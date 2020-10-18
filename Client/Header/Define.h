@@ -8,6 +8,7 @@ using namespace Client;
 
 #include "Enum.h"
 #include "Const.h"
+#include "Struct.h"
 //#include "CKeyMgr.h"
 extern HWND g_hWnd;
 

@@ -15,12 +15,12 @@ Engine::CTimerMgr::~CTimerMgr(void)
 
 HRESULT Engine::CTimerMgr::Ready_Timer(const _tchar* pTimerTag)
 {
-	CTimer*	pTimer = Find_Timer(pTimerTag);
-	
+	CChronoTimer*	pTimer = Find_Timer(pTimerTag);
 	if (nullptr != pTimer)
 		return E_FAIL;
 
-	pTimer = CTimer::Create();
+	pTimer = CChronoTimer::Create();
+	
 	NULL_CHECK_RETURN(pTimer, E_FAIL);
 
 	m_mapTimers.emplace(pTimerTag, pTimer);
@@ -28,7 +28,7 @@ HRESULT Engine::CTimerMgr::Ready_Timer(const _tchar* pTimerTag)
 	return S_OK;
 }
 
-Engine::CTimer* Engine::CTimerMgr::Find_Timer(const _tchar* pTimerTag)
+Engine::CChronoTimer* Engine::CTimerMgr::Find_Timer(const _tchar* pTimerTag)
 {
 	auto	iter = find_if(m_mapTimers.begin(), m_mapTimers.end(), CTag_Finder(pTimerTag));
 
@@ -48,19 +48,20 @@ void Engine::CTimerMgr::Free(void)
 
 Engine::_float	Engine::CTimerMgr::Get_TimeDelta(const _tchar* pTimerTag)
 {
-	CTimer*	pTimer = Find_Timer(pTimerTag);
+	CChronoTimer*	pTimer = Find_Timer(pTimerTag);
 
 	if (nullptr == pTimer)
 		return 0.f;
 
-	return pTimer->Get_TimeDelta();
+	return pTimer->GetElapsedTimePerFrame();
 }
+
 void		Engine::CTimerMgr::Set_TimeDelta(const _tchar* pTimerTag)
 {
-	CTimer*	pTimer = Find_Timer(pTimerTag);
+	CChronoTimer*	pTimer = Find_Timer(pTimerTag);
 
 	if (nullptr == pTimer)
 		return;
 
-	pTimer->SetUp_TimeDelta();
+	pTimer->RunTick();
 }

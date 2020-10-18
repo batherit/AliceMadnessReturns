@@ -39,6 +39,9 @@
     <ClInclude Include="..\Code\FrameMgr.h">
       <Filter>02. Frame\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\ChronoTimer.h">
+      <Filter>01. Timer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Header\Export_System.inl">
@@ -60,6 +63,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\FrameMgr.cpp">
       <Filter>02. Frame\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ChronoTimer.cpp">
+      <Filter>01. Timer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

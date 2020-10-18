@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <functional>
 #include <ctime>
+#include <chrono>
 #include <process.h>
 
 #pragma warning(disable : 4251)

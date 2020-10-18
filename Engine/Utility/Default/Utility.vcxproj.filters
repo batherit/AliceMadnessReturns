@@ -48,9 +48,6 @@
     <ClInclude Include="..\Code\Component.h">
       <Filter>04. Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\CGameObject.h">
-      <Filter>03. GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Layer.h">
       <Filter>02. Layer</Filter>
     </ClInclude>
@@ -66,6 +63,9 @@
     <ClInclude Include="..\Code\KeyMgr.h">
       <Filter>05. Manager\00. KeyMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\GameObject.h">
+      <Filter>03. GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -76,9 +76,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Component.cpp">
       <Filter>04. Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CGameObject.cpp">
-      <Filter>03. GameObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Layer.cpp">
       <Filter>02. Layer</Filter>
@@ -94,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\KeyMgr.cpp">
       <Filter>05. Manager\00. KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GameObject.cpp">
+      <Filter>03. GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

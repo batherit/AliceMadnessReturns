@@ -1,3 +1,62 @@
+//#include "Timer.h"
+//
+//USING(Engine)
+//
+//Engine::CTimer::CTimer(void)
+//	: m_fTimeDelta(0.f)
+//{
+//
+//}
+//
+//Engine::CTimer::~CTimer(void)
+//{
+//
+//}
+//
+//HRESULT Engine::CTimer::Ready_Timer(void)
+//{
+//	QueryPerformanceCounter(&m_FrameTime);	// 1012
+//	QueryPerformanceCounter(&m_LastTime);	// 1048
+//
+//	QueryPerformanceCounter(&m_FixTime);
+//
+//	QueryPerformanceFrequency(&m_CpuTick);
+//
+//	return S_OK;
+//}
+//
+//void Engine::CTimer::SetUp_TimeDelta(void)
+//{
+//	QueryPerformanceCounter(&m_FrameTime);
+//
+//	if (m_FrameTime.QuadPart - m_FixTime.QuadPart >= m_CpuTick.QuadPart)
+//	{
+//		QueryPerformanceFrequency(&m_CpuTick);
+//		m_FixTime = m_FrameTime;
+//	}
+//
+//	m_fTimeDelta = (_float(m_FrameTime.QuadPart) - _float(m_LastTime.QuadPart)) / (_float)m_CpuTick.QuadPart;
+//
+//	m_LastTime = m_FrameTime;
+//}
+//
+//Engine::CTimer* Engine::CTimer::Create(void)
+//{
+//	CTimer*	pInstance = new CTimer;
+//
+//	if (FAILED(pInstance->Ready_Timer()))
+//		Safe_Release(pInstance);
+//
+//	return pInstance;
+//}
+//
+//void Engine::CTimer::Free(void)
+//{
+//
+//}
+//
+
+
 #include "Timer.h"
 
 USING(Engine)
@@ -15,8 +74,12 @@ Engine::CTimer::~CTimer(void)
 
 HRESULT Engine::CTimer::Ready_Timer(void)
 {
-	QueryPerformanceCounter(&m_FrameTime);	// 1012
-	QueryPerformanceCounter(&m_LastTime);	// 1048
+
+	m_FrameT = chrono::steady_clock::now();
+	m_LastT = chrono::steady_clock::now();
+
+	QueryPerformanceCounter(&m_FrameTime);
+	QueryPerformanceCounter(&m_LastTime);
 
 	QueryPerformanceCounter(&m_FixTime);
 
@@ -27,22 +90,31 @@ HRESULT Engine::CTimer::Ready_Timer(void)
 
 void Engine::CTimer::SetUp_TimeDelta(void)
 {
-	QueryPerformanceCounter(&m_FrameTime);
+	m_FrameT = chrono::steady_clock::now();
 
-	if (m_FrameTime.QuadPart - m_FixTime.QuadPart >= m_CpuTick.QuadPart)
-	{
-		QueryPerformanceFrequency(&m_CpuTick);
-		m_FixTime = m_FrameTime;
-	}
+	chrono::duration<_float> fTimeDelta = m_FrameT - m_LastT;
 
-	m_fTimeDelta = (_float(m_FrameTime.QuadPart) - _float(m_LastTime.QuadPart)) / (_float)m_CpuTick.QuadPart;
+	m_fTimeDelta = fTimeDelta.count();
 
-	m_LastTime = m_FrameTime;
+	m_LastT = m_FrameT;
+
+	//QueryPerformanceCounter(&m_FrameTime);
+	//
+	//if (m_FrameTime.QuadPart - m_FixTime.QuadPart >= m_CpuTick.QuadPart)
+	//{
+	//   QueryPerformanceFrequency(&m_CpuTick);
+	//   m_FixTime = m_FrameTime;
+	//}
+
+	//m_fTimeDelta = (_float(m_FrameTime.QuadPart) - _float(m_LastTime.QuadPart)) / (_float)m_CpuTick.QuadPart;
+
+
+	//m_LastTime = m_FrameTime;
 }
 
 Engine::CTimer* Engine::CTimer::Create(void)
 {
-	CTimer*	pInstance = new CTimer;
+	CTimer*   pInstance = new CTimer;
 
 	if (FAILED(pInstance->Ready_Timer()))
 		Safe_Release(pInstance);
@@ -54,4 +126,7 @@ void Engine::CTimer::Free(void)
 {
 
 }
+
+
+
 

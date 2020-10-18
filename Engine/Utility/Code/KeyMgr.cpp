@@ -11,7 +11,7 @@ CKeyMgr::CKeyMgr()
 
 CKeyMgr::~CKeyMgr()
 {
-	Release();
+	Free();
 }
 
 void CKeyMgr::Update(void)

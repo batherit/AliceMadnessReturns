@@ -1,7 +1,7 @@
 #ifndef TimerMgr_h__
 #define TimerMgr_h__
 
-#include "Timer.h"
+#include "ChronoTimer.h"
 
 BEGIN(Engine)
 
@@ -21,10 +21,10 @@ public:
 	HRESULT		Ready_Timer(const _tchar* pTimerTag);
 
 private:
-	CTimer*		Find_Timer(const _tchar* pTimerTag);
+	CChronoTimer*		Find_Timer(const _tchar* pTimerTag);
 
 private:
-	map<const _tchar*, CTimer*>		m_mapTimers;
+	map<const _tchar*, CChronoTimer*>		m_mapTimers;
 
 public:
 	virtual void	Free(void);

@@ -179,12 +179,14 @@
     <ClInclude Include="..\Code\CPlayScene.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Code\SpriteObject.h" />
     <ClInclude Include="..\Code\TerrainMap.h" />
     <ClInclude Include="..\Header\Const.h" />
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Enum.h" />
     <ClInclude Include="..\Header\Function.h" />
     <ClInclude Include="..\Header\Macro.h" />
+    <ClInclude Include="..\Header\Struct.h" />
     <ClInclude Include="..\Header\Typedef.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
@@ -207,6 +209,7 @@
     <ClCompile Include="..\Code\CPlayScene.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\SpriteObject.cpp" />
     <ClCompile Include="..\Code\TerrainMap.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">

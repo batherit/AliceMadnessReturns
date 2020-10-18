@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\CGameObject.cpp" />
+    <ClCompile Include="..\Code\GameObject.cpp" />
     <ClCompile Include="..\Code\KeyMgr.cpp" />
     <ClCompile Include="..\Code\Management.cpp" />
     <ClCompile Include="..\Code\MoveComponent.cpp" />
@@ -31,7 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h" />
-    <ClInclude Include="..\Code\CGameObject.h" />
+    <ClInclude Include="..\Code\GameObject.h" />
     <ClInclude Include="..\Code\KeyMgr.h" />
     <ClInclude Include="..\Code\Management.h" />
     <ClInclude Include="..\Code\MoveComponent.h" />

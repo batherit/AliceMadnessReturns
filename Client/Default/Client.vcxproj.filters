@@ -37,6 +37,9 @@
     <Filter Include="02. Object\00. Camera">
       <UniqueIdentifier>{f74bf0ce-950b-4592-9f5a-e6972899e445}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\01. SpricteObject">
+      <UniqueIdentifier>{b9e3876b-06d4-4744-8577-14c804088c11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -93,6 +96,12 @@
     <ClInclude Include="..\Code\Camera.h">
       <Filter>02. Object\00. Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\SpriteObject.h">
+      <Filter>02. Object\01. SpricteObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Struct.h">
+      <Filter>98. Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -121,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Camera.cpp">
       <Filter>02. Object\00. Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpriteObject.cpp">
+      <Filter>02. Object\01. SpricteObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

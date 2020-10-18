@@ -1,4 +1,4 @@
-#include "CGameObject.h"
+#include "GameObject.h"
 #include "Component.h"
 #include "ProtoMgr.h"
 

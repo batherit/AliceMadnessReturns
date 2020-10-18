@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_System.h" />
+    <ClInclude Include="..\Code\ChronoTimer.h" />
     <ClInclude Include="..\Code\Frame.h" />
     <ClInclude Include="..\Code\FrameMgr.h" />
     <ClInclude Include="..\Code\GraphicDev.h" />
@@ -30,6 +31,7 @@
     <None Include="..\..\Header\Export_System.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\ChronoTimer.cpp" />
     <ClCompile Include="..\Code\Frame.cpp" />
     <ClCompile Include="..\Code\FrameMgr.cpp" />
     <ClCompile Include="..\Code\GraphicDev.cpp" />

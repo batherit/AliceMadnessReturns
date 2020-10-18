@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="00. Resources">
+      <UniqueIdentifier>{17402d6e-ee47-4ac1-bd03-2bdef3abd002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. ResourcesMgr">
+      <UniqueIdentifier>{1e3b277c-ba00-4141-995c-1429339a5b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Export">
+      <UniqueIdentifier>{134a20fe-c05d-4274-8b34-6cb302f1a86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\00. VIBuffer">
+      <UniqueIdentifier>{a68675e0-8421-4ba0-82e5-4ce8ae897bfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\00. VIBuffer\00. TriCol">
+      <UniqueIdentifier>{cab2324c-26a3-437e-b094-b7b8c758bb77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\00. VIBuffer\01. RcCol">
+      <UniqueIdentifier>{988c15fb-93ce-47f3-8ccc-f5b09d7da92a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\00. VIBuffer\02. RcTex">
+      <UniqueIdentifier>{538d2439-0d9b-475f-9bcb-1e3674358b74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\01. Texture">
+      <UniqueIdentifier>{f595b9fc-05cc-473d-ab78-234f2cbd23cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\00. VIBuffer\03. Terrain">
+      <UniqueIdentifier>{634d4d44-45cf-456f-b23f-d3c7b1ab66fd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Header\Export_Resouces.h">
+      <Filter>99. Export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ResourcesMgr.h">
+      <Filter>01. ResourcesMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Resources.h">
+      <Filter>00. Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\TriCol.h">
+      <Filter>00. Resources\00. VIBuffer\00. TriCol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\VIBuffer.h">
+      <Filter>00. Resources\00. VIBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CRcCol.h">
+      <Filter>00. Resources\00. VIBuffer\01. RcCol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\RcTex.h">
+      <Filter>00. Resources\00. VIBuffer\02. RcTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Texture.h">
+      <Filter>00. Resources\01. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Terrain.h">
+      <Filter>00. Resources\00. VIBuffer\03. Terrain</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Header\Export_Resouces.inl">
+      <Filter>99. Export</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Code\ResourcesMgr.cpp">
+      <Filter>01. ResourcesMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Resources.cpp">
+      <Filter>00. Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TriCol.cpp">
+      <Filter>00. Resources\00. VIBuffer\00. TriCol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\VIBuffer.cpp">
+      <Filter>00. Resources\00. VIBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRcCol.cpp">
+      <Filter>00. Resources\00. VIBuffer\01. RcCol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RcTex.cpp">
+      <Filter>00. Resources\00. VIBuffer\02. RcTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Texture.cpp">
+      <Filter>00. Resources\01. Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Terrain.cpp">
+      <Filter>00. Resources\00. VIBuffer\03. Terrain</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

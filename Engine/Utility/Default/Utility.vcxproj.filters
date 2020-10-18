@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="00. Management">
+      <UniqueIdentifier>{40d52a8a-6132-4a89-aa3c-5cad4e5cbf40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Export">
+      <UniqueIdentifier>{b041585e-c687-489e-b10b-5eed9de150d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component">
+      <UniqueIdentifier>{9f866eed-9b6e-44ef-8908-ffb0c4ac1778}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene">
+      <UniqueIdentifier>{06d89463-04ad-4703-be07-05a33d89a4c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Layer">
+      <UniqueIdentifier>{673401ec-cf05-4fa6-a71e-0c707e42eca6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject">
+      <UniqueIdentifier>{f6d8fe00-eaa8-4e4d-996e-ab8ad6f87f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\00. MoveComponent">
+      <UniqueIdentifier>{e5e203d4-fe85-4a99-8417-7c096136dd15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Manager">
+      <UniqueIdentifier>{44108967-497d-4acf-991d-f9bfd7f48a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Manager\00. KeyMgr">
+      <UniqueIdentifier>{8227eef7-f7be-4d87-98cc-42585e584984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Manager\02. ProtoMgr">
+      <UniqueIdentifier>{cc9bfcd9-9e65-47fa-8420-39eee0aa097d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Manager\01. SceneMgr">
+      <UniqueIdentifier>{abde659e-8343-48b5-940f-a9d99fea1b95}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Header\Export_Utility.h">
+      <Filter>99. Export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CScene.h">
+      <Filter>01. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CSceneMgr.h">
+      <Filter>05. Manager\01. SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Component.h">
+      <Filter>04. Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CGameObject.h">
+      <Filter>03. GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Layer.h">
+      <Filter>02. Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ProtoMgr.h">
+      <Filter>05. Manager\02. ProtoMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MoveComponent.h">
+      <Filter>04. Component\00. MoveComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Management.h">
+      <Filter>00. Management</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\KeyMgr.h">
+      <Filter>05. Manager\00. KeyMgr</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Code\CScene.cpp">
+      <Filter>01. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSceneMgr.cpp">
+      <Filter>05. Manager\01. SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Component.cpp">
+      <Filter>04. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGameObject.cpp">
+      <Filter>03. GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Layer.cpp">
+      <Filter>02. Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ProtoMgr.cpp">
+      <Filter>05. Manager\02. ProtoMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MoveComponent.cpp">
+      <Filter>04. Component\00. MoveComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Management.cpp">
+      <Filter>00. Management</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KeyMgr.cpp">
+      <Filter>05. Manager\00. KeyMgr</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Header\Export_Utility.inl">
+      <Filter>99. Export</Filter>
+    </None>
+  </ItemGroup>
+</Project>

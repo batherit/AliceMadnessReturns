@@ -3,6 +3,7 @@
 
 #include "Typedef.h"
 #include "Function.h"
+#include "sjhD3DXFunction.h"
 #include "Macro.h"
 using namespace Client;
 

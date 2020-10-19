@@ -43,7 +43,11 @@ namespace Engine
 
 	}INDEX32;
 		
-
+	typedef struct tagHeightMapInfo {
+		LONG iWidth = 0;
+		LONG iHeight = 0;
+		WORD iBitCount = 0;
+	}HEIGHTMAPINFO;
 }
 
 #endif // Engine_Struct_h__

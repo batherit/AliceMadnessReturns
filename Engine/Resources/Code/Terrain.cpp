@@ -64,7 +64,7 @@ HRESULT CTerrain::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _uint
 	// 1인자 : 어디서부터 잠글 것인가
 	// 2인자 : 숫자가 0이면 전체 영역을 잠근다.
 	// 3인자 : 인자값을 통해서 버텍스 버퍼 내 정점 중 첫번째 주소를 얻어온다.
-	// 4인자 : 잠그는 형태를 묻는 인자, 정적 버퍼인 경우 0
+	// 4인자 : 잠그는 형태를 묻는 인자, 정적 버퍼인 경우 
 
 	_float fCU = 1.f / (_iNumOfVerticesW - 1);
 	_float fCV = 1.f / (_iNumOfVerticesH - 1);
@@ -82,7 +82,7 @@ HRESULT CTerrain::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _uint
 	vector<INDEX16> indices;
 
 	for (_uint i = 1; i < _iNumOfVerticesH; ++i) {
-		for (_uint j = 1; j < _iNumOfVerticesW; ++j) {
+		for (_uint j = 0; j < _iNumOfVerticesW - 1; ++j) {
 			/*indices.emplace_back(INDEX16{ 
 				static_cast<_ushort>(0 + i * _iNumOfVerticesW + j), 
 				static_cast<_ushort>(1 + i * _iNumOfVerticesW + j),
@@ -95,7 +95,7 @@ HRESULT CTerrain::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _uint
 			indices.emplace_back(INDEX16{
 				static_cast<_ushort>(0 + i * _iNumOfVerticesW + j),
 				static_cast<_ushort>(1 + i * _iNumOfVerticesW + j),
-				static_cast<_ushort>(0 + (i - 1) * _iNumOfVerticesW + j)});
+				static_cast<_ushort>(1 + (i - 1) * _iNumOfVerticesW + j)});
 			indices.emplace_back(INDEX16{
 				static_cast<_ushort>(1 + (i - 1) * _iNumOfVerticesW + j),
 				static_cast<_ushort>(0 + (i - 1) * _iNumOfVerticesW + j),
@@ -156,7 +156,7 @@ _bool CTerrain::LoadHeightMap(const _tchar * _szHeightMapFileName)
 		LONG iImageHeight = bmpInfoHeader.biHeight;
 
 		// 비트맵 이미지 데이터의 크기를 계산하기
-		_int iImageSize = 4 * iImageWidth * iImageHeight;
+		_int iImageSize = (bmpInfoHeader.biBitCount / CHAR_BIT) * iImageWidth * iImageHeight;
 
 		// 비트맵 이미지 데이터를 위한 메모리 할당하기
 		if (m_pHeightMapData) {

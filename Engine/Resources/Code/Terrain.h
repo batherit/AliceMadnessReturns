@@ -32,6 +32,7 @@ private:
 
 private:
 	_ubyte* m_pHeightMapData = nullptr;
+	HEIGHTMAPINFO m_stHeightMapInfo;
 	//_uint m_iNumOfVerticesW;
 	//_uint m_iNumOfVerticesH;
 };

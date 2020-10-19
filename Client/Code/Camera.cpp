@@ -50,8 +50,8 @@ int CCamera::Update_Object(const _float & fTimeDelta)
 		_vec2 vToCurrent = _vec2(
 			static_cast<FLOAT>(ptCurrentCursor.x - ptOldCursor.x), 
 			static_cast<FLOAT>(ptCurrentCursor.y - ptOldCursor.y));
-		_float fRotAngleByY = vToCurrent.x * D3DX_PI / WINCX;
-		_float fRotAngleByRight = vToCurrent.y * D3DX_PI / WINCY;
+		_float fRotAngleByY = vToCurrent.x * 2.f * D3DX_PI / WINCX;
+		_float fRotAngleByRight = vToCurrent.y * 2.f * D3DX_PI / WINCY;
 
 		m_pMoveComponent->RotateByRight(fRotAngleByRight);
 		m_pMoveComponent->RotateByAxis(fRotAngleByY, WORLD_Y_AXIS);
@@ -96,10 +96,16 @@ int CCamera::Update_Object(const _float & fTimeDelta)
 	_vec3 vAt = vEye + m_pMoveComponent->GetLook() ;	// 카메라 위치에서 바로 아래를 본다.
 	_vec3 vUp = m_pMoveComponent->GetUp();						// 카메라 Up축
 
-	D3DXMatrixLookAtLH(&matView, // 행렬 결과
-		&vEye, // eye(카메라 위치)
-		&vAt,	// at(카메라가 바라보는 위치)
-		&vUp); // up(카메라와 수직을 이루는 방향)
+	//D3DXMatrixLookAtLH(&matView, // 행렬 결과
+	//	&vEye, // eye(카메라 위치)
+	//	&vAt,	// at(카메라가 바라보는 위치)
+	//	&vUp); // up(카메라와 수직을 이루는 방향)
+	sjhMatrixLookAtLH(
+		&matView,
+		&vEye,
+		&vAt,
+		&vUp
+	);
 
 	// 원근 투영 행렬 생성 함수
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
@@ -110,11 +116,16 @@ int CCamera::Update_Object(const _float & fTimeDelta)
 void CCamera::SetProjectionMatrix(const _float & _fFOV, const _float & _fAspect, const _float & _fNearZ, const _float & _fFarZ)
 {
 	_matrix matProj;
-	D3DXMatrixPerspectiveFovLH(&matProj, // 행렬 결과
-		_fFOV,		// fovY
-		_fAspect,	// 종횡비
-		_fNearZ,	// 절두체의 near 평면의 z값
-		_fFarZ); // 절두체의 far 평면의 z값
+	//D3DXMatrixPerspectiveFovLH(&matProj, // 행렬 결과
+	//	_fFOV,		// fovY
+	//	_fAspect,	// 종횡비
+	//	_fNearZ,	// 절두체의 near 평면의 z값
+	//	_fFarZ); // 절두체의 far 평면의 z값
+	sjhMatrixPerspectiveFovLH(&matProj,
+		_fFOV,
+		_fAspect,
+		_fNearZ,
+		_fFarZ);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 

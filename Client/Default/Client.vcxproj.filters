@@ -102,6 +102,9 @@
     <ClInclude Include="..\Header\Struct.h">
       <Filter>98. Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\sjhD3DXFunction.h">
+      <Filter>98. Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">

@@ -34,6 +34,9 @@
     <Filter Include="05. Manager\01. SceneMgr">
       <UniqueIdentifier>{abde659e-8343-48b5-940f-a9d99fea1b95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. GameObject\Camera">
+      <UniqueIdentifier>{484679ae-2fc2-4f97-b660-b0505f4c5b92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -66,6 +69,9 @@
     <ClInclude Include="..\Code\GameObject.h">
       <Filter>03. GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Camera.h">
+      <Filter>03. GameObject\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -94,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\GameObject.cpp">
       <Filter>03. GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Camera.cpp">
+      <Filter>03. GameObject\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

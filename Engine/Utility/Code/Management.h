@@ -6,9 +6,6 @@
 #include "Base.h"
 
 #include "CSceneMgr.h"
-#include "Component.h"
-#include "CGameObject.h"
-#include "MoveComponent.h"
 
 
 BEGIN(Engine)

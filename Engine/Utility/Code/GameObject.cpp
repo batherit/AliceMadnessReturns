@@ -50,6 +50,7 @@ void Engine::CGameObject::AddComponent(const COMPONENTID eComponentID, const _tc
 
 	CComponent* pComp = CProtoMgr::GetInstance()->Clone(pComponentTag);
 	if (pComp) {
+		pComp->SetOwner(this);
 		m_mapComponent[eComponentID].emplace(pComponentTag, pComp);
 	}
 }

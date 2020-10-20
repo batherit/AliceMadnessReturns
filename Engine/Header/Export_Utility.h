@@ -4,6 +4,11 @@
 #include "Management.h"
 #include "KeyMgr.h"
 #include "ProtoMgr.h"
+
+#include "GameObject.h"
+#include "Camera.h"
+
+#include "Component.h"
 #include "MoveComponent.h"
 //#include "Renderer.h"
 

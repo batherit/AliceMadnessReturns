@@ -26,7 +26,7 @@ HRESULT CTerrainMap::Ready_Object(void)
 
 	AddComponent<Engine::CTerrain>();
 	m_pTerrain = GetComponent<Engine::CTerrain>();
-	m_pTerrain->SetTerrainInfo(_vec3(0.f, 0.f, 0.f), 129, 129, 0.5f, 0.5f, L"../Bin/Resource/Texture/Terrain/Height1.bmp");
+	m_pTerrain->SetTerrainInfo(_vec3(0.f, 0.f, 0.f), 129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height1.bmp");
 
 	return S_OK;
 }
@@ -38,7 +38,7 @@ int CTerrainMap::Update_Object(const _float & fTimeDelta)
 
 void CTerrainMap::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pMoveComponent->GetWorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pMoveComponent->GetObjectMatrix());
 
 	Engine::Render_Texture(Engine::RESOURCE_STATIC, L"Height", 0);
 	m_pTerrain->Render_Buffer();

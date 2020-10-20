@@ -165,21 +165,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Code\Camera.h">
+    <ClInclude Include="..\Code\DynamicCamera.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\CLogoObject.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="..\Code\CLogoScene.h" />
+    <ClInclude Include="..\Code\LoadScene.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Code\Player.h" />
+    <ClInclude Include="..\Code\PlayScene.h" />
     <ClInclude Include="..\Code\CMainApp.h" />
     <ClInclude Include="..\Code\CMonster.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="..\Code\CPlayScene.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="..\Code\Loading.h" />
     <ClInclude Include="..\Code\SpriteObject.h" />
+    <ClInclude Include="..\Code\StaticCamera.h" />
     <ClInclude Include="..\Code\TerrainMap.h" />
     <ClInclude Include="..\Header\Const.h" />
     <ClInclude Include="..\Header\Define.h" />
@@ -196,21 +199,24 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\Camera.cpp">
+    <ClCompile Include="..\Code\DynamicCamera.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\CLogoObject.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\Code\CLogoScene.cpp" />
+    <ClCompile Include="..\Code\LoadScene.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player.cpp" />
+    <ClCompile Include="..\Code\PlayScene.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />
     <ClCompile Include="..\Code\CMonster.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\Code\CPlayScene.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\SpriteObject.cpp" />
+    <ClCompile Include="..\Code\StaticCamera.cpp" />
     <ClCompile Include="..\Code\TerrainMap.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">

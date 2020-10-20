@@ -3,8 +3,7 @@
 
 #include "Engine_Define.h"
 #include "Base.h"
-
-class CGameObject;
+#include "GameObject.h"
 
 BEGIN(Engine)
 
@@ -19,13 +18,14 @@ public:
 	virtual HRESULT Ready(void) = 0;
 	virtual int Update(const _float& _fDeltaTime) = 0;
 	virtual void Render(void) {};
-	//virtual const _tchar* GetComponentTag() const = 0;
-	//virtual void Release(void) = 0;
+	void SetOwner(CGameObject* _pOwner) { if (m_pOwner) return; m_pOwner = _pOwner; }
 
 public:
 	virtual CComponent* Clone(void) = 0;
+
 protected:
 	virtual void Free(void) = 0;
+	CGameObject* m_pOwner = nullptr;
 };
 
 END

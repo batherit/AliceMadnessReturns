@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CMainApp.h"
-#include "CLogoScene.h"
+#include "PlayScene.h"
 
 CMainApp::CMainApp(void)
 {
@@ -53,7 +53,7 @@ HRESULT CMainApp::Ready_MainApp(void)
 
 
 	// 첫 씬을 Logo로 설정한다.
-	Engine::CManagement::GetInstance()->SetNextScene(CLogoScene::Create(m_pGraphicDev));
+	Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
 	
 	return S_OK;
 }

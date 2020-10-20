@@ -19,6 +19,7 @@ public:
 	static const Engine::COMPONENTID GetComponentID() { return Engine::ID_STATIC; }
 
 	HRESULT SetTerrainInfo(_vec3 _vStartPos = _vec3(0.f, 0.f, 0.f), _uint _iNumOfVerticesW = 2, _uint _iNumOfVerticesH = 2, _float _fWidth = 1.f, _float _fHeight = 1.f, const _tchar* _szHeightMapFileName = nullptr);
+	_float GetHeight(const _vec3& _vPos);
 
 public:
 	static CTerrain*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -32,9 +33,13 @@ private:
 
 private:
 	_ubyte* m_pHeightMapData = nullptr;
-	HEIGHTMAPINFO m_stHeightMapInfo;
-	//_uint m_iNumOfVerticesW;
-	//_uint m_iNumOfVerticesH;
+	BITMAPINFOHEADER m_stBitmapInfoHeader;
+	_vec3 m_vStartPos;
+	_uint m_iNumOfVerticesW;
+	_uint m_iNumOfVerticesH;
+	_float m_fWidth;
+	_float m_fHeight;
+	vector<_vec3> m_vecVertices;
 };
 END
 

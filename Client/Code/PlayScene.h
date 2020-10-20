@@ -1,11 +1,10 @@
-#ifndef LogoScene_h__
-#define LogoScene_h__
+#ifndef PlayScene_h__
+#define PlayScene_h__
 
 #include "Define.h"
 #include "Base.h"
 #include "Engine_Define.h"
 #include "Export_Function.h"
-#include "Camera.h"
 
 //BEGIN(Engine)
 //
@@ -13,13 +12,14 @@
 
 //END
 BEGIN(Client)
-
-class CLogoScene : public Engine::CScene
+class CPlayer;
+class CTerrainMap;
+class CPlayScene : public Engine::CScene
 {
 private: // 持失切, 社瑚切
-	explicit CLogoScene(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CLogoScene(const CLogoScene& rhs);
-	virtual ~CLogoScene(void);
+	explicit CPlayScene(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CPlayScene(const CPlayScene& rhs);
+	virtual ~CPlayScene(void);
 
 public:
 	virtual LRESULT CALLBACK OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
@@ -30,7 +30,7 @@ public:
 	virtual void Render(void);
 	
 public:
-	static CLogoScene*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CPlayScene*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	HRESULT		Ready_Environment_Layer(const _tchar* pLayerTag);
@@ -42,8 +42,9 @@ private:
 private:
 	//Engine::CGameObject* m_pLogoObject = nullptr;
 	//Engine::CGameObject* m_pMonster = nullptr;
-	CCamera* m_pCamera = nullptr;
-	Engine::CGameObject* m_pTerrain = nullptr;
+	Engine::CCamera* m_pCamera = nullptr;
+	CPlayer* m_pPlayer = nullptr;
+	CTerrainMap* m_pTerrain = nullptr;
 };
 
 END

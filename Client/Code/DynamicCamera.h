@@ -1,5 +1,5 @@
-#ifndef Camera_h__
-#define Camera_h__
+#ifndef DynamicCamera_h__
+#define DynamicCamera_h__
 
 #include "Define.h"
 #include "Base.h"
@@ -8,20 +8,19 @@
 
 BEGIN(Client)
 
-class CCamera : public Engine::CGameObject
+class CDynamicCamera : public Engine::CCamera
 {
 private: // 생성자, 소멸자
-	explicit  CCamera(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit  CCamera(const  CCamera& rhs);
-	virtual ~CCamera(void);
+	explicit  CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit  CDynamicCamera(const  CDynamicCamera& rhs);
+	virtual ~CDynamicCamera(void);
 
 	// CGameObject을(를) 통해 상속됨
 	virtual HRESULT Ready_Object(void) override;
 	virtual int Update_Object(const _float & _fDeltaTime) override;
-	void SetProjectionMatrix(const _float& _fFOV, const _float& _fAspect, const _float& _fNearZ, const _float& _fFarZ);
 
 public:
-	static CCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CDynamicCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
 
 private:
@@ -30,4 +29,4 @@ private:
 
 END
 
-#endif // !Camera_h__
+#endif // !DynamicCamera_h__

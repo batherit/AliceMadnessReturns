@@ -1,25 +1,25 @@
 #include "pch.h"
-#include "Camera.h"
+#include "DynamicCamera.h"
 
 
-CCamera::CCamera(LPDIRECT3DDEVICE9 pGraphicDev)
+CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
-	CGameObject(pGraphicDev)
+	CCamera(pGraphicDev)
 {
 }
 
-CCamera::CCamera(const CCamera & rhs)
+CDynamicCamera::CDynamicCamera(const CDynamicCamera & rhs)
 	:
-	CGameObject(rhs)
+	CCamera(rhs)
 {
 }
 
-CCamera::~CCamera(void)
+CDynamicCamera::~CDynamicCamera(void)
 {
 }
 
 
-HRESULT CCamera::Ready_Object(void)
+HRESULT CDynamicCamera::Ready_Object(void)
 {
 	AddComponent<Engine::CMoveComponent>();
 	m_pMoveComponent = GetComponent<Engine::CMoveComponent>();
@@ -33,7 +33,7 @@ HRESULT CCamera::Ready_Object(void)
 	return S_OK;
 }
 
-int CCamera::Update_Object(const _float & fTimeDelta)
+int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 {	
 	if (Engine::CKeyMgr::GetInstance()->IsKeyDown(L"KEY_LBUTTON")) {
 		POINT ptCurrentCursor = Engine::GetClientCursorPoint(g_hWnd);
@@ -91,47 +91,16 @@ int CCamera::Update_Object(const _float & fTimeDelta)
 	m_pMoveComponent->MoveByDelta(fTimeDelta);
 
 	// 뷰 스페이스 변환 행렬 생성 함수(즉, 카메라 월드 행렬의 역 행렬을 만들어주는 함수)
-	_matrix matView;
-	_vec3 vEye = m_pMoveComponent->GetPos();		// 카메라 위치
-	_vec3 vAt = vEye + m_pMoveComponent->GetLook() ;	// 카메라 위치에서 바로 아래를 본다.
-	_vec3 vUp = m_pMoveComponent->GetUp();						// 카메라 Up축
+	m_vEye = m_pMoveComponent->GetPos();		// 카메라 위치
+	m_vAt = m_vEye + m_pMoveComponent->GetLook() * 10.f ;	// 카메라 위치에서 바로 아래를 본다.
+	m_vUp = m_pMoveComponent->GetUp();						// 카메라 Up축
 
-	//D3DXMatrixLookAtLH(&matView, // 행렬 결과
-	//	&vEye, // eye(카메라 위치)
-	//	&vAt,	// at(카메라가 바라보는 위치)
-	//	&vUp); // up(카메라와 수직을 이루는 방향)
-	sjhMatrixLookAtLH(
-		&matView,
-		&vEye,
-		&vAt,
-		&vUp
-	);
-
-	// 원근 투영 행렬 생성 함수
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-
-	return 0;
+	return Engine::CCamera::Update_Object(fTimeDelta);
 }
 
-void CCamera::SetProjectionMatrix(const _float & _fFOV, const _float & _fAspect, const _float & _fNearZ, const _float & _fFarZ)
+CDynamicCamera * CDynamicCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	_matrix matProj;
-	//D3DXMatrixPerspectiveFovLH(&matProj, // 행렬 결과
-	//	_fFOV,		// fovY
-	//	_fAspect,	// 종횡비
-	//	_fNearZ,	// 절두체의 near 평면의 z값
-	//	_fFarZ); // 절두체의 far 평면의 z값
-	sjhMatrixPerspectiveFovLH(&matProj,
-		_fFOV,
-		_fAspect,
-		_fNearZ,
-		_fFarZ);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
-}
-
-CCamera * CCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	CCamera*	pInstance = new CCamera(pGraphicDev);
+	CDynamicCamera*	pInstance = new CDynamicCamera(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -139,7 +108,7 @@ CCamera * CCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CCamera::Free(void)
+void CDynamicCamera::Free(void)
 {
-	CGameObject::Free();
+	CCamera::Free();
 }

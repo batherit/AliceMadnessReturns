@@ -38,23 +38,9 @@ public:
 		const COMPONENTID id = T::GetComponentID();
 		AddComponent(id, tag);
 	}
-	/*
-	template<typename T>
-	void AddComponent() {
-		Engine::COMPONENTID eComponentID = T::GetComponentID();
-		auto iter = find_if(m_mapComponent[eComponentID].begin(), m_mapComponent[eComponentID].end(), CTag_Finder(T::GetComponentTag()));
-		if (iter != m_mapComponent[eComponentID].end()) return;
-		m_mapComponent[eComponentID].emplace(T::GetComponentTag(), T::Create());
-	}
+	void SetParent(CGameObject* _pParent) { m_pParent = _pParent; }
+	CGameObject* GetParent() const { return m_pParent; }
 
-	template<typename T>
-	T* GetComponent() {
-		Engine::COMPONENTID eComponentID = T::GetComponentID();
-		auto iter = find_if(m_mapComponent[eComponentID].begin(), m_mapComponent[eComponentID].end(), CTag_Finder(T::GetComponentTag()));
-		if (iter == m_mapComponent[eComponentID].end()) return nullptr;
-		return static_cast<T*>(m_mapComponent[eComponentID][T::GetComponentTag()]);
-	}
-	*/
 	virtual void Free(void);
 
 private:
@@ -62,10 +48,29 @@ private:
 
 protected:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
+	CGameObject* m_pParent = nullptr;
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
-	//CComponent* m_pComponent = nullptr;		// map 형식으로 되어있을 것이다.
 };
 
 END
 
 #endif
+
+
+/*
+template<typename T>
+void AddComponent() {
+	Engine::COMPONENTID eComponentID = T::GetComponentID();
+	auto iter = find_if(m_mapComponent[eComponentID].begin(), m_mapComponent[eComponentID].end(), CTag_Finder(T::GetComponentTag()));
+	if (iter != m_mapComponent[eComponentID].end()) return;
+	m_mapComponent[eComponentID].emplace(T::GetComponentTag(), T::Create());
+}
+
+template<typename T>
+T* GetComponent() {
+	Engine::COMPONENTID eComponentID = T::GetComponentID();
+	auto iter = find_if(m_mapComponent[eComponentID].begin(), m_mapComponent[eComponentID].end(), CTag_Finder(T::GetComponentTag()));
+	if (iter == m_mapComponent[eComponentID].end()) return nullptr;
+	return static_cast<T*>(m_mapComponent[eComponentID][T::GetComponentTag()]);
+}
+*/

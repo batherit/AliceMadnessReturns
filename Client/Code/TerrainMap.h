@@ -21,6 +21,11 @@ private: // 持失切, 社瑚切
 	virtual void Render_Object(void) override;
 
 public:
+	_float GetHeight(_vec3 _vPos) const {
+		return m_pTerrain->GetHeight(_vPos);
+	}
+
+public:
 	static CTerrainMap*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
 

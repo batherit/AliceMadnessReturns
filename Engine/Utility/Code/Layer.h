@@ -1,7 +1,7 @@
 #ifndef Layer_h__
 #define Layer_h__
 
-#include "CGameObject.h"
+#include "GameObject.h"
 
 BEGIN(Engine)
 

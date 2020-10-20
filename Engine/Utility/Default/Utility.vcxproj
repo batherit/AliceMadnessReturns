@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Camera.cpp" />
     <ClCompile Include="..\Code\GameObject.cpp" />
     <ClCompile Include="..\Code\KeyMgr.cpp" />
     <ClCompile Include="..\Code\Management.cpp" />
@@ -31,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h" />
+    <ClInclude Include="..\Code\Camera.h" />
     <ClInclude Include="..\Code\GameObject.h" />
     <ClInclude Include="..\Code\KeyMgr.h" />
     <ClInclude Include="..\Code\Management.h" />

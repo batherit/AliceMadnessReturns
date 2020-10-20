@@ -20,6 +20,8 @@ namespace Client
 	typedef	float					_float;
 	typedef	double					_double;
 
+	typedef	bool					_bool;
+
 	typedef	D3DXVECTOR2				_vec2;
 	typedef	D3DXVECTOR3				_vec3;
 	typedef	D3DXVECTOR4				_vec4;

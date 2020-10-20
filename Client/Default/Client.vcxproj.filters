@@ -25,9 +25,6 @@
     <Filter Include="01. Scene">
       <UniqueIdentifier>{51f02425-b421-49ab-868d-b00750cfb7f4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\00. Logo">
-      <UniqueIdentifier>{ba4b59d1-dd55-4e49-8542-b30ca2c8defe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object">
       <UniqueIdentifier>{f4e13200-b89a-4d64-96c4-182df433c848}</UniqueIdentifier>
     </Filter>
@@ -39,6 +36,15 @@
     </Filter>
     <Filter Include="02. Object\01. SpricteObject">
       <UniqueIdentifier>{b9e3876b-06d4-4744-8577-14c804088c11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\02. Public">
+      <UniqueIdentifier>{af091aa3-bbbf-4962-ad07-2b35aa38f3b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. LoadScene">
+      <UniqueIdentifier>{ba4b59d1-dd55-4e49-8542-b30ca2c8defe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. Object">
+      <UniqueIdentifier>{201ca04f-c72e-4f0b-846f-dc77d7047bdd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,23 +84,14 @@
     <ClInclude Include="..\Header\Const.h">
       <Filter>98. Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\CLogoScene.h">
-      <Filter>01. Scene\00. Logo</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\CLogoObject.h">
       <Filter>02. Object</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\CMonster.h">
       <Filter>02. Object</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\CPlayScene.h">
-      <Filter>01. Scene\01. Play</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\TerrainMap.h">
       <Filter>02. Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Camera.h">
-      <Filter>02. Object\00. Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SpriteObject.h">
       <Filter>02. Object\01. SpricteObject</Filter>
@@ -104,6 +101,24 @@
     </ClInclude>
     <ClInclude Include="..\Header\sjhD3DXFunction.h">
       <Filter>98. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Loading.h">
+      <Filter>01. Scene\02. Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\PlayScene.h">
+      <Filter>01. Scene\01. Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\LoadScene.h">
+      <Filter>01. Scene\00. LoadScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Player.h">
+      <Filter>02. Object\02. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\DynamicCamera.h">
+      <Filter>02. Object\00. Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\StaticCamera.h">
+      <Filter>02. Object\00. Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -116,26 +131,35 @@
     <ClCompile Include="..\Code\CMainApp.cpp">
       <Filter>00. MainApp</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CLogoScene.cpp">
-      <Filter>01. Scene\00. Logo</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CLogoObject.cpp">
       <Filter>02. Object</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMonster.cpp">
       <Filter>02. Object</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CPlayScene.cpp">
-      <Filter>01. Scene\01. Play</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\TerrainMap.cpp">
       <Filter>02. Object</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Camera.cpp">
-      <Filter>02. Object\00. Camera</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SpriteObject.cpp">
       <Filter>02. Object\01. SpricteObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Loading.cpp">
+      <Filter>01. Scene\02. Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayScene.cpp">
+      <Filter>01. Scene\01. Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadScene.cpp">
+      <Filter>01. Scene\00. LoadScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player.cpp">
+      <Filter>02. Object\02. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicCamera.cpp">
+      <Filter>02. Object\00. Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticCamera.cpp">
+      <Filter>02. Object\00. Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

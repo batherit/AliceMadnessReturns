@@ -9,7 +9,7 @@ class ENGINE_DLL CKeyMgr final : public CBase
 {
 	DECLARE_SINGLETON(CKeyMgr)
 
-public:
+private:
 	typedef const _tchar* KEY_STRING;
 	typedef int KEY;
 	typedef DWORD BITMASK;

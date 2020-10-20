@@ -27,6 +27,22 @@ namespace Client
 		return pOut;
 	}
 
+	inline _vec3* sjhVec3TransformCoord(_vec3 *pOut, const _vec3 *pV, const _matrix *pM) {
+		pOut->x = pV->x * pM->_11 + pV->y * pM->_21 + pV->z * pM->_31 + pM->_41;
+		pOut->y = pV->x * pM->_12 + pV->y * pM->_22 + pV->z * pM->_32 + pM->_42;
+		pOut->z = pV->x * pM->_13 + pV->y * pM->_23 + pV->z * pM->_33 + pM->_43;
+
+		return pOut;
+	}
+
+	inline _vec3* sjhVec3TransformNormal(_vec3 *pOut, const _vec3 *pV, const _matrix *pM) {
+		pOut->x = pV->x * pM->_11 + pV->y * pM->_21 + pV->z * pM->_31;
+		pOut->y = pV->x * pM->_12 + pV->y * pM->_22 + pV->z * pM->_32;
+		pOut->z = pV->x * pM->_13 + pV->y * pM->_23 + pV->z * pM->_33;
+
+		return pOut;
+	}
+
 	inline _matrix* sjhMatrixIdentity(_matrix *pOut) {
 		pOut->_11 = 1.f;	pOut->_12 = 0.f;	pOut->_13 = 0.f;	pOut->_14 = 0.f;
 		pOut->_21 = 0.f;	pOut->_22 = 1.f;	pOut->_23 = 0.f;	pOut->_24 = 0.f;
@@ -37,6 +53,8 @@ namespace Client
 	}
 
 	inline _matrix* sjhMatrixLookAtLH(_matrix *pOut, const _vec3 *pEye, const _vec3 *pAt, const _vec3 *pUp) {
+		sjhMatrixIdentity(pOut);
+
 		_vec3 vLook, vRight, vUp;
 		// Look축을 구합니다.
 		sjhVec3Normalize(&vLook, &(*pAt - *pEye));

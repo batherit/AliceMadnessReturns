@@ -114,13 +114,63 @@ public:
 	void SetSpeed(float _fSpeed) { m_fSpeed = _fSpeed; Clamp(&m_fSpeed, -m_fMaxSpeed, m_fMaxSpeed); }
 	void SetMaxSpeed(float _fMaxSpeed) { m_fMaxSpeed = _fMaxSpeed; }
 	
-	_vec3 GetPos() const { return m_vPos; }
+	_matrix GetParentMatrix(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const {
+		D3DXMATRIX matParent;
+		D3DXMatrixIdentity(&matParent);
+
+		CGameObject* pParent = m_pOwner->GetParent();
+		if (pParent) {
+			CMoveComponent* pParentMoveComponent = pParent->GetComponent<CMoveComponent>();
+			if(pParentMoveComponent)
+				matParent = pParentMoveComponent->GetObjectMatrix(_eCoordType);
+		}
+			
+		// 부모행렬을 얻지 못했다면, 항등행렬을 반환한다.
+		return matParent;
+	}
+	_matrix GetObjectMatrix(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const {
+		_matrix matWorld;
+		D3DXMatrixIdentity(&matWorld);
+		matWorld._11 = m_vRight.x * m_vScale.x;
+		matWorld._12 = m_vRight.y * m_vScale.x;
+		matWorld._13 = m_vRight.z * m_vScale.x;
+		matWorld._21 = m_vUp.x * m_vScale.y;
+		matWorld._22 = m_vUp.y * m_vScale.y;
+		matWorld._23 = m_vUp.z * m_vScale.y;
+		matWorld._31 = m_vLook.x * m_vScale.z;
+		matWorld._32 = m_vLook.y * m_vScale.z;
+		matWorld._33 = m_vLook.z * m_vScale.z;
+		matWorld._41 = m_vPos.x;
+		matWorld._42 = m_vPos.y;
+		matWorld._43 = m_vPos.z;
+
+		switch (_eCoordType)
+		{
+		case COORD_TYPE_WORLD:
+			// 부
+			matWorld *= GetParentMatrix(_eCoordType);
+			break;
+		}
+
+		return matWorld;
+	}
+	_vec3 GetPos(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const {
+		D3DXVECTOR3 vPos = m_vPos;
+
+		switch (_eCoordType) {
+		case COORD_TYPE_WORLD:
+			D3DXVec3TransformCoord(&vPos, &vPos, &GetParentMatrix(COORD_TYPE_WORLD));
+			break;
+		}
+
+		return vPos;
+	}
 	_vec3 GetRight() const { return m_vRight; }
 	_vec3 GetUp() const { return m_vUp; }
 	_vec3 GetLook() const { return m_vLook; }
 
 
-	_matrix GetWorldMatrix(void);
+	
 private:
 	_vec3 m_vRight{ 1.f, 0.f, 0.f };
 	_vec3 m_vUp{ 0.f, 1.f,0.f };
@@ -130,6 +180,7 @@ private:
 	_vec3 m_vPos{ 0.f, 0.f, 0.f };
 	_vec3 m_vDir{ 1.f, 0.f, 0.f };
 	_vec3 m_vAngle{ 0.f, 0.f, 0.f };
+	//_vec3 m_vPosOffset
 	_matrix m_matWorld;
 	_float m_fMaxSpeed = 9876543210.f;
 	_float m_fSpeed = 0.f;

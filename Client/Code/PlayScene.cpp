@@ -50,13 +50,21 @@ int CPlayScene::Update(const _float& fTimeDelta)
 	m_pPlayer->GetComponent<Engine::CMoveComponent>()->SetY(fHeight);
 
 	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_LBUTTON")) {
-		_vec3 vCameraPos = m_pCamera->GetComponent<Engine::CMoveComponent>()->GetPos();
-		_vec3 vRay = Engine::GetRayVector(m_pGraphicDev, Engine::GetClientCursorPoint(g_hWnd));
-		_float fU, fV, fDist;
+		// 픽킹을 하기 위한 기본 변수들 세팅.
 		auto& pVertices = m_pTerrain->GetComponent<Engine::CTerrain>()->GetVertices();
+		auto stPickingRayInfo = Engine::GetPickingRayInfo(m_pGraphicDev, Engine::GetClientCursorPoint(g_hWnd));
+		_float fU, fV, fDist;
+		_vec3 vV1, vV2, vV3;
+		
+		// 픽킹 검사를 진행한다.
 		for (auto& pIndex : m_pTerrain->GetComponent<Engine::CTerrain>()->GetIndexes()) {
-			if (D3DXIntersectTri(&pVertices[pIndex._0], &pVertices[pIndex._1], &pVertices[pIndex._2], &vCameraPos, &vRay, &fU, &fV, &fDist)) {
-				m_pPlayer->SetTartgetPos(vCameraPos + vRay * fDist);
+			vV1 = pVertices[pIndex._0];
+			vV2 = pVertices[pIndex._1];
+			vV3 = pVertices[pIndex._2];
+			if (D3DXIntersectTri(&vV1, &vV2, &vV3, &stPickingRayInfo.vRayPos, &stPickingRayInfo.vRayDir, &fU, &fV, &fDist)) {
+				//m_pPlayer->SetTartgetPos(stPickingRayInfo.vRayPos + stPickingRayInfo.vRayDir * fDist);
+				m_pPlayer->SetTartgetPos(Engine::GetHitPos(vV1, vV2, vV3, fU, fV));
+				break;
 			}
 		}
 	}	

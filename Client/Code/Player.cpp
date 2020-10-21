@@ -53,7 +53,7 @@ int CPlayer::Update_Object(const _float & _fDeltaTime)
 	}*/
 
 	_vec3 vDir = m_vTargetPos - m_pMoveComponent->GetPos();
-	if (D3DXVec3LengthSq(&vDir) > 3.f) {
+	if (D3DXVec3LengthSq(&vDir) > 0.5f) {
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pMoveComponent->SetToXYZ(vDir);
 		m_pMoveComponent->MoveByDelta(_fDeltaTime);

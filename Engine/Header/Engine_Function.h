@@ -216,12 +216,12 @@ namespace Engine
 	}
 
 	// 광선벡터
-	inline _vec3 GetRayVector(LPDIRECT3DDEVICE9	_pGraphicDev, const POINT& _ptClient) {
+	inline PICKINGRAYINFO GetPickingRayInfo(LPDIRECT3DDEVICE9 _pGraphicDev, const POINT& _ptClient) {
 		_vec3 vRay = _vec3(static_cast<FLOAT>(_ptClient.x), static_cast<FLOAT>(_ptClient.y), 0.f);
 		_matrix matInvViewport, matInvProj, matInvView;
 		D3DVIEWPORT9 vp;
 		_pGraphicDev->GetViewport(&vp);
-		
+
 		// 뷰포트 행렬의 역 구하기
 		matInvViewport = GetViewportMatrix(vp);
 		D3DXMatrixInverse(&matInvViewport, NULL, &matInvViewport);
@@ -234,13 +234,12 @@ namespace Engine
 		_pGraphicDev->GetTransform(D3DTS_VIEW, &matInvView);
 		D3DXMatrixInverse(&matInvView, NULL, &matInvView);
 
-		D3DXVec3TransformCoord(&vRay, &vRay, &(matInvViewport * matInvProj));		// 카메라 공간
+		D3DXVec3TransformCoord(&vRay, &vRay, &(matInvViewport * matInvProj * matInvView));		// 카메라 공간
 		_vec3 vCameraPos = _vec3(matInvView._41, matInvView._42, matInvView._43);
 		vRay -= vCameraPos;
-		D3DXVec3TransformNormal(&vRay, &vRay, &matInvView);
 		D3DXVec3Normalize(&vRay, &vRay);
 
-		return vRay;
+		return PICKINGRAYINFO{ vRay, vCameraPos };
 	}
 }
 

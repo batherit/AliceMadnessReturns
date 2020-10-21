@@ -43,11 +43,10 @@ namespace Engine
 
 	}INDEX32;
 		
-	typedef struct tagHeightMapInfo {
-		LONG iWidth = 0;
-		LONG iHeight = 0;
-		WORD iBitCount = 0;
-	}HEIGHTMAPINFO;
+	typedef struct tagPickingRayInfo {
+		_vec3 vRayDir;
+		_vec3 vRayPos;
+	}PICKINGRAYINFO;
 }
 
 #endif // Engine_Struct_h__

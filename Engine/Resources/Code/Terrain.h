@@ -20,6 +20,8 @@ public:
 
 	HRESULT SetTerrainInfo(_vec3 _vStartPos = _vec3(0.f, 0.f, 0.f), _uint _iNumOfVerticesW = 2, _uint _iNumOfVerticesH = 2, _float _fWidth = 1.f, _float _fHeight = 1.f, const _tchar* _szHeightMapFileName = nullptr);
 	_float GetHeight(const _vec3& _vPos);
+	vector<_vec3>& GetVertices() { return m_vecVertices; }
+	vector<INDEX16>& GetIndexes() { return m_vecIndexes; }
 
 public:
 	static CTerrain*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -40,6 +42,7 @@ private:
 	_float m_fWidth;
 	_float m_fHeight;
 	vector<_vec3> m_vecVertices;
+	vector<INDEX16> m_vecIndexes;
 };
 END
 

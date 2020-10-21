@@ -26,7 +26,7 @@ HRESULT CTerrainMap::Ready_Object(void)
 
 	AddComponent<Engine::CTerrain>();
 	m_pTerrain = GetComponent<Engine::CTerrain>();
-	m_pTerrain->SetTerrainInfo(_vec3(0.f, 0.f, 0.f), 129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height1.bmp");
+	m_pTerrain->SetTerrainInfo(_vec3(5.f, 5.f, 5.f), 129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height1.bmp");
 
 	return S_OK;
 }

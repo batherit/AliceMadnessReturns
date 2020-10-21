@@ -40,7 +40,6 @@ HRESULT CPlayScene::Ready(void)
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
-
 	return S_OK;
 }
 
@@ -49,6 +48,18 @@ int CPlayScene::Update(const _float& fTimeDelta)
 	// TODO : 네모를 움직이는 코드를 작성합니다.
 	_float fHeight = m_pTerrain->GetHeight(m_pPlayer->GetComponent<Engine::CMoveComponent>()->GetPos());
 	m_pPlayer->GetComponent<Engine::CMoveComponent>()->SetY(fHeight);
+
+	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_LBUTTON")) {
+		_vec3 vCameraPos = m_pCamera->GetComponent<Engine::CMoveComponent>()->GetPos();
+		_vec3 vRay = Engine::GetRayVector(m_pGraphicDev, Engine::GetClientCursorPoint(g_hWnd));
+		_float fU, fV, fDist;
+		auto& pVertices = m_pTerrain->GetComponent<Engine::CTerrain>()->GetVertices();
+		for (auto& pIndex : m_pTerrain->GetComponent<Engine::CTerrain>()->GetIndexes()) {
+			if (D3DXIntersectTri(&pVertices[pIndex._0], &pVertices[pIndex._1], &pVertices[pIndex._2], &vCameraPos, &vRay, &fU, &fV, &fDist)) {
+				m_pPlayer->SetTartgetPos(vCameraPos + vRay * fDist);
+			}
+		}
+	}	
 
 	return CScene::Update(fTimeDelta);
 }
@@ -79,11 +90,12 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
 
 	// 카메라 생성
-	//m_pCamera = CDynamicCamera::Create(m_pGraphicDev);
-	m_pCamera = CStaticCamera::Create(m_pGraphicDev);
+	//m_pCamera = CDynamicCamera::Create(m_pGraphicDev);		// 동적 카메라
+	m_pCamera = CStaticCamera::Create(m_pGraphicDev);			// 정적 카메라
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
 	m_pCamera->SetParent(m_pPlayer);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", m_pCamera), E_FAIL);
+
 	// 지형 생성
 	m_pTerrain = CTerrainMap::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pTerrain, E_FAIL);

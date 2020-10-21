@@ -91,17 +91,25 @@ HRESULT CTerrain::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _uint
 	m_pVB->Unlock();
 
 	vector<INDEX16> indices;
+	m_vecIndexes.resize(2 * (_iNumOfVerticesW - 1) * (_iNumOfVerticesH - 1));
+	m_vecIndexes.clear();
 
+	INDEX16 Indexes;
 	for (_uint i = 1; i < _iNumOfVerticesH; ++i) {
 		for (_uint j = 0; j < _iNumOfVerticesW - 1; ++j) {
-			indices.emplace_back(INDEX16{
+			Indexes = INDEX16{
 				static_cast<_ushort>(0 + i * _iNumOfVerticesW + j),
 				static_cast<_ushort>(1 + i * _iNumOfVerticesW + j),
-				static_cast<_ushort>(1 + (i - 1) * _iNumOfVerticesW + j)});
-			indices.emplace_back(INDEX16{
+				static_cast<_ushort>(1 + (i - 1) * _iNumOfVerticesW + j) };
+			m_vecIndexes.emplace_back(Indexes);
+			indices.emplace_back(Indexes);
+
+			Indexes = INDEX16{
 				static_cast<_ushort>(1 + (i - 1) * _iNumOfVerticesW + j),
 				static_cast<_ushort>(0 + (i - 1) * _iNumOfVerticesW + j),
-				static_cast<_ushort>(0 + i * _iNumOfVerticesW + j) });
+				static_cast<_ushort>(0 + i * _iNumOfVerticesW + j) };
+			m_vecIndexes.emplace_back(Indexes);
+			indices.emplace_back(Indexes);
 		}
 	}
 
@@ -114,40 +122,41 @@ HRESULT CTerrain::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _uint
 }
 
 _float Engine::CTerrain::GetHeight(const _vec3& _vPos) {
+	_vec3 vIndexPos = _vPos - m_vStartPos;
+
+	if (vIndexPos.x < 0.f || vIndexPos.x > m_fWidth) return 0.f;
+	if (vIndexPos.z < 0.f || vIndexPos.z > m_fHeight) return 0.f;
+
 	_float fCX = m_fWidth / (m_iNumOfVerticesW - 1);
 	_float fCY = m_fHeight / (m_iNumOfVerticesH - 1);
-	
-	_vec3 vIndexPos = _vPos - m_vStartPos;
-	_int iRow = static_cast<_int>(vIndexPos.z / fCY);
-	_int iCol = static_cast<_int>(vIndexPos.x / fCX);
 
-	if (iRow < 0 || iRow >= static_cast<_int>(m_iNumOfVerticesH)) return 0.f;
-	if (iCol < 0 || iCol >= static_cast<_int>(m_iNumOfVerticesW)) return 0.f;
+	_float fRow = vIndexPos.z / fCY + 1;
+	_float fCol = vIndexPos.x / fCX;
+	_int iRow = static_cast<_int>(fRow);
+	_int iCol = static_cast<_int>(fCol);
 
-	_vec3 vRightTopPos;
-	_vec3 vLeftBottomPos;
+	//// 우상단 인덱스 구하기
+	//_vec3 vRightTopPos = m_vecVertices[(iRow + 1) * m_iNumOfVerticesW + iCol + 1];
+	//_vec3 vLeftBottomPos = m_vecVertices[iRow * m_iNumOfVerticesW + iCol];
 	D3DXPLANE plane;
-
-	// 우상단 인덱스 구하기
-	vRightTopPos = m_vecVertices[(iRow + 1) * m_iNumOfVerticesW + iCol + 1];
-	vLeftBottomPos = m_vecVertices[iRow * m_iNumOfVerticesW + iCol];
-
-	if (D3DXVec3LengthSq(&(vRightTopPos - _vPos)) > D3DXVec3LengthSq(&(vLeftBottomPos - _vPos))) {
+	if (fRow - static_cast<_float>(iRow) > fCol - static_cast<_float>(iCol)) {
 		// 좌하단에 더 가깝다.
 		D3DXPlaneFromPoints(&plane,
-			&m_vecVertices[iRow * m_iNumOfVerticesW + iCol + 1],
 			&m_vecVertices[iRow * m_iNumOfVerticesW + iCol],
-			&m_vecVertices[(iRow + 1) * m_iNumOfVerticesW + iCol]);
+			&m_vecVertices[iRow * m_iNumOfVerticesW + iCol + 1],
+			&m_vecVertices[(iRow - 1) * m_iNumOfVerticesW + iCol + 1]);
 	}
 	else {
 		// 우상단에 더 가깝다.
 		D3DXPlaneFromPoints(&plane,
-			&m_vecVertices[(iRow + 1) * m_iNumOfVerticesW + iCol],
-			&m_vecVertices[(iRow + 1) * m_iNumOfVerticesW + iCol + 1],
-			&m_vecVertices[iRow * m_iNumOfVerticesW + iCol + 1]);
+			&m_vecVertices[iRow * m_iNumOfVerticesW + iCol],
+			&m_vecVertices[(iRow - 1) * m_iNumOfVerticesW + iCol + 1],
+			&m_vecVertices[(iRow - 1) * m_iNumOfVerticesW + iCol]);
 	}
 
 	return (plane.a * _vPos.x + plane.c * _vPos.z  + plane.d) / -plane.b;
+
+	// 선형 보간으로도 구할 수 있다.
 }
 
 
@@ -231,6 +240,8 @@ void Engine::CTerrain::Free(void)
 {
 	m_vecVertices.clear();
 	m_vecVertices.shrink_to_fit();
+	m_vecIndexes.clear();
+	m_vecIndexes.shrink_to_fit();
 	Safe_Delete(m_pHeightMapData);
 	CVIBuffer::Free();
 }

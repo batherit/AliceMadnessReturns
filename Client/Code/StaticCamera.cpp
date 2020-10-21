@@ -33,8 +33,6 @@ HRESULT CStaticCamera::Ready_Object(void)
 
 int CStaticCamera::Update_Object(const _float & fTimeDelta)
 {
-	
-
 	// 뷰 스페이스 변환 행렬 생성 함수(즉, 카메라 월드 행렬의 역 행렬을 만들어주는 함수)
 	m_vEye = m_pMoveComponent->GetPos();		// 카메라 위치
 	m_vAt = m_vEye + m_pMoveComponent->GetLook();	// 카메라 위치에서 바로 아래를 본다.

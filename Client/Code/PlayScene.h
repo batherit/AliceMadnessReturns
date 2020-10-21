@@ -40,8 +40,6 @@ private:
 	virtual void		Free(void);
 
 private:
-	//Engine::CGameObject* m_pLogoObject = nullptr;
-	//Engine::CGameObject* m_pMonster = nullptr;
 	Engine::CCamera* m_pCamera = nullptr;
 	CPlayer* m_pPlayer = nullptr;
 	CTerrainMap* m_pTerrain = nullptr;

@@ -199,8 +199,49 @@ namespace Engine
 	inline float GetWeightByDegree(float _fDegree) {
 		return cosf(D3DXToRadian(_fDegree)) * 0.5f + 0.5f;
 	}
-	// 벡터
-	// TODO : D3DX 구현
+
+	// 뷰포트 행렬 얻기
+	inline _matrix GetViewportMatrix(const D3DVIEWPORT9& _vp) {
+		_matrix matViewport;
+		D3DXMatrixIdentity(&matViewport);
+
+		matViewport._11 = _vp.Width * 0.5f;
+		matViewport._22 = -(_vp.Height * 0.5f);
+		matViewport._33 = _vp.MaxZ - _vp.MinZ;
+		matViewport._41 = _vp.X + _vp.Width * 0.5f;
+		matViewport._42 = _vp.Y + _vp.Height * 0.5f;
+		matViewport._43 = _vp.MinZ;
+
+		return matViewport;
+	}
+
+	// 광선벡터
+	inline _vec3 GetRayVector(LPDIRECT3DDEVICE9	_pGraphicDev, const POINT& _ptClient) {
+		_vec3 vRay = _vec3(static_cast<FLOAT>(_ptClient.x), static_cast<FLOAT>(_ptClient.y), 0.f);
+		_matrix matInvViewport, matInvProj, matInvView;
+		D3DVIEWPORT9 vp;
+		_pGraphicDev->GetViewport(&vp);
+		
+		// 뷰포트 행렬의 역 구하기
+		matInvViewport = GetViewportMatrix(vp);
+		D3DXMatrixInverse(&matInvViewport, NULL, &matInvViewport);
+
+		// 투영 행렬의 역 구하기
+		_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matInvProj);
+		D3DXMatrixInverse(&matInvProj, NULL, &matInvProj);
+
+		// 뷰 행렬의 역 구하기
+		_pGraphicDev->GetTransform(D3DTS_VIEW, &matInvView);
+		D3DXMatrixInverse(&matInvView, NULL, &matInvView);
+
+		D3DXVec3TransformCoord(&vRay, &vRay, &(matInvViewport * matInvProj));		// 카메라 공간
+		_vec3 vCameraPos = _vec3(matInvView._41, matInvView._42, matInvView._43);
+		vRay -= vCameraPos;
+		D3DXVec3TransformNormal(&vRay, &vRay, &matInvView);
+		D3DXVec3Normalize(&vRay, &vRay);
+
+		return vRay;
+	}
 }
 
 

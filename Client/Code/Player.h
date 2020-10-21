@@ -21,11 +21,15 @@ private: // 持失切, 社瑚切
 	virtual void Render_Object(void) override;
 
 public:
+	void SetTartgetPos(const _vec3& _vTargetPos) { m_vTargetPos = _vTargetPos; }
+
+public:
 	static CPlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
 
 private:
 	Engine::CMoveComponent* m_pMoveComponent = nullptr;
+	_vec3 m_vTargetPos{0.f, 0.f, 0.f};
 };
 
 END

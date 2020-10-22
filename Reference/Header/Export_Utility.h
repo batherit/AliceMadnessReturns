@@ -9,7 +9,7 @@
 #include "Camera.h"
 
 #include "Component.h"
-#include "MoveComponent.h"
+#include "Transform.h"
 #include "Renderer.h"
 
 BEGIN(Engine)
@@ -19,9 +19,9 @@ BEGIN(Engine)
 inline CComponent*	   Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
 
 inline HRESULT Create_Management(CManagement** ppManagement);
-inline HRESULT	SetUp_Scene(CScene* pScene);
-inline _int	Update_Scene(const _float& fTimeDelta);
-inline void	Render_Scene(void);
+//inline HRESULT	SetUp_Scene(CScene* pScene);
+//inline _int	Update_Scene(const _float& fTimeDelta);
+//inline void	Render_Scene(void);
 
 // protomgr
 inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pInstance);

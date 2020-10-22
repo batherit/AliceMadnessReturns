@@ -1,26 +1,26 @@
-#include "MoveComponent.h"
+#include "Transform.h"
 
 USING(Engine)
 
-CMoveComponent::CMoveComponent()
+CTransform::CTransform()
 {
 	D3DXMatrixIdentity(&m_matWorld);
 }
 
-CMoveComponent::CMoveComponent(const CMoveComponent & rhs)
+CTransform::CTransform(const CTransform & rhs)
 	:
 	CComponent(rhs)
 {
 	m_matWorld = rhs.m_matWorld;
 }
 
-CMoveComponent::~CMoveComponent()
+CTransform::~CTransform()
 {
 }
 
-CMoveComponent * CMoveComponent::Create()
+CTransform * CTransform::Create()
 {
-	CMoveComponent*	pInstance = new CMoveComponent();
+	CTransform*	pInstance = new CTransform();
 
 	if (FAILED(pInstance->Ready()))
 		Safe_Release(pInstance);
@@ -28,16 +28,16 @@ CMoveComponent * CMoveComponent::Create()
 	return pInstance;
 }
 
-CComponent * CMoveComponent::Clone(void)
+CComponent * CTransform::Clone(void)
 {
-	return new CMoveComponent(*this);
+	return new CTransform(*this);
 }
 
-void CMoveComponent::Free(void)
+void CTransform::Free(void)
 {
 }
 
-//_matrix CMoveComponent::GetWorldMatrix(void)
+//_matrix CTransform::GetWorldMatrix(void)
 //{
 //	//_matrix matWorld, matScale, matRot, matTrans;
 //	//D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);

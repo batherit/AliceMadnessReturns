@@ -24,7 +24,7 @@ public:
 	virtual void		Free(void);
 
 private:
-	Engine::CMoveComponent* m_pMoveComponent = nullptr;
+	Engine::CTransform* m_pTransform = nullptr;
 };
 
 END

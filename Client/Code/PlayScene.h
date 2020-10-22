@@ -13,6 +13,7 @@
 //END
 BEGIN(Client)
 class CPlayer;
+class CMonster;
 class CTerrainMap;
 class CPlayScene : public Engine::CScene
 {
@@ -42,6 +43,7 @@ private:
 private:
 	Engine::CCamera* m_pCamera = nullptr;
 	CPlayer* m_pPlayer = nullptr;
+	CMonster* m_pMonster = nullptr;
 	CTerrainMap* m_pTerrain = nullptr;
 };
 

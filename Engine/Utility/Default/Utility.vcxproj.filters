@@ -60,9 +60,6 @@
     <ClInclude Include="..\Code\ProtoMgr.h">
       <Filter>05. Manager\02. ProtoMgr</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\MoveComponent.h">
-      <Filter>04. Component\00. MoveComponent</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Management.h">
       <Filter>00. Management</Filter>
     </ClInclude>
@@ -77,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Renderer.h">
       <Filter>04. Component\01. Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Transform.h">
+      <Filter>04. Component\00. MoveComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -95,9 +95,6 @@
     <ClCompile Include="..\Code\ProtoMgr.cpp">
       <Filter>05. Manager\02. ProtoMgr</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MoveComponent.cpp">
-      <Filter>04. Component\00. MoveComponent</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Management.cpp">
       <Filter>00. Management</Filter>
     </ClCompile>
@@ -112,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Renderer.cpp">
       <Filter>04. Component\01. Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Transform.cpp">
+      <Filter>04. Component\00. MoveComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

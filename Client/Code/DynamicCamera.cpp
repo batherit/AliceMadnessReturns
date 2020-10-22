@@ -21,12 +21,12 @@ CDynamicCamera::~CDynamicCamera(void)
 
 HRESULT CDynamicCamera::Ready_Object(void)
 {
-	AddComponent<Engine::CMoveComponent>();
-	m_pMoveComponent = GetComponent<Engine::CMoveComponent>();
-	m_pMoveComponent->SetXYZ(30.f, 80.f, -80.f);
-	m_pMoveComponent->RotateByRight(D3DXToRadian(45.f));
-	m_pMoveComponent->SetMaxSpeed(110.f);
-	m_pMoveComponent->SetSpeed(100.f);
+	AddComponent<Engine::CTransform>();
+	m_pTransform = GetComponent<Engine::CTransform>();
+	m_pTransform->SetXYZ(30.f, 80.f, -80.f);
+	m_pTransform->RotateByRight(D3DXToRadian(45.f));
+	m_pTransform->SetMaxSpeed(110.f);
+	m_pTransform->SetSpeed(100.f);
 
 	SetProjectionMatrix(D3DXToRadian(45.f), (_float)WINCX / WINCY, 0.1f, 1000.f);
 
@@ -53,8 +53,8 @@ int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 		_float fRotAngleByY = vToCurrent.x * 2.f * D3DX_PI / WINCX;
 		_float fRotAngleByRight = vToCurrent.y * 2.f * D3DX_PI / WINCY;
 
-		m_pMoveComponent->RotateByRight(fRotAngleByRight);
-		m_pMoveComponent->RotateByAxis(fRotAngleByY, WORLD_Y_AXIS);
+		m_pTransform->RotateByRight(fRotAngleByRight);
+		m_pTransform->RotateByAxis(fRotAngleByY, WORLD_Y_AXIS);
 
 		// 화면 내에 순환하는 클라이언트 영역 좌표 얻기
 		ptCurrentCursor = Engine::GetToroidClientPoint(g_hWnd, ptCurrentCursor);
@@ -72,28 +72,28 @@ int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 	_vec3 vDir{ 0.f, 0.f, 0.f };
 
 	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_W")) {
-		vDir += m_pMoveComponent->GetLook();
+		vDir += m_pTransform->GetLook();
 	}
 
 	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_S")) {
-		vDir -= m_pMoveComponent->GetLook();
+		vDir -= m_pTransform->GetLook();
 	}
 
 	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_A")) {
-		vDir -= m_pMoveComponent->GetRight();
+		vDir -= m_pTransform->GetRight();
 	}
 
 	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_D")) {
-		vDir += m_pMoveComponent->GetRight();
+		vDir += m_pTransform->GetRight();
 	}
 
-	m_pMoveComponent->SetToXYZ(vDir);
-	m_pMoveComponent->MoveByDelta(fTimeDelta);
+	m_pTransform->SetToXYZ(vDir);
+	m_pTransform->MoveByDelta(fTimeDelta);
 
 	// 뷰 스페이스 변환 행렬 생성 함수(즉, 카메라 월드 행렬의 역 행렬을 만들어주는 함수)
-	m_vEye = m_pMoveComponent->GetPos();		// 카메라 위치
-	m_vAt = m_vEye + m_pMoveComponent->GetLook() * 10.f ;	// 카메라 위치에서 바로 아래를 본다.
-	m_vUp = m_pMoveComponent->GetUp();						// 카메라 Up축
+	m_vEye = m_pTransform->GetPos();		// 카메라 위치
+	m_vAt = m_vEye + m_pTransform->GetLook() * 10.f ;	// 카메라 위치에서 바로 아래를 본다.
+	m_vUp = m_pTransform->GetUp();						// 카메라 Up축
 
 	return Engine::CCamera::Update_Object(fTimeDelta);
 }

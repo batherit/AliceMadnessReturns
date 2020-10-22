@@ -2,6 +2,7 @@
 #include "PlayScene.h"
 #include "TerrainMap.h"
 #include "Player.h"
+#include "Monster.h"
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
 
@@ -46,8 +47,8 @@ HRESULT CPlayScene::Ready(void)
 int CPlayScene::Update(const _float& fTimeDelta)
 {
 	// TODO : 네모를 움직이는 코드를 작성합니다.
-	_float fHeight = m_pTerrain->GetHeight(m_pPlayer->GetComponent<Engine::CMoveComponent>()->GetPos());
-	m_pPlayer->GetComponent<Engine::CMoveComponent>()->SetY(fHeight);
+	_float fHeight = m_pTerrain->GetHeight(m_pPlayer->GetComponent<Engine::CTransform>()->GetPos());
+	m_pPlayer->GetComponent<Engine::CTransform>()->SetY(fHeight);
 
 	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_LBUTTON")) {
 		// 픽킹을 하기 위한 기본 변수들 세팅.
@@ -100,16 +101,33 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
 
 	// 카메라 생성
-	//m_pCamera = CDynamicCamera::Create(m_pGraphicDev);		// 동적 카메라
-	m_pCamera = CStaticCamera::Create(m_pGraphicDev);			// 정적 카메라
+	m_pCamera = CDynamicCamera::Create(m_pGraphicDev);		// 동적 카메라
+	//m_pCamera = CStaticCamera::Create(m_pGraphicDev);			// 정적 카메라
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
-	m_pCamera->SetParent(m_pPlayer);
+	//m_pCamera->SetParent(m_pPlayer);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", m_pCamera), E_FAIL);
 
 	// 지형 생성
 	m_pTerrain = CTerrainMap::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pTerrain, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", m_pTerrain), E_FAIL);
+
+	// 몬스터 생성
+	m_pMonster = CMonster::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pMonster, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", m_pMonster), E_FAIL);
+	
+	// 몬스터에 카메라를 세팅함.
+	m_pMonster->SetCameraForBillboard(m_pCamera);
+
+	// 몬스터를 임의의 위치에 둠.
+	m_pMonster->GetComponent<Engine::CTransform>()->SetXYZ(
+		Engine::GetNumberMinBetweenMax(10.f, 20.f),
+		0.f,
+		Engine::GetNumberMinBetweenMax(10.f, 20.f)
+	);
+	_float fHeight = m_pTerrain->GetHeight(m_pMonster->GetComponent<Engine::CTransform>()->GetPos());
+	m_pMonster->GetComponent<Engine::CTransform>()->SetY(fHeight);
 
 	m_mapLayer.emplace(pLayerTag, pLayer);
 
@@ -124,6 +142,7 @@ HRESULT CPlayScene::Ready_Resource(Engine::RESOURCETYPE eType)
 void CPlayScene::Free(void)
 {
 	Client::Safe_Release(m_pPlayer);
+	Client::Safe_Release(m_pMonster);
 	Client::Safe_Release(m_pCamera);
 	Client::Safe_Release(m_pTerrain);
 	CScene::Free();

@@ -6,24 +6,24 @@
 
 BEGIN(Engine)
 
-class ENGINE_DLL CMoveComponent final : public CComponent
+class ENGINE_DLL CTransform final : public CComponent
 {
 public:
 	enum E_COORD_TYPE { COORD_TYPE_LOCAL, COORD_TYPE_WORLD, COORD_TYPE_END };
 
 protected:
-	explicit CMoveComponent();	// 老馆 积己磊
-	explicit CMoveComponent(const CMoveComponent& rhs);			// 汗荤 积己磊
-	virtual ~CMoveComponent();
+	explicit CTransform();	// 老馆 积己磊
+	explicit CTransform(const CTransform& rhs);			// 汗荤 积己磊
+	virtual ~CTransform();
 
 public:
 	virtual HRESULT Ready(void) { return S_OK; }
 	virtual int Update(const _float& _fDeltaTime) { return 0; }
-	static const _tchar* GetComponentTag() { return L"MoveComponent"; }
+	static const _tchar* GetComponentTag() { return L"Transform"; }
 	static const Engine::COMPONENTID GetComponentID() { return Engine::ID_STATIC; }
 
 public:
-	static CMoveComponent* Create();
+	static CTransform* Create();
 	virtual CComponent* Clone(void) override;
 
 private:
@@ -117,7 +117,7 @@ public:
 
 		CGameObject* pParent = m_pOwner->GetParent();
 		if (pParent) {
-			CMoveComponent* pParentMoveComponent = pParent->GetComponent<CMoveComponent>();
+			CTransform* pParentMoveComponent = pParent->GetComponent<CTransform>();
 			if(pParentMoveComponent)
 				matParent = pParentMoveComponent->GetObjectMatrix(_eCoordType);
 		}

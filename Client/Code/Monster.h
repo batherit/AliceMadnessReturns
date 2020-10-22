@@ -1,5 +1,5 @@
-#ifndef Player_h__
-#define Player_h__
+#ifndef Monster_h__
+#define Monster_h__
 
 #include "Define.h"
 #include "Base.h"
@@ -8,12 +8,12 @@
 
 BEGIN(Client)
 
-class CPlayer : public Engine::CGameObject
+class CMonster : public Engine::CGameObject
 {
 private: // 생성자, 소멸자
-	explicit  CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit  CPlayer(const  CPlayer& rhs);
-	virtual ~CPlayer(void);
+	explicit  CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit  CMonster(const  CMonster& rhs);
+	virtual ~CMonster(void);
 
 	// CGameObject을(를) 통해 상속됨
 	virtual HRESULT Ready_Object(void) override;
@@ -21,16 +21,16 @@ private: // 생성자, 소멸자
 	virtual void Render_Object(void) override;
 
 public:
-	void SetTartgetPos(const _vec3& _vTargetPos) { m_vTargetPos = _vTargetPos; }
+	static CMonster*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual void		Free(void);
 
 public:
-	static CPlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual void		Free(void);
+	void SetCameraForBillboard(Engine::CCamera* _pMainCamera) { m_pMainCamera = _pMainCamera; }
 
 private:
 	Engine::CTransform* m_pTransform = nullptr;
 	Engine::CRenderer* m_pRenderer = nullptr;
-	_vec3 m_vTargetPos{0.f, 0.f, 0.f};
+	Engine::CCamera* m_pMainCamera = nullptr;
 };
 
 END

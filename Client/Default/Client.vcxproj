@@ -174,6 +174,7 @@
     <ClInclude Include="..\Code\LoadScene.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Code\Monster.h" />
     <ClInclude Include="..\Code\Player.h" />
     <ClInclude Include="..\Code\PlayScene.h" />
     <ClInclude Include="..\Code\CMainApp.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="..\Code\LoadScene.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\PlayScene.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />

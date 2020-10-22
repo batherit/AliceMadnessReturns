@@ -36,9 +36,9 @@ HRESULT CMainApp::Ready_MainApp(void)
 	
 	// 클론할 컴포넌트를 프로토타입 매니저에 등록/
 	Engine::CComponent* pComponent = nullptr;
-	pComponent = Engine::CMoveComponent::Create();
+	pComponent = Engine::CTransform::Create();
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CMoveComponent::GetComponentTag(), pComponent);
+	Engine::Ready_Proto(Engine::CTransform::GetComponentTag(), pComponent);
 
 	pComponent = Engine::CRenderer::GetInstance();
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

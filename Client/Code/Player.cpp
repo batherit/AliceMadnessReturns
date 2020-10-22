@@ -19,11 +19,11 @@ CPlayer::~CPlayer(void)
 
 HRESULT CPlayer::Ready_Object(void)
 {
-	AddComponent<Engine::CMoveComponent>();
-	m_pMoveComponent = GetComponent<Engine::CMoveComponent>();
-	m_pMoveComponent->SetMaxSpeed(20.f);
-	m_pMoveComponent->SetSpeed(20.f);
-	m_vTargetPos = m_pMoveComponent->GetPos();
+	AddComponent<Engine::CTransform>();
+	m_pTransform = GetComponent<Engine::CTransform>();
+	m_pTransform->SetMaxSpeed(20.f);
+	m_pTransform->SetSpeed(20.f);
+	m_vTargetPos = m_pTransform->GetPos();
 
 	AddComponent<Engine::CRenderer>();
 	m_pRenderer = GetComponent<Engine::CRenderer>();
@@ -40,26 +40,26 @@ int CPlayer::Update_Object(const _float & _fDeltaTime)
 {
 	/*_vec3 vDir{ 0.f, 0.f, 0.f };
 	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_UP")) {
-		vDir += m_pMoveComponent->GetLook();
+		vDir += m_pTransform->GetLook();
 	}
 
 	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_DOWN")) {
-		vDir -= m_pMoveComponent->GetLook();
+		vDir -= m_pTransform->GetLook();
 	}
 
 	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_LEFT")) {
-		vDir -= m_pMoveComponent->GetRight();
+		vDir -= m_pTransform->GetRight();
 	}
 
 	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_RIGHT")) {
-		vDir += m_pMoveComponent->GetRight();
+		vDir += m_pTransform->GetRight();
 	}*/
 
-	_vec3 vDir = m_vTargetPos - m_pMoveComponent->GetPos();
+	_vec3 vDir = m_vTargetPos - m_pTransform->GetPos();
 	if (D3DXVec3LengthSq(&vDir) > 0.5f) {
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pMoveComponent->SetToXYZ(vDir);
-		m_pMoveComponent->MoveByDelta(_fDeltaTime);
+		m_pTransform->SetToXYZ(vDir);
+		m_pTransform->MoveByDelta(_fDeltaTime);
 	}
 
 	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
@@ -69,7 +69,7 @@ int CPlayer::Update_Object(const _float & _fDeltaTime)
 
 void CPlayer::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pMoveComponent->GetObjectMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 
 	Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 }

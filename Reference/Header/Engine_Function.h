@@ -119,6 +119,7 @@ namespace Engine
 		}
 	};
 
+	// 클라이언트 커서 좌표얻기
 	inline POINT GetClientCursorPoint(const HWND& _hWND)
 	{
 		POINT pt;
@@ -127,7 +128,8 @@ namespace Engine
 
 		return pt;
 	}
-
+	
+	// 커서 좌표가 화면 내 존재하는지?
 	inline _bool IsPointInClient(const HWND& _hWND, const POINT& _ptClientPoint) {
 		RECT rectView;
 		GetClientRect(_hWND, &rectView);
@@ -140,6 +142,7 @@ namespace Engine
 		return true;
 	}
 	
+	// 화면에서 돌아다니는 좌표얻기
 	inline POINT GetToroidClientPoint(const HWND& _hWND, const POINT& _ptClientPoint) {
 		RECT rectView;
 		GetClientRect(_hWND, &rectView);
@@ -195,6 +198,24 @@ namespace Engine
 		else _bValue = true;
 	}
 
+	// 회전축 얻기
+	inline _vec3 GetRotationAxis(const _vec3& vU, const _vec3& vV) {
+		_vec3 vRotAxis;
+		D3DXVec3Cross(&vRotAxis, &vU, &vV);
+		D3DXVec3Normalize(&vRotAxis, &vRotAxis);
+		return vRotAxis;
+	}
+	// 회전각 얻기
+	inline _float GetRotationAngle(const _vec3& vU, const _vec3& vV) {
+		_vec3 vUnitU;
+		_vec3 vUnitV;
+		_float fDot;
+		D3DXVec3Normalize(&vUnitU, &vU);
+		D3DXVec3Normalize(&vUnitV, &vV);
+		fDot = Clamp(D3DXVec3Dot(&vUnitU, &vUnitV), -1.f, 1.f);
+		return acosf(fDot);
+	}
+
 	// 가중치
 	inline float GetWeightByDegree(float _fDegree) {
 		return cosf(D3DXToRadian(_fDegree)) * 0.5f + 0.5f;
@@ -242,6 +263,7 @@ namespace Engine
 		return PICKINGRAYINFO{ vRay, vCameraPos };
 	}
 
+	// 광선 충돌 지점 얻기
 	inline _vec3 GetHitPos(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3, const _float& _fU, const _float& _fV) {
 		return _vV1 + _fU * (_vV2 - _vV1) + _fV * (_vV3 - _vV1);
 	}

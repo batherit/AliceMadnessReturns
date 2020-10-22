@@ -27,7 +27,7 @@ public:
 	void SetOffset(const _vec3& _vOffset) { m_vOffset = _vOffset; }
 
 private:
-	Engine::CMoveComponent* m_pMoveComponent = nullptr;
+	Engine::CTransform* m_pTransform = nullptr;
 	_vec3 m_vOffset{ 0.f, 0.f, 0.f };
 };
 

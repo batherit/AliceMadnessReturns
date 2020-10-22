@@ -45,7 +45,7 @@ void CManagement::UpdateScene(const _float & _fDeltaTime)
 }
 
 void CManagement::RenderScene(void)
-{
+{	
 	m_pSceneMgr->Render();
 }
 

@@ -241,6 +241,10 @@ namespace Engine
 
 		return PICKINGRAYINFO{ vRay, vCameraPos };
 	}
+
+	inline _vec3 GetHitPos(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3, const _float& _fU, const _float& _fV) {
+		return _vV1 + _fU * (_vV2 - _vV1) + _fV * (_vV3 - _vV1);
+	}
 }
 
 

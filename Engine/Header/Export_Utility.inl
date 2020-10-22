@@ -36,10 +36,10 @@ CComponent*		Clone(const _tchar* pProtoTag)
 }
 
 // Renderer
-//CRenderer*		Get_Renderer(void)
-//{
-//	return CRenderer::GetInstance();
-//}
+CRenderer*		Get_Renderer(void)
+{
+	return CRenderer::GetInstance();
+}
 
 void Release_Utility(void)
 {

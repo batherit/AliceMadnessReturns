@@ -29,6 +29,7 @@ public:
 
 private:
 	Engine::CMoveComponent* m_pMoveComponent = nullptr;
+	Engine::CRenderer* m_pRenderer = nullptr;
 	_vec3 m_vTargetPos{0.f, 0.f, 0.f};
 };
 

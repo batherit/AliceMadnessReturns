@@ -17,7 +17,7 @@ protected:
 public:
 	virtual HRESULT Ready(void) = 0;
 	virtual int Update(const _float& _fDeltaTime) = 0;
-	virtual void Render(void) {};
+	//virtual void Render(void) {};
 	void SetOwner(CGameObject* _pOwner) { if (m_pOwner) return; m_pOwner = _pOwner; }
 
 public:

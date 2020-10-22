@@ -10,7 +10,7 @@
 
 #include "Component.h"
 #include "MoveComponent.h"
-//#include "Renderer.h"
+#include "Renderer.h"
 
 BEGIN(Engine)
 
@@ -28,7 +28,7 @@ inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pInstance);
 inline CComponent*		Clone(const _tchar* pProtoTag);
 
 // Renderer
-//inline CRenderer*		Get_Renderer(void);
+inline CRenderer*		Get_Renderer(void);
 
 inline void Release_Utility(void);
 

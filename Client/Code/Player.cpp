@@ -25,6 +25,9 @@ HRESULT CPlayer::Ready_Object(void)
 	m_pMoveComponent->SetSpeed(20.f);
 	m_vTargetPos = m_pMoveComponent->GetPos();
 
+	AddComponent<Engine::CRenderer>();
+	m_pRenderer = GetComponent<Engine::CRenderer>();
+
 	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_UP", VK_UP);
 	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_DOWN", VK_DOWN);
 	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_LEFT", VK_LEFT);
@@ -59,7 +62,7 @@ int CPlayer::Update_Object(const _float & _fDeltaTime)
 		m_pMoveComponent->MoveByDelta(_fDeltaTime);
 	}
 
-	
+	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
 	return 0;
 }

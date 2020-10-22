@@ -1,4 +1,6 @@
 #include "CScene.h"
+#include "Renderer.h"
+
 USING(Engine)
 
 Engine::CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -48,11 +50,12 @@ _int CScene::Update(const _float & _fDeltaTime)
 	return iExit;
 }
 
-void CScene::Render(void)
-{
-	for (auto& iter : m_mapLayer)
-		iter.second->Render_Layer();
-}
+//void CScene::Render(void)
+//{
+//	//CRenderer::Render();
+//	//for (auto& iter : m_mapLayer)
+//	//	iter.second->Render_Layer();
+//}
 
 void Engine::CScene::Free(void)
 {

@@ -23,7 +23,7 @@ public:
 	virtual void ResetScene(void) = 0;
 	virtual HRESULT Ready(void) = 0;
 	virtual _int Update(const _float& _fDeltaTime);
-	virtual void Render(void);
+	virtual void Render(void) = 0;
 
 public:
 	virtual void Free(void);

@@ -37,6 +37,9 @@
     <Filter Include="03. GameObject\Camera">
       <UniqueIdentifier>{484679ae-2fc2-4f97-b660-b0505f4c5b92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\01. Renderer">
+      <UniqueIdentifier>{484376b2-6b94-4461-aac2-b2634aca9fb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -72,6 +75,9 @@
     <ClInclude Include="..\Code\Camera.h">
       <Filter>03. GameObject\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Renderer.h">
+      <Filter>04. Component\01. Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -103,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Camera.cpp">
       <Filter>03. GameObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Renderer.cpp">
+      <Filter>04. Component\01. Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

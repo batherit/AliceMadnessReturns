@@ -40,6 +40,10 @@ HRESULT CMainApp::Ready_MainApp(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::CMoveComponent::GetComponentTag(), pComponent);
 
+	pComponent = Engine::CRenderer::GetInstance();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::CRenderer::GetComponentTag(), pComponent);
+
 	pComponent = Engine::CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::CTerrain::GetComponentTag(), pComponent);
@@ -90,11 +94,10 @@ CMainApp* CMainApp::Create(void)
 
 void CMainApp::Free(void)
 {
-	int debug_iRefCnt = Client::Safe_Release(m_pGraphicDev);
+	Client::Safe_Release(m_pGraphicDev);
+
 	Engine::Release_Resoures();
-	//int b = Client::Safe_Release(m_pGraphicDev);
 	Engine::Release_Utility();
-	//int c = Client::Safe_Release(m_pGraphicDev);
 	Engine::Release_System();
 }
 

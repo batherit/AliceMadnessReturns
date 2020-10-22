@@ -62,6 +62,7 @@ int CPlayScene::Update(const _float& fTimeDelta)
 			vV2 = pVertices[pIndex._1];
 			vV3 = pVertices[pIndex._2];
 			if (D3DXIntersectTri(&vV1, &vV2, &vV3, &stPickingRayInfo.vRayPos, &stPickingRayInfo.vRayDir, &fU, &fV, &fDist)) {
+				// 픽킹이 성공했다면, 픽킹 히트 지점을 플레이어 이동 지점으로 세팅
 				//m_pPlayer->SetTartgetPos(stPickingRayInfo.vRayPos + stPickingRayInfo.vRayDir * fDist);
 				m_pPlayer->SetTartgetPos(Engine::GetHitPos(vV1, vV2, vV3, fU, fV));
 				break;
@@ -74,7 +75,8 @@ int CPlayScene::Update(const _float& fTimeDelta)
 
 void CPlayScene::Render(void)
 {
-	CScene::Render();
+	Engine::Get_Renderer()->Render_GameObject();
+	//CScene::Render();
 }
 
 CPlayScene * CPlayScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)

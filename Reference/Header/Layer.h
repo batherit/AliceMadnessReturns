@@ -18,7 +18,7 @@ public:
 	HRESULT		Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject);
 	HRESULT		Ready_Layer(void);
 	_int		Update_Layer(const _float& fTimeDelta);
-	void		Render_Layer(void);
+	//void		Render_Layer(void);
 
 private:
 	map<const _tchar*, CGameObject*>			m_mapObject;

@@ -31,6 +31,7 @@ public:
 
 private:
 	Engine::CMoveComponent* m_pMoveComponent = nullptr;
+	Engine::CRenderer* m_pRenderer = nullptr;
 	Engine::CTerrain* m_pTerrain = nullptr;
 };
 

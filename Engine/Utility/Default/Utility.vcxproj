@@ -29,6 +29,7 @@
     <ClCompile Include="..\Code\CSceneMgr.cpp" />
     <ClCompile Include="..\Code\Layer.cpp" />
     <ClCompile Include="..\Code\ProtoMgr.cpp" />
+    <ClCompile Include="..\Code\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h" />
@@ -42,6 +43,7 @@
     <ClInclude Include="..\Code\CSceneMgr.h" />
     <ClInclude Include="..\Code\Layer.h" />
     <ClInclude Include="..\Code\ProtoMgr.h" />
+    <ClInclude Include="..\Code\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Header\Export_Utility.inl" />

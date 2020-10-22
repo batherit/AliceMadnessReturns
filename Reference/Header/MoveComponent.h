@@ -2,10 +2,7 @@
 #define	MoveComponent_h__
 
 #include "Engine_Define.h"
-#include "Base.h"
-
 #include "Component.h"
-//#include "UtilFunction.h"
 
 BEGIN(Engine)
 

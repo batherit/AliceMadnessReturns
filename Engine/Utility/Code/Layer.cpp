@@ -55,11 +55,11 @@ Engine::_int Engine::CLayer::Update_Layer(const _float& fTimeDelta)
 	return iExit;
 }
 
-void Engine::CLayer::Render_Layer(void)
-{
-	for (auto& iter : m_mapObject)
-		iter.second->Render_Object();
-}
+//void Engine::CLayer::Render_Layer(void)
+//{
+//	for (auto& iter : m_mapObject)
+//		iter.second->Render_Object();
+//}
 
 Engine::CLayer* Engine::CLayer::Create(void)
 {

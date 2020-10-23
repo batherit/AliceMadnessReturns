@@ -19,6 +19,15 @@
     <Filter Include="02. Frame\Manager">
       <UniqueIdentifier>{f94eb270-c818-41a3-8a8a-e4e1e455ba94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Font">
+      <UniqueIdentifier>{781a457a-bf91-468a-9758-8478949cd3b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Font\Manager">
+      <UniqueIdentifier>{2a47fcdb-0c53-4068-b4c1-cd345ea6405a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. InputDev">
+      <UniqueIdentifier>{2704f173-eed9-4921-81c9-71dab91ae1a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_System.h">
@@ -41,6 +50,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\ChronoTimer.h">
       <Filter>01. Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Font.h">
+      <Filter>03. Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\FontMgr.h">
+      <Filter>03. Font\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputDev.h">
+      <Filter>04. InputDev</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +84,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\ChronoTimer.cpp">
       <Filter>01. Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Font.cpp">
+      <Filter>03. Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FontMgr.cpp">
+      <Filter>03. Font\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputDev.cpp">
+      <Filter>04. InputDev</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

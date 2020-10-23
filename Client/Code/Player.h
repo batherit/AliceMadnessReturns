@@ -28,7 +28,6 @@ public:
 	virtual void		Free(void);
 
 private:
-	Engine::CTransform* m_pTransform = nullptr;
 	Engine::CRenderer* m_pRenderer = nullptr;
 	_vec3 m_vTargetPos{0.f, 0.f, 0.f};
 };

@@ -23,7 +23,7 @@ HRESULT CStaticCamera::Ready_Object(void)
 {
 	AddComponent<Engine::CTransform>();
 	m_pTransform = GetComponent<Engine::CTransform>();
-	m_pTransform->SetXYZ(0.f, 10.f, -10.f);
+	m_pTransform->SetPos(0.f, 10.f, -10.f);
 	m_pTransform->RotateByRight(D3DXToRadian(45.f));
 
 	SetProjectionMatrix(D3DXToRadian(45.f), (_float)WINCX / WINCY, 0.1f, 1000.f);

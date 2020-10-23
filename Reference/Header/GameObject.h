@@ -4,9 +4,9 @@
 #include "Engine_Define.h"
 #include "Base.h"
 
-
 BEGIN(Engine)
 class CComponent;
+class CTransform;
 
 class ENGINE_DLL CGameObject abstract : public CBase
 {
@@ -17,6 +17,7 @@ protected:
 
 public:
 	CComponent* Get_Component(const _tchar* pComponentTag, COMPONENTID eID);
+	CTransform* GetTransform() const { return m_pTransform; }
 
 public:
 	virtual HRESULT Ready_Object(void) = 0;
@@ -25,7 +26,7 @@ public:
 
 public:
 	CComponent* GetComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);
-	void		AddComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);
+	CComponent*	AddComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);
 	template <class T>
 	T* GetComponent() {
 		const _tchar* tag = T::GetComponentTag();
@@ -33,10 +34,10 @@ public:
 		return static_cast<T*>(GetComponent(id, tag));
 	}
 	template <class T>
-	void AddComponent() {
+	T* AddComponent() {
 		const _tchar* tag = T::GetComponentTag();
 		const COMPONENTID id = T::GetComponentID();
-		AddComponent(id, tag);
+		return static_cast<T*>(AddComponent(id, tag));
 	}
 	void SetParent(CGameObject* _pParent) { m_pParent = _pParent; }
 	CGameObject* GetParent() const { return m_pParent; }
@@ -50,6 +51,7 @@ protected:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 	CGameObject* m_pParent = nullptr;
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
+	CTransform* m_pTransform = nullptr;
 };
 
 END

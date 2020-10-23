@@ -93,20 +93,33 @@ public:
 		D3DXVec3Normalize(&m_vUp, &m_vUp);
 		D3DXVec3Normalize(&m_vLook, &m_vLook);
 	}
+	// 축 세팅
+	void ResetRightUpLook(const _vec3 *pAt, const _vec3 *pUp) {
+		_matrix matRUL;
+		D3DXMatrixIdentity(&matRUL);
+
+		// Look축을 구합니다.
+		D3DXVec3Normalize(&m_vLook, &(*pAt - GetPos()));
+		// Right축을 구합니다.
+		D3DXVec3Cross(&m_vRight, pUp, &m_vLook);
+		D3DXVec3Normalize(&m_vRight, &m_vRight);
+		// Up축을 구합니다.
+		D3DXVec3Cross(&m_vUp, &m_vLook, &m_vRight);
+	}
 
 	// 이동/위치
-	void SetX(_float _fX) { m_vPos.x = _fX; }
-	void SetY(_float _fY) { m_vPos.y = _fY; }
-	void SetZ(_float _fZ) { m_vPos.z = _fZ; }
-	void SetXYZ(_float _fX, _float _fY, _float _fZ) { SetX(_fX); SetY(_fY); SetZ(_fZ); }
-	void SetXYZ(_vec3 _vPos) { m_vPos = _vPos; }
+	void SetPosX(_float _fX) { m_vPos.x = _fX; }
+	void SetPosY(_float _fY) { m_vPos.y = _fY; }
+	void SetPosZ(_float _fZ) { m_vPos.z = _fZ; }
+	void SetPos(_float _fX, _float _fY, _float _fZ) { SetPosX(_fX); SetPosY(_fY); SetPosZ(_fZ); }
+	void SetPos(_vec3 _vPos) { m_vPos = _vPos; }
 
 	// 방향
-	void SetToX(_float _fToX) { m_vDir.x = _fToX; }
-	void SetToY(_float _fToY) { m_vDir.y = _fToY; }
-	void SetToZ(_float _fToZ) { m_vDir.z = _fToZ; }
-	void SetToXYZ(_float _fToX, _float _fToY, _float _fToZ) { SetToX(_fToX); SetToY(_fToY); SetToZ(_fToZ); D3DXVec3Normalize(&m_vDir, &m_vDir); }
-	void SetToXYZ(_vec3 _vDir) { m_vDir = _vDir; D3DXVec3Normalize(&m_vDir, &m_vDir); }
+	void SetDirX(_float _fToX) { m_vDir.x = _fToX; }
+	void SetDirY(_float _fToY) { m_vDir.y = _fToY; }
+	void SetDirZ(_float _fToZ) { m_vDir.z = _fToZ; }
+	void SetDir(_float _fToX, _float _fToY, _float _fToZ) { SetDirX(_fToX); SetDirY(_fToY); SetDirZ(_fToZ); D3DXVec3Normalize(&m_vDir, &m_vDir); }
+	void SetDir(_vec3 _vDir) { m_vDir = _vDir; D3DXVec3Normalize(&m_vDir, &m_vDir); }
 
 	void SetSpeed(float _fSpeed) { m_fSpeed = _fSpeed; Clamp(&m_fSpeed, -m_fMaxSpeed, m_fMaxSpeed); }
 	void SetMaxSpeed(float _fMaxSpeed) { m_fMaxSpeed = _fMaxSpeed; }
@@ -116,11 +129,7 @@ public:
 		D3DXMatrixIdentity(&matParent);
 
 		CGameObject* pParent = m_pOwner->GetParent();
-		if (pParent) {
-			CTransform* pParentMoveComponent = pParent->GetComponent<CTransform>();
-			if(pParentMoveComponent)
-				matParent = pParentMoveComponent->GetObjectMatrix(_eCoordType);
-		}
+		if (pParent) matParent = pParent->GetTransform()->GetObjectMatrix(_eCoordType);
 			
 		// 부모행렬을 얻지 못했다면, 항등행렬을 반환한다.
 		return matParent;

@@ -21,9 +21,12 @@
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_System.h" />
     <ClInclude Include="..\Code\ChronoTimer.h" />
+    <ClInclude Include="..\Code\Font.h" />
+    <ClInclude Include="..\Code\FontMgr.h" />
     <ClInclude Include="..\Code\Frame.h" />
     <ClInclude Include="..\Code\FrameMgr.h" />
     <ClInclude Include="..\Code\GraphicDev.h" />
+    <ClInclude Include="..\Code\InputDev.h" />
     <ClInclude Include="..\Code\Timer.h" />
     <ClInclude Include="..\Code\TimerMgr.h" />
   </ItemGroup>
@@ -32,9 +35,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\ChronoTimer.cpp" />
+    <ClCompile Include="..\Code\Font.cpp" />
+    <ClCompile Include="..\Code\FontMgr.cpp" />
     <ClCompile Include="..\Code\Frame.cpp" />
     <ClCompile Include="..\Code\FrameMgr.cpp" />
     <ClCompile Include="..\Code\GraphicDev.cpp" />
+    <ClCompile Include="..\Code\InputDev.cpp" />
     <ClCompile Include="..\Code\Timer.cpp" />
     <ClCompile Include="..\Code\TimerMgr.cpp" />
   </ItemGroup>

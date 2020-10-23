@@ -21,14 +21,9 @@ CTerrainMap::~CTerrainMap(void)
 
 HRESULT CTerrainMap::Ready_Object(void)
 {
-	AddComponent<Engine::CTransform>();
-	m_pTransform = GetComponent<Engine::CTransform>();
+	m_pRenderer = AddComponent<Engine::CRenderer>();
 
-	AddComponent<Engine::CRenderer>();
-	m_pRenderer = GetComponent<Engine::CRenderer>();
-
-	AddComponent<Engine::CTerrain>();
-	m_pTerrain = GetComponent<Engine::CTerrain>();
+	m_pTerrain = AddComponent<Engine::CTerrain>();
 	m_pTerrain->SetTerrainInfo(_vec3(0.f, 0.f, 0.f), 129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height1.bmp");
 
 	return S_OK;

@@ -30,7 +30,6 @@ public:
 	virtual void		Free(void);
 
 private:
-	Engine::CTransform* m_pTransform = nullptr;
 	Engine::CRenderer* m_pRenderer = nullptr;
 	Engine::CTerrain* m_pTerrain = nullptr;
 };

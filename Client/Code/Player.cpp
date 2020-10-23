@@ -19,14 +19,11 @@ CPlayer::~CPlayer(void)
 
 HRESULT CPlayer::Ready_Object(void)
 {
-	AddComponent<Engine::CTransform>();
-	m_pTransform = GetComponent<Engine::CTransform>();
 	m_pTransform->SetMaxSpeed(20.f);
 	m_pTransform->SetSpeed(20.f);
 	m_vTargetPos = m_pTransform->GetPos();
 
-	AddComponent<Engine::CRenderer>();
-	m_pRenderer = GetComponent<Engine::CRenderer>();
+	m_pRenderer = AddComponent<Engine::CRenderer>();
 
 	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_UP", VK_UP);
 	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_DOWN", VK_DOWN);
@@ -58,7 +55,7 @@ int CPlayer::Update_Object(const _float & _fDeltaTime)
 	_vec3 vDir = m_vTargetPos - m_pTransform->GetPos();
 	if (D3DXVec3LengthSq(&vDir) > 0.5f) {
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransform->SetToXYZ(vDir);
+		m_pTransform->SetDir(vDir);
 		m_pTransform->MoveByDelta(_fDeltaTime);
 	}
 

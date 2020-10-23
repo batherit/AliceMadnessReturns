@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Component.h"
+#include "Transform.h"
 #include "ProtoMgr.h"
 
 USING(Engine)
@@ -9,6 +10,8 @@ Engine::CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_pGraphicDev(pGraphicDev)
 {
 	Safe_AddRef(m_pGraphicDev);
+	AddComponent<CTransform>();
+	m_pTransform = GetComponent<CTransform>();
 }
 
 Engine::CGameObject::CGameObject(const CGameObject & rhs)
@@ -16,6 +19,8 @@ Engine::CGameObject::CGameObject(const CGameObject & rhs)
 	m_pGraphicDev(rhs.m_pGraphicDev)
 {
 	Safe_AddRef(m_pGraphicDev);
+	AddComponent<CTransform>();
+	m_pTransform = GetComponent<CTransform>();
 }
 
 Engine::CGameObject::~CGameObject()
@@ -42,17 +47,20 @@ CComponent * Engine::CGameObject::GetComponent(const COMPONENTID eComponentID, c
 	return nullptr;
 }
 
-void Engine::CGameObject::AddComponent(const COMPONENTID eComponentID, const _tchar * pComponentTag)
+CComponent* Engine::CGameObject::AddComponent(const COMPONENTID eComponentID, const _tchar * pComponentTag)
 {
 	auto iter = find_if(m_mapComponent[eComponentID].begin(), m_mapComponent[eComponentID].end(), CTag_Finder(pComponentTag));
 	if (iter != m_mapComponent[eComponentID].end())
-		return;
+		return iter->second;
 
 	CComponent* pComp = CProtoMgr::GetInstance()->Clone(pComponentTag);
 	if (pComp) {
 		pComp->SetOwner(this);
 		m_mapComponent[eComponentID].emplace(pComponentTag, pComp);
+		return pComp;
 	}
+
+	return nullptr;
 }
 
 void Engine::CGameObject::Free(void)

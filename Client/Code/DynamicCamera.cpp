@@ -23,7 +23,7 @@ HRESULT CDynamicCamera::Ready_Object(void)
 {
 	AddComponent<Engine::CTransform>();
 	m_pTransform = GetComponent<Engine::CTransform>();
-	m_pTransform->SetXYZ(30.f, 80.f, -80.f);
+	m_pTransform->SetPos(30.f, 80.f, -80.f);
 	m_pTransform->RotateByRight(D3DXToRadian(45.f));
 	m_pTransform->SetMaxSpeed(110.f);
 	m_pTransform->SetSpeed(100.f);
@@ -87,7 +87,7 @@ int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 		vDir += m_pTransform->GetRight();
 	}
 
-	m_pTransform->SetToXYZ(vDir);
+	m_pTransform->SetDir(vDir);
 	m_pTransform->MoveByDelta(fTimeDelta);
 
 	// 뷰 스페이스 변환 행렬 생성 함수(즉, 카메라 월드 행렬의 역 행렬을 만들어주는 함수)

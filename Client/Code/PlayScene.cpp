@@ -38,7 +38,7 @@ HRESULT CPlayScene::Ready(void)
 	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
 
-	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	return S_OK;
@@ -48,7 +48,7 @@ int CPlayScene::Update(const _float& fTimeDelta)
 {
 	// TODO : 네모를 움직이는 코드를 작성합니다.
 	_float fHeight = m_pTerrain->GetHeight(m_pPlayer->GetComponent<Engine::CTransform>()->GetPos());
-	m_pPlayer->GetComponent<Engine::CTransform>()->SetY(fHeight);
+	m_pPlayer->GetComponent<Engine::CTransform>()->SetPosY(fHeight);
 
 	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_LBUTTON")) {
 		// 픽킹을 하기 위한 기본 변수들 세팅.
@@ -77,6 +77,8 @@ int CPlayScene::Update(const _float& fTimeDelta)
 void CPlayScene::Render(void)
 {
 	Engine::Get_Renderer()->Render_GameObject();
+
+	Engine::Render_Font(L"Font_Jinji", L"Text Test", &_vec2(10.f, 10.f), D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
 	//CScene::Render();
 }
 
@@ -121,13 +123,13 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pMonster->SetCameraForBillboard(m_pCamera);
 
 	// 몬스터를 임의의 위치에 둠.
-	m_pMonster->GetComponent<Engine::CTransform>()->SetXYZ(
+	m_pMonster->GetComponent<Engine::CTransform>()->SetPos(
 		Engine::GetNumberMinBetweenMax(10.f, 20.f),
 		0.f,
 		Engine::GetNumberMinBetweenMax(10.f, 20.f)
 	);
 	_float fHeight = m_pTerrain->GetHeight(m_pMonster->GetComponent<Engine::CTransform>()->GetPos());
-	m_pMonster->GetComponent<Engine::CTransform>()->SetY(fHeight);
+	m_pMonster->GetComponent<Engine::CTransform>()->SetPosY(fHeight);
 
 	m_mapLayer.emplace(pLayerTag, pLayer);
 

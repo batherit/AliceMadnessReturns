@@ -19,29 +19,28 @@ CMonster::~CMonster(void)
 
 HRESULT CMonster::Ready_Object(void)
 {
-	AddComponent<Engine::CTransform>();
-	m_pTransform = GetComponent<Engine::CTransform>();
 	m_pTransform->SetScaleXYZ(5.f, 5.f, 5.f);
-
-	AddComponent<Engine::CRenderer>();
-	m_pRenderer = GetComponent<Engine::CRenderer>();
-
-	
+	m_pRenderer = AddComponent<Engine::CRenderer>();
 
 	return S_OK;
 }
 
 int CMonster::Update_Object(const _float & _fDeltaTime)
 {
-	Engine::CTransform* pCameraTransform = m_pMainCamera->GetComponent<Engine::CTransform>();
-	_vec3 vInvLook = -m_pTransform->GetLook();
+	Engine::CTransform* pCameraTransform = m_pMainCamera->GetTransform();
+	_vec3 vLook = m_pTransform->GetPos() - pCameraTransform->GetPos();
+	D3DXVec3Normalize(&vLook, &vLook);
+	// y축은 고정
+	/*_vec3 vInvLook = -m_pTransform->GetLook();
 	_vec3 vToCamera = pCameraTransform->GetPos() - m_pTransform->GetPos();
 	vToCamera.y = 0;
 	D3DXVec3Normalize(&vToCamera, &vToCamera);
 	
 	_float fRotAngle = Engine::GetRotationAngle(vInvLook, vToCamera);
 	_vec3 vRotAxis = Engine::GetRotationAxis(vInvLook, vToCamera);
-	m_pTransform->RotateByAxis(fRotAngle, vRotAxis);
+	m_pTransform->RotateByAxis(fRotAngle, vRotAxis);*/
+
+	m_pTransform->ResetRightUpLook(&(m_pTransform->GetPos() + vLook), &WORLD_Y_AXIS);
 
 	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 

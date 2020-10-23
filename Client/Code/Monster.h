@@ -28,7 +28,6 @@ public:
 	void SetCameraForBillboard(Engine::CCamera* _pMainCamera) { m_pMainCamera = _pMainCamera; }
 
 private:
-	Engine::CTransform* m_pTransform = nullptr;
 	Engine::CRenderer* m_pRenderer = nullptr;
 	Engine::CCamera* m_pMainCamera = nullptr;
 };

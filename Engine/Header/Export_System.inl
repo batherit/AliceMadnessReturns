@@ -46,11 +46,42 @@ HRESULT		Ready_Frame(const _tchar* pFrameTag, const _float& fCallLimit)
 	return CFrameMgr::GetInstance()->Ready_Frame(pFrameTag, fCallLimit);
 }
 
-
+// FontMgr
+HRESULT	Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFontTag,
+	const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
+{
+	return CFontMgr::GetInstance()->Ready_Font(pGraphicDev, pFontTag, pFontType, iWidth, iHeight, iWeight);
+}
+void	Render_Font(const _tchar* pFontTag, const _tchar* pString, const _vec2* pPos, D3DXCOLOR Color)
+{
+	CFontMgr::GetInstance()->Render_Font(pFontTag, pString, pPos, Color);
+}
+// InputDev
+_byte	Get_DIKeyState(_ubyte byKeyID)
+{
+	return CInputDev::GetInstance()->Get_DIKeyState(byKeyID);
+}
+_byte	Get_DIMouseState(MOUSEKEYSTATE eMouse)
+{
+	return CInputDev::GetInstance()->Get_DIMouseState(eMouse);
+}
+_long	Get_DIMouseMove(MOUSEMOVESTATE eMouseState)
+{
+	return CInputDev::GetInstance()->Get_DIMouseMove(eMouseState);
+}
+HRESULT Ready_InputDev(HINSTANCE hInst, HWND hWnd)
+{
+	return CInputDev::GetInstance()->Ready_InputDev(hInst, hWnd);
+}
+void	Set_InputDev(void)
+{
+	CInputDev::GetInstance()->Set_InputDev();
+}
 
 
 void		Release_System(void)
 {
+	CFontMgr::GetInstance()->DestroyInstance();
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
 	CGraphicDev::GetInstance()->DestroyInstance();

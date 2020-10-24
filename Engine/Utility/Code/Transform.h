@@ -185,8 +185,6 @@ private:
 	_vec3 m_vRot{ 0.f, 0.f, 0.f };			// Radian
 	_vec3 m_vPos{ 0.f, 0.f, 0.f };
 	_vec3 m_vDir{ 1.f, 0.f, 0.f };
-	_vec3 m_vAngle{ 0.f, 0.f, 0.f };
-	//_vec3 m_vPosOffset
 	_matrix m_matWorld;
 	_float m_fMaxSpeed = 9876543210.f;
 	_float m_fSpeed = 0.f;

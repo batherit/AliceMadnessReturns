@@ -35,55 +35,50 @@ HRESULT CDynamicCamera::Ready_Object(void)
 
 int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 {	
-	if (Engine::CKeyMgr::GetInstance()->IsKeyDown(L"KEY_LBUTTON")) {
-		POINT ptCurrentCursor = Engine::GetClientCursorPoint(g_hWnd);
+	if (Engine::CDirectInputMgr::GetInstance()->IsMouseDown(Engine::CDirectInputMgr::MB_L)) {
+		POINT ptCurrentCursor = Engine::CDirectInputMgr::GetInstance()->GetCurrentMousePos();
 
 		if (Engine::IsPointInClient(g_hWnd, ptCurrentCursor)) {
 			SetCapture(g_hWnd);
-			Engine::CKeyMgr::GetInstance()->SetOldCursorPoint(ptCurrentCursor);
 		}
 	}
 
-	if (GetCapture() == g_hWnd && Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_LBUTTON")) {
-		POINT ptCurrentCursor = Engine::GetClientCursorPoint(g_hWnd);
-		POINT ptOldCursor = Engine::CKeyMgr::GetInstance()->GetOldCursorPoint();
-		_vec2 vToCurrent = _vec2(
-			static_cast<FLOAT>(ptCurrentCursor.x - ptOldCursor.x), 
-			static_cast<FLOAT>(ptCurrentCursor.y - ptOldCursor.y));
-		_float fRotAngleByY = vToCurrent.x * 2.f * D3DX_PI / WINCX;
-		_float fRotAngleByRight = vToCurrent.y * 2.f * D3DX_PI / WINCY;
+	if (GetCapture() == g_hWnd && Engine::CDirectInputMgr::GetInstance()->IsMousePressing(Engine::CDirectInputMgr::MB_L)) {
+		POINT ptToCurrent = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
+		_float fRotAngleByY = ptToCurrent.x * 2.f * D3DX_PI / WINCX;
+		_float fRotAngleByRight = ptToCurrent.y * 2.f * D3DX_PI / WINCY;
 
 		m_pTransform->RotateByRight(fRotAngleByRight);
 		m_pTransform->RotateByAxis(fRotAngleByY, WORLD_Y_AXIS);
 
 		// 화면 내에 순환하는 클라이언트 영역 좌표 얻기
+		POINT ptCurrentCursor = Engine::CDirectInputMgr::GetInstance()->GetCurrentMousePos();
 		ptCurrentCursor = Engine::GetToroidClientPoint(g_hWnd, ptCurrentCursor);
-		Engine::CKeyMgr::GetInstance()->SetOldCursorPoint(ptCurrentCursor);
 
 		// 순환된 클라이언트 좌표를 스크린 좌표로 세팅하여 커서 좌표로 둔다.
 		ClientToScreen(g_hWnd, &ptCurrentCursor);
 		SetCursorPos(ptCurrentCursor.x, ptCurrentCursor.y);
 	}
 
-	if (GetCapture() == g_hWnd && Engine::CKeyMgr::GetInstance()->IsKeyUp(L"KEY_LBUTTON")) {
+	if (GetCapture() == g_hWnd && Engine::CDirectInputMgr::GetInstance()->IsMouseUp(Engine::CDirectInputMgr::MB_L)) {
 		ReleaseCapture();
 	}
 
 	_vec3 vDir{ 0.f, 0.f, 0.f };
 
-	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_W")) {
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(L"KEY_W")) {
 		vDir += m_pTransform->GetLook();
 	}
 
-	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_S")) {
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(L"KEY_S")) {
 		vDir -= m_pTransform->GetLook();
 	}
 
-	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_A")) {
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(L"KEY_A")) {
 		vDir -= m_pTransform->GetRight();
 	}
 
-	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_D")) {
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(L"KEY_D")) {
 		vDir += m_pTransform->GetRight();
 	}
 

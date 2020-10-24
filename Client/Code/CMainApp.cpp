@@ -25,14 +25,26 @@ HRESULT CMainApp::Ready_MainApp(void)
 	m_pGraphicDev = m_pDeviceClass->Get_GraphicDev();
 	Engine::Safe_AddRef(m_pGraphicDev);
 
-	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(Engine::RESOURCE_END), E_FAIL);
-	Client::Safe_Release(m_pDeviceClass);
+	// 인풋 매니져 세팅
+	FAILED_CHECK_RETURN(Engine::CDirectInputMgr::GetInstance()->Ready(g_hInst, g_hWnd), E_FAIL);
+	Engine::CDirectInputMgr::GetInstance()->BindKeyStringToKey(L"KEY_UP", DIK_UP);
+	Engine::CDirectInputMgr::GetInstance()->BindKeyStringToKey(L"KEY_DOWN", DIK_DOWN);
+	Engine::CDirectInputMgr::GetInstance()->BindKeyStringToKey(L"KEY_LEFT", DIK_LEFT);
+	Engine::CDirectInputMgr::GetInstance()->BindKeyStringToKey(L"KEY_RIGHT", DIK_RIGHT);
 
+	Engine::CDirectInputMgr::GetInstance()->BindKeyStringToKey(L"KEY_W", DIK_W);
+	Engine::CDirectInputMgr::GetInstance()->BindKeyStringToKey(L"KEY_A", DIK_A);
+	Engine::CDirectInputMgr::GetInstance()->BindKeyStringToKey(L"KEY_S", DIK_S);
+	Engine::CDirectInputMgr::GetInstance()->BindKeyStringToKey(L"KEY_D", DIK_D);
+	
 	// 폰트 세팅
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"바탕", 15, 20, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"궁서", 30, 30, FW_HEAVY), E_FAIL);
 
 	// 임시 리소스 로드.
+	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(Engine::RESOURCE_END), E_FAIL);
+	Client::Safe_Release(m_pDeviceClass);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_RcTex", Engine::BUFFER_RCTEX), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"M_Buffer_TriCol", Engine::BUFFER_TRICOL), E_FAIL);
@@ -53,11 +65,11 @@ HRESULT CMainApp::Ready_MainApp(void)
 	Engine::Ready_Proto(Engine::CTerrain::GetComponentTag(), pComponent);
 
 	// 키 세팅
-	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_LBUTTON", VK_LBUTTON);
-	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_W", 'W');
-	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_A", 'A');
-	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_S", 'S');
-	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_D", 'D');
+	//Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_LBUTTON", VK_LBUTTON);
+	//Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_W", 'W');
+	//Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_A", 'A');
+	//Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_S", 'S');
+	//Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_D", 'D');
 
 
 	// 첫 씬을 Logo로 설정한다.
@@ -68,6 +80,7 @@ HRESULT CMainApp::Ready_MainApp(void)
 
 _int CMainApp::Update_MainApp(const _float& fTimeDelta)
 {
+	Engine::CDirectInputMgr::GetInstance()->Update();
 	Engine::CManagement::GetInstance()->UpdateScene(fTimeDelta);
 
 	return 0;

@@ -25,10 +25,10 @@ HRESULT CPlayer::Ready_Object(void)
 
 	m_pRenderer = AddComponent<Engine::CRenderer>();
 
-	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_UP", VK_UP);
+	/*Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_UP", VK_UP);
 	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_DOWN", VK_DOWN);
 	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_LEFT", VK_LEFT);
-	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_RIGHT", VK_RIGHT);
+	Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_RIGHT", VK_RIGHT);*/
 		
 	return S_OK;
 }

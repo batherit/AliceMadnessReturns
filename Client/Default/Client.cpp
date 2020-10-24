@@ -9,7 +9,7 @@
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
-HINSTANCE hInst;                                // 현재 인스턴스입니다.
+HINSTANCE g_hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND g_hWnd;
@@ -60,8 +60,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	if (nullptr == g_pMainApp)
 		return FALSE;
 
-	POINT ptOldCursor = Engine::GetClientCursorPoint(g_hWnd);
-	Engine::CKeyMgr::GetInstance()->SetOldCursorPoint(ptOldCursor);
+	// DirectInput을 사용.
+	//POINT ptOldCursor = Engine::GetClientCursorPoint(g_hWnd);
+	//Engine::CKeyMgr::GetInstance()->SetOldCursorPoint(ptOldCursor);
 
 	// 기본 메시지 루프입니다.
 	while (true)
@@ -90,7 +91,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				Engine::Set_TimeDelta(L"Timer_FPS60");
 				_float fTime60 = Engine::Get_TimeDelta(L"Timer_FPS60");
 
-				Engine::CKeyMgr::GetInstance()->Update();
+				//Direct Input을 사용
+				//Engine::CKeyMgr::GetInstance()->Update();
 				g_pMainApp->Update_MainApp(fTime60);
 				g_pMainApp->Render_MainApp();
 			}
@@ -147,7 +149,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-	hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+	g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 	RECT rc{ 0, 0, WINCX, WINCY };
 
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);

@@ -73,7 +73,7 @@ namespace Engine
 			}											\
 		}
 
-	// 비트마스크 플래그 관련
+// 비트마스크 플래그 관련
 #define IS_PRESS_(_Key) (GetAsyncKeyState(_Key) & 0x8000)
 #define ALL_FLAG(_State, _StateSize) (flags = (1 << (size * 8)) - 1)
 #define EMPTY_FLAG(_State) (_State = 0)
@@ -81,6 +81,10 @@ namespace Engine
 #define OFF_FLAG(_State, _Mask) (_State &= ~_Mask)
 #define TOGGLE_FLAG(_State, _Mask) (_State ^= _Mask)
 #define IS_ON_FLAG(_State, _Mask) ((bool)((_State & _Mask) != 0))
+
+// Direct Input 관련
+#define DI_IS_ON_KEY(_KeyState, _Key) ((bool)((_KeyState[_Key] & 0x80) != 0))  
+#define DI_IS_ON_MB(_MouseState, _MouseButtonType) ((bool)((_MouseState.rgbButtons[_MouseButtonType]) != 0))  
 
 #define WORLD_X_AXIS _vec3(1.f, 0.f, 0.f)
 #define WORLD_Y_AXIS _vec3(0.f, 1.f, 0.f)

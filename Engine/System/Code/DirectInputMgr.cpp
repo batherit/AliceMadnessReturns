@@ -181,7 +181,10 @@ POINT CDirectInputMgr::GetOldMousePos() const
 _vec3 CDirectInputMgr::GetDeltaMouseDegree() const
 {
 	// 위상 변화량 축각도 => 하드웨어
-	return _vec3(m_tCurrentMouseState.lX, m_tCurrentMouseState.lY, m_tCurrentMouseState.lZ);
+	return _vec3(
+		static_cast<FLOAT>(m_tCurrentMouseState.lX), 
+		static_cast<FLOAT>(m_tCurrentMouseState.lY),
+		static_cast<FLOAT>(m_tCurrentMouseState.lZ));
 }
 
 void CDirectInputMgr::Free(void)

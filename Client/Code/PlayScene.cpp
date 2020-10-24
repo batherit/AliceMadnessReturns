@@ -3,6 +3,7 @@
 #include "TerrainMap.h"
 #include "Player.h"
 #include "Monster.h"
+#include "SkyBox.h"
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
 
@@ -50,15 +51,15 @@ int CPlayScene::Update(const _float& fTimeDelta)
 	_float fHeight = m_pTerrain->GetHeight(m_pPlayer->GetComponent<Engine::CTransform>()->GetPos());
 	m_pPlayer->GetComponent<Engine::CTransform>()->SetPosY(fHeight);
 
-	if (Engine::CKeyMgr::GetInstance()->IsKeyPressing(L"KEY_LBUTTON")) {
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB)) {
 		// 픽킹을 하기 위한 기본 변수들 세팅.
-		auto& pVertices = m_pTerrain->GetComponent<Engine::CTerrain>()->GetVertices();
+		auto& pVertices = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetVertices();
 		auto stPickingRayInfo = Engine::GetPickingRayInfo(m_pGraphicDev, Engine::GetClientCursorPoint(g_hWnd));
 		_float fU, fV, fDist;
 		_vec3 vV1, vV2, vV3;
 		
 		// 픽킹 검사를 진행한다.
-		for (auto& pIndex : m_pTerrain->GetComponent<Engine::CTerrain>()->GetIndexes()) {
+		for (auto& pIndex : m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetIndexes()) {
 			vV1 = pVertices[pIndex._0];
 			vV2 = pVertices[pIndex._1];
 			vV3 = pVertices[pIndex._2];
@@ -114,6 +115,11 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(m_pTerrain, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", m_pTerrain), E_FAIL);
 
+	// 스카이 박스 생성
+	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pSkyBox, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", m_pSkyBox), E_FAIL);
+
 	// 몬스터 생성
 	m_pMonster = CMonster::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pMonster, E_FAIL);
@@ -145,6 +151,7 @@ void CPlayScene::Free(void)
 {
 	Client::Safe_Release(m_pPlayer);
 	Client::Safe_Release(m_pMonster);
+	Client::Safe_Release(m_pSkyBox);
 	Client::Safe_Release(m_pCamera);
 	Client::Safe_Release(m_pTerrain);
 	CScene::Free();

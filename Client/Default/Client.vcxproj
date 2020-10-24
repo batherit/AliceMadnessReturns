@@ -182,6 +182,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\Loading.h" />
+    <ClInclude Include="..\Code\SkyBox.h" />
     <ClInclude Include="..\Code\SpriteObject.h" />
     <ClInclude Include="..\Code\StaticCamera.h" />
     <ClInclude Include="..\Code\TerrainMap.h" />
@@ -217,6 +218,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\Loading.cpp" />
+    <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\SpriteObject.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
     <ClCompile Include="..\Code\TerrainMap.cpp" />

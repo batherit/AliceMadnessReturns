@@ -7,7 +7,8 @@
 #include "TriCol.h"
 #include "CRcCol.h"
 #include "RcTex.h"
-#include "Terrain.h"
+#include "TerrainTex.h"
+#include "CubeTex.h"
 
 #include "Texture.h"
 

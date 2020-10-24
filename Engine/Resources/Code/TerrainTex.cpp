@@ -1,30 +1,30 @@
-#include "Terrain.h"
+#include "TerrainTex.h"
 
 USING(Engine)
-Engine::CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
+Engine::CTerrainTex::CTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CVIBuffer(pGraphicDev)
 {
 
 }
 
-Engine::CTerrain::CTerrain(const CTerrain& rhs)
+Engine::CTerrainTex::CTerrainTex(const CTerrainTex& rhs)
 	: CVIBuffer(rhs)
 {
 
 }
 
-Engine::CTerrain::~CTerrain(void)
+Engine::CTerrainTex::~CTerrainTex(void)
 {
 
 }
 
-HRESULT Engine::CTerrain::Ready_Buffer(void)
+HRESULT Engine::CTerrainTex::Ready_Buffer(void)
 {
 	// default
 	return SetTerrainInfo(_vec3(0.f, 0.f, 0.f), 3, 3, 1.f, 1.f);
 }
 
-void CTerrain::Render_Buffer(void)
+void CTerrainTex::Render_Buffer(void)
 {
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, sizeof(VTXTEX));
@@ -34,7 +34,7 @@ void CTerrain::Render_Buffer(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
-HRESULT CTerrain::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _uint _iNumOfVerticesH, _float _fWidth, _float _fHeight, const _tchar* _szHeightMapFileName)
+HRESULT CTerrainTex::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _uint _iNumOfVerticesH, _float _fWidth, _float _fHeight, const _tchar* _szHeightMapFileName)
 {
 	Safe_Release(m_pVB);
 	Safe_Release(m_pIB);
@@ -53,16 +53,11 @@ HRESULT CTerrain::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _uint
 	m_dwVtxCnt = _iNumOfVerticesW * _iNumOfVerticesH;		//4;
 	m_dwVtxSize = sizeof(VTXTEX);
 
-	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), E_FAIL);
+	m_dwIdxSize = sizeof(INDEX16);
+	m_IdxFmt = D3DFMT_INDEX16;
 
-	// 인덱스 버퍼 생성
-	FAILED_CHECK_RETURN(m_pGraphicDev->CreateIndexBuffer(sizeof(INDEX16) * m_dwTriCnt,
-		0,
-		D3DFMT_INDEX16,
-		D3DPOOL_MANAGED,
-		&m_pIB,
-		NULL),
-		E_FAIL);
+	// 버퍼 생성
+	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), E_FAIL);
 
 	VTXTEX*		pVertex = NULL;
 	m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
@@ -121,7 +116,7 @@ HRESULT CTerrain::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _uint
 	return S_OK;
 }
 
-_float Engine::CTerrain::GetHeight(const _vec3& _vPos) {
+_float Engine::CTerrainTex::GetHeight(const _vec3& _vPos) {
 	_vec3 vIndexPos = _vPos - m_vStartPos;
 
 	if (vIndexPos.x < 0.f || vIndexPos.x > m_fWidth) return 0.f;
@@ -160,9 +155,9 @@ _float Engine::CTerrain::GetHeight(const _vec3& _vPos) {
 }
 
 
-Engine::CTerrain* Engine::CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+Engine::CTerrainTex* Engine::CTerrainTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CTerrain*	pInstance = new CTerrain(pGraphicDev);
+	CTerrainTex*	pInstance = new CTerrainTex(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Buffer()))		// 버퍼 생성하고 정점 정보를 세팅한다.
 		Safe_Release(pInstance);
@@ -170,12 +165,12 @@ Engine::CTerrain* Engine::CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CComponent * CTerrain::Clone(void)
+CComponent * CTerrainTex::Clone(void)
 {
-	return new CTerrain(*this);
+	return new CTerrainTex(*this);
 }
 
-_bool CTerrain::LoadHeightMap(const _tchar * _szHeightMapFileName)
+_bool CTerrainTex::LoadHeightMap(const _tchar * _szHeightMapFileName)
 {
 	if (!_szHeightMapFileName)
 		return false;
@@ -236,7 +231,7 @@ _bool CTerrain::LoadHeightMap(const _tchar * _szHeightMapFileName)
 	return true;
 }
 
-void Engine::CTerrain::Free(void)
+void Engine::CTerrainTex::Free(void)
 {
 	m_vecVertices.clear();
 	m_vecVertices.shrink_to_fit();

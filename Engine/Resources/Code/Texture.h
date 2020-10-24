@@ -16,6 +16,8 @@ private:
 public:
 	HRESULT		Ready_Texture(const _tchar* pPath, TEXTURETYPE eType, const _uint& iCnt);
 	void		Render_Texture(const _uint& iIndex = 0);
+	static const _tchar* GetComponentTag() { return L"Texture"; }
+	static const Engine::COMPONENTID GetComponentID() { return Engine::ID_STATIC; }
 
 private:
 	vector<IDirect3DBaseTexture9*>			m_vecTexture;

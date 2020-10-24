@@ -20,21 +20,15 @@ Engine::CTriCol::~CTriCol(void)
 
 HRESULT Engine::CTriCol::Ready_Buffer(void)
 {
-	//FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), E_FAIL);
-
 	m_dwFVF = FVF_COL;
 	m_dwTriCnt = 1;
 	m_dwVtxCnt = 3;
 	m_dwVtxSize = sizeof(VTXCOL);
 
+	m_dwIdxSize = sizeof(INDEX16);
+	m_IdxFmt = D3DFMT_INDEX16;
+
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), E_FAIL);
-	//FAILED_CHECK_RETURN(m_pGraphicDev->CreateVertexBuffer(sizeof(VTXCOL) * 3,
-	//	0, // 정적버퍼로 할당하겠다는 옵션
-	//	FVF_COL,
-	//	D3DPOOL_MANAGED,
-	//	&m_pVB,
-	//	NULL),
-	//	E_FAIL);
 
 	VTXCOL*		pVertex = NULL;
 
@@ -54,6 +48,16 @@ HRESULT Engine::CTriCol::Ready_Buffer(void)
 	pVertex[2].dwColor = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
 
 	m_pVB->Unlock();
+
+	INDEX16*		pIndex = nullptr;
+
+	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
+
+	pIndex[0]._0 = 0;
+	pIndex[0]._1 = 1;
+	pIndex[0]._2 = 2;
+
+	m_pIB->Unlock();
 
 	return S_OK;
 }

@@ -14,7 +14,7 @@ protected:
 
 public:
 	virtual HRESULT	Ready_Buffer(void) override;
-	virtual void	Render_Buffer(void) override;
+	//virtual void	Render_Buffer(void) override;
 
 public:
 	static CRcCol*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

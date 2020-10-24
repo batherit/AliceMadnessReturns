@@ -46,6 +46,15 @@
     <Filter Include="02. Object\02. Object">
       <UniqueIdentifier>{201ca04f-c72e-4f0b-846f-dc77d7047bdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. Object\Monster">
+      <UniqueIdentifier>{ff1602f6-035f-4927-b2d7-e852e51a510b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. Object\Player">
+      <UniqueIdentifier>{32cb0994-47c5-4825-bbdf-cd871b863a1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. Object\SkyBox">
+      <UniqueIdentifier>{2ec60084-704c-447a-aecd-b75b1226b5f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -111,9 +120,6 @@
     <ClInclude Include="..\Code\LoadScene.h">
       <Filter>01. Scene\00. LoadScene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Player.h">
-      <Filter>02. Object\02. Object</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\DynamicCamera.h">
       <Filter>02. Object\00. Camera</Filter>
     </ClInclude>
@@ -121,7 +127,13 @@
       <Filter>02. Object\00. Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Monster.h">
-      <Filter>02. Object\02. Object</Filter>
+      <Filter>02. Object\02. Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Player.h">
+      <Filter>02. Object\02. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SkyBox.h">
+      <Filter>02. Object\02. Object\SkyBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +167,6 @@
     <ClCompile Include="..\Code\LoadScene.cpp">
       <Filter>01. Scene\00. LoadScene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Player.cpp">
-      <Filter>02. Object\02. Object</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\DynamicCamera.cpp">
       <Filter>02. Object\00. Camera</Filter>
     </ClCompile>
@@ -165,7 +174,13 @@
       <Filter>02. Object\00. Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>02. Object\02. Object</Filter>
+      <Filter>02. Object\02. Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player.cpp">
+      <Filter>02. Object\02. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkyBox.cpp">
+      <Filter>02. Object\02. Object\SkyBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

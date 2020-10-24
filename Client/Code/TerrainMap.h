@@ -31,7 +31,7 @@ public:
 
 private:
 	Engine::CRenderer* m_pRenderer = nullptr;
-	Engine::CTerrain* m_pTerrain = nullptr;
+	Engine::CTerrainTex* m_pTerrain = nullptr;
 };
 
 END

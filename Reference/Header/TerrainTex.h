@@ -5,17 +5,17 @@
 
 BEGIN(Engine)
 
-class ENGINE_DLL CTerrain : public CVIBuffer
+class ENGINE_DLL CTerrainTex : public CVIBuffer
 {
 protected:
-	explicit CTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CTerrain(const CTerrain& rhs);
-	virtual ~CTerrain(void);
+	explicit CTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CTerrainTex(const CTerrainTex& rhs);
+	virtual ~CTerrainTex(void);
 
 public:
 	virtual HRESULT	Ready_Buffer(void) override;
 	virtual void	Render_Buffer(void) override;
-	static const _tchar* GetComponentTag() { return L"Terrain"; }
+	static const _tchar* GetComponentTag() { return L"TerrainTex"; }
 	static const Engine::COMPONENTID GetComponentID() { return Engine::ID_STATIC; }
 
 	HRESULT SetTerrainInfo(_vec3 _vStartPos = _vec3(0.f, 0.f, 0.f), _uint _iNumOfVerticesW = 2, _uint _iNumOfVerticesH = 2, _float _fWidth = 1.f, _float _fHeight = 1.f, const _tchar* _szHeightMapFileName = nullptr);
@@ -24,7 +24,7 @@ public:
 	vector<INDEX16>& GetIndexes() { return m_vecIndexes; }
 
 public:
-	static CTerrain*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CTerrainTex*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent* Clone(void) override;
 
 private:

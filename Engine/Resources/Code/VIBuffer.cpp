@@ -5,6 +5,11 @@ Engine::CVIBuffer::CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResources(pGraphicDev)
 	, m_pVB(nullptr)
 	, m_pIB(nullptr)
+	, m_dwVtxCnt(0)
+	, m_dwTriCnt(0)
+	, m_dwVtxSize(0)
+	, m_dwFVF(0)
+	, m_dwIdxSize(0)
 {
 
 }
@@ -17,6 +22,8 @@ Engine::CVIBuffer::CVIBuffer(const CVIBuffer& rhs)
 	, m_dwTriCnt(rhs.m_dwTriCnt)
 	, m_dwVtxSize(rhs.m_dwVtxSize)
 	, m_dwFVF(rhs.m_dwFVF)
+	, m_dwIdxSize(rhs.m_dwIdxSize)
+	, m_IdxFmt(rhs.m_IdxFmt)
 {
 	Safe_AddRef(m_pVB);
 	Safe_AddRef(m_pIB);
@@ -54,7 +61,13 @@ HRESULT Engine::CVIBuffer::Ready_Buffer(void)
 		NULL),
 		E_FAIL);
 
-
+	FAILED_CHECK_RETURN(m_pGraphicDev->CreateIndexBuffer(m_dwIdxSize * m_dwTriCnt,
+		0, // 정적버퍼로 할당하겠다는 옵션
+		m_IdxFmt,
+		D3DPOOL_MANAGED,
+		&m_pIB,
+		NULL),
+		E_FAIL);
 
 	return S_OK;
 }
@@ -69,7 +82,10 @@ void Engine::CVIBuffer::Render_Buffer(void)
 	// 4인자 : 어떤 단위로 표현할 것인가
 
 	m_pGraphicDev->SetFVF(m_dwFVF);
-	m_pGraphicDev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, m_dwTriCnt);
+	m_pGraphicDev->SetIndices(m_pIB);
+	//m_pGraphicDev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, m_dwTriCnt);
+
+	m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
 }
 
 void Engine::CVIBuffer::Free(void)

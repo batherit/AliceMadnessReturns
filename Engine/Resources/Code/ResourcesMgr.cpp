@@ -50,7 +50,11 @@ HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const
 		pResources = CRcTex::Create(pGraphicDev);
 		break;
 	case BUFFER_TERRAINTEX:
-		pResources = CTerrain::Create(pGraphicDev);
+		pResources = CTerrainTex::Create(pGraphicDev);
+		break;
+	case BUFFER_CUBETEX:
+		pResources = CCubeTex::Create(pGraphicDev);
+		break;
 	}
 	NULL_CHECK_RETURN(pResources, E_FAIL);
 	

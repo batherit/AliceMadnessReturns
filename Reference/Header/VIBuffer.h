@@ -25,6 +25,9 @@ protected:
 	_ulong						m_dwVtxSize;
 	_ulong						m_dwFVF;
 
+	_ulong						m_dwIdxSize;
+	D3DFORMAT					m_IdxFmt;
+
 public:
 	virtual void Free(void);
 };

@@ -52,12 +52,12 @@ int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 		m_pTransform->RotateByAxis(fRotAngleByY, WORLD_Y_AXIS);
 
 		// 화면 내에 순환하는 클라이언트 영역 좌표 얻기
-		POINT ptCurrentCursor = Engine::CDirectInputMgr::GetInstance()->GetCurrentMousePos();
-		ptCurrentCursor = Engine::GetToroidClientPoint(g_hWnd, ptCurrentCursor);
+		//POINT ptCurrentCursor = Engine::CDirectInputMgr::GetInstance()->GetCurrentMousePos();
+		//ptCurrentCursor = Engine::GetToroidClientPoint(g_hWnd, ptCurrentCursor);
 
 		// 순환된 클라이언트 좌표를 스크린 좌표로 세팅하여 커서 좌표로 둔다.
-		ClientToScreen(g_hWnd, &ptCurrentCursor);
-		SetCursorPos(ptCurrentCursor.x, ptCurrentCursor.y);
+		//ClientToScreen(g_hWnd, &ptCurrentCursor);
+		//SetCursorPos(ptCurrentCursor.x, ptCurrentCursor.y);
 	}
 
 	if (GetCapture() == g_hWnd && Engine::CDirectInputMgr::GetInstance()->IsKeyUp(Engine::DIM_LB)) {

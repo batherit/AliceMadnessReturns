@@ -14,6 +14,7 @@
 BEGIN(Client)
 class CPlayer;
 class CMonster;
+class CSkyBox;
 class CTerrainMap;
 class CPlayScene : public Engine::CScene
 {
@@ -44,6 +45,7 @@ private:
 	Engine::CCamera* m_pCamera = nullptr;
 	CPlayer* m_pPlayer = nullptr;
 	CMonster* m_pMonster = nullptr;
+	CSkyBox* m_pSkyBox = nullptr;
 	CTerrainMap* m_pTerrain = nullptr;
 };
 

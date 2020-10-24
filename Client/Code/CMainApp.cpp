@@ -53,6 +53,17 @@ HRESULT CMainApp::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"M_Buffer_TriCol", Engine::BUFFER_TRICOL), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Height", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Height1.bmp"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		L"Buffer_CubeTex",
+		Engine::BUFFER_CUBETEX),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Texture_SkyBox",
+		Engine::TEX_CUBE,
+		L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4),
+		E_FAIL);
 	
 	// 클론할 컴포넌트를 프로토타입 매니저에 등록/
 	Engine::CComponent* pComponent = nullptr;
@@ -64,9 +75,13 @@ HRESULT CMainApp::Ready_MainApp(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::CRenderer::GetComponentTag(), pComponent);
 
-	pComponent = Engine::CTerrain::Create(m_pGraphicDev);
+	pComponent = Engine::CTerrainTex::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CTerrain::GetComponentTag(), pComponent);
+	Engine::Ready_Proto(Engine::CTerrainTex::GetComponentTag(), pComponent);
+
+	/*pComponent = Engine::CCubeTex::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::CCubeTex::GetComponentTag(), pComponent);*/
 
 	// 키 세팅
 	//Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_LBUTTON", VK_LBUTTON);

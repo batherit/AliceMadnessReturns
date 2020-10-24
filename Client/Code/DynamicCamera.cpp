@@ -35,7 +35,7 @@ HRESULT CDynamicCamera::Ready_Object(void)
 
 int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 {	
-	if (Engine::CDirectInputMgr::GetInstance()->IsMouseDown(Engine::CDirectInputMgr::MB_L)) {
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
 		POINT ptCurrentCursor = Engine::CDirectInputMgr::GetInstance()->GetCurrentMousePos();
 
 		if (Engine::IsPointInClient(g_hWnd, ptCurrentCursor)) {
@@ -43,7 +43,7 @@ int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 		}
 	}
 
-	if (GetCapture() == g_hWnd && Engine::CDirectInputMgr::GetInstance()->IsMousePressing(Engine::CDirectInputMgr::MB_L)) {
+	if (GetCapture() == g_hWnd && Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB)) {
 		POINT ptToCurrent = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
 		_float fRotAngleByY = ptToCurrent.x * 2.f * D3DX_PI / WINCX;
 		_float fRotAngleByRight = ptToCurrent.y * 2.f * D3DX_PI / WINCY;
@@ -60,7 +60,7 @@ int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 		SetCursorPos(ptCurrentCursor.x, ptCurrentCursor.y);
 	}
 
-	if (GetCapture() == g_hWnd && Engine::CDirectInputMgr::GetInstance()->IsMouseUp(Engine::CDirectInputMgr::MB_L)) {
+	if (GetCapture() == g_hWnd && Engine::CDirectInputMgr::GetInstance()->IsKeyUp(Engine::DIM_LB)) {
 		ReleaseCapture();
 	}
 

@@ -32,14 +32,16 @@ public:
 	_bool IsKeyPressing(KEY_STRING _szKeyString) const;
 	_bool IsKeyNone(KEY_STRING _szKeyString) const;
 
-	_bool IsMouseUp(E_MOUSE_BUTTON _eMouseButton) const;
-	_bool IsMouseDown(E_MOUSE_BUTTON _eMouseButton) const;
-	_bool IsMousePressing(E_MOUSE_BUTTON _eMouseButton) const;
-	_bool IsMouseNone(E_MOUSE_BUTTON _eMouseButton) const;
+	_bool IsKeyUp(const MOUSEKEYSTATE& _eMouseKey) const;
+	_bool IsKeyDown(const MOUSEKEYSTATE& _eMouseKey) const;
+	_bool IsKeyPressing(const MOUSEKEYSTATE& _eMouseKey) const;
+	_bool IsKeyNone(const MOUSEKEYSTATE& _eMouseKey) const;
 
 	POINT GetDeltaMousePos() const;
 	POINT GetCurrentMousePos() const;
 	POINT GetOldMousePos() const;
+
+	_vec3 GetDeltaMouseDegree() const;
 
 private:
 	virtual void Free(void) override;

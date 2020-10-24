@@ -134,39 +134,36 @@ _bool CDirectInputMgr::IsKeyNone(KEY_STRING _szKeyString) const
 	return false;
 }
 
-_bool CDirectInputMgr::IsMouseUp(E_MOUSE_BUTTON _eMouseButton) const
+_bool CDirectInputMgr::IsKeyUp(const MOUSEKEYSTATE& _eMouseKey) const
 {
-	if (DI_IS_ON_MB(m_tOldMouseState, _eMouseButton) && !DI_IS_ON_MB(m_tCurrentMouseState, _eMouseButton))
+	if (DI_IS_ON_MB(m_tOldMouseState, _eMouseKey) && !DI_IS_ON_MB(m_tCurrentMouseState, _eMouseKey))
 		return true;
 	return false;
 }
 
-_bool CDirectInputMgr::IsMouseDown(E_MOUSE_BUTTON _eMouseButton) const
+_bool CDirectInputMgr::IsKeyDown(const MOUSEKEYSTATE& _eMouseKey) const
 {
-	if (!DI_IS_ON_MB(m_tOldMouseState, _eMouseButton) && DI_IS_ON_MB(m_tCurrentMouseState, _eMouseButton))
+	if (!DI_IS_ON_MB(m_tOldMouseState, _eMouseKey) && DI_IS_ON_MB(m_tCurrentMouseState, _eMouseKey))
 		return true;
 	return false;
 }
 
-_bool CDirectInputMgr::IsMousePressing(E_MOUSE_BUTTON _eMouseButton) const
+_bool CDirectInputMgr::IsKeyPressing(const MOUSEKEYSTATE& _eMouseKey) const
 {
-	if (DI_IS_ON_MB(m_tOldMouseState, _eMouseButton) && DI_IS_ON_MB(m_tCurrentMouseState, _eMouseButton))
+	if (DI_IS_ON_MB(m_tOldMouseState, _eMouseKey) && DI_IS_ON_MB(m_tCurrentMouseState, _eMouseKey))
 		return true;
 	return false;
 }
 
-_bool CDirectInputMgr::IsMouseNone(E_MOUSE_BUTTON _eMouseButton) const
+_bool CDirectInputMgr::IsKeyNone(const MOUSEKEYSTATE& _eMouseKey) const
 {
-	if (!DI_IS_ON_MB(m_tOldMouseState, _eMouseButton) && !DI_IS_ON_MB(m_tCurrentMouseState, _eMouseButton))
+	if (!DI_IS_ON_MB(m_tOldMouseState, _eMouseKey) && !DI_IS_ON_MB(m_tCurrentMouseState, _eMouseKey))
 		return true;
 	return false;
 }
 
 POINT CDirectInputMgr::GetDeltaMousePos() const
 {
-	// 위상 변화량 => 하드웨어
-	//return POINT{ m_tCurrentMouseState.lX, m_tCurrentMouseState.lY };
-
 	// 클라이언트상 변화량 => 소프트웨어
 	return POINT{ m_ptCurrentClientMousePos.x - m_ptOldClientMousePos.x, m_ptCurrentClientMousePos.y - m_ptOldClientMousePos.y };
 }
@@ -179,6 +176,12 @@ POINT CDirectInputMgr::GetCurrentMousePos() const
 POINT CDirectInputMgr::GetOldMousePos() const
 {
 	return m_ptOldClientMousePos;
+}
+
+_vec3 CDirectInputMgr::GetDeltaMouseDegree() const
+{
+	// 위상 변화량 축각도 => 하드웨어
+	return _vec3(m_tCurrentMouseState.lX, m_tCurrentMouseState.lY, m_tCurrentMouseState.lZ);
 }
 
 void CDirectInputMgr::Free(void)

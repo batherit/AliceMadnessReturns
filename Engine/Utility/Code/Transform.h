@@ -174,8 +174,6 @@ public:
 	_vec3 GetRight() const { return m_vRight; }
 	_vec3 GetUp() const { return m_vUp; }
 	_vec3 GetLook() const { return m_vLook; }
-
-
 	
 private:
 	_vec3 m_vRight{ 1.f, 0.f, 0.f };

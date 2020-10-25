@@ -216,6 +216,37 @@ namespace Engine
 		return acosf(fDot);
 	}
 
+	// 쿼터니언 보간된 회전 행렬 얻기
+	inline _matrix* GetRotationMatrixSlerp(_matrix *_pOut, const _matrix* _pFromM, const _matrix* _pToM, const _float& _fT) {
+		D3DXQUATERNION _FromQ, _ToQ, _LerpQ;
+		D3DXQuaternionRotationMatrix(&_FromQ, _pFromM);
+		D3DXQuaternionRotationMatrix(&_ToQ, _pToM);
+
+		D3DXQuaternionSlerp(&_LerpQ, &_FromQ, &_ToQ, _fT);
+
+		D3DXMatrixRotationQuaternion(_pOut, &_LerpQ);
+
+		return _pOut;
+	}
+
+	// 월드 행렬에서 회전 행렬 정보 추출하기
+	inline _matrix* ExtractRotationMatrix(_matrix* _pOut, const _matrix* _pWorldM) {
+		_vec3 vRight = _vec3(_pWorldM->_11, _pWorldM->_12, _pWorldM->_13);
+		_vec3 vUp = _vec3(_pWorldM->_21, _pWorldM->_22, _pWorldM->_23);
+		_vec3 vLook = _vec3(_pWorldM->_31, _pWorldM->_32, _pWorldM->_33);
+
+		D3DXMatrixIdentity(_pOut);
+		D3DXVec3Normalize(&vRight, &vRight);
+		D3DXVec3Normalize(&vUp, &vUp);
+		D3DXVec3Normalize(&vLook, &vLook);
+
+		_pOut->_11 = vRight.x;	_pOut->_12 = vRight.y;	_pOut->_13 = vRight.z;
+		_pOut->_21 = vUp.x;		_pOut->_22 = vUp.y;		_pOut->_23 = vUp.z;
+		_pOut->_31 = vLook.x;	_pOut->_32 = vLook.y;	_pOut->_33 = vLook.z;
+
+		return _pOut;
+	}
+
 	// 가중치
 	inline float GetWeightByDegree(float _fDegree) {
 		return cosf(D3DXToRadian(_fDegree)) * 0.5f + 0.5f;

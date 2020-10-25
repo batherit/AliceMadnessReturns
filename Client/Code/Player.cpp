@@ -52,12 +52,27 @@ int CPlayer::Update_Object(const _float & _fDeltaTime)
 		vDir += m_pTransform->GetRight();
 	}*/
 
-	_vec3 vDir = m_vTargetPos - m_pTransform->GetPos();
+	// 쿼터니언 회전을 통해 카메라 축과 일치시키기
+	_matrix matView, matViewRot, matRotSlerp;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, NULL, &matView);
+
+	Engine::ExtractRotationMatrix(&matViewRot, &matView);
+	
+	_matrix matCurRot;
+	Engine::ExtractRotationMatrix(&matCurRot, &m_pTransform->GetObjectMatrix());
+	Engine::GetRotationMatrixSlerp(&matRotSlerp, &matCurRot, &matViewRot, 0.1f);
+	m_pTransform->ResetRightUpLook(
+		&(_vec3(matRotSlerp._31, matRotSlerp._32, matRotSlerp._33) + m_pTransform->GetPos()),
+		&WORLD_Y_AXIS
+	);
+
+	/*_vec3 vDir = m_vTargetPos - m_pTransform->GetPos();
 	if (D3DXVec3LengthSq(&vDir) > 0.5f) {
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransform->SetDir(vDir);
 		m_pTransform->MoveByDelta(_fDeltaTime);
-	}
+	}*/
 
 	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 

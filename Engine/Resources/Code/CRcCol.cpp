@@ -63,6 +63,8 @@ HRESULT Engine::CRcCol::Ready_Buffer(void)
 
 
 	m_pIB->Unlock();
+
+	return S_OK;
 }
 
 //void CRcCol::Render_Buffer(void)

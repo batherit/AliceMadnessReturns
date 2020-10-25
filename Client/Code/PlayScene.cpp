@@ -23,11 +23,11 @@ CPlayScene::~CPlayScene(void)
 {
 }
 
-LRESULT CPlayScene::OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
-{
-	
-	return LRESULT();
-}
+//LRESULT CPlayScene::OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
+//{
+//	
+//	return LRESULT();
+//}
 
 void CPlayScene::ResetScene(void)
 {

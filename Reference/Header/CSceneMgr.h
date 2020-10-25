@@ -14,7 +14,7 @@ private:
 	virtual ~CSceneMgr();
 
 public:
-	LRESULT CALLBACK OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
+	//LRESULT CALLBACK OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 	_bool ConfirmValidScene(void);				// 다음 씬이 존재한다면, 해당씬으로 변경한다.
 	void SetNextScene(CScene* _pNextScene);		// nullptr을 전달하거나, 초기 씬이 세팅되지 않으면 프로그램이 종료된다.
 	void RequestSceneInit(void) { m_bInit = false; }

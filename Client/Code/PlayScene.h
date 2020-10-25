@@ -24,7 +24,7 @@ private: // 생성자, 소멸자
 	virtual ~CPlayScene(void);
 
 public:
-	virtual LRESULT CALLBACK OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
+	//virtual LRESULT CALLBACK OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 	// CScene을(를) 통해 상속됨
 	virtual void ResetScene(void) override;
 	virtual HRESULT Ready(void);

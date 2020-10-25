@@ -186,7 +186,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	if (g_pMainApp) g_pMainApp->OnProcessingWindowMessage(hWnd, message, wParam, lParam);
+	//if (g_pMainApp) g_pMainApp->OnProcessingWindowMessage(hWnd, message, wParam, lParam);
 
 	switch (message)
 	{

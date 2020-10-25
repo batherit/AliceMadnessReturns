@@ -15,11 +15,11 @@ Engine::CSceneMgr::~CSceneMgr()
 	//Free();
 }
 
-LRESULT CSceneMgr::OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
-{
-	if (!m_pCurScene) return 0;
-	return m_pCurScene->OnProcessingWindowMessage(hWnd, nMessageID, wParam, lParam);
-}
+//LRESULT CSceneMgr::OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
+//{
+//	if (!m_pCurScene) return 0;
+//	return m_pCurScene->OnProcessingWindowMessage(hWnd, nMessageID, wParam, lParam);
+//}
 
 bool Engine::CSceneMgr::ConfirmValidScene(void)
 {

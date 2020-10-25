@@ -54,14 +54,14 @@ HRESULT CLoading::Ready_Loading(LOADINGID eLoading)
 
 _uint CLoading::Loading_ForStage(void)
 {
+
+
 	lstrcpy(m_szLoading, L"Buffer Loading.............................");
 	
 	int i = 0;
-
-	// buffer
-
-	//FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_RcTex", Engine::BUFFER_RCTEX), E_FAIL);
-
+	
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_RcTex", Engine::BUFFER_RCTEX), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"M_Buffer_TriCol", Engine::BUFFER_TRICOL), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
 												Engine::RESOURCE_STATIC,
 												L"Buffer_TerrainTex",
@@ -71,16 +71,35 @@ _uint CLoading::Loading_ForStage(void)
 												VTXITV),
 												E_FAIL);
 
-	/*FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
 												Engine::RESOURCE_STATIC,
 												L"Buffer_CubeTex",
 												Engine::BUFFER_CUBETEX),
-												E_FAIL);*/
+												E_FAIL);
 
 
-	lstrcpy(m_szLoading, L"Texture Loading.............................");
+												// 임시 리소스 로드.
+
+	
+	// 컴포넌트
+	lstrcpy(m_szLoading, L"Registering Component.............................");
+	// 클론할 컴포넌트를 프로토타입 매니저에 등록/
+	Engine::CComponent* pComponent = nullptr;
+	pComponent = Engine::CTransform::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::CTransform::GetComponentTag(), pComponent);
+
+	pComponent = Engine::CRenderer::GetInstance();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::CRenderer::GetComponentTag(), pComponent);
+
+	pComponent = Engine::CTerrainTex::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::CTerrainTex::GetComponentTag(), pComponent);
+
+	
 	// 텍스쳐
-
+	lstrcpy(m_szLoading, L"Texture Loading.............................");
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Player", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ma.jpg"), E_FAIL);
 
@@ -91,10 +110,16 @@ _uint CLoading::Loading_ForStage(void)
 												Engine::TEX_NORMAL,
 												L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2),
 												E_FAIL);
-
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Height", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Height1.bmp"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Texture_SkyBox",
+		Engine::TEX_CUBE,
+		L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4),
+		E_FAIL);
 	
-	
-	lstrcpy(m_szLoading, L"Mesh Loading.............................");
+	//lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	//// Stone
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//											RESOURCE_STAGE,

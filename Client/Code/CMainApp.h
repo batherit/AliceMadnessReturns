@@ -21,7 +21,7 @@ private: // 생성자, 소멸자
 
 	// public 함수, 변수
 public:
-	virtual LRESULT CALLBACK OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
+	//virtual LRESULT CALLBACK OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 	HRESULT		Ready_MainApp(void);
 	_int		Update_MainApp(const _float& fTimeDelta);
 	void		Render_MainApp(void);

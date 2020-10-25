@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CMainApp.h"
-#include "PlayScene.h"
+#include "LoadScene.h"
+//#include "PlayScene.h"
 
 CMainApp::CMainApp(void)
 {
@@ -12,10 +13,10 @@ CMainApp::~CMainApp(void)
 
 }
 
-LRESULT CMainApp::OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
-{
-	return Engine::CManagement::GetInstance()->GetSceneMgr()->OnProcessingWindowMessage(hWnd, nMessageID, wParam, lParam);
-}
+//LRESULT CMainApp::OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
+//{
+//	return Engine::CManagement::GetInstance()->GetSceneMgr()->OnProcessingWindowMessage(hWnd, nMessageID, wParam, lParam);
+//}
 
 HRESULT CMainApp::Ready_MainApp(void)
 {
@@ -25,6 +26,9 @@ HRESULT CMainApp::Ready_MainApp(void)
 	m_pGraphicDev = m_pDeviceClass->Get_GraphicDev();
 	Engine::Safe_AddRef(m_pGraphicDev);
 
+	// 임시 리소스 로드.
+	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(Engine::RESOURCE_END), E_FAIL);
+	Client::Safe_Release(m_pDeviceClass);
 	// 샘플링 상태 설정
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
@@ -45,54 +49,8 @@ HRESULT CMainApp::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"바탕", 15, 20, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"궁서", 30, 30, FW_HEAVY), E_FAIL);
 
-	// 임시 리소스 로드.
-	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(Engine::RESOURCE_END), E_FAIL);
-	Client::Safe_Release(m_pDeviceClass);
-
-	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_RcTex", Engine::BUFFER_RCTEX), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"M_Buffer_TriCol", Engine::BUFFER_TRICOL), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Height", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Height1.bmp"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
-		Engine::RESOURCE_STATIC,
-		L"Buffer_CubeTex",
-		Engine::BUFFER_CUBETEX),
-		E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Texture_SkyBox",
-		Engine::TEX_CUBE,
-		L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4),
-		E_FAIL);
-	
-	// 클론할 컴포넌트를 프로토타입 매니저에 등록/
-	Engine::CComponent* pComponent = nullptr;
-	pComponent = Engine::CTransform::Create();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CTransform::GetComponentTag(), pComponent);
-
-	pComponent = Engine::CRenderer::GetInstance();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CRenderer::GetComponentTag(), pComponent);
-
-	pComponent = Engine::CTerrainTex::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CTerrainTex::GetComponentTag(), pComponent);
-
-	/*pComponent = Engine::CCubeTex::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CCubeTex::GetComponentTag(), pComponent);*/
-
-	// 키 세팅
-	//Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_LBUTTON", VK_LBUTTON);
-	//Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_W", 'W');
-	//Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_A", 'A');
-	//Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_S", 'S');
-	//Engine::CKeyMgr::GetInstance()->BindKeyStringToKey(L"KEY_D", 'D');
-
-
 	// 첫 씬을 Logo로 설정한다.
-	Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+	Engine::CManagement::GetInstance()->SetNextScene(CLoadScene::Create(m_pGraphicDev));
 	
 	return S_OK;
 }

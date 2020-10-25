@@ -1,12 +1,10 @@
 #ifndef LoadScene_h__
 #define LoadScene_h__
 
-#include "Scene.h"
 #include "Define.h"
-
-#include "BackGround.h"
-#include "TestPlayer.h"
-#include "TestMonster.h"
+#include "Base.h"
+#include "Engine_Define.h"
+#include "Export_Function.h"
 #include "Loading.h"
 
 BEGIN(Client)
@@ -18,16 +16,10 @@ private:
 	virtual ~CLoadScene(void);
 
 public:
-	virtual HRESULT Ready_Scene(void) override;
-	virtual _int Update_Scene(const _float& fTimeDelta) override;
-	virtual void Render_Scene(void) override;
-		
-private:
-	HRESULT		Ready_Environment_Layer(const _tchar* pLayerTag);
-	HRESULT		Ready_GameLogic_Layer(const _tchar* pLayerTag);
-	HRESULT		Ready_UI_Layer(const _tchar* pLayerTag);
-
-	HRESULT		Ready_Resource(Engine::RESOURCETYPE eType);
+	virtual void ResetScene(void) override;
+	virtual HRESULT Ready(void);
+	virtual _int Update(const _float& fTimeDelta);
+	virtual void Render(void);
 
 private:
 	CLoading*	m_pLoading = nullptr;

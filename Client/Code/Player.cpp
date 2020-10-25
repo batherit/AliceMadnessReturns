@@ -67,12 +67,12 @@ int CPlayer::Update_Object(const _float & _fDeltaTime)
 		&WORLD_Y_AXIS
 	);
 
-	/*_vec3 vDir = m_vTargetPos - m_pTransform->GetPos();
+	_vec3 vDir = m_vTargetPos - m_pTransform->GetPos();
 	if (D3DXVec3LengthSq(&vDir) > 0.5f) {
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransform->SetDir(vDir);
 		m_pTransform->MoveByDelta(_fDeltaTime);
-	}*/
+	}
 
 	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 

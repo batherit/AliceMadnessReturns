@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "Stone.h"
+#include "SphereRenderer.h"
 #include "SkyBox.h"
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
@@ -126,6 +127,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(m_pMonster, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", m_pMonster), E_FAIL);
 
+	// ½ºÅæ »ý¼º
 	Engine::CGameObject* pGameObject = CStone::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);

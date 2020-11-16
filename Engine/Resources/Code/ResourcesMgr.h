@@ -6,6 +6,7 @@
 
 #include "TriCol.h"
 #include "CRcCol.h"
+#include "SphereCol.h"
 #include "RcTex.h"
 #include "TerrainTex.h"
 #include "CubeTex.h"

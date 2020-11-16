@@ -9,11 +9,13 @@ BEGIN(Engine)
 class CStaticMesh;
 class CTransform;
 class CRenderer;
+class CSphereCollider;
 //class CCalculator;
 
 END
 
 BEGIN(Client)
+class CSphereRenderer;
 class CStone : public Engine::CGameObject
 {
 private:
@@ -32,13 +34,11 @@ private:
 	//_vec3		PickUp_OnTerrain(void);
 
 private:
-
 	Engine::CStaticMesh*		m_pMesh = nullptr;
 	Engine::CTransform*			m_pTransform = nullptr;
 	Engine::CRenderer*			m_pRenderer = nullptr;
-	//Engine::CCalculator*		m_pCalculatorCom = nullptr;
-	_vec3						m_vDir;
-	_float						m_fSpeed = 5.f;
+	Engine::CSphereCollider*	m_pCollider = nullptr;
+	CSphereRenderer*			m_pSphere = nullptr;
 
 public:
 	static CStone*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -23,6 +23,7 @@
     <ClCompile Include="..\Code\GameObject.cpp" />
     <ClCompile Include="..\Code\KeyMgr.cpp" />
     <ClCompile Include="..\Code\Management.cpp" />
+    <ClCompile Include="..\Code\SphereCollider.cpp" />
     <ClCompile Include="..\Code\Transform.cpp" />
     <ClCompile Include="..\Code\Component.cpp" />
     <ClCompile Include="..\Code\CScene.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="..\Code\GameObject.h" />
     <ClInclude Include="..\Code\KeyMgr.h" />
     <ClInclude Include="..\Code\Management.h" />
+    <ClInclude Include="..\Code\SphereCollider.h" />
     <ClInclude Include="..\Code\Transform.h" />
     <ClInclude Include="..\Code\Component.h" />
     <ClInclude Include="..\Code\CScene.h" />

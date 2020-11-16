@@ -19,9 +19,6 @@
     <Filter Include="03. GameObject">
       <UniqueIdentifier>{f6d8fe00-eaa8-4e4d-996e-ab8ad6f87f45}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Component\00. MoveComponent">
-      <UniqueIdentifier>{e5e203d4-fe85-4a99-8417-7c096136dd15}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05. Manager">
       <UniqueIdentifier>{44108967-497d-4acf-991d-f9bfd7f48a5b}</UniqueIdentifier>
     </Filter>
@@ -39,6 +36,15 @@
     </Filter>
     <Filter Include="04. Component\01. Renderer">
       <UniqueIdentifier>{484376b2-6b94-4461-aac2-b2634aca9fb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\00. Transform">
+      <UniqueIdentifier>{e5e203d4-fe85-4a99-8417-7c096136dd15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\02. Collider">
+      <UniqueIdentifier>{8459c5bd-bcf3-4ed9-b1a4-1b0b53775625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\02. Collider\00. SphereCollider">
+      <UniqueIdentifier>{6e0504be-0545-46a6-bebe-2c0f37958951}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,7 +82,10 @@
       <Filter>04. Component\01. Renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Transform.h">
-      <Filter>04. Component\00. MoveComponent</Filter>
+      <Filter>04. Component\00. Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SphereCollider.h">
+      <Filter>04. Component\02. Collider\00. SphereCollider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +120,10 @@
       <Filter>04. Component\01. Renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Transform.cpp">
-      <Filter>04. Component\00. MoveComponent</Filter>
+      <Filter>04. Component\00. Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SphereCollider.cpp">
+      <Filter>04. Component\02. Collider\00. SphereCollider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

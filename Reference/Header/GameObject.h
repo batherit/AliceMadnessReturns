@@ -39,7 +39,7 @@ public:
 		const COMPONENTID id = T::GetComponentID();
 		return static_cast<T*>(AddComponent(id, tag));
 	}
-	void SetParent(CGameObject* _pParent) { m_pParent = _pParent; }
+	void SetParent(CGameObject* _pParent);
 	CGameObject* GetParent() const { return m_pParent; }
 
 	virtual void Free(void);

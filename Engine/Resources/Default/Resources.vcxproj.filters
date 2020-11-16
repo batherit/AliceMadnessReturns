@@ -37,6 +37,9 @@
     <Filter Include="00. Resources\02. Mesh\00. StaticMesh">
       <UniqueIdentifier>{59800114-ccba-4e34-867f-75b407ac95a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Resources\00. VIBuffer\05. SphereCol">
+      <UniqueIdentifier>{83c0a717-a2d2-4dee-a34a-b4ba84c98311}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Resouces.h">
@@ -74,6 +77,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\StaticMesh.h">
       <Filter>00. Resources\02. Mesh\00. StaticMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SphereCol.h">
+      <Filter>00. Resources\00. VIBuffer\05. SphereCol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +120,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\StaticMesh.cpp">
       <Filter>00. Resources\02. Mesh\00. StaticMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SphereCol.cpp">
+      <Filter>00. Resources\00. VIBuffer\05. SphereCol</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

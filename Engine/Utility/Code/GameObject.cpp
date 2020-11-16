@@ -71,6 +71,7 @@ void Engine::CGameObject::Free(void)
 		m_mapComponent[i].clear();
 	}
 
+	Safe_Release(m_pParent);
 	Safe_Release(m_pGraphicDev);
 }
 
@@ -82,4 +83,12 @@ CComponent * Engine::CGameObject::Find_Component(const _tchar * pComponentTag, C
 		return nullptr;
 
 	return iter->second;
+}
+
+void Engine::CGameObject::SetParent(CGameObject* _pParent) {
+	if (!_pParent)
+		return;
+
+	m_pParent = _pParent;
+	Engine::Safe_AddRef(_pParent);
 }

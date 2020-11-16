@@ -58,6 +58,9 @@
     <Filter Include="02. Object\02. Object\Stone">
       <UniqueIdentifier>{128134c3-5108-4598-a6bf-359411d51126}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. Object\ColliderRenderer">
+      <UniqueIdentifier>{3d6a4757-c873-4862-929a-b6793d7b549e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -141,6 +144,9 @@
     <ClInclude Include="..\Code\Stone.h">
       <Filter>02. Object\02. Object\Stone</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\SphereRenderer.h">
+      <Filter>02. Object\02. Object\ColliderRenderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -190,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Stone.cpp">
       <Filter>02. Object\02. Object\Stone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SphereRenderer.cpp">
+      <Filter>02. Object\02. Object\ColliderRenderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

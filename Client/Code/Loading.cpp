@@ -61,6 +61,7 @@ _uint CLoading::Loading_ForStage(void)
 	int i = 0;
 	
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_RcTex", Engine::BUFFER_RCTEX), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_SphereCol", Engine::BUFFER_SPHERECOL), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"M_Buffer_TriCol", Engine::BUFFER_TRICOL), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
 												Engine::RESOURCE_STATIC,
@@ -76,6 +77,7 @@ _uint CLoading::Loading_ForStage(void)
 												L"Buffer_CubeTex",
 												Engine::BUFFER_CUBETEX),
 												E_FAIL);
+
 
 
 												// 임시 리소스 로드.
@@ -97,6 +99,9 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::CTerrainTex::GetComponentTag(), pComponent);
 
+	pComponent = Engine::CSphereCollider::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::CSphereCollider::GetComponentTag(), pComponent);
 	
 	// 텍스쳐
 	lstrcpy(m_szLoading, L"Texture Loading.............................");

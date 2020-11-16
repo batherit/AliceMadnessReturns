@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "Stone.h"
+#include "SphereRenderer.h"
 #include "Export_Function.h"
 
 CStone::CStone(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
-	, m_vDir(0.f, 0.f, 0.f)
 {
 
 }
@@ -40,6 +40,13 @@ HRESULT Client::CStone::Add_Component(void)
 	// Renderer
 	pComponent = m_pRenderer = AddComponent<Engine::CRenderer>();
 
+	// Collider
+	pComponent = m_pCollider = AddComponent<Engine::CSphereCollider>();
+	m_pCollider->SetSphereColliderInfo(2.f);
+
+	m_pSphere = CSphereRenderer::Create(m_pGraphicDev);
+	m_pSphere->GetTransform()->SetScaleXYZ(_vec3(2.f, 2.f, 2.f));
+
 	// Calculator
 	/*pComponent = m_pCalculatorCom = dynamic_cast<Engine::CCalculator*>(Engine::Clone(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -65,6 +72,7 @@ CStone* CStone::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStone::Free(void)
 {
+	Client::Safe_Release(m_pSphere);
 	Engine::CGameObject::Free();
 }
 
@@ -104,6 +112,8 @@ void Client::CStone::Render_Object(void)
 
 	m_pMesh->Render_Meshes();
 
+	m_pSphere->GetTransform()->SetPos(GetTransform()->GetPos());
+	m_pSphere->Render_Object();
 }
 //void Client::CStone::SetUp_OnTerrain(void)
 //{

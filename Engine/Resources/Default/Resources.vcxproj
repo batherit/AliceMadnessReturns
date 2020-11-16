@@ -174,6 +174,7 @@ call CopyResources.bat</Command>
     <ClInclude Include="..\Code\RcTex.h" />
     <ClInclude Include="..\Code\Resources.h" />
     <ClInclude Include="..\Code\ResourcesMgr.h" />
+    <ClInclude Include="..\Code\SphereCol.h" />
     <ClInclude Include="..\Code\StaticMesh.h" />
     <ClInclude Include="..\Code\TerrainTex.h" />
     <ClInclude Include="..\Code\Texture.h" />
@@ -190,6 +191,7 @@ call CopyResources.bat</Command>
     <ClCompile Include="..\Code\RcTex.cpp" />
     <ClCompile Include="..\Code\Resources.cpp" />
     <ClCompile Include="..\Code\ResourcesMgr.cpp" />
+    <ClCompile Include="..\Code\SphereCol.cpp" />
     <ClCompile Include="..\Code\StaticMesh.cpp" />
     <ClCompile Include="..\Code\TerrainTex.cpp" />
     <ClCompile Include="..\Code\Texture.cpp" />

@@ -11,6 +11,7 @@
 #include "Component.h"
 #include "Transform.h"
 #include "Renderer.h"
+#include "SphereCollider.h"
 
 BEGIN(Engine)
 

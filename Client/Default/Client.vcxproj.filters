@@ -55,6 +55,9 @@
     <Filter Include="02. Object\02. Object\SkyBox">
       <UniqueIdentifier>{2ec60084-704c-447a-aecd-b75b1226b5f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. Object\Stone">
+      <UniqueIdentifier>{128134c3-5108-4598-a6bf-359411d51126}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -135,6 +138,9 @@
     <ClInclude Include="..\Code\SkyBox.h">
       <Filter>02. Object\02. Object\SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Stone.h">
+      <Filter>02. Object\02. Object\Stone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -181,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
       <Filter>02. Object\02. Object\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stone.cpp">
+      <Filter>02. Object\02. Object\Stone</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -205,6 +205,7 @@ namespace Engine
 		D3DXVec3Normalize(&vRotAxis, &vRotAxis);
 		return vRotAxis;
 	}
+
 	// 회전각 얻기
 	inline _float GetRotationAngle(const _vec3& vU, const _vec3& vV) {
 		_vec3 vUnitU;

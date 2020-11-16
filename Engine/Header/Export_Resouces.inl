@@ -19,6 +19,10 @@ inline HRESULT Ready_Texture(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort & wCon
 {
 	return CResourcesMgr::GetInstance()->Ready_Texture(pGraphicDev, wContainerIdx, pTextureTag, eType, pFilePath, iCnt);
 }
+inline HRESULT Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort & wContainerIdx, const _tchar * pMeshTag, MESHTYPE eType, const _tchar * pFilePath, const _tchar * pFileName)
+{
+	return CResourcesMgr::GetInstance()->Ready_Meshes(pGraphicDev, wContainerIdx, pMeshTag, eType, pFilePath, pFileName);
+}
 void		Render_Buffer(const _ushort& wContainerIdx, const _tchar* pBufferTag)
 {
 	CResourcesMgr::GetInstance()->Render_Buffer(wContainerIdx, pBufferTag);

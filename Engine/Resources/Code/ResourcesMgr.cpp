@@ -83,6 +83,39 @@ HRESULT CResourcesMgr::Ready_Texture(LPDIRECT3DDEVICE9 pGraphicDev, const _ushor
 	return S_OK;
 }
 
+HRESULT CResourcesMgr::Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort & wContainerIdx, const _tchar * pMeshTag, MESHTYPE eType, const _tchar * pFilePath, const _tchar * pFileName)
+{
+	if (nullptr == m_pmapResource)
+	{
+		MSG_BOX("Resource Container not Reserved");
+		return E_FAIL;
+	}
+
+	CResources*		pResources = Find_Resources(wContainerIdx, pMeshTag);
+	if (nullptr != pResources)
+		return E_FAIL;
+
+	switch (eType)
+	{
+	case TYPE_STATIC:
+		pResources = CStaticMesh::Create(pGraphicDev, pFilePath, pFileName);
+		break;
+
+	case TYPE_DYNAMIC:
+		break;
+
+	case TYPE_NAVI:
+		break;
+	}
+
+	if (nullptr == pResources)
+		return E_FAIL;
+
+	m_pmapResource[wContainerIdx].emplace(pMeshTag, pResources);
+
+	return S_OK;
+}
+
 Engine::CResources* Engine::CResourcesMgr::Find_Resources(const _ushort& wContainerIdx, const _tchar* pResourcesTag)
 {
 	auto	iter = find_if(m_pmapResource[wContainerIdx].begin(),

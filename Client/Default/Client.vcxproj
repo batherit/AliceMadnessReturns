@@ -185,6 +185,7 @@
     <ClInclude Include="..\Code\SkyBox.h" />
     <ClInclude Include="..\Code\SpriteObject.h" />
     <ClInclude Include="..\Code\StaticCamera.h" />
+    <ClInclude Include="..\Code\Stone.h" />
     <ClInclude Include="..\Code\TerrainMap.h" />
     <ClInclude Include="..\Header\Const.h" />
     <ClInclude Include="..\Header\Define.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\SpriteObject.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
+    <ClCompile Include="..\Code\Stone.cpp" />
     <ClCompile Include="..\Code\TerrainMap.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">

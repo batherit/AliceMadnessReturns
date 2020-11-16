@@ -3,6 +3,7 @@
 #include "TerrainMap.h"
 #include "Player.h"
 #include "Monster.h"
+#include "Stone.h"
 #include "SkyBox.h"
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
@@ -124,6 +125,13 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pMonster = CMonster::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pMonster, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", m_pMonster), E_FAIL);
+
+	Engine::CGameObject* pGameObject = CStone::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
+
+
+	m_mapLayer.emplace(pLayerTag, pLayer);
 	
 	// 몬스터에 카메라를 세팅함.
 	m_pMonster->SetCameraForBillboard(m_pCamera);

@@ -31,6 +31,12 @@
     <Filter Include="00. Resources\00. VIBuffer\03. TerrainTex">
       <UniqueIdentifier>{634d4d44-45cf-456f-b23f-d3c7b1ab66fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Resources\02. Mesh">
+      <UniqueIdentifier>{3d938690-6705-4ed6-9b92-79ef4ecf76e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\02. Mesh\00. StaticMesh">
+      <UniqueIdentifier>{59800114-ccba-4e34-867f-75b407ac95a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Resouces.h">
@@ -62,6 +68,12 @@
     </ClInclude>
     <ClInclude Include="..\Code\CubeTex.h">
       <Filter>00. Resources\00. VIBuffer\04. CubeTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Mesh.h">
+      <Filter>00. Resources\02. Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\StaticMesh.h">
+      <Filter>00. Resources\02. Mesh\00. StaticMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +108,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CubeTex.cpp">
       <Filter>00. Resources\00. VIBuffer\04. CubeTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mesh.cpp">
+      <Filter>00. Resources\02. Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticMesh.cpp">
+      <Filter>00. Resources\02. Mesh\00. StaticMesh</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

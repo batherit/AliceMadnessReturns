@@ -119,15 +119,15 @@ _uint CLoading::Loading_ForStage(void)
 		L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4),
 		E_FAIL);
 	
-	//lstrcpy(m_szLoading, L"Mesh Loading.............................");
-	//// Stone
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//											RESOURCE_STAGE,
-	//											L"Mesh_Stone", 
-	//											Engine::TYPE_STATIC, 
-	//											L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
-	//											L"TombStone.X"),
-	//											E_FAIL);
+	lstrcpy(m_szLoading, L"Mesh Loading.............................");
+	// Stone
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Stone",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+		L"TombStone.X"),
+		E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	RESOURCE_STAGE,

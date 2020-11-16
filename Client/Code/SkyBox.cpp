@@ -32,7 +32,7 @@ void CSkyBox::Free(void)
 
 HRESULT Client::CSkyBox::Ready_Object(void)
 {
-	m_pTransform->SetScaleXYZ(100.f, 100.f, 100.f);
+	//m_pTransform->SetScaleXYZ(105.101f, 105.101f, 105.101f);
 
 	m_pCubeTex = dynamic_cast<Engine::CCubeTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_CubeTex"));
 	m_mapComponent[Engine::CCubeTex::GetComponentID()].emplace(Engine::CCubeTex::GetComponentTag(), m_pCubeTex);

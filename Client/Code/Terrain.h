@@ -8,12 +8,12 @@
 
 BEGIN(Client)
 
-class CTerrainMap : public Engine::CGameObject
+class CTerrain : public Engine::CGameObject
 {
 private: // 생성자, 소멸자
-	explicit  CTerrainMap(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit  CTerrainMap(const  CTerrainMap& rhs);
-	virtual ~CTerrainMap(void);
+	explicit  CTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit  CTerrain(const  CTerrain& rhs);
+	virtual ~CTerrain(void);
 
 	// CGameObject을(를) 통해 상속됨
 	virtual HRESULT Ready_Object(void) override;
@@ -24,9 +24,10 @@ public:
 	_float GetHeight(_vec3 _vPos) const {
 		return m_pTerrain->GetHeight(_vPos);
 	}
+	void CreateTerrain(_uint _iNumOfVerticesW, _uint _iNumOfVerticesH, _float _fWidth, _float _fHeight, const _tchar* _szHeightMapFileName);
 
 public:
-	static CTerrainMap*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CTerrain*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
 
 private:

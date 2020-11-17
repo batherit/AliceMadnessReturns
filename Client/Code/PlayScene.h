@@ -15,7 +15,7 @@ BEGIN(Client)
 class CPlayer;
 class CMonster;
 class CSkyBox;
-class CTerrainMap;
+class CTerrain;
 class CPlayScene : public Engine::CScene
 {
 private: // 持失切, 社瑚切
@@ -46,7 +46,7 @@ private:
 	CPlayer* m_pPlayer = nullptr;
 	CMonster* m_pMonster = nullptr;
 	CSkyBox* m_pSkyBox = nullptr;
-	CTerrainMap* m_pTerrain = nullptr;
+	CTerrain* m_pTerrain = nullptr;
 };
 
 END

@@ -28,15 +28,15 @@ Engine::CGameObject::~CGameObject()
 	//Free();
 }
 
-CComponent * Engine::CGameObject::Get_Component(const _tchar * pComponentTag, COMPONENTID eID)
-{
-	Engine::CComponent*	pComponent = Find_Component(pComponentTag, eID);
-
-	if (nullptr == pComponent)
-		return nullptr;
-
-	return pComponent;
-}
+//CComponent * Engine::CGameObject::Get_Component(const _tchar * pComponentTag, COMPONENTID eID)
+//{
+//	Engine::CComponent*	pComponent = Find_Component(pComponentTag, eID);
+//
+//	if (nullptr == pComponent)
+//		return nullptr;
+//
+//	return pComponent;
+//}
 
 CComponent * Engine::CGameObject::GetComponent(const COMPONENTID eComponentID, const _tchar * pComponentTag)
 {

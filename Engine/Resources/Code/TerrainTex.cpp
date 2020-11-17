@@ -21,7 +21,7 @@ Engine::CTerrainTex::~CTerrainTex(void)
 HRESULT Engine::CTerrainTex::Ready_Buffer(void)
 {
 	// default
-	return SetTerrainInfo(_vec3(0.f, 0.f, 0.f), 3, 3, 1.f, 1.f);
+	return SetTerrainInfo(3, 3, 1.f, 1.f);
 }
 
 void CTerrainTex::Render_Buffer(void)
@@ -34,15 +34,17 @@ void CTerrainTex::Render_Buffer(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
-HRESULT CTerrainTex::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _uint _iNumOfVerticesH, _float _fWidth, _float _fHeight, const _tchar* _szHeightMapFileName)
+HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVerticesH, _float _fWidth, _float _fHeight, const _tchar* _szHeightMapFileName)
 {
 	Safe_Release(m_pVB);
 	Safe_Release(m_pIB);
 
+	m_iBitmapSizeW = _iNumOfVerticesW;
+	m_iBitmapSizeH = _iNumOfVerticesH;
 	// 높이맵 로드하기
 	LoadHeightMap(_szHeightMapFileName);
 
-	m_vStartPos = _vStartPos;
+	//m_vStartPos = _vStartPos;
 	m_iNumOfVerticesW = _iNumOfVerticesW;
 	m_iNumOfVerticesH = _iNumOfVerticesH;
 	m_fWidth = _fWidth;
@@ -73,13 +75,15 @@ HRESULT CTerrainTex::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _u
 	_float fCV = 1.f / (_iNumOfVerticesH - 1);
 	_float fCX = _fWidth / (_iNumOfVerticesW - 1);
 	_float fCY = _fHeight / (_iNumOfVerticesH - 1);
-	_int iIndex = 0;
+	_int iIndexVB = 0;
+	_int iIndexPixel = 0;
 	for (_uint i = 0; i < _iNumOfVerticesH; ++i) {
 		for (_uint j = 0; j < _iNumOfVerticesW; ++j) {
-			iIndex = _iNumOfVerticesW * i + j;
-			m_vecVertices[iIndex] = pVertex[iIndex].vPos = _vStartPos
-				+ _vec3(j * fCX, (m_pHeightMapData ? (m_pHeightMapData[m_stBitmapInfoHeader.biBitCount/CHAR_BIT * iIndex] / 10.f) : 0.f), (i * fCY));
-			pVertex[iIndex].vTexUV = _vec2(fCU * j, 1.f - fCV * i);
+			iIndexVB = _iNumOfVerticesW * i + j;
+			iIndexPixel = static_cast<_int>(m_iBitmapSizeW * static_cast<_int>(i * static_cast<_float>(m_iBitmapSizeH - 1) 
+				/ (_iNumOfVerticesH - 1)) + j * static_cast<_float>(m_iBitmapSizeW - 1) / (_iNumOfVerticesW - 1));
+			m_vecVertices[iIndexVB] = pVertex[iIndexVB].vPos = _vec3(j * fCX, (m_pHeightMapData ? (m_pHeightMapData[m_stBitmapInfoHeader.biBitCount/CHAR_BIT * iIndexPixel] / 10.f) : 0.f), (i * fCY));
+			pVertex[iIndexVB].vTexUV = _vec2(fCU * j, 1.f - fCV * i);
 		}
 	}
 
@@ -117,7 +121,7 @@ HRESULT CTerrainTex::SetTerrainInfo(_vec3 _vStartPos, _uint _iNumOfVerticesW, _u
 }
 
 _float Engine::CTerrainTex::GetHeight(const _vec3& _vPos) {
-	_vec3 vIndexPos = _vPos - m_vStartPos;
+	_vec3 vIndexPos = _vPos /*- m_vStartPos*/;
 
 	if (vIndexPos.x < 0.f || vIndexPos.x > m_fWidth) return 0.f;
 	if (vIndexPos.z < 0.f || vIndexPos.z > m_fHeight) return 0.f;
@@ -195,9 +199,8 @@ _bool CTerrainTex::LoadHeightMap(const _tchar * _szHeightMapFileName)
 		}
 
 		//// 비트맵 크기/픽셀 비트를 저장하기
-		//m_stHeightMapInfo.iWidth = bmpInfoHeader.biWidth;
-		//m_stHeightMapInfo.iHeight = bmpInfoHeader.biHeight;
-		//m_stHeightMapInfo.iBitCount = bmpInfoHeader.
+		m_iBitmapSizeW = m_stBitmapInfoHeader.biWidth;
+		m_iBitmapSizeH = m_stBitmapInfoHeader.biHeight;
 
 		// 비트맵 이미지 데이터의 크기를 계산하기
 		_int iImageSize = (m_stBitmapInfoHeader.biBitCount / CHAR_BIT) * m_stBitmapInfoHeader.biWidth * m_stBitmapInfoHeader.biHeight;

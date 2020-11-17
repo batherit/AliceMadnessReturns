@@ -16,7 +16,7 @@ protected:
 	virtual ~CGameObject();
 
 public:
-	CComponent* Get_Component(const _tchar* pComponentTag, COMPONENTID eID);
+	//CComponent* Get_Component(const _tchar* pComponentTag, COMPONENTID eID);
 	CTransform* GetTransform() const { return m_pTransform; }
 
 public:

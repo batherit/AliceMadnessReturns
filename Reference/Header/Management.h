@@ -18,8 +18,8 @@ private:
 	explicit CManagement(void);
 	virtual ~CManagement(void);
 
-public:
-	CComponent * Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID);
+//public:
+	//CComponent * Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID);
 
 public:
 	// ¾À °ü·Ã

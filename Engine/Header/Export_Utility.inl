@@ -7,10 +7,10 @@ HRESULT Create_Management(CManagement** ppManagement)
 
 	return S_OK;
 }
-CComponent*	   Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID)
-{
-	return CManagement::GetInstance()->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
-}
+//CComponent*	   Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID)
+//{
+//	return CManagement::GetInstance()->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
+//}
 
 //HRESULT	SetUp_Scene(CScene* pScene)
 //{

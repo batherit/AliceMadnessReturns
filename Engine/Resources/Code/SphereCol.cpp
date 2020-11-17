@@ -39,11 +39,11 @@ HRESULT Engine::CSphereCol::Ready_Buffer(void)
 
 void CSphereCol::Render_Buffer(void)
 {
-	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, sizeof(VTXCOL));
+	//m_pGraphicDev->SetStreamSource(0, m_pVB, 0, sizeof(VTXCOL));
 	//m_pGraphicDev->SetFVF(FVF_COL);
 	//m_pGraphicDev->SetIndices(m_pIB);
 	//m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 4, 0, 2);
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pClone->DrawSubset(0);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);

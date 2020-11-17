@@ -22,15 +22,15 @@ Engine::CScene::~CScene()
 	//Free();
 }
 
-CComponent * CScene::Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
-{
-	auto	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), CTag_Finder(pLayerTag));
-
-	if (iter == m_mapLayer.end())
-		return nullptr;
-
-	return iter->second->Get_Component(pObjTag, pComponentTag, eID);
-}
+//CComponent * CScene::Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
+//{
+//	auto	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), CTag_Finder(pLayerTag));
+//
+//	if (iter == m_mapLayer.end())
+//		return nullptr;
+//
+//	return iter->second->Get_Component(pObjTag, pComponentTag, eID);
+//}
 
 _int CScene::Update(const _float & _fDeltaTime)
 {

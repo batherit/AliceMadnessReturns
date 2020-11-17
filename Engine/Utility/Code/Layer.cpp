@@ -12,24 +12,46 @@ Engine::CLayer::~CLayer()
 
 }
 
-CComponent * CLayer::Get_Component(const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
-{
-	auto	iter = find_if(m_mapObject.begin(), m_mapObject.end(), CTag_Finder(pObjTag));
-
-	if (iter == m_mapObject.end())
-		return nullptr;
-
-	return iter->second->Get_Component(pComponentTag, eID);
-}
+//CComponent * CLayer::Get_Component(const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
+//{
+//	auto	iter = find_if(m_mapObject.begin(), m_mapObject.end(), CTag_Finder(pObjTag));
+//
+//	if (iter == m_mapObject.end())
+//		return nullptr;
+//
+//	return iter->second->Get_Component(pComponentTag, eID);
+//}
 
 HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pGameObject)
 {
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
-	m_mapObject.emplace(pObjTag, pGameObject);
+	//m_mapObject.emplace(pObjTag, pGameObject);
+
+	m_mapObjectList[pObjTag].emplace_back(pGameObject);
 
 	return S_OK;
+}
+
+HRESULT CLayer::Add_GameObject(CGameObject * _pGameObject)
+{
+	if (nullptr == _pGameObject)
+		return E_FAIL;
+
+	m_mapObjectList[OBJECTLIST_TCHAR].emplace_back(_pGameObject);
+
+	return S_OK;
+}
+
+CLayer::LayerList& CLayer::GetLayerList(const _tchar * _pObjTag)
+{
+	return m_mapObjectList[_pObjTag];
+}
+
+CLayer::LayerList& CLayer::GetLayerList()
+{
+	return m_mapObjectList[OBJECTLIST_TCHAR];
 }
 
 HRESULT Engine::CLayer::Ready_Layer(void)
@@ -41,14 +63,16 @@ Engine::_int Engine::CLayer::Update_Layer(const _float& fTimeDelta)
 {
 	_int iExit = 0;
 
-	for (auto& iter : m_mapObject)
+	for (auto& iter : m_mapObjectList)
 	{
-		iExit = iter.second->Update_Object(fTimeDelta);
+		for (auto& rObj : iter.second) {
+			iExit = rObj->Update_Object(fTimeDelta);
 
-		if (iExit & 0x80000000)
-		{
-			MSG_BOX("GameObject Problem");
-			return iExit;
+			if (iExit & 0x80000000)
+			{
+				MSG_BOX("GameObject Problem");
+				return iExit;
+			}
 		}
 	}
 
@@ -73,7 +97,9 @@ Engine::CLayer* Engine::CLayer::Create(void)
 
 void Engine::CLayer::Free(void)
 {
-	for_each(m_mapObject.begin(), m_mapObject.end(), CDeleteMap());
-	m_mapObject.clear();
+	for (auto& iter : m_mapObjectList) {
+		for_each(iter.second.begin(), iter.second.end(), CDeleteObj());
+	}
+	m_mapObjectList.clear();
 }
 

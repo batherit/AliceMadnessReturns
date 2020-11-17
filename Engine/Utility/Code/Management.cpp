@@ -16,13 +16,13 @@ CManagement::~CManagement(void)
 	Free();
 }
 
-CComponent * CManagement::Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
-{
-	if (nullptr == m_pSceneMgr->GetCurScene())
-		return nullptr;
-
-	return m_pSceneMgr->GetCurScene()->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
-}
+//CComponent * CManagement::Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
+//{
+//	if (nullptr == m_pSceneMgr->GetCurScene())
+//		return nullptr;
+//
+//	return m_pSceneMgr->GetCurScene()->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
+//}
 
 void CManagement::SetNextScene(CScene * _pNextScene)
 {

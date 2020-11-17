@@ -46,6 +46,9 @@
     <Filter Include="04. Component\02. Collider\00. SphereCollider">
       <UniqueIdentifier>{6e0504be-0545-46a6-bebe-2c0f37958951}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\03. Physics">
+      <UniqueIdentifier>{987c246f-e407-4581-8cc9-49c93d70a7b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -87,6 +90,9 @@
     <ClInclude Include="..\Code\SphereCollider.h">
       <Filter>04. Component\02. Collider\00. SphereCollider</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Physics.h">
+      <Filter>04. Component\03. Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -124,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\SphereCollider.cpp">
       <Filter>04. Component\02. Collider\00. SphereCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Physics.cpp">
+      <Filter>04. Component\03. Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

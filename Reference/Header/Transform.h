@@ -50,6 +50,11 @@ public:
 		m_vPos.y += _fDeltaY;
 		m_vPos.z += _fDeltaZ;
 	}
+	void Translate(_vec3 _vDeltaMove) {
+		m_vPos.x += _vDeltaMove.x;
+		m_vPos.y += _vDeltaMove.y;
+		m_vPos.z += _vDeltaMove.z;
+	}
 	
 	// Ω∫ƒ…¿œ
 	void SetScaleX(_float _fScaleX) { m_vScale.x = _fScaleX; }

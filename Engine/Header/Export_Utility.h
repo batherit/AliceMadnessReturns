@@ -8,10 +8,12 @@
 #include "GameObject.h"
 #include "Camera.h"
 
+// Components
 #include "Component.h"
 #include "Transform.h"
 #include "Renderer.h"
 #include "SphereCollider.h"
+#include "Physics.h"
 
 BEGIN(Engine)
 

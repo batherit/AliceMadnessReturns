@@ -25,8 +25,9 @@ HRESULT CDynamicCamera::Ready_Object(void)
 	m_pTransform = GetComponent<Engine::CTransform>();
 	m_pTransform->SetPos(30.f, 80.f, -80.f);
 	m_pTransform->RotateByRight(D3DXToRadian(45.f));
-	m_pTransform->SetMaxSpeed(110.f);
-	m_pTransform->SetSpeed(100.f);
+
+	m_pPhysics = AddComponent<Engine::CPhysics>();
+	m_pPhysics->SetSpeed(100.f, 110.f);
 
 	SetProjectionMatrix(D3DXToRadian(45.f), (_float)WINCX / WINCY, 0.1f, 1000.f);
 
@@ -82,8 +83,8 @@ int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 		vDir += m_pTransform->GetRight();
 	}
 
-	m_pTransform->SetDir(vDir);
-	m_pTransform->MoveByDelta(fTimeDelta);
+	m_pPhysics->SetDirection(vDir);
+	m_pPhysics->MoveByDelta(fTimeDelta);
 
 	// 뷰 스페이스 변환 행렬 생성 함수(즉, 카메라 월드 행렬의 역 행렬을 만들어주는 함수)
 	m_vEye = m_pTransform->GetPos();		// 카메라 위치

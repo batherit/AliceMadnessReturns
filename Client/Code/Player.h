@@ -29,6 +29,7 @@ public:
 
 private:
 	Engine::CRenderer* m_pRenderer = nullptr;
+	Engine::CPhysics* m_pPhysics = nullptr;
 	_vec3 m_vTargetPos{0.f, 0.f, 0.f};
 	_float m_fT = 0.f;
 };

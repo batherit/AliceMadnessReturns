@@ -30,11 +30,11 @@ private:
 	virtual void Free(void);
 
 public:
-	void MoveByDelta(const _float& _fDeltaTime) { 
+	/*void MoveByDelta(const _float& _fDeltaTime) { 
 		m_vPos.x += (m_vDir.x * m_fSpeed * _fDeltaTime); 
 		m_vPos.y += (m_vDir.y * m_fSpeed * _fDeltaTime);
 		m_vPos.z += (m_vDir.z * m_fSpeed * _fDeltaTime);
-	}
+	}*/
 	void Scaling(_float _fDeltaX, _float _fDeltaY, _float _fDeltaZ) {
 		m_vScale.x += _fDeltaX;
 		m_vScale.y += _fDeltaY;
@@ -120,14 +120,14 @@ public:
 	void SetPos(_vec3 _vPos) { m_vPos = _vPos; }
 
 	// πÊ«‚
-	void SetDirX(_float _fToX) { m_vDir.x = _fToX; }
-	void SetDirY(_float _fToY) { m_vDir.y = _fToY; }
-	void SetDirZ(_float _fToZ) { m_vDir.z = _fToZ; }
-	void SetDir(_float _fToX, _float _fToY, _float _fToZ) { SetDirX(_fToX); SetDirY(_fToY); SetDirZ(_fToZ); D3DXVec3Normalize(&m_vDir, &m_vDir); }
-	void SetDir(_vec3 _vDir) { m_vDir = _vDir; D3DXVec3Normalize(&m_vDir, &m_vDir); }
+	//void SetDirX(_float _fToX) { m_vDir.x = _fToX; }
+	//void SetDirY(_float _fToY) { m_vDir.y = _fToY; }
+	//void SetDirZ(_float _fToZ) { m_vDir.z = _fToZ; }
+	//void SetDir(_float _fToX, _float _fToY, _float _fToZ) { SetDirX(_fToX); SetDirY(_fToY); SetDirZ(_fToZ); D3DXVec3Normalize(&m_vDir, &m_vDir); }
+	//void SetDir(_vec3 _vDir) { m_vDir = _vDir; D3DXVec3Normalize(&m_vDir, &m_vDir); }
 
-	void SetSpeed(float _fSpeed) { m_fSpeed = _fSpeed; Clamp(&m_fSpeed, -m_fMaxSpeed, m_fMaxSpeed); }
-	void SetMaxSpeed(float _fMaxSpeed) { m_fMaxSpeed = _fMaxSpeed; }
+	//void SetSpeed(float _fSpeed) { m_fSpeed = _fSpeed; Clamp(&m_fSpeed, -m_fMaxSpeed, m_fMaxSpeed); }
+	//void SetMaxSpeed(float _fMaxSpeed) { m_fMaxSpeed = _fMaxSpeed; }
 	
 	_matrix GetParentMatrix(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const {
 		D3DXMATRIX matParent;
@@ -187,10 +187,10 @@ private:
 	_vec3 m_vScale{ 1.f, 1.f, 1.f };
 	_vec3 m_vRot{ 0.f, 0.f, 0.f };			// Radian
 	_vec3 m_vPos{ 0.f, 0.f, 0.f };
-	_vec3 m_vDir{ 1.f, 0.f, 0.f };
+	// _vec3 m_vDir{ 1.f, 0.f, 0.f };
 	_matrix m_matWorld;
-	_float m_fMaxSpeed = 9876543210.f;
-	_float m_fSpeed = 0.f;
+	//_float m_fMaxSpeed = 9876543210.f;
+	//_float m_fSpeed = 0.f;
 };
 
 END

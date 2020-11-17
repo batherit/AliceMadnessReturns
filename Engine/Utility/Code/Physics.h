@@ -16,6 +16,7 @@ public:
 
 public:
 	static const _tchar* GetComponentTag() { return L"Physics"; }
+	static const Engine::COMPONENTID GetComponentID() { return Engine::ID_STATIC; }
 	static CComponent* Create();
 	virtual CComponent* Clone(void) override;
 	virtual void Free(void) override;

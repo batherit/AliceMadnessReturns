@@ -27,11 +27,15 @@ HRESULT Engine::CSphereCol::Ready_Buffer(void)
 		_int iNumVertices = m_pClone->GetNumVertices();
 		
 		VTXCOL*		pVertices = NULL;
-		m_pVB->Lock(0, 0, (void**)&pVertices, NULL);
+		m_pClone->LockVertexBuffer(0, (void**)&pVertices);
+
+		//m_pVB->Lock(0, 0, (void**)&pVertices, NULL);
 		for (_int i = 0; i < iNumVertices; ++i) {
-			pVertices[i].dwColor = D3DCOLOR_ARGB(200, 200, 200, 200);
+			pVertices[i].dwColor = D3DCOLOR_ARGB(255, 0, 0, 255);
 		}
-		m_pVB->Unlock();
+
+		m_pClone->UnlockVertexBuffer();
+		//m_pVB->Unlock();
 	}
 
 	return S_OK;

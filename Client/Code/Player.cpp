@@ -19,9 +19,10 @@ CPlayer::~CPlayer(void)
 
 HRESULT CPlayer::Ready_Object(void)
 {
-	m_pTransform->SetMaxSpeed(20.f);
-	m_pTransform->SetSpeed(20.f);
 	m_vTargetPos = m_pTransform->GetPos();
+
+	m_pPhysics = AddComponent<Engine::CPhysics>();
+	m_pPhysics->SetSpeed(20.f, 20.f);
 
 	m_pRenderer = AddComponent<Engine::CRenderer>();
 
@@ -70,8 +71,8 @@ int CPlayer::Update_Object(const _float & _fDeltaTime)
 	_vec3 vDir = m_vTargetPos - m_pTransform->GetPos();
 	if (D3DXVec3LengthSq(&vDir) > 0.5f) {
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransform->SetDir(vDir);
-		m_pTransform->MoveByDelta(_fDeltaTime);
+		m_pPhysics->SetDirection(vDir);
+		m_pPhysics->MoveByDelta(_fDeltaTime);
 	}
 
 	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);

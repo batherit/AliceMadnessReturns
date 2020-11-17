@@ -24,7 +24,7 @@ public:
 	virtual void		Free(void);
 
 private:
-	Engine::CTransform* m_pTransform = nullptr;
+	Engine::CPhysics*	m_pPhysics = nullptr;
 };
 
 END

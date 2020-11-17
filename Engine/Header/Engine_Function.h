@@ -159,6 +159,7 @@ namespace Engine
 		return ptClientPoint;
 	}
 
+	// Å¬·¥ÇÁ
 	template<typename T>
 	void Clamp(T* _pValue, T _Min, T _Max) {
 		if (*_pValue < _Min)		*_pValue = _Min;

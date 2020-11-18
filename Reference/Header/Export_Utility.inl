@@ -1,3 +1,4 @@
+#include "Export_Utility.h"
 HRESULT Create_Management(CManagement** ppManagement)
 {
 	CManagement*		pManagement = CManagement::GetInstance();
@@ -33,6 +34,11 @@ HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pInstance)
 CComponent*		Clone(const _tchar* pProtoTag)
 {
 	return CProtoMgr::GetInstance()->Clone(pProtoTag);
+}
+
+inline CComponent * GetOriProto(const _tchar * _pProtoTag)
+{
+	return CProtoMgr::GetInstance()->GetOriProto(_pProtoTag);
 }
 
 // Renderer

@@ -35,6 +35,11 @@ Engine::CComponent* Engine::CProtoMgr::Clone(const _tchar* pProtoTag)
 	return pPrototype->Clone();
 }
 
+CComponent * CProtoMgr::GetOriProto(const _tchar * pProtoTag)
+{
+	return Find_Proto(pProtoTag);
+}
+
 Engine::CComponent* Engine::CProtoMgr::Find_Proto(const _tchar* pProtoTag)
 {
 	auto	iter = find_if(m_mapPrototype.begin(), m_mapPrototype.end(), CTag_Finder(pProtoTag));

@@ -40,7 +40,7 @@ private:
 #endif
 
 public:
-	static CMeshCollider*			Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pVtxPos, const _ulong& dwNumVtxCnt, const _ulong& dwStride);
+	static CMeshCollider*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pVtxPos, const _ulong& dwNumVtxCnt, const _ulong& dwStride);
 	virtual CComponent*			Clone(void);
 	virtual void				Free(void);
 

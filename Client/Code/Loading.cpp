@@ -144,6 +144,13 @@ _uint CLoading::Loading_ForStage(void)
 		L"TombStone.X"),
 		E_FAIL);
 
+	// 스톤에 맞는 메쉬 콜라이더 원본 생성.
+	Engine::CStaticMesh* pStaticMesh = nullptr;
+	pStaticMesh = static_cast<Engine::CStaticMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Stone"));
+	pComponent = Engine::CMeshCollider::Create(m_pGraphicDev, pStaticMesh->Get_VtxPos(), pStaticMesh->Get_NumVtx(), pStaticMesh->Get_Stride());
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Collider_Stone", pComponent);
+
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	RESOURCE_STAGE,
 	//	L"Mesh_Player",

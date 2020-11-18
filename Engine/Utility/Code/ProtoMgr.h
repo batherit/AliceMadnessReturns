@@ -18,6 +18,7 @@ private:
 public:
 	HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pInstance);
 	CComponent*		Clone(const _tchar* pProtoTag);
+	CComponent*		GetOriProto(const _tchar* pProtoTag);
 
 private:
 	CComponent*		Find_Proto(const _tchar* pProtoTag);

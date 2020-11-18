@@ -8,6 +8,7 @@ BEGIN(Engine)
 // ResourcesMgr
 // Get
 inline CComponent*	Clone(const _ushort& wContainerIdx, const _tchar* pResourcesTag);
+inline CComponent* GetOriResource(const _ushort& _wContainerIdx, const _tchar* _pResourcesTag);
 // Set
 // General
 

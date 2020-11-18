@@ -52,6 +52,7 @@ public:
 	void		Render_Buffer(const _ushort& wContainerIdx, const _tchar* pBufferTag);
 	void		Render_Texture(const _ushort& wContainerIdx, const _tchar* pTextureTag, const _uint& iIndex);
 	CComponent*	Clone(const _ushort& wContainerIdx, const _tchar* pResourcesTag);
+	CComponent* GetOriResource(const _ushort& _wContainerIdx, const _tchar* _pResourcesTag);
 
 private:
 	CResources*		Find_Resources(const _ushort& wContainerIdx, const _tchar* pResourcesTag);

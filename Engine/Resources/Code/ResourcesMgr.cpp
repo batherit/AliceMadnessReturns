@@ -171,3 +171,10 @@ CComponent * CResourcesMgr::Clone(const _ushort & wContainerIdx, const _tchar * 
 	return pProto->Clone();
 }
 
+CComponent* CResourcesMgr::GetOriResource(const _ushort& _wContainerIdx, const _tchar* _pResourcesTag)
+{
+	if (nullptr == m_pmapResource)
+		return nullptr;
+
+	return Find_Resources(_wContainerIdx, _pResourcesTag);
+}

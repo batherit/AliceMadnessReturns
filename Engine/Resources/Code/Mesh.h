@@ -5,13 +5,15 @@
 
 BEGIN(Engine)
 
-class ENGINE_DLL CMesh: public CResources
+class ENGINE_DLL CMesh : public CResources
 {
 protected:
 	explicit CMesh(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CMesh(const CMesh& rhs);
 	virtual ~CMesh(void);
 
+protected:
+	_bool		m_bClone;
 
 public:
 	virtual CComponent*		Clone(void)PURE;

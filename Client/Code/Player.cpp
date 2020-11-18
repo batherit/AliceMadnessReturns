@@ -22,10 +22,12 @@ HRESULT CPlayer::Ready_Object(void)
 	m_vTargetPos = m_pTransform->GetPos();
 
 	Engine::CComponent* pComponent = nullptr;
-	// Mesh
-	pComponent = m_pMesh = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Stone"));
+
+	// Clone Mesh
+	pComponent = m_pMesh = dynamic_cast<Engine::CStaticMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Stone"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
+	Engine::Safe_AddRef(pComponent);
 
 	// Transform
 	pComponent = m_pTransform = AddComponent<Engine::CTransform>();
@@ -38,10 +40,14 @@ HRESULT CPlayer::Ready_Object(void)
 	pComponent = m_pRenderer = AddComponent<Engine::CRenderer>();
 
 	// Collider
-	pComponent = m_pCollider = AddComponent<Engine::CSphereCollider>();
-	m_pCollider->SetSphereColliderInfo(2.f);
+	//pComponent = m_pCollider = AddComponent<Engine::CSphereCollider>();
+	//m_pCollider->SetSphereColliderInfo(2.f);
 
-
+	// MeshCollider
+	pComponent = m_pCollider = dynamic_cast<Engine::CMeshCollider*>(Engine::GetOriProto(L"Collider_Stone"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
+	Engine::Safe_AddRef(pComponent);
 		
 	return S_OK;
 }
@@ -80,6 +86,7 @@ void CPlayer::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 
 	m_pMesh->Render_Meshes();
+	m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
 }
 
 CPlayer * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)

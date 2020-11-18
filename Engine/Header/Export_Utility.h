@@ -13,6 +13,7 @@
 #include "Transform.h"
 #include "Renderer.h"
 #include "SphereCollider.h"
+#include "MeshCollider.h"
 #include "Physics.h"
 
 BEGIN(Engine)
@@ -29,6 +30,7 @@ inline HRESULT Create_Management(CManagement** ppManagement);
 // protomgr
 inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pInstance);
 inline CComponent*		Clone(const _tchar* pProtoTag);
+inline CComponent*		GetOriComponent(const _tchar* _pProtoTag);
 
 // Renderer
 inline CRenderer*		Get_Renderer(void);

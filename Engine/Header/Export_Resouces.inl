@@ -4,6 +4,10 @@
 CComponent*	Clone(const _ushort& wContainerIdx, const _tchar* pResourcesTag) {
 	return CResourcesMgr::GetInstance()->Clone(wContainerIdx, pResourcesTag);
 }
+
+CComponent* GetOriResource(const _ushort& _wContainerIdx, const _tchar* _pResourcesTag) {
+	return CResourcesMgr::GetInstance()->GetOriResource(_wContainerIdx, _pResourcesTag);
+}
 // Set
 // General
 

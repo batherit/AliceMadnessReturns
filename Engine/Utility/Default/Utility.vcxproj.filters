@@ -49,6 +49,9 @@
     <Filter Include="04. Component\03. Physics">
       <UniqueIdentifier>{987c246f-e407-4581-8cc9-49c93d70a7b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\02. Collider\01. MeshCollider">
+      <UniqueIdentifier>{9dea5d7c-3ee4-4538-96ae-551aa5257a91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -93,6 +96,9 @@
     <ClInclude Include="..\Code\Physics.h">
       <Filter>04. Component\03. Physics</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\MeshCollider.h">
+      <Filter>04. Component\02. Collider\01. MeshCollider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -133,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Physics.cpp">
       <Filter>04. Component\03. Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MeshCollider.cpp">
+      <Filter>04. Component\02. Collider\01. MeshCollider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

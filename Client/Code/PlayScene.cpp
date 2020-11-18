@@ -136,29 +136,29 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", m_pSkyBox), E_FAIL);
 
 	// 몬스터 생성
-	m_pMonster = CMonster::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(m_pMonster, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", m_pMonster), E_FAIL);
+	//m_pMonster = CMonster::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(m_pMonster, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", m_pMonster), E_FAIL);
 
 	// 스톤 생성
-	Engine::CGameObject* pGameObject = CStone::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
+	//Engine::CGameObject* pGameObject = CStone::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
 
 
 	m_mapLayer.emplace(pLayerTag, pLayer);
 	
 	// 몬스터에 카메라를 세팅함.
-	m_pMonster->SetCameraForBillboard(m_pCamera);
+	//m_pMonster->SetCameraForBillboard(m_pCamera);
 
 	// 몬스터를 임의의 위치에 둠.
-	m_pMonster->GetComponent<Engine::CTransform>()->SetPos(
-		Engine::GetNumberMinBetweenMax(10.f, 20.f),
-		0.f,
-		Engine::GetNumberMinBetweenMax(10.f, 20.f)
-	);
-	_float fHeight = m_pTerrain->GetHeight(m_pMonster->GetComponent<Engine::CTransform>()->GetPos());
-	m_pMonster->GetComponent<Engine::CTransform>()->SetPosY(fHeight);
+	//m_pMonster->GetComponent<Engine::CTransform>()->SetPos(
+	//	Engine::GetNumberMinBetweenMax(10.f, 20.f),
+	//	0.f,
+	//	Engine::GetNumberMinBetweenMax(10.f, 20.f)
+	//);
+	//_float fHeight = m_pTerrain->GetHeight(m_pMonster->GetComponent<Engine::CTransform>()->GetPos());
+	//m_pMonster->GetComponent<Engine::CTransform>()->SetPosY(fHeight);
 
 	m_mapLayer.emplace(pLayerTag, pLayer);
 
@@ -172,10 +172,10 @@ HRESULT CPlayScene::Ready_Resource(Engine::RESOURCETYPE eType)
 
 void CPlayScene::Free(void)
 {
-	Client::Safe_Release(m_pPlayer);
-	Client::Safe_Release(m_pMonster);
-	Client::Safe_Release(m_pSkyBox);
-	Client::Safe_Release(m_pCamera);
-	Client::Safe_Release(m_pTerrain);
+	//Client::Safe_Release(m_pPlayer);
+	//Client::Safe_Release(m_pMonster);
+	//Client::Safe_Release(m_pSkyBox);
+	//Client::Safe_Release(m_pCamera);
+	//Client::Safe_Release(m_pTerrain);
 	CScene::Free();
 }

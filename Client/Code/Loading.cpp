@@ -135,7 +135,7 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
-	// Stone
+	// Stone 메쉬 원본 생성
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Stone",

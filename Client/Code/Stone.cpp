@@ -44,6 +44,8 @@ HRESULT Client::CStone::Add_Component(void)
 	pComponent = m_pCollider = AddComponent<Engine::CSphereCollider>();
 	m_pCollider->SetSphereColliderInfo(2.f);
 
+
+	// ½ºÇÇ¾î ·»´õ °´Ã¼
 	m_pSphere = CSphereRenderer::Create(m_pGraphicDev);
 	m_pSphere->GetTransform()->SetScaleXYZ(_vec3(2.f, 2.f, 2.f));
 

@@ -5,7 +5,7 @@ USING(Engine)
 Engine::CStaticMesh::CStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMesh(pGraphicDev)
 {
-
+	
 }
 
 Engine::CStaticMesh::CStaticMesh(const CStaticMesh& rhs)

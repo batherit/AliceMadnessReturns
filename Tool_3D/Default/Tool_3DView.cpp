@@ -103,3 +103,19 @@ CTool3DDoc* CTool3DView::GetDocument() const // 디버그되지 않은 버전은
 
 
 // CTool3DView 메시지 처리기
+
+
+void CTool3DView::OnInitialUpdate()
+{
+	CView::OnInitialUpdate();
+
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+}
+
+
+void CTool3DView::PostNcDestroy()
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+
+	CView::PostNcDestroy();
+}

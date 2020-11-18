@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tool_3D.h">
+    <ClInclude Include="MFCApplication1.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
@@ -27,10 +27,10 @@
     <ClInclude Include="MainFrm.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Tool_3DDoc.h">
+    <ClInclude Include="MFCApplication1Doc.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Tool_3DView.h">
+    <ClInclude Include="MFCApplication1View.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
@@ -41,16 +41,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Tool_3D.cpp">
+    <ClCompile Include="MFCApplication1.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MainFrm.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Tool_3DDoc.cpp">
+    <ClCompile Include="MFCApplication1Doc.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Tool_3DView.cpp">
+    <ClCompile Include="MFCApplication1View.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
@@ -58,20 +58,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Tool3D.rc">
+    <ResourceCompile Include="MFCApplication1.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\Tool3D.rc2">
+    <None Include="res\MFCApplication1.rc2">
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\Tool_3DDoc.ico">
+    <Image Include="res\MFCApplication1Doc.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="res\Tool_3D.ico">
+    <Image Include="res\MFCApplication1.ico">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="res\Toolbar.bmp">

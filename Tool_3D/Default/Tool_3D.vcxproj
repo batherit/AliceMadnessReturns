@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Code\DefaultScene.h" />
     <ClInclude Include="..\Code\Tool3D_Kernel.h" />
     <ClInclude Include="..\Header\Const.h" />
     <ClInclude Include="..\Header\Define.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="Tool_3DView.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\DefaultScene.cpp" />
     <ClCompile Include="..\Code\Tool3D_Kernel.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">

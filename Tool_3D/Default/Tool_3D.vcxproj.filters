@@ -5,40 +5,46 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="0. App">
-      <UniqueIdentifier>{ab857542-660f-45ae-bd6e-5df33e8b2e03}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="0. Doc">
-      <UniqueIdentifier>{94c7866c-0654-4759-98d5-17a8442c9249}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="0. Frame">
-      <UniqueIdentifier>{a86b2cb4-6a85-44fa-81e0-73ec4e30a78e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="0. View">
-      <UniqueIdentifier>{720016ac-38b6-42d2-89c2-2c6c045a196b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="99. Default">
       <UniqueIdentifier>{7c4e5225-13ea-49e4-98f1-8c4bb0ec79b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="0. Tool3D_Kernel">
-      <UniqueIdentifier>{89d62d50-c61a-431f-ae52-2c7cfb09a583}</UniqueIdentifier>
     </Filter>
     <Filter Include="98. Header">
       <UniqueIdentifier>{829224a2-56a1-4233-87d0-f9eba7e14937}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. App">
+      <UniqueIdentifier>{ab857542-660f-45ae-bd6e-5df33e8b2e03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Doc">
+      <UniqueIdentifier>{94c7866c-0654-4759-98d5-17a8442c9249}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Frame">
+      <UniqueIdentifier>{a86b2cb4-6a85-44fa-81e0-73ec4e30a78e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. View">
+      <UniqueIdentifier>{720016ac-38b6-42d2-89c2-2c6c045a196b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Tool3D_Kernel">
+      <UniqueIdentifier>{89d62d50-c61a-431f-ae52-2c7cfb09a583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene">
+      <UniqueIdentifier>{91e1f47f-24b2-40ff-b9f6-acc3e7331feb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\00. DefaultScene">
+      <UniqueIdentifier>{bfb5255f-135a-40dd-afb7-64519521b41b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
-      <Filter>0. Frame</Filter>
+      <Filter>00. Frame</Filter>
     </ClInclude>
     <ClInclude Include="Tool_3DDoc.h">
-      <Filter>0. Doc</Filter>
+      <Filter>00. Doc</Filter>
     </ClInclude>
     <ClInclude Include="Tool_3DView.h">
-      <Filter>0. View</Filter>
+      <Filter>00. View</Filter>
     </ClInclude>
     <ClInclude Include="Tool_3D.h">
-      <Filter>0. App</Filter>
+      <Filter>00. App</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
       <Filter>99. Default</Filter>
@@ -53,7 +59,7 @@
       <Filter>99. Default</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Tool3D_Kernel.h">
-      <Filter>0. Tool3D_Kernel</Filter>
+      <Filter>01. Tool3D_Kernel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Const.h">
       <Filter>98. Header</Filter>
@@ -79,25 +85,31 @@
     <ClInclude Include="..\Header\Typedef.h">
       <Filter>98. Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\DefaultScene.h">
+      <Filter>02. Scene\00. DefaultScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
-      <Filter>0. Frame</Filter>
+      <Filter>00. Frame</Filter>
     </ClCompile>
     <ClCompile Include="Tool_3DDoc.cpp">
-      <Filter>0. Doc</Filter>
+      <Filter>00. Doc</Filter>
     </ClCompile>
     <ClCompile Include="Tool_3DView.cpp">
-      <Filter>0. View</Filter>
+      <Filter>00. View</Filter>
     </ClCompile>
     <ClCompile Include="Tool_3D.cpp">
-      <Filter>0. App</Filter>
+      <Filter>00. App</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>99. Default</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Tool3D_Kernel.cpp">
-      <Filter>0. Tool3D_Kernel</Filter>
+      <Filter>01. Tool3D_Kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DefaultScene.cpp">
+      <Filter>02. Scene\00. DefaultScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

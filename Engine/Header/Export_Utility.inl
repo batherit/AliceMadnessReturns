@@ -49,7 +49,7 @@ CRenderer*		Get_Renderer(void)
 
 void Release_Utility(void)
 {
-	//CRenderer::GetInstance()->DestroyInstance();
+	CRenderer::GetInstance()->DestroyInstance();
 	CKeyMgr::GetInstance()->DestroyInstance();
 	CProtoMgr::GetInstance()->DestroyInstance();
 	CManagement::GetInstance()->DestroyInstance();

@@ -8,12 +8,12 @@
 
 //END
 BEGIN(Client)
-class CDefaultScene : public Engine::CScene
+class CEditScene : public Engine::CScene
 {
 private: // 생성자, 소멸자
-	explicit CDefaultScene(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CDefaultScene(const CDefaultScene& rhs);
-	virtual ~CDefaultScene(void);
+	explicit CEditScene(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CEditScene(const CEditScene& rhs);
+	virtual ~CEditScene(void);
 
 public:
 	// CScene을(를) 통해 상속됨
@@ -23,7 +23,7 @@ public:
 	virtual void Render(void);
 
 public:
-	static CDefaultScene*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CEditScene*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void		Free(void);

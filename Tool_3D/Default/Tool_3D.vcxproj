@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Code\DefaultScene.h" />
+    <ClInclude Include="..\Code\EditScene.h" />
+    <ClInclude Include="..\Code\DynamicCamera.h" />
+    <ClInclude Include="..\Code\Terrain.h" />
     <ClInclude Include="..\Code\Tool3D_Kernel.h" />
     <ClInclude Include="..\Header\Const.h" />
     <ClInclude Include="..\Header\Define.h" />
@@ -39,7 +41,9 @@
     <ClInclude Include="Tool_3DView.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\DefaultScene.cpp" />
+    <ClCompile Include="..\Code\EditScene.cpp" />
+    <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Tool3D_Kernel.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">

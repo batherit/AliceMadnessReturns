@@ -29,7 +29,16 @@
     <Filter Include="02. Scene">
       <UniqueIdentifier>{91e1f47f-24b2-40ff-b9f6-acc3e7331feb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Scene\00. DefaultScene">
+    <Filter Include="03. Object">
+      <UniqueIdentifier>{8346a18a-acad-4632-b0b2-83273dcf8ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\Terrain">
+      <UniqueIdentifier>{15b06d01-083c-4a6a-8024-8d0dfc79131d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\DynamicCamera">
+      <UniqueIdentifier>{fdfc7e93-bfb2-41bf-82be-2259b4bdce9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\00. EditScene">
       <UniqueIdentifier>{bfb5255f-135a-40dd-afb7-64519521b41b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -85,8 +94,14 @@
     <ClInclude Include="..\Header\Typedef.h">
       <Filter>98. Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\DefaultScene.h">
-      <Filter>02. Scene\00. DefaultScene</Filter>
+    <ClInclude Include="..\Code\Terrain.h">
+      <Filter>03. Object\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\DynamicCamera.h">
+      <Filter>03. Object\DynamicCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\EditScene.h">
+      <Filter>02. Scene\00. EditScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -108,8 +123,14 @@
     <ClCompile Include="..\Code\Tool3D_Kernel.cpp">
       <Filter>01. Tool3D_Kernel</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\DefaultScene.cpp">
-      <Filter>02. Scene\00. DefaultScene</Filter>
+    <ClCompile Include="..\Code\Terrain.cpp">
+      <Filter>03. Object\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicCamera.cpp">
+      <Filter>03. Object\DynamicCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EditScene.cpp">
+      <Filter>02. Scene\00. EditScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

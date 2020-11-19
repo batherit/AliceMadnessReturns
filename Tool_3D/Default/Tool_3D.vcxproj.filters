@@ -20,6 +20,12 @@
     <Filter Include="99. Default">
       <UniqueIdentifier>{7c4e5225-13ea-49e4-98f1-8c4bb0ec79b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="0. Tool3D_Kernel">
+      <UniqueIdentifier>{89d62d50-c61a-431f-ae52-2c7cfb09a583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Header">
+      <UniqueIdentifier>{829224a2-56a1-4233-87d0-f9eba7e14937}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -46,6 +52,33 @@
     <ClInclude Include="pch.h">
       <Filter>99. Default</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Tool3D_Kernel.h">
+      <Filter>0. Tool3D_Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Const.h">
+      <Filter>98. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Define.h">
+      <Filter>98. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Enum.h">
+      <Filter>98. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Function.h">
+      <Filter>98. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Macro.h">
+      <Filter>98. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\sjhD3DXFunction.h">
+      <Filter>98. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Struct.h">
+      <Filter>98. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Typedef.h">
+      <Filter>98. Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -62,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>99. Default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Tool3D_Kernel.cpp">
+      <Filter>0. Tool3D_Kernel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

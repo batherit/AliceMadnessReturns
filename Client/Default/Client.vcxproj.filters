@@ -7,21 +7,6 @@
     <Filter Include="98. Header">
       <UniqueIdentifier>{2d23b24d-6960-436f-af35-a37073d656f4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="99. Etc">
-      <UniqueIdentifier>{be38746a-b6c0-45a1-9830-3eca1a6c3ce9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="99. Etc\리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="99. Etc\소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="99. Etc\헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="01. Scene">
       <UniqueIdentifier>{51f02425-b421-49ab-868d-b00750cfb7f4}</UniqueIdentifier>
     </Filter>
@@ -61,22 +46,37 @@
     <Filter Include="02. Object\02. Object\ColliderRenderer">
       <UniqueIdentifier>{3d6a4757-c873-4862-929a-b6793d7b549e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="99. Default">
+      <UniqueIdentifier>{be38746a-b6c0-45a1-9830-3eca1a6c3ce9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Default\리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="99. Default\소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="99. Default\헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
-      <Filter>99. Etc\헤더 파일</Filter>
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>99. Etc\헤더 파일</Filter>
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>99. Etc\헤더 파일</Filter>
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Client.h">
-      <Filter>99. Etc\헤더 파일</Filter>
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>99. Etc\헤더 파일</Filter>
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Define.h">
       <Filter>98. Header</Filter>
@@ -150,10 +150,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
-      <Filter>99. Etc\소스 파일</Filter>
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>99. Etc\소스 파일</Filter>
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMainApp.cpp">
       <Filter>00. MainApp</Filter>
@@ -203,15 +203,15 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
-      <Filter>99. Etc\리소스 파일</Filter>
+      <Filter>99. Default\리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
-      <Filter>99. Etc\리소스 파일</Filter>
+      <Filter>99. Default\리소스 파일</Filter>
     </Image>
     <Image Include="Client.ico">
-      <Filter>99. Etc\리소스 파일</Filter>
+      <Filter>99. Default\리소스 파일</Filter>
     </Image>
   </ItemGroup>
 </Project>

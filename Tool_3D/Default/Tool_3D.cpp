@@ -16,6 +16,9 @@
 #define new DEBUG_NEW
 #endif
 
+HWND g_hWnd;
+HINSTANCE g_hInst;
+
 
 // CTool3DApp
 

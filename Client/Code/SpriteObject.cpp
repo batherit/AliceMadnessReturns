@@ -6,16 +6,6 @@ CSpriteObject::CSpriteObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
 	CGameObject(pGraphicDev)
 {
-	//AddComponent<Engine::CRcTex>();
-	//m_pTextureBoard = GetComponent<Engine::CRcTex>();
-
-	//AddComponent<CRectRenderer>();
-	//m_pRenderer = GetComponent<CRectRenderer>();
-	//m_pRenderer->SetDevice(m_pGraphicDev);
-
-	//m_pRenderer->SetTextureTag(L"Texture_Cloud");
-	//m_pRenderer->SetTextureCnt(0);
-	//m_pRenderer->SetBufferTag(L"Buffer_RcTex");
 }
 
 CSpriteObject::~CSpriteObject() 

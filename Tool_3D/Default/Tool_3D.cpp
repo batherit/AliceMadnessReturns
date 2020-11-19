@@ -12,13 +12,14 @@
 #include "Tool_3DDoc.h"
 #include "Tool_3DView.h"
 
+#include "Tool3D_Kernel.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-HWND g_hWnd;
 HINSTANCE g_hInst;
-
+CTool3D_Kernel* g_pTool3D_Kernel = nullptr;
 
 // CTool3DApp
 
@@ -182,5 +183,124 @@ void CTool3DApp::OnAppAbout()
 
 // CTool3DApp 메시지 처리기
 
+
+
+
+
+int CTool3DApp::Run()
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+
+	g_hInst = AfxGetInstanceHandle();
+	
+	// 툴 커널 객체 생성
+	g_pTool3D_Kernel = CTool3D_Kernel::Create();
+	if (nullptr == g_pTool3D_Kernel)
+	return FALSE;
+
+	// 타이머 설치
+	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_Immediate"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_FPS60"), E_FAIL);
+
+	// 프레임 설치
+	FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame_FPS60", 60.f), E_FAIL);
+
+	//CMainApp* pMainApp = CMainApp::Create();
+	/*if (nullptr == pMainApp)
+	   return FALSE;*/
+
+	MSG msg;
+	msg.message = WM_NULL;
+	   // 기본 메시지 루프입니다.
+	while (true) {
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+			if (WM_QUIT == msg.message)
+				break;
+
+			if (!TranslateAccelerator(msg.hwnd, nullptr, &msg)) {
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+		else {
+			if (!Engine::CManagement::GetInstance()->ConfirmValidScene()) break;
+
+			Engine::Set_TimeDelta(L"Timer_Immediate");
+
+			_float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+
+			if (Engine::IsPermit_Call(L"Frame_FPS60", fTimeDelta)) {
+				Engine::Set_TimeDelta(L"Timer_FPS60");
+				_float fTime60 = Engine::Get_TimeDelta(L"Timer_FPS60");
+
+				g_pTool3D_Kernel->Update_MainApp(fTime60);
+				g_pTool3D_Kernel->Render_MainApp();
+			}
+		}
+	}
+
+	_ulong dwRefCnt = 0;
+
+	if (dwRefCnt = Engine::Safe_Release(g_pTool3D_Kernel)) {
+	   MSG_BOX("MainApp Release Failed");
+	   return FALSE;
+	}
+
+	return (int)msg.wParam;
+
+}
+
+
+BOOL CTool3DApp::OnIdle(LONG lCount)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+
+	return CWinApp::OnIdle(lCount);
+}
+
+
+//g_hInst = AfxGetInstanceHandle();
+//
+//// 툴 커널 객체 생성
+//g_pTool3D_Kernel = CTool3D_Kernel::Create();
+//if (nullptr == g_pTool3D_Kernel)
+//return FALSE;
+//
+//// 타이머 설치
+//FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_Immediate"), E_FAIL);
+//FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_FPS60"), E_FAIL);
+//
+//// 프레임 설치
+//FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame_FPS60", 60.f), E_FAIL);
+//
+//// 기본 메시지 루프입니다.
+//while (true)
+//{
+//	if (!Engine::CManagement::GetInstance()->ConfirmValidScene()) break;
+//
+//	Engine::Set_TimeDelta(L"Timer_Immediate");
+//
+//	_float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+//
+//	if (Engine::IsPermit_Call(L"Frame_FPS60", fTimeDelta))
+//	{
+//		Engine::Set_TimeDelta(L"Timer_FPS60");
+//		_float fTime60 = Engine::Get_TimeDelta(L"Timer_FPS60");
+//
+//		//Direct Input을 사용
+//		//Engine::CKeyMgr::GetInstance()->Update();
+//		g_pTool3D_Kernel->Update_MainApp(fTime60);
+//		g_pTool3D_Kernel->Render_MainApp();
+//	}
+//}
+//_ulong dwRefCnt = 0;
+//
+//if (dwRefCnt = Safe_Release(g_pTool3D_Kernel))
+//{
+//	MSG_BOX("MainApp Release Failed");
+//	return FALSE;
+//}
+//
+//return CWinApp::Run();
 
 

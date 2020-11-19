@@ -20,6 +20,7 @@
 
 // CTool3DView
 
+HWND g_hWnd;
 IMPLEMENT_DYNCREATE(CTool3DView, CView)
 
 BEGIN_MESSAGE_MAP(CTool3DView, CView)
@@ -110,6 +111,7 @@ void CTool3DView::OnInitialUpdate()
 	CView::OnInitialUpdate();
 
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	g_hWnd = m_hWnd;
 }
 
 

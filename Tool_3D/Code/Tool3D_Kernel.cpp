@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Tool3D_Kernel.h"
+#include "DefaultScene.h"
 //#include "LoadScene.h"
 //include "PlayScene.h"
 
@@ -50,7 +51,7 @@ HRESULT CTool3D_Kernel::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"±Ã¼­", 30, 30, FW_HEAVY), E_FAIL);
 
 	// Ã¹ ¾ÀÀ» Logo·Î ¼³Á¤ÇÑ´Ù.
-	//Engine::CManagement::GetInstance()->SetNextScene(CLoadScene::Create(m_pGraphicDev));
+	Engine::CManagement::GetInstance()->SetNextScene(CDefaultScene::Create(m_pGraphicDev));
 	
 	return S_OK;
 }

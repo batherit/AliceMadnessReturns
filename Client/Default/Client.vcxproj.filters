@@ -96,9 +96,6 @@
     <ClInclude Include="..\Header\Enum.h">
       <Filter>98. Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Const.h">
-      <Filter>98. Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\CLogoObject.h">
       <Filter>02. Object</Filter>
     </ClInclude>

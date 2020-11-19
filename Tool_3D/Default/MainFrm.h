@@ -13,6 +13,8 @@ protected: // serialization에서만 만들어집니다.
 
 // 특성입니다.
 public:
+	// 창분할을 제공해주는 객체
+	CSplitterWnd m_MainSplitter;
 
 // 작업입니다.
 public:
@@ -38,6 +40,7 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	DECLARE_MESSAGE_MAP()
 
+	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 };
 
 

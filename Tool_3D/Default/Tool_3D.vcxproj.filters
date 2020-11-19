@@ -20,9 +20,6 @@
     <Filter Include="00. Frame">
       <UniqueIdentifier>{a86b2cb4-6a85-44fa-81e0-73ec4e30a78e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. View">
-      <UniqueIdentifier>{720016ac-38b6-42d2-89c2-2c6c045a196b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Tool3D_Kernel">
       <UniqueIdentifier>{89d62d50-c61a-431f-ae52-2c7cfb09a583}</UniqueIdentifier>
     </Filter>
@@ -47,6 +44,12 @@
     <Filter Include="02. Scene\00. LoadScene\Public">
       <UniqueIdentifier>{fe48aceb-82a2-47b8-ad39-c040aa7646bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. View%28Workspace%29">
+      <UniqueIdentifier>{720016ac-38b6-42d2-89c2-2c6c045a196b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. View%28Workspace%29\Form">
+      <UniqueIdentifier>{4a4f5570-8094-4d32-a973-ba1009740b75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -56,7 +59,7 @@
       <Filter>00. Doc</Filter>
     </ClInclude>
     <ClInclude Include="Tool_3DView.h">
-      <Filter>00. View</Filter>
+      <Filter>00. View%28Workspace%29</Filter>
     </ClInclude>
     <ClInclude Include="Tool_3D.h">
       <Filter>00. App</Filter>
@@ -115,6 +118,9 @@
     <ClInclude Include="..\Code\LoadScene.h">
       <Filter>02. Scene\00. LoadScene</Filter>
     </ClInclude>
+    <ClInclude Include="CForm.h">
+      <Filter>00. View%28Workspace%29\Form</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -124,7 +130,7 @@
       <Filter>00. Doc</Filter>
     </ClCompile>
     <ClCompile Include="Tool_3DView.cpp">
-      <Filter>00. View</Filter>
+      <Filter>00. View%28Workspace%29</Filter>
     </ClCompile>
     <ClCompile Include="Tool_3D.cpp">
       <Filter>00. App</Filter>
@@ -149,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\LoadScene.cpp">
       <Filter>02. Scene\00. LoadScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CForm.cpp">
+      <Filter>00. View%28Workspace%29\Form</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

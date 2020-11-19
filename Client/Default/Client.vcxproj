@@ -191,7 +191,6 @@
     <ClInclude Include="..\Code\StaticCamera.h" />
     <ClInclude Include="..\Code\Stone.h" />
     <ClInclude Include="..\Code\Terrain.h" />
-    <ClInclude Include="..\Header\Const.h" />
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Enum.h" />
     <ClInclude Include="..\Header\Function.h" />

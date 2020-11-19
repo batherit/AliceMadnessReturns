@@ -20,11 +20,16 @@
 #include <functional>
 #include <ctime>
 
+using namespace std;
+#include "Define.h"
+
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
+#include <afxext.h>
+
 
 #ifndef DBG_NEW 
 

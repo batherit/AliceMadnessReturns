@@ -5,12 +5,9 @@
 #include "Function.h"
 #include "sjhD3DXFunction.h"
 #include "Macro.h"
-using namespace Client;
-
 #include "Enum.h"
-#include "Const.h"
 #include "Struct.h"
-
+using namespace Client;
 extern HWND g_hWnd;
 extern HINSTANCE g_hInst;
 

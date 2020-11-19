@@ -33,6 +33,7 @@
     <ClInclude Include="..\Header\sjhD3DXFunction.h" />
     <ClInclude Include="..\Header\Struct.h" />
     <ClInclude Include="..\Header\Typedef.h" />
+    <ClInclude Include="CForm.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="..\Code\LoadScene.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Tool3D_Kernel.cpp" />
+    <ClCompile Include="CForm.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

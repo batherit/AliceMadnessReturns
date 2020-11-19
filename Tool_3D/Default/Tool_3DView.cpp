@@ -12,6 +12,7 @@
 
 #include "Tool_3DDoc.h"
 #include "Tool_3DView.h"
+#include "MainFrm.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -28,6 +29,7 @@ BEGIN_MESSAGE_MAP(CTool3DView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+//	ON_WM_GETMINMAXINFO()
 END_MESSAGE_MAP()
 
 // CTool3DView 생성/소멸
@@ -110,8 +112,24 @@ void CTool3DView::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
 
+	// Gap을 구하기 위해서 MainFrame 크기를 구한다.
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
+	RECT rcMain = {};
+	pMain->GetWindowRect(&rcMain);														// MainFrame 렉트를 구하고,
+	SetRect(&rcMain, 0, 0, rcMain.right - rcMain.left, rcMain.bottom - rcMain.top);		// 렉트 시작 위치를 (0, 0)으로 변환
+
+	// Gap을 구하기 위해서 View 크기를 구한다.
+	RECT rcView = {};
+	GetClientRect(&rcView); ;
+	float fGapX = rcMain.right - float(rcView.right);
+	float fGapY = WINCY + (float(rcMain.bottom) - rcView.bottom);
+
+	pMain->SetWindowPos(nullptr, 0, 0, LONG(WINCX + fGapX), LONG(fGapY), SWP_NOZORDER);
+
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	g_hWnd = m_hWnd;
+
+	// D2D같은 경우 여기에서 장치와 에디터툴 객체를 생성하였다.
 }
 
 
@@ -121,3 +139,15 @@ void CTool3DView::PostNcDestroy()
 
 	CView::PostNcDestroy();
 }
+
+
+//void CTool3DView::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
+//{
+//	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+//	lpMMI->ptMinTrackSize.x = WINCX - 300;
+//	lpMMI->ptMinTrackSize.y = WINCY - 300;
+//	lpMMI->ptMaxTrackSize.x = WINCX - 300;
+//	lpMMI->ptMaxTrackSize.y = WINCY - 300;
+//
+//	CView::OnGetMinMaxInfo(lpMMI);
+//}

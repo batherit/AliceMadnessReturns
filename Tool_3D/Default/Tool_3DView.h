@@ -4,7 +4,7 @@
 
 #pragma once
 
-
+class CTool3DDoc;
 class CTool3DView : public CView
 {
 protected: // serialization에서만 만들어집니다.
@@ -43,6 +43,7 @@ protected:
 public:
 	virtual void OnInitialUpdate();
 	virtual void PostNcDestroy();
+//	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
 };
 
 #ifndef _DEBUG  // Tool_3DView.cpp의 디버그 버전

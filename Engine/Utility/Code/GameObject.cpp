@@ -10,8 +10,7 @@ Engine::CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_pGraphicDev(pGraphicDev)
 {
 	Safe_AddRef(m_pGraphicDev);
-	AddComponent<CTransform>();
-	m_pTransform = GetComponent<CTransform>();
+	m_pTransform = AddComponent<CTransform>();
 }
 
 Engine::CGameObject::CGameObject(const CGameObject & rhs)
@@ -19,8 +18,7 @@ Engine::CGameObject::CGameObject(const CGameObject & rhs)
 	m_pGraphicDev(rhs.m_pGraphicDev)
 {
 	Safe_AddRef(m_pGraphicDev);
-	AddComponent<CTransform>();
-	m_pTransform = GetComponent<CTransform>();
+	m_pTransform = AddComponent<CTransform>();
 }
 
 Engine::CGameObject::~CGameObject()

@@ -21,8 +21,6 @@ CDynamicCamera::~CDynamicCamera(void)
 
 HRESULT CDynamicCamera::Ready_Object(void)
 {
-	AddComponent<Engine::CTransform>();
-	m_pTransform = GetComponent<Engine::CTransform>();
 	m_pTransform->SetPos(30.f, 80.f, -80.f);
 	m_pTransform->RotateByRight(D3DXToRadian(45.f));
 

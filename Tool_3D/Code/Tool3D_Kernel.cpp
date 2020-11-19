@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "Tool3D_Kernel.h"
-#include "EditScene.h"
-//#include "LoadScene.h"
-//include "PlayScene.h"
+#include "LoadScene.h"
 
 CTool3D_Kernel::CTool3D_Kernel(void)
 {
@@ -51,7 +49,7 @@ HRESULT CTool3D_Kernel::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"±Ã¼­", 30, 30, FW_HEAVY), E_FAIL);
 
 	// Ã¹ ¾ÀÀ» Logo·Î ¼³Á¤ÇÑ´Ù.
-	Engine::CManagement::GetInstance()->SetNextScene(CEditScene::Create(m_pGraphicDev));
+	Engine::CManagement::GetInstance()->SetNextScene(CLoadScene::Create(m_pGraphicDev));
 	
 	return S_OK;
 }

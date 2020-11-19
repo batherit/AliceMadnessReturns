@@ -38,8 +38,14 @@
     <Filter Include="03. Object\DynamicCamera">
       <UniqueIdentifier>{fdfc7e93-bfb2-41bf-82be-2259b4bdce9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Scene\00. EditScene">
+    <Filter Include="02. Scene\00. LoadScene">
+      <UniqueIdentifier>{b0803a52-d2f9-4a6b-ab4b-1c5287ad44f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\01. EditScene">
       <UniqueIdentifier>{bfb5255f-135a-40dd-afb7-64519521b41b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\00. LoadScene\Public">
+      <UniqueIdentifier>{fe48aceb-82a2-47b8-ad39-c040aa7646bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -101,7 +107,13 @@
       <Filter>03. Object\DynamicCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\EditScene.h">
-      <Filter>02. Scene\00. EditScene</Filter>
+      <Filter>02. Scene\01. EditScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Loading.h">
+      <Filter>02. Scene\00. LoadScene\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\LoadScene.h">
+      <Filter>02. Scene\00. LoadScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,7 +142,13 @@
       <Filter>03. Object\DynamicCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EditScene.cpp">
-      <Filter>02. Scene\00. EditScene</Filter>
+      <Filter>02. Scene\01. EditScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Loading.cpp">
+      <Filter>02. Scene\00. LoadScene\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadScene.cpp">
+      <Filter>02. Scene\00. LoadScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

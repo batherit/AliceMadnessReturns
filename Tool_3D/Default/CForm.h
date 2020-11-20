@@ -34,9 +34,14 @@ public:
 	afx_msg void OnEnChangeEditRotX();
 	afx_msg void OnEnChangeEditRotY();
 	afx_msg void OnEnChangeEditRotZ();
+	afx_msg void OnEnChangeEditScaleX();
+	afx_msg void OnEnChangeEditScaleY();
+	afx_msg void OnEnChangeEditScaleZ();
 
 	_vec3 m_vPos{0.f, 0.f, 0.f};
 	_vec3 m_vAngle{0.f, 0.f, 0.f};
+	_vec3 m_vScale{ 1.f, 1.f, 1.f };
+	
 };
 
 

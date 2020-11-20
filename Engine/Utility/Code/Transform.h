@@ -36,6 +36,7 @@ public:
 	void Translate(_vec3 _vDeltaMove);
 	
 	// Ω∫ƒ…¿œ
+	void SetScale(_vec3 _vScale) { m_vScale = _vScale; }
 	void SetScaleX(_float _fScaleX) { m_vScale.x = _fScaleX; }
 	void SetScaleY(_float _fScaleY) { m_vScale.y = _fScaleY; }
 	void SetScaleZ(_float _fScaleZ) { m_vScale.z = _fScaleZ; }

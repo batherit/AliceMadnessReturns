@@ -220,7 +220,7 @@ namespace Engine
 
 	// 쿼터니언 보간된 회전 행렬 얻기
 	inline _matrix* GetRotationMatrixSlerp(_matrix *_pOut, const _matrix* _pFromM, const _matrix* _pToM, const _float& _fT) {
-		D3DXQUATERNION _FromQ, _ToQ, _LerpQ;
+		_qt _FromQ, _ToQ, _LerpQ;
 		D3DXQuaternionRotationMatrix(&_FromQ, _pFromM);
 		D3DXQuaternionRotationMatrix(&_ToQ, _pToM);
 
@@ -299,6 +299,45 @@ namespace Engine
 	// 광선 충돌 지점 얻기
 	inline _vec3 GetHitPos(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3, const _float& _fU, const _float& _fV) {
 		return _vV1 + _fU * (_vV2 - _vV1) + _fV * (_vV3 - _vV1);
+	}
+
+	// 쿼터니언 -> YawPitchRoll
+	inline _vec3 ConvQuaternionToYawPitchRoll(const _qt& pQt) {
+		_vec3 vResult;
+
+		_float q2sqr = pQt.y * pQt.y;
+		_float t0 = -2.f * (q2sqr + pQt.z * pQt.z) + 1.f;
+		_float t1 = +2.f * (pQt.x * pQt.y + pQt.w * pQt.z);
+		_float t2 = -2.f * (pQt.x * pQt.z - pQt.w * pQt.y);
+		_float t3 = +2.f * (pQt.y * pQt.z + pQt.w * pQt.x);
+		_float t4 = -2.f * (pQt.x * pQt.x + q2sqr) + 1.f;
+
+		t2 = t2 > 1.f ? 1.f : t2;
+		t2 = t2 < -1.f ? -1.f : t2;
+
+		vResult.y = asinf(t2);			// Yaw
+		vResult.x = atan2f(t3, t4);		// Pitch
+		vResult.z = atan2f(t1, t0);		// Roll
+
+		return vResult;					// _vec3(Pitch, Yaw, Roll);
+	}
+
+	// 오일러각(YawPitchRoll) -> 쿼터니언
+	inline _qt ConvAngleToQuaternion(const _vec3& vEulerAngle) {
+		_qt qtResult;
+
+		D3DXQuaternionRotationYawPitchRoll(&qtResult, vEulerAngle.y, vEulerAngle.x, vEulerAngle.z);
+
+		return qtResult;
+	}
+
+	// YawPitchRoll -> 쿼터니언
+	inline _qt ConvYawPitchRollToQuaternion(const _float& _fYaw, const _float& _fPitch, const _float& _fRoll) {
+		_qt qtResult;
+
+		D3DXQuaternionRotationYawPitchRoll(&qtResult, _fYaw, _fPitch, _fRoll);
+
+		return qtResult;
 	}
 }
 

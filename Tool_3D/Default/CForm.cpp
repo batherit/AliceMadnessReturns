@@ -27,9 +27,9 @@ void CForm::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT1, m_vPos.x);
 	DDX_Text(pDX, IDC_EDIT2, m_vPos.y);
 	DDX_Text(pDX, IDC_EDIT3, m_vPos.z);
-	DDX_Text(pDX, IDC_EDIT4, m_vRot.x);
-	DDX_Text(pDX, IDC_EDIT5, m_vRot.y);
-	DDX_Text(pDX, IDC_EDIT6, m_vRot.z);
+	DDX_Text(pDX, IDC_EDIT4, m_vAngle.x);
+	DDX_Text(pDX, IDC_EDIT5, m_vAngle.y);
+	DDX_Text(pDX, IDC_EDIT6, m_vAngle.z);
 }
 
 BEGIN_MESSAGE_MAP(CForm, CFormView)
@@ -124,6 +124,16 @@ void CForm::OnEnChangeEditRotX()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
+	auto pPickedObject = pEditScene->GetPickedObject();
+
+	if (pPickedObject) {
+		_vec3 vRadian = _vec3(D3DXToRadian(m_vAngle.x), D3DXToRadian(m_vAngle.y), D3DXToRadian(m_vAngle.z));
+		pPickedObject->GetTransform()->SetAngle(vRadian);
+	}
+		
+	UpdateData(FALSE);
 }
 
 
@@ -135,6 +145,16 @@ void CForm::OnEnChangeEditRotY()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
+	auto pPickedObject = pEditScene->GetPickedObject();
+
+	if (pPickedObject) {
+		_vec3 vRadian = _vec3(D3DXToRadian(m_vAngle.x), D3DXToRadian(m_vAngle.y), D3DXToRadian(m_vAngle.z));
+		pPickedObject->GetTransform()->SetAngle(vRadian);
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -146,4 +166,14 @@ void CForm::OnEnChangeEditRotZ()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
+	auto pPickedObject = pEditScene->GetPickedObject();
+
+	if (pPickedObject) {
+		_vec3 vRadian = _vec3(D3DXToRadian(m_vAngle.x), D3DXToRadian(m_vAngle.y), D3DXToRadian(m_vAngle.z));
+		pPickedObject->GetTransform()->SetAngle(vRadian);
+	}
+
+	UpdateData(FALSE);
 }

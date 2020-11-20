@@ -36,7 +36,7 @@ public:
 	afx_msg void OnEnChangeEditRotZ();
 
 	_vec3 m_vPos{0.f, 0.f, 0.f};
-	_vec3 m_vRot{0.f, 0.f, 0.f};
+	_vec3 m_vAngle{0.f, 0.f, 0.f};
 };
 
 

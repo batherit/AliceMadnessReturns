@@ -12,7 +12,7 @@ class CGraphicDev;
 
 END
 BEGIN(Client)
-
+class CEditScene;
 class CTool3D_Kernel : public CBase
 {
 private: // 持失切, 社瑚切
@@ -35,6 +35,9 @@ private:
 public:
 	static CTool3D_Kernel*	Create(void);
 	virtual void		Free(void);
+
+public:
+	CEditScene* GetEditScene() const;
 
 };
 

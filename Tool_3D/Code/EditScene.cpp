@@ -71,3 +71,18 @@ void CEditScene::Free(void)
 {
 	CScene::Free();
 }
+
+Engine::CGameObject * CEditScene::GetPickedObject() const
+{
+	auto pLayer = GetLayer(L"EditLayer");
+	
+	if (!pLayer)
+		return nullptr;
+
+	auto& rLayerList = pLayer->GetLayerList(L"Terrain");
+
+	if (rLayerList.empty())
+		return nullptr;
+
+	return (*rLayerList.begin());
+}

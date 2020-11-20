@@ -27,6 +27,13 @@ public:
 
 private:
 	virtual void		Free(void);
+
+public:
+	Engine::CGameObject* GetPickedObject() const;
+
+private:
+	_vec3 m_vObjectPostion{ 0.f, 0.f, 0.f };
+	_vec3 m_vObjectRotation{ 0.f, 0.f, 0.f };
 };
 
 END

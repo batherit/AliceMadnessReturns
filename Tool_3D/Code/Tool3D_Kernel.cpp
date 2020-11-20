@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Tool3D_Kernel.h"
 #include "LoadScene.h"
+#include "EditScene.h"
 
 CTool3D_Kernel::CTool3D_Kernel(void)
 {
@@ -92,5 +93,10 @@ void CTool3D_Kernel::Free(void)
 	Engine::Release_Resoures();
 	Engine::Release_Utility();
 	Engine::Release_System();
+}
+
+CEditScene * CTool3D_Kernel::GetEditScene() const
+{
+	return dynamic_cast<CEditScene*>(Engine::CManagement::GetInstance()->GetSceneMgr()->GetCurScene());
 }
 

@@ -19,10 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Code\CEmptyForm.h" />
+    <ClInclude Include="..\Code\CForm.h" />
+    <ClInclude Include="..\Code\CMeshPage.h" />
+    <ClInclude Include="..\Code\CMeshTab.h" />
+    <ClInclude Include="..\Code\CTabForm.h" />
+    <ClInclude Include="..\Code\CTerrainPage.h" />
+    <ClInclude Include="..\Code\CTerrainTab.h" />
     <ClInclude Include="..\Code\EditScene.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\Loading.h" />
     <ClInclude Include="..\Code\LoadScene.h" />
+    <ClInclude Include="..\Code\Sheet.h" />
     <ClInclude Include="..\Code\Terrain.h" />
     <ClInclude Include="..\Code\Tool3D_Kernel.h" />
     <ClInclude Include="..\Header\Const.h" />
@@ -33,54 +41,34 @@
     <ClInclude Include="..\Header\sjhD3DXFunction.h" />
     <ClInclude Include="..\Header\Struct.h" />
     <ClInclude Include="..\Header\Typedef.h" />
-    <ClInclude Include="CEmptyForm.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="CForm.h" />
-    <ClInclude Include="CMeshPage.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="Sheet.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="CTerrainPage.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="Tool_3D.h" />
     <ClInclude Include="Tool_3DDoc.h" />
     <ClInclude Include="Tool_3DView.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CEmptyForm.cpp" />
+    <ClCompile Include="..\Code\CForm.cpp" />
+    <ClCompile Include="..\Code\CMeshPage.cpp" />
+    <ClCompile Include="..\Code\CMeshTab.cpp" />
+    <ClCompile Include="..\Code\CTabForm.cpp" />
+    <ClCompile Include="..\Code\CTerrainPage.cpp" />
+    <ClCompile Include="..\Code\CTerrainTab.cpp" />
     <ClCompile Include="..\Code\EditScene.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\LoadScene.cpp" />
+    <ClCompile Include="..\Code\Sheet.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Tool3D_Kernel.cpp" />
-    <ClCompile Include="CEmptyForm.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="CForm.cpp" />
-    <ClCompile Include="CMeshPage.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Sheet.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="CTerrainPage.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Tool_3D.cpp" />
     <ClCompile Include="Tool_3DDoc.cpp" />

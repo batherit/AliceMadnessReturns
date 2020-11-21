@@ -30,6 +30,7 @@ BEGIN_MESSAGE_MAP(CTool3DView, CView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 //	ON_WM_GETMINMAXINFO()
+//ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // CTool3DView 생성/소멸
@@ -150,4 +151,13 @@ void CTool3DView::PostNcDestroy()
 //	lpMMI->ptMaxTrackSize.y = WINCY - 300;
 //
 //	CView::OnGetMinMaxInfo(lpMMI);
+//}
+
+
+//void CTool3DView::OnLButtonDown(UINT nFlags, CPoint point)
+//{
+//	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+//	g_pTool3D_Kernel->OnLButtonDown(nFlags, point);
+//
+//	CView::OnLButtonDown(nFlags, point);
 //}

@@ -33,6 +33,9 @@ using namespace std;
 #include <afxdlgs.h>
 #include <afxext.h>
 #include <afxdlgs.h>
+#include <afxcontrolbars.h>
+#include <afxcontrolbars.h>
+#include <afxext.h>
 
 
 #ifndef DBG_NEW 

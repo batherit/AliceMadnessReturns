@@ -39,6 +39,8 @@ public:
 public:
 	CEditScene* GetEditScene() const;
 
+	//void OnLButtonDown(UINT nFlags, CPoint point);
+
 };
 
 END

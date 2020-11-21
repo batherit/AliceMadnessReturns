@@ -34,7 +34,7 @@ HRESULT CDynamicCamera::Ready_Object(void)
 
 int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 {	
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_RB)) {
 		POINT ptCurrentCursor = Engine::CDirectInputMgr::GetInstance()->GetCurrentMousePos();
 
 		if (Engine::IsPointInClient(g_hWnd, ptCurrentCursor)) {
@@ -42,7 +42,7 @@ int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 		}
 	}
 
-	if (GetCapture() == g_hWnd && Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB)) {
+	if (GetCapture() == g_hWnd && Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_RB)) {
 		// 화면 내에 순환하는 클라이언트 영역 좌표 얻기
 		POINT ptToCurrent = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
 		_float fRotAngleByY = ptToCurrent.x * 2.f * D3DX_PI / WINCX;
@@ -59,7 +59,7 @@ int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 		//SetCursorPos(ptCurrentCursor.x, ptCurrentCursor.y);
 	}
 
-	if (GetCapture() == g_hWnd && Engine::CDirectInputMgr::GetInstance()->IsKeyUp(Engine::DIM_LB)) {
+	if (GetCapture() == g_hWnd && Engine::CDirectInputMgr::GetInstance()->IsKeyUp(Engine::DIM_RB)) {
 		ReleaseCapture();
 	}
 

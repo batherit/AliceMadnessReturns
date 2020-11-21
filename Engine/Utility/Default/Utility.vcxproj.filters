@@ -19,18 +19,6 @@
     <Filter Include="03. GameObject">
       <UniqueIdentifier>{f6d8fe00-eaa8-4e4d-996e-ab8ad6f87f45}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. Manager">
-      <UniqueIdentifier>{44108967-497d-4acf-991d-f9bfd7f48a5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05. Manager\00. KeyMgr">
-      <UniqueIdentifier>{8227eef7-f7be-4d87-98cc-42585e584984}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05. Manager\02. ProtoMgr">
-      <UniqueIdentifier>{cc9bfcd9-9e65-47fa-8420-39eee0aa097d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05. Manager\01. SceneMgr">
-      <UniqueIdentifier>{abde659e-8343-48b5-940f-a9d99fea1b95}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. GameObject\Camera">
       <UniqueIdentifier>{484679ae-2fc2-4f97-b660-b0505f4c5b92}</UniqueIdentifier>
     </Filter>
@@ -52,6 +40,24 @@
     <Filter Include="04. Component\02. Collider\01. MeshCollider">
       <UniqueIdentifier>{9dea5d7c-3ee4-4538-96ae-551aa5257a91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98. Manager">
+      <UniqueIdentifier>{44108967-497d-4acf-991d-f9bfd7f48a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager\00. KeyMgr">
+      <UniqueIdentifier>{8227eef7-f7be-4d87-98cc-42585e584984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager\02. ProtoMgr">
+      <UniqueIdentifier>{cc9bfcd9-9e65-47fa-8420-39eee0aa097d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager\01. SceneMgr">
+      <UniqueIdentifier>{abde659e-8343-48b5-940f-a9d99fea1b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. InputMode">
+      <UniqueIdentifier>{9fe0f35d-6972-46c5-bc30-cb7df8ceed77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager\03. InputModeMgr">
+      <UniqueIdentifier>{99d2baa9-153f-4324-b9db-50a20d3a2b81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -61,7 +67,7 @@
       <Filter>01. Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\CSceneMgr.h">
-      <Filter>05. Manager\01. SceneMgr</Filter>
+      <Filter>98. Manager\01. SceneMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Component.h">
       <Filter>04. Component</Filter>
@@ -70,13 +76,13 @@
       <Filter>02. Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\ProtoMgr.h">
-      <Filter>05. Manager\02. ProtoMgr</Filter>
+      <Filter>98. Manager\02. ProtoMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Management.h">
       <Filter>00. Management</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\KeyMgr.h">
-      <Filter>05. Manager\00. KeyMgr</Filter>
+      <Filter>98. Manager\00. KeyMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\GameObject.h">
       <Filter>03. GameObject</Filter>
@@ -99,13 +105,19 @@
     <ClInclude Include="..\Code\MeshCollider.h">
       <Filter>04. Component\02. Collider\01. MeshCollider</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\InputMode.h">
+      <Filter>05. InputMode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputModeMgr.h">
+      <Filter>98. Manager\03. InputModeMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
       <Filter>01. Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSceneMgr.cpp">
-      <Filter>05. Manager\01. SceneMgr</Filter>
+      <Filter>98. Manager\01. SceneMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Component.cpp">
       <Filter>04. Component</Filter>
@@ -114,13 +126,13 @@
       <Filter>02. Layer</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ProtoMgr.cpp">
-      <Filter>05. Manager\02. ProtoMgr</Filter>
+      <Filter>98. Manager\02. ProtoMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Management.cpp">
       <Filter>00. Management</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\KeyMgr.cpp">
-      <Filter>05. Manager\00. KeyMgr</Filter>
+      <Filter>98. Manager\00. KeyMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GameObject.cpp">
       <Filter>03. GameObject</Filter>
@@ -142,6 +154,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\MeshCollider.cpp">
       <Filter>04. Component\02. Collider\01. MeshCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputMode.cpp">
+      <Filter>05. InputMode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputModeMgr.cpp">
+      <Filter>98. Manager\03. InputModeMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

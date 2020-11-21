@@ -44,6 +44,7 @@ public:
 	virtual void OnInitialUpdate();
 	virtual void PostNcDestroy();
 //	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
+//	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // Tool_3DView.cpp의 디버그 버전

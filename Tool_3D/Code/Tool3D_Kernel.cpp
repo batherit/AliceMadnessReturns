@@ -100,3 +100,11 @@ CEditScene * CTool3D_Kernel::GetEditScene() const
 	return dynamic_cast<CEditScene*>(Engine::CManagement::GetInstance()->GetSceneMgr()->GetCurScene());
 }
 
+//void CTool3D_Kernel::OnLButtonDown(UINT nFlags, CPoint point)
+//{
+//	CEditScene* pEditScene = GetEditScene();
+//	if (!pEditScene) return;
+//
+//
+//}
+

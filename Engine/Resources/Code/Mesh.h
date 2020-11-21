@@ -5,7 +5,7 @@
 
 BEGIN(Engine)
 
-class ENGINE_DLL CMesh : public CResources
+class ENGINE_DLL CMesh: public CResources
 {
 protected:
 	explicit CMesh(LPDIRECT3DDEVICE9 pGraphicDev);

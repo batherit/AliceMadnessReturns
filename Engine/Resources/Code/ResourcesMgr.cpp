@@ -55,9 +55,11 @@ HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const
 	case BUFFER_TERRAINTEX:
 		pResources = CTerrainTex::Create(pGraphicDev);
 		break;
+
 	case BUFFER_CUBETEX:
 		pResources = CCubeTex::Create(pGraphicDev);
 		break;
+
 	}
 	NULL_CHECK_RETURN(pResources, E_FAIL);
 	
@@ -66,7 +68,12 @@ HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const
 	return S_OK;
 }
 
-HRESULT CResourcesMgr::Ready_Texture(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort & wContainerIdx, const _tchar * pTextureTag, TEXTURETYPE eType, const _tchar * pFilePath, const _uint & iCnt)
+HRESULT CResourcesMgr::Ready_Texture(LPDIRECT3DDEVICE9 pGraphicDev, 
+									const _ushort & wContainerIdx, 
+									const _tchar * pTextureTag, 
+									TEXTURETYPE eType,
+									const _tchar* pFilePath,
+									const _uint& iCnt)
 {
 	if (nullptr == m_pmapResource)
 	{
@@ -80,13 +87,14 @@ HRESULT CResourcesMgr::Ready_Texture(LPDIRECT3DDEVICE9 pGraphicDev, const _ushor
 
 	pResources = CTexture::Create(pGraphicDev, pFilePath, eType, iCnt);
 	NULL_CHECK_RETURN(pResources, E_FAIL);
-
+	
 	m_pmapResource[wContainerIdx].emplace(pTextureTag, pResources);
-
+	
 	return S_OK;
 }
 
-HRESULT CResourcesMgr::Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort & wContainerIdx, const _tchar * pMeshTag, MESHTYPE eType, const _tchar * pFilePath, const _tchar * pFileName)
+HRESULT Engine::CResourcesMgr::Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev, 
+	const _ushort& wContainerIdx, const _tchar* pMeshTag, MESHTYPE eType, const _tchar* pFilePath, const _tchar* pFileName)
 {
 	if (nullptr == m_pmapResource)
 	{
@@ -105,6 +113,7 @@ HRESULT CResourcesMgr::Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort
 		break;
 
 	case TYPE_DYNAMIC:
+		pResources = CDynamicMesh::Create(pGraphicDev, pFilePath, pFileName);
 		break;
 
 	case TYPE_NAVI:
@@ -150,7 +159,7 @@ void Engine::CResourcesMgr::Render_Buffer(const _ushort& wContainerIdx, const _t
 	dynamic_cast<CVIBuffer*>(pResources)->Render_Buffer();
 }
 
-void CResourcesMgr::Render_Texture(const _ushort & wContainerIdx, const _tchar * pTextureTag, const _uint & iIndex)
+void CResourcesMgr::Render_Texture(const _ushort & wContainerIdx, const _tchar * pTextureTag, const _uint& iIndex)
 {
 	CResources*		pResources = Find_Resources(wContainerIdx, pTextureTag);
 
@@ -160,11 +169,11 @@ void CResourcesMgr::Render_Texture(const _ushort & wContainerIdx, const _tchar *
 	dynamic_cast<CTexture*>(pResources)->Render_Texture(iIndex);
 }
 
-CComponent * CResourcesMgr::Clone(const _ushort & wContainerIdx, const _tchar * pResourcesTag)
+Engine::CComponent* Engine::CResourcesMgr::Clone(const _ushort& wContainerIdx, const _tchar* pResourcesTag)
 {
 	if (nullptr == m_pmapResource)
 		return nullptr;
-
+	
 	CResources*		pProto = Find_Resources(wContainerIdx, pResourcesTag);
 	NULL_CHECK_RETURN(pProto, nullptr);
 

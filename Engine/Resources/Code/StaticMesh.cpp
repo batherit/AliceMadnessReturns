@@ -16,7 +16,7 @@ Engine::CStaticMesh::CStaticMesh(const CStaticMesh& rhs)
 	, m_pOriMesh(rhs.m_pOriMesh)
 	, m_pMtrl(rhs.m_pMtrl)
 	, m_dwSubsetCnt(rhs.m_dwSubsetCnt)
-	, m_dwNumVtx(rhs.m_dwNumVtx)
+	, m_dwNumVtx(rhs.m_dwNumVtx)	
 	, m_pVtxPos(rhs.m_pVtxPos)
 	, m_dwStride(rhs.m_dwStride)
 {
@@ -27,7 +27,7 @@ Engine::CStaticMesh::CStaticMesh(const CStaticMesh& rhs)
 		m_ppTextures[i] = rhs.m_ppTextures[i];
 		Safe_AddRef(m_ppTextures[i]);
 	}
-
+	
 	Safe_AddRef(m_pMesh);
 	Safe_AddRef(m_pOriMesh);
 	Safe_AddRef(m_pAdjacency);
@@ -67,7 +67,7 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 
 	m_dwNumVtx = m_pMesh->GetNumVertices();	// 메쉬가 지닌 정점의 개수를 반환
 	m_pVtxPos = new _vec3[m_dwNumVtx];
-
+	
 	m_pMesh->LockVertexBuffer(0, &pVertex);
 
 	// 정점 정보 중 position의 위치 찾기
@@ -80,7 +80,7 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 
 	for (_ulong i = 0; i < MAX_FVF_DECL_SIZE; ++i)
 	{
-		if (Decl[i].Usage == D3DDECLUSAGE_POSITION)
+		if(Decl[i].Usage == D3DDECLUSAGE_POSITION)
 		{
 			byOffset = (_ubyte)Decl[i].Offset;
 			break;
@@ -93,7 +93,7 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 	{
 		m_pVtxPos[i] = *((_vec3*)(((_ubyte*)pVertex) + (i * m_dwStride + byOffset)));
 	}
-
+	
 	m_pMesh->UnlockVertexBuffer();
 
 	// 메쉬가 지닌 재질 정보 중 첫 번째 주소를 반환하여 저장
@@ -107,11 +107,11 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 
 		lstrcpy(szFullPath, pFilePath);
 
-		MultiByteToWideChar(CP_ACP,
+		MultiByteToWideChar(CP_ACP, 
 			0,
 			m_pMtrl[i].pTextureFilename,
-			strlen(m_pMtrl[i].pTextureFilename),
-			szFileName,
+			strlen(m_pMtrl[i].pTextureFilename), 
+			szFileName, 
 			256);
 
 		lstrcat(szFullPath, szFileName);

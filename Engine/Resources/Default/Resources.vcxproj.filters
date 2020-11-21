@@ -40,6 +40,15 @@
     <Filter Include="00. Resources\00. VIBuffer\05. SphereCol">
       <UniqueIdentifier>{83c0a717-a2d2-4dee-a34a-b4ba84c98311}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Resources\02. Mesh\01. DynamicMesh">
+      <UniqueIdentifier>{19cd77ab-ce34-4759-a613-266f323ab66c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\02. Mesh\01. DynamicMesh\00. HierarchyLoader">
+      <UniqueIdentifier>{abd34805-0337-42fe-8385-17167e11d625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\02. Mesh\01. DynamicMesh\01. AniCtrl">
+      <UniqueIdentifier>{5625bc86-48b8-4874-a0d8-69ba5c082a34}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Resouces.h">
@@ -80,6 +89,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\SphereCol.h">
       <Filter>00. Resources\00. VIBuffer\05. SphereCol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AniCtrl.h">
+      <Filter>00. Resources\02. Mesh\01. DynamicMesh\01. AniCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\DynamicMesh.h">
+      <Filter>00. Resources\02. Mesh\01. DynamicMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\HierarchyLoader.h">
+      <Filter>00. Resources\02. Mesh\01. DynamicMesh\00. HierarchyLoader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +141,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\SphereCol.cpp">
       <Filter>00. Resources\00. VIBuffer\05. SphereCol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AniCtrl.cpp">
+      <Filter>00. Resources\02. Mesh\01. DynamicMesh\01. AniCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicMesh.cpp">
+      <Filter>00. Resources\02. Mesh\01. DynamicMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HierarchyLoader.cpp">
+      <Filter>00. Resources\02. Mesh\01. DynamicMesh\00. HierarchyLoader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

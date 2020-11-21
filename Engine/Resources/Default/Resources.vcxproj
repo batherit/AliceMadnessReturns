@@ -168,8 +168,11 @@ call CopyResources.bat</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Resouces.h" />
+    <ClInclude Include="..\Code\AniCtrl.h" />
     <ClInclude Include="..\Code\CRcCol.h" />
     <ClInclude Include="..\Code\CubeTex.h" />
+    <ClInclude Include="..\Code\DynamicMesh.h" />
+    <ClInclude Include="..\Code\HierarchyLoader.h" />
     <ClInclude Include="..\Code\Mesh.h" />
     <ClInclude Include="..\Code\RcTex.h" />
     <ClInclude Include="..\Code\Resources.h" />
@@ -185,8 +188,11 @@ call CopyResources.bat</Command>
     <None Include="..\..\Header\Export_Resouces.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\AniCtrl.cpp" />
     <ClCompile Include="..\Code\CRcCol.cpp" />
     <ClCompile Include="..\Code\CubeTex.cpp" />
+    <ClCompile Include="..\Code\DynamicMesh.cpp" />
+    <ClCompile Include="..\Code\HierarchyLoader.cpp" />
     <ClCompile Include="..\Code\Mesh.cpp" />
     <ClCompile Include="..\Code\RcTex.cpp" />
     <ClCompile Include="..\Code\Resources.cpp" />

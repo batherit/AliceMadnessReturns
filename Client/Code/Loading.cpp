@@ -151,13 +151,21 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Collider_Stone", pComponent);
 
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	RESOURCE_STAGE,
-	//	L"Mesh_Player",
-	//	Engine::TYPE_DYNAMIC,
-	//	L"../Bin/Resource/Mesh/DynamicMesh/PlayerXfile/",
-	//	L"Player.X"),
-	//	E_FAIL);
+	// Player 메쉬 원본 생성
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Player",
+		Engine::TYPE_DYNAMIC,
+		L"../Bin/Resource/Mesh/DynamicMesh/PlayerXfile/",
+		L"Player.X"),
+		E_FAIL);
+
+	// 플레이어에 맞는 메쉬 콜라이더 원본 생성. (미구현)
+	//Engine::CDynamicMesh* pDynamicMesh = nullptr;
+	//pDynamicMesh = static_cast<Engine::CDynamicMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Player"));
+	//pComponent = Engine::CMeshCollider::Create(m_pGraphicDev, pDynamicMesh->Get_VtxPos(), pDynamicMesh->Get_NumVtx(), pDynamicMesh->Get_Stride());
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//Engine::Ready_Proto(L"Collider_Stone", pComponent);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	RESOURCE_STAGE,

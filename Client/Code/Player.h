@@ -28,11 +28,12 @@ public:
 	virtual void		Free(void);
 
 private:
-	Engine::CStaticMesh* m_pMesh = nullptr;
+	//Engine::CStaticMesh* m_pMesh = nullptr;
+	Engine::CDynamicMesh* m_pMesh = nullptr;
 	Engine::CRenderer* m_pRenderer = nullptr;
 	Engine::CPhysics* m_pPhysics = nullptr;
 	//Engine::CSphereCollider* m_pCollider = nullptr;
-	Engine::CMeshCollider* m_pCollider = nullptr;
+	//Engine::CMeshCollider* m_pCollider = nullptr;
 	_vec3 m_vTargetPos{0.f, 0.f, 0.f};
 	_float m_fT = 0.f;
 };

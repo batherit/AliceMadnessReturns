@@ -57,6 +57,8 @@ HRESULT CTool3D_Kernel::Ready_MainApp(void)
 
 _int CTool3D_Kernel::Update_MainApp(const _float& fTimeDelta)
 {
+	if (!Engine::CManagement::GetInstance()->ConfirmValidScene())
+		return -1;
 	Engine::CDirectInputMgr::GetInstance()->Update();
 	Engine::CManagement::GetInstance()->UpdateScene(fTimeDelta);
 

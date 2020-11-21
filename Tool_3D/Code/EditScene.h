@@ -30,6 +30,9 @@ private:
 
 public:
 	Engine::CGameObject* GetPickedObject() const;
+
+private:
+	Engine::CInputModeMgr* m_pInputModeMgr = nullptr;
 };
 
 END

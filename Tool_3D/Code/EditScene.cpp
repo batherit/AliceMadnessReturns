@@ -2,6 +2,7 @@
 #include "EditScene.h"
 #include "DynamicCamera.h"
 #include "Terrain.h"
+#include "InputMode_Terrain.h"
 
 CEditScene::CEditScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -42,13 +43,21 @@ HRESULT CEditScene::Ready(void)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
 	dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
 
+	// 편집 레이어 등록
 	m_mapLayer.emplace(L"EditLayer", pLayer);
+
+	// 입력 모드 매니저 생성
+	m_pInputModeMgr = Engine::CInputModeMgr::Create();
+	NULL_CHECK_RETURN(m_pInputModeMgr, E_FAIL);
+	m_pInputModeMgr->SetNextInputMode(new CInputMode_Terrain(m_pInputModeMgr));
 
 	return S_OK;
 }
 
 int CEditScene::Update(const _float& fTimeDelta)
 {
+	m_pInputModeMgr->ProcessInput(fTimeDelta);
+
 	return CScene::Update(fTimeDelta);
 }
 
@@ -69,6 +78,7 @@ CEditScene * CEditScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CEditScene::Free(void)
 {
+	Engine::Safe_Release(m_pInputModeMgr);
 	CScene::Free();
 }
 

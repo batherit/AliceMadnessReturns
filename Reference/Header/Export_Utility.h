@@ -1,9 +1,12 @@
 #ifndef Export_Utility_h__
 #define Export_Utility_h__
 
+// Manage
 #include "Management.h"
 #include "KeyMgr.h"
 #include "ProtoMgr.h"
+#include "InputMode.h"
+#include "InputModeMgr.h"
 
 #include "GameObject.h"
 #include "Camera.h"

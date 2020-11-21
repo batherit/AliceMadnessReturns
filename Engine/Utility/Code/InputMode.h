@@ -4,20 +4,24 @@
 
 #include "Engine_Define.h"
 #include "Base.h"
+//#include "InputModeMgr.h"
 
 BEGIN(Engine)
-
+class CInputModeMgr;
 class ENGINE_DLL CInputMode abstract : public CBase
 {
 protected:
-	explicit CInputMode();	// 老馆 积己磊
+	explicit CInputMode(CInputModeMgr* _pInputModeMgr);	// 老馆 积己磊
 	virtual ~CInputMode();
 
 public:
-	virtual void OnLButtonDown() {};
+	virtual _int ProcessInput(const _float& _fDeltaTime) = 0;
 
 public:
 	virtual void Free(void) override;
+
+protected:
+	CInputModeMgr* m_pInputModeMgr = nullptr;
 };
 
 END

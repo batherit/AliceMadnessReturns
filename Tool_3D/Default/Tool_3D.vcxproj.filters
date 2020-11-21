@@ -157,6 +157,12 @@
     <ClInclude Include="..\Code\CTabForm.h">
       <Filter>00. View%28Workspace%29\Form</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\InputMode_Navi.h">
+      <Filter>03. InputMode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputMode_Terrain.h">
+      <Filter>03. InputMode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -215,6 +221,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTabForm.cpp">
       <Filter>00. View%28Workspace%29\Form</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputMode_Navi.cpp">
+      <Filter>03. InputMode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputMode_Terrain.cpp">
+      <Filter>03. InputMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

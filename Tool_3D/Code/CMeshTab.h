@@ -20,4 +20,11 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 
 	DECLARE_MESSAGE_MAP()
+public:
+	virtual BOOL OnInitDialog();
+	CButton m_rbtnNavi;
+	CButton m_rbtnObject;
+	_int m_iPickedRadioBtnIndex;
+	afx_msg void OnBnClickedRadioNavi();
+	afx_msg void OnBnClickedRadioObject();
 };

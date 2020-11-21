@@ -1,103 +1,70 @@
-#include "CSceneMgr.h"
+#include "InputModeMgr.h"
 
 USING(Engine)
 
-Engine::CSceneMgr::CSceneMgr()
+Engine::CInputModeMgr::CInputModeMgr()
 	:
 	//m_rGameWorld(_rGameWorld),
 	m_bIsConfirmed(true)		// 반.드.시. 초기에는 true로 설정해주어야 함.
 {
 }
 
-Engine::CSceneMgr::~CSceneMgr()
+Engine::CInputModeMgr::~CInputModeMgr()
 {
 	//Release();
 	//Free();
 }
 
-//LRESULT CSceneMgr::OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
+//LRESULT CInputModeMgr::OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 //{
-//	if (!m_pCurScene) return 0;
-//	return m_pCurScene->OnProcessingWindowMessage(hWnd, nMessageID, wParam, lParam);
+//	if (!m_pCurInputMode) return 0;
+//	return m_pCurInputMode->OnProcessingWindowMessage(hWnd, nMessageID, wParam, lParam);
 //}
 
-bool Engine::CSceneMgr::ConfirmValidScene(void)
+bool Engine::CInputModeMgr::ConfirmValidInputMode(void)
 {
 	if (!m_bIsConfirmed) {				// 상태 변경 요청이 접수된 경우
-		Safe_Release(m_pCurScene);		// 기존 상태를 지운다. 
-		m_pCurScene = m_pNextScene;		// 기존 상태를 새로운 상태로 교체한다.
-		m_pNextScene = nullptr;			// 새로운 상태 변수 무효화
+		Safe_Release(m_pCurInputMode);		// 기존 상태를 지운다. 
+		m_pCurInputMode = m_pNextInputMode;		// 기존 상태를 새로운 상태로 교체한다.
+		m_pNextInputMode = nullptr;			// 새로운 상태 변수 무효화
 		m_bIsConfirmed = true;			// 상태 변경 완료!
 	}
-	if (!m_pCurScene) return false;		// 그럼에도 현재 유효한 씬이 없다면 false를 반환
-	if (!m_bInit) {
-		m_pCurScene->ResetScene();
-		m_bInit = true;
-	}
+	if (!m_pCurInputMode) return false;		// 그럼에도 현재 유효한 씬이 없다면 false를 반환
 
 	return true;						// 계속 프로세스를 진행
 }
 
-void Engine::CSceneMgr::SetNextScene(CScene * _pNextScene)
+void Engine::CInputModeMgr::SetNextInputMode(CInputMode * _pNextInputMode)
 {
 	// 다음 씬이 이미 세팅된 경우, 해당 함수를 무시한다.
 	// => 다음 상태 변경까지 새로운 상태로 세팅할 수 없다.
 	// for 상태를 동기화해주기 위함.
 	if (!m_bIsConfirmed) {
-		Safe_Release(_pNextScene);	// 해당 요청은 삭제한다.
+		Safe_Release(_pNextInputMode);	// 해당 요청은 삭제한다.
 		return;	// 이전에 상태 변경이 요청이 들어왔지만 아직 변경되지 않은 경우
 	}
 
-	m_pNextScene = _pNextScene;		// 새로이 상태 변경 요청이 들어온 경우.
+	m_pNextInputMode = _pNextInputMode;		// 새로이 상태 변경 요청이 들어온 경우.
 	m_bIsConfirmed = false;			// 변경 요청이 들어옴.
 }
 
-void Engine::CSceneMgr::Update(const _float& _fDeltaTime)
+_int Engine::CInputModeMgr::ProcessInput(const _float& _fDeltaTime)
 {
-	m_pCurScene->Update(_fDeltaTime);
+	if (!ConfirmValidInputMode())
+		return -1;
+
+	return m_pCurInputMode->ProcessInput(_fDeltaTime);
 }
 
-//void Engine::CSceneMgr::LateUpdate(void)
-//{
-//	m_pCurScene->LateUpdate();
-//}
 
-//void Engine::CSceneMgr::Render(CCamera * _pCamera)
-//{
-//	m_pCurScene->Render(_pCamera);
-//}
-//
-//void Engine::CSceneMgr::Render(HDC & _hdc, CCamera * _pCamera)
-//{
-//	
-//}
-
-void Engine::CSceneMgr::Render(void)
+CInputModeMgr * CInputModeMgr::Create(void)
 {
-	m_pCurScene->Render();
+	return new CInputModeMgr();
 }
 
-//void Engine::CSceneMgr::Release(void)
-//{
-//	Safe_Delete(m_pCurScene);
-//	Safe_Delete(m_pNextScene);
-//	m_bIsConfirmed = true;
-//}
-
-CSceneMgr * CSceneMgr::Create(void)
+void Engine::CInputModeMgr::Free(void)
 {
-	return new CSceneMgr();
-}
-
-void Engine::CSceneMgr::Free(void)
-{
-	Safe_Release(m_pCurScene);
-	Safe_Release(m_pNextScene);
+	Safe_Release(m_pCurInputMode);
+	Safe_Release(m_pNextInputMode);
 	m_bIsConfirmed = true;
 }
-
-//LRESULT Engine::CSceneMgr::OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
-//{
-//	if (!m_pCurScene) return 0;
-//	return m_pCurScene->OnProcessingWindowMessage(hWnd, nMessageID, wParam, lParam);
-//}

@@ -28,6 +28,14 @@
     <ClInclude Include="..\Code\CTerrainTab.h" />
     <ClInclude Include="..\Code\EditScene.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
+    <ClInclude Include="..\Code\InputMode_Navi.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputMode_Terrain.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\Loading.h" />
     <ClInclude Include="..\Code\LoadScene.h" />
     <ClInclude Include="..\Code\Sheet.h" />
@@ -60,6 +68,14 @@
     <ClCompile Include="..\Code\CTerrainTab.cpp" />
     <ClCompile Include="..\Code\EditScene.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\InputMode_Navi.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputMode_Terrain.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\LoadScene.cpp" />
     <ClCompile Include="..\Code\Sheet.cpp" />

@@ -219,7 +219,7 @@ int CTool3DApp::Run()
 			}
 		}
 		else {
-			if (!Engine::CManagement::GetInstance()->ConfirmValidScene()) break;
+			//if (!Engine::CManagement::GetInstance()->ConfirmValidScene()) break;
 
 			Engine::Set_TimeDelta(L"Timer_Immediate");
 
@@ -229,7 +229,7 @@ int CTool3DApp::Run()
 				Engine::Set_TimeDelta(L"Timer_FPS60");
 				_float fTime60 = Engine::Get_TimeDelta(L"Timer_FPS60");
 
-				g_pTool3D_Kernel->Update_MainApp(fTime60);
+				if (g_pTool3D_Kernel->Update_MainApp(fTime60) == -1) break;
 				g_pTool3D_Kernel->Render_MainApp();
 			}
 		}

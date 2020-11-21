@@ -7,6 +7,9 @@
 #define IDR_MAINFRAME                   128
 #define IDR_Tool3DTYPE                  130
 #define IDD_FORM                        310
+#define IDD_DIALOG1                     311
+#define IDD_TERRAIN_PAGE                311
+#define IDD_EMPTY_FORM                  313
 #define IDC_EDIT1                       1000
 #define IDC_EDIT2                       1003
 #define IDC_EDIT3                       1005
@@ -21,9 +24,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        311
+#define _APS_NEXT_RESOURCE_VALUE        313
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1001
-#define _APS_NEXT_SYMED_VALUE           313
+#define _APS_NEXT_CONTROL_VALUE         1003
+#define _APS_NEXT_SYMED_VALUE           314
 #endif
 #endif

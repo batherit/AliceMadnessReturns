@@ -29,6 +29,9 @@ using namespace std;
 #include <stdlib.h>
 #include <crtdbg.h>
 #include <afxext.h>
+#include <afxdlgs.h>
+#include <afxdlgs.h>
+#include <afxext.h>
 
 
 #ifndef DBG_NEW 

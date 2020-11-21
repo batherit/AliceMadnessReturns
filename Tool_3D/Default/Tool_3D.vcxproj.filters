@@ -50,6 +50,12 @@
     <Filter Include="00. View%28Workspace%29\Form">
       <UniqueIdentifier>{4a4f5570-8094-4d32-a973-ba1009740b75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. View%28Workspace%29\Sheet">
+      <UniqueIdentifier>{f9bc4cfc-a0d0-47e3-9a1a-3179187731d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. View%28Workspace%29\Page">
+      <UniqueIdentifier>{694c8730-e3f4-4843-9b06-563341a33594}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -121,6 +127,15 @@
     <ClInclude Include="CForm.h">
       <Filter>00. View%28Workspace%29\Form</Filter>
     </ClInclude>
+    <ClInclude Include="Sheet.h">
+      <Filter>00. View%28Workspace%29\Sheet</Filter>
+    </ClInclude>
+    <ClInclude Include="TerrainPage.h">
+      <Filter>00. View%28Workspace%29\Page</Filter>
+    </ClInclude>
+    <ClInclude Include="CEmptyForm.h">
+      <Filter>00. View%28Workspace%29\Form</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -157,6 +172,15 @@
       <Filter>02. Scene\00. LoadScene</Filter>
     </ClCompile>
     <ClCompile Include="CForm.cpp">
+      <Filter>00. View%28Workspace%29\Form</Filter>
+    </ClCompile>
+    <ClCompile Include="Sheet.cpp">
+      <Filter>00. View%28Workspace%29\Sheet</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainPage.cpp">
+      <Filter>00. View%28Workspace%29\Page</Filter>
+    </ClCompile>
+    <ClCompile Include="CEmptyForm.cpp">
       <Filter>00. View%28Workspace%29\Form</Filter>
     </ClCompile>
   </ItemGroup>

@@ -38,6 +38,7 @@
     </ClInclude>
     <ClInclude Include="..\Code\Loading.h" />
     <ClInclude Include="..\Code\LoadScene.h" />
+    <ClInclude Include="..\Code\NaviMesh.h" />
     <ClInclude Include="..\Code\Sheet.h" />
     <ClInclude Include="..\Code\Terrain.h" />
     <ClInclude Include="..\Code\Tool3D_Kernel.h" />
@@ -78,6 +79,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\LoadScene.cpp" />
+    <ClCompile Include="..\Code\NaviMesh.cpp" />
     <ClCompile Include="..\Code\Sheet.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Tool3D_Kernel.cpp" />

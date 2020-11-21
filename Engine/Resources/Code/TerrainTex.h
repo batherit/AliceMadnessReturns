@@ -1,5 +1,5 @@
-#ifndef Terrain_h__
-#define Terrain_h__
+#ifndef TerrainTex_h__
+#define TerrainTex_h__
 
 #include "VIBuffer.h"
 

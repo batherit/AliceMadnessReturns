@@ -65,6 +65,9 @@
     <Filter Include="00. View%28Workspace%29\Tab">
       <UniqueIdentifier>{eb57a8ab-93e3-4f3e-96a5-c997acc79892}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Object\NaviMesh">
+      <UniqueIdentifier>{ec2e0422-ce6f-48d2-b2d9-d29be1a96315}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -163,6 +166,9 @@
     <ClInclude Include="..\Code\InputMode_Terrain.h">
       <Filter>03. InputMode</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\NaviMesh.h">
+      <Filter>04. Object\NaviMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -227,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\InputMode_Terrain.cpp">
       <Filter>03. InputMode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\NaviMesh.cpp">
+      <Filter>04. Object\NaviMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -103,6 +103,11 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::CTerrainTex::GetComponentTag(), pComponent);
 
+	// ManualCol
+	pComponent = Engine::CManualCol::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::CManualCol::GetComponentTag(), pComponent);
+
 	// SphereCollider
 	pComponent = Engine::CSphereCollider::Create();
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

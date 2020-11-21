@@ -20,7 +20,7 @@ _int CInputMode_Terrain::ProcessInput(const _float & _fDeltaTime)
 
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
 		// TODO : 터레인모드에서의 LButton 처리
-		m_pInputModeMgr->SetNextInputMode(new CInputMode_Navi(m_pInputModeMgr));
+		//m_pInputModeMgr->SetNextInputMode(new CInputMode_Navi(m_pInputModeMgr));
 	}
 	return 0;
 }

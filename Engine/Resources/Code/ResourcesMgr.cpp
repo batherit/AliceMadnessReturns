@@ -49,6 +49,9 @@ HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const
 	case BUFFER_SPHERECOL:
 		pResources = CSphereCol::Create(pGraphicDev);
 		break;
+	case BUFFER_MANUALCOL:
+		pResources = CManualCol::Create(pGraphicDev);
+		break;
 	case BUFFER_RCTEX:
 		pResources = CRcTex::Create(pGraphicDev);
 		break;

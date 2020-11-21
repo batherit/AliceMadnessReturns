@@ -7,10 +7,10 @@
 #include "TriCol.h"
 #include "CRcCol.h"
 #include "SphereCol.h"
+#include "ManualCol.h"
 #include "RcTex.h"
 #include "TerrainTex.h"
 #include "CubeTex.h"
-
 
 #include "Texture.h"
 

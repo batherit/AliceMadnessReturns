@@ -19,7 +19,7 @@ _int CInputMode_Navi::ProcessInput(const _float & _fDeltaTime)
 
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
 		// TODO : 네비모드에서의 LButton 처리
-		abort();
+		//abort();
 	}
 	return _int();
 }

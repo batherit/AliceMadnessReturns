@@ -2,10 +2,10 @@
 
 #include "Engine_Define.h"
 #include "Base.h"
-#include "InputMode.h"
+//#include "InputMode.h"
 
 BEGIN(Engine)
-
+class CInputMode;
 class ENGINE_DLL CInputModeMgr final : public CBase
 {
 private:

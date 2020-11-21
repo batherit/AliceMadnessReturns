@@ -22,10 +22,7 @@ CNaviMesh::~CNaviMesh(void)
 HRESULT CNaviMesh::Ready_Object(void)
 {
 	m_pRenderer = AddComponent<Engine::CRenderer>();
-
 	m_pManualCol = AddComponent<Engine::CManualCol>();
-
-	//m_pTerrain->SetTerrainInfo(129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height1.bmp");
 	return S_OK;
 }
 

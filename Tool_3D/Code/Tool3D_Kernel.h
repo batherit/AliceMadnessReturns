@@ -37,7 +37,9 @@ public:
 	virtual void		Free(void);
 
 public:
+	LPDIRECT3DDEVICE9 GetGraphicDev() { return m_pGraphicDev; }
 	CEditScene* GetEditScene() const;
+	
 
 	//void OnLButtonDown(UINT nFlags, CPoint point);
 

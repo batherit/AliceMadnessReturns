@@ -1,4 +1,5 @@
 #include "InputModeMgr.h"
+#include "InputMode.h"
 
 USING(Engine)
 

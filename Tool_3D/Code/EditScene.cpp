@@ -2,7 +2,9 @@
 #include "EditScene.h"
 #include "DynamicCamera.h"
 #include "Terrain.h"
+#include "NaviMesh.h"
 #include "InputMode_Terrain.h"
+#include "InputMode_Navi.h"
 
 CEditScene::CEditScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -43,13 +45,18 @@ HRESULT CEditScene::Ready(void)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
 	dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
 
+	// 네비메쉬 오브젝트 생성
+	pGameObject = CNaviMesh::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMesh", pGameObject), E_FAIL);
+
 	// 편집 레이어 등록
 	m_mapLayer.emplace(L"EditLayer", pLayer);
 
 	// 입력 모드 매니저 생성
 	m_pInputModeMgr = Engine::CInputModeMgr::Create();
 	NULL_CHECK_RETURN(m_pInputModeMgr, E_FAIL);
-	m_pInputModeMgr->SetNextInputMode(new CInputMode_Terrain(m_pInputModeMgr));
+	m_pInputModeMgr->SetNextInputMode(new CInputMode_Navi(m_pInputModeMgr));
 
 	return S_OK;
 }
@@ -82,10 +89,10 @@ void CEditScene::Free(void)
 	CScene::Free();
 }
 
-Engine::CGameObject * CEditScene::GetPickedObject() const
+CTerrain * CEditScene::GetTerrain() const
 {
 	auto pLayer = GetLayer(L"EditLayer");
-	
+
 	if (!pLayer)
 		return nullptr;
 
@@ -94,5 +101,25 @@ Engine::CGameObject * CEditScene::GetPickedObject() const
 	if (rLayerList.empty())
 		return nullptr;
 
-	return (*rLayerList.begin());
+	return static_cast<CTerrain*>(*rLayerList.begin());
+}
+
+CNaviMesh * CEditScene::GetNaviMesh() const
+{
+	auto pLayer = GetLayer(L"EditLayer");
+
+	if (!pLayer)
+		return nullptr;
+
+	auto& rLayerList = pLayer->GetLayerList(L"NaviMesh");
+
+	if (rLayerList.empty())
+		return nullptr;
+
+	return static_cast<CNaviMesh*>(*rLayerList.begin());
+}
+
+Engine::CGameObject * CEditScene::GetPickedObject() const
+{
+	return GetTerrain();
 }

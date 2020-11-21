@@ -8,6 +8,8 @@
 
 //END
 BEGIN(Client)
+class CTerrain;
+class CNaviMesh;
 class CEditScene : public Engine::CScene
 {
 private: // 持失切, 社瑚切
@@ -29,6 +31,8 @@ private:
 	virtual void		Free(void);
 
 public:
+	CTerrain* GetTerrain() const;
+	CNaviMesh* GetNaviMesh() const;
 	Engine::CGameObject* GetPickedObject() const;
 
 private:

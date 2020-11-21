@@ -37,10 +37,13 @@ HRESULT Engine::CManualCol::Ready_Buffer(void)
 void CManualCol::Render_Buffer(void)
 {
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
 	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, sizeof(VTXCOL));
 	m_pGraphicDev->SetFVF(FVF_TEX);
-	m_pGraphicDev->SetIndices(m_pIB);
-	m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
+	//m_pGraphicDev->SetIndices(m_pIB);
+	//m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
+	m_pGraphicDev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, m_dwTriCnt);
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
@@ -56,7 +59,7 @@ void CManualCol::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _v
 
 	// 기존 버퍼 파괴 (인덱스 버퍼는 사용하지 않을 것이다.)
 	Safe_Release(m_pVB);
-	//Safe_Release(m_pIB);
+	Safe_Release(m_pIB);
 
 	// 새 버퍼 생성
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), );
@@ -72,7 +75,7 @@ void CManualCol::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _v
 	_int iVecSize = m_vecVertices.size();
 	for (_int i = 0; i < iVecSize; ++i) {
 		pVertex[i].vPos = m_vecVertices[i];
-		pVertex[i].dwColor = D3DCOLOR_ARGB(255, 255, 50, 50);
+		pVertex[i].dwColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 	}
 
 	m_pVB->Unlock();
@@ -91,7 +94,7 @@ void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 
 	// 기존 버퍼 파괴 (인덱스 버퍼는 사용하지 않을 것이다.)
 	Safe_Release(m_pVB);
-	//Safe_Release(m_pIB);
+	Safe_Release(m_pIB);
 
 	// 새 버퍼 생성
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), );
@@ -107,7 +110,7 @@ void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 	_int iVecSize = m_vecVertices.size();
 	for (_int i = 0; i < iVecSize; ++i) {
 		pVertex[i].vPos = m_vecVertices[i];
-		pVertex[i].dwColor = D3DCOLOR_ARGB(255, 255, 50, 50);
+		pVertex[i].dwColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 	}
 
 	m_pVB->Unlock();

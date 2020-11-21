@@ -18,6 +18,9 @@ public:
 	// CInputMode을(를) 통해 상속됨
 	virtual _int ProcessInput(const _float & _fDeltaTime) override;
 
+private:
+	CEditScene* m_pEditScene = nullptr;
+	vector<_vec3> m_vecTriangle;
 };
 
 END

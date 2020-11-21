@@ -1,28 +1,28 @@
-﻿// TerrainPage.cpp: 구현 파일
+﻿// CTerrainPage.cpp: 구현 파일
 //
 
 #include "pch.h"
 #include "Tool_3D.h"
-#include "TerrainPage.h"
+#include "CTerrainPage.h"
 #include "afxdialogex.h"
 #include "EditScene.h"
 
 
-// TerrainPage 대화 상자
+// CTerrainPage 대화 상자
 
-IMPLEMENT_DYNAMIC(TerrainPage, CPropertyPage)
+IMPLEMENT_DYNAMIC(CTerrainPage, CPropertyPage)
 
-TerrainPage::TerrainPage()
+CTerrainPage::CTerrainPage()
 	: CPropertyPage(IDD_TERRAIN_PAGE)
 {
 
 }
 
-TerrainPage::~TerrainPage()
+CTerrainPage::~CTerrainPage()
 {
 }
 
-void TerrainPage::DoDataExchange(CDataExchange* pDX)
+void CTerrainPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT1, m_vPos.x);
@@ -37,24 +37,24 @@ void TerrainPage::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(TerrainPage, CPropertyPage)
-	ON_EN_CHANGE(IDC_EDIT1, &TerrainPage::OnEnChangeEditPosX)
-	ON_EN_CHANGE(IDC_EDIT2, &TerrainPage::OnEnChangeEditPosY)
-	ON_EN_CHANGE(IDC_EDIT3, &TerrainPage::OnEnChangeEditPosZ)
-	ON_EN_CHANGE(IDC_EDIT4, &TerrainPage::OnEnChangeEditRotX)
-	ON_EN_CHANGE(IDC_EDIT5, &TerrainPage::OnEnChangeEditRotY)
-	ON_EN_CHANGE(IDC_EDIT6, &TerrainPage::OnEnChangeEditRotZ)
-	ON_EN_CHANGE(IDC_EDIT7, &TerrainPage::OnEnChangeEditScaleX)
-	ON_EN_CHANGE(IDC_EDIT8, &TerrainPage::OnEnChangeEditScaleX)
-	ON_EN_CHANGE(IDC_EDIT9, &TerrainPage::OnEnChangeEditScaleX)
+BEGIN_MESSAGE_MAP(CTerrainPage, CPropertyPage)
+	ON_EN_CHANGE(IDC_EDIT1, &CTerrainPage::OnEnChangeEditPosX)
+	ON_EN_CHANGE(IDC_EDIT2, &CTerrainPage::OnEnChangeEditPosY)
+	ON_EN_CHANGE(IDC_EDIT3, &CTerrainPage::OnEnChangeEditPosZ)
+	ON_EN_CHANGE(IDC_EDIT4, &CTerrainPage::OnEnChangeEditRotX)
+	ON_EN_CHANGE(IDC_EDIT5, &CTerrainPage::OnEnChangeEditRotY)
+	ON_EN_CHANGE(IDC_EDIT6, &CTerrainPage::OnEnChangeEditRotZ)
+	ON_EN_CHANGE(IDC_EDIT7, &CTerrainPage::OnEnChangeEditScaleX)
+	ON_EN_CHANGE(IDC_EDIT8, &CTerrainPage::OnEnChangeEditScaleX)
+	ON_EN_CHANGE(IDC_EDIT9, &CTerrainPage::OnEnChangeEditScaleX)
 END_MESSAGE_MAP()
 
 
-// TerrainPage 메시지 처리기
-void TerrainPage::OnEnChangeEditPosX()
+// CTerrainPage 메시지 처리기
+void CTerrainPage::OnEnChangeEditPosX()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// TerrainPageView::OnInitDialog() 함수를 재지정 
+	// CTerrainPageView::OnInitDialog() 함수를 재지정 
 	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
 	// 이 알림 메시지를 보내지 않습니다.
 
@@ -69,10 +69,10 @@ void TerrainPage::OnEnChangeEditPosX()
 }
 
 
-void TerrainPage::OnEnChangeEditPosY()
+void CTerrainPage::OnEnChangeEditPosY()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// TerrainPageView::OnInitDialog() 함수를 재지정 
+	// CTerrainPageView::OnInitDialog() 함수를 재지정 
 	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
 	// 이 알림 메시지를 보내지 않습니다.
 
@@ -87,10 +87,10 @@ void TerrainPage::OnEnChangeEditPosY()
 }
 
 
-void TerrainPage::OnEnChangeEditPosZ()
+void CTerrainPage::OnEnChangeEditPosZ()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// TerrainPageView::OnInitDialog() 함수를 재지정 
+	// CTerrainPageView::OnInitDialog() 함수를 재지정 
 	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
 	// 이 알림 메시지를 보내지 않습니다.
 
@@ -105,10 +105,10 @@ void TerrainPage::OnEnChangeEditPosZ()
 }
 
 
-void TerrainPage::OnEnChangeEditRotX()
+void CTerrainPage::OnEnChangeEditRotX()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// TerrainPageView::OnInitDialog() 함수를 재지정 
+	// CTerrainPageView::OnInitDialog() 함수를 재지정 
 	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
 	// 이 알림 메시지를 보내지 않습니다.
 
@@ -126,10 +126,10 @@ void TerrainPage::OnEnChangeEditRotX()
 }
 
 
-void TerrainPage::OnEnChangeEditRotY()
+void CTerrainPage::OnEnChangeEditRotY()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// TerrainPageView::OnInitDialog() 함수를 재지정 
+	// CTerrainPageView::OnInitDialog() 함수를 재지정 
 	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
 	// 이 알림 메시지를 보내지 않습니다.
 
@@ -147,10 +147,10 @@ void TerrainPage::OnEnChangeEditRotY()
 }
 
 
-void TerrainPage::OnEnChangeEditRotZ()
+void CTerrainPage::OnEnChangeEditRotZ()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// TerrainPageView::OnInitDialog() 함수를 재지정 
+	// CTerrainPageView::OnInitDialog() 함수를 재지정 
 	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
 	// 이 알림 메시지를 보내지 않습니다.
 
@@ -168,10 +168,10 @@ void TerrainPage::OnEnChangeEditRotZ()
 }
 
 
-void TerrainPage::OnEnChangeEditScaleX()
+void CTerrainPage::OnEnChangeEditScaleX()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// TerrainPageView::OnInitDialog() 함수를 재지정 
+	// CTerrainPageView::OnInitDialog() 함수를 재지정 
 	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
 	// 이 알림 메시지를 보내지 않습니다.
 
@@ -188,10 +188,10 @@ void TerrainPage::OnEnChangeEditScaleX()
 }
 
 
-void TerrainPage::OnEnChangeEditScaleY()
+void CTerrainPage::OnEnChangeEditScaleY()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// TerrainPageView::OnInitDialog() 함수를 재지정 
+	// CTerrainPageView::OnInitDialog() 함수를 재지정 
 	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
 	// 이 알림 메시지를 보내지 않습니다.
 
@@ -208,10 +208,10 @@ void TerrainPage::OnEnChangeEditScaleY()
 }
 
 
-void TerrainPage::OnEnChangeEditScaleZ()
+void CTerrainPage::OnEnChangeEditScaleZ()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// TerrainPageView::OnInitDialog() 함수를 재지정 
+	// CTerrainPageView::OnInitDialog() 함수를 재지정 
 	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
 	// 이 알림 메시지를 보내지 않습니다.
 

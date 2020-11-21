@@ -130,11 +130,14 @@
     <ClInclude Include="Sheet.h">
       <Filter>00. View%28Workspace%29\Sheet</Filter>
     </ClInclude>
-    <ClInclude Include="TerrainPage.h">
-      <Filter>00. View%28Workspace%29\Page</Filter>
-    </ClInclude>
     <ClInclude Include="CEmptyForm.h">
       <Filter>00. View%28Workspace%29\Form</Filter>
+    </ClInclude>
+    <ClInclude Include="CMeshPage.h">
+      <Filter>00. View%28Workspace%29\Page</Filter>
+    </ClInclude>
+    <ClInclude Include="CTerrainPage.h">
+      <Filter>00. View%28Workspace%29\Page</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,11 +180,14 @@
     <ClCompile Include="Sheet.cpp">
       <Filter>00. View%28Workspace%29\Sheet</Filter>
     </ClCompile>
-    <ClCompile Include="TerrainPage.cpp">
-      <Filter>00. View%28Workspace%29\Page</Filter>
-    </ClCompile>
     <ClCompile Include="CEmptyForm.cpp">
       <Filter>00. View%28Workspace%29\Form</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeshPage.cpp">
+      <Filter>00. View%28Workspace%29\Page</Filter>
+    </ClCompile>
+    <ClCompile Include="CTerrainPage.cpp">
+      <Filter>00. View%28Workspace%29\Page</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

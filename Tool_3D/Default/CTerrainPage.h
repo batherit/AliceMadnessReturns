@@ -1,15 +1,15 @@
 ﻿#pragma once
 
 
-// TerrainPage 대화 상자
+// CTerrainPage 대화 상자
 
-class TerrainPage : public CPropertyPage
+class CTerrainPage : public CPropertyPage
 {
-	DECLARE_DYNAMIC(TerrainPage)
+	DECLARE_DYNAMIC(CTerrainPage)
 
 public:
-	TerrainPage();
-	virtual ~TerrainPage();
+	CTerrainPage();
+	virtual ~CTerrainPage();
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME

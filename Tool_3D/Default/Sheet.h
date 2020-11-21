@@ -1,7 +1,7 @@
 #pragma once
 
-#include "TerrainPage.h"
-
+#include "CTerrainPage.h"
+#include "CMeshPage.h"
 // Sheet
 
 class Sheet : public CPropertySheet
@@ -18,7 +18,8 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-	TerrainPage		m_tTerrainPage;
+	CTerrainPage		m_tTerrainPage;
+	CMeshPage			m_tMeshPage;
 };
 
 

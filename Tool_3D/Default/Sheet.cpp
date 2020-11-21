@@ -13,6 +13,7 @@ IMPLEMENT_DYNAMIC(Sheet, CPropertySheet)
 Sheet::Sheet()
 {
 	AddPage(&m_tTerrainPage);
+	AddPage(&m_tMeshPage);
 }
 
 Sheet::Sheet(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)

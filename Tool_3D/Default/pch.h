@@ -32,6 +32,7 @@ using namespace std;
 #include <afxdlgs.h>
 #include <afxdlgs.h>
 #include <afxext.h>
+#include <afxdlgs.h>
 
 
 #ifndef DBG_NEW 

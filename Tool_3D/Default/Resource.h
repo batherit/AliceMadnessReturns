@@ -10,8 +10,10 @@
 #define IDD_DIALOG1                     311
 #define IDD_TERRAIN_PAGE                311
 #define IDD_EMPTY_FORM                  313
+#define IDD_MESH_PAGE                   314
 #define IDC_EDIT1                       1000
 #define IDC_EDIT2                       1003
+#define IDC_TREE1                       1003
 #define IDC_EDIT3                       1005
 #define IDC_EDIT4                       1006
 #define IDC_EDIT5                       1007
@@ -24,9 +26,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        313
+#define _APS_NEXT_RESOURCE_VALUE        316
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1003
+#define _APS_NEXT_CONTROL_VALUE         1004
 #define _APS_NEXT_SYMED_VALUE           314
 #endif
 #endif

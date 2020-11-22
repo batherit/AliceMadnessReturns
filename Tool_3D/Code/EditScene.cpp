@@ -58,6 +58,17 @@ HRESULT CEditScene::Ready(void)
 	NULL_CHECK_RETURN(m_pInputModeMgr, E_FAIL);
 	m_pInputModeMgr->SetNextInputMode(new CInputMode_Navi(m_pInputModeMgr));
 
+	// 컬모드 설정
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	
+	// 조명 설정
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	// 알파블렌딩 설정
+	m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
 	return S_OK;
 }
 

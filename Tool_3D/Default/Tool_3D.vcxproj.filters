@@ -56,9 +56,6 @@
     <Filter Include="04. Object\DynamicCamera">
       <UniqueIdentifier>{fdfc7e93-bfb2-41bf-82be-2259b4bdce9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="97. Manager">
-      <UniqueIdentifier>{c608121c-c8d3-4e96-a414-4c34e3859239}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. InputMode">
       <UniqueIdentifier>{bbe7685e-f8e8-4095-93b7-c2c8a6c43ee3}</UniqueIdentifier>
     </Filter>
@@ -96,9 +93,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\Tool3D_Kernel.h">
       <Filter>01. Tool3D_Kernel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Const.h">
-      <Filter>98. Header</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Define.h">
       <Filter>98. Header</Filter>

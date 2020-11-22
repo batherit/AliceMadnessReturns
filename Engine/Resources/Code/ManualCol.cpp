@@ -4,13 +4,11 @@ USING(Engine)
 Engine::CManualCol::CManualCol(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CVIBuffer(pGraphicDev)
 {
-
 }
 
 Engine::CManualCol::CManualCol(const CManualCol& rhs)
 	: CVIBuffer(rhs)
 {
-
 }
 
 Engine::CManualCol::~CManualCol(void)
@@ -21,7 +19,7 @@ Engine::CManualCol::~CManualCol(void)
 HRESULT Engine::CManualCol::Ready_Buffer(void)
 {
 	// 속성 설정
-	m_dwFVF = FVF_TEX;
+	m_dwFVF = FVF_COL;
 	m_dwTriCnt = 0;
 	m_dwVtxCnt = 0;
 	m_dwVtxSize = sizeof(VTXCOL);
@@ -37,14 +35,12 @@ HRESULT Engine::CManualCol::Ready_Buffer(void)
 void CManualCol::Render_Buffer(void)
 {
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	//m_pGraphicDev->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
-	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, sizeof(VTXCOL));
-	m_pGraphicDev->SetFVF(FVF_TEX);
+	CVIBuffer::Render_Buffer();
+	//m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
+	//m_pGraphicDev->SetFVF(m_dwFVF);
 	//m_pGraphicDev->SetIndices(m_pIB);
 	//m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
-	m_pGraphicDev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, m_dwTriCnt);
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//m_pGraphicDev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, m_dwTriCnt);
 }
 
 void CManualCol::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _vTriPos3)
@@ -56,6 +52,8 @@ void CManualCol::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _v
 
 	m_dwTriCnt = m_vecVertices.size() / 3;	// 정점 3개로 삼각형 하나를 만들 수 있으므로.
 	m_dwVtxCnt = m_vecVertices.size();
+	//m_dwFVF = FVF_COL;
+	//m_dwVtxSize = sizeof(VTXCOL);
 
 	// 기존 버퍼 파괴 (인덱스 버퍼는 사용하지 않을 것이다.)
 	Safe_Release(m_pVB);
@@ -65,6 +63,8 @@ void CManualCol::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _v
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), );
 
 	VTXCOL*		pVertex = NULL;
+	INDEX16*	pIndex = nullptr;
+	
 	m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
 	// 1인자 : 어디서부터 잠글 것인가
 	// 2인자 : 숫자가 0이면 전체 영역을 잠근다.
@@ -75,10 +75,18 @@ void CManualCol::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _v
 	_int iVecSize = m_vecVertices.size();
 	for (_int i = 0; i < iVecSize; ++i) {
 		pVertex[i].vPos = m_vecVertices[i];
-		pVertex[i].dwColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+		pVertex[i].dwColor = D3DCOLOR_ARGB(100, 255, 0, 0);//D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	}
-
 	m_pVB->Unlock();
+
+	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
+	iVecSize /= 3;
+	for (_int i = 0; i < iVecSize; ++i) {
+		pIndex[i]._0 = i * 3;
+		pIndex[i]._1 = i * 3 + 1;
+		pIndex[i]._2 = i * 3 + 2;
+	}
+	m_pIB->Unlock();
 }
 
 void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
@@ -92,6 +100,9 @@ void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 		m_vecVertices.erase(m_vecVertices.begin() + 3 * _iTriangleIndex);
 	}
 
+	m_dwTriCnt = m_vecVertices.size() / 3;	// 정점 3개로 삼각형 하나를 만들 수 있으므로.
+	m_dwVtxCnt = m_vecVertices.size();
+
 	// 기존 버퍼 파괴 (인덱스 버퍼는 사용하지 않을 것이다.)
 	Safe_Release(m_pVB);
 	Safe_Release(m_pIB);
@@ -100,6 +111,8 @@ void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), );
 
 	VTXCOL*		pVertex = NULL;
+	INDEX16*	pIndex = nullptr;
+
 	m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
 	// 1인자 : 어디서부터 잠글 것인가
 	// 2인자 : 숫자가 0이면 전체 영역을 잠근다.
@@ -110,10 +123,18 @@ void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 	_int iVecSize = m_vecVertices.size();
 	for (_int i = 0; i < iVecSize; ++i) {
 		pVertex[i].vPos = m_vecVertices[i];
-		pVertex[i].dwColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+		pVertex[i].dwColor = D3DCOLOR_ARGB(100, 255, 0, 0);//D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	}
-
 	m_pVB->Unlock();
+
+	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
+	iVecSize /= 3;
+	for (_int i = 0; i < iVecSize; ++i) {
+		pIndex[i]._0 = i * 3;
+		pIndex[i]._1 = i * 3 + 1;
+		pIndex[i]._2 = i * 3 + 2;
+	}
+	m_pIB->Unlock();
 }
 
 Engine::CManualCol* Engine::CManualCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)

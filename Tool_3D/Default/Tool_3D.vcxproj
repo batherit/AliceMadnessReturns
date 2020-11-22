@@ -42,7 +42,6 @@
     <ClInclude Include="..\Code\Sheet.h" />
     <ClInclude Include="..\Code\Terrain.h" />
     <ClInclude Include="..\Code\Tool3D_Kernel.h" />
-    <ClInclude Include="..\Header\Const.h" />
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Enum.h" />
     <ClInclude Include="..\Header\Function.h" />

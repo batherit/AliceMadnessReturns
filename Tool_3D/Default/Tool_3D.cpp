@@ -190,20 +190,19 @@ void CTool3DApp::OnAppAbout()
 int CTool3DApp::Run()
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
-
 	g_hInst = AfxGetInstanceHandle();
 	
-	// 툴 커널 객체 생성
-	g_pTool3D_Kernel = CTool3D_Kernel::Create();
-	if (nullptr == g_pTool3D_Kernel)
-	return FALSE;
-
 	// 타이머 설치
 	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_Immediate"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_FPS60"), E_FAIL);
 
 	// 프레임 설치
 	FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame_FPS60", 60.f), E_FAIL);
+
+	// 툴 커널 객체 생성
+	g_pTool3D_Kernel = CTool3D_Kernel::Create();
+	if (nullptr == g_pTool3D_Kernel)
+		return FALSE;
 
 	MSG msg;
 	msg.message = WM_NULL;

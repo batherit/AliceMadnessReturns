@@ -90,6 +90,7 @@ void CPlayer::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 
 	m_pMesh->Render_Meshes();
+	Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
 }
 

@@ -34,7 +34,10 @@ HRESULT CTool3D_Kernel::Ready_MainApp(void)
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 
-	m_pGraphicDev->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+	//m_pGraphicDev->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
 
 	// 인풋 매니져 세팅
 	FAILED_CHECK_RETURN(Engine::CDirectInputMgr::GetInstance()->Ready(g_hInst, g_hWnd), E_FAIL);

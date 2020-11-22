@@ -10,7 +10,7 @@ namespace Engine
 
 	}VTXCOL;
 
-	const _ulong		FVF_COL = D3DFVF_XYZ | D3DFVF_DIFFUSE;
+	const _ulong		FVF_COL = D3DFVF_XYZ | D3DFVF_DIFFUSE/* | D3DFVF_TEX0*/;
 
 	typedef	struct tagVertexTexture
 	{

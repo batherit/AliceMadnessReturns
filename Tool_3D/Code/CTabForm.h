@@ -7,6 +7,10 @@
 class CTerrainTab;
 class CMeshTab;
 
+BEGIN(Client)
+class CNaviMesh;
+END
+
 class CTabForm : public CFormView
 {
 	DECLARE_DYNCREATE(CTabForm)
@@ -30,6 +34,12 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 
 	DECLARE_MESSAGE_MAP()
+
+public:
+
+	// MeshTab
+	void UpdateNaviTree(Client::CNaviMesh* _pNaviMesh);
+	
 public:
 	CTabCtrl m_Tab;
 	CTerrainTab*	m_pTerrainTab;

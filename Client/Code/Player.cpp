@@ -25,13 +25,15 @@ HRESULT CPlayer::Ready_Object(void)
 
 	// Clone Mesh
 	//pComponent = m_pMesh = dynamic_cast<Engine::CStaticMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Stone"));
-	pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Player"));
+	//pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Player"));
+	pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Alice"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 	Engine::Safe_AddRef(pComponent);
 
 	m_pTransform->SetScale(_vec3(0.01f, 0.01f, 0.01f));
-	m_pMesh->Set_AnimationSet(57);
+	//m_pMesh->Set_AnimationSet(57);
+	m_pMesh->Set_AnimationSet(0);
 	
 	// Physics
 	pComponent = m_pPhysics = AddComponent<Engine::CPhysics>();

@@ -65,6 +65,7 @@ HRESULT CEditScene::Ready(void)
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	// 알파블렌딩 설정
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);

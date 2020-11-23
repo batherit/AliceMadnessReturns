@@ -3,6 +3,8 @@
 #include "EditScene.h"
 #include "Terrain.h"
 #include "NaviMesh.h"
+#include "MainFrm.h"
+#include "CTabForm.h"
 
 CInputMode_Navi::CInputMode_Navi(Engine::CInputModeMgr * _pInputModeMgr)
 	:
@@ -51,6 +53,10 @@ _int CInputMode_Navi::ProcessInput(const _float & _fDeltaTime)
 				if (m_vecTriangle.size() == 3) {
 					m_pEditScene->GetNaviMesh()->PushTriangleVertices(m_vecTriangle[0], m_vecTriangle[1], m_vecTriangle[2]);
 					m_vecTriangle.clear();
+
+					CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+					CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+					pTabForm->UpdateNaviTree(m_pEditScene->GetNaviMesh());
 				}
 				break;
 			}

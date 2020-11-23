@@ -75,7 +75,7 @@ void CManualCol::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _v
 	_int iVecSize = m_vecVertices.size();
 	for (_int i = 0; i < iVecSize; ++i) {
 		pVertex[i].vPos = m_vecVertices[i];
-		pVertex[i].dwColor = D3DCOLOR_ARGB(100, 255, 0, 0);//D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+		pVertex[i].dwColor = D3DCOLOR_ARGB(150, 255, 0, 0);//D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	}
 	m_pVB->Unlock();
 
@@ -123,7 +123,7 @@ void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 	_int iVecSize = m_vecVertices.size();
 	for (_int i = 0; i < iVecSize; ++i) {
 		pVertex[i].vPos = m_vecVertices[i];
-		pVertex[i].dwColor = D3DCOLOR_ARGB(100, 255, 0, 0);//D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+		pVertex[i].dwColor = D3DCOLOR_ARGB(150, 255, 0, 0);//D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	}
 	m_pVB->Unlock();
 

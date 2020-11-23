@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "Tool_3D.h"
 #include "CMeshTab.h"
+#include "NaviMesh.h"
 #include "afxdialogex.h"
 
 
@@ -28,6 +29,7 @@ void CMeshTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RADIO1, m_rbtnNavi);
 	DDX_Control(pDX, IDC_RADIO2, m_rbtnObject);
 	DDX_Radio(pDX, IDC_RADIO1, m_iPickedRadioBtnIndex);
+	DDX_Control(pDX, IDC_TREE1, m_treeNavi);
 }
 
 
@@ -39,6 +41,31 @@ END_MESSAGE_MAP()
 
 // CMeshTab 메시지 처리기
 
+
+void CMeshTab::UpdateNaviTree(Client::CNaviMesh * _pNaviMesh)
+{
+	auto& rNaviVertices = _pNaviMesh->GetNaviVertices();
+	_int iVerticesNum = rNaviVertices.size();
+
+	CString cstTriangleIndex;
+	CString cstVertexIndex;
+
+	HTREEITEM hTriangleIndex = nullptr;
+
+	m_treeNavi.DeleteAllItems();
+	for (_int i = 0; i < iVerticesNum; ++i) {
+		if (i % 3 == 0) {
+			// TreeCtrl에 삼각형 인덱스 아이템을 삽입한다.
+			cstTriangleIndex.Format(L"%d", i / 3);
+			// hTriangeIndex는 hVertexIndex의 부모로 삼기위해 필요하다.
+			hTriangleIndex = m_treeNavi.InsertItem(cstTriangleIndex, NULL, NULL);
+		}
+
+		cstVertexIndex.Format(L"%d", i % 3);
+		m_treeNavi.InsertItem(cstVertexIndex, hTriangleIndex, NULL);
+		m_treeNavi.Expand(hTriangleIndex, TVE_EXPAND);
+	}
+}
 
 BOOL CMeshTab::OnInitDialog()
 {

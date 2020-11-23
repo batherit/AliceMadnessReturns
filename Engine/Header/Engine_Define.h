@@ -1,6 +1,9 @@
 #ifndef Engine_Define_h__
 #define Engine_Define_h__
 
+#include<shlwapi.h>
+#pragma comment(lib, "shlwapi")
+
 #include <d3d9.h>
 #include <d3dx9.h>
 

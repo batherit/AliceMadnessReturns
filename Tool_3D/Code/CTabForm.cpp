@@ -6,6 +6,7 @@
 #include "CTabForm.h"
 #include "CTerrainTab.h"
 #include "CMeshTab.h"
+#include "NaviMesh.h"
 
 
 // CTabForm
@@ -53,6 +54,10 @@ void CTabForm::Dump(CDumpContext& dc) const
 
 // CTabForm 메시지 처리기
 
+void CTabForm::UpdateNaviTree(Client::CNaviMesh * _pNaviMesh)
+{
+	m_pMeshTab->UpdateNaviTree(_pNaviMesh);
+}
 
 void CTabForm::OnInitialUpdate()
 {

@@ -65,3 +65,9 @@ void CNaviMesh::PopTriangleVertices(_int _iTriangleIndex)
 {
 	m_pManualCol->PopTriangleVertices(_iTriangleIndex);
 }
+
+vector<_vec3>& CNaviMesh::GetNaviVertices()
+{
+	// TODO: 여기에 반환 구문을 삽입합니다.
+	return m_pManualCol->GetVertices();
+}

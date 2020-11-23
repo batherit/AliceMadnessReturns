@@ -5,7 +5,7 @@
 // CTabForm 폼 보기
 
 class CTerrainTab;
-class CMeshTab;
+class CNaviMeshTab;
 
 BEGIN(Client)
 class CNaviMesh;
@@ -36,14 +36,14 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
-
-	// MeshTab
-	void UpdateNaviTree(Client::CNaviMesh* _pNaviMesh);
+	CTerrainTab* GetTerrainTab() const		{ return m_pTerrainTab; }
+	CNaviMeshTab* GetNaviMeshTab() const	{ return m_pNaviMeshTab; }
 	
 public:
-	CTabCtrl m_Tab;
-	CTerrainTab*	m_pTerrainTab;
-	CMeshTab*		m_pMeshTab;
+	CTabCtrl		m_Tab;
+	CTerrainTab*	m_pTerrainTab = nullptr;
+	CNaviMeshTab*	m_pNaviMeshTab = nullptr;
+
 	virtual void OnInitialUpdate();
 	afx_msg void OnDestroy();
 	afx_msg void OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult);

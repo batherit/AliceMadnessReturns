@@ -5,7 +5,7 @@
 #include "Tool_3D.h"
 #include "CTabForm.h"
 #include "CTerrainTab.h"
-#include "CMeshTab.h"
+#include "CNaviMeshTab.h"
 #include "NaviMesh.h"
 
 
@@ -54,18 +54,13 @@ void CTabForm::Dump(CDumpContext& dc) const
 
 // CTabForm 메시지 처리기
 
-void CTabForm::UpdateNaviTree(Client::CNaviMesh * _pNaviMesh)
-{
-	m_pMeshTab->UpdateNaviTree(_pNaviMesh);
-}
-
 void CTabForm::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
 
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	m_Tab.InsertItem(0, _T("Terrain"));
-	m_Tab.InsertItem(1, _T("Mesh"));
+	m_Tab.InsertItem(1, _T("Navi Mesh"));
 
 	m_Tab.SetCurSel(0);
 
@@ -77,10 +72,10 @@ void CTabForm::OnInitialUpdate()
 	m_pTerrainTab->MoveWindow(0, 25, rect.Width(), rect.Height());
 	m_pTerrainTab->ShowWindow(SW_SHOW);
 
-	m_pMeshTab = new CMeshTab;
-	m_pMeshTab->Create(IDD_MESH_TAB, &m_Tab);
-	m_pMeshTab->MoveWindow(0, 25, rect.Width(), rect.Height());
-	m_pMeshTab->ShowWindow(SW_HIDE);
+	m_pNaviMeshTab = new CNaviMeshTab;
+	m_pNaviMeshTab->Create(IDD_NAVI_MESH_TAB, &m_Tab);
+	m_pNaviMeshTab->MoveWindow(0, 25, rect.Width(), rect.Height());
+	m_pNaviMeshTab->ShowWindow(SW_HIDE);
 }
 
 
@@ -90,7 +85,7 @@ void CTabForm::OnDestroy()
 
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
 	Safe_Delete(m_pTerrainTab);
-	Safe_Delete(m_pMeshTab);
+	Safe_Delete(m_pNaviMeshTab);
 }
 
 
@@ -103,11 +98,11 @@ void CTabForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 	case 0:
 		m_pTerrainTab->ShowWindow(SW_SHOW);
-		m_pMeshTab->ShowWindow(SW_HIDE);
+		m_pNaviMeshTab->ShowWindow(SW_HIDE);
 		break;
 	case 1:
 		m_pTerrainTab->ShowWindow(SW_HIDE);
-		m_pMeshTab->ShowWindow(SW_SHOW);
+		m_pNaviMeshTab->ShowWindow(SW_SHOW);
 		break;
 	default:
 		break;

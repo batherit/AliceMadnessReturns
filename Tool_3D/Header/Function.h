@@ -62,6 +62,16 @@ namespace Client
 			pointer = NULL;
 		}
 	}
+
+	/*inline CMainFrame* GetMainFrame() {
+		return dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	}
+
+	inline CTabForm* GetTabForm() {
+		CMainFrame* pMain = GetMainFrame();
+		if (!pMain) return nullptr;
+		return dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+	}*/
 }
 
 #endif // Function_h__

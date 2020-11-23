@@ -22,7 +22,7 @@
     <ClInclude Include="..\Code\CEmptyForm.h" />
     <ClInclude Include="..\Code\CForm.h" />
     <ClInclude Include="..\Code\CMeshPage.h" />
-    <ClInclude Include="..\Code\CMeshTab.h" />
+    <ClInclude Include="..\Code\CNaviMeshTab.h" />
     <ClInclude Include="..\Code\CTabForm.h" />
     <ClInclude Include="..\Code\CTerrainPage.h" />
     <ClInclude Include="..\Code\CTerrainTab.h" />
@@ -62,7 +62,7 @@
     <ClCompile Include="..\Code\CEmptyForm.cpp" />
     <ClCompile Include="..\Code\CForm.cpp" />
     <ClCompile Include="..\Code\CMeshPage.cpp" />
-    <ClCompile Include="..\Code\CMeshTab.cpp" />
+    <ClCompile Include="..\Code\CNaviMeshTab.cpp" />
     <ClCompile Include="..\Code\CTabForm.cpp" />
     <ClCompile Include="..\Code\CTerrainPage.cpp" />
     <ClCompile Include="..\Code\CTerrainTab.cpp" />

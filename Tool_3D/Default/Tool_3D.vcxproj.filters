@@ -145,9 +145,6 @@
     <ClInclude Include="..\Code\Sheet.h">
       <Filter>00. View%28Workspace%29\Sheet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\CMeshTab.h">
-      <Filter>00. View%28Workspace%29\Tab</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\CTerrainTab.h">
       <Filter>00. View%28Workspace%29\Tab</Filter>
     </ClInclude>
@@ -162,6 +159,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\NaviMesh.h">
       <Filter>04. Object\NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CNaviMeshTab.h">
+      <Filter>00. View%28Workspace%29\Tab</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +213,6 @@
     <ClCompile Include="..\Code\Sheet.cpp">
       <Filter>00. View%28Workspace%29\Sheet</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CMeshTab.cpp">
-      <Filter>00. View%28Workspace%29\Tab</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CTerrainTab.cpp">
       <Filter>00. View%28Workspace%29\Tab</Filter>
     </ClCompile>
@@ -230,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\NaviMesh.cpp">
       <Filter>04. Object\NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CNaviMeshTab.cpp">
+      <Filter>00. View%28Workspace%29\Tab</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

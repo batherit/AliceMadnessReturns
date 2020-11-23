@@ -3,6 +3,7 @@
 #include "EditScene.h"
 #include "Terrain.h"
 #include "NaviMesh.h"
+#include "CNaviMeshTab.h"
 #include "MainFrm.h"
 #include "CTabForm.h"
 
@@ -51,12 +52,14 @@ _int CInputMode_Navi::ProcessInput(const _float & _fDeltaTime)
 				m_vecTriangle.push_back(Engine::GetHitPos(vV1, vV2, vV3, fU, fV));
 
 				if (m_vecTriangle.size() == 3) {
+					// 네비 메쉬 갱신
 					m_pEditScene->GetNaviMesh()->PushTriangleVertices(m_vecTriangle[0], m_vecTriangle[1], m_vecTriangle[2]);
 					m_vecTriangle.clear();
 
+					// 네비 트리 갱신
 					CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 					CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
-					pTabForm->UpdateNaviTree(m_pEditScene->GetNaviMesh());
+					pTabForm->GetNaviMeshTab()->UpdateNaviTree(m_pEditScene->GetNaviMesh());
 				}
 				break;
 			}

@@ -27,11 +27,14 @@ public:
 public:
 	void PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _vTriPos3);
 	void PopTriangleVertices(_int _iTriangleIndex);
+	void MarkTriangle(_int _iTriangleIndex);
+	void ReleaseMarkedTriangle();
 	vector<_vec3>& GetNaviVertices();
 
 private:
 	Engine::CRenderer* m_pRenderer = nullptr;
 	Engine::CManualCol* m_pManualCol = nullptr;
+	_int m_iMarkedTriangleIndex = -1;		//-1 => 선택된 삼각형이 없다.
 };
 
 END

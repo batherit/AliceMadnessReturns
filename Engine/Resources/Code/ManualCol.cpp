@@ -59,6 +59,10 @@ void CManualCol::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _v
 	Safe_Release(m_pVB);
 	Safe_Release(m_pIB);
 
+	// 그릴 삼각형이 없다면 종료.
+	if (m_dwTriCnt == 0)
+		return;
+
 	// 새 버퍼 생성
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), );
 
@@ -107,6 +111,10 @@ void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 	Safe_Release(m_pVB);
 	Safe_Release(m_pIB);
 
+	// 그릴 삼각형이 없다면 종료.
+	if (m_dwTriCnt == 0)
+		return;
+
 	// 새 버퍼 생성
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), );
 
@@ -135,6 +143,23 @@ void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 		pIndex[i]._2 = i * 3 + 2;
 	}
 	m_pIB->Unlock();
+}
+
+void CManualCol::ChangeTriangleColor(_int _iTriangleIndex, D3DXCOLOR _colTriangleColor)
+{
+	if (_iTriangleIndex <= 0 && _iTriangleIndex > static_cast<_int>(m_vecVertices.size()) / 3)
+		return;
+
+	VTXCOL*		pVertex = NULL;
+
+	m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
+
+	// 시스템 메모리에 둘 정점 버퍼 채우기
+	for (_int i = 0; i < 3; ++i) {
+		pVertex[3 * _iTriangleIndex + i].dwColor = _colTriangleColor;
+	}
+
+	m_pVB->Unlock();
 }
 
 Engine::CManualCol* Engine::CManualCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)

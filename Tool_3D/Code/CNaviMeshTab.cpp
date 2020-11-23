@@ -90,6 +90,11 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 	else {
 		m_btnDelete.EnableWindow(TRUE);
+		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+
+		CString strIndex = m_treeNavi.GetItemText(m_hSelectedTreeItem);
+		_int iIndex = _ttoi(strIndex);
+		pNaviMesh->MarkTriangle(iIndex);
 	}
 
 	*pResult = 0;

@@ -20,6 +20,7 @@ public:
 
 	void PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _vTriPos3);
 	void PopTriangleVertices(_int _iTriangleIndex);
+	void ChangeTriangleColor(_int _iTriangleIndex, D3DXCOLOR _colTriangleColor = D3DCOLOR_ARGB(150, 255, 0, 0));
 	vector<_vec3>& GetVertices() { return m_vecVertices; }
 
 public:

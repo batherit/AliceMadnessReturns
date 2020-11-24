@@ -26,6 +26,7 @@ public:
 protected:
 	virtual void Free(void) = 0;
 	CGameObject* m_pOwner = nullptr;
+	_bool		m_bClone;
 };
 
 END

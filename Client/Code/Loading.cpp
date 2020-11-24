@@ -113,6 +113,11 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::CPhysics::GetComponentTag(), pComponent);
 
+	// Optimization
+	pComponent = Engine::COptimization::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::COptimization::GetComponentTag(), pComponent);
+
 	// ÅØ½ºÃÄ
 	lstrcpy(m_szLoading, L"Texture Loading.............................");
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);

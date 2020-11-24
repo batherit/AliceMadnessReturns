@@ -20,6 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Camera.cpp" />
+    <ClCompile Include="..\Code\Frustum.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\GameObject.cpp" />
     <ClCompile Include="..\Code\InputMode.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -32,6 +36,10 @@
     <ClCompile Include="..\Code\KeyMgr.cpp" />
     <ClCompile Include="..\Code\Management.cpp" />
     <ClCompile Include="..\Code\MeshCollider.cpp" />
+    <ClCompile Include="..\Code\Optimization.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Physics.cpp" />
     <ClCompile Include="..\Code\SphereCollider.cpp" />
     <ClCompile Include="..\Code\Transform.cpp" />
@@ -45,6 +53,10 @@
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h" />
     <ClInclude Include="..\Code\Camera.h" />
+    <ClInclude Include="..\Code\Frustum.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\GameObject.h" />
     <ClInclude Include="..\Code\InputMode.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -57,6 +69,10 @@
     <ClInclude Include="..\Code\KeyMgr.h" />
     <ClInclude Include="..\Code\Management.h" />
     <ClInclude Include="..\Code\MeshCollider.h" />
+    <ClInclude Include="..\Code\Optimization.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\Physics.h" />
     <ClInclude Include="..\Code\SphereCollider.h" />
     <ClInclude Include="..\Code\Transform.h" />

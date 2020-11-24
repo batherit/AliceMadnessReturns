@@ -58,6 +58,12 @@
     <Filter Include="98. Manager\03. InputModeMgr">
       <UniqueIdentifier>{99d2baa9-153f-4324-b9db-50a20d3a2b81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\04.Optimization">
+      <UniqueIdentifier>{5d7d7d62-c995-43bc-9803-e07783dafd6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\04.Optimization\00. Frustum">
+      <UniqueIdentifier>{46968657-01cb-48fb-b8f4-35e17cb102aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -111,6 +117,12 @@
     <ClInclude Include="..\Code\InputModeMgr.h">
       <Filter>98. Manager\03. InputModeMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Optimization.h">
+      <Filter>04. Component\04.Optimization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Frustum.h">
+      <Filter>04. Component\04.Optimization\00. Frustum</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -160,6 +172,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\InputModeMgr.cpp">
       <Filter>98. Manager\03. InputModeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Optimization.cpp">
+      <Filter>04. Component\04.Optimization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Frustum.cpp">
+      <Filter>04. Component\04.Optimization\00. Frustum</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

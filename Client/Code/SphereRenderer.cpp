@@ -34,7 +34,7 @@ int CSphereRenderer::Update_Object(const _float & _fDeltaTime)
 void CSphereRenderer::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
-
+	m_pGraphicDev->SetTexture(0, NULL);
 	Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"Buffer_SphereCol");
 }
 

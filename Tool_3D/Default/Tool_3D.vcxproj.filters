@@ -65,6 +65,9 @@
     <Filter Include="04. Object\NaviMesh">
       <UniqueIdentifier>{ec2e0422-ce6f-48d2-b2d9-d29be1a96315}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Object\EditObject">
+      <UniqueIdentifier>{e95df750-3dc8-4a31-bcca-0159530e410a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">

@@ -37,7 +37,6 @@ void CNaviMesh::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	m_pGraphicDev->SetTexture(0, NULL);
-	//Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 	m_pManualCol->Render_Buffer();
 }
 

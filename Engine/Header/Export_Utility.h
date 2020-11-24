@@ -18,6 +18,7 @@
 #include "SphereCollider.h"
 #include "MeshCollider.h"
 #include "Physics.h"
+#include "Optimization.h"
 
 BEGIN(Engine)
 

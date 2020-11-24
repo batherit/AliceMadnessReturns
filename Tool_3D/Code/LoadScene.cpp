@@ -35,12 +35,12 @@ Engine::_int CLoadScene::Update(const _float& fTimeDelta)
 
 	if (true == m_pLoading->Get_Finish())
 	{
-		if (GetAsyncKeyState(VK_RETURN) & 0x8000)
-		{
+		//if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+		//{
 			Engine::CManagement::GetInstance()->SetNextScene(CEditScene::Create(m_pGraphicDev));
 
 			return iExit;
-		}	
+		//}	
 	}
 
 	return iExit;

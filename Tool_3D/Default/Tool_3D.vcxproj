@@ -80,7 +80,10 @@
     <ClCompile Include="..\Code\LoadScene.cpp" />
     <ClCompile Include="..\Code\NaviMesh.cpp" />
     <ClCompile Include="..\Code\Sheet.cpp" />
-    <ClCompile Include="..\Code\Terrain.cpp" />
+    <ClCompile Include="..\Code\Terrain.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Tool3D_Kernel.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">

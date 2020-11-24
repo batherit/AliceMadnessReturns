@@ -49,6 +49,8 @@ HRESULT Client::CStone::Add_Component(void)
 	m_pSphere = CSphereRenderer::Create(m_pGraphicDev);
 	m_pSphere->GetTransform()->SetScaleXYZ(_vec3(2.f, 2.f, 2.f));
 
+	m_pOptimization = AddComponent<Engine::COptimization>();
+
 	// Calculator
 	/*pComponent = m_pCalculatorCom = dynamic_cast<Engine::CCalculator*>(Engine::Clone(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -109,7 +111,9 @@ _int CStone::Update_Object(const _float & fTimeDelta)
 //}
 void Client::CStone::Render_Object(void)
 {
-	//m_pTransformCom->Set_Transform(m_pGraphicDev);
+	if (!m_pOptimization->Is_InFrustumForObject(&GetTransform()->GetPos(), 0.f)) {
+		return;
+	}
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 
 	m_pMesh->Render_Meshes();

@@ -25,6 +25,7 @@ BEGIN(Engine)
 // management
 // Get
 //inline CComponent*	   Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
+inline CLayer* GetLayer(const _tchar* _pLayerTag);
 
 inline HRESULT Create_Management(CManagement** ppManagement);
 //inline HRESULT	SetUp_Scene(CScene* pScene);
@@ -34,7 +35,7 @@ inline HRESULT Create_Management(CManagement** ppManagement);
 // protomgr
 inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pInstance);
 inline CComponent*		Clone(const _tchar* pProtoTag);
-inline CComponent*		GetOriComponent(const _tchar* _pProtoTag);
+inline CComponent*		GetOriProto(const _tchar* _pProtoTag);
 
 // Renderer
 inline CRenderer*		Get_Renderer(void);

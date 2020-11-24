@@ -157,22 +157,22 @@ _uint CLoading::Loading_ForStage(void)
 	Engine::Ready_Proto(L"Collider_Stone", pComponent);
 
 	// Player 메쉬 원본 생성
-	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Player",
 		Engine::TYPE_DYNAMIC,
 		L"../Bin/Resource/Mesh/DynamicMesh/PlayerXfile/",
 		L"Player.X"),
-		E_FAIL);*/
+		E_FAIL);
 
 	// Alice 메쉬 원본 생성
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Alice",
 		Engine::TYPE_DYNAMIC,
 		L"../Bin/Resource/Mesh/DynamicMesh/Alice/",
 		L"testalice.X"),
-		E_FAIL);
+		E_FAIL);*/
 
 	// 플레이어에 맞는 메쉬 콜라이더 원본 생성. (미구현)
 	//Engine::CDynamicMesh* pDynamicMesh = nullptr;
@@ -181,13 +181,13 @@ _uint CLoading::Loading_ForStage(void)
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
 	//Engine::Ready_Proto(L"Collider_Stone", pComponent);
 
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	RESOURCE_STAGE,
-	//	L"Mesh_Sword",
-	//	Engine::TYPE_STATIC,
-	//	L"../Bin/Resource/Mesh/StaticMesh/Sword/",
-	//	L"Sword.X"),
-	//	E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Sword",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/Sword/",
+		L"Sword.X"),
+		E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	RESOURCE_STAGE,

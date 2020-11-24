@@ -1,4 +1,8 @@
 #include "Export_Utility.h"
+inline CLayer * GetLayer(const _tchar * _pLayerTag)
+{
+	return CManagement::GetInstance()->GetSceneMgr()->GetCurScene()->GetLayer(_pLayerTag);
+}
 HRESULT Create_Management(CManagement** ppManagement)
 {
 	CManagement*		pManagement = CManagement::GetInstance();
@@ -36,7 +40,7 @@ CComponent*		Clone(const _tchar* pProtoTag)
 	return CProtoMgr::GetInstance()->Clone(pProtoTag);
 }
 
-inline CComponent * GetOriProto(const _tchar * _pProtoTag)
+CComponent * GetOriProto(const _tchar * _pProtoTag)
 {
 	return CProtoMgr::GetInstance()->GetOriProto(_pProtoTag);
 }

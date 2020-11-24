@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "Stone.h"
+#include "Sword.h"
 #include "SphereRenderer.h"
 #include "SkyBox.h"
 #include "DynamicCamera.h"
@@ -116,7 +117,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pPlayer = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
-
+	
 	// 카메라 생성
 	m_pCamera = CDynamicCamera::Create(m_pGraphicDev);		// 동적 카메라
 	//m_pCamera = CStaticCamera::Create(m_pGraphicDev);			// 정적 카메라
@@ -145,6 +146,10 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
 
+	//
+	pGameObject = CSword::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
 
 	m_mapLayer.emplace(pLayerTag, pLayer);
 	

@@ -95,7 +95,7 @@ void CManualCol::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _v
 
 void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 {
-	if (_iTriangleIndex <= 0 && _iTriangleIndex > static_cast<_int>(m_vecVertices.size()) / 3)
+	if (_iTriangleIndex < 0 || _iTriangleIndex >= static_cast<_int>(m_vecVertices.size()) / 3)
 		return;
 
 	// 삼각형은 세 정점으로 이루어져 있으므로 정점을 제거하기 위해 for문을 3번 진행한다.
@@ -145,9 +145,9 @@ void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 	m_pIB->Unlock();
 }
 
-void CManualCol::ChangeTriangleColor(_int _iTriangleIndex, D3DXCOLOR _colTriangleColor)
+void CManualCol::SetTriangleColor(_int _iTriangleIndex, D3DXCOLOR _colTriangleColor)
 {
-	if (_iTriangleIndex <= 0 && _iTriangleIndex > static_cast<_int>(m_vecVertices.size()) / 3)
+	if (_iTriangleIndex < 0 || _iTriangleIndex >= static_cast<_int>(m_vecVertices.size()) / 3)
 		return;
 
 	VTXCOL*		pVertex = NULL;
@@ -158,6 +158,22 @@ void CManualCol::ChangeTriangleColor(_int _iTriangleIndex, D3DXCOLOR _colTriangl
 	for (_int i = 0; i < 3; ++i) {
 		pVertex[3 * _iTriangleIndex + i].dwColor = _colTriangleColor;
 	}
+
+	m_pVB->Unlock();
+}
+
+void CManualCol::SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex, const _vec3 _vNewPosition)
+{
+	if (_iTriangleIndex < 0 || _iTriangleIndex >= static_cast<_int>(m_vecVertices.size()) / 3)
+		return;
+	if (_iVertexIndex < 0 || _iVertexIndex >= 3)
+		return;
+
+	VTXCOL* pVertex = NULL;
+
+	m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
+
+	pVertex[3 * _iTriangleIndex + _iVertexIndex].vPos = _vNewPosition;
 
 	m_pVB->Unlock();
 }

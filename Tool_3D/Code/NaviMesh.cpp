@@ -78,7 +78,7 @@ void CNaviMesh::PopTriangleVertices(_int _iTriangleIndex)
 
 void CNaviMesh::MarkTriangle(_int _iTriangleIndex)
 {
-	if (_iTriangleIndex <= 0 && _iTriangleIndex > static_cast<_int>(m_pManualCol->GetVertices().size()) / 3)
+	if (_iTriangleIndex < 0 || _iTriangleIndex >= static_cast<_int>(m_pManualCol->GetVertices().size()) / 3)
 		return;
 
 	// 기존에 마크된 트라이앵글이 있다면, 해제한다.
@@ -87,7 +87,7 @@ void CNaviMesh::MarkTriangle(_int _iTriangleIndex)
 
 	// 해당 인덱스의 트라이앵글을 마크한다.
 	m_iMarkedTriangleIndex = _iTriangleIndex;
-	m_pManualCol->ChangeTriangleColor(_iTriangleIndex, D3DCOLOR_ARGB(150, 255, 255, 50));
+	m_pManualCol->SetTriangleColor(_iTriangleIndex, D3DCOLOR_ARGB(150, 255, 255, 50));
 }
 
 void CNaviMesh::ReleaseMarkedTriangle()
@@ -96,8 +96,13 @@ void CNaviMesh::ReleaseMarkedTriangle()
 		return;
 
 	// 마크된 삼각형을 해제한다.
-	m_pManualCol->ChangeTriangleColor(m_iMarkedTriangleIndex);
+	m_pManualCol->SetTriangleColor(m_iMarkedTriangleIndex);
 	m_iMarkedTriangleIndex = -1;
+}
+
+void CNaviMesh::SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex, const _vec3 & _vNewPosition)
+{
+	m_pManualCol->SetTriangleVertexPosition(_iTriangleIndex, _iVertexIndex, _vNewPosition);
 }
 
 vector<_vec3>& CNaviMesh::GetNaviVertices()

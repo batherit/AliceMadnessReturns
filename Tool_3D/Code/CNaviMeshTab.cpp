@@ -28,12 +28,21 @@ void CNaviMeshTab::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TREE1, m_treeNavi);
 	DDX_Control(pDX, IDC_BUTTON1, m_btnDelete);
+	DDX_Text(pDX, IDC_EDIT1, m_vVertexPos.x);
+	DDX_Text(pDX, IDC_EDIT10, m_vVertexPos.y);
+	DDX_Text(pDX, IDC_EDIT3, m_vVertexPos.z);
+	DDX_Control(pDX, IDC_EDIT1, m_editPosX);
+	DDX_Control(pDX, IDC_EDIT10, m_editPosY);
+	DDX_Control(pDX, IDC_EDIT3, m_editPosZ);
 }
 
 
 BEGIN_MESSAGE_MAP(CNaviMeshTab, CDialogEx)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE1, &CNaviMeshTab::OnTvnSelchangedTree1)
 	ON_BN_CLICKED(IDC_BUTTON1, &CNaviMeshTab::OnBnClickedButtonDelete)
+	ON_EN_CHANGE(IDC_EDIT1, &CNaviMeshTab::OnEnChangeEditPosX)
+	ON_EN_CHANGE(IDC_EDIT10, &CNaviMeshTab::OnEnChangeEditPosY)
+	ON_EN_CHANGE(IDC_EDIT3, &CNaviMeshTab::OnEnChangeEditPosZ)
 END_MESSAGE_MAP()
 
 
@@ -85,16 +94,37 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 	auto hParent = m_treeNavi.GetParentItem(m_hSelectedTreeItem);
 
 	if (hParent) {
-		// 최상위 아이템이 아니라면,
+		// 삼각형의 정점 중 하나를 선택한 경우
 		m_btnDelete.EnableWindow(FALSE);
+
+		_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
+		_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
+
+		// Position Edit Ctrl 활성화
+		m_editPosX.EnableWindow(TRUE);
+		m_editPosY.EnableWindow(TRUE);
+		m_editPosZ.EnableWindow(TRUE);
+
+		// Position Edit Ctrl 갱신
+		UpdateData(TRUE);
+		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+		auto& rVertices = pNaviMesh->GetNaviVertices();
+		m_vVertexPos = rVertices[iTriangleIndex * 3 + iVertexIndex];
+		UpdateData(FALSE);
 	}
 	else {
+		// 삼각형 자체를 선택한 경우
 		m_btnDelete.EnableWindow(TRUE);
 		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
 
 		CString strIndex = m_treeNavi.GetItemText(m_hSelectedTreeItem);
 		_int iIndex = _ttoi(strIndex);
 		pNaviMesh->MarkTriangle(iIndex);
+
+		// Position Edit Ctrl 비활성화
+		m_editPosX.EnableWindow(FALSE);
+		m_editPosY.EnableWindow(FALSE);
+		m_editPosZ.EnableWindow(FALSE);
 	}
 
 	*pResult = 0;
@@ -120,4 +150,73 @@ void CNaviMeshTab::OnBnClickedButtonDelete()
 	UpdateNaviTree(pNaviMesh);
 
 	m_btnDelete.EnableWindow(FALSE);
+}
+
+
+void CNaviMeshTab::OnEnChangeEditPosX()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	//m_hSelectedTreeItem;	=> 삼각형의 정점 중 하나로 해석된다.
+	auto hParent = m_treeNavi.GetParentItem(m_hSelectedTreeItem);
+	_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
+	_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
+	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+
+	UpdateData(TRUE);
+
+	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
+
+	UpdateData(FALSE);
+}
+
+
+void CNaviMeshTab::OnEnChangeEditPosY()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	//m_hSelectedTreeItem;	=> 삼각형의 정점 중 하나로 해석된다.
+	auto hParent = m_treeNavi.GetParentItem(m_hSelectedTreeItem);
+	_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
+	_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
+	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+
+	UpdateData(TRUE);
+
+	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
+
+	UpdateData(FALSE);
+}
+
+
+void CNaviMeshTab::OnEnChangeEditPosZ()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	//m_hSelectedTreeItem;	=> 삼각형의 정점 중 하나로 해석된다.
+	auto hParent = m_treeNavi.GetParentItem(m_hSelectedTreeItem);
+	_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
+	_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
+	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+
+	UpdateData(TRUE);
+
+	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
+
+	UpdateData(FALSE);
 }

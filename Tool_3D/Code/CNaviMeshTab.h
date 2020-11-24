@@ -34,4 +34,11 @@ public:
 	afx_msg void OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult);
 	CButton m_btnDelete;
 	afx_msg void OnBnClickedButtonDelete();
+	_vec3 m_vVertexPos;
+	CEdit m_editPosX;
+	CEdit m_editPosY;
+	CEdit m_editPosZ;
+	afx_msg void OnEnChangeEditPosX();
+	afx_msg void OnEnChangeEditPosY();
+	afx_msg void OnEnChangeEditPosZ();
 };

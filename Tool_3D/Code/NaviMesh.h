@@ -29,6 +29,7 @@ public:
 	void PopTriangleVertices(_int _iTriangleIndex);
 	void MarkTriangle(_int _iTriangleIndex);
 	void ReleaseMarkedTriangle();
+	void SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex, const _vec3& _vNewPosition);
 	vector<_vec3>& GetNaviVertices();
 
 private:

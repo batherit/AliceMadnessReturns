@@ -7,6 +7,9 @@
 #include "CTerrainTab.h"
 #include "CNaviMeshTab.h"
 #include "NaviMesh.h"
+#include "EditScene.h"
+#include "InputMode_Terrain.h"
+#include "InputMode_Navi.h"
 
 
 // CTabForm
@@ -62,7 +65,8 @@ void CTabForm::OnInitialUpdate()
 	m_Tab.InsertItem(0, _T("Terrain"));
 	m_Tab.InsertItem(1, _T("Navi Mesh"));
 
-	m_Tab.SetCurSel(0);
+	// 초기 터레인 탭으로 설정
+	m_Tab.SetCurSel(0);		
 
 	CRect rect;
 	m_Tab.GetWindowRect(&rect);
@@ -93,16 +97,24 @@ void CTabForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	int iSelIndex = m_Tab.GetCurSel();
-
+	auto pInputModeMgr = g_pTool3D_Kernel->GetEditScene()->GetInputModeMgr();
+	
 	switch (iSelIndex)
 	{
-	case 0:
+	case 0: {
+		if(pInputModeMgr)
+			pInputModeMgr->SetNextInputMode(new CInputMode_Terrain(pInputModeMgr));
 		m_pTerrainTab->ShowWindow(SW_SHOW);
 		m_pNaviMeshTab->ShowWindow(SW_HIDE);
+	}
+		
 		break;
-	case 1:
+	case 1: {
+		if (pInputModeMgr)
+			pInputModeMgr->SetNextInputMode(new CInputMode_Navi(pInputModeMgr));
 		m_pTerrainTab->ShowWindow(SW_HIDE);
 		m_pNaviMeshTab->ShowWindow(SW_SHOW);
+	}
 		break;
 	default:
 		break;

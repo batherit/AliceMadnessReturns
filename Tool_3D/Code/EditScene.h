@@ -34,6 +34,7 @@ public:
 	CTerrain* GetTerrain() const;
 	CNaviMesh* GetNaviMesh() const;
 	Engine::CGameObject* GetPickedObject() const;
+	Engine::CInputModeMgr* GetInputModeMgr() const { return m_pInputModeMgr; }
 
 private:
 	Engine::CInputModeMgr* m_pInputModeMgr = nullptr;

@@ -4,7 +4,7 @@
 #include "Terrain.h"
 #include "NaviMesh.h"
 #include "InputMode_Terrain.h"
-#include "InputMode_Navi.h"
+//#include "InputMode_Navi.h"
 
 CEditScene::CEditScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -56,7 +56,7 @@ HRESULT CEditScene::Ready(void)
 	// 입력 모드 매니저 생성
 	m_pInputModeMgr = Engine::CInputModeMgr::Create();
 	NULL_CHECK_RETURN(m_pInputModeMgr, E_FAIL);
-	m_pInputModeMgr->SetNextInputMode(new CInputMode_Navi(m_pInputModeMgr));
+	m_pInputModeMgr->SetNextInputMode(new CInputMode_Terrain(m_pInputModeMgr));
 
 	// 컬모드 설정
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);

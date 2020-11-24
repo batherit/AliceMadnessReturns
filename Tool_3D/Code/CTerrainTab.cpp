@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "Tool_3D.h"
 #include "CTerrainTab.h"
+#include "Terrain.h"
 #include "afxdialogex.h"
 #include "EditScene.h"
 
@@ -60,10 +61,10 @@ void CTerrainTab::OnEnChangeEditPosX()
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
-	auto pPickedObject = pEditScene->GetPickedObject();
+	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pPickedObject)
-		pPickedObject->GetTransform()->SetPos(m_vPos);
+	if (pTerrain)
+		pTerrain->GetTransform()->SetPos(m_vPos);
 	UpdateData(FALSE);
 }
 
@@ -78,10 +79,10 @@ void CTerrainTab::OnEnChangeEditPosY()
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
-	auto pPickedObject = pEditScene->GetPickedObject();
+	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pPickedObject)
-		pPickedObject->GetTransform()->SetPos(m_vPos);
+	if (pTerrain)
+		pTerrain->GetTransform()->SetPos(m_vPos);
 	UpdateData(FALSE);
 }
 
@@ -96,10 +97,10 @@ void CTerrainTab::OnEnChangeEditPosZ()
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
-	auto pPickedObject = pEditScene->GetPickedObject();
+	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pPickedObject)
-		pPickedObject->GetTransform()->SetPos(m_vPos);
+	if (pTerrain)
+		pTerrain->GetTransform()->SetPos(m_vPos);
 	UpdateData(FALSE);
 }
 
@@ -114,11 +115,11 @@ void CTerrainTab::OnEnChangeEditRotX()
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
-	auto pPickedObject = pEditScene->GetPickedObject();
+	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pPickedObject) {
+	if (pTerrain) {
 		_vec3 vRadian = _vec3(D3DXToRadian(m_vAngle.x), D3DXToRadian(m_vAngle.y), D3DXToRadian(m_vAngle.z));
-		pPickedObject->GetTransform()->SetAngle(vRadian);
+		pTerrain->GetTransform()->SetAngle(vRadian);
 	}
 
 	UpdateData(FALSE);
@@ -135,11 +136,11 @@ void CTerrainTab::OnEnChangeEditRotY()
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
-	auto pPickedObject = pEditScene->GetPickedObject();
+	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pPickedObject) {
+	if (pTerrain) {
 		_vec3 vRadian = _vec3(D3DXToRadian(m_vAngle.x), D3DXToRadian(m_vAngle.y), D3DXToRadian(m_vAngle.z));
-		pPickedObject->GetTransform()->SetAngle(vRadian);
+		pTerrain->GetTransform()->SetAngle(vRadian);
 	}
 
 	UpdateData(FALSE);
@@ -156,11 +157,11 @@ void CTerrainTab::OnEnChangeEditRotZ()
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
-	auto pPickedObject = pEditScene->GetPickedObject();
+	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pPickedObject) {
+	if (pTerrain) {
 		_vec3 vRadian = _vec3(D3DXToRadian(m_vAngle.x), D3DXToRadian(m_vAngle.y), D3DXToRadian(m_vAngle.z));
-		pPickedObject->GetTransform()->SetAngle(vRadian);
+		pTerrain->GetTransform()->SetAngle(vRadian);
 	}
 
 	UpdateData(FALSE);
@@ -177,10 +178,10 @@ void CTerrainTab::OnEnChangeEditScaleX()
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
-	auto pPickedObject = pEditScene->GetPickedObject();
+	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pPickedObject) {
-		pPickedObject->GetTransform()->SetScale(m_vScale);
+	if (pTerrain) {
+		pTerrain->GetTransform()->SetScale(m_vScale);
 	}
 
 	UpdateData(FALSE);
@@ -197,10 +198,10 @@ void CTerrainTab::OnEnChangeEditScaleY()
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
-	auto pPickedObject = pEditScene->GetPickedObject();
+	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pPickedObject) {
-		pPickedObject->GetTransform()->SetScale(m_vScale);
+	if (pTerrain) {
+		pTerrain->GetTransform()->SetScale(m_vScale);
 	}
 
 	UpdateData(FALSE);
@@ -217,10 +218,10 @@ void CTerrainTab::OnEnChangeEditScaleZ()
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
-	auto pPickedObject = pEditScene->GetPickedObject();
+	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pPickedObject) {
-		pPickedObject->GetTransform()->SetScale(m_vScale);
+	if (pTerrain) {
+		pTerrain->GetTransform()->SetScale(m_vScale);
 	}
 
 	UpdateData(FALSE);

@@ -96,6 +96,7 @@ HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVertice
 	INDEX16 Indexes;
 	for (_uint i = 1; i < _iNumOfVerticesH; ++i) {
 		for (_uint j = 0; j < _iNumOfVerticesW - 1; ++j) {
+			// ÁÂ»ó ¿ì»ó ¿ìÇÏ
 			Indexes = INDEX16{
 				static_cast<_ushort>(0 + i * _iNumOfVerticesW + j),
 				static_cast<_ushort>(1 + i * _iNumOfVerticesW + j),
@@ -103,6 +104,7 @@ HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVertice
 			m_vecIndexes.emplace_back(Indexes);
 			indices.emplace_back(Indexes);
 
+			// ¿ìÇÏ ÁÂÇÏ ÁÂ»ó
 			Indexes = INDEX16{
 				static_cast<_ushort>(1 + (i - 1) * _iNumOfVerticesW + j),
 				static_cast<_ushort>(0 + (i - 1) * _iNumOfVerticesW + j),

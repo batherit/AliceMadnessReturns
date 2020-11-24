@@ -269,6 +269,22 @@ namespace Engine
 		return matViewport;
 	}
 
+	// 세 정점으로부터 외적얻기 
+	inline _vec3 GetCross(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3) {
+		_vec3 vCross;
+		D3DXVec3Cross(&vCross, &(_vV2 - _vV1), &(_vV3 - _vV1));
+		return vCross;
+	}
+
+	inline _bool IsFacing(const _vec3& _vDir1, const _vec3& _vDir2) {
+		_vec3 vNormalizedDir1, vNormalizedDir2;
+		D3DXVec3Normalize(&vNormalizedDir1, &_vDir1);
+		D3DXVec3Normalize(&vNormalizedDir2, &_vDir2);
+		
+		// 음수이면 마주 보고 있는 것이다.
+		return D3DXVec3Dot(&vNormalizedDir1, &vNormalizedDir2) < 0.f;
+	}
+
 	// 광선벡터
 	inline PICKINGRAYINFO GetPickingRayInfo(LPDIRECT3DDEVICE9 _pGraphicDev, const POINT& _ptClient) {
 		_vec3 vRay = _vec3(static_cast<FLOAT>(_ptClient.x), static_cast<FLOAT>(_ptClient.y), 0.f);

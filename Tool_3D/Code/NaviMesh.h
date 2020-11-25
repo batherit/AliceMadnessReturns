@@ -25,11 +25,15 @@ public:
 	virtual void		Free(void);
 
 public:
+	_bool IsValidTriangleIndex(_int _iTriangleIndex);
+	_bool IsValidVertexIndex(_int _iVertexIndex);
+	_bool IsValidIndex(_int _iTriangleIndex, _int _iVertexIndex);
 	void PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _vTriPos3);
 	void PopTriangleVertices(_int _iTriangleIndex);
 	void MarkTriangle(_int _iTriangleIndex);
 	void ReleaseMarkedTriangle();
 	void SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex, const _vec3& _vNewPosition);
+	_vec3 GetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex) const;
 	vector<_vec3>& GetNaviVertices();
 
 private:

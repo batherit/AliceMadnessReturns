@@ -43,6 +43,21 @@ void CManualCol::Render_Buffer(void)
 	//m_pGraphicDev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, m_dwTriCnt);
 }
 
+_bool CManualCol::IsValidTriangleIndex(_int _iTriangleIndex)
+{
+	return !(_iTriangleIndex < 0 || _iTriangleIndex >= static_cast<_int>(GetVertices().size()) / 3);
+}
+
+_bool CManualCol::IsValidVertexIndex(_int _iVertexIndex)
+{
+	return !(_iVertexIndex < 0 || _iVertexIndex >= 3);
+}
+
+_bool CManualCol::IsValidIndex(_int _iTriangleIndex, _int _iVertexIndex)
+{
+	return IsValidTriangleIndex(_iTriangleIndex) && IsValidVertexIndex(_iVertexIndex);
+}
+
 void CManualCol::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _vTriPos3)
 {
 	// 삼각형 추가
@@ -95,7 +110,7 @@ void CManualCol::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _v
 
 void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 {
-	if (_iTriangleIndex < 0 || _iTriangleIndex >= static_cast<_int>(m_vecVertices.size()) / 3)
+	if (!IsValidTriangleIndex(_iTriangleIndex))
 		return;
 
 	// 삼각형은 세 정점으로 이루어져 있으므로 정점을 제거하기 위해 for문을 3번 진행한다.
@@ -147,7 +162,7 @@ void CManualCol::PopTriangleVertices(_int _iTriangleIndex)
 
 void CManualCol::SetTriangleColor(_int _iTriangleIndex, D3DXCOLOR _colTriangleColor)
 {
-	if (_iTriangleIndex < 0 || _iTriangleIndex >= static_cast<_int>(m_vecVertices.size()) / 3)
+	if (!IsValidTriangleIndex(_iTriangleIndex))
 		return;
 
 	VTXCOL*		pVertex = NULL;
@@ -164,9 +179,7 @@ void CManualCol::SetTriangleColor(_int _iTriangleIndex, D3DXCOLOR _colTriangleCo
 
 void CManualCol::SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex, const _vec3 _vNewPosition)
 {
-	if (_iTriangleIndex < 0 || _iTriangleIndex >= static_cast<_int>(m_vecVertices.size()) / 3)
-		return;
-	if (_iVertexIndex < 0 || _iVertexIndex >= 3)
+	if (!IsValidIndex(_iTriangleIndex, _iVertexIndex))
 		return;
 
 	VTXCOL* pVertex = NULL;
@@ -176,6 +189,11 @@ void CManualCol::SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIn
 	pVertex[3 * _iTriangleIndex + _iVertexIndex].vPos = _vNewPosition;
 
 	m_pVB->Unlock();
+}
+
+_vec3 CManualCol::GetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex) const
+{
+	return m_vecVertices[3 * _iTriangleIndex + _iVertexIndex];
 }
 
 Engine::CManualCol* Engine::CManualCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)

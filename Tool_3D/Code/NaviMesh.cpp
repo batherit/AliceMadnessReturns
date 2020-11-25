@@ -55,6 +55,21 @@ void CNaviMesh::Free(void)
 	CGameObject::Free();
 }
 
+_bool CNaviMesh::IsValidTriangleIndex(_int _iTriangleIndex)
+{
+	return m_pManualCol->IsValidTriangleIndex(_iTriangleIndex);
+}
+
+_bool CNaviMesh::IsValidVertexIndex(_int _iVertexIndex)
+{
+	return m_pManualCol->IsValidVertexIndex(_iVertexIndex);
+}
+
+_bool CNaviMesh::IsValidIndex(_int _iTriangleIndex, _int _iVertexIndex)
+{
+	return m_pManualCol->IsValidIndex(_iTriangleIndex, _iVertexIndex);
+}
+
 void CNaviMesh::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _vTriPos3)
 {
 	m_pManualCol->PushTriangleVertices(_vTriPos1, _vTriPos2, _vTriPos3);
@@ -77,7 +92,7 @@ void CNaviMesh::PopTriangleVertices(_int _iTriangleIndex)
 
 void CNaviMesh::MarkTriangle(_int _iTriangleIndex)
 {
-	if (_iTriangleIndex < 0 || _iTriangleIndex >= static_cast<_int>(m_pManualCol->GetVertices().size()) / 3)
+	if (!IsValidTriangleIndex(_iTriangleIndex))
 		return;
 
 	// 기존에 마크된 트라이앵글이 있다면, 해제한다.
@@ -102,6 +117,11 @@ void CNaviMesh::ReleaseMarkedTriangle()
 void CNaviMesh::SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex, const _vec3 & _vNewPosition)
 {
 	m_pManualCol->SetTriangleVertexPosition(_iTriangleIndex, _iVertexIndex, _vNewPosition);
+}
+
+_vec3 CNaviMesh::GetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex) const
+{
+	return _vec3();
 }
 
 vector<_vec3>& CNaviMesh::GetNaviVertices()

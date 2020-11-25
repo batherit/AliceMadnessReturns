@@ -65,3 +65,7 @@ namespace UI {
 namespace BULLET {
 	enum E_TYPE { TYPE_MONSTER, TYPE_PLAYER, TYPE_END };
 }
+
+namespace PLANE {
+	enum E_TYPE { TYPE_XY, TYPE_XZ, TYPE_YZ, TYPE_END };
+}

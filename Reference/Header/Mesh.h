@@ -13,7 +13,7 @@ protected:
 	virtual ~CMesh(void);
 
 protected:
-	_bool		m_bClone;
+	//_bool		m_bClone;
 
 public:
 	virtual CComponent*		Clone(void)PURE;

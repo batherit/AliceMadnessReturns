@@ -54,7 +54,7 @@ void CTransform::Translate(_float _fDeltaX, _float _fDeltaY, _float _fDeltaZ) {
 	m_vPos.y += _fDeltaY;
 	m_vPos.z += _fDeltaZ;
 }
-void CTransform::Translate(_vec3 _vDeltaMove) {
+void CTransform::Translate(const _vec3& _vDeltaMove) {
 	m_vPos.x += _vDeltaMove.x;
 	m_vPos.y += _vDeltaMove.y;
 	m_vPos.z += _vDeltaMove.z;
@@ -114,7 +114,7 @@ void CTransform::NormalizeAxis() {
 	D3DXVec3Normalize(&m_vLook, &m_vLook);
 }
 
-void CTransform::SetAngle(_vec3 _vAngle) {
+void CTransform::SetAngle(const _vec3& _vAngle) {
 	m_vAngle = _vAngle;
 
 	_qt qtRot = ConvAngleToQuaternion(m_vAngle);

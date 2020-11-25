@@ -39,6 +39,11 @@
     <ClInclude Include="..\Code\Loading.h" />
     <ClInclude Include="..\Code\LoadScene.h" />
     <ClInclude Include="..\Code\NaviMesh.h" />
+    <ClInclude Include="..\Code\NaviMeshVtxCtrl.h" />
+    <ClInclude Include="..\Code\PointObject.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\Sheet.h" />
     <ClInclude Include="..\Code\Terrain.h" />
     <ClInclude Include="..\Code\Tool3D_Kernel.h" />
@@ -79,6 +84,11 @@
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\LoadScene.cpp" />
     <ClCompile Include="..\Code\NaviMesh.cpp" />
+    <ClCompile Include="..\Code\NaviMeshVtxCtrl.cpp" />
+    <ClCompile Include="..\Code\PointObject.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Sheet.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

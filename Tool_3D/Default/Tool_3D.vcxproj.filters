@@ -65,8 +65,11 @@
     <Filter Include="04. Object\NaviMesh">
       <UniqueIdentifier>{ec2e0422-ce6f-48d2-b2d9-d29be1a96315}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Object\EditObject">
-      <UniqueIdentifier>{e95df750-3dc8-4a31-bcca-0159530e410a}</UniqueIdentifier>
+    <Filter Include="04. Object\PointObject">
+      <UniqueIdentifier>{db149def-e233-47f3-ba3a-735281f31cfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Object\NaviMeshVtxCtrl">
+      <UniqueIdentifier>{10b4d8df-5edd-4efb-bb8e-7c49d8921f43}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -160,11 +163,17 @@
     <ClInclude Include="..\Code\InputMode_Terrain.h">
       <Filter>03. InputMode</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\CNaviMeshTab.h">
+      <Filter>00. View%28Workspace%29\Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\PointObject.h">
+      <Filter>04. Object\PointObject</Filter>
+    </ClInclude>
     <ClInclude Include="..\Code\NaviMesh.h">
       <Filter>04. Object\NaviMesh</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\CNaviMeshTab.h">
-      <Filter>00. View%28Workspace%29\Tab</Filter>
+    <ClInclude Include="..\Code\NaviMeshVtxCtrl.h">
+      <Filter>04. Object\NaviMeshVtxCtrl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,11 +237,17 @@
     <ClCompile Include="..\Code\InputMode_Terrain.cpp">
       <Filter>03. InputMode</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CNaviMeshTab.cpp">
+      <Filter>00. View%28Workspace%29\Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PointObject.cpp">
+      <Filter>04. Object\PointObject</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\NaviMesh.cpp">
       <Filter>04. Object\NaviMesh</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CNaviMeshTab.cpp">
-      <Filter>00. View%28Workspace%29\Tab</Filter>
+    <ClCompile Include="..\Code\NaviMeshVtxCtrl.cpp">
+      <Filter>04. Object\NaviMeshVtxCtrl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

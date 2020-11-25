@@ -33,18 +33,18 @@ public:
 	void Scaling(_float _fDeltaX, _float _fDeltaY, _float _fDeltaZ);
 	void Rotate(_float _fDeltaX, _float _fDeltaY, _float _fDeltaZ);
 	void Translate(_float _fDeltaX, _float _fDeltaY, _float _fDeltaZ);
-	void Translate(_vec3 _vDeltaMove);
+	void Translate(const _vec3& _vDeltaMove);
 	
 	// 스케일
-	void SetScale(_vec3 _vScale) { m_vScale = _vScale; }
+	void SetScale(const _vec3& _vScale) { m_vScale = _vScale; }
 	void SetScaleX(_float _fScaleX) { m_vScale.x = _fScaleX; }
 	void SetScaleY(_float _fScaleY) { m_vScale.y = _fScaleY; }
 	void SetScaleZ(_float _fScaleZ) { m_vScale.z = _fScaleZ; }
 	void SetScaleXYZ(_float _fScaleX, _float _fScaleY, _float _fScaleZ) { SetScaleX(_fScaleX); SetScaleY(_fScaleY); SetScaleZ(_fScaleZ); }
-	void SetScaleXYZ(_vec3 _vScale) { m_vScale = _vScale; }
+	void SetScaleXYZ(const _vec3& _vScale) { m_vScale = _vScale; }
 	
 	// 회전
-	void SetAngle(_vec3 _vAngle);
+	void SetAngle(const _vec3& _vAngle);
 	void SetAngle(_float _fYaw, _float _fPitch, _float _fRoll) { SetAngle(_vec3(_fPitch, _fYaw, _fRoll)); }
 	void RotateByRight(_float _fDeltaAngle);
 	void RotateByUp(_float _fDeltaAngle);

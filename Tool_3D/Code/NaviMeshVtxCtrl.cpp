@@ -19,7 +19,9 @@ CNaviMeshVtxCtrl::~CNaviMeshVtxCtrl(void)
 HRESULT CNaviMeshVtxCtrl::Ready_Object(void)
 {
 	m_pRenderer = AddComponent<Engine::CRenderer>();
-	return E_NOTIMPL;
+	
+	GetTransform()->SetScale(_vec3(50.f, 50.f, 50.f));
+	return S_OK;
 }
 
 int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
@@ -39,20 +41,7 @@ int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
 	}
 	else if (m_bIsPicking) {
 		if(Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB)) {
-			switch (m_ePlaneType) {
-			case PLANE::TYPE_XY:
-				// TODO : XY 평면에 대한 이동 갱신
-			{int a = 10; }
-				break;
-			case PLANE::TYPE_XZ:
-				// TODO : XZ 평면에 대한 이동 갱신
-			{int a = 10; }
-				break;
-			case PLANE::TYPE_YZ:
-				// TODO : YZ 평면에 대한 이동 갱신
-			{int a = 10; }
-				break;
-			}
+			DragVertex();
 		}
 		else {
 			// 드래그가 끝났다면, 픽킹 상태가 아닌 것이다.
@@ -107,7 +96,6 @@ PLANE::E_TYPE CNaviMeshVtxCtrl::GetPlaneTypeByRay(Engine::PICKINGRAYINFO & _rRay
 	_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
 	_matrix matWorld = GetTransform()->GetObjectMatrix();
 
-	auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
 	// 1) XY 평면
 	for (_int i = 0; i < TRIANGLE_NUM; ++i) {
 		// 삼각형 로컬 정점 좌표를 월드 좌표로 변환한다.
@@ -116,7 +104,7 @@ PLANE::E_TYPE CNaviMeshVtxCtrl::GetPlaneTypeByRay(Engine::PICKINGRAYINFO & _rRay
 		}
 		// 충돌했는지를 체크한다.
 		if (D3DXIntersectTri(&vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2],
-			&stPickingRayInfo.vRayPos, &stPickingRayInfo.vRayDir, &fU, &fV, &fDist)) {
+			&_rRayInfo.vRayPos, &_rRayInfo.vRayDir, &fU, &fV, &fDist)) {
 
 			// 충돌했다면, 충돌 평면 타입과 광선 충돌 지점을 저장한다.
 			vMinHitPos = Engine::GetHitPos(vWorldTriVtx[0], vWorldTriVtx[1], vWorldTriVtx[2], fU, fV);
@@ -132,13 +120,13 @@ PLANE::E_TYPE CNaviMeshVtxCtrl::GetPlaneTypeByRay(Engine::PICKINGRAYINFO & _rRay
 		}
 		// 충돌했는지를 체크한다.
 		if (D3DXIntersectTri(&vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2],
-			&stPickingRayInfo.vRayPos, &stPickingRayInfo.vRayDir, &fU, &fV, &fDist)) {
+			&_rRayInfo.vRayPos, &_rRayInfo.vRayDir, &fU, &fV, &fDist)) {
 
 			// 충돌했다면, 충돌 평면 타입과 광선 충돌 지점을 저장한다.
 			vTempHitPos = Engine::GetHitPos(vWorldTriVtx[0], vWorldTriVtx[1], vWorldTriVtx[2], fU, fV);
 
 			// 기존 히트 포스와 거리를 비교하여 가까우면 해당 평면 타입으로 갱신한다.
-			if (D3DXVec3LengthSq(&(vMinHitPos - stPickingRayInfo.vRayPos)) > D3DXVec3LengthSq(&(vTempHitPos - stPickingRayInfo.vRayPos))) {
+			if (D3DXVec3LengthSq(&(vMinHitPos - _rRayInfo.vRayPos)) > D3DXVec3LengthSq(&(vTempHitPos - _rRayInfo.vRayPos))) {
 				vMinHitPos = vTempHitPos;
 				ePlaneType = PLANE::TYPE_XZ;
 				break;
@@ -153,13 +141,13 @@ PLANE::E_TYPE CNaviMeshVtxCtrl::GetPlaneTypeByRay(Engine::PICKINGRAYINFO & _rRay
 		}
 		// 충돌했는지를 체크한다.
 		if (D3DXIntersectTri(&vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2],
-			&stPickingRayInfo.vRayPos, &stPickingRayInfo.vRayDir, &fU, &fV, &fDist)) {
+			&_rRayInfo.vRayPos, &_rRayInfo.vRayDir, &fU, &fV, &fDist)) {
 
 			// 충돌했다면, 충돌 평면 타입과 광선 충돌 지점을 저장한다.
 			vTempHitPos = Engine::GetHitPos(vWorldTriVtx[0], vWorldTriVtx[1], vWorldTriVtx[2], fU, fV);
 
 			// 기존 히트 포스와 거리를 비교하여 가까우면 해당 평면 타입으로 갱신한다.
-			if (D3DXVec3LengthSq(&(vMinHitPos - stPickingRayInfo.vRayPos)) > D3DXVec3LengthSq(&(vTempHitPos - stPickingRayInfo.vRayPos))) {
+			if (D3DXVec3LengthSq(&(vMinHitPos - _rRayInfo.vRayPos)) > D3DXVec3LengthSq(&(vTempHitPos - _rRayInfo.vRayPos))) {
 				ePlaneType = PLANE::TYPE_YZ;
 				break;
 			}
@@ -167,4 +155,98 @@ PLANE::E_TYPE CNaviMeshVtxCtrl::GetPlaneTypeByRay(Engine::PICKINGRAYINFO & _rRay
 	}
 
 	return ePlaneType;
+}
+
+void CNaviMeshVtxCtrl::DragVertex()
+{
+	switch (m_ePlaneType) {
+	case PLANE::TYPE_XY:
+		// TODO : XY 평면에 대한 이동 갱신
+	{
+		// XY 평면을 구한다.
+		D3DXPLANE planeXY;
+		_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
+		_matrix matWorld = GetTransform()->GetObjectMatrix();
+		_vec3 vHitPos;
+		// 로컬 삼각형 정점들을 월드 좌표로 변환한다.
+		for (_int i = 0; i < TRI_VERTEX_NUM; ++i) {
+			D3DXVec3TransformCoord(&vWorldTriVtx[i], &XYTriLocal[0][i], &matWorld);
+		}
+
+		// 월드 XY 평면을 구한다
+		D3DXPlaneFromPoints(&planeXY, &vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2]);
+		// 광선을 구한다.
+		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
+
+		// 광선과 평면이 충돌했는지 확인한다.
+		float fT;
+		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeXY, &fT)) {
+			vHitPos = stPickingRayInfo.vRayPos + fT * stPickingRayInfo.vRayDir;
+			// 충돌 지점으로 삼각형 정점과 컨트롤러를 이동시킨다.
+			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
+			GetTransform()->SetPos(vHitPos);
+		}
+		else m_bIsPicking = false;
+	}
+	break;
+	case PLANE::TYPE_XZ:
+		// TODO : XZ 평면에 대한 이동 갱신
+	{
+		D3DXPLANE planeXZ;
+		_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
+		_matrix matWorld = GetTransform()->GetObjectMatrix();
+		_vec3 vHitPos;
+		// 로컬 삼각형 정점들을 월드 좌표로 변환한다.
+		for (_int i = 0; i < TRI_VERTEX_NUM; ++i) {
+			D3DXVec3TransformCoord(&vWorldTriVtx[i], &XZTriLocal[0][i], &matWorld);
+		}
+
+		// 월드 XY 평면을 구한다
+		D3DXPlaneFromPoints(&planeXZ, &vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2]);
+		// 광선을 구한다.
+		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
+
+		// 광선과 평면이 충돌했는지 확인한다.
+		float fT;
+		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeXZ, &fT)) {
+			vHitPos = stPickingRayInfo.vRayPos + fT * stPickingRayInfo.vRayDir;
+			// 충돌 지점으로 삼각형 정점과 컨트롤러를 이동시킨다.
+			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
+			GetTransform()->SetPos(vHitPos);
+		}
+		else m_bIsPicking = false;
+	}
+	break;
+	case PLANE::TYPE_YZ:
+		// TODO : YZ 평면에 대한 이동 갱신
+	{
+		D3DXPLANE planeYZ;
+		_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
+		_matrix matWorld = GetTransform()->GetObjectMatrix();
+		_vec3 vHitPos;
+		// 로컬 삼각형 정점들을 월드 좌표로 변환한다.
+		for (_int i = 0; i < TRI_VERTEX_NUM; ++i) {
+			D3DXVec3TransformCoord(&vWorldTriVtx[i], &YZTriLocal[0][i], &matWorld);
+		}
+
+		// 월드 XY 평면을 구한다
+		D3DXPlaneFromPoints(&planeYZ, &vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2]);
+		// 광선을 구한다.
+		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
+
+		// 광선과 평면이 충돌했는지 확인한다.
+		float fT;
+		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeYZ, &fT)) {
+			vHitPos = stPickingRayInfo.vRayPos + fT * stPickingRayInfo.vRayDir;
+			// 충돌 지점으로 삼각형 정점과 컨트롤러를 이동시킨다.
+			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
+			GetTransform()->SetPos(vHitPos);
+		}
+		else m_bIsPicking = false;
+	}
+	break;
+	default:
+		m_bIsPicking = false;
+		break;
+	}
 }

@@ -31,6 +31,7 @@ namespace Engine
 	typedef		D3DXMATRIX				_matrix;
 
 	typedef		D3DXQUATERNION			_qt;
+	typedef		D3DXPLANE				_plane;
 }
 
 #endif // Engine_Typedef_h__

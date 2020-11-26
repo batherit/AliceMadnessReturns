@@ -121,7 +121,7 @@ void CNaviMesh::SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexInd
 
 _vec3 CNaviMesh::GetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex) const
 {
-	return _vec3();
+	return m_pManualCol->GetTriangleVertexPosition(_iTriangleIndex, _iVertexIndex);
 }
 
 vector<_vec3>& CNaviMesh::GetNaviVertices()

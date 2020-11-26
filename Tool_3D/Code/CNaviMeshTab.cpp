@@ -5,6 +5,7 @@
 #include "Tool_3D.h"
 #include "CNaviMeshTab.h"
 #include "NaviMesh.h"
+#include "NaviMeshVtxCtrl.h"
 #include "EditScene.h"
 #include "afxdialogex.h"
 
@@ -92,6 +93,7 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 	m_hSelectedTreeItem = pNMTreeView->itemNew.hItem;	// 선택된 아이템
 
 	auto hParent = m_treeNavi.GetParentItem(m_hSelectedTreeItem);
+	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
 
 	if (hParent) {
 		// 삼각형의 정점 중 하나를 선택한 경우
@@ -108,6 +110,10 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		// Position Edit Ctrl 갱신
 		UpdateData(TRUE);
 		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+		
+		// 정점 컨트롤러에 컨트롤할 삼각형 정점 정보를 등록한다.
+		pNaviMeshVtxCtrl->SetVertexInfo(pNaviMesh, iTriangleIndex, iVertexIndex);
+		pNaviMeshVtxCtrl->SetActive(true);
 		auto& rVertices = pNaviMesh->GetNaviVertices();
 		m_vVertexPos = rVertices[iTriangleIndex * 3 + iVertexIndex];
 		UpdateData(FALSE);
@@ -116,6 +122,7 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		// 삼각형 자체를 선택한 경우
 		m_btnDelete.EnableWindow(TRUE);
 		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+		pNaviMeshVtxCtrl->SetActive(false);
 
 		CString strIndex = m_treeNavi.GetItemText(m_hSelectedTreeItem);
 		_int iIndex = _ttoi(strIndex);

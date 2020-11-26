@@ -3,6 +3,7 @@
 #include "EditScene.h"
 #include "Terrain.h"
 #include "NaviMesh.h"
+#include "NaviMeshVtxCtrl.h"
 #include "CNaviMeshTab.h"
 #include "MainFrm.h"
 #include "CTabForm.h"
@@ -33,8 +34,10 @@ _int CInputMode_Navi::ProcessInput(const _float & _fDeltaTime)
 		return -1;
 
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
+		if (m_pEditScene->GetNaviMeshVtxCtrl()->IsActive())
+			return 0;
+
 		// 픽킹을 하기 위한 기본 변수들 세팅.
-		
 		CTerrain* pTerrain = m_pEditScene->GetTerrain();
 		auto& pVertices = pTerrain->GetComponent<Engine::CTerrainTex>()->GetVertices();
 		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));

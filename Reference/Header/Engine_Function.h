@@ -179,16 +179,55 @@ namespace Engine
 		return _p1 * (1.f - _fT) * (1.f - _fT) + _p2 * 2.f * _fT * (1.f - _fT) + _p3 * _fT * _fT;
 	}
 
+	// 평면과 점 사이의 거리
+	inline _float GetDistanceBetweenPlaneAndPoint(const _plane& _plPlane, const _vec3& _vPos) {
+		_vec3 vPlaneNormal = _vec3(_plPlane.a, _plPlane.b, _plPlane.c);
+		return D3DXVec3Dot(&vPlaneNormal, &_vPos) + _plPlane.d;
+	}
+
+	// 평면에 투영된 점 위치얻기
+	inline _vec3 GetPointProjectedOntoPlane(const _plane& _plPlane, const _vec3& _vPos) {
+		_vec3 vPlaneNormal = _vec3(_plPlane.a, _plPlane.b, _plPlane.c);
+		_float fK = D3DXVec3Dot(&vPlaneNormal, &_vPos) + _plPlane.d;
+		return _vPos - fK * vPlaneNormal;
+	}
+
+	// 평면과 벡터가 직교 관계에 있는지? => 직교라면 충돌할 가능성이 없다. 
+	inline _bool IsPlaneAndVectorOrthogonal(const _vec3& _vV, const _plane& _plPlane) {
+		_vec3 vPlaneNormal = _vec3(_plPlane.a, _plPlane.b, _plPlane.c);
+		return D3DXVec3Dot(&_vV, &vPlaneNormal) < 0.00001f;
+	}
+
+	// 광선과 평면이 충돌했는지?
+	inline _bool IsRayAndPlaneCollided(const PICKINGRAYINFO& _stPickingInfo, const _plane& _plPlane, _float* pT = nullptr) {
+		_vec3 vPlaneNormal = _vec3(_plPlane.a, _plPlane.b, _plPlane.c);
+		_float fT = (-_plPlane.d - (D3DXVec3Dot(&vPlaneNormal, &_stPickingInfo.vRayPos)))
+			/ D3DXVec3Dot(&vPlaneNormal, &_stPickingInfo.vRayDir);
+
+		if (pT)
+			*pT = fT;
+
+		return  fT >= 0.f;
+	}
+
+	// 광선 평면 교차하는 지점 좌표 얻기
+	inline _vec3 GetPointBetweenRayAndPlane(const PICKINGRAYINFO& _stPickingInfo, const _plane& _plPlane) {
+		_vec3 vPlaneNormal = _vec3(_plPlane.a, _plPlane.b, _plPlane.c);
+		_float fT = (-_plPlane.d - (D3DXVec3Dot(&vPlaneNormal, &_stPickingInfo.vRayPos)))
+			/ D3DXVec3Dot(&vPlaneNormal, &_stPickingInfo.vRayDir);
+		return _stPickingInfo.vRayPos + fT * _stPickingInfo.vRayDir;
+	}
+
 	// 랜덤 유틸
 	inline _float GetRandomFloat(void) {
 		return static_cast <_float> (rand()) / static_cast <_float> (RAND_MAX);
 	}
-	inline _int GetNumberMinBetweenMax(_int _iMin, _int _iMax) {
+	inline _int GetNumberBetweenMinMax(_int _iMin, _int _iMax) {
 		if (_iMin > _iMax) abort();
 
 		return rand() % (_iMax - _iMin + 1) + _iMin;
 	}
-	inline _float GetNumberMinBetweenMax(_float _fMin, _float _fMax) {
+	inline _float GetNumberBetweenMinMax(_float _fMin, _float _fMax) {
 		if (_fMin > _fMax) abort();
 
 		float fT = GetRandomFloat();

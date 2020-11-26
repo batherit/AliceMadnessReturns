@@ -10,6 +10,7 @@
 BEGIN(Client)
 class CTerrain;
 class CNaviMesh;
+class CNaviMeshVtxCtrl;
 class CEditScene : public Engine::CScene
 {
 private: // 持失切, 社瑚切
@@ -33,6 +34,8 @@ private:
 public:
 	CTerrain* GetTerrain() const;
 	CNaviMesh* GetNaviMesh() const;
+	CNaviMeshVtxCtrl* GetNaviMeshVtxCtrl() const;
+
 	Engine::CGameObject* GetPickedObject() const;
 	Engine::CInputModeMgr* GetInputModeMgr() const { return m_pInputModeMgr; }
 

@@ -3,6 +3,7 @@
 #include "DynamicCamera.h"
 #include "Terrain.h"
 #include "NaviMesh.h"
+#include "NaviMeshVtxCtrl.h"
 #include "InputMode_Terrain.h"
 //#include "InputMode_Navi.h"
 
@@ -49,6 +50,12 @@ HRESULT CEditScene::Ready(void)
 	pGameObject = CNaviMesh::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMesh", pGameObject), E_FAIL);
+
+	// 네비메쉬버텍스컨트롤러 생성
+	pGameObject = CNaviMeshVtxCtrl::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxCtrl", pGameObject), E_FAIL);
+	dynamic_cast<CNaviMeshVtxCtrl*>(pGameObject)->SetActive(false);
 
 	// 편집 레이어 등록
 	m_mapLayer.emplace(L"EditLayer", pLayer);
@@ -129,6 +136,21 @@ CNaviMesh * CEditScene::GetNaviMesh() const
 		return nullptr;
 
 	return static_cast<CNaviMesh*>(*rLayerList.begin());
+}
+
+CNaviMeshVtxCtrl * CEditScene::GetNaviMeshVtxCtrl() const
+{
+	auto pLayer = GetLayer(L"EditLayer");
+
+	if (!pLayer)
+		return nullptr;
+
+	auto& rLayerList = pLayer->GetLayerList(L"NaviMeshVtxCtrl");
+
+	if (rLayerList.empty())
+		return nullptr;
+
+	return static_cast<CNaviMeshVtxCtrl*>(*rLayerList.begin());
 }
 
 Engine::CGameObject * CEditScene::GetPickedObject() const

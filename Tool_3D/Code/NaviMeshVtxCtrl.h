@@ -31,6 +31,9 @@ public:
 	void SetActive(_bool _bIsActivated) { m_bIsActivated = _bIsActivated; }
 	void SetVertexInfo(CNaviMesh* _pNaviMesh, _int _iTriangleIndex, _int _iVertexIndex);
 	PLANE::E_TYPE GetPlaneTypeByRay(Engine::PICKINGRAYINFO& _rRayInfo);
+	void DragVertex();
+
+	_bool IsActive() const { return m_bIsActivated; }
 
 private:
 	const _vec3 XYTriLocal[TRIANGLE_NUM][TRI_VERTEX_NUM] = {

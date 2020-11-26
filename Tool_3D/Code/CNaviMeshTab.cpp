@@ -35,6 +35,8 @@ void CNaviMeshTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT1, m_editPosX);
 	DDX_Control(pDX, IDC_EDIT10, m_editPosY);
 	DDX_Control(pDX, IDC_EDIT3, m_editPosZ);
+	DDX_Control(pDX, IDC_BUTTON2, m_btnCombine);
+	DDX_Control(pDX, IDC_BUTTON4, m_btnCancel);
 }
 
 
@@ -44,6 +46,8 @@ BEGIN_MESSAGE_MAP(CNaviMeshTab, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT1, &CNaviMeshTab::OnEnChangeEditPosX)
 	ON_EN_CHANGE(IDC_EDIT10, &CNaviMeshTab::OnEnChangeEditPosY)
 	ON_EN_CHANGE(IDC_EDIT3, &CNaviMeshTab::OnEnChangeEditPosZ)
+	ON_BN_CLICKED(IDC_BUTTON2, &CNaviMeshTab::OnBnClickedButtonCombine)
+	ON_BN_CLICKED(IDC_BUTTON4, &CNaviMeshTab::OnBnClickedButtonCancel)
 END_MESSAGE_MAP()
 
 
@@ -107,16 +111,40 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		m_editPosY.EnableWindow(TRUE);
 		m_editPosZ.EnableWindow(TRUE);
 
-		// Position Edit Ctrl 갱신
-		UpdateData(TRUE);
+		
+		
 		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
 		
 		// 정점 컨트롤러에 컨트롤할 삼각형 정점 정보를 등록한다.
 		pNaviMeshVtxCtrl->SetVertexInfo(pNaviMesh, iTriangleIndex, iVertexIndex);
 		pNaviMeshVtxCtrl->SetActive(true);
 		auto& rVertices = pNaviMesh->GetNaviVertices();
+		
+		// Position Edit Ctrl 갱신
+		UpdateData(TRUE);
 		m_vVertexPos = rVertices[iTriangleIndex * 3 + iVertexIndex];
 		UpdateData(FALSE);
+
+		if (m_btnCombine.IsWindowVisible()) {
+			// 초기 상태에서 정점을 선택하여 컴바인 버튼이 활성화된 상태로 전환
+			m_pairLastPickedVertex.first = iTriangleIndex;
+			m_pairLastPickedVertex.second = iVertexIndex;
+			m_btnCombine.EnableWindow(TRUE);
+		}
+		else if (m_btnCancel.IsWindowVisible()) {
+			if (m_pairLastPickedVertex.first != iTriangleIndex) {
+				// 컴바인을 수행한다.
+				// 다른 정점의 삼각형이면 컴바인을 수행한다.
+				_vec3 vSrcPos = pNaviMesh->GetTriangleVertexPosition(m_pairLastPickedVertex.first, m_pairLastPickedVertex.second);
+				pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, vSrcPos);
+			}
+			
+			// 초기 상태로 돌아간다.
+			m_btnCombine.EnableWindow(FALSE);
+			m_btnCombine.ShowWindow(TRUE);
+			m_btnCancel.EnableWindow(FALSE);
+			m_btnCancel.ShowWindow(FALSE);
+		}
 	}
 	else {
 		// 삼각형 자체를 선택한 경우
@@ -132,6 +160,12 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		m_editPosX.EnableWindow(FALSE);
 		m_editPosY.EnableWindow(FALSE);
 		m_editPosZ.EnableWindow(FALSE);
+
+		// 초기 상태로 돌아간다.
+		m_btnCombine.EnableWindow(FALSE);
+		m_btnCombine.ShowWindow(TRUE);
+		m_btnCancel.EnableWindow(FALSE);
+		m_btnCancel.ShowWindow(FALSE);
 	}
 
 	*pResult = 0;
@@ -226,4 +260,26 @@ void CNaviMeshTab::OnEnChangeEditPosZ()
 	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
 
 	UpdateData(FALSE);
+}
+
+
+void CNaviMeshTab::OnBnClickedButtonCombine()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// 컴바인 버튼이 눌리면, 컴바인 캔슬 버튼이 보이게 된다.
+	m_btnCombine.EnableWindow(FALSE);
+	m_btnCombine.ShowWindow(FALSE);
+	m_btnCancel.EnableWindow(TRUE);
+	m_btnCancel.ShowWindow(TRUE);
+}
+
+
+void CNaviMeshTab::OnBnClickedButtonCancel()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// 캔슬 버튼이 눌리면 비활성화된 상태의 컴바인 버튼이 보인다.
+	m_btnCombine.EnableWindow(FALSE);
+	m_btnCombine.ShowWindow(TRUE);
+	m_btnCancel.EnableWindow(FALSE);
+	m_btnCancel.ShowWindow(FALSE);
 }

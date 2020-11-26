@@ -25,20 +25,31 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
+	afx_msg void OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButtonDelete();
+	afx_msg void OnEnChangeEditPosX();
+	afx_msg void OnEnChangeEditPosY();
+	afx_msg void OnEnChangeEditPosZ();
+	afx_msg void OnBnClickedButtonCombine();
+	afx_msg void OnBnClickedButtonCancel();
+
+public:
 	void UpdateNaviTree(Client::CNaviMesh* _pNaviMesh);
 
 public:
 	virtual BOOL OnInitDialog();
 	CTreeCtrl m_treeNavi;
 	HTREEITEM m_hSelectedTreeItem = nullptr;
-	afx_msg void OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult);
+	
 	CButton m_btnDelete;
-	afx_msg void OnBnClickedButtonDelete();
+	CButton m_btnCombine;
+	CButton m_btnCancel;
+
 	_vec3 m_vVertexPos;
 	CEdit m_editPosX;
 	CEdit m_editPosY;
 	CEdit m_editPosZ;
-	afx_msg void OnEnChangeEditPosX();
-	afx_msg void OnEnChangeEditPosY();
-	afx_msg void OnEnChangeEditPosZ();
+	
+	// 컴바인 기능 관련
+	pair<_int, _int> m_pairLastPickedVertex = make_pair(-1, -1);
 };

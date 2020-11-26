@@ -10,8 +10,9 @@ BEGIN(Client)
 class CNaviMesh;
 class CNaviMeshVtxCtrl : public Engine::CGameObject
 {
-#define TRIANGLE_NUM 2
-#define TRI_VERTEX_NUM 3
+#define TRIANGLE_NUM	2
+#define TRI_VERTEX_NUM	3
+#define AXIS_NUM		3
 
 private: // 생성자, 소멸자
 	explicit  CNaviMeshVtxCtrl(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -36,6 +37,17 @@ public:
 	_bool IsActive() const { return m_bIsActivated; }
 
 private:
+	const _vec3 m_vAxisVertices[AXIS_NUM][2] =
+	{
+		{ _vec3(0.f, 0.f, 0.f), _vec3(1.f, 0.f, 0.f) },		// X축
+		{ _vec3(0.f, 0.f, 0.f), _vec3(0.f, 1.f, 0.f) },		// Y축
+		{ _vec3(0.f, 0.f, 0.f), _vec3(0.f, 0.f, -1.f) }		// -Z축
+	};
+	const D3DXCOLOR m_clAxisColor[AXIS_NUM] = {
+		D3DXCOLOR(1.f, 0.f, 0.f, 1.f),
+		D3DXCOLOR(0.f, 1.f, 0.f, 1.f),
+		D3DXCOLOR(0.f, 0.f, 1.f, 1.f)
+	};
 	const _vec3 XYTriLocal[TRIANGLE_NUM][TRI_VERTEX_NUM] = {
 		{ _vec3(0.f, 1.f, 0.f), _vec3(1.f, 1.f, 0.f), _vec3(1.f, 0.f, 0.f) },
 		{ _vec3(1.f, 0.f, 0.f), _vec3(0.f, 0.f, 0.f), _vec3(0.f, 1.f, 0.f) }
@@ -43,6 +55,8 @@ private:
 	const _vec3 XZTriLocal[TRIANGLE_NUM][TRI_VERTEX_NUM] = {
 		{ _vec3(0.f, 0.f, 0.f), _vec3(1.f, 0.f, 0.f), _vec3(1.f, 0.f, -1.f) },
 		{ _vec3(1.f, 0.f, -1.f), _vec3(0.f, 0.f, -1.f), _vec3(0.f, 0.f, 0.f) }
+		//{ _vec3(0.f, 0.f, 1.f), _vec3(1.f, 0.f, 1.f), _vec3(1.f, 0.f, 0.f) },
+		//{ _vec3(1.f, 0.f, 0.f), _vec3(0.f, 0.f, 0.f), _vec3(0.f, 0.f, -1.f) }
 	};
 	const _vec3 YZTriLocal[TRIANGLE_NUM][TRI_VERTEX_NUM] = {
 		{ _vec3(0.f, 1.f, -1.f), _vec3(0.f, 1.f, 0.f), _vec3(0.f, 0.f, 0.f) },

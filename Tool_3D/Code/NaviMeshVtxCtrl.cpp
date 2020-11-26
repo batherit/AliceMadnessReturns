@@ -20,7 +20,7 @@ HRESULT CNaviMeshVtxCtrl::Ready_Object(void)
 {
 	m_pRenderer = AddComponent<Engine::CRenderer>();
 	
-	GetTransform()->SetScale(_vec3(50.f, 50.f, 50.f));
+	GetTransform()->SetScale(_vec3(10.f, 10.f, 10.f));
 	return S_OK;
 }
 
@@ -45,6 +45,7 @@ int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
 		}
 		else {
 			// 드래그가 끝났다면, 픽킹 상태가 아닌 것이다.
+			m_ePlaneType = PLANE::TYPE_END;
 			m_bIsPicking = false;
 		}
 	}
@@ -55,8 +56,30 @@ int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
 
 void CNaviMeshVtxCtrl::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
+	_matrix matWorld, matView, matProj;
+	matWorld = m_pTransform->GetObjectMatrix();
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 	m_pGraphicDev->SetTexture(0, NULL);
+
+	// 축 그리기
+	ID3DXLine *pLine;
+	D3DXCreateLine(m_pGraphicDev, &pLine);
+	pLine->SetWidth(2.f);
+	pLine->SetAntialias(true);
+	pLine->Begin();
+
+	for (_int i = 0; i < AXIS_NUM; ++i) {
+		if (m_ePlaneType == PLANE::TYPE_XY && i == 2) continue;
+		else if (m_ePlaneType == PLANE::TYPE_XZ && i == 1) continue;
+		else if (m_ePlaneType == PLANE::TYPE_YZ && i == 0) continue;
+
+		pLine->DrawTransform(m_vAxisVertices[i], 2, &(matWorld * matView * matProj), m_clAxisColor[i]);
+	}
+	pLine->End();
+	pLine->Release();
+	
 }
 
 CNaviMeshVtxCtrl * CNaviMeshVtxCtrl::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -186,7 +209,10 @@ void CNaviMeshVtxCtrl::DragVertex()
 			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
 			GetTransform()->SetPos(vHitPos);
 		}
-		else m_bIsPicking = false;
+		else {
+			m_ePlaneType = PLANE::TYPE_END;
+			m_bIsPicking = false;
+		}
 	}
 	break;
 	case PLANE::TYPE_XZ:
@@ -214,7 +240,10 @@ void CNaviMeshVtxCtrl::DragVertex()
 			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
 			GetTransform()->SetPos(vHitPos);
 		}
-		else m_bIsPicking = false;
+		else {
+			m_ePlaneType = PLANE::TYPE_END;
+			m_bIsPicking = false;
+		}
 	}
 	break;
 	case PLANE::TYPE_YZ:
@@ -242,10 +271,14 @@ void CNaviMeshVtxCtrl::DragVertex()
 			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
 			GetTransform()->SetPos(vHitPos);
 		}
-		else m_bIsPicking = false;
+		else {
+			m_ePlaneType = PLANE::TYPE_END;
+			m_bIsPicking = false;
+		}
 	}
 	break;
 	default:
+		m_ePlaneType = PLANE::TYPE_END;
 		m_bIsPicking = false;
 		break;
 	}

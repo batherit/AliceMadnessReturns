@@ -32,18 +32,22 @@ public:
 	afx_msg void OnEnChangeEditPosZ();
 	afx_msg void OnBnClickedButtonCombine();
 	afx_msg void OnBnClickedButtonCancel();
+	afx_msg void OnBnClickedCheckGroup();
 
 public:
 	void UpdateNaviTree(Client::CNaviMesh* _pNaviMesh);
+	void UpdateVertexPos(const _vec3& _vPos);
 
 public:
 	virtual BOOL OnInitDialog();
+	// 트리 UI
 	CTreeCtrl m_treeNavi;
 	HTREEITEM m_hSelectedTreeItem = nullptr;
 	
 	CButton m_btnDelete;
 	CButton m_btnCombine;
 	CButton m_btnCancel;
+	CButton m_chkGroup;
 
 	_vec3 m_vVertexPos;
 	CEdit m_editPosX;
@@ -52,4 +56,7 @@ public:
 	
 	// 컴바인 기능 관련
 	pair<_int, _int> m_pairLastPickedVertex = make_pair(-1, -1);
+	
+	BOOL m_bIsGrouping;
+	
 };

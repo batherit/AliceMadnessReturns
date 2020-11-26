@@ -29,14 +29,23 @@ public:
 	virtual void		Free(void);
 
 public:
+	_vec3 GetVertexPos() const;
 	void SetActive(_bool _bIsActivated) { m_bIsActivated = _bIsActivated; }
+	void SetGrouping(_bool _bIsGrouping);
+	//void SetGroupingRadius(_float _fGroupRadius)
 	void SetVertexInfo(CNaviMesh* _pNaviMesh, _int _iTriangleIndex, _int _iVertexIndex);
-	PLANE::E_TYPE GetPlaneTypeByRay(Engine::PICKINGRAYINFO& _rRayInfo);
-	void DragVertex();
-
+	
 	_bool IsActive() const { return m_bIsActivated; }
+	_bool IsGrouping() const { return m_bIsGrouping; }
 
 private:
+	PLANE::E_TYPE GetPlaneTypeByRay(Engine::PICKINGRAYINFO& _rRayInfo);
+	void DragVertex();
+	void FormGroup();
+	void MoveGroup();
+
+private:
+	vector<pair<_int, _int>> m_vecGroupList;
 	const _vec3 m_vAxisVertices[AXIS_NUM][2] =
 	{
 		{ _vec3(0.f, 0.f, 0.f), _vec3(1.f, 0.f, 0.f) },		// X√‡
@@ -64,6 +73,7 @@ private:
 	};
 	PLANE::E_TYPE m_ePlaneType = PLANE::TYPE_END;
 	_bool m_bIsActivated = false;
+	_bool m_bIsGrouping = false;
 	_bool m_bIsPicking = false;
 	CNaviMesh* m_pNaviMesh = nullptr;
 	_int m_iTriangleIndex = -1;

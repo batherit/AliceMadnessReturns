@@ -65,11 +65,11 @@
     <Filter Include="04. Object\NaviMesh">
       <UniqueIdentifier>{ec2e0422-ce6f-48d2-b2d9-d29be1a96315}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Object\PointObject">
-      <UniqueIdentifier>{db149def-e233-47f3-ba3a-735281f31cfb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. Object\NaviMeshVtxCtrl">
       <UniqueIdentifier>{10b4d8df-5edd-4efb-bb8e-7c49d8921f43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Object\PointObject">
+      <UniqueIdentifier>{db149def-e233-47f3-ba3a-735281f31cfb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "NaviMeshVtxCtrl.h"
 #include "NaviMesh.h"
+#include "CNaviMeshTab.h"
+#include "MainFrm.h"
+#include "CTabForm.h"
 
 CNaviMeshVtxCtrl::CNaviMeshVtxCtrl(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -21,6 +24,8 @@ HRESULT CNaviMeshVtxCtrl::Ready_Object(void)
 	m_pRenderer = AddComponent<Engine::CRenderer>();
 	
 	GetTransform()->SetScale(_vec3(10.f, 10.f, 10.f));
+
+	m_vecGroupList.reserve(100);
 	return S_OK;
 }
 
@@ -95,6 +100,21 @@ CNaviMeshVtxCtrl * CNaviMeshVtxCtrl::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CNaviMeshVtxCtrl::Free(void)
 {
 	CGameObject::Free();
+}
+
+_vec3 CNaviMeshVtxCtrl::GetVertexPos() const
+{
+	return m_pNaviMesh->GetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex);
+}
+
+void CNaviMeshVtxCtrl::SetGrouping(_bool _bIsGrouping)
+{
+	m_bIsGrouping = _bIsGrouping;
+
+	if (!_bIsGrouping || !m_pNaviMesh)
+		return;
+
+	FormGroup();
 }
 
 void CNaviMeshVtxCtrl::SetVertexInfo(CNaviMesh * _pNaviMesh, _int _iTriangleIndex, _int _iVertexIndex)
@@ -208,6 +228,14 @@ void CNaviMeshVtxCtrl::DragVertex()
 			// 충돌 지점으로 삼각형 정점과 컨트롤러를 이동시킨다.
 			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
 			GetTransform()->SetPos(vHitPos);
+			CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+			CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+			pTabForm->GetNaviMeshTab()->UpdateVertexPos(vHitPos);
+
+			if (m_bIsGrouping) {
+				// 그루핑이 설정되어있다면, 그룹 이동을 진행한다.
+				MoveGroup();
+			}
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -239,6 +267,14 @@ void CNaviMeshVtxCtrl::DragVertex()
 			// 충돌 지점으로 삼각형 정점과 컨트롤러를 이동시킨다.
 			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
 			GetTransform()->SetPos(vHitPos);
+			CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+			CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+			pTabForm->GetNaviMeshTab()->UpdateVertexPos(vHitPos);
+
+			if (m_bIsGrouping) {
+				// 그루핑이 설정되어있다면, 그룹 이동을 진행한다.
+				MoveGroup();
+			}
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -270,6 +306,14 @@ void CNaviMeshVtxCtrl::DragVertex()
 			// 충돌 지점으로 삼각형 정점과 컨트롤러를 이동시킨다.
 			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
 			GetTransform()->SetPos(vHitPos);
+			CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+			CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+			pTabForm->GetNaviMeshTab()->UpdateVertexPos(vHitPos);
+
+			if (m_bIsGrouping) {
+				// 그루핑이 설정되어있다면, 그룹 이동을 진행한다.
+				MoveGroup();
+			}
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -281,5 +325,41 @@ void CNaviMeshVtxCtrl::DragVertex()
 		m_ePlaneType = PLANE::TYPE_END;
 		m_bIsPicking = false;
 		break;
+	}
+}
+
+void CNaviMeshVtxCtrl::FormGroup()
+{
+	m_vecGroupList.clear();
+
+	auto& rVertices = m_pNaviMesh->GetNaviVertices();
+
+	_int iVerticesSize = static_cast<_int>(rVertices.size());
+	_int iTriangleSize = iVerticesSize / 3;
+	_vec3 vVtxPos = m_pNaviMesh->GetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex);
+	_vec3 vExtractedVtxPos;
+
+	for (_int i = 0; i < iTriangleSize; ++i) {
+		// 같은 삼각형 내 정점은 취급하지 않는다.
+		if (i == m_iTriangleIndex) continue;
+
+		for (_int j = 0; j < 3; ++j) {
+			vExtractedVtxPos = m_pNaviMesh->GetTriangleVertexPosition(i, j);
+			if (D3DXVec3Length(&(vVtxPos - vExtractedVtxPos)) < 5.f) {
+				// 그룹 리스트에 추가
+				m_vecGroupList.emplace_back(make_pair(i, j));
+				break;
+			}
+		}
+	}
+}
+
+void CNaviMeshVtxCtrl::MoveGroup()
+{
+	_int iGroupSize = static_cast<_int>(m_vecGroupList.size());
+	_vec3 vVtxPos = m_pNaviMesh->GetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex);
+
+	for (_int i = 0; i < iGroupSize; ++i) {
+		m_pNaviMesh->SetTriangleVertexPosition(m_vecGroupList[i].first, m_vecGroupList[i].second, vVtxPos);
 	}
 }

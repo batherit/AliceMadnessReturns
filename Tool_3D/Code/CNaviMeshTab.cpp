@@ -16,6 +16,7 @@ IMPLEMENT_DYNAMIC(CNaviMeshTab, CDialogEx)
 
 CNaviMeshTab::CNaviMeshTab(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_NAVI_MESH_TAB, pParent)
+	, m_bIsGrouping(FALSE)
 {
 
 }
@@ -37,6 +38,8 @@ void CNaviMeshTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT3, m_editPosZ);
 	DDX_Control(pDX, IDC_BUTTON2, m_btnCombine);
 	DDX_Control(pDX, IDC_BUTTON4, m_btnCancel);
+	DDX_Check(pDX, IDC_CHECK2, m_bIsGrouping);
+	DDX_Control(pDX, IDC_CHECK2, m_chkGroup);
 }
 
 
@@ -48,6 +51,7 @@ BEGIN_MESSAGE_MAP(CNaviMeshTab, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT3, &CNaviMeshTab::OnEnChangeEditPosZ)
 	ON_BN_CLICKED(IDC_BUTTON2, &CNaviMeshTab::OnBnClickedButtonCombine)
 	ON_BN_CLICKED(IDC_BUTTON4, &CNaviMeshTab::OnBnClickedButtonCancel)
+	ON_BN_CLICKED(IDC_CHECK2, &CNaviMeshTab::OnBnClickedCheckGroup)
 END_MESSAGE_MAP()
 
 
@@ -77,6 +81,13 @@ void CNaviMeshTab::UpdateNaviTree(Client::CNaviMesh * _pNaviMesh)
 		m_treeNavi.InsertItem(cstVertexIndex, hTriangleIndex, NULL);
 		m_treeNavi.Expand(hTriangleIndex, TVE_EXPAND);
 	}
+}
+
+void CNaviMeshTab::UpdateVertexPos(const _vec3& _vPos)
+{
+	UpdateData(TRUE);
+	m_vVertexPos = _vPos;
+	UpdateData(FALSE);
 }
 
 BOOL CNaviMeshTab::OnInitDialog()
@@ -110,18 +121,19 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		m_editPosX.EnableWindow(TRUE);
 		m_editPosY.EnableWindow(TRUE);
 		m_editPosZ.EnableWindow(TRUE);
+		m_chkGroup.EnableWindow(TRUE);
 
-		
-		
 		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
 		
 		// 정점 컨트롤러에 컨트롤할 삼각형 정점 정보를 등록한다.
 		pNaviMeshVtxCtrl->SetVertexInfo(pNaviMesh, iTriangleIndex, iVertexIndex);
+		pNaviMeshVtxCtrl->SetGrouping(false);
 		pNaviMeshVtxCtrl->SetActive(true);
 		auto& rVertices = pNaviMesh->GetNaviVertices();
 		
-		// Position Edit Ctrl 갱신
+		// UI 동기화
 		UpdateData(TRUE);
+		m_bIsGrouping = pNaviMeshVtxCtrl->IsGrouping();
 		m_vVertexPos = rVertices[iTriangleIndex * 3 + iVertexIndex];
 		UpdateData(FALSE);
 
@@ -137,6 +149,8 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 				// 다른 정점의 삼각형이면 컴바인을 수행한다.
 				_vec3 vSrcPos = pNaviMesh->GetTriangleVertexPosition(m_pairLastPickedVertex.first, m_pairLastPickedVertex.second);
 				pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, vSrcPos);
+				// 정점 컨트롤러 위치 재갱신
+				pNaviMeshVtxCtrl->SetVertexInfo(pNaviMesh, iTriangleIndex, iVertexIndex);
 			}
 			
 			// 초기 상태로 돌아간다.
@@ -160,6 +174,7 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		m_editPosX.EnableWindow(FALSE);
 		m_editPosY.EnableWindow(FALSE);
 		m_editPosZ.EnableWindow(FALSE);
+		m_chkGroup.EnableWindow(FALSE);
 
 		// 초기 상태로 돌아간다.
 		m_btnCombine.EnableWindow(FALSE);
@@ -282,4 +297,18 @@ void CNaviMeshTab::OnBnClickedButtonCancel()
 	m_btnCombine.ShowWindow(TRUE);
 	m_btnCancel.EnableWindow(FALSE);
 	m_btnCancel.ShowWindow(FALSE);
+}
+
+
+void CNaviMeshTab::OnBnClickedCheckGroup()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	
+	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+
+	UpdateData(TRUE);
+
+	pNaviMeshVtxCtrl->SetGrouping(m_bIsGrouping);
+	
+	UpdateData(FALSE);
 }

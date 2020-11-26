@@ -187,6 +187,7 @@ void CManualCol::SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIn
 	m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
 
 	pVertex[3 * _iTriangleIndex + _iVertexIndex].vPos = _vNewPosition;
+	m_vecVertices[3 * _iTriangleIndex + _iVertexIndex] = _vNewPosition;
 
 	m_pVB->Unlock();
 }

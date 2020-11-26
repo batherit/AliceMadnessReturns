@@ -223,10 +223,12 @@ void CNaviMeshTab::OnEnChangeEditPosX()
 	_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
 	_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
 	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
 
 	UpdateData(TRUE);
 
 	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
+	pNaviMeshVtxCtrl->GetTransform()->SetPos(m_vVertexPos);
 
 	UpdateData(FALSE);
 }
@@ -246,10 +248,12 @@ void CNaviMeshTab::OnEnChangeEditPosY()
 	_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
 	_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
 	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
 
 	UpdateData(TRUE);
 
 	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
+	pNaviMeshVtxCtrl->GetTransform()->SetPos(m_vVertexPos);
 
 	UpdateData(FALSE);
 }
@@ -269,10 +273,12 @@ void CNaviMeshTab::OnEnChangeEditPosZ()
 	_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
 	_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
 	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
 
 	UpdateData(TRUE);
 
 	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
+	pNaviMeshVtxCtrl->GetTransform()->SetPos(m_vVertexPos);
 
 	UpdateData(FALSE);
 }

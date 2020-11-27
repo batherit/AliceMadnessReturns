@@ -34,7 +34,7 @@ _int CInputMode_Navi::ProcessInput(const _float & _fDeltaTime)
 		return -1;
 
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
-		if (m_pEditScene->GetNaviMeshVtxCtrl()->IsActive())
+		if (m_pEditScene->GetNaviMeshVtxCtrl()->GetPickMode() != NAVIMESH_TAB::PICKMODE_NAVI)
 			return 0;
 
 		// 픽킹을 하기 위한 기본 변수들 세팅.

@@ -29,16 +29,21 @@ public:
 	virtual void		Free(void);
 
 public:
-	_vec3 GetVertexPos() const;
+	void ProcessPickInput();
+	
+	void SetVertexInfo(CNaviMesh* _pNaviMesh, _int _iTriangleIndex, _int _iVertexIndex);
 	void SetActive(_bool _bIsActivated) { m_bIsActivated = _bIsActivated; }
 	void SetGrouping(_bool _bIsGrouping);
 	void SetGroupRange(_float _fGroupRange) { m_fGroupRange = _fGroupRange; }
-	//void SetGroupingRadius(_float _fGroupRadius)
-	void SetVertexInfo(CNaviMesh* _pNaviMesh, _int _iTriangleIndex, _int _iVertexIndex);
+	void SetPickMode(NAVIMESH_TAB::E_PICKMODE _ePickMode);
+	void SetNaviMagnet(_bool _bIsNaviMagnet) { m_bIsNaviMagnet = _bIsNaviMagnet; }
 	
+	_vec3 GetVertexPos() const;
 	_bool IsActive() const { return m_bIsActivated; }
 	_bool IsGrouping() const { return m_bIsGrouping; }
 	_float GetGroupRange() const { return m_fGroupRange; }
+	NAVIMESH_TAB::E_PICKMODE GetPickMode() const { return m_ePickMode; }
+	_bool GetNaviMagnet() const { return m_bIsNaviMagnet; }
 
 private:
 	PLANE::E_TYPE GetPlaneTypeByRay(Engine::PICKINGRAYINFO& _rRayInfo);
@@ -81,6 +86,8 @@ private:
 	_int m_iTriangleIndex = -1;
 	_int m_iVertexIndex = -1;
 	_float m_fGroupRange = 3.f;
+	NAVIMESH_TAB::E_PICKMODE m_ePickMode = NAVIMESH_TAB::PICKMODE_NAVI;
+	_bool m_bIsNaviMagnet = false;
 
 	Engine::CRenderer* m_pRenderer = nullptr;
 };

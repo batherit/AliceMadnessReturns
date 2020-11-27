@@ -33,6 +33,11 @@ public:
 	afx_msg void OnBnClickedButtonCombine();
 	afx_msg void OnBnClickedButtonCancel();
 	afx_msg void OnBnClickedCheckGroup();
+	afx_msg void OnEnChangeEditGroupRange();
+	afx_msg void OnBnClickedRadioNavi();
+	afx_msg void OnBnClickedCheckNaviMagnet();
+	afx_msg void OnBnClickedRadioVertex();
+	afx_msg void OnBnClickedRadioTriangle();
 
 public:
 	void UpdateNaviTree(Client::CNaviMesh* _pNaviMesh);
@@ -62,5 +67,11 @@ public:
 	// 그룹
 	_float m_fGroupRange;
 	CEdit m_editGroupRange;
-	afx_msg void OnEnChangeEditGroupRange();
+	
+	
+	CButton m_rbtnNavi;
+	CButton m_rbtnVertex;
+	CButton m_rbtnTriangle;
+
+	BOOL m_bIsNaviMagnet;
 };

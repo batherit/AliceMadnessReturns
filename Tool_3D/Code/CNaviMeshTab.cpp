@@ -18,6 +18,8 @@ CNaviMeshTab::CNaviMeshTab(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_NAVI_MESH_TAB, pParent)
 	, m_bIsGrouping(FALSE)
 	, m_fGroupRange(0)
+	//, m_chkNaviMagnet(FALSE)
+	, m_bIsNaviMagnet(FALSE)
 {
 
 }
@@ -43,6 +45,11 @@ void CNaviMeshTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK2, m_chkGroup);
 	DDX_Text(pDX, IDC_EDIT5, m_fGroupRange);
 	DDX_Control(pDX, IDC_EDIT5, m_editGroupRange);
+	DDX_Control(pDX, IDC_RADIO3, m_rbtnNavi);
+	DDX_Control(pDX, IDC_RADIO4, m_rbtnVertex);
+	DDX_Control(pDX, IDC_RADIO5, m_rbtnTriangle);
+	//DDX_Check(pDX, IDC_CHECK1, m_chkNaviMagnet);
+	DDX_Check(pDX, IDC_CHECK1, m_bIsNaviMagnet);
 }
 
 
@@ -56,6 +63,13 @@ BEGIN_MESSAGE_MAP(CNaviMeshTab, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON4, &CNaviMeshTab::OnBnClickedButtonCancel)
 	ON_BN_CLICKED(IDC_CHECK2, &CNaviMeshTab::OnBnClickedCheckGroup)
 	ON_EN_CHANGE(IDC_EDIT5, &CNaviMeshTab::OnEnChangeEditGroupRange)
+	//ON_NOTIFY(NM_KILLFOCUS, IDC_TREE1, &CNaviMeshTab::OnNMKillfocusTree1)
+//	ON_WM_ACTIVATE()
+//ON_WM_ENABLE()
+	ON_BN_CLICKED(IDC_RADIO3, &CNaviMeshTab::OnBnClickedRadioNavi)
+	ON_BN_CLICKED(IDC_CHECK1, &CNaviMeshTab::OnBnClickedCheckNaviMagnet)
+	ON_BN_CLICKED(IDC_RADIO4, &CNaviMeshTab::OnBnClickedRadioVertex)
+	ON_BN_CLICKED(IDC_RADIO5, &CNaviMeshTab::OnBnClickedRadioTriangle)
 END_MESSAGE_MAP()
 
 
@@ -99,6 +113,7 @@ BOOL CNaviMeshTab::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+	m_rbtnNavi.SetCheck(TRUE);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
@@ -126,6 +141,7 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		m_editPosY.EnableWindow(TRUE);
 		m_editPosZ.EnableWindow(TRUE);
 		m_chkGroup.EnableWindow(TRUE);
+		
 
 		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
 		
@@ -134,6 +150,11 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		pNaviMeshVtxCtrl->SetGrouping(false);
 		pNaviMeshVtxCtrl->SetActive(true);
 		auto& rVertices = pNaviMesh->GetNaviVertices();
+
+		pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_VERTEX);
+		m_rbtnNavi.SetCheck(FALSE);
+		m_rbtnVertex.SetCheck(TRUE);
+		m_rbtnTriangle.SetCheck(FALSE);
 		
 		// UI 동기화
 		UpdateData(TRUE);
@@ -180,6 +201,11 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		m_editPosZ.EnableWindow(FALSE);
 		m_chkGroup.EnableWindow(FALSE);
 		m_editGroupRange.EnableWindow(FALSE);
+
+		pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_TRIANGLE);
+		m_rbtnNavi.SetCheck(FALSE);
+		m_rbtnVertex.SetCheck(FALSE);
+		m_rbtnTriangle.SetCheck(TRUE);
 
 		// 초기 상태로 돌아간다.
 		m_btnCombine.EnableWindow(FALSE);
@@ -348,6 +374,58 @@ void CNaviMeshTab::OnEnChangeEditGroupRange()
 
 	pNaviMeshVtxCtrl->SetGroupRange(m_fGroupRange);
 	pNaviMeshVtxCtrl->SetGrouping(true);
+
+	UpdateData(FALSE);
+}
+
+
+void CNaviMeshTab::OnBnClickedRadioNavi()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+
+	UpdateData(TRUE);
+
+	pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_NAVI);
+
+	UpdateData(FALSE);
+}
+
+
+void CNaviMeshTab::OnBnClickedCheckNaviMagnet()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+
+	UpdateData(TRUE);
+
+	pNaviMeshVtxCtrl->SetNaviMagnet(m_bIsNaviMagnet);
+
+	UpdateData(FALSE);
+}
+
+
+void CNaviMeshTab::OnBnClickedRadioVertex()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+
+	UpdateData(TRUE);
+
+	pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_VERTEX);
+
+	UpdateData(FALSE);
+}
+
+
+void CNaviMeshTab::OnBnClickedRadioTriangle()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+
+	UpdateData(TRUE);
+
+	pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_TRIANGLE);
 
 	UpdateData(FALSE);
 }

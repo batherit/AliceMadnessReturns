@@ -42,6 +42,38 @@ int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
 			if (m_ePlaneType != PLANE::TYPE_END) {
 				m_bIsPicking = true;
 			}
+			else if(m_ePickMode == NAVIMESH_TAB::PICKMODE_VERTEX){
+				// 충돌 정점을 찾는다.
+				if (m_pNaviMesh) {
+					vector<_int> vecCollidedSphereIndex;
+					vecCollidedSphereIndex.reserve(1);
+					auto& vecNaviVertices = m_pNaviMesh->GetNaviVertices();
+					_int iVecSize = vecNaviVertices.size();
+					auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
+					
+					for (_int i = 0; i < iVecSize; ++i) {
+						if (Engine::IsRayAndSphereCollided(stPickingRayInfo, 2.f, vecNaviVertices[i])) {
+							if (vecCollidedSphereIndex.empty()) {
+								vecCollidedSphereIndex.emplace_back(i);
+							}
+							else {
+								if (D3DXVec3LengthSq(&(vecNaviVertices[vecCollidedSphereIndex[0]] - stPickingRayInfo.vRayPos))
+										> D3DXVec3LengthSq(&(vecNaviVertices[i] - stPickingRayInfo.vRayPos))) {
+									vecNaviVertices[0] = vecNaviVertices[i];
+								}
+							}
+						}
+					}
+					
+					if (!vecCollidedSphereIndex.empty()) {
+						SetVertexInfo(m_pNaviMesh, vecCollidedSphereIndex[0] / 3, vecCollidedSphereIndex[0] % 3);
+					}
+				}
+			}
+			else if (m_ePickMode == NAVIMESH_TAB::PICKMODE_TRIANGLE) {
+				// TODO : 충돌 삼각형을 찾는다.
+
+			}
 		}
 	}
 	else if (m_bIsPicking) {
@@ -115,6 +147,37 @@ void CNaviMeshVtxCtrl::SetGrouping(_bool _bIsGrouping)
 		return;
 
 	FormGroup();
+}
+
+void CNaviMeshVtxCtrl::SetPickMode(NAVIMESH_TAB::E_PICKMODE _ePickMode)
+{
+	m_ePickMode = _ePickMode;
+
+	switch (_ePickMode) {
+	case NAVIMESH_TAB::PICKMODE_NAVI:
+		SetActive(false);
+		break;
+	case NAVIMESH_TAB::PICKMODE_VERTEX:
+		SetActive(true);
+		break;
+	case NAVIMESH_TAB::PICKMODE_TRIANGLE:
+		SetActive(false);
+		break;
+	}
+}
+
+void CNaviMeshVtxCtrl::ProcessPickInput()
+{
+	switch (m_ePickMode) {
+	case NAVIMESH_TAB::PICKMODE_NAVI:
+		// InputMode가 처리하고 있습니다.
+		break;
+	case NAVIMESH_TAB::PICKMODE_VERTEX:
+
+		break;
+	case NAVIMESH_TAB::PICKMODE_TRIANGLE:
+		break;
+	}
 }
 
 void CNaviMeshVtxCtrl::SetVertexInfo(CNaviMesh * _pNaviMesh, _int _iTriangleIndex, _int _iVertexIndex)

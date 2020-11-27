@@ -59,4 +59,8 @@ public:
 	
 	BOOL m_bIsGrouping;
 	
+	// 그룹
+	_float m_fGroupRange;
+	CEdit m_editGroupRange;
+	afx_msg void OnEnChangeEditGroupRange();
 };

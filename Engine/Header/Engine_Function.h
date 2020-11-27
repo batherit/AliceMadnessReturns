@@ -210,6 +210,31 @@ namespace Engine
 		return  fT >= 0.f;
 	}
 
+	// 광선과 구가 충돌했는지?
+	inline _bool IsRayAndSphereCollided(const PICKINGRAYINFO& _stPickingInfo, _float _fRadius, const _vec3& _vSpherePos, _float* pT = nullptr) {
+		// 다렉 및 그래픽스 책 참고
+		_vec3 vM = _stPickingInfo.vRayPos - _vSpherePos;
+		_float fA = D3DXVec3Dot(&_stPickingInfo.vRayDir, &_stPickingInfo.vRayDir);		// u.u
+		_float fB = 2.f * D3DXVec3Dot(&vM, &_stPickingInfo.vRayDir);					// 2(m.u)
+		_float fC = D3DXVec3Dot(&vM, &vM) - _fRadius * _fRadius;						// m.m - r^2
+		_float fD = fB * fB - 4.f * fA * fC;	// 판별식 b^2 - 4ac
+
+		if (fD < 0.f)	// 판별식이 음수이면 충돌하지 않은 것이다.
+			return false;
+
+		_float fT1 = (-fB + sqrtf(fD)) / (2.f * fA);
+		_float fT2 = (-fB - sqrtf(fD)) / (2.f * fA);
+		_float fT = min(fT1, fT2);
+
+		if (fT < 0.f)	// fT가 음수이면, 충돌하지 않은 것이다.
+			return false;
+
+		if (pT)
+			*pT = fT;
+
+		return true;
+	}
+
 	// 광선 평면 교차하는 지점 좌표 얻기
 	inline _vec3 GetPointBetweenRayAndPlane(const PICKINGRAYINFO& _stPickingInfo, const _plane& _plPlane) {
 		_vec3 vPlaneNormal = _vec3(_plPlane.a, _plPlane.b, _plPlane.c);

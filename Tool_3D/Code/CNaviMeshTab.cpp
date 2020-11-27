@@ -17,6 +17,7 @@ IMPLEMENT_DYNAMIC(CNaviMeshTab, CDialogEx)
 CNaviMeshTab::CNaviMeshTab(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_NAVI_MESH_TAB, pParent)
 	, m_bIsGrouping(FALSE)
+	, m_fGroupRange(0)
 {
 
 }
@@ -40,6 +41,8 @@ void CNaviMeshTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON4, m_btnCancel);
 	DDX_Check(pDX, IDC_CHECK2, m_bIsGrouping);
 	DDX_Control(pDX, IDC_CHECK2, m_chkGroup);
+	DDX_Text(pDX, IDC_EDIT5, m_fGroupRange);
+	DDX_Control(pDX, IDC_EDIT5, m_editGroupRange);
 }
 
 
@@ -52,6 +55,7 @@ BEGIN_MESSAGE_MAP(CNaviMeshTab, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &CNaviMeshTab::OnBnClickedButtonCombine)
 	ON_BN_CLICKED(IDC_BUTTON4, &CNaviMeshTab::OnBnClickedButtonCancel)
 	ON_BN_CLICKED(IDC_CHECK2, &CNaviMeshTab::OnBnClickedCheckGroup)
+	ON_EN_CHANGE(IDC_EDIT5, &CNaviMeshTab::OnEnChangeEditGroupRange)
 END_MESSAGE_MAP()
 
 
@@ -175,6 +179,7 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		m_editPosY.EnableWindow(FALSE);
 		m_editPosZ.EnableWindow(FALSE);
 		m_chkGroup.EnableWindow(FALSE);
+		m_editGroupRange.EnableWindow(FALSE);
 
 		// 초기 상태로 돌아간다.
 		m_btnCombine.EnableWindow(FALSE);
@@ -315,6 +320,34 @@ void CNaviMeshTab::OnBnClickedCheckGroup()
 	UpdateData(TRUE);
 
 	pNaviMeshVtxCtrl->SetGrouping(m_bIsGrouping);
+
+	if (m_chkGroup.GetCheck()) {
+		// 활성화된 상태라면,
+		m_editGroupRange.EnableWindow(TRUE);
+		m_fGroupRange = pNaviMeshVtxCtrl->GetGroupRange();
+	}
+	else {
+		m_editGroupRange.EnableWindow(FALSE);
+	}
 	
+	UpdateData(FALSE);
+}
+
+
+void CNaviMeshTab::OnEnChangeEditGroupRange()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+
+	UpdateData(TRUE);
+
+	pNaviMeshVtxCtrl->SetGroupRange(m_fGroupRange);
+	pNaviMeshVtxCtrl->SetGrouping(true);
+
 	UpdateData(FALSE);
 }

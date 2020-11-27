@@ -345,7 +345,7 @@ void CNaviMeshVtxCtrl::FormGroup()
 
 		for (_int j = 0; j < 3; ++j) {
 			vExtractedVtxPos = m_pNaviMesh->GetTriangleVertexPosition(i, j);
-			if (D3DXVec3Length(&(vVtxPos - vExtractedVtxPos)) < 5.f) {
+			if (D3DXVec3Length(&(vVtxPos - vExtractedVtxPos)) < m_fGroupRange) {
 				// 그룹 리스트에 추가
 				m_vecGroupList.emplace_back(make_pair(i, j));
 				break;

@@ -38,7 +38,8 @@ HRESULT Client::CStone::Add_Component(void)
 	pComponent = m_pTransform = AddComponent<Engine::CTransform>();
 
 	// Renderer
-	pComponent = m_pRenderer = AddComponent<Engine::CRenderer>();
+	pComponent = m_pRenderer = AddComponent<Engine::CMeshRenderer>();
+	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
 	// Collider
 	pComponent = m_pCollider = AddComponent<Engine::CSphereCollider>();
@@ -94,7 +95,7 @@ _int CStone::Update_Object(const _float & fTimeDelta)
 	//CGameObject::Update_Object(fTimeDelta);
 	//Engine::CGameObject::Update_Object(fTimeDelta);
 	
-	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	m_pRenderer->Update(fTimeDelta);
 
 	return 0;
 }
@@ -114,9 +115,10 @@ void Client::CStone::Render_Object(void)
 	if (!m_pOptimization->Is_InFrustumForObject(&GetTransform()->GetPos(), 0.f)) {
 		return;
 	}
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 
-	m_pMesh->Render_Meshes();
+	//m_pMesh->Render_Meshes();
+	m_pRenderer->Render();
 
 	m_pSphere->GetTransform()->SetPos(GetTransform()->GetPos());
 	m_pSphere->Render_Object();

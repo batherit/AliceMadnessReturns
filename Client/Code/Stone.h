@@ -11,6 +11,7 @@ class CTransform;
 class CRenderer;
 class CSphereCollider;
 class COptimization;
+class CMeshRenderer;
 //class CCalculator;
 
 END
@@ -37,7 +38,7 @@ private:
 private:
 	Engine::CStaticMesh*		m_pMesh = nullptr;
 	Engine::CTransform*			m_pTransform = nullptr;
-	Engine::CRenderer*			m_pRenderer = nullptr;
+	Engine::CMeshRenderer*		m_pRenderer = nullptr;
 	Engine::CSphereCollider*	m_pCollider = nullptr;
 	Engine::COptimization*		m_pOptimization = nullptr;
 	CSphereRenderer*			m_pSphere = nullptr;

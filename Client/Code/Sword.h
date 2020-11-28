@@ -8,7 +8,7 @@ BEGIN(Engine)
 
 class CStaticMesh;
 class CTransform;
-class CRenderer;
+class CMeshRenderer;
 //class CCalculator;
 //class CCollider;
 
@@ -34,7 +34,7 @@ private:
 
 	Engine::CStaticMesh*		m_pMeshCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
-	Engine::CRenderer*			m_pRendererCom = nullptr;
+	Engine::CMeshRenderer*		m_pRendererCom = nullptr;
 	//Engine::CCalculator*		m_pCalculatorCom = nullptr;
 	//Engine::CCollider*		m_pColliderCom = nullptr;
 	_bool						m_bColl = false;

@@ -1,5 +1,5 @@
 #include "MeshRenderer.h"
-#include "Mesh.h"
+#include "Mesh.h"			// Reference
 #include "Transform.h"
 
 USING(Engine)
@@ -38,7 +38,7 @@ void CMeshRenderer::Render()
 
 void CMeshRenderer::SetRenderInfo(RENDERID _eRenderID, Engine::CMesh * _pMesh)
 {
-	if (!_pMesh)
+	if (_eRenderID >= RENDERID::RENDER_END || !_pMesh)
 		return;
 
 	SetRenderID(_eRenderID);

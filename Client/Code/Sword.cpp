@@ -34,7 +34,8 @@ HRESULT Client::CSword::Add_Component(void)
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
 	//Safe_AddRef(pComponent);
 	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
-	m_pRendererCom = AddComponent<Engine::CRenderer>();
+	m_pRendererCom = AddComponent<Engine::CMeshRenderer>();
+	m_pRendererCom->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMeshCom);
 
 	//// Calculator
 	//pComponent = m_pCalculatorCom = dynamic_cast<Engine::CCalculator*>(Engine::Clone(L"Proto_Calculator"));
@@ -100,16 +101,18 @@ _int CSword::Update_Object(const _float& fTimeDelta)
 
 	//m_bColl = Collision_ToObject(L"GameLogic", L"Player");
 
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	//m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	m_pRendererCom->Update(fTimeDelta);
 
 	return 0;
 }
 void CSword::Render_Object(void)
 {
 	//m_pTransformCom->Set_Transform(m_pGraphicDev);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &(GetTransform()->GetObjectMatrix() * *m_pParentBoneMatrix * m_ParentWorldMatrix));
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &(GetTransform()->GetObjectMatrix() * *m_pParentBoneMatrix * m_ParentWorldMatrix));
 
-	m_pMeshCom->Render_Meshes();
+	//m_pMeshCom->Render_Meshes();
+	m_pRendererCom->Render();
 
 	//_matrix matWorld;
 	//	m_pTransformCom->Get_WorldMatrix(&matWorld);

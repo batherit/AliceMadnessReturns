@@ -86,6 +86,20 @@ _int CInputMode_Navi::ProcessInput(const _float & _fDeltaTime)
 
 		if (bIsNearestPosFinded) {
 			// 가장 가까운 점을 찾았다면, 이것을 저장해둔다.
+
+			// 네비 마그넷 기능이 켜져있다면 vNearestPos를 보정한다.
+			if (m_pEditScene->GetNaviMeshVtxCtrl()->IsNaviMagnet()) {
+				auto& rNaviVertices = m_pEditScene->GetNaviMesh()->GetNaviVertices();
+				_int iVerticesSize = rNaviVertices.size();
+
+				for (auto& rPos : rNaviVertices) {
+					if (Engine::IsPointAndSphereCollided(vNearestPos, 5.f, rPos)) {
+						vNearestPos = rPos;
+						break;
+					}
+				}
+			}
+
 			m_vecTriangle.push_back(vNearestPos);
 
 			if (m_vecTriangle.size() == 3) {

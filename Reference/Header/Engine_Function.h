@@ -235,6 +235,11 @@ namespace Engine
 		return true;
 	}
 
+	// 구와 점의 충돌
+	inline _bool IsPointAndSphereCollided(const _vec3 _vPoint, _float _fRadius, const _vec3 _vSpherePos) {
+		return D3DXVec3Length(&(_vPoint - _vSpherePos)) <= _fRadius;
+	}
+
 	// 광선 평면 교차하는 지점 좌표 얻기
 	inline _vec3 GetPointBetweenRayAndPlane(const PICKINGRAYINFO& _stPickingInfo, const _plane& _plPlane) {
 		_vec3 vPlaneNormal = _vec3(_plPlane.a, _plPlane.b, _plPlane.c);

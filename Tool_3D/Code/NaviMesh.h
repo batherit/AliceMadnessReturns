@@ -35,6 +35,7 @@ public:
 	void SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex, const _vec3& _vNewPosition);
 	_vec3 GetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex) const;
 	vector<_vec3>& GetNaviVertices();
+	_int GetMarkedTriangleIndex() const { return m_iMarkedTriangleIndex; }
 
 private:
 	Engine::CRenderer* m_pRenderer = nullptr;

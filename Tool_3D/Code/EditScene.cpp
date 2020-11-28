@@ -47,15 +47,16 @@ HRESULT CEditScene::Ready(void)
 	dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
 
 	// 네비메쉬 오브젝트 생성
-	pGameObject = CNaviMesh::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMesh", pGameObject), E_FAIL);
+	CNaviMesh* pNaviMesh = CNaviMesh::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pNaviMesh, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMesh", pNaviMesh), E_FAIL);
 
 	// 네비메쉬버텍스컨트롤러 생성
-	pGameObject = CNaviMeshVtxCtrl::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxCtrl", pGameObject), E_FAIL);
-	dynamic_cast<CNaviMeshVtxCtrl*>(pGameObject)->SetActive(false);
+	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = CNaviMeshVtxCtrl::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pNaviMeshVtxCtrl, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxCtrl", pNaviMeshVtxCtrl), E_FAIL);
+	pNaviMeshVtxCtrl->SetNaviMesh(pNaviMesh);
+	pNaviMeshVtxCtrl->SetActive(false);
 
 	// 편집 레이어 등록
 	m_mapLayer.emplace(L"EditLayer", pLayer);

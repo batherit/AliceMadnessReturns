@@ -31,7 +31,7 @@ HRESULT CNaviMeshVtxCtrl::Ready_Object(void)
 
 int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
 {
-	if (!m_bIsActivated)
+	if (!m_bIsActivated && m_ePickMode != NAVIMESH_TAB::PICKMODE_TRIANGLE)
 		return 0;
 
 	if (!m_bIsPicking) {
@@ -39,7 +39,7 @@ int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
 			// 충돌된 평면을 찾는다.
 			auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
 			m_ePlaneType = GetPlaneTypeByRay(stPickingRayInfo);
-			if (m_ePlaneType != PLANE::TYPE_END) {
+			if (m_ePickMode == NAVIMESH_TAB::PICKMODE_VERTEX && m_ePlaneType != PLANE::TYPE_END) {
 				m_bIsPicking = true;
 			}
 			else if(m_ePickMode == NAVIMESH_TAB::PICKMODE_VERTEX){
@@ -66,13 +66,88 @@ int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
 					}
 					
 					if (!vecCollidedSphereIndex.empty()) {
-						SetVertexInfo(m_pNaviMesh, vecCollidedSphereIndex[0] / 3, vecCollidedSphereIndex[0] % 3);
+						// 충돌 정점을 찾은 경우,
+						_int iTriangleIndex = vecCollidedSphereIndex[0] / 3;
+						_int iVertexIndex = vecCollidedSphereIndex[0] % 3;
+						SetVertexInfo(m_pNaviMesh, iTriangleIndex, iVertexIndex);
+						CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+						CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+						auto pNaviMeshTab = pTabForm->GetNaviMeshTab();
+						pNaviMeshTab->m_chkGroup.EnableWindow(TRUE);
+
+						if (pNaviMeshTab->m_btnCombine.IsWindowVisible()) {
+							// 초기 상태에서 정점을 선택하여 컴바인 버튼이 활성화된 상태로 전환
+							pNaviMeshTab->m_pairLastPickedVertex.first = iTriangleIndex;
+							pNaviMeshTab->m_pairLastPickedVertex.second = iVertexIndex;
+							pNaviMeshTab->m_btnCombine.EnableWindow(TRUE);
+						}
+						else if (pNaviMeshTab->m_btnCancel.IsWindowVisible()) {
+							if (pNaviMeshTab->m_pairLastPickedVertex.first != iTriangleIndex) {
+								// 컴바인을 수행한다.
+								// 다른 정점의 삼각형이면 컴바인을 수행한다.
+								//_vec3 vSrcPos = m_pNaviMesh->GetTriangleVertexPosition(pNaviMeshTab->m_pairLastPickedVertex.first, pNaviMeshTab->m_pairLastPickedVertex.second);
+								//m_pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, vSrcPos);
+								_vec3 vDestPos = m_pNaviMesh->GetTriangleVertexPosition(iTriangleIndex, iVertexIndex);
+								m_pNaviMesh->SetTriangleVertexPosition(pNaviMeshTab->m_pairLastPickedVertex.first, pNaviMeshTab->m_pairLastPickedVertex.second, vDestPos);
+								
+								// 정점 컨트롤러 위치 재갱신
+								SetVertexInfo(m_pNaviMesh, iTriangleIndex, iVertexIndex);
+								MoveGroup();
+							}
+
+							// 초기 상태로 돌아간다.
+							pNaviMeshTab->m_btnCombine.EnableWindow(FALSE);
+							pNaviMeshTab->m_btnCombine.ShowWindow(TRUE);
+							pNaviMeshTab->m_btnCancel.EnableWindow(FALSE);
+							pNaviMeshTab->m_btnCancel.ShowWindow(FALSE);
+						}
 					}
 				}
 			}
 			else if (m_ePickMode == NAVIMESH_TAB::PICKMODE_TRIANGLE) {
 				// TODO : 충돌 삼각형을 찾는다.
+				vector<_int> vecCollidedTriangleIndex;
+				vecCollidedTriangleIndex.reserve(1);
 
+				auto& vecNaviVertices = m_pNaviMesh->GetNaviVertices();
+				_int iVecSize = vecNaviVertices.size();
+				auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
+
+				_vec3 vV1, vV2, vV3;
+				_float fU, fV, fDist;
+				for (_int i = 0; i < iVecSize / 3; ++i) {
+					vV1 = vecNaviVertices[3 * i];
+					vV2 = vecNaviVertices[3 * i + 1];
+					vV3 = vecNaviVertices[3 * i + 2];
+					if (D3DXIntersectTri(&vV1, &vV2, &vV3, &stPickingRayInfo.vRayPos, &stPickingRayInfo.vRayDir, &fU, &fV, &fDist)) {
+						// 충돌했다면, 해당 인덱스의 삼각형을 활성화시킨다.
+						m_pNaviMesh->MarkTriangle(i);
+
+						CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+						CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+						auto pNaviMeshTab = pTabForm->GetNaviMeshTab();
+
+						pNaviMeshTab->m_btnDelete.EnableWindow(TRUE);
+						// Position Edit Ctrl 비활성화
+						pNaviMeshTab->m_editPosX.EnableWindow(FALSE);
+						pNaviMeshTab->m_editPosY.EnableWindow(FALSE);
+						pNaviMeshTab->m_editPosZ.EnableWindow(FALSE);
+						pNaviMeshTab->m_chkGroup.EnableWindow(FALSE);
+						pNaviMeshTab->m_editGroupRange.EnableWindow(FALSE);
+
+						//pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_TRIANGLE);
+						pNaviMeshTab->m_rbtnNavi.SetCheck(FALSE);
+						pNaviMeshTab->m_rbtnVertex.SetCheck(FALSE);
+						pNaviMeshTab->m_rbtnTriangle.SetCheck(TRUE);
+
+						// 초기 상태로 돌아간다.
+						pNaviMeshTab->m_btnCombine.EnableWindow(FALSE);
+						pNaviMeshTab->m_btnCombine.ShowWindow(TRUE);
+						pNaviMeshTab->m_btnCancel.EnableWindow(FALSE);
+						pNaviMeshTab->m_btnCancel.ShowWindow(FALSE);
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -87,7 +162,8 @@ int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
 		}
 	}
 
-	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	if(m_ePickMode != NAVIMESH_TAB::PICKMODE_TRIANGLE)
+		m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 	return 0;
 }
 
@@ -142,11 +218,14 @@ _vec3 CNaviMeshVtxCtrl::GetVertexPos() const
 void CNaviMeshVtxCtrl::SetGrouping(_bool _bIsGrouping)
 {
 	m_bIsGrouping = _bIsGrouping;
-
-	if (!_bIsGrouping || !m_pNaviMesh)
+	
+	if (!m_pNaviMesh)
 		return;
 
-	FormGroup();
+	if (m_bIsGrouping)
+		FormGroup();
+	else
+		ReleaseGroup();
 }
 
 void CNaviMeshVtxCtrl::SetPickMode(NAVIMESH_TAB::E_PICKMODE _ePickMode)
@@ -158,7 +237,17 @@ void CNaviMeshVtxCtrl::SetPickMode(NAVIMESH_TAB::E_PICKMODE _ePickMode)
 		SetActive(false);
 		break;
 	case NAVIMESH_TAB::PICKMODE_VERTEX:
-		SetActive(true);
+		if (m_pNaviMesh && !m_pNaviMesh->GetNaviVertices().empty()) {
+			if (!m_pNaviMesh->IsValidIndex(m_iTriangleIndex, m_iVertexIndex)) {
+				m_iTriangleIndex = 0;
+				m_iVertexIndex = 0;
+				GetTransform()->SetPos(m_pNaviMesh->GetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex));
+			}
+			SetActive(true);
+		}
+		else {
+			SetActive(false);
+		}
 		break;
 	case NAVIMESH_TAB::PICKMODE_TRIANGLE:
 		SetActive(false);
@@ -180,6 +269,14 @@ void CNaviMeshVtxCtrl::ProcessPickInput()
 	}
 }
 
+void CNaviMeshVtxCtrl::SetNaviMesh(CNaviMesh * _pNaviMesh)
+{
+	if (!_pNaviMesh)
+		return;
+
+	m_pNaviMesh = _pNaviMesh;
+}
+
 void CNaviMeshVtxCtrl::SetVertexInfo(CNaviMesh * _pNaviMesh, _int _iTriangleIndex, _int _iVertexIndex)
 {
 	if (!_pNaviMesh || !_pNaviMesh->IsValidIndex(_iTriangleIndex, _iVertexIndex))
@@ -191,6 +288,13 @@ void CNaviMeshVtxCtrl::SetVertexInfo(CNaviMesh * _pNaviMesh, _int _iTriangleInde
 
 	// 정점 위치에 컨트롤을 일치시킨다.(동기화)
 	GetTransform()->SetPos(_pNaviMesh->GetTriangleVertexPosition(_iTriangleIndex, _iVertexIndex));
+}
+
+void CNaviMeshVtxCtrl::ReleaseVertexInfo()
+{
+	m_pNaviMesh = nullptr;
+	m_iTriangleIndex = -1;
+	m_iVertexIndex = -1;
 }
 
 PLANE::E_TYPE CNaviMeshVtxCtrl::GetPlaneTypeByRay(Engine::PICKINGRAYINFO & _rRayInfo)
@@ -393,7 +497,8 @@ void CNaviMeshVtxCtrl::DragVertex()
 
 void CNaviMeshVtxCtrl::FormGroup()
 {
-	m_vecGroupList.clear();
+	// 기존 그룹을 해제한다.
+	ReleaseGroup();
 
 	auto& rVertices = m_pNaviMesh->GetNaviVertices();
 
@@ -415,6 +520,11 @@ void CNaviMeshVtxCtrl::FormGroup()
 			}
 		}
 	}
+}
+
+void CNaviMeshVtxCtrl::ReleaseGroup()
+{
+	m_vecGroupList.clear();
 }
 
 void CNaviMeshVtxCtrl::MoveGroup()

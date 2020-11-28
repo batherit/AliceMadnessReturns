@@ -36,6 +36,7 @@ void CManualCol::Render_Buffer(void)
 {
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	CVIBuffer::Render_Buffer();
+
 	//m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
 	//m_pGraphicDev->SetFVF(m_dwFVF);
 	//m_pGraphicDev->SetIndices(m_pIB);

@@ -172,10 +172,13 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 			if (m_pairLastPickedVertex.first != iTriangleIndex) {
 				// 컴바인을 수행한다.
 				// 다른 정점의 삼각형이면 컴바인을 수행한다.
-				_vec3 vSrcPos = pNaviMesh->GetTriangleVertexPosition(m_pairLastPickedVertex.first, m_pairLastPickedVertex.second);
-				pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, vSrcPos);
+				//_vec3 vSrcPos = pNaviMesh->GetTriangleVertexPosition(m_pairLastPickedVertex.first, m_pairLastPickedVertex.second);
+				//pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, vSrcPos);
+				_vec3 vDestPos = pNaviMesh->GetTriangleVertexPosition(iTriangleIndex, iVertexIndex);
+				pNaviMesh->SetTriangleVertexPosition(m_pairLastPickedVertex.first, m_pairLastPickedVertex.second, vDestPos);
 				// 정점 컨트롤러 위치 재갱신
 				pNaviMeshVtxCtrl->SetVertexInfo(pNaviMesh, iTriangleIndex, iVertexIndex);
+				pNaviMeshVtxCtrl->MoveGroup();
 			}
 			
 			// 초기 상태로 돌아간다.
@@ -187,7 +190,7 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 	else {
 		// 삼각형 자체를 선택한 경우
-		m_btnDelete.EnableWindow(TRUE);
+		
 		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
 		pNaviMeshVtxCtrl->SetActive(false);
 
@@ -195,6 +198,7 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		_int iIndex = _ttoi(strIndex);
 		pNaviMesh->MarkTriangle(iIndex);
 
+		m_btnDelete.EnableWindow(TRUE);
 		// Position Edit Ctrl 비활성화
 		m_editPosX.EnableWindow(FALSE);
 		m_editPosY.EnableWindow(FALSE);
@@ -221,17 +225,27 @@ void CNaviMeshTab::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 void CNaviMeshTab::OnBnClickedButtonDelete()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	if (!m_hSelectedTreeItem)
+
+	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+
+	//if (!m_hSelectedTreeItem)
+	//	return;
+
+	if (pNaviMesh->GetMarkedTriangleIndex() == -1)
 		return;
 
-	CString strIndex = m_treeNavi.GetItemText(m_hSelectedTreeItem);
-	_int iIndex = _ttoi(strIndex);
+	//CString strIndex = m_treeNavi.GetItemText(m_hSelectedTreeItem);
+	//_int iIndex = _ttoi(strIndex);
 	
-	m_treeNavi.DeleteItem(m_hSelectedTreeItem);
+	HTREEITEM treeRootItem = m_treeNavi.GetRootItem();
+	m_treeNavi.DeleteItem(treeRootItem);
+	//m_treeNavi.DeleteItem(m_hSelectedTreeItem);
+	//m_treeNavi.DeleteItem(m_treeNavi.GetNextSiblingItem(treeRootItem));
+	
 
 	// 네비메쉬 갱신
-	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
-	pNaviMesh->PopTriangleVertices(iIndex);
+	//CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+	pNaviMesh->PopTriangleVertices(pNaviMesh->GetMarkedTriangleIndex());
 
 	// 네비트리 갱신
 	UpdateNaviTree(pNaviMesh);
@@ -260,6 +274,7 @@ void CNaviMeshTab::OnEnChangeEditPosX()
 
 	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
 	pNaviMeshVtxCtrl->GetTransform()->SetPos(m_vVertexPos);
+	pNaviMeshVtxCtrl->MoveGroup();
 
 	UpdateData(FALSE);
 }
@@ -285,6 +300,7 @@ void CNaviMeshTab::OnEnChangeEditPosY()
 
 	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
 	pNaviMeshVtxCtrl->GetTransform()->SetPos(m_vVertexPos);
+	pNaviMeshVtxCtrl->MoveGroup();
 
 	UpdateData(FALSE);
 }
@@ -310,6 +326,7 @@ void CNaviMeshTab::OnEnChangeEditPosZ()
 
 	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
 	pNaviMeshVtxCtrl->GetTransform()->SetPos(m_vVertexPos);
+	pNaviMeshVtxCtrl->MoveGroup();
 
 	UpdateData(FALSE);
 }
@@ -409,9 +426,11 @@ void CNaviMeshTab::OnBnClickedRadioVertex()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
 
 	UpdateData(TRUE);
 
+	pNaviMeshVtxCtrl->SetNaviMesh(pNaviMesh);
 	pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_VERTEX);
 
 	UpdateData(FALSE);
@@ -422,9 +441,11 @@ void CNaviMeshTab::OnBnClickedRadioTriangle()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
 
 	UpdateData(TRUE);
 
+	pNaviMeshVtxCtrl->SetNaviMesh(pNaviMesh);
 	pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_TRIANGLE);
 
 	UpdateData(FALSE);

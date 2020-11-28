@@ -35,9 +35,42 @@ int CNaviMesh::Update_Object(const _float & fTimeDelta)
 
 void CNaviMesh::Render_Object(void)
 {
+	DWORD dwCullMode;
+	m_pGraphicDev->GetRenderState(D3DRS_CULLMODE, &dwCullMode);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	m_pGraphicDev->SetTexture(0, NULL);
 	m_pManualCol->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, dwCullMode);
+
+
+
+	// 삼각형 라인 그리기
+	_matrix matWorld, matView, matProj;
+	matWorld = m_pTransform->GetObjectMatrix();
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	ID3DXLine *pLine;
+	D3DXCreateLine(m_pGraphicDev, &pLine);
+	pLine->SetWidth(2.f);
+	pLine->SetAntialias(true);
+	pLine->Begin();
+
+	auto& vecVertices = GetNaviVertices();
+	_int iVerticesSize = vecVertices.size();
+	_vec3 vLastLine[2];
+	for (_int i = 0; i < iVerticesSize / 3; ++i) {
+		pLine->DrawTransform(&vecVertices[i * 3], 2, &(matWorld * matView * matProj), D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
+		pLine->DrawTransform(&vecVertices[i * 3 + 1], 2, &(matWorld * matView * matProj), D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
+
+		vLastLine[0] = vecVertices[i * 3 + 2];
+		vLastLine[1] = vecVertices[i * 3];
+		pLine->DrawTransform(vLastLine, 2, &(matWorld * matView * matProj), D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
+	}
+	pLine->End();
+	pLine->Release();
+
 }
 
 CNaviMesh * CNaviMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev)

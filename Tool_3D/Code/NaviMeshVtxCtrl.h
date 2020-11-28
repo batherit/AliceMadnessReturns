@@ -31,6 +31,7 @@ public:
 public:
 	void ProcessPickInput();
 	
+	void SetNaviMesh(CNaviMesh* _pNaviMesh);
 	void SetVertexInfo(CNaviMesh* _pNaviMesh, _int _iTriangleIndex, _int _iVertexIndex);
 	void SetActive(_bool _bIsActivated) { m_bIsActivated = _bIsActivated; }
 	void SetGrouping(_bool _bIsGrouping);
@@ -43,12 +44,14 @@ public:
 	_bool IsGrouping() const { return m_bIsGrouping; }
 	_float GetGroupRange() const { return m_fGroupRange; }
 	NAVIMESH_TAB::E_PICKMODE GetPickMode() const { return m_ePickMode; }
-	_bool GetNaviMagnet() const { return m_bIsNaviMagnet; }
+	_bool IsNaviMagnet() const { return m_bIsNaviMagnet; }
 
-private:
+	void ReleaseVertexInfo();
+	
 	PLANE::E_TYPE GetPlaneTypeByRay(Engine::PICKINGRAYINFO& _rRayInfo);
 	void DragVertex();
 	void FormGroup();
+	void ReleaseGroup();
 	void MoveGroup();
 
 private:

@@ -162,3 +162,42 @@ vector<_vec3>& CNaviMesh::GetNaviVertices()
 	// TODO: 여기에 반환 구문을 삽입합니다.
 	return m_pManualCol->GetVertices();
 }
+
+void CNaviMesh::GenerateNewNaviMesh(vector<_vec3>& _rVertices)
+{
+	m_pManualCol->GenerateNewNaviMesh(_rVertices);
+}
+
+void CNaviMesh::SaveInfo(HANDLE & _hfOut)
+{
+	auto& rVertices = GetNaviVertices();
+	_int iVerticesSize = static_cast<_int>(GetNaviVertices().size());
+	WriteFile(_hfOut, &iVerticesSize, sizeof(_int), nullptr, nullptr);
+
+	for (auto& rPos : GetNaviVertices()) {
+		WriteFile(_hfOut, &rPos.x, sizeof(rPos.x), nullptr, nullptr);
+		WriteFile(_hfOut, &rPos.y, sizeof(rPos.y), nullptr, nullptr);
+		WriteFile(_hfOut, &rPos.z, sizeof(rPos.z), nullptr, nullptr);
+	}
+}
+
+void CNaviMesh::LoadInfo(HANDLE & _hfIn)
+{
+	_int iVerticesSize = 0;
+	ReadFile(_hfIn, &iVerticesSize, sizeof(_int), nullptr, nullptr);
+	vector<_vec3> vecVertices;
+	vecVertices.reserve(iVerticesSize + 10);
+
+	_vec3 vPos;
+	for (_int i = 0; i < iVerticesSize; ++i) {
+		ReadFile(_hfIn, &vPos.x, sizeof(vPos.x), nullptr, nullptr);
+		ReadFile(_hfIn, &vPos.y, sizeof(vPos.y), nullptr, nullptr);
+		ReadFile(_hfIn, &vPos.z, sizeof(vPos.z), nullptr, nullptr);
+		vecVertices.emplace_back(vPos);
+	}
+
+	GenerateNewNaviMesh(vecVertices);
+
+	vecVertices.clear();
+	vecVertices.shrink_to_fit();
+}

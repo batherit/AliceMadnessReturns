@@ -27,6 +27,7 @@ public:
 	void SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex, const _vec3 _vNewPosition);
 	_vec3 GetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex) const;
 	vector<_vec3>& GetVertices() { return m_vecVertices; }
+	void GenerateNewNaviMesh(vector<_vec3>& _rVertices);
 
 public:
 	static CManualCol*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

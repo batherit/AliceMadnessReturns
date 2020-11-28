@@ -39,6 +39,8 @@ public:
 	Engine::CGameObject* GetPickedObject() const;
 	Engine::CInputModeMgr* GetInputModeMgr() const { return m_pInputModeMgr; }
 
+	void SaveNaviMesh();
+	void LoadNaviMesh();
 private:
 	Engine::CInputModeMgr* m_pInputModeMgr = nullptr;
 };

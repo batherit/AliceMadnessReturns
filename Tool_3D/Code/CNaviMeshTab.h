@@ -74,4 +74,6 @@ public:
 	CButton m_rbtnTriangle;
 
 	BOOL m_bIsNaviMagnet;
+	afx_msg void OnBnClickedButtonSave();
+	afx_msg void OnBnClickedButtonLoad();
 };

@@ -5,6 +5,8 @@
 #include "NaviMesh.h"
 #include "NaviMeshVtxCtrl.h"
 #include "InputMode_Terrain.h"
+#include "MainFrm.h"
+#include "CTabForm.h"
 //#include "InputMode_Navi.h"
 
 CEditScene::CEditScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -157,4 +159,58 @@ CNaviMeshVtxCtrl * CEditScene::GetNaviMeshVtxCtrl() const
 Engine::CGameObject * CEditScene::GetPickedObject() const
 {
 	return GetTerrain();
+}
+
+void CEditScene::SaveNaviMesh()
+{
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+
+	CFileDialog Dlg(FALSE, L"navi", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.navi) | *.navi||", pTabForm);
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Bin\\Resource\\Navi");
+	Dlg.m_ofn.lpstrInitialDir = szDataPath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString strPath = Dlg.GetPathName();
+		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		GetNaviMesh()->SaveInfo(hFile);
+
+		CloseHandle(hFile);
+	}
+}
+
+void CEditScene::LoadNaviMesh()
+{
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CFileDialog Dlg(TRUE, L"nav", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.navi) | *.navi||", pTabForm);
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Bin\\Resource\\Navi");
+	Dlg.m_ofn.lpstrInitialDir = szDataPath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString strPath = Dlg.GetPathName();
+		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		GetNaviMesh()->LoadInfo(hFile);
+
+		CloseHandle(hFile);
+	}
+	//UpdateData(FALSE);
 }

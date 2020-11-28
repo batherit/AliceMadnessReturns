@@ -36,6 +36,11 @@ public:
 	_vec3 GetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex) const;
 	vector<_vec3>& GetNaviVertices();
 	_int GetMarkedTriangleIndex() const { return m_iMarkedTriangleIndex; }
+	void GenerateNewNaviMesh(vector<_vec3>& _rVertices);
+
+	// 파일 입출력
+	virtual void SaveInfo(HANDLE& _hfOut) override;
+	virtual void LoadInfo(HANDLE& _hfIn) override;
 
 private:
 	Engine::CRenderer* m_pRenderer = nullptr;

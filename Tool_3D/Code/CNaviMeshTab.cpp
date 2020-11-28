@@ -70,6 +70,8 @@ BEGIN_MESSAGE_MAP(CNaviMeshTab, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK1, &CNaviMeshTab::OnBnClickedCheckNaviMagnet)
 	ON_BN_CLICKED(IDC_RADIO4, &CNaviMeshTab::OnBnClickedRadioVertex)
 	ON_BN_CLICKED(IDC_RADIO5, &CNaviMeshTab::OnBnClickedRadioTriangle)
+	ON_BN_CLICKED(IDC_BUTTON5, &CNaviMeshTab::OnBnClickedButtonSave)
+	ON_BN_CLICKED(IDC_BUTTON6, &CNaviMeshTab::OnBnClickedButtonLoad)
 END_MESSAGE_MAP()
 
 
@@ -449,4 +451,20 @@ void CNaviMeshTab::OnBnClickedRadioTriangle()
 	pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_TRIANGLE);
 
 	UpdateData(FALSE);
+}
+
+
+void CNaviMeshTab::OnBnClickedButtonSave()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// TODO : 네비메쉬를 저장합니다.
+	g_pTool3D_Kernel->GetEditScene()->SaveNaviMesh();
+}
+
+
+void CNaviMeshTab::OnBnClickedButtonLoad()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// TODO : 네비메쉬를 읽어옵니다.
+	g_pTool3D_Kernel->GetEditScene()->LoadNaviMesh();
 }

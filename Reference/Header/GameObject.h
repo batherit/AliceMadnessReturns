@@ -42,6 +42,12 @@ public:
 	void SetParent(CGameObject* _pParent);
 	CGameObject* GetParent() const { return m_pParent; }
 
+	// 파일 입출력 관련
+	virtual void SaveInfo(FILE* _fpOut) {};
+	virtual void LoadInfo(FILE* _fpIn) {};
+	virtual void SaveInfo(HANDLE& _hfOut) {};
+	virtual void LoadInfo(HANDLE& _hfIn) {};
+
 	virtual void Free(void);
 
 private:

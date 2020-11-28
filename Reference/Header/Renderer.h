@@ -33,8 +33,6 @@ private:
 		Safe_AddRef(pRenderer);
 		return pRenderer; }
 	virtual void Free(void);
-
-	
 };
 
 END

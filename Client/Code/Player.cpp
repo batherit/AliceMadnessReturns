@@ -25,11 +25,14 @@ HRESULT CPlayer::Ready_Object(void)
 
 	// Clone Mesh
 	//pComponent = m_pMesh = dynamic_cast<Engine::CStaticMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Stone"));
-	pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Player"));
+	pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
 	//pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Alice"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
-	Engine::Safe_AddRef(pComponent);
+
+	// MeshRenderer
+	pComponent = m_pRenderer = AddComponent<Engine::CMeshRenderer>();
+	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
 	m_pTransform->SetScale(_vec3(0.01f, 0.01f, 0.01f));
 	m_pMesh->Set_AnimationSet(57);
@@ -40,7 +43,7 @@ HRESULT CPlayer::Ready_Object(void)
 	m_pPhysics->SetSpeed(20.f, 20.f);
 
 	// Renderer
-	pComponent = m_pRenderer = AddComponent<Engine::CRenderer>();
+	//pComponent = m_pRenderer = AddComponent<Engine::CRenderer>();
 
 	// Collider
 	//pComponent = m_pCollider = AddComponent<Engine::CSphereCollider>();
@@ -82,17 +85,18 @@ int CPlayer::Update_Object(const _float & _fDeltaTime)
 
 	m_pMesh->Play_Animation(_fDeltaTime);
 
-	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	//m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	m_pRenderer->Update(_fDeltaTime);
 
 	return 0;
 }
 
 void CPlayer::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 
-	m_pMesh->Render_Meshes();
-	Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
+	m_pRenderer->Render();
+	//Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
 }
 

@@ -30,7 +30,7 @@ public:
 private:
 	//Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CDynamicMesh* m_pMesh = nullptr;
-	Engine::CRenderer* m_pRenderer = nullptr;
+	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CPhysics* m_pPhysics = nullptr;
 	//Engine::CSphereCollider* m_pCollider = nullptr;
 	//Engine::CMeshCollider* m_pCollider = nullptr;

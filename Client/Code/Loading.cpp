@@ -93,10 +93,15 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::CTransform::GetComponentTag(), pComponent);
 
-	// Renderer
+	// Renderer (지금은 터레인 같은 애들이 쓰고 있기 때문에 일단 놔둠.)
 	pComponent = Engine::CRenderer::GetInstance();
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::CRenderer::GetComponentTag(), pComponent);
+
+	// MeshRenderer
+	pComponent = Engine::CMeshRenderer::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::CMeshRenderer::GetComponentTag(), pComponent);
 
 	// TerrainTex
 	pComponent = Engine::CTerrainTex::Create(m_pGraphicDev);

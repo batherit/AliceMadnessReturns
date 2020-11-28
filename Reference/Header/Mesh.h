@@ -12,8 +12,8 @@ protected:
 	explicit CMesh(const CMesh& rhs);
 	virtual ~CMesh(void);
 
-protected:
-	//_bool		m_bClone;
+public:
+	virtual void		Render_Meshes(void) {};
 
 public:
 	virtual CComponent*		Clone(void)PURE;

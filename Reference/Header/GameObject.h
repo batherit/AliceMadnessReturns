@@ -25,6 +25,7 @@ public:
 	virtual void Render_Object(void) {};
 
 public:
+	LPDIRECT3DDEVICE9 GetGraphicDev() const { return m_pGraphicDev; }
 	CComponent* GetComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);
 	CComponent*	AddComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);
 	template <class T>

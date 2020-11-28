@@ -64,6 +64,12 @@
     <Filter Include="04. Component\04.Optimization\00. Frustum">
       <UniqueIdentifier>{46968657-01cb-48fb-b8f4-35e17cb102aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\01. Renderer\00. BaseRenderer">
+      <UniqueIdentifier>{f00983d1-977f-4aa0-aec4-ea96562e5636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\01. Renderer\01. MeshRenderer">
+      <UniqueIdentifier>{9b784f84-aa9a-48de-be14-147ea49a3597}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -123,6 +129,12 @@
     <ClInclude Include="..\Code\Frustum.h">
       <Filter>04. Component\04.Optimization\00. Frustum</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\MeshRenderer.h">
+      <Filter>04. Component\01. Renderer\01. MeshRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseRenderer.h">
+      <Filter>04. Component\01. Renderer\00. BaseRenderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -178,6 +190,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Frustum.cpp">
       <Filter>04. Component\04.Optimization\00. Frustum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MeshRenderer.cpp">
+      <Filter>04. Component\01. Renderer\01. MeshRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseRenderer.cpp">
+      <Filter>04. Component\01. Renderer\00. BaseRenderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

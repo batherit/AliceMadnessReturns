@@ -288,6 +288,9 @@ void CNaviMeshVtxCtrl::SetVertexInfo(CNaviMesh * _pNaviMesh, _int _iTriangleInde
 
 	// 정점 위치에 컨트롤을 일치시킨다.(동기화)
 	GetTransform()->SetPos(_pNaviMesh->GetTriangleVertexPosition(_iTriangleIndex, _iVertexIndex));
+
+	if (m_bIsGrouping)
+		FormGroup();
 }
 
 void CNaviMeshVtxCtrl::ReleaseVertexInfo()

@@ -79,4 +79,5 @@ public:
 
 	BOOL m_bIsNaviMagnet;
 	
+	//afx_msg void OnTvnBeginrdragTree1(NMHDR *pNMHDR, LRESULT *pResult);
 };

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="..\Code\CEmptyForm.h" />
     <ClInclude Include="..\Code\CForm.h" />
+    <ClInclude Include="..\Code\CMapTab.h" />
     <ClInclude Include="..\Code\CMeshPage.h" />
     <ClInclude Include="..\Code\CNaviMeshTab.h" />
     <ClInclude Include="..\Code\CTabForm.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="..\Code\CTerrainTab.h" />
     <ClInclude Include="..\Code\EditScene.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
+    <ClInclude Include="..\Code\InputMode_Map.h" />
     <ClInclude Include="..\Code\InputMode_Navi.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
@@ -66,6 +68,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\CEmptyForm.cpp" />
     <ClCompile Include="..\Code\CForm.cpp" />
+    <ClCompile Include="..\Code\CMapTab.cpp" />
     <ClCompile Include="..\Code\CMeshPage.cpp" />
     <ClCompile Include="..\Code\CNaviMeshTab.cpp" />
     <ClCompile Include="..\Code\CTabForm.cpp" />
@@ -73,6 +76,7 @@
     <ClCompile Include="..\Code\CTerrainTab.cpp" />
     <ClCompile Include="..\Code\EditScene.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\InputMode_Map.cpp" />
     <ClCompile Include="..\Code\InputMode_Navi.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>

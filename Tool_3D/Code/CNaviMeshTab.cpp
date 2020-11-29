@@ -74,6 +74,7 @@ BEGIN_MESSAGE_MAP(CNaviMeshTab, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON6, &CNaviMeshTab::OnBnClickedButtonLoad)
 	//ON_NOTIFY(TVN_KEYDOWN, IDC_TREE1, &CNaviMeshTab::OnTvnKeydownTree1)
 	ON_NOTIFY(NM_CLICK, IDC_TREE1, &CNaviMeshTab::OnNMClickTree1)
+	//ON_NOTIFY(TVN_BEGINRDRAG, IDC_TREE1, &CNaviMeshTab::OnTvnBeginrdragTree1)
 END_MESSAGE_MAP()
 
 
@@ -508,3 +509,11 @@ void CNaviMeshTab::OnNMClickTree1(NMHDR *pNMHDR, LRESULT *pResult)
 
 	*pResult = 0;
 }
+
+
+//void CNaviMeshTab::OnTvnBeginrdragTree1(NMHDR *pNMHDR, LRESULT *pResult)
+//{
+//	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+//	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+//	*pResult = 0;
+//}

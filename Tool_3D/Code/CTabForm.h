@@ -3,13 +3,9 @@
 
 
 // CTabForm 폼 보기
-
 class CTerrainTab;
 class CNaviMeshTab;
-
-BEGIN(Client)
-class CNaviMesh;
-END
+class CMapTab;
 
 class CTabForm : public CFormView
 {
@@ -38,11 +34,13 @@ protected:
 public:
 	CTerrainTab* GetTerrainTab() const		{ return m_pTerrainTab; }
 	CNaviMeshTab* GetNaviMeshTab() const	{ return m_pNaviMeshTab; }
+	CMapTab* GetMapTab() const { return m_pMapTab; }
 	
 public:
 	CTabCtrl		m_Tab;
 	CTerrainTab*	m_pTerrainTab = nullptr;
 	CNaviMeshTab*	m_pNaviMeshTab = nullptr;
+	CMapTab*		m_pMapTab = nullptr;
 
 	virtual void OnInitialUpdate();
 	afx_msg void OnDestroy();

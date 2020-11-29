@@ -6,11 +6,13 @@
 #include "CTabForm.h"
 #include "CTerrainTab.h"
 #include "CNaviMeshTab.h"
+#include "CMapTab.h"
 #include "NaviMesh.h"
 #include "NaviMeshVtxCtrl.h"
 #include "EditScene.h"
 #include "InputMode_Terrain.h"
 #include "InputMode_Navi.h"
+#include "InputMode_Map.h"
 
 
 // CTabForm
@@ -65,6 +67,7 @@ void CTabForm::OnInitialUpdate()
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	m_Tab.InsertItem(0, _T("Terrain"));
 	m_Tab.InsertItem(1, _T("Navi Mesh"));
+	m_Tab.InsertItem(2, _T("Map"));
 
 	// 초기 터레인 탭으로 설정
 	m_Tab.SetCurSel(0);		
@@ -81,6 +84,11 @@ void CTabForm::OnInitialUpdate()
 	m_pNaviMeshTab->Create(IDD_NAVI_MESH_TAB, &m_Tab);
 	m_pNaviMeshTab->MoveWindow(0, 25, rect.Width(), rect.Height());
 	m_pNaviMeshTab->ShowWindow(SW_HIDE);
+
+	m_pMapTab = new CMapTab;
+	m_pMapTab->Create(IDD_MAP_TAB, &m_Tab);
+	m_pMapTab->MoveWindow(0, 25, rect.Width(), rect.Height());
+	m_pMapTab->ShowWindow(SW_HIDE);
 }
 
 
@@ -91,6 +99,7 @@ void CTabForm::OnDestroy()
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
 	Safe_Delete(m_pTerrainTab);
 	Safe_Delete(m_pNaviMeshTab);
+	Safe_Delete(m_pMapTab);
 }
 
 
@@ -109,17 +118,27 @@ void CTabForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 			pInputModeMgr->SetNextInputMode(new CInputMode_Terrain(pInputModeMgr));
 		m_pTerrainTab->ShowWindow(SW_SHOW);
 		m_pNaviMeshTab->ShowWindow(SW_HIDE);
+		m_pMapTab->ShowWindow(SW_HIDE);
+		break;
 	}
 		
-		break;
 	case 1: {
 		if (pInputModeMgr)
 			pInputModeMgr->SetNextInputMode(new CInputMode_Navi(pInputModeMgr));
 		m_pTerrainTab->ShowWindow(SW_HIDE);
 		m_pNaviMeshTab->ShowWindow(SW_SHOW);
-		//pEditScene->GetNaviMeshVtxCtrl()->SetActive(true);
-	}
+		m_pMapTab->ShowWindow(SW_HIDE);
 		break;
+	}
+			
+	case 2: {
+		if (pInputModeMgr)
+			pInputModeMgr->SetNextInputMode(new CInputMode_Map(pInputModeMgr));
+		m_pTerrainTab->ShowWindow(SW_HIDE);
+		m_pNaviMeshTab->ShowWindow(SW_HIDE);
+		m_pMapTab->ShowWindow(SW_SHOW);
+		break;
+	}
 	default:
 		break;
 	}

@@ -115,7 +115,7 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	// ref. OnCreate를 실행하는 동안 호출됨.
 	m_MainSplitter.CreateStatic(this, 1, 2);
-	m_MainSplitter.CreateView(0, 0, RUNTIME_CLASS(CTabForm), CSize(335, 2000), pContext);
+	m_MainSplitter.CreateView(0, 0, RUNTIME_CLASS(CTabForm), CSize(365, 2000), pContext);
 	m_MainSplitter.CreateView(0, 1, RUNTIME_CLASS(CTool3DView), CSize(WINCX, WINCY), pContext);
 	//m_MainSplitter.SetColumnInfo(0, 300, 50);
 

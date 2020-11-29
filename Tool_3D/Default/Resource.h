@@ -15,17 +15,20 @@
 #define IDD_TERRAIN_TAB                 318
 #define IDD_MESH_TAB                    319
 #define IDD_NAVI_MESH_TAB               319
+#define IDD_MAP_TAB                     323
 #define IDC_EDIT1                       1000
 #define IDC_EDIT2                       1003
 #define IDC_TREE1                       1003
 #define IDC_TAB1                        1004
 #define IDC_EDIT10                      1004
+#define IDC_TREE2                       1004
 #define IDC_EDIT3                       1005
 #define IDC_RADIO1                      1005
 #define IDC_EDIT4                       1006
 #define IDC_RADIO2                      1006
 #define IDC_BUTTON1                     1006
 #define IDC_EDIT5                       1007
+#define IDC_BUTTON3                     1007
 #define IDC_EDIT6                       1008
 #define IDC_EDIT7                       1009
 #define IDC_BUTTON2                     1009
@@ -33,10 +36,15 @@
 #define IDC_EDIT9                       1011
 #define IDC_CHECK2                      1011
 #define IDC_BUTTON4                     1012
+#define IDC_EDIT11                      1012
 #define IDC_BUTTON5                     1013
+#define IDC_EDIT12                      1013
 #define IDC_BUTTON6                     1014
+#define IDC_EDIT13                      1014
 #define IDC_RADIO3                      1015
+#define IDC_BUTTON7                     1015
 #define IDC_RADIO4                      1016
+#define IDC_BUTTON8                     1016
 #define IDC_RADIO5                      1017
 #define IDC_CHECK1                      1018
 
@@ -44,9 +52,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        323
+#define _APS_NEXT_RESOURCE_VALUE        324
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1019
-#define _APS_NEXT_SYMED_VALUE           318
+#define _APS_NEXT_SYMED_VALUE           324
 #endif
 #endif

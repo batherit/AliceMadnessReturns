@@ -175,6 +175,12 @@
     <ClInclude Include="..\Code\NaviMeshVtxCtrl.h">
       <Filter>04. Object\NaviMeshVtxCtrl</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\CMapTab.h">
+      <Filter>00. View%28Workspace%29\Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputMode_Map.h">
+      <Filter>03. InputMode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -248,6 +254,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\NaviMeshVtxCtrl.cpp">
       <Filter>04. Object\NaviMeshVtxCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapTab.cpp">
+      <Filter>00. View%28Workspace%29\Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputMode_Map.cpp">
+      <Filter>03. InputMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

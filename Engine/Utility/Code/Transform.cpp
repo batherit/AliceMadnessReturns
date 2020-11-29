@@ -144,6 +144,7 @@ void CTransform::ResetRightUpLook(const _vec3 *pAt, const _vec3 *pUp) {
 	D3DXQuaternionRotationMatrix(&qtRot, &matRot);
 	m_vAngle = ConvQuaternionToYawPitchRoll(qtRot);
 }
+
 _matrix CTransform::GetParentMatrix(E_COORD_TYPE _eCoordType) const {
 	D3DXMATRIX matParent;
 	D3DXMatrixIdentity(&matParent);
@@ -154,6 +155,17 @@ _matrix CTransform::GetParentMatrix(E_COORD_TYPE _eCoordType) const {
 	// 부모행렬을 얻지 못했다면, 항등행렬을 반환한다.
 	return matParent;
 }
+
+_matrix CTransform::GetParentBoneMatrix() const
+{
+	_matrix matIdentity;
+	D3DXMatrixIdentity(&matIdentity);
+
+	if (m_pParentBoneMatrix) return *m_pParentBoneMatrix;
+	
+	return matIdentity;
+}
+
 _matrix CTransform::GetObjectMatrix(E_COORD_TYPE _eCoordType) const {
 	_matrix matWorld;
 	D3DXMatrixIdentity(&matWorld);
@@ -174,7 +186,7 @@ _matrix CTransform::GetObjectMatrix(E_COORD_TYPE _eCoordType) const {
 	{
 	case COORD_TYPE_WORLD:
 		// 부
-		matWorld *= GetParentMatrix(_eCoordType);
+		matWorld *= GetParentBoneMatrix() * GetParentMatrix(_eCoordType);
 		break;
 	}
 

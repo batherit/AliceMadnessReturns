@@ -15,6 +15,7 @@
 #include "Component.h"
 #include "Transform.h"
 #include "Renderer.h"
+#include "PolygonRenderer.h"
 #include "MeshRenderer.h"
 #include "SphereCollider.h"
 #include "MeshCollider.h"

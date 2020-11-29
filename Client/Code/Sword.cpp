@@ -77,23 +77,23 @@ HRESULT CSword::Ready_Object(void)
 }
 _int CSword::Update_Object(const _float& fTimeDelta)
 {
-	CPlayer* pPlayer = dynamic_cast<CPlayer*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Player").begin());
+	//CPlayer* pPlayer = dynamic_cast<CPlayer*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Player").begin());
 
-	if (nullptr == m_pParentBoneMatrix)
-	{
-		Engine::CDynamicMesh*	pPlayerMeshCom = dynamic_cast<Engine::CDynamicMesh*>(pPlayer->GetComponent(Engine::ID_STATIC, L"Com_Mesh"));
-			//dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Mesh", Engine::ID_STATIC));
-		NULL_CHECK_RETURN(pPlayerMeshCom, 0);
+	//if (nullptr == m_pParentBoneMatrix)
+	//{
+	//	Engine::CDynamicMesh*	pPlayerMeshCom = dynamic_cast<Engine::CDynamicMesh*>(pPlayer->GetComponent(Engine::ID_STATIC, L"Com_Mesh"));
+	//		//dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Mesh", Engine::ID_STATIC));
+	//	NULL_CHECK_RETURN(pPlayerMeshCom, 0);
 
-		const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("R_Hand");
+	//	const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("R_Hand");
 
-		m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
+	//	m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
 
-		//Engine::CTransform*		pPlayerTransCom = pPlayer->GetComponent<Engine::CTransform>();
-		//NULL_CHECK_RETURN(pPlayerTransCom, 0);
-		//m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
-	}
-	m_ParentWorldMatrix = pPlayer->GetTransform()->GetObjectMatrix();
+	//	//Engine::CTransform*		pPlayerTransCom = pPlayer->GetComponent<Engine::CTransform>();
+	//	//NULL_CHECK_RETURN(pPlayerTransCom, 0);
+	//	//m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
+	//}
+	//m_ParentWorldMatrix = pPlayer->GetTransform()->GetObjectMatrix();
 	//Engine::CGameObject::Update_Object(fTimeDelta);
 		
 	//m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));

@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "Transform.h"
 #include "ProtoMgr.h"
+#include "DynamicMesh.h"
+
 
 USING(Engine)
 
@@ -83,10 +85,28 @@ CComponent * Engine::CGameObject::Find_Component(const _tchar * pComponentTag, C
 	return iter->second;
 }
 
-void Engine::CGameObject::SetParent(CGameObject* _pParent) {
-	if (!_pParent)
-		return;
+_bool Engine::CGameObject::SetParent(CGameObject* _pParent, const char* _pBoneName) {
+	if (!_pParent) {
+		// 부모가 NULL값이 들어오면 부모로부터 해제된다.
+		Safe_Release(m_pParent);						// 기존 부모 해제
+		m_pParent = _pParent;							// 부모를 nullptr로 세팅	
+		GetTransform()->SetParentBoneMatrix(nullptr);	// 부모 뼈행렬도 nullptr로 세팅
+		return true;
+	}
+	
+	if (_pBoneName) {
+		// 본 이름에 해당하는 프레임을 찾는다.
+		CDynamicMesh* pParentDynamicMesh = _pParent->GetComponent<CDynamicMesh>();
+		if (!pParentDynamicMesh) return false;	// 동적 메쉬가 없다면 false를 반환
+		const D3DXFRAME_DERIVED* pFrame = pParentDynamicMesh->Get_FrameByName(_pBoneName);
+		if (!pFrame) return false;				// 프레임이 없다면 false를 반환
 
+		GetTransform()->SetParentBoneMatrix(&pFrame->CombinedTransformationMatrix);
+	}
+
+	// 부모 설정
+	Safe_Release(m_pParent);
 	m_pParent = _pParent;
-	Engine::Safe_AddRef(_pParent);
+	Safe_AddRef(m_pParent);
+	return true;
 }

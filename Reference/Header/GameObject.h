@@ -40,7 +40,7 @@ public:
 		const COMPONENTID id = T::GetComponentID();
 		return static_cast<T*>(AddComponent(id, tag));
 	}
-	void SetParent(CGameObject* _pParent);
+	_bool SetParent(CGameObject* _pParent, const char* _pBoneName = nullptr);
 	CGameObject* GetParent() const { return m_pParent; }
 
 	// 파일 입출력 관련

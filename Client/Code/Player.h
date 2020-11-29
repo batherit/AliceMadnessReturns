@@ -22,6 +22,8 @@ private: // 持失切, 社瑚切
 
 public:
 	void SetTartgetPos(const _vec3& _vTargetPos) { m_vTargetPos = _vTargetPos; }
+	//void AttachItemToBone(Engine::CGameObject* _pItemObject, const _tchar* _pBoneName);
+	//void DetachFromBone();
 
 public:
 	static CPlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

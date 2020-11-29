@@ -28,7 +28,8 @@ HRESULT CPlayer::Ready_Object(void)
 	pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
 	//pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Alice"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
+	m_mapComponent[Engine::CDynamicMesh::GetComponentID()].emplace(Engine::CDynamicMesh::GetComponentTag(), pComponent);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
 	// MeshRenderer
 	pComponent = m_pRenderer = AddComponent<Engine::CMeshRenderer>();
@@ -99,6 +100,14 @@ void CPlayer::Render_Object(void)
 	//Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
 }
+
+//void CPlayer::AttachItemToBone(Engine::CGameObject * _pItemObject, const _tchar * _pBoneName)
+//{
+//}
+//
+//void CPlayer::DetachFromBone()
+//{
+//}
 
 CPlayer * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

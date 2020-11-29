@@ -33,6 +33,11 @@ _int CInputMode_Navi::ProcessInput(const _float & _fDeltaTime)
 	if (!m_pEditScene)
 		return -1;
 
+
+
+
+
+
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
 		if (m_pEditScene->GetNaviMeshVtxCtrl()->GetPickMode() != NAVIMESH_TAB::PICKMODE_NAVI)
 			return 0;
@@ -114,5 +119,5 @@ _int CInputMode_Navi::ProcessInput(const _float & _fDeltaTime)
 			}
 		}
 	}
-	return _int();
+	return 0;
 }

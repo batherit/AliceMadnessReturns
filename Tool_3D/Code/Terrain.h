@@ -31,7 +31,7 @@ public:
 	virtual void		Free(void);
 
 private:
-	Engine::CRenderer* m_pRenderer = nullptr;
+	Engine::CPolygonRenderer* m_pRenderer = nullptr;
 	Engine::CTerrainTex* m_pTerrain = nullptr;
 };
 

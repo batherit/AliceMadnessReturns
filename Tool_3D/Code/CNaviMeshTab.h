@@ -25,7 +25,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
-	afx_msg void OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult);
+	//afx_msg void OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonDelete();
 	afx_msg void OnEnChangeEditPosX();
 	afx_msg void OnEnChangeEditPosY();
@@ -38,6 +38,10 @@ public:
 	afx_msg void OnBnClickedCheckNaviMagnet();
 	afx_msg void OnBnClickedRadioVertex();
 	afx_msg void OnBnClickedRadioTriangle();
+	afx_msg void OnBnClickedButtonSave();
+	afx_msg void OnBnClickedButtonLoad();
+	//afx_msg void OnTvnKeydownTree1(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMClickTree1(NMHDR *pNMHDR, LRESULT *pResult);
 
 public:
 	void UpdateNaviTree(Client::CNaviMesh* _pNaviMesh);
@@ -74,6 +78,5 @@ public:
 	CButton m_rbtnTriangle;
 
 	BOOL m_bIsNaviMagnet;
-	afx_msg void OnBnClickedButtonSave();
-	afx_msg void OnBnClickedButtonLoad();
+	
 };

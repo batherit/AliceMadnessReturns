@@ -43,7 +43,7 @@ public:
 	virtual void LoadInfo(HANDLE& _hfIn) override;
 
 private:
-	Engine::CRenderer* m_pRenderer = nullptr;
+	Engine::CPolygonRenderer* m_pRenderer = nullptr;
 	Engine::CManualCol* m_pManualCol = nullptr;
 	_int m_iMarkedTriangleIndex = -1;		//-1 => 선택된 삼각형이 없다.
 };

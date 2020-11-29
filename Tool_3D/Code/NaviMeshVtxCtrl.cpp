@@ -34,12 +34,18 @@ int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
 	if (!m_bIsActivated && m_ePickMode != NAVIMESH_TAB::PICKMODE_TRIANGLE)
 		return 0;
 
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+	auto pNaviMeshTab = pTabForm->GetNaviMeshTab();
+
 	if (!m_bIsPicking) {
 		if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
 			// 충돌된 평면을 찾는다.
 			auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
 			m_ePlaneType = GetPlaneTypeByRay(stPickingRayInfo);
-			if (m_ePickMode == NAVIMESH_TAB::PICKMODE_VERTEX && m_ePlaneType != PLANE::TYPE_END) {
+			
+
+			if (m_ePickMode == NAVIMESH_TAB::PICKMODE_VERTEX && m_ePlaneType != PLANE::TYPE_END && !pNaviMeshTab->m_btnCancel.IsWindowVisible()) {
 				m_bIsPicking = true;
 			}
 			else if(m_ePickMode == NAVIMESH_TAB::PICKMODE_VERTEX){
@@ -88,11 +94,17 @@ int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
 								//_vec3 vSrcPos = m_pNaviMesh->GetTriangleVertexPosition(pNaviMeshTab->m_pairLastPickedVertex.first, pNaviMeshTab->m_pairLastPickedVertex.second);
 								//m_pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, vSrcPos);
 								_vec3 vDestPos = m_pNaviMesh->GetTriangleVertexPosition(iTriangleIndex, iVertexIndex);
+
+								SetVertexInfo(m_pNaviMesh, pNaviMeshTab->m_pairLastPickedVertex.first, pNaviMeshTab->m_pairLastPickedVertex.second);
+								if (m_bIsGrouping)
+									FormGroup();
+								else
+									ReleaseGroup();
+
 								m_pNaviMesh->SetTriangleVertexPosition(pNaviMeshTab->m_pairLastPickedVertex.first, pNaviMeshTab->m_pairLastPickedVertex.second, vDestPos);
-								
-								// 정점 컨트롤러 위치 재갱신
-								SetVertexInfo(m_pNaviMesh, iTriangleIndex, iVertexIndex);
 								MoveGroup();
+								// 정점 컨트롤러 위치 재갱신
+								SetVertexInfo(m_pNaviMesh, pNaviMeshTab->m_pairLastPickedVertex.first, pNaviMeshTab->m_pairLastPickedVertex.second);
 							}
 
 							// 초기 상태로 돌아간다.
@@ -162,7 +174,7 @@ int CNaviMeshVtxCtrl::Update_Object(const _float & _fDeltaTime)
 		}
 	}
 
-	if(m_ePickMode != NAVIMESH_TAB::PICKMODE_TRIANGLE)
+	if(m_ePickMode != NAVIMESH_TAB::PICKMODE_TRIANGLE && !pNaviMeshTab->m_btnCancel.IsWindowEnabled())
 		m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 	return 0;
 }

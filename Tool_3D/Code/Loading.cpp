@@ -99,6 +99,16 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::CRenderer::GetComponentTag(), pComponent);
 
+	// PolygonRenderer
+	pComponent = Engine::CPolygonRenderer::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::CPolygonRenderer::GetComponentTag(), pComponent);
+
+	// MeshRenderer
+	pComponent = Engine::CMeshRenderer::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::CMeshRenderer::GetComponentTag(), pComponent);
+
 	// TerrainTex
 	pComponent = Engine::CTerrainTex::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

@@ -1,5 +1,5 @@
-#ifndef TerrainMap_h__
-#define TerrainMap_h__
+#ifndef Terrain_h__
+#define Terrain_h__
 
 #include "Define.h"
 #include "Base.h"

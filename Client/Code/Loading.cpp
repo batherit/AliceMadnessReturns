@@ -94,9 +94,9 @@ _uint CLoading::Loading_ForStage(void)
 	Engine::Ready_Proto(Engine::CTransform::GetComponentTag(), pComponent);
 
 	// Renderer (지금은 터레인 같은 애들이 쓰고 있기 때문에 일단 놔둠.)
-	pComponent = Engine::CRenderer::GetInstance();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CRenderer::GetComponentTag(), pComponent);
+	//pComponent = Engine::CRenderer::GetInstance();
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//Engine::Ready_Proto(Engine::CRenderer::GetComponentTag(), pComponent);
 
 	// PolygonRenderer
 	pComponent = Engine::CPolygonRenderer::Create();

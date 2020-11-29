@@ -21,15 +21,16 @@ CNaviMesh::~CNaviMesh(void)
 
 HRESULT CNaviMesh::Ready_Object(void)
 {
-	m_pRenderer = AddComponent<Engine::CRenderer>();
 	m_pManualCol = AddComponent<Engine::CManualCol>();
+	m_pRenderer = AddComponent<Engine::CPolygonRenderer>();
+	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pManualCol);
 	return S_OK;
 }
 
 int CNaviMesh::Update_Object(const _float & fTimeDelta)
 {
-	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
-
+	//m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	m_pRenderer->Update(fTimeDelta);
 	return 0;
 }
 
@@ -40,7 +41,9 @@ void CNaviMesh::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	m_pGraphicDev->SetTexture(0, NULL);
-	m_pManualCol->Render_Buffer();
+	//m_pManualCol->Render_Buffer();
+	m_pRenderer->Render();
+
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, dwCullMode);
 
 

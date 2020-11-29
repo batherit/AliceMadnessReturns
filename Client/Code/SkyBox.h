@@ -10,6 +10,8 @@ class CCubeTex;
 class CTexture;
 class CRenderer;
 class CTransform;
+class CPolygonRenderer;
+
 END
 
 BEGIN(Client)
@@ -27,7 +29,7 @@ public:
 private:
 	Engine::CCubeTex*				m_pCubeTex = nullptr;
 	Engine::CTexture*			m_pTexture = nullptr;
-	Engine::CRenderer*			m_pRenderer = nullptr;
+	Engine::CPolygonRenderer*			m_pRenderer = nullptr;
 
 public:
 	static CSkyBox*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

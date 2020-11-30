@@ -2,6 +2,8 @@
 #include "LoadScene.h"
 #include "Export_Function.h"
 #include "EditScene.h"
+#include "MainFrm.h"
+#include "CTabForm.h"
 
 
 CLoadScene::CLoadScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -35,12 +37,13 @@ Engine::_int CLoadScene::Update(const _float& fTimeDelta)
 
 	if (true == m_pLoading->Get_Finish())
 	{
-		//if (GetAsyncKeyState(VK_RETURN) & 0x8000)
-		//{
-			Engine::CManagement::GetInstance()->SetNextScene(CEditScene::Create(m_pGraphicDev));
+		CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+		CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+		pTabForm->EnableWindow(TRUE);
+		Engine::CManagement::GetInstance()->SetNextScene(CEditScene::Create(m_pGraphicDev));
 
-			return iExit;
-		//}	
+		return iExit;
+
 	}
 
 	return iExit;

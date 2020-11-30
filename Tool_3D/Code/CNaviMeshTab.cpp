@@ -387,6 +387,7 @@ void CNaviMeshTab::OnBnClickedButtonLoad()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	// TODO : 네비메쉬를 읽어옵니다.
 	g_pTool3D_Kernel->GetEditScene()->LoadNaviMesh();
+	UpdateNaviTree(g_pTool3D_Kernel->GetEditScene()->GetNaviMesh());
 }
 
 

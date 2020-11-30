@@ -41,6 +41,7 @@
     <ClInclude Include="..\Code\Loading.h" />
     <ClInclude Include="..\Code\LoadScene.h" />
     <ClInclude Include="..\Code\NaviMesh.h" />
+    <ClInclude Include="..\Code\NaviMeshInputProcessor.h" />
     <ClInclude Include="..\Code\NaviMeshVtxCtrl.h" />
     <ClInclude Include="..\Code\PointObject.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -88,6 +89,7 @@
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\LoadScene.cpp" />
     <ClCompile Include="..\Code\NaviMesh.cpp" />
+    <ClCompile Include="..\Code\NaviMeshInputProcessor.cpp" />
     <ClCompile Include="..\Code\NaviMeshVtxCtrl.cpp" />
     <ClCompile Include="..\Code\PointObject.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

@@ -7,7 +7,7 @@
 #include "Export_Function.h"
 
 BEGIN(Client)
-
+class CNaviMeshInputProcessor;
 class CInputMode_Navi : public Engine::CInputMode
 {
 public: // 持失切, 社瑚切
@@ -21,6 +21,7 @@ public:
 private:
 	CEditScene* m_pEditScene = nullptr;
 	vector<_vec3> m_vecTriangle;
+	CNaviMeshInputProcessor* m_pNaviMeshInputProcessor = nullptr;
 };
 
 END

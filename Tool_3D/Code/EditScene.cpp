@@ -4,6 +4,7 @@
 #include "Terrain.h"
 #include "NaviMesh.h"
 #include "NaviMeshVtxCtrl.h"
+#include "NaviMeshInputProcessor.h"
 #include "InputMode_Terrain.h"
 #include "MainFrm.h"
 #include "CTabForm.h"
@@ -59,6 +60,11 @@ HRESULT CEditScene::Ready(void)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxCtrl", pNaviMeshVtxCtrl), E_FAIL);
 	pNaviMeshVtxCtrl->SetNaviMesh(pNaviMesh);
 	pNaviMeshVtxCtrl->SetActive(false);
+
+	// 네비메쉬 입력 처리기 생성
+	CNaviMeshInputProcessor* pNaviMeshInputProcessor = CNaviMeshInputProcessor::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pNaviMeshInputProcessor, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshInputProcessor", pNaviMeshInputProcessor), E_FAIL);
 
 	// 편집 레이어 등록
 	m_mapLayer.emplace(L"EditLayer", pLayer);
@@ -154,6 +160,21 @@ CNaviMeshVtxCtrl * CEditScene::GetNaviMeshVtxCtrl() const
 		return nullptr;
 
 	return static_cast<CNaviMeshVtxCtrl*>(*rLayerList.begin());
+}
+
+CNaviMeshInputProcessor * CEditScene::GetNaviMeshInputProcessor() const
+{
+	auto pLayer = GetLayer(L"EditLayer");
+
+	if (!pLayer)
+		return nullptr;
+
+	auto& rLayerList = pLayer->GetLayerList(L"NaviMeshInputProcessor");
+
+	if (rLayerList.empty())
+		return nullptr;
+
+	return static_cast<CNaviMeshInputProcessor*>(*rLayerList.begin());
 }
 
 Engine::CGameObject * CEditScene::GetPickedObject() const

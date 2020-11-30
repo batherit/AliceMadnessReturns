@@ -56,9 +56,6 @@
     <Filter Include="04. Object\DynamicCamera">
       <UniqueIdentifier>{fdfc7e93-bfb2-41bf-82be-2259b4bdce9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. InputMode">
-      <UniqueIdentifier>{bbe7685e-f8e8-4095-93b7-c2c8a6c43ee3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00. View%28Workspace%29\Tab">
       <UniqueIdentifier>{eb57a8ab-93e3-4f3e-96a5-c997acc79892}</UniqueIdentifier>
     </Filter>
@@ -70,6 +67,12 @@
     </Filter>
     <Filter Include="04. Object\PointObject">
       <UniqueIdentifier>{db149def-e233-47f3-ba3a-735281f31cfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. InputMode">
+      <UniqueIdentifier>{bbe7685e-f8e8-4095-93b7-c2c8a6c43ee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Object\InputProcessor">
+      <UniqueIdentifier>{88243d0a-79f1-4b99-88d4-3c958f227e30}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -157,12 +160,6 @@
     <ClInclude Include="..\Code\CTabForm.h">
       <Filter>00. View%28Workspace%29\Form</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\InputMode_Navi.h">
-      <Filter>03. InputMode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\InputMode_Terrain.h">
-      <Filter>03. InputMode</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\CNaviMeshTab.h">
       <Filter>00. View%28Workspace%29\Tab</Filter>
     </ClInclude>
@@ -180,6 +177,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\InputMode_Map.h">
       <Filter>03. InputMode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputMode_Navi.h">
+      <Filter>03. InputMode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputMode_Terrain.h">
+      <Filter>03. InputMode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\NaviMeshInputProcessor.h">
+      <Filter>04. Object\InputProcessor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -237,12 +243,6 @@
     <ClCompile Include="..\Code\CTabForm.cpp">
       <Filter>00. View%28Workspace%29\Form</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\InputMode_Navi.cpp">
-      <Filter>03. InputMode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\InputMode_Terrain.cpp">
-      <Filter>03. InputMode</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CNaviMeshTab.cpp">
       <Filter>00. View%28Workspace%29\Tab</Filter>
     </ClCompile>
@@ -260,6 +260,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\InputMode_Map.cpp">
       <Filter>03. InputMode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputMode_Navi.cpp">
+      <Filter>03. InputMode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputMode_Terrain.cpp">
+      <Filter>03. InputMode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\NaviMeshInputProcessor.cpp">
+      <Filter>04. Object\InputProcessor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

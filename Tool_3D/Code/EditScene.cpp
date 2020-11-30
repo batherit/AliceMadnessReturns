@@ -3,7 +3,8 @@
 #include "DynamicCamera.h"
 #include "Terrain.h"
 #include "NaviMesh.h"
-#include "NaviMeshVtxCtrl.h"
+//#include "NaviMeshVtxCtrl.h"
+#include "NaviMeshVtxMover.h"
 #include "NaviMeshInputProcessor.h"
 #include "InputMode_Terrain.h"
 #include "MainFrm.h"
@@ -55,16 +56,21 @@ HRESULT CEditScene::Ready(void)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMesh", pNaviMesh), E_FAIL);
 
 	// 네비메쉬버텍스컨트롤러 생성
-	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = CNaviMeshVtxCtrl::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pNaviMeshVtxCtrl, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxCtrl", pNaviMeshVtxCtrl), E_FAIL);
-	pNaviMeshVtxCtrl->SetNaviMesh(pNaviMesh);
-	pNaviMeshVtxCtrl->SetActive(false);
+	//CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = CNaviMeshVtxCtrl::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pNaviMeshVtxCtrl, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxCtrl", pNaviMeshVtxCtrl), E_FAIL);
+	//pNaviMeshVtxCtrl->SetNaviMesh(pNaviMesh);
+	//pNaviMeshVtxCtrl->SetActive(false);
+
+	// 네비메쉬정점이동자 생성
+	CNaviMeshVtxMover* pNaviMeshVtxMover = CNaviMeshVtxMover::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pNaviMeshVtxMover, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxMover", pNaviMeshVtxMover), E_FAIL);
 
 	// 네비메쉬 입력 처리기 생성
-	CNaviMeshInputProcessor* pNaviMeshInputProcessor = CNaviMeshInputProcessor::Create(m_pGraphicDev);
+	/*CNaviMeshInputProcessor* pNaviMeshInputProcessor = CNaviMeshInputProcessor::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pNaviMeshInputProcessor, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshInputProcessor", pNaviMeshInputProcessor), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshInputProcessor", pNaviMeshInputProcessor), E_FAIL);*/
 
 	// 편집 레이어 등록
 	m_mapLayer.emplace(L"EditLayer", pLayer);
@@ -147,35 +153,40 @@ CNaviMesh * CEditScene::GetNaviMesh() const
 	return static_cast<CNaviMesh*>(*rLayerList.begin());
 }
 
-CNaviMeshVtxCtrl * CEditScene::GetNaviMeshVtxCtrl() const
+CNaviMeshVtxMover * CEditScene::GetNaviMeshVtxMover() const
 {
 	auto pLayer = GetLayer(L"EditLayer");
 
 	if (!pLayer)
 		return nullptr;
 
-	auto& rLayerList = pLayer->GetLayerList(L"NaviMeshVtxCtrl");
+	auto& rLayerList = pLayer->GetLayerList(L"NaviMeshVtxMover");
 
 	if (rLayerList.empty())
 		return nullptr;
 
-	return static_cast<CNaviMeshVtxCtrl*>(*rLayerList.begin());
+	return static_cast<CNaviMeshVtxMover*>(*rLayerList.begin());
 }
 
-CNaviMeshInputProcessor * CEditScene::GetNaviMeshInputProcessor() const
+Engine::CInputMode * CEditScene::GetInputProcessor() const
 {
-	auto pLayer = GetLayer(L"EditLayer");
-
-	if (!pLayer)
-		return nullptr;
-
-	auto& rLayerList = pLayer->GetLayerList(L"NaviMeshInputProcessor");
-
-	if (rLayerList.empty())
-		return nullptr;
-
-	return static_cast<CNaviMeshInputProcessor*>(*rLayerList.begin());
+	return m_pInputModeMgr->GetCurInputMode();
 }
+
+//CNaviMeshInputProcessor * CEditScene::GetNaviMeshInputProcessor() const
+//{
+//	auto pLayer = GetLayer(L"EditLayer");
+//
+//	if (!pLayer)
+//		return nullptr;
+//
+//	auto& rLayerList = pLayer->GetLayerList(L"NaviMeshInputProcessor");
+//
+//	if (rLayerList.empty())
+//		return nullptr;
+//
+//	return static_cast<CNaviMeshInputProcessor*>(*rLayerList.begin());
+//}
 
 Engine::CGameObject * CEditScene::GetPickedObject() const
 {

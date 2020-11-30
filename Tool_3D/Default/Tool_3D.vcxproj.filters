@@ -68,11 +68,14 @@
     <Filter Include="04. Object\PointObject">
       <UniqueIdentifier>{db149def-e233-47f3-ba3a-735281f31cfb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. InputMode">
-      <UniqueIdentifier>{bbe7685e-f8e8-4095-93b7-c2c8a6c43ee3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. Object\InputProcessor">
       <UniqueIdentifier>{88243d0a-79f1-4b99-88d4-3c958f227e30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Object\NaviMeshVtxMover">
+      <UniqueIdentifier>{93ab7ba6-b1f5-4264-98d1-cb7d59331443}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. InputProcessor">
+      <UniqueIdentifier>{bbe7685e-f8e8-4095-93b7-c2c8a6c43ee3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -176,16 +179,22 @@
       <Filter>00. View%28Workspace%29\Tab</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\InputMode_Map.h">
-      <Filter>03. InputMode</Filter>
+      <Filter>03. InputProcessor</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\InputMode_Navi.h">
-      <Filter>03. InputMode</Filter>
+      <Filter>03. InputProcessor</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\InputMode_Terrain.h">
-      <Filter>03. InputMode</Filter>
+      <Filter>03. InputProcessor</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\NaviMeshInputProcessor.h">
       <Filter>04. Object\InputProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputProcessor_Navi.h">
+      <Filter>03. InputProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\NaviMeshVtxMover.h">
+      <Filter>04. Object\NaviMeshVtxMover</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -259,16 +268,22 @@
       <Filter>00. View%28Workspace%29\Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InputMode_Map.cpp">
-      <Filter>03. InputMode</Filter>
+      <Filter>03. InputProcessor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InputMode_Navi.cpp">
-      <Filter>03. InputMode</Filter>
+      <Filter>03. InputProcessor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InputMode_Terrain.cpp">
-      <Filter>03. InputMode</Filter>
+      <Filter>03. InputProcessor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\NaviMeshInputProcessor.cpp">
       <Filter>04. Object\InputProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputProcessor_Navi.cpp">
+      <Filter>03. InputProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\NaviMeshVtxMover.cpp">
+      <Filter>04. Object\NaviMeshVtxMover</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

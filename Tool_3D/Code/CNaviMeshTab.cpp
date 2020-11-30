@@ -5,7 +5,10 @@
 #include "Tool_3D.h"
 #include "CNaviMeshTab.h"
 #include "NaviMesh.h"
-#include "NaviMeshVtxCtrl.h"
+#include "InputProcessor_Navi.h"
+//#include "NaviMeshInputProcessor.h"
+//#include "NaviMeshVtxCtrl.h"
+#include "NaviMeshVtxMover.h"
 #include "EditScene.h"
 #include "afxdialogex.h"
 
@@ -139,30 +142,17 @@ void CNaviMeshTab::OnBnClickedButtonDelete()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
+	// 편집하고 있는 네비메쉬 얻기
 	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
 
-	//if (!m_hSelectedTreeItem)
-	//	return;
-
+	// 현재 선택한 삼각형이 있는지를 확인한다.
 	if (pNaviMesh->GetMarkedTriangleIndex() == -1)
 		return;
-
-	//CString strIndex = m_treeNavi.GetItemText(m_hSelectedTreeItem);
-	//_int iIndex = _ttoi(strIndex);
-	
-	HTREEITEM treeRootItem = m_treeNavi.GetRootItem();
-	m_treeNavi.DeleteItem(treeRootItem);
-	//m_treeNavi.DeleteItem(m_hSelectedTreeItem);
-	//m_treeNavi.DeleteItem(m_treeNavi.GetNextSiblingItem(treeRootItem));
-	
-
-	// 네비메쉬 갱신
-	//CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+	// 네비메쉬에서 해당 삼각형을 제거한다.
 	pNaviMesh->PopTriangleVertices(pNaviMesh->GetMarkedTriangleIndex());
-
 	// 네비트리 갱신
 	UpdateNaviTree(pNaviMesh);
-
+	// 삭제 버튼 비활성화
 	m_btnDelete.EnableWindow(FALSE);
 }
 
@@ -177,18 +167,16 @@ void CNaviMeshTab::OnEnChangeEditPosX()
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
 	//m_hSelectedTreeItem;	=> 삼각형의 정점 중 하나로 해석된다.
-	auto hParent = m_treeNavi.GetParentItem(m_hSelectedTreeItem);
-	_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
-	_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
-	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
-	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+	//auto hParent = m_treeNavi.GetParentItem(m_hSelectedTreeItem);
+	//_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
+	//_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
 
+	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
+	
+	
 	UpdateData(TRUE);
-
-	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
-	pNaviMeshVtxCtrl->GetTransform()->SetPos(m_vVertexPos);
-	pNaviMeshVtxCtrl->MoveGroup();
-
+	// 정점을 이동시키기 이전에 유효한 삼각형 정점이 세팅되어 있어야 합니다.
+	pNaviMeshVtxMover->SetVertexPos(m_vVertexPos);
 	UpdateData(FALSE);
 }
 
@@ -202,19 +190,11 @@ void CNaviMeshTab::OnEnChangeEditPosY()
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
-	//m_hSelectedTreeItem;	=> 삼각형의 정점 중 하나로 해석된다.
-	auto hParent = m_treeNavi.GetParentItem(m_hSelectedTreeItem);
-	_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
-	_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
-	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
-	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
 
 	UpdateData(TRUE);
-
-	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
-	pNaviMeshVtxCtrl->GetTransform()->SetPos(m_vVertexPos);
-	pNaviMeshVtxCtrl->MoveGroup();
-
+	// 정점을 이동시키기 이전에 유효한 삼각형 정점이 세팅되어 있어야 합니다.
+	pNaviMeshVtxMover->SetVertexPos(m_vVertexPos);
 	UpdateData(FALSE);
 }
 
@@ -228,19 +208,11 @@ void CNaviMeshTab::OnEnChangeEditPosZ()
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
-	//m_hSelectedTreeItem;	=> 삼각형의 정점 중 하나로 해석된다.
-	auto hParent = m_treeNavi.GetParentItem(m_hSelectedTreeItem);
-	_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
-	_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
-	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
-	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
 
 	UpdateData(TRUE);
-
-	pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, m_vVertexPos);
-	pNaviMeshVtxCtrl->GetTransform()->SetPos(m_vVertexPos);
-	pNaviMeshVtxCtrl->MoveGroup();
-
+	// 정점을 이동시키기 이전에 유효한 삼각형 정점이 세팅되어 있어야 합니다.
+	pNaviMeshVtxMover->SetVertexPos(m_vVertexPos);
 	UpdateData(FALSE);
 }
 
@@ -248,11 +220,15 @@ void CNaviMeshTab::OnEnChangeEditPosZ()
 void CNaviMeshTab::OnBnClickedButtonCombine()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
 	// 컴바인 버튼이 눌리면, 컴바인 캔슬 버튼이 보이게 된다.
 	m_btnCombine.EnableWindow(FALSE);
 	m_btnCombine.ShowWindow(FALSE);
 	m_btnCancel.EnableWindow(TRUE);
 	m_btnCancel.ShowWindow(TRUE);
+
+	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
+	pNaviMeshVtxMover->ActivateMoverGizmo(false);	// 이동자 기즈모를 활성화하지 않습니다. (선택과 함수를 통한 이동은 가능합니다.)
 }
 
 
@@ -260,10 +236,13 @@ void CNaviMeshTab::OnBnClickedButtonCancel()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	// 캔슬 버튼이 눌리면 비활성화된 상태의 컴바인 버튼이 보인다.
-	m_btnCombine.EnableWindow(FALSE);
+	m_btnCombine.EnableWindow(TRUE);
 	m_btnCombine.ShowWindow(TRUE);
 	m_btnCancel.EnableWindow(FALSE);
 	m_btnCancel.ShowWindow(FALSE);
+
+	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
+	pNaviMeshVtxMover->ActivateMoverGizmo(true);	// 이동자 기즈모를 활성화합니다. (기즈모를 통한 드래그 이동이 가능해집니다.)
 }
 
 
@@ -271,19 +250,19 @@ void CNaviMeshTab::OnBnClickedCheckGroup()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	
-	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+	CNaviMeshVtxMover* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
 
 	UpdateData(TRUE);
-
-	pNaviMeshVtxCtrl->SetGrouping(m_bIsGrouping);
 
 	if (m_chkGroup.GetCheck()) {
 		// 활성화된 상태라면,
 		m_editGroupRange.EnableWindow(TRUE);
 		m_fGroupRange = pNaviMeshVtxCtrl->GetGroupRange();
+		pNaviMeshVtxCtrl->FormGroup();
 	}
 	else {
 		m_editGroupRange.EnableWindow(FALSE);
+		pNaviMeshVtxCtrl->ReleaseGroup();
 	}
 	
 	UpdateData(FALSE);
@@ -298,12 +277,13 @@ void CNaviMeshTab::OnEnChangeEditGroupRange()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
 
 	UpdateData(TRUE);
 
-	pNaviMeshVtxCtrl->SetGroupRange(m_fGroupRange);
-	pNaviMeshVtxCtrl->SetGrouping(true);
+	// 새로 지정된 그룹 범위를 이동자에 세팅하고, 새로이 그룹을 지정합니다.
+	pNaviMeshVtxMover->SetGroupRange(m_fGroupRange);
+	pNaviMeshVtxMover->FormGroup();
 
 	UpdateData(FALSE);
 }
@@ -312,25 +292,28 @@ void CNaviMeshTab::OnEnChangeEditGroupRange()
 void CNaviMeshTab::OnBnClickedRadioNavi()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetEditScene()->GetInputProcessor());
+	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
 
 	UpdateData(TRUE);
 
-	pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_NAVI);
+	if (pInputProcessor) {
+		pInputProcessor->ClearPickedVertices();
+	}
 
 	UpdateData(FALSE);
+
+	pNaviMeshVtxMover->ActivateMoverGizmo(false);
+	pNaviMesh->ReleaseMarkedTriangle();
+	m_btnDelete.EnableWindow(FALSE);
 }
 
 
 void CNaviMeshTab::OnBnClickedCheckNaviMagnet()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
-
 	UpdateData(TRUE);
-
-	pNaviMeshVtxCtrl->SetNaviMagnet(m_bIsNaviMagnet);
-
 	UpdateData(FALSE);
 }
 
@@ -338,30 +321,40 @@ void CNaviMeshTab::OnBnClickedCheckNaviMagnet()
 void CNaviMeshTab::OnBnClickedRadioVertex()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetEditScene()->GetInputProcessor());
 	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
 
 	UpdateData(TRUE);
 
-	pNaviMeshVtxCtrl->SetNaviMesh(pNaviMesh);
-	pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_VERTEX);
+	if (pInputProcessor) {
+		pInputProcessor->ClearPickedVertices();
+	}
 
 	UpdateData(FALSE);
+
+	if(pNaviMeshVtxMover->GetVertexIndex() != -1)
+		pNaviMeshVtxMover->ActivateMoverGizmo(true);
+	pNaviMesh->ReleaseMarkedTriangle();
+	m_btnDelete.EnableWindow(FALSE);
 }
 
 
 void CNaviMeshTab::OnBnClickedRadioTriangle()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
-	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetEditScene()->GetInputProcessor());
+	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
 
 	UpdateData(TRUE);
 
-	pNaviMeshVtxCtrl->SetNaviMesh(pNaviMesh);
-	pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_TRIANGLE);
+	if (pInputProcessor) {
+		pInputProcessor->ClearPickedVertices();
+	}
 
 	UpdateData(FALSE);
+
+	pNaviMeshVtxMover->ActivateMoverGizmo(false);
 }
 
 
@@ -407,85 +400,82 @@ void CNaviMeshTab::OnNMClickTree1(NMHDR *pNMHDR, LRESULT *pResult)
 	//m_hSelectedTreeItem = pNMTreeView->itemNew.hItem;	// 선택된 아이템
 	m_hSelectedTreeItem = hItem;
 	auto hParent = m_treeNavi.GetParentItem(m_hSelectedTreeItem);
-	CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxCtrl();
+	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
+	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetEditScene()->GetInputProcessor());
 
 	if (hParent) {
 		// 삼각형의 정점 중 하나를 선택한 경우
-		m_btnDelete.EnableWindow(FALSE);
-
-		_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
-		_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
-
+		
 		// Position Edit Ctrl 활성화
 		m_editPosX.EnableWindow(TRUE);
 		m_editPosY.EnableWindow(TRUE);
 		m_editPosZ.EnableWindow(TRUE);
+
+		// 그룹 체크 박스 활성화
 		m_chkGroup.EnableWindow(TRUE);
+		m_chkGroup.SetCheck(FALSE);
+		pNaviMeshVtxMover->ReleaseGroup();
 
-
-		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
-
-		// 정점 컨트롤러에 컨트롤할 삼각형 정점 정보를 등록한다.
-		pNaviMeshVtxCtrl->SetVertexInfo(pNaviMesh, iTriangleIndex, iVertexIndex);
-		pNaviMeshVtxCtrl->SetGrouping(false);
-		pNaviMeshVtxCtrl->SetActive(true);
-		auto& rVertices = pNaviMesh->GetNaviVertices();
-
-		pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_VERTEX);
+		// 삼각형 삭제 버튼 비활성화
+		m_btnDelete.EnableWindow(FALSE);
+		
+		// 픽모드를 변경한다.
+		pInputProcessor->ClearPickedVertices();
 		m_rbtnNavi.SetCheck(FALSE);
 		m_rbtnVertex.SetCheck(TRUE);
 		m_rbtnTriangle.SetCheck(FALSE);
 
-		// UI 동기화
-		UpdateData(TRUE);
-		m_bIsGrouping = pNaviMeshVtxCtrl->IsGrouping();
-		m_vVertexPos = rVertices[iTriangleIndex * 3 + iVertexIndex];
-		UpdateData(FALSE);
+		_int iTriangleIndex = _ttoi(m_treeNavi.GetItemText(hParent));
+		_int iVertexIndex = _ttoi(m_treeNavi.GetItemText(m_hSelectedTreeItem));
+		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+		pNaviMesh->ReleaseMarkedTriangle();
 
 		if (m_btnCombine.IsWindowVisible()) {
 			// 초기 상태에서 정점을 선택하여 컴바인 버튼이 활성화된 상태로 전환
-			m_pairLastPickedVertex.first = iTriangleIndex;
-			m_pairLastPickedVertex.second = iVertexIndex;
+			pNaviMeshVtxMover->SelectVertex(pNaviMesh, iTriangleIndex, iVertexIndex);
+			pNaviMeshVtxMover->ActivateMoverGizmo(true);
 			m_btnCombine.EnableWindow(TRUE);
 		}
 		else if (m_btnCancel.IsWindowVisible()) {
 			if (m_pairLastPickedVertex.first != iTriangleIndex) {
 				// 컴바인을 수행한다.
-				// 다른 정점의 삼각형이면 컴바인을 수행한다.
-				//_vec3 vSrcPos = pNaviMesh->GetTriangleVertexPosition(m_pairLastPickedVertex.first, m_pairLastPickedVertex.second);
-				//pNaviMesh->SetTriangleVertexPosition(iTriangleIndex, iVertexIndex, vSrcPos);
+				// 이동할 지점의 위치를 얻어온다.
 				_vec3 vDestPos = pNaviMesh->GetTriangleVertexPosition(iTriangleIndex, iVertexIndex);
-				
-				pNaviMeshVtxCtrl->SetVertexInfo(pNaviMesh, m_pairLastPickedVertex.first, m_pairLastPickedVertex.second);
-				if (pNaviMeshVtxCtrl->IsGrouping())
-					pNaviMeshVtxCtrl->FormGroup();
-				else
-					pNaviMeshVtxCtrl->ReleaseGroup();
-
-				pNaviMesh->SetTriangleVertexPosition(m_pairLastPickedVertex.first, m_pairLastPickedVertex.second, vDestPos);
-				pNaviMeshVtxCtrl->MoveGroup();
-				// 정점 컨트롤러 위치 재갱신
-				pNaviMeshVtxCtrl->SetVertexInfo(pNaviMesh, m_pairLastPickedVertex.first, m_pairLastPickedVertex.second);
+				pNaviMeshVtxMover->SetVertexPos(vDestPos);
+				if (m_chkGroup.GetCheck()) 
+					pNaviMeshVtxMover->MoveGroup();
+				else 
+					pNaviMeshVtxMover->ReleaseGroup();
+				// 이동을 완료하였다면, 클릭한 정점을 선택한다.
+				pNaviMeshVtxMover->SelectVertex(pNaviMesh, iTriangleIndex, iVertexIndex);
 			}
+			// 이동 기즈모를 활성화한다.
+			pNaviMeshVtxMover->ActivateMoverGizmo(true);
 
 			// 초기 상태로 돌아간다.
-			m_btnCombine.EnableWindow(FALSE);
+			m_btnCombine.EnableWindow(TRUE);
 			m_btnCombine.ShowWindow(TRUE);
 			m_btnCancel.EnableWindow(FALSE);
 			m_btnCancel.ShowWindow(FALSE);
 		}
+
+		// UI 동기화
+		UpdateData(TRUE);
+		m_vVertexPos = pNaviMeshVtxMover->GetVertexPos();
+		UpdateData(FALSE);
 	}
 	else {
 		// 삼각형 자체를 선택한 경우
-
 		CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
-		pNaviMeshVtxCtrl->SetActive(false);
+
+		// 이동 기즈모를 비활성화시킨다.
+		pNaviMeshVtxMover->ActivateMoverGizmo(false);
 
 		CString strIndex = m_treeNavi.GetItemText(m_hSelectedTreeItem);
 		_int iIndex = _ttoi(strIndex);
 		pNaviMesh->MarkTriangle(iIndex);
 
-		m_btnDelete.EnableWindow(TRUE);
+		
 		// Position Edit Ctrl 비활성화
 		m_editPosX.EnableWindow(FALSE);
 		m_editPosY.EnableWindow(FALSE);
@@ -493,7 +483,10 @@ void CNaviMeshTab::OnNMClickTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		m_chkGroup.EnableWindow(FALSE);
 		m_editGroupRange.EnableWindow(FALSE);
 
-		pNaviMeshVtxCtrl->SetPickMode(NAVIMESH_TAB::PICKMODE_TRIANGLE);
+		// 삼각형 삭제 버튼을 활성화한다.
+		m_btnDelete.EnableWindow(TRUE);
+
+		// 삼각형 픽모드로 세팅한다.
 		m_rbtnNavi.SetCheck(FALSE);
 		m_rbtnVertex.SetCheck(FALSE);
 		m_rbtnTriangle.SetCheck(TRUE);

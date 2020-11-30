@@ -11,7 +11,8 @@
 #include "NaviMeshVtxCtrl.h"
 #include "EditScene.h"
 #include "InputMode_Terrain.h"
-#include "InputMode_Navi.h"
+// #include "InputMode_Navi.h"
+#include "InputProcessor_Navi.h"
 #include "InputMode_Map.h"
 
 
@@ -108,7 +109,7 @@ void CTabForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	int iSelIndex = m_Tab.GetCurSel();
 	CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
-	pEditScene->GetNaviMeshVtxCtrl()->SetActive(false);
+	//pEditScene->GetNaviMeshVtxCtrl()->SetActive(false);
 	auto pInputModeMgr = pEditScene->GetInputModeMgr();
 	
 	switch (iSelIndex)
@@ -124,7 +125,7 @@ void CTabForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 		
 	case 1: {
 		if (pInputModeMgr)
-			pInputModeMgr->SetNextInputMode(new CInputMode_Navi(pInputModeMgr));
+			pInputModeMgr->SetNextInputMode(new CInputProcessor_Navi(pInputModeMgr));
 		m_pTerrainTab->ShowWindow(SW_HIDE);
 		m_pNaviMeshTab->ShowWindow(SW_SHOW);
 		m_pMapTab->ShowWindow(SW_HIDE);

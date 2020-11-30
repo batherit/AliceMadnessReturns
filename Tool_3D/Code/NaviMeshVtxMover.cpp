@@ -82,14 +82,15 @@ int CNaviMeshVtxMover::Update_Object(const _float & _fDeltaTime)
 						SelectVertex(m_pNaviMesh, iTriangleIndex, iVertexIndex);
 
 						pNaviMeshTab->m_chkGroup.EnableWindow(TRUE);
-						pNaviMeshTab->m_chkGroup.SetCheck(FALSE);
-						ReleaseGroup();
 
 						// 초기 상태로 돌아간다.
 						pNaviMeshTab->m_btnCombine.EnableWindow(TRUE);
 						pNaviMeshTab->m_btnCombine.ShowWindow(TRUE);
 						pNaviMeshTab->m_btnCancel.EnableWindow(FALSE);
 						pNaviMeshTab->m_btnCancel.ShowWindow(FALSE);
+
+						if (pNaviMeshTab->m_chkGroup.GetCheck())
+							FormGroup();
 					}
 
 					// UI 동기화

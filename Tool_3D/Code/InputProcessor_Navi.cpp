@@ -244,8 +244,7 @@ void CInputProcessor_Navi::PickVertex()
 
 			// 그룹 체크 박스 활성화
 			m_pNaviMeshTab->m_chkGroup.EnableWindow(TRUE);
-			m_pNaviMeshTab->m_chkGroup.SetCheck(FALSE);
-			pNaviMeshVtxMover->ReleaseGroup();
+
 
 			// 삼각형 삭제 버튼 비활성화
 			m_pNaviMeshTab->m_btnDelete.EnableWindow(FALSE);
@@ -290,6 +289,9 @@ void CInputProcessor_Navi::PickVertex()
 				m_pNaviMeshTab->m_btnCancel.EnableWindow(FALSE);
 				m_pNaviMeshTab->m_btnCancel.ShowWindow(FALSE);
 			}
+
+			if (m_pNaviMeshTab->m_chkGroup.GetCheck())
+				pNaviMeshVtxMover->FormGroup();
 
 			// UI 동기화
 			m_pNaviMeshTab->UpdateVertexPos(pNaviMeshVtxMover->GetVertexPos());

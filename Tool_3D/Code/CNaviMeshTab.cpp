@@ -178,6 +178,9 @@ void CNaviMeshTab::OnEnChangeEditPosX()
 	// 정점을 이동시키기 이전에 유효한 삼각형 정점이 세팅되어 있어야 합니다.
 	pNaviMeshVtxMover->SetVertexPos(m_vVertexPos);
 	UpdateData(FALSE);
+
+	if (m_chkGroup.GetCheck())
+		pNaviMeshVtxMover->MoveGroup();
 }
 
 
@@ -196,6 +199,9 @@ void CNaviMeshTab::OnEnChangeEditPosY()
 	// 정점을 이동시키기 이전에 유효한 삼각형 정점이 세팅되어 있어야 합니다.
 	pNaviMeshVtxMover->SetVertexPos(m_vVertexPos);
 	UpdateData(FALSE);
+
+	if (m_chkGroup.GetCheck())
+		pNaviMeshVtxMover->MoveGroup();
 }
 
 
@@ -214,6 +220,11 @@ void CNaviMeshTab::OnEnChangeEditPosZ()
 	// 정점을 이동시키기 이전에 유효한 삼각형 정점이 세팅되어 있어야 합니다.
 	pNaviMeshVtxMover->SetVertexPos(m_vVertexPos);
 	UpdateData(FALSE);
+
+	if (m_chkGroup.GetCheck()) {
+		pNaviMeshVtxMover->MoveGroup();
+	}
+		
 }
 
 
@@ -307,6 +318,8 @@ void CNaviMeshTab::OnBnClickedRadioNavi()
 	pNaviMeshVtxMover->ActivateMoverGizmo(false);
 	pNaviMesh->ReleaseMarkedTriangle();
 	m_btnDelete.EnableWindow(FALSE);
+	m_chkGroup.SetCheck(FALSE);
+	m_chkGroup.EnableWindow(FALSE);
 }
 
 
@@ -337,6 +350,7 @@ void CNaviMeshTab::OnBnClickedRadioVertex()
 		pNaviMeshVtxMover->ActivateMoverGizmo(true);
 	pNaviMesh->ReleaseMarkedTriangle();
 	m_btnDelete.EnableWindow(FALSE);
+	m_chkGroup.EnableWindow(TRUE);
 }
 
 
@@ -355,6 +369,8 @@ void CNaviMeshTab::OnBnClickedRadioTriangle()
 	UpdateData(FALSE);
 
 	pNaviMeshVtxMover->ActivateMoverGizmo(false);
+	m_chkGroup.SetCheck(FALSE);
+	m_chkGroup.EnableWindow(FALSE);
 }
 
 
@@ -413,8 +429,8 @@ void CNaviMeshTab::OnNMClickTree1(NMHDR *pNMHDR, LRESULT *pResult)
 
 		// 그룹 체크 박스 활성화
 		m_chkGroup.EnableWindow(TRUE);
-		m_chkGroup.SetCheck(FALSE);
-		pNaviMeshVtxMover->ReleaseGroup();
+		//if (m_chkGroup.GetCheck())
+		//	pNaviMeshVtxMover->FormGroup();
 
 		// 삼각형 삭제 버튼 비활성화
 		m_btnDelete.EnableWindow(FALSE);
@@ -458,6 +474,9 @@ void CNaviMeshTab::OnNMClickTree1(NMHDR *pNMHDR, LRESULT *pResult)
 			m_btnCancel.EnableWindow(FALSE);
 			m_btnCancel.ShowWindow(FALSE);
 		}
+
+		if (m_chkGroup.GetCheck())
+			pNaviMeshVtxMover->FormGroup();
 
 		// UI 동기화
 		UpdateData(TRUE);

@@ -120,12 +120,6 @@
     <ClInclude Include="..\Code\MeshCollider.h">
       <Filter>04. Component\02. Collider\01. MeshCollider</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\InputMode.h">
-      <Filter>05. InputMode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\InputModeMgr.h">
-      <Filter>98. Manager\03. InputModeMgr</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Optimization.h">
       <Filter>04. Component\04.Optimization</Filter>
     </ClInclude>
@@ -140,6 +134,12 @@
     </ClInclude>
     <ClInclude Include="..\Code\PolygonRenderer.h">
       <Filter>04. Component\01. Renderer\01. PolygonRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputProcessor.h">
+      <Filter>05. InputMode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputProcessorMgr.h">
+      <Filter>98. Manager\03. InputModeMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -185,12 +185,6 @@
     <ClCompile Include="..\Code\MeshCollider.cpp">
       <Filter>04. Component\02. Collider\01. MeshCollider</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\InputMode.cpp">
-      <Filter>05. InputMode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\InputModeMgr.cpp">
-      <Filter>98. Manager\03. InputModeMgr</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Optimization.cpp">
       <Filter>04. Component\04.Optimization</Filter>
     </ClCompile>
@@ -205,6 +199,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\PolygonRenderer.cpp">
       <Filter>04. Component\01. Renderer\01. PolygonRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputProcessor.cpp">
+      <Filter>05. InputMode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputProcessorMgr.cpp">
+      <Filter>98. Manager\03. InputModeMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

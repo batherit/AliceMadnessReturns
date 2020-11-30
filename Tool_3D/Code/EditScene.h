@@ -36,16 +36,16 @@ public:
 	CTerrain* GetTerrain() const;
 	CNaviMesh* GetNaviMesh() const;
 	CNaviMeshVtxMover* GetNaviMeshVtxMover() const;
-	Engine::CInputMode* GetInputProcessor() const;
+	Engine::CInputProcessor* GetInputProcessor() const;
 	//CNaviMeshInputProcessor* GetNaviMeshInputProcessor() const;
 
 	Engine::CGameObject* GetPickedObject() const;
-	Engine::CInputModeMgr* GetInputModeMgr() const { return m_pInputModeMgr; }
+	Engine::CInputProcessorMgr* GetInputProcessorMgr() const { return m_pInputProcessorMgr; }
 
 	void SaveNaviMesh();
 	void LoadNaviMesh();
 private:
-	Engine::CInputModeMgr* m_pInputModeMgr = nullptr;
+	Engine::CInputProcessorMgr* m_pInputProcessorMgr = nullptr;
 };
 
 END

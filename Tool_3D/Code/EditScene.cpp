@@ -6,10 +6,10 @@
 //#include "NaviMeshVtxCtrl.h"
 #include "NaviMeshVtxMover.h"
 #include "NaviMeshInputProcessor.h"
-#include "InputMode_Terrain.h"
+#include "InputProcessor_Terrain.h"
 #include "MainFrm.h"
 #include "CTabForm.h"
-//#include "InputMode_Navi.h"
+//#include "InputProcessor_Navi.h"
 
 CEditScene::CEditScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -76,9 +76,9 @@ HRESULT CEditScene::Ready(void)
 	m_mapLayer.emplace(L"EditLayer", pLayer);
 
 	// 입력 모드 매니저 생성
-	m_pInputModeMgr = Engine::CInputModeMgr::Create();
-	NULL_CHECK_RETURN(m_pInputModeMgr, E_FAIL);
-	m_pInputModeMgr->SetNextInputMode(new CInputMode_Terrain(m_pInputModeMgr));
+	m_pInputProcessorMgr = Engine::CInputProcessorMgr::Create();
+	NULL_CHECK_RETURN(m_pInputProcessorMgr, E_FAIL);
+	m_pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Terrain(m_pInputProcessorMgr));
 
 	// 컬모드 설정
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -97,7 +97,7 @@ HRESULT CEditScene::Ready(void)
 
 int CEditScene::Update(const _float& fTimeDelta)
 {
-	m_pInputModeMgr->ProcessInput(fTimeDelta);
+	m_pInputProcessorMgr->ProcessInput(fTimeDelta);
 
 	return CScene::Update(fTimeDelta);
 }
@@ -119,7 +119,7 @@ CEditScene * CEditScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CEditScene::Free(void)
 {
-	Engine::Safe_Release(m_pInputModeMgr);
+	Engine::Safe_Release(m_pInputProcessorMgr);
 	CScene::Free();
 }
 
@@ -168,9 +168,9 @@ CNaviMeshVtxMover * CEditScene::GetNaviMeshVtxMover() const
 	return static_cast<CNaviMeshVtxMover*>(*rLayerList.begin());
 }
 
-Engine::CInputMode * CEditScene::GetInputProcessor() const
+Engine::CInputProcessor * CEditScene::GetInputProcessor() const
 {
-	return m_pInputModeMgr->GetCurInputMode();
+	return m_pInputProcessorMgr->GetCurInputProcessor();
 }
 
 //CNaviMeshInputProcessor * CEditScene::GetNaviMeshInputProcessor() const

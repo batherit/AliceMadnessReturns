@@ -178,13 +178,7 @@
     <ClInclude Include="..\Code\CMapTab.h">
       <Filter>00. View%28Workspace%29\Tab</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\InputMode_Map.h">
-      <Filter>03. InputProcessor</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\InputMode_Navi.h">
-      <Filter>03. InputProcessor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\InputMode_Terrain.h">
       <Filter>03. InputProcessor</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\NaviMeshInputProcessor.h">
@@ -195,6 +189,12 @@
     </ClInclude>
     <ClInclude Include="..\Code\NaviMeshVtxMover.h">
       <Filter>04. Object\NaviMeshVtxMover</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputProcessor_Terrain.h">
+      <Filter>03. InputProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputProcessor_Map.h">
+      <Filter>03. InputProcessor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -267,13 +267,7 @@
     <ClCompile Include="..\Code\CMapTab.cpp">
       <Filter>00. View%28Workspace%29\Tab</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\InputMode_Map.cpp">
-      <Filter>03. InputProcessor</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\InputMode_Navi.cpp">
-      <Filter>03. InputProcessor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\InputMode_Terrain.cpp">
       <Filter>03. InputProcessor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\NaviMeshInputProcessor.cpp">
@@ -284,6 +278,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\NaviMeshVtxMover.cpp">
       <Filter>04. Object\NaviMeshVtxMover</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputProcessor_Terrain.cpp">
+      <Filter>03. InputProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputProcessor_Map.cpp">
+      <Filter>03. InputProcessor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

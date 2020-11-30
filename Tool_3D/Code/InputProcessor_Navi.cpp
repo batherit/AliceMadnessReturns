@@ -12,9 +12,9 @@
 #include "CNaviMeshTab.h"
 
 
-CInputProcessor_Navi::CInputProcessor_Navi(Engine::CInputModeMgr * _pInputModeMgr)
+CInputProcessor_Navi::CInputProcessor_Navi(Engine::CInputProcessorMgr * _pInputProcessorMgr)
 	:
-	CInputMode(_pInputModeMgr)
+	CInputProcessor(_pInputProcessorMgr)
 {
 	// 에디트씬 포인터를 얻어온다.
 	m_pEditScene = m_pEditScene = g_pTool3D_Kernel->GetEditScene();

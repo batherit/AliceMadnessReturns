@@ -10,10 +10,10 @@
 #include "NaviMesh.h"
 #include "NaviMeshVtxCtrl.h"
 #include "EditScene.h"
-#include "InputMode_Terrain.h"
-// #include "InputMode_Navi.h"
+#include "InputProcessor_Terrain.h"
+// #include "InputProcessor_Navi.h"
 #include "InputProcessor_Navi.h"
-#include "InputMode_Map.h"
+#include "InputProcessor_Map.h"
 
 
 // CTabForm
@@ -110,13 +110,13 @@ void CTabForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 	int iSelIndex = m_Tab.GetCurSel();
 	CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
 	//pEditScene->GetNaviMeshVtxCtrl()->SetActive(false);
-	auto pInputModeMgr = pEditScene->GetInputModeMgr();
+	auto pInputProcessorMgr = pEditScene->GetInputProcessorMgr();
 	
 	switch (iSelIndex)
 	{
 	case 0: {
-		if(pInputModeMgr)
-			pInputModeMgr->SetNextInputMode(new CInputMode_Terrain(pInputModeMgr));
+		if(pInputProcessorMgr)
+			pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Terrain(pInputProcessorMgr));
 		m_pTerrainTab->ShowWindow(SW_SHOW);
 		m_pNaviMeshTab->ShowWindow(SW_HIDE);
 		m_pMapTab->ShowWindow(SW_HIDE);
@@ -124,8 +124,8 @@ void CTabForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 		
 	case 1: {
-		if (pInputModeMgr)
-			pInputModeMgr->SetNextInputMode(new CInputProcessor_Navi(pInputModeMgr));
+		if (pInputProcessorMgr)
+			pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Navi(pInputProcessorMgr));
 		m_pTerrainTab->ShowWindow(SW_HIDE);
 		m_pNaviMeshTab->ShowWindow(SW_SHOW);
 		m_pMapTab->ShowWindow(SW_HIDE);
@@ -133,8 +133,8 @@ void CTabForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 			
 	case 2: {
-		if (pInputModeMgr)
-			pInputModeMgr->SetNextInputMode(new CInputMode_Map(pInputModeMgr));
+		if (pInputProcessorMgr)
+			pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Map(pInputProcessorMgr));
 		m_pTerrainTab->ShowWindow(SW_HIDE);
 		m_pNaviMeshTab->ShowWindow(SW_HIDE);
 		m_pMapTab->ShowWindow(SW_SHOW);

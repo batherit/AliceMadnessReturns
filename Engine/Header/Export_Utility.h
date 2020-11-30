@@ -5,8 +5,8 @@
 #include "Management.h"
 #include "KeyMgr.h"
 #include "ProtoMgr.h"
-#include "InputMode.h"
-#include "InputModeMgr.h"
+#include "InputProcessor.h"
+#include "InputProcessorMgr.h"
 
 #include "GameObject.h"
 #include "Camera.h"

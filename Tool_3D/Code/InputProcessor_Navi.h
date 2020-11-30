@@ -9,10 +9,10 @@
 class CNaviMeshTab;
 BEGIN(Client)
 class CEditScene;
-class CInputProcessor_Navi : public Engine::CInputMode
+class CInputProcessor_Navi : public Engine::CInputProcessor
 {
 public: // 持失切, 社瑚切
-	explicit  CInputProcessor_Navi(Engine::CInputModeMgr* _pInputProcessorMgr);
+	explicit  CInputProcessor_Navi(Engine::CInputProcessorMgr* _pInputProcessorMgr);
 	virtual ~CInputProcessor_Navi(void);
 
 public:

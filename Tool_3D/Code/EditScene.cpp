@@ -200,10 +200,30 @@ _bool CEditScene::AddStaticObject(const _tchar * _pMeshTag)
 
 	if (pStaticObject->GetComponent(Engine::ID_STATIC, L"Com_Mesh")) {
 		GetLayer(L"EditLayer")->Add_GameObject(pStaticObject);
+		m_vecStaticObjects.emplace_back(pStaticObject);
 		return true;
 	}
 
 	return false;
+}
+
+CStaticObject * CEditScene::GetStaticObject(_int _iObjectIndex)
+{
+	if(!IsValidObjectIndex(_iObjectIndex))
+		return nullptr;
+
+	return m_vecStaticObjects[_iObjectIndex];
+}
+
+_bool CEditScene::DeleteStaticObject(_int _iObjectIndex)
+{
+	if (!IsValidObjectIndex(_iObjectIndex))
+		return false;
+
+	m_vecStaticObjects[_iObjectIndex]->SetValid(false);
+	m_vecStaticObjects.erase(m_vecStaticObjects.begin() + _iObjectIndex);
+
+	return true;
 }
 
 void CEditScene::SaveNaviMesh()
@@ -258,4 +278,11 @@ void CEditScene::LoadNaviMesh()
 		CloseHandle(hFile);
 	}
 	//UpdateData(FALSE);
+}
+
+_bool CEditScene::IsValidObjectIndex(_int _iObjectIndex)
+{
+	if (_iObjectIndex < 0 || _iObjectIndex >= static_cast<_int>(m_vecStaticObjects.size()))
+		return false;
+	return true;
 }

@@ -14,9 +14,6 @@ private:
 	explicit CLayer(void);
 	virtual ~CLayer();
 
-//public:
-	//CComponent*	   Get_Component(const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
-
 public:
 	HRESULT		Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject);
 	HRESULT		Add_GameObject(CGameObject* _pGameObject);
@@ -26,10 +23,11 @@ public:
 
 	HRESULT		Ready_Layer(void);
 	_int		Update_Layer(const _float& fTimeDelta);
-	//void		Render_Layer(void);
 
 private:
-	//map<const _tchar*, CGameObject*>			m_mapObject;
+	void CollectInvalidObjects();
+
+private:
 	map<const _tchar*, LayerList>		m_mapObjectList;
 
 public:

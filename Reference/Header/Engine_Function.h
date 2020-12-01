@@ -1,6 +1,8 @@
 #ifndef Engine_Function_h__
 #define Engine_Function_h__
 
+#include <list>
+
 namespace Engine
 {
 	template <typename T>
@@ -119,6 +121,23 @@ namespace Engine
 		}
 	};
 
+	// 무효화 객체 수거
+	/*template <typename T>
+	inline void CollectInvalidObjects(list<T*>& _list)
+	{
+		for (auto& pObj : _list)
+		{
+			if (!pObj->IsValid())
+			{
+				Safe_Release(pObj);
+			}
+		}
+		_list.remove_if([](auto& pObj)
+		{
+			return pObj == nullptr;
+		});
+	}*/
+
 	// 클라이언트 커서 좌표얻기
 	inline POINT GetClientCursorPoint(const HWND& _hWND)
 	{
@@ -211,7 +230,8 @@ namespace Engine
 	}
 
 	// 광선과 구가 충돌했는지?
-	inline _bool IsRayAndSphereCollided(const PICKINGRAYINFO& _stPickingInfo, _float _fRadius, const _vec3& _vSpherePos, _float* pT = nullptr) {
+	inline _bool IsRayAndSphereCollided(const PICKINGRAYINFO& _stPickingInfo, 
+		_float _fRadius, const _vec3& _vSpherePos, _float* pT = nullptr) {
 		// 다렉 및 그래픽스 책 참고
 		_vec3 vM = _stPickingInfo.vRayPos - _vSpherePos;
 		_float fA = D3DXVec3Dot(&_stPickingInfo.vRayDir, &_stPickingInfo.vRayDir);		// u.u

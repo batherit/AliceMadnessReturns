@@ -2,6 +2,9 @@
 
 
 // CMapTab 대화 상자
+BEGIN(Client)
+class CStaticObject;
+END
 
 class CMapTab : public CDialogEx
 {
@@ -22,6 +25,7 @@ public:
 	afx_msg void OnBnClickedButtonAdd();
 	afx_msg void OnBnClickedButtonDelete();
 	afx_msg void OnNMClickTreeObjectToAdd(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult);
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
@@ -31,4 +35,30 @@ protected:
 private:
 	HTREEITEM m_hSelectedTreeItem = nullptr;
 	
+public:
+	afx_msg void OnEnChangeEditPosX();
+	afx_msg void OnEnChangeEditPosY();
+	afx_msg void OnEnChangeEditPosZ();
+	afx_msg void OnEnChangeEditRotX();
+	afx_msg void OnEnChangeEditRotY();
+	afx_msg void OnEnChangeEditRotZ();
+	afx_msg void OnEnChangeEditScaleX();
+	afx_msg void OnEnChangeEditScaleY();
+	afx_msg void OnEnChangeEditScaleZ();
+
+	CStaticObject* m_pSelectedStaticObject = nullptr;
+	_int m_iSelectedStaticObjectIndex = -1;
+
+	CEdit m_editPosX;
+	CEdit m_editPosY;
+	CEdit m_editPosZ;
+	CEdit m_editRotX;
+	CEdit m_editRotY;
+	CEdit m_editRotZ;
+	CEdit m_editScaleX;
+	CEdit m_editScaleY;
+	CEdit m_editScaleZ;
+
+	CButton m_btnAdd;
+	CButton m_btnDelete;
 };

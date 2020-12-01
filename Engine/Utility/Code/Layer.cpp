@@ -61,6 +61,9 @@ HRESULT Engine::CLayer::Ready_Layer(void)
 
 Engine::_int Engine::CLayer::Update_Layer(const _float& fTimeDelta)
 {
+	// 무효화 객체 수거(렌더 이후에 최종적으로 nullptr이 될 수 있기 때문에, 앞쪽에 배치함.)
+	CollectInvalidObjects();
+
 	_int iExit = 0;
 
 	for (auto& iter : m_mapObjectList)
@@ -79,11 +82,23 @@ Engine::_int Engine::CLayer::Update_Layer(const _float& fTimeDelta)
 	return iExit;
 }
 
-//void Engine::CLayer::Render_Layer(void)
-//{
-//	for (auto& iter : m_mapObject)
-//		iter.second->Render_Object();
-//}
+void CLayer::CollectInvalidObjects()
+{
+	for (auto& iter : m_mapObjectList)
+	{
+		for (auto& rObj : iter.second) {
+			// 무효화 객체 해제
+			if (!rObj->IsValid()) {
+				Safe_Release(rObj);
+			}
+		}
+
+		iter.second.remove_if([](auto& rObj)
+		{
+			return rObj == nullptr;
+		});
+	}
+}
 
 Engine::CLayer* Engine::CLayer::Create(void)
 {

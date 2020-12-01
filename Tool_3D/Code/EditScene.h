@@ -38,15 +38,21 @@ public:
 	CNaviMesh* GetNaviMesh() const;
 	CNaviMeshVtxMover* GetNaviMeshVtxMover() const;
 	Engine::CInputProcessor* GetInputProcessor() const;
-	//CNaviMeshInputProcessor* GetNaviMeshInputProcessor() const;
 
 	Engine::CGameObject* GetPickedObject() const;
 	Engine::CInputProcessorMgr* GetInputProcessorMgr() const { return m_pInputProcessorMgr; }
 
+	
 	_bool AddStaticObject(const _tchar* _pMeshTag);
+	CStaticObject* GetStaticObject(_int _iObjectIndex);
+	_bool DeleteStaticObject(_int _iObjectIndex);
 
 	void SaveNaviMesh();
 	void LoadNaviMesh();
+
+private:
+	_bool IsValidObjectIndex(_int _iObjectIndex);
+
 private:
 	Engine::CInputProcessorMgr* m_pInputProcessorMgr = nullptr;
 	vector<CStaticObject*> m_vecStaticObjects;

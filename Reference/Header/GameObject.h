@@ -26,6 +26,10 @@ public:
 
 public:
 	LPDIRECT3DDEVICE9 GetGraphicDev() const { return m_pGraphicDev; }
+
+	void SetValid(_bool _bIsValid) { m_bIsValid = _bIsValid; }
+	_bool IsValid() const { return m_bIsValid; }
+
 	CComponent* GetComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);
 	CComponent*	AddComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);
 	template <class T>
@@ -55,6 +59,7 @@ private:
 	CComponent*		Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
 
 protected:
+	_bool m_bIsValid = true;
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 	CGameObject* m_pParent = nullptr;
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];

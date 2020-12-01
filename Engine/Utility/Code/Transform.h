@@ -45,6 +45,10 @@ public:
 	
 	// È¸Àü
 	void SetAngle(const _vec3& _vAngle);
+	void SetAngleX(_float _fAngleX) { _vec3 vAngle = GetAngle(); vAngle.x = _fAngleX; SetAngle(vAngle); }
+	void SetAngleY(_float _fAngleY) { _vec3 vAngle = GetAngle(); vAngle.y = _fAngleY; SetAngle(vAngle); }
+	void SetAngleZ(_float _fAngleZ) { _vec3 vAngle = GetAngle(); vAngle.z = _fAngleZ; SetAngle(vAngle); }
+
 	void SetAngle(_float _fYaw, _float _fPitch, _float _fRoll) { SetAngle(_vec3(_fPitch, _fYaw, _fRoll)); }
 	void RotateByRight(_float _fDeltaAngle);
 	void RotateByUp(_float _fDeltaAngle);
@@ -69,6 +73,8 @@ public:
 	_matrix GetParentBoneMatrix() const;
 	_matrix GetObjectMatrix(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const;
 	_vec3 GetPos(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const;
+	_vec3 GetAngle() const { return m_vAngle; }
+	_vec3 GetScale() const { return m_vScale; }
 	_vec3 GetRight() const { return m_vRight; }
 	_vec3 GetUp() const { return m_vUp; }
 	_vec3 GetLook() const { return m_vLook; }

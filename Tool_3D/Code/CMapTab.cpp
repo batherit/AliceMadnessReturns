@@ -5,6 +5,7 @@
 #include "Tool_3D.h"
 #include "CMapTab.h"
 #include "EditScene.h"
+#include "StaticObject.h"
 #include "afxdialogex.h"
 
 
@@ -27,6 +28,17 @@ void CMapTab::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TREE1, m_treeObjectList);
 	DDX_Control(pDX, IDC_TREE2, m_treeAddedObject);
+	DDX_Control(pDX, IDC_EDIT1, m_editPosX);
+	DDX_Control(pDX, IDC_EDIT3, m_editPosY);
+	DDX_Control(pDX, IDC_EDIT11, m_editPosZ);
+	DDX_Control(pDX, IDC_EDIT6, m_editRotX);
+	DDX_Control(pDX, IDC_EDIT8, m_editRotY);
+	DDX_Control(pDX, IDC_EDIT12, m_editRotZ);
+	DDX_Control(pDX, IDC_EDIT7, m_editScaleX);
+	DDX_Control(pDX, IDC_EDIT9, m_editScaleY);
+	DDX_Control(pDX, IDC_EDIT13, m_editScaleZ);
+	DDX_Control(pDX, IDC_BUTTON1, m_btnAdd);
+	DDX_Control(pDX, IDC_BUTTON3, m_btnDelete);
 }
 
 
@@ -34,6 +46,16 @@ BEGIN_MESSAGE_MAP(CMapTab, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMapTab::OnBnClickedButtonAdd)
 	ON_BN_CLICKED(IDC_BUTTON3, &CMapTab::OnBnClickedButtonDelete)
 	ON_NOTIFY(NM_CLICK, IDC_TREE1, &CMapTab::OnNMClickTreeObjectToAdd)
+	ON_NOTIFY(NM_CLICK, IDC_TREE2, &CMapTab::OnNMClickTreeAddedObject)
+	ON_EN_CHANGE(IDC_EDIT1, &CMapTab::OnEnChangeEditPosX)
+	ON_EN_CHANGE(IDC_EDIT3, &CMapTab::OnEnChangeEditPosY)
+	ON_EN_CHANGE(IDC_EDIT11, &CMapTab::OnEnChangeEditPosZ)
+	ON_EN_CHANGE(IDC_EDIT6, &CMapTab::OnEnChangeEditRotX)
+	ON_EN_CHANGE(IDC_EDIT8, &CMapTab::OnEnChangeEditRotY)
+	ON_EN_CHANGE(IDC_EDIT12, &CMapTab::OnEnChangeEditRotZ)
+	ON_EN_CHANGE(IDC_EDIT7, &CMapTab::OnEnChangeEditScaleX)
+	ON_EN_CHANGE(IDC_EDIT9, &CMapTab::OnEnChangeEditScaleY)
+	ON_EN_CHANGE(IDC_EDIT13, &CMapTab::OnEnChangeEditScaleZ)
 END_MESSAGE_MAP()
 
 
@@ -57,6 +79,36 @@ void CMapTab::OnBnClickedButtonAdd()
 void CMapTab::OnBnClickedButtonDelete()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	
+	// Delete버튼이 눌렸다는 것은 제거할 오브젝트가 선택되었다는 뜻.
+	if (!m_pSelectedStaticObject)
+		return;
+
+	m_pSelectedStaticObject->SetValid(false);
+	g_pTool3D_Kernel->GetEditScene()->DeleteStaticObject(m_iSelectedStaticObjectIndex);
+
+	HTREEITEM hChild = m_treeAddedObject.GetChildItem(NULL);
+
+	for (int i = 0; i < m_iSelectedStaticObjectIndex; ++i) {
+		hChild = m_treeAddedObject.GetNextItem(hChild, TVGN_NEXT);
+	}
+
+	m_treeAddedObject.DeleteItem(hChild);
+
+	m_editPosX.EnableWindow(FALSE);
+	m_editPosY.EnableWindow(FALSE);
+	m_editPosZ.EnableWindow(FALSE);
+	m_editRotX.EnableWindow(FALSE);
+	m_editRotY.EnableWindow(FALSE);
+	m_editRotZ.EnableWindow(FALSE);
+	m_editScaleX.EnableWindow(FALSE);
+	m_editScaleY.EnableWindow(FALSE);
+	m_editScaleZ.EnableWindow(FALSE);
+	m_btnAdd.EnableWindow(FALSE);
+	m_btnDelete.EnableWindow(FALSE);
+
+	m_pSelectedStaticObject = nullptr;
+	m_iSelectedStaticObjectIndex = -1;
 }
 
 
@@ -73,8 +125,271 @@ void CMapTab::OnNMClickTreeObjectToAdd(NMHDR *pNMHDR, LRESULT *pResult)
 	if (!hItem)
 		return;
 
-	//m_hSelectedTreeItem = pNMTreeView->itemNew.hItem;	// 선택된 아이템
 	m_hSelectedTreeItem = hItem;
+
+	m_editPosX.EnableWindow(FALSE);
+	m_editPosY.EnableWindow(FALSE);
+	m_editPosZ.EnableWindow(FALSE);
+	m_editRotX.EnableWindow(FALSE);
+	m_editRotY.EnableWindow(FALSE);
+	m_editRotZ.EnableWindow(FALSE);
+	m_editScaleX.EnableWindow(FALSE);
+	m_editScaleY.EnableWindow(FALSE);
+	m_editScaleZ.EnableWindow(FALSE);
+	m_btnAdd.EnableWindow(TRUE);
+	m_btnDelete.EnableWindow(FALSE);
+
+	m_pSelectedStaticObject = nullptr;
+	m_iSelectedStaticObjectIndex = -1;
 
 	*pResult = 0;
 }
+
+void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+
+	POINT point = Engine::GetClientCursorPoint(m_treeAddedObject.m_hWnd);
+	UINT nFlags = 0;
+	HTREEITEM hItem = m_treeAddedObject.HitTest(point, &nFlags);
+
+	if (!hItem)
+		return;
+
+	//m_hSelectedTreeItem = hItem;
+	
+	m_iSelectedStaticObjectIndex = 0;
+	//HTREEITEM hItem = m_treeAddedObject.GetSelectedItem();
+	HTREEITEM hChild = m_treeAddedObject.GetChildItem(NULL);
+	while (hChild)
+	{
+		if (hChild == hItem) break;
+		hChild = m_treeAddedObject.GetNextItem(hChild, TVGN_NEXT);
+		++m_iSelectedStaticObjectIndex;
+	}
+
+	//_int iObjectIndex = _ttoi(m_treeAddedObjectGetItemText(m_hSelectedTreeItem));
+	m_pSelectedStaticObject = g_pTool3D_Kernel->GetEditScene()->GetStaticObject(m_iSelectedStaticObjectIndex);
+
+	if (m_pSelectedStaticObject) {
+		_vec3 vPos = m_pSelectedStaticObject->GetTransform()->GetPos();
+		_vec3 vAngle = m_pSelectedStaticObject->GetTransform()->GetAngle();
+		_vec3 vScale = m_pSelectedStaticObject->GetTransform()->GetScale();
+
+		CString strValue = L"";
+		// 위치 
+		strValue.Format(_T("%f"), vPos.x);
+		m_editPosX.SetWindowTextW(strValue);
+		strValue.Format(_T("%f"), vPos.y);
+		m_editPosY.SetWindowTextW(strValue);
+		strValue.Format(_T("%f"), vPos.z);
+		m_editPosZ.SetWindowTextW(strValue);
+
+		// 회전
+		strValue.Format(_T("%f"), vAngle.x);
+		m_editRotX.SetWindowTextW(strValue);
+		strValue.Format(_T("%f"), vAngle.y);
+		m_editRotY.SetWindowTextW(strValue);
+		strValue.Format(_T("%f"), vAngle.z);
+		m_editRotZ.SetWindowTextW(strValue);
+
+		// 스케일
+		strValue.Format(_T("%f"), vScale.x);
+		m_editScaleX.SetWindowTextW(strValue);
+		strValue.Format(_T("%f"), vScale.y);
+		m_editScaleY.SetWindowTextW(strValue);
+		strValue.Format(_T("%f"), vScale.z);
+		m_editScaleZ.SetWindowTextW(strValue);
+		
+		m_editPosX.EnableWindow(TRUE);
+		m_editPosY.EnableWindow(TRUE);
+		m_editPosZ.EnableWindow(TRUE);
+		m_editRotX.EnableWindow(TRUE);
+		m_editRotY.EnableWindow(TRUE);
+		m_editRotZ.EnableWindow(TRUE);
+		m_editScaleX.EnableWindow(TRUE);
+		m_editScaleY.EnableWindow(TRUE);
+		m_editScaleZ.EnableWindow(TRUE);
+		m_btnAdd.EnableWindow(FALSE);
+		m_btnDelete.EnableWindow(TRUE);
+	}
+	else {
+		m_pSelectedStaticObject = nullptr;
+		m_iSelectedStaticObjectIndex = -1;
+	}
+	
+	*pResult = 0;
+}
+
+void CMapTab::OnEnChangeEditPosX()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	CString strPosX;
+	m_editPosX.GetWindowTextW(strPosX);
+	_float fPosX = static_cast<_float>(_tstof(strPosX));
+	m_pSelectedStaticObject->GetTransform()->SetPosX(fPosX);
+	
+	UpdateData(FALSE);
+}
+
+
+void CMapTab::OnEnChangeEditPosY()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	
+	CString strPosY;
+	m_editPosY.GetWindowTextW(strPosY);
+	_float fPosY = static_cast<_float>(_tstof(strPosY));
+	m_pSelectedStaticObject->GetTransform()->SetPosY(fPosY);
+	
+	UpdateData(FALSE);
+}
+
+
+void CMapTab::OnEnChangeEditPosZ()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	CString strPosZ;
+	m_editPosZ.GetWindowTextW(strPosZ);
+	_float fPosZ = static_cast<_float>(_tstof(strPosZ));
+	m_pSelectedStaticObject->GetTransform()->SetPosZ(fPosZ);
+
+	UpdateData(FALSE);
+}
+
+
+void CMapTab::OnEnChangeEditRotX()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	CString strRotX;
+	m_editRotX.GetWindowTextW(strRotX);
+	_float fRotX = static_cast<_float>(_tstof(strRotX));
+	m_pSelectedStaticObject->GetTransform()->SetAngleZ(fRotX);
+
+	UpdateData(FALSE);
+}
+
+
+void CMapTab::OnEnChangeEditRotY()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	CString strRotY;
+	m_editRotY.GetWindowTextW(strRotY);
+	_float fRotY = static_cast<_float>(_tstof(strRotY));
+	m_pSelectedStaticObject->GetTransform()->SetAngleY(fRotY);
+
+	UpdateData(FALSE);
+}
+
+
+void CMapTab::OnEnChangeEditRotZ()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	CString strRotZ;
+	m_editRotZ.GetWindowTextW(strRotZ);
+	_float fRotZ = static_cast<_float>(_tstof(strRotZ));
+	m_pSelectedStaticObject->GetTransform()->SetAngleZ(fRotZ);
+
+	UpdateData(FALSE);
+}
+
+
+void CMapTab::OnEnChangeEditScaleX()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	CString strScaleX;
+	m_editScaleX.GetWindowTextW(strScaleX);
+	_float fScaleX = static_cast<_float>(_tstof(strScaleX));
+	m_pSelectedStaticObject->GetTransform()->SetScaleX(fScaleX);
+
+	UpdateData(FALSE);
+}
+
+
+void CMapTab::OnEnChangeEditScaleY()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	CString strScaleY;
+	m_editScaleY.GetWindowTextW(strScaleY);
+	_float fScaleY = static_cast<_float>(_tstof(strScaleY));
+	m_pSelectedStaticObject->GetTransform()->SetScaleY(fScaleY);
+
+	UpdateData(FALSE);
+}
+
+
+void CMapTab::OnEnChangeEditScaleZ()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	CString strScaleZ;
+	m_editScaleZ.GetWindowTextW(strScaleZ);
+	_float fScaleZ = static_cast<_float>(_tstof(strScaleZ));
+	m_pSelectedStaticObject->GetTransform()->SetScaleY(fScaleZ);
+
+	UpdateData(FALSE);
+}
+
+

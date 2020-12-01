@@ -36,6 +36,7 @@ private:
 	HTREEITEM m_hSelectedTreeItem = nullptr;
 	
 public:
+	virtual BOOL OnInitDialog();
 	afx_msg void OnEnChangeEditPosX();
 	afx_msg void OnEnChangeEditPosY();
 	afx_msg void OnEnChangeEditPosZ();
@@ -45,6 +46,9 @@ public:
 	afx_msg void OnEnChangeEditScaleX();
 	afx_msg void OnEnChangeEditScaleY();
 	afx_msg void OnEnChangeEditScaleZ();
+	afx_msg void OnBnClickedRadioPosition();
+	afx_msg void OnBnClickedRadioRotation();
+	afx_msg void OnBnClickedRadioScale();
 
 	CStaticObject* m_pSelectedStaticObject = nullptr;
 	_int m_iSelectedStaticObjectIndex = -1;
@@ -61,4 +65,10 @@ public:
 
 	CButton m_btnAdd;
 	CButton m_btnDelete;
+	CButton m_rbtnPosition;
+	CButton m_rbtnRotation;
+	CButton m_rbtnScale;
+	
+	
+	
 };

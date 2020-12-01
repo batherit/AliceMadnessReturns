@@ -30,12 +30,16 @@ public:
 
 public:
 	void SetObject(Engine::CGameObject* _pGameObject);
+	void SetGizmoMode(MAP_TAB::E_GIZMO_MODE _eGizmoMode) { m_eGizmoMode = _eGizmoMode; }
 
 	void ActivateGizmo(const _bool& _bIsGizmoActived) { m_bIsGizmoActivated = _bIsGizmoActived; }
 
 	_bool IsGizmoActivated() const { return m_bIsGizmoActivated; }
 	PLANE::E_TYPE GetPlaneTypeByRay(Engine::PICKINGRAYINFO& _rRayInfo);
+	MAP_TAB::E_GIZMO_MODE GetGizmoMode() const { return m_eGizmoMode; }
 	void DragObject();
+	void RotateObject();
+	void ScaleObject();
 
 
 private:
@@ -70,7 +74,7 @@ private:
 	_bool m_bIsGizmoActivated = false;
 	_bool m_bIsPicking = false;
 	PLANE::E_TYPE m_ePlaneType = PLANE::TYPE_END;
-
+	MAP_TAB::E_GIZMO_MODE m_eGizmoMode = MAP_TAB::MODE_POSITION;
 	// 이동자를 렌더링 하기 위한 렌더러
 	Engine::CRenderer* m_pRenderer = nullptr;
 };

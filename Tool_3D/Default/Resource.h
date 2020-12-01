@@ -47,6 +47,8 @@
 #define IDC_BUTTON8                     1016
 #define IDC_RADIO5                      1017
 #define IDC_CHECK1                      1018
+#define IDC_RADIO6                      1018
+#define IDC_RADIO7                      1019
 
 // Next default values for new objects
 // 

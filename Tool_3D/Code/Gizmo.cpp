@@ -52,7 +52,18 @@ int CGizmo::Update_Object(const _float & _fDeltaTime)
 	}
 	else if (m_bIsPicking) {
 		if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB)) {
-			DragObject();
+			switch (m_eGizmoMode) {
+				case MAP_TAB::MODE_POSITION :
+					DragObject();
+					break;
+				case MAP_TAB::MODE_ROTATION :
+					RotateObject();
+					break;
+				case MAP_TAB::MODE_SCALE:
+					ScaleObject();
+					break;
+			}
+			
 		}
 		else {
 			// 드래그가 끝났다면, 픽킹 상태가 아닌 것이다.
@@ -300,4 +311,12 @@ void CGizmo::DragObject()
 		m_bIsPicking = false;
 		break;
 	}
+}
+
+void CGizmo::RotateObject()
+{
+}
+
+void CGizmo::ScaleObject()
+{
 }

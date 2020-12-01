@@ -40,6 +40,9 @@ void CMapTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT13, m_editScaleZ);
 	DDX_Control(pDX, IDC_BUTTON1, m_btnAdd);
 	DDX_Control(pDX, IDC_BUTTON3, m_btnDelete);
+	DDX_Control(pDX, IDC_RADIO5, m_rbtnPosition);
+	DDX_Control(pDX, IDC_RADIO6, m_rbtnRotation);
+	DDX_Control(pDX, IDC_RADIO7, m_rbtnScale);
 }
 
 
@@ -57,11 +60,23 @@ BEGIN_MESSAGE_MAP(CMapTab, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT7, &CMapTab::OnEnChangeEditScaleX)
 	ON_EN_CHANGE(IDC_EDIT9, &CMapTab::OnEnChangeEditScaleY)
 	ON_EN_CHANGE(IDC_EDIT13, &CMapTab::OnEnChangeEditScaleZ)
+	ON_BN_CLICKED(IDC_RADIO5, &CMapTab::OnBnClickedRadioPosition)
+	ON_BN_CLICKED(IDC_RADIO6, &CMapTab::OnBnClickedRadioRotation)
+	ON_BN_CLICKED(IDC_RADIO7, &CMapTab::OnBnClickedRadioScale)
 END_MESSAGE_MAP()
 
 
 // CMapTab 메시지 처리기
+BOOL CMapTab::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
 
+	m_rbtnPosition.SetCheck(TRUE);
+	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
+}
 
 void CMapTab::OnBnClickedButtonAdd()
 {
@@ -398,6 +413,27 @@ void CMapTab::OnEnChangeEditScaleZ()
 	m_pSelectedStaticObject->GetTransform()->SetScaleY(fScaleZ);
 
 	UpdateData(FALSE);
+}
+
+
+
+
+void CMapTab::OnBnClickedRadioPosition()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->SetGizmoMode(MAP_TAB::MODE_POSITION);
+}
+
+void CMapTab::OnBnClickedRadioRotation()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->SetGizmoMode(MAP_TAB::MODE_ROTATION);
+}
+
+void CMapTab::OnBnClickedRadioScale()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->SetGizmoMode(MAP_TAB::MODE_SCALE);
 }
 
 

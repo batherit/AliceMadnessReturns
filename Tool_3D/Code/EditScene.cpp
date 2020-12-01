@@ -6,6 +6,7 @@
 //#include "NaviMeshVtxCtrl.h"
 #include "NaviMeshVtxMover.h"
 #include "NaviMeshInputProcessor.h"
+#include "Gizmo.h"
 #include "InputProcessor_Terrain.h"
 #include "MainFrm.h"
 #include "CTabForm.h"
@@ -68,10 +69,11 @@ HRESULT CEditScene::Ready(void)
 	NULL_CHECK_RETURN(pNaviMeshVtxMover, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxMover", pNaviMeshVtxMover), E_FAIL);
 
-	// 네비메쉬 입력 처리기 생성
-	/*CNaviMeshInputProcessor* pNaviMeshInputProcessor = CNaviMeshInputProcessor::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pNaviMeshInputProcessor, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshInputProcessor", pNaviMeshInputProcessor), E_FAIL);*/
+	// 오브젝트 기즈모 생성
+	CGizmo* pGizmo = CGizmo::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGizmo, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Gizmo", pGizmo), E_FAIL);
+	pGizmo->ActivateGizmo(false);
 
 	// 편집 레이어 등록
 	m_mapLayer.emplace(L"EditLayer", pLayer);
@@ -167,6 +169,21 @@ CNaviMeshVtxMover * CEditScene::GetNaviMeshVtxMover() const
 		return nullptr;
 
 	return static_cast<CNaviMeshVtxMover*>(*rLayerList.begin());
+}
+
+CGizmo * CEditScene::GetGizmo() const
+{
+	auto pLayer = GetLayer(L"EditLayer");
+
+	if (!pLayer)
+		return nullptr;
+
+	auto& rLayerList = pLayer->GetLayerList(L"Gizmo");
+
+	if (rLayerList.empty())
+		return nullptr;
+
+	return static_cast<CGizmo*>(*rLayerList.begin());
 }
 
 Engine::CInputProcessor * CEditScene::GetInputProcessor() const

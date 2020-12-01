@@ -80,6 +80,9 @@
     <Filter Include="04. Object\StaticObject">
       <UniqueIdentifier>{b4ee601a-6721-4fa3-adeb-c6e6c5fbce4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Object\Gizmo">
+      <UniqueIdentifier>{d40701dd-7645-4739-a459-5b8f27deb3a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -202,6 +205,9 @@
     <ClInclude Include="..\Code\StaticObject.h">
       <Filter>04. Object\StaticObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Gizmo.h">
+      <Filter>04. Object\Gizmo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -293,6 +299,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\StaticObject.cpp">
       <Filter>04. Object\StaticObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Gizmo.cpp">
+      <Filter>04. Object\Gizmo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

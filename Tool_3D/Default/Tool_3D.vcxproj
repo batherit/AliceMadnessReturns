@@ -29,6 +29,7 @@
     <ClInclude Include="..\Code\CTerrainTab.h" />
     <ClInclude Include="..\Code\EditScene.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
+    <ClInclude Include="..\Code\Gizmo.h" />
     <ClInclude Include="..\Code\InputProcessor_Map.h" />
     <ClInclude Include="..\Code\InputMode_Navi.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -92,6 +93,7 @@
     <ClCompile Include="..\Code\CTerrainTab.cpp" />
     <ClCompile Include="..\Code\EditScene.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\Gizmo.cpp" />
     <ClCompile Include="..\Code\InputProcessor_Map.cpp" />
     <ClCompile Include="..\Code\InputMode_Navi.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

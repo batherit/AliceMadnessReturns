@@ -4,34 +4,33 @@
 #include "CNaviMeshTab.h"
 #include "MainFrm.h"
 #include "CTabForm.h"
+#include "Gizmo.h"
 
-CNaviMeshVtxMover::CNaviMeshVtxMover(LPDIRECT3DDEVICE9 pGraphicDev)
+CGizmo::CGizmo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
 }
 
-CNaviMeshVtxMover::CNaviMeshVtxMover(const CNaviMeshVtxMover & rhs)
+CGizmo::CGizmo(const CGizmo & rhs)
 	: CGameObject(rhs)
 {
 }
 
-CNaviMeshVtxMover::~CNaviMeshVtxMover(void)
+CGizmo::~CGizmo(void)
 {
 }
 
-HRESULT CNaviMeshVtxMover::Ready_Object(void)
+HRESULT CGizmo::Ready_Object(void)
 {
 	m_pRenderer = AddComponent<Engine::CRenderer>();
 
 	GetTransform()->SetScale(_vec3(10.f, 10.f, 10.f));
-
-	m_vecGroupList.reserve(100);
 	return S_OK;
 }
 
-int CNaviMeshVtxMover::Update_Object(const _float & _fDeltaTime)
+int CGizmo::Update_Object(const _float & _fDeltaTime)
 {
-	if (!m_bIsMoverGizmoActivated)
+	if (!m_bIsGizmoActivated)
 		return 0;
 
 	// 컴바인 상태가 아닐때 업데이트됩니다.
@@ -46,62 +45,14 @@ int CNaviMeshVtxMover::Update_Object(const _float & _fDeltaTime)
 				m_bIsPicking = true;
 			}
 			else {
-				// 충돌된 평면을 찾지 못한 경우,
-				// 충돌 정점을 찾는다.
-				if (m_pNaviMesh) {
-					vector<_int> vecCollidedSphereIndex;
-					vecCollidedSphereIndex.reserve(1);
-					auto& vecNaviVertices = m_pNaviMesh->GetNaviVertices();
-					_int iVecSize = vecNaviVertices.size();
-					auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
-
-					for (_int i = 0; i < iVecSize; ++i) {
-						if (Engine::IsRayAndSphereCollided(stPickingRayInfo, 2.f, vecNaviVertices[i])) {
-							if (vecCollidedSphereIndex.empty()) {
-								vecCollidedSphereIndex.emplace_back(i);
-							}
-							else {
-								if (D3DXVec3LengthSq(&(vecNaviVertices[vecCollidedSphereIndex[0]] - stPickingRayInfo.vRayPos))
-									> D3DXVec3LengthSq(&(vecNaviVertices[i] - stPickingRayInfo.vRayPos))) {
-									vecCollidedSphereIndex[0] = i;
-								}
-							}
-						}
-					}
-
-					CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-					CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
-					auto pNaviMeshTab = pTabForm->GetNaviMeshTab();
-					
-
-					if (!vecCollidedSphereIndex.empty()) {
-						// 충돌 정점을 찾은 경우,
-						_int iTriangleIndex = vecCollidedSphereIndex[0] / 3;
-						_int iVertexIndex = vecCollidedSphereIndex[0] % 3;
-
-						SelectVertex(m_pNaviMesh, iTriangleIndex, iVertexIndex);
-
-						pNaviMeshTab->m_chkGroup.EnableWindow(TRUE);
-
-						// 초기 상태로 돌아간다.
-						pNaviMeshTab->m_btnCombine.EnableWindow(TRUE);
-						pNaviMeshTab->m_btnCombine.ShowWindow(TRUE);
-						pNaviMeshTab->m_btnCancel.EnableWindow(FALSE);
-						pNaviMeshTab->m_btnCancel.ShowWindow(FALSE);
-
-						if (pNaviMeshTab->m_chkGroup.GetCheck())
-							FormGroup();
-					}
-
-					// UI 동기화
-					pNaviMeshTab->UpdateVertexPos(GetVertexPos());
-				}
+				SetObject(nullptr);
+				ActivateGizmo(false);
 			}
 		}
 	}
 	else if (m_bIsPicking) {
 		if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB)) {
-			DragVertex();
+			DragObject();
 		}
 		else {
 			// 드래그가 끝났다면, 픽킹 상태가 아닌 것이다.
@@ -114,7 +65,7 @@ int CNaviMeshVtxMover::Update_Object(const _float & _fDeltaTime)
 	return 0;
 }
 
-void CNaviMeshVtxMover::Render_Object(void)
+void CGizmo::Render_Object(void)
 {
 	_matrix matWorld, matView, matProj;
 	matWorld = m_pTransform->GetObjectMatrix();
@@ -142,9 +93,9 @@ void CNaviMeshVtxMover::Render_Object(void)
 
 }
 
-CNaviMeshVtxMover * CNaviMeshVtxMover::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGizmo * CGizmo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CNaviMeshVtxMover*	pInstance = new CNaviMeshVtxMover(pGraphicDev);
+	CGizmo*	pInstance = new CGizmo(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -152,46 +103,20 @@ CNaviMeshVtxMover * CNaviMeshVtxMover::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CNaviMeshVtxMover::Free(void)
+void CGizmo::Free(void)
 {
 	CGameObject::Free();
 }
 
-void CNaviMeshVtxMover::SelectVertex(CNaviMesh * _pNaviMesh, _int _iTriangleIndex, _int _iVertexIndex)
+void CGizmo::SetObject(Engine::CGameObject * _pGameObject)
 {
-	if (!_pNaviMesh || !_pNaviMesh->IsValidIndex(_iTriangleIndex, _iVertexIndex))
-		return;
+	m_pGameObject = _pGameObject;
 
-	m_pNaviMesh = _pNaviMesh;
-	m_iTriangleIndex = _iTriangleIndex;
-	m_iVertexIndex = _iVertexIndex;
-
-	// 정점 위치에 이동자를 일치시킨다.(동기화)
-	GetTransform()->SetPos(_pNaviMesh->GetTriangleVertexPosition(_iTriangleIndex, _iVertexIndex));
+	if(_pGameObject)
+		GetTransform()->SetPos(_pGameObject->GetTransform()->GetPos());
 }
 
-void CNaviMeshVtxMover::SetVertexPos(const _vec3 & _vPos)
-{
-	if (!m_pNaviMesh && m_pNaviMesh->IsValidIndex(m_iTriangleIndex, m_iVertexIndex))
-		return;
-
-	m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, _vPos);
-	GetTransform()->SetPos(_vPos);
-}
-
-_vec3 CNaviMeshVtxMover::GetVertexPos() const
-{
-	return m_pNaviMesh->GetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex);
-}
-
-void CNaviMeshVtxMover::ReleaseVertexInfo()
-{
-	m_pNaviMesh = nullptr;
-	m_iTriangleIndex = -1;
-	m_iVertexIndex = -1;
-}
-
-PLANE::E_TYPE CNaviMeshVtxMover::GetPlaneTypeByRay(Engine::PICKINGRAYINFO & _rRayInfo)
+PLANE::E_TYPE CGizmo::GetPlaneTypeByRay(Engine::PICKINGRAYINFO & _rRayInfo)
 {
 	PLANE::E_TYPE ePlaneType = PLANE::TYPE_END;
 	_float fU, fV, fDist;
@@ -261,7 +186,7 @@ PLANE::E_TYPE CNaviMeshVtxMover::GetPlaneTypeByRay(Engine::PICKINGRAYINFO & _rRa
 	return ePlaneType;
 }
 
-void CNaviMeshVtxMover::DragVertex()
+void CGizmo::DragObject()
 {
 	switch (m_ePlaneType) {
 	case PLANE::TYPE_XY:
@@ -286,18 +211,13 @@ void CNaviMeshVtxMover::DragVertex()
 		float fT;
 		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeXY, &fT)) {
 			vHitPos = stPickingRayInfo.vRayPos + fT * stPickingRayInfo.vRayDir;
-			// 충돌 지점으로 삼각형 정점과 컨트롤러를 이동시킨다.
-			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
+			// 충돌 지점으로 오브젝트와 기즈모를 이동시킨다.
+			m_pGameObject->GetTransform()->SetPos(vHitPos);
 			GetTransform()->SetPos(vHitPos);
 			CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 			CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
 			CNaviMeshTab* pNaviMeshTab = pTabForm->GetNaviMeshTab();
 			pNaviMeshTab->UpdateVertexPos(vHitPos);
-
-			if (pNaviMeshTab->m_chkGroup) {
-				// 그루핑이 설정되어있다면, 그룹 이동을 진행한다.
-				MoveGroup();
-			}
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -326,18 +246,13 @@ void CNaviMeshVtxMover::DragVertex()
 		float fT;
 		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeXZ, &fT)) {
 			vHitPos = stPickingRayInfo.vRayPos + fT * stPickingRayInfo.vRayDir;
-			// 충돌 지점으로 삼각형 정점과 컨트롤러를 이동시킨다.
-			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
+			// 충돌 지점으로 오브젝트와 기즈모를 이동시킨다.
+			m_pGameObject->GetTransform()->SetPos(vHitPos);
 			GetTransform()->SetPos(vHitPos);
 			CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 			CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
 			CNaviMeshTab* pNaviMeshTab = pTabForm->GetNaviMeshTab();
 			pNaviMeshTab->UpdateVertexPos(vHitPos);
-
-			if (pNaviMeshTab->m_chkGroup) {
-				// 그루핑이 설정되어있다면, 그룹 이동을 진행한다.
-				MoveGroup();
-			}
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -366,18 +281,13 @@ void CNaviMeshVtxMover::DragVertex()
 		float fT;
 		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeYZ, &fT)) {
 			vHitPos = stPickingRayInfo.vRayPos + fT * stPickingRayInfo.vRayDir;
-			// 충돌 지점으로 삼각형 정점과 컨트롤러를 이동시킨다.
-			m_pNaviMesh->SetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex, vHitPos);
+			// 충돌 지점으로 오브젝트와 기즈모를 이동시킨다.
+			m_pGameObject->GetTransform()->SetPos(vHitPos);
 			GetTransform()->SetPos(vHitPos);
 			CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 			CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
 			CNaviMeshTab* pNaviMeshTab = pTabForm->GetNaviMeshTab();
 			pNaviMeshTab->UpdateVertexPos(vHitPos);
-
-			if (pNaviMeshTab->m_chkGroup) {
-				// 그루핑이 설정되어있다면, 그룹 이동을 진행한다.
-				MoveGroup();
-			}
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -389,47 +299,5 @@ void CNaviMeshVtxMover::DragVertex()
 		m_ePlaneType = PLANE::TYPE_END;
 		m_bIsPicking = false;
 		break;
-	}
-}
-
-void CNaviMeshVtxMover::FormGroup()
-{
-	// 기존 그룹을 해제한다.
-	ReleaseGroup();
-
-	auto& rVertices = m_pNaviMesh->GetNaviVertices();
-
-	_int iVerticesSize = static_cast<_int>(rVertices.size());
-	_int iTriangleSize = iVerticesSize / 3;
-	_vec3 vVtxPos = m_pNaviMesh->GetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex);
-	_vec3 vExtractedVtxPos;
-
-	for (_int i = 0; i < iTriangleSize; ++i) {
-		// 같은 삼각형 내 정점은 취급하지 않는다.
-		if (i == m_iTriangleIndex) continue;
-
-		for (_int j = 0; j < 3; ++j) {
-			vExtractedVtxPos = m_pNaviMesh->GetTriangleVertexPosition(i, j);
-			if (D3DXVec3Length(&(vVtxPos - vExtractedVtxPos)) < m_fGroupRange) {
-				// 그룹 리스트에 추가
-				m_vecGroupList.emplace_back(make_pair(i, j));
-				break;
-			}
-		}
-	}
-}
-
-void CNaviMeshVtxMover::ReleaseGroup()
-{
-	m_vecGroupList.clear();
-}
-
-void CNaviMeshVtxMover::MoveGroup()
-{
-	_int iGroupSize = static_cast<_int>(m_vecGroupList.size());
-	_vec3 vVtxPos = m_pNaviMesh->GetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex);
-
-	for (_int i = 0; i < iGroupSize; ++i) {
-		m_pNaviMesh->SetTriangleVertexPosition(m_vecGroupList[i].first, m_vecGroupList[i].second, vVtxPos);
 	}
 }

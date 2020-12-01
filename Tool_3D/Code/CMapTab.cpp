@@ -6,6 +6,7 @@
 #include "CMapTab.h"
 #include "EditScene.h"
 #include "StaticObject.h"
+#include "Gizmo.h"
 #include "afxdialogex.h"
 
 
@@ -109,6 +110,10 @@ void CMapTab::OnBnClickedButtonDelete()
 
 	m_pSelectedStaticObject = nullptr;
 	m_iSelectedStaticObjectIndex = -1;
+
+	CGizmo* pGizmo = g_pTool3D_Kernel->GetEditScene()->GetGizmo();
+	pGizmo->SetObject(nullptr);
+	pGizmo->ActivateGizmo(false);
 }
 
 
@@ -157,10 +162,8 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 	if (!hItem)
 		return;
 
-	//m_hSelectedTreeItem = hItem;
-	
 	m_iSelectedStaticObjectIndex = 0;
-	//HTREEITEM hItem = m_treeAddedObject.GetSelectedItem();
+
 	HTREEITEM hChild = m_treeAddedObject.GetChildItem(NULL);
 	while (hChild)
 	{
@@ -169,10 +172,13 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 		++m_iSelectedStaticObjectIndex;
 	}
 
-	//_int iObjectIndex = _ttoi(m_treeAddedObjectGetItemText(m_hSelectedTreeItem));
 	m_pSelectedStaticObject = g_pTool3D_Kernel->GetEditScene()->GetStaticObject(m_iSelectedStaticObjectIndex);
+	CGizmo* pGizmo = g_pTool3D_Kernel->GetEditScene()->GetGizmo();
 
 	if (m_pSelectedStaticObject) {
+		pGizmo->SetObject(m_pSelectedStaticObject);
+		pGizmo->ActivateGizmo(true);
+
 		_vec3 vPos = m_pSelectedStaticObject->GetTransform()->GetPos();
 		_vec3 vAngle = m_pSelectedStaticObject->GetTransform()->GetAngle();
 		_vec3 vScale = m_pSelectedStaticObject->GetTransform()->GetScale();
@@ -215,6 +221,8 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 		m_btnDelete.EnableWindow(TRUE);
 	}
 	else {
+		pGizmo->SetObject(nullptr);
+		pGizmo->ActivateGizmo(false);
 		m_pSelectedStaticObject = nullptr;
 		m_iSelectedStaticObjectIndex = -1;
 	}

@@ -190,7 +190,8 @@ void CInputProcessor_Navi::PickVertex()
 				else {
 					if (D3DXVec3LengthSq(&(vecNaviVertices[vecCollidedSphereIndex[0]] - stPickingRayInfo.vRayPos))
 		> D3DXVec3LengthSq(&(vecNaviVertices[i] - stPickingRayInfo.vRayPos))) {
-						vecNaviVertices[0] = vecNaviVertices[i];
+						//vecNaviVertices[0] = vecNaviVertices[i];
+						vecCollidedSphereIndex[0] = i;
 					}
 				}
 			}
@@ -230,7 +231,8 @@ void CInputProcessor_Navi::PickVertex()
 				else {
 					if (D3DXVec3LengthSq(&(vecNaviVertices[vecCollidedSphereIndex[0]] - stPickingRayInfo.vRayPos))
 						> D3DXVec3LengthSq(&(vecNaviVertices[i] - stPickingRayInfo.vRayPos))) {
-						vecNaviVertices[0] = vecNaviVertices[i];
+						//vecNaviVertices[0] = vecNaviVertices[i];
+						vecCollidedSphereIndex[0] = i;
 					}
 				}
 			}

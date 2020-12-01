@@ -12,6 +12,7 @@ class CTerrain;
 class CNaviMesh;
 class CNaviMeshVtxMover;
 class CStaticObject;
+class CGizmo;
 //class CNaviMeshInputProcessor;
 class CEditScene : public Engine::CScene
 {
@@ -37,6 +38,8 @@ public:
 	CTerrain* GetTerrain() const;
 	CNaviMesh* GetNaviMesh() const;
 	CNaviMeshVtxMover* GetNaviMeshVtxMover() const;
+	CGizmo* GetGizmo() const;
+
 	Engine::CInputProcessor* GetInputProcessor() const;
 
 	Engine::CGameObject* GetPickedObject() const;
@@ -45,6 +48,7 @@ public:
 	
 	_bool AddStaticObject(const _tchar* _pMeshTag);
 	CStaticObject* GetStaticObject(_int _iObjectIndex);
+	vector<CStaticObject*>& GetStaticObjectList() { return m_vecStaticObjects; }
 	_bool DeleteStaticObject(_int _iObjectIndex);
 
 	void SaveNaviMesh();

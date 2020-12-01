@@ -4,6 +4,7 @@
 #include "EditScene.h"
 #include "MainFrm.h"
 #include "CTabForm.h"
+#include "CMapTab.h"
 
 
 CLoadScene::CLoadScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -37,9 +38,8 @@ Engine::_int CLoadScene::Update(const _float& fTimeDelta)
 
 	if (true == m_pLoading->Get_Finish())
 	{
-		CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-		CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
-		pTabForm->EnableWindow(TRUE);
+		UpdateObjectList();
+		
 		Engine::CManagement::GetInstance()->SetNextScene(CEditScene::Create(m_pGraphicDev));
 
 		return iExit;
@@ -64,6 +64,17 @@ CLoadScene* CLoadScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		Client::Safe_Release(pInstance);
 
 	return pInstance;
+}
+
+void CLoadScene::UpdateObjectList()
+{
+	// MapTab에서 쓰일 정적 오브젝트를 세팅한다.
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+	auto pMapTab = pTabForm->GetMapTab();
+	pMapTab->m_treeObjectList.InsertItem(L"Mesh_Stone", NULL, NULL);
+
+	pTabForm->EnableWindow(TRUE);
 }
 
 void CLoadScene::Free(void)

@@ -11,6 +11,7 @@ BEGIN(Client)
 class CTerrain;
 class CNaviMesh;
 class CNaviMeshVtxMover;
+class CStaticObject;
 //class CNaviMeshInputProcessor;
 class CEditScene : public Engine::CScene
 {
@@ -42,10 +43,13 @@ public:
 	Engine::CGameObject* GetPickedObject() const;
 	Engine::CInputProcessorMgr* GetInputProcessorMgr() const { return m_pInputProcessorMgr; }
 
+	_bool AddStaticObject(const _tchar* _pMeshTag);
+
 	void SaveNaviMesh();
 	void LoadNaviMesh();
 private:
 	Engine::CInputProcessorMgr* m_pInputProcessorMgr = nullptr;
+	vector<CStaticObject*> m_vecStaticObjects;
 };
 
 END

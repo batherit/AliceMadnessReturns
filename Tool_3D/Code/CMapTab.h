@@ -16,8 +16,19 @@ public:
 	enum { IDD = IDD_MAP_TAB };
 #endif
 
+public:
+	CTreeCtrl m_treeObjectList;
+	CTreeCtrl m_treeAddedObject;
+	afx_msg void OnBnClickedButtonAdd();
+	afx_msg void OnBnClickedButtonDelete();
+	afx_msg void OnNMClickTreeObjectToAdd(NMHDR *pNMHDR, LRESULT *pResult);
+
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 
 	DECLARE_MESSAGE_MAP()
+
+private:
+	HTREEITEM m_hSelectedTreeItem = nullptr;
+	
 };

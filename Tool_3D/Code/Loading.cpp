@@ -3,6 +3,7 @@
 
 #include "Export_Function.h"
 
+
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 	, m_bFinish(false)
@@ -151,6 +152,7 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
+
 	// Stone 메쉬 원본 생성
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

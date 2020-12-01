@@ -77,6 +77,9 @@
     <Filter Include="03. InputProcessor">
       <UniqueIdentifier>{bbe7685e-f8e8-4095-93b7-c2c8a6c43ee3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Object\StaticObject">
+      <UniqueIdentifier>{b4ee601a-6721-4fa3-adeb-c6e6c5fbce4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -196,6 +199,9 @@
     <ClInclude Include="..\Code\InputProcessor_Map.h">
       <Filter>03. InputProcessor</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\StaticObject.h">
+      <Filter>04. Object\StaticObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -284,6 +290,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\InputProcessor_Map.cpp">
       <Filter>03. InputProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticObject.cpp">
+      <Filter>04. Object\StaticObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

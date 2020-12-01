@@ -21,11 +21,16 @@ public:
 	virtual _int Update(const _float& fTimeDelta);
 	virtual void Render(void);
 
+public:
+	static CLoadScene*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+private:
+	void UpdateObjectList();
+
 private:
 	CLoading*	m_pLoading = nullptr;
 
-public:
-	static CLoadScene*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
 
 private:
 	virtual void Free(void) override;

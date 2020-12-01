@@ -9,6 +9,7 @@
 #include "InputProcessor_Terrain.h"
 #include "MainFrm.h"
 #include "CTabForm.h"
+#include "StaticObject.h"
 //#include "InputProcessor_Navi.h"
 
 CEditScene::CEditScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -191,6 +192,18 @@ Engine::CInputProcessor * CEditScene::GetInputProcessor() const
 Engine::CGameObject * CEditScene::GetPickedObject() const
 {
 	return GetTerrain();
+}
+
+_bool CEditScene::AddStaticObject(const _tchar * _pMeshTag)
+{
+	CStaticObject* pStaticObject = CStaticObject::Create(m_pGraphicDev, _pMeshTag);
+
+	if (pStaticObject->GetComponent(Engine::ID_STATIC, L"Com_Mesh")) {
+		GetLayer(L"EditLayer")->Add_GameObject(pStaticObject);
+		return true;
+	}
+
+	return false;
 }
 
 void CEditScene::SaveNaviMesh()

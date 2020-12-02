@@ -34,6 +34,14 @@ int CGizmo::Update_Object(const _float & _fDeltaTime)
 		return 0;
 
 	// 컴바인 상태가 아닐때 업데이트됩니다.
+	auto ptCurrentCursor = Engine::GetClientCursorPoint(g_hWnd);
+	if (!Engine::IsPointInClient(g_hWnd, ptCurrentCursor))
+	{
+		m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+		return 0;
+	}
+		
+
 
 	if (!m_bIsPicking) {
 		if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
@@ -69,6 +77,7 @@ int CGizmo::Update_Object(const _float & _fDeltaTime)
 			// 드래그가 끝났다면, 픽킹 상태가 아닌 것이다.
 			m_ePlaneType = PLANE::TYPE_END;
 			m_bIsPicking = false;
+			GetTransform()->SetAngle(0.f, 0.f, 0.f);
 		}
 	}
 
@@ -295,10 +304,6 @@ void CGizmo::DragObject()
 			// 충돌 지점으로 오브젝트와 기즈모를 이동시킨다.
 			m_pGameObject->GetTransform()->SetPos(vHitPos);
 			GetTransform()->SetPos(vHitPos);
-			CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-			CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
-			CNaviMeshTab* pNaviMeshTab = pTabForm->GetNaviMeshTab();
-			pNaviMeshTab->UpdateVertexPos(vHitPos);
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -315,8 +320,215 @@ void CGizmo::DragObject()
 
 void CGizmo::RotateObject()
 {
+	switch (m_ePlaneType) {
+	case PLANE::TYPE_XY:
+		// TODO : XY 평면에 대한 회전 갱신
+	{
+		// XY 평면을 구한다.
+		D3DXPLANE planeXY;
+		_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
+		_matrix matWorld = GetTransform()->GetObjectMatrix();
+		_vec3 vHitPos;
+		// 로컬 삼각형 정점들을 월드 좌표로 변환한다.
+		for (_int i = 0; i < TRI_VERTEX_NUM; ++i) {
+			D3DXVec3TransformCoord(&vWorldTriVtx[i], &XYTriLocal[0][i], &matWorld);
+		}
+
+		// 월드 XY 평면을 구한다
+		D3DXPlaneFromPoints(&planeXY, &vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2]);
+		// 광선을 구한다.
+		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
+
+		// 광선과 평면이 충돌했는지 확인한다.
+		float fT;
+		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeXY, &fT)) {
+			// 충돌 지점으로 오브젝트와 기즈모를 이동시킨다.
+			POINT ptDeltaMousePos = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
+			_float fDeltaMousePosX = static_cast<_float>(ptDeltaMousePos.x);
+			m_pGameObject->GetTransform()->RotateByAxis(-D3DXToRadian(fDeltaMousePosX / WINCX * 360.f), WORLD_Z_AXIS);
+		}
+		else {
+			m_ePlaneType = PLANE::TYPE_END;
+			m_bIsPicking = false;
+		}
+	}
+	break;
+	case PLANE::TYPE_XZ:
+		// TODO : XZ 평면에 대한 회전 갱신
+	{
+		D3DXPLANE planeXZ;
+		_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
+		_matrix matWorld = GetTransform()->GetObjectMatrix();
+		_vec3 vHitPos;
+		// 로컬 삼각형 정점들을 월드 좌표로 변환한다.
+		for (_int i = 0; i < TRI_VERTEX_NUM; ++i) {
+			D3DXVec3TransformCoord(&vWorldTriVtx[i], &XZTriLocal[0][i], &matWorld);
+		}
+
+		// 월드 XZ 평면을 구한다
+		D3DXPlaneFromPoints(&planeXZ, &vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2]);
+		// 광선을 구한다.
+		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
+
+		// 광선과 평면이 충돌했는지 확인한다.
+		float fT;
+		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeXZ, &fT)) {
+			// 충돌 지점으로 오브젝트와 기즈모를 이동시킨다.
+			POINT ptDeltaMousePos = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
+			_float fDeltaMousePosX = static_cast<_float>(ptDeltaMousePos.x);
+			m_pGameObject->GetTransform()->RotateByAxis(-D3DXToRadian(fDeltaMousePosX / WINCX * 360.f), WORLD_Y_AXIS);
+		}
+		else {
+			m_ePlaneType = PLANE::TYPE_END;
+			m_bIsPicking = false;
+		}
+	}
+	break;
+	case PLANE::TYPE_YZ:
+		// TODO : YZ 평면에 대한 회전 갱신
+	{
+		D3DXPLANE planeYZ;
+		_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
+		_matrix matWorld = GetTransform()->GetObjectMatrix();
+		_vec3 vHitPos;
+		// 로컬 삼각형 정점들을 월드 좌표로 변환한다.
+		for (_int i = 0; i < TRI_VERTEX_NUM; ++i) {
+			D3DXVec3TransformCoord(&vWorldTriVtx[i], &YZTriLocal[0][i], &matWorld);
+		}
+
+		// 월드 YZ 평면을 구한다
+		D3DXPlaneFromPoints(&planeYZ, &vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2]);
+		// 광선을 구한다.
+		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
+
+		// 광선과 평면이 충돌했는지 확인한다.
+		float fT;
+		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeYZ, &fT)) {
+			// 충돌 지점으로 오브젝트와 기즈모를 이동시킨다.
+			POINT ptDeltaMousePos = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
+			_float fDeltaMousePosX = static_cast<_float>(ptDeltaMousePos.x);
+			m_pGameObject->GetTransform()->RotateByAxis(D3DXToRadian(fDeltaMousePosX / WINCX * 360.f), WORLD_X_AXIS);
+		}
+		else {
+			m_ePlaneType = PLANE::TYPE_END;
+			m_bIsPicking = false;
+		}
+	}
+	break;
+	default:
+		m_ePlaneType = PLANE::TYPE_END;
+		m_bIsPicking = false;
+		break;
+	}
 }
 
 void CGizmo::ScaleObject()
 {
+	switch (m_ePlaneType) {
+	case PLANE::TYPE_XY:
+		// TODO : XY 평면에 대한 회전 갱신
+	{
+		// XY 평면을 구한다.
+		D3DXPLANE planeXY;
+		_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
+		_matrix matWorld = GetTransform()->GetObjectMatrix();
+		_vec3 vHitPos;
+		// 로컬 삼각형 정점들을 월드 좌표로 변환한다.
+		for (_int i = 0; i < TRI_VERTEX_NUM; ++i) {
+			D3DXVec3TransformCoord(&vWorldTriVtx[i], &XYTriLocal[0][i], &matWorld);
+		}
+
+		// 월드 XY 평면을 구한다
+		D3DXPlaneFromPoints(&planeXY, &vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2]);
+		// 광선을 구한다.
+		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
+
+		// 광선과 평면이 충돌했는지 확인한다.
+		float fT;
+		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeXY, &fT)) {
+			// 충돌 지점으로 오브젝트와 기즈모를 이동시킨다.
+			GetTransform()->SetAngle(m_pGameObject->GetTransform()->GetAngle());
+			POINT ptDeltaMousePos = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
+			m_pGameObject->GetTransform()->Scaling(
+				static_cast<_float>(ptDeltaMousePos.x) / WINCX * 10.f, 
+				-static_cast<_float>(ptDeltaMousePos.y) / WINCY * 10.f, 0.f);
+		}
+		else {
+			m_ePlaneType = PLANE::TYPE_END;
+			m_bIsPicking = false;
+		}
+	}
+	break;
+	case PLANE::TYPE_XZ:
+		// TODO : XZ 평면에 대한 회전 갱신
+	{
+		D3DXPLANE planeXZ;
+		_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
+		_matrix matWorld = GetTransform()->GetObjectMatrix();
+		_vec3 vHitPos;
+		// 로컬 삼각형 정점들을 월드 좌표로 변환한다.
+		for (_int i = 0; i < TRI_VERTEX_NUM; ++i) {
+			D3DXVec3TransformCoord(&vWorldTriVtx[i], &XZTriLocal[0][i], &matWorld);
+		}
+
+		// 월드 XZ 평면을 구한다
+		D3DXPlaneFromPoints(&planeXZ, &vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2]);
+		// 광선을 구한다.
+		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
+
+		// 광선과 평면이 충돌했는지 확인한다.
+		float fT;
+		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeXZ, &fT)) {
+			// 충돌 지점으로 오브젝트와 기즈모를 이동시킨다.
+			GetTransform()->SetAngle(m_pGameObject->GetTransform()->GetAngle());
+			POINT ptDeltaMousePos = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
+			m_pGameObject->GetTransform()->Scaling(
+				static_cast<_float>(ptDeltaMousePos.x) / WINCX * 10.f,
+				0.f, static_cast<_float>(ptDeltaMousePos.y) / WINCY * 10.f);
+		}
+		else {
+			m_ePlaneType = PLANE::TYPE_END;
+			m_bIsPicking = false;
+		}
+	}
+	break;
+	case PLANE::TYPE_YZ:
+		// TODO : YZ 평면에 대한 회전 갱신
+	{
+		D3DXPLANE planeYZ;
+		_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
+		_matrix matWorld = GetTransform()->GetObjectMatrix();
+		_vec3 vHitPos;
+		// 로컬 삼각형 정점들을 월드 좌표로 변환한다.
+		for (_int i = 0; i < TRI_VERTEX_NUM; ++i) {
+			D3DXVec3TransformCoord(&vWorldTriVtx[i], &YZTriLocal[0][i], &matWorld);
+		}
+
+		// 월드 YZ 평면을 구한다
+		D3DXPlaneFromPoints(&planeYZ, &vWorldTriVtx[0], &vWorldTriVtx[1], &vWorldTriVtx[2]);
+		// 광선을 구한다.
+		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
+
+		// 광선과 평면이 충돌했는지 확인한다.
+		float fT;
+		if (Engine::IsRayAndPlaneCollided(stPickingRayInfo, planeYZ, &fT)) {
+			// 충돌 지점으로 오브젝트와 기즈모를 이동시킨다.
+			GetTransform()->SetAngle(m_pGameObject->GetTransform()->GetAngle());
+			POINT ptDeltaMousePos = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
+			m_pGameObject->GetTransform()->Scaling(
+				0.f,
+				-static_cast<_float>(ptDeltaMousePos.y) / WINCY * 10.f
+				, -static_cast<_float>(ptDeltaMousePos.x) / WINCX * 10.f);
+		}
+		else {
+			m_ePlaneType = PLANE::TYPE_END;
+			m_bIsPicking = false;
+		}
+	}
+	break;
+	default:
+		m_ePlaneType = PLANE::TYPE_END;
+		m_bIsPicking = false;
+		break;
+	}
 }

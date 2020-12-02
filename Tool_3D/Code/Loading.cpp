@@ -2,6 +2,9 @@
 #include "Loading.h"
 
 #include "Export_Function.h"
+#include "MainFrm.h"
+#include "CTabForm.h"
+#include "CMapTab.h"
 
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -49,6 +52,11 @@ HRESULT CLoading::Ready_Loading(LOADINGID eLoading)
 	m_hThread = (HANDLE)_beginthreadex(NULL, 0, Thread_Main, this, 0, NULL);
 
 	m_eLoading = eLoading;
+
+	// MapTab에서 쓰일 정적 오브젝트를 세팅한다.
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+	m_pMapTab = pTabForm->GetMapTab();
 
 	return S_OK;
 }
@@ -152,6 +160,7 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
+	
 
 	// Stone 메쉬 원본 생성
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -161,6 +170,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
 		L"TombStone.X"),
 		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"Mesh_Stone", NULL, NULL);
 
 	// 스톤에 맞는 메쉬 콜라이더 원본 생성.
 	Engine::CStaticMesh* pStaticMesh = nullptr;
@@ -168,6 +178,26 @@ _uint CLoading::Loading_ForStage(void)
 	pComponent = Engine::CMeshCollider::Create(m_pGraphicDev, pStaticMesh->Get_VtxPos(), pStaticMesh->Get_NumVtx(), pStaticMesh->Get_Stride());
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Collider_Stone", pComponent);
+
+	// CobbledStreet 생성
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"CobbledStreet",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"CobbledStreet.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"CobbledStreet", NULL, NULL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PoorBuildingE01",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"PoorBuildingE01.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"PoorBuildingE01", NULL, NULL);
+
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	RESOURCE_STAGE,

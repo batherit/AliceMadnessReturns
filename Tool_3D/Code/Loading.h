@@ -4,6 +4,7 @@
 #include "Define.h"
 #include "Base.h"
 
+class CMapTab;
 BEGIN(Client)
 
 class CLoading : public CBase 
@@ -42,6 +43,9 @@ public:
 	static CLoading*		Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID eLoading);
 private:
 	virtual void	Free(void);
+
+private:
+	CMapTab* m_pMapTab = nullptr;
 
 };
 END

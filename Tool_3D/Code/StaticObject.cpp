@@ -113,7 +113,6 @@ _bool CStaticObject::LoadInfo(HANDLE & _hfIn)
 	Engine::RENDERID eRenderID = Engine::RENDER_END;
 	ReadFile(_hfIn, &eRenderID, sizeof(eRenderID), nullptr, nullptr);
 	
-
 	// 3) 트랜스폼 정보 세팅
 	_vec3 vPos, vAngle, vScale;
 	ReadFile(_hfIn, &vPos, sizeof(vPos), nullptr, nullptr);

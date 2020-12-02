@@ -25,9 +25,6 @@ public:
 	static CLoadScene*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	void UpdateObjectList();
-
-private:
 	CLoading*	m_pLoading = nullptr;
 
 

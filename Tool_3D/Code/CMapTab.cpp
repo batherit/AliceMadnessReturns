@@ -63,6 +63,8 @@ BEGIN_MESSAGE_MAP(CMapTab, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO5, &CMapTab::OnBnClickedRadioPosition)
 	ON_BN_CLICKED(IDC_RADIO6, &CMapTab::OnBnClickedRadioRotation)
 	ON_BN_CLICKED(IDC_RADIO7, &CMapTab::OnBnClickedRadioScale)
+	ON_BN_CLICKED(IDC_BUTTON7, &CMapTab::OnBnClickedButtonSave)
+	ON_BN_CLICKED(IDC_BUTTON8, &CMapTab::OnBnClickedButtonLoad)
 END_MESSAGE_MAP()
 
 
@@ -437,3 +439,17 @@ void CMapTab::OnBnClickedRadioScale()
 }
 
 
+
+
+void CMapTab::OnBnClickedButtonSave()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	g_pTool3D_Kernel->GetEditScene()->SaveMap();
+}
+
+
+void CMapTab::OnBnClickedButtonLoad()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	g_pTool3D_Kernel->GetEditScene()->LoadMap();
+}

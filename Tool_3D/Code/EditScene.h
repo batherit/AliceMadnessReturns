@@ -51,8 +51,12 @@ public:
 	vector<CStaticObject*>& GetStaticObjectList() { return m_vecStaticObjects; }
 	_bool DeleteStaticObject(_int _iObjectIndex);
 
+	// 네비메쉬탭 편집 내용 세이브/로드
 	void SaveNaviMesh();
 	void LoadNaviMesh();
+	// 맵탭 편집 내용 세이브/로드
+	void SaveMap();
+	void LoadMap();
 
 private:
 	_bool IsValidObjectIndex(_int _iObjectIndex);

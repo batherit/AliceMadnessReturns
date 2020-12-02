@@ -24,7 +24,6 @@ CNaviMeshTab::CNaviMeshTab(CWnd* pParent /*=nullptr*/)
 	//, m_chkNaviMagnet(FALSE)
 	, m_bIsNaviMagnet(FALSE)
 {
-
 }
 
 CNaviMeshTab::~CNaviMeshTab()

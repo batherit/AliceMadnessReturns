@@ -10,6 +10,7 @@
 #include "InputProcessor_Terrain.h"
 #include "MainFrm.h"
 #include "CTabForm.h"
+#include "CMapTab.h"
 #include "StaticObject.h"
 //#include "InputProcessor_Navi.h"
 
@@ -213,7 +214,8 @@ Engine::CGameObject * CEditScene::GetPickedObject() const
 
 _bool CEditScene::AddStaticObject(const _tchar * _pMeshTag)
 {
-	CStaticObject* pStaticObject = CStaticObject::Create(m_pGraphicDev, _pMeshTag);
+	CStaticObject* pStaticObject = CStaticObject::Create(m_pGraphicDev);
+	pStaticObject->SetRenderInfo(_pMeshTag);
 
 	if (pStaticObject->GetComponent(Engine::ID_STATIC, L"Com_Mesh")) {
 		GetLayer(L"EditLayer")->Add_GameObject(pStaticObject);
@@ -221,6 +223,7 @@ _bool CEditScene::AddStaticObject(const _tchar * _pMeshTag)
 		return true;
 	}
 
+	Engine::Safe_Release(pStaticObject);
 	return false;
 }
 
@@ -317,7 +320,10 @@ void CEditScene::SaveMap()
 		if (INVALID_HANDLE_VALUE == hFile)
 			return;
 
-		//GetNaviMesh()->SaveInfo(hFile);
+		_int iVecSize = m_vecStaticObjects.size();
+		WriteFile(hFile, &iVecSize, sizeof(iVecSize), nullptr, nullptr);
+		for (auto& rStaticObj : m_vecStaticObjects)
+			rStaticObj->SaveInfo(hFile);
 
 		CloseHandle(hFile);
 	}
@@ -344,7 +350,26 @@ void CEditScene::LoadMap()
 		if (INVALID_HANDLE_VALUE == hFile)
 			return;
 
-		//GetNaviMesh()->LoadInfo(hFile);
+		// 기존 정보들은 파기한다.
+		for (auto& rObj : m_vecStaticObjects) {
+			rObj->SetValid(false);
+		}
+		m_vecStaticObjects.clear();
+
+		// 객체 정보를 로드한다.
+		_int iVecSize = 0;
+		ReadFile(hFile, &iVecSize, sizeof(iVecSize), nullptr, nullptr);
+		CStaticObject* pStaticObject = nullptr;
+		for (_int i = 0; i < iVecSize; ++i) {
+			pStaticObject = CStaticObject::Create(m_pGraphicDev);
+			if (!pStaticObject->LoadInfo(hFile))
+				Engine::Safe_Release(pStaticObject);
+			else {
+				GetLayer(L"EditLayer")->Add_GameObject(pStaticObject);
+				m_vecStaticObjects.emplace_back(pStaticObject);
+			}
+				
+		}
 
 		CloseHandle(hFile);
 	}

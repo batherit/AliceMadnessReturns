@@ -21,13 +21,20 @@ private: // 持失切, 社瑚切
 	virtual void Render_Object(void) override;
 
 public:
-	static CStaticObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _pMeshTag);
+	static CStaticObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	_bool SetRenderInfo(const _tchar* _pMeshTag, Engine::RENDERID _eRenderID = Engine::RENDER_NONALPHA);
+	const _tchar* GetMeshTag() const { return m_tcMeshTag; }
+
 	virtual void		Free(void);
+
+	virtual _bool SaveInfo(HANDLE& _hfOut) override;
+	virtual _bool LoadInfo(HANDLE& _hfIn) override;
 
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
-	const _tchar* m_pMeshTag = nullptr;
+	//const _tchar* m_pMeshTag = nullptr;
+	_tchar m_tcMeshTag[MAX_PATH] = L"";
 };
 
 END

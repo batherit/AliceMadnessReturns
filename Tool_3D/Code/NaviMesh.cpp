@@ -171,7 +171,7 @@ void CNaviMesh::GenerateNewNaviMesh(vector<_vec3>& _rVertices)
 	m_pManualCol->GenerateNewNaviMesh(_rVertices);
 }
 
-void CNaviMesh::SaveInfo(HANDLE & _hfOut)
+_bool CNaviMesh::SaveInfo(HANDLE & _hfOut)
 {
 	auto& rVertices = GetNaviVertices();
 	_int iVerticesSize = static_cast<_int>(GetNaviVertices().size());
@@ -182,9 +182,11 @@ void CNaviMesh::SaveInfo(HANDLE & _hfOut)
 		WriteFile(_hfOut, &rPos.y, sizeof(rPos.y), nullptr, nullptr);
 		WriteFile(_hfOut, &rPos.z, sizeof(rPos.z), nullptr, nullptr);
 	}
+
+	return true;
 }
 
-void CNaviMesh::LoadInfo(HANDLE & _hfIn)
+_bool CNaviMesh::LoadInfo(HANDLE & _hfIn)
 {
 	_int iVerticesSize = 0;
 	ReadFile(_hfIn, &iVerticesSize, sizeof(_int), nullptr, nullptr);
@@ -203,4 +205,6 @@ void CNaviMesh::LoadInfo(HANDLE & _hfIn)
 
 	vecVertices.clear();
 	vecVertices.shrink_to_fit();
+
+	return true;
 }

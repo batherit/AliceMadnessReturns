@@ -19,6 +19,7 @@ public:
 	virtual int Update(const _float & _fDeltaTime) PURE;
 	virtual void	Render() PURE;
 	void SetRenderID(RENDERID _eRenderID) { m_eRenderID = _eRenderID; }
+	RENDERID GetRenderID() const { return m_eRenderID; }
 
 protected:
 	void RegisterToRenderer();

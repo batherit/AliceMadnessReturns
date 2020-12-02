@@ -39,8 +39,8 @@ public:
 	void GenerateNewNaviMesh(vector<_vec3>& _rVertices);
 
 	// 파일 입출력
-	virtual void SaveInfo(HANDLE& _hfOut) override;
-	virtual void LoadInfo(HANDLE& _hfIn) override;
+	virtual _bool SaveInfo(HANDLE& _hfOut) override;
+	virtual _bool LoadInfo(HANDLE& _hfIn) override;
 
 private:
 	Engine::CPolygonRenderer* m_pRenderer = nullptr;

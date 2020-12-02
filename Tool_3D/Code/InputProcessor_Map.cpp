@@ -19,10 +19,13 @@ CInputProcessor_Map::CInputProcessor_Map(Engine::CInputProcessorMgr * _pInputPro
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
 	m_pMapTab = pTabForm->GetMapTab();
+
+	
 }
 
 CInputProcessor_Map::~CInputProcessor_Map(void)
 {
+	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->ActivateGizmo(false);
 }
 
 _int CInputProcessor_Map::ProcessInput(const _float & _fDeltaTime)

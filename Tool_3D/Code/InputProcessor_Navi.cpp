@@ -26,12 +26,15 @@ CInputProcessor_Navi::CInputProcessor_Navi(Engine::CInputProcessorMgr * _pInputP
 
 	// 네비메쉬 생성을 위한 히트포지션을 저장할 벡터 공간을 예약한다.
 	m_vecTriangle.reserve(3);
+
+	
 }
 
 CInputProcessor_Navi::~CInputProcessor_Navi(void)
 {
 	m_vecTriangle.clear();
 	m_vecTriangle.shrink_to_fit();
+	g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover()->ActivateMoverGizmo(false);
 }
 
 _int CInputProcessor_Navi::ProcessInput(const _float & _fDeltaTime)

@@ -247,6 +247,17 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
+void CMapTab::UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects)
+{
+	m_treeAddedObject.DeleteAllItems();
+
+	for (auto& rStaticObj : rStaticObjects) {
+		if (rStaticObj->IsValid()) {
+			m_treeAddedObject.InsertItem(rStaticObj->GetMeshTag() , NULL, NULL);
+		}
+	}
+}
+
 void CMapTab::OnEnChangeEditPosX()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
@@ -452,4 +463,5 @@ void CMapTab::OnBnClickedButtonLoad()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	g_pTool3D_Kernel->GetEditScene()->LoadMap();
+	UpdateAddedTree(g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList());
 }

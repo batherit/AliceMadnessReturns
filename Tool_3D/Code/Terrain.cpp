@@ -49,9 +49,43 @@ void CTerrain::Render_Object(void)
 	m_pRenderer->Render();
 }
 
-void CTerrain::CreateTerrain(_uint _iNumOfVerticesW, _uint _iNumOfVerticesH, _float _fWidth, _float _fHeight, const _tchar * _szHeightMapFileName)
+void CTerrain::CreateTerrain(_uint _iNumOfVerticesW, _uint _iNumOfVerticesD, _float _fWidth, _float _fDepth, _float _fU, _float _fV, const _tchar * _szHeightMapFileName)
 {
-	m_pTerrain->SetTerrainInfo(_iNumOfVerticesW, _iNumOfVerticesH, _fWidth, _fHeight, _szHeightMapFileName);
+	m_pTerrain->SetTerrainInfo(_iNumOfVerticesW, _iNumOfVerticesD, _fWidth, _fDepth, _szHeightMapFileName);
+}
+
+void CTerrain::SetHeightMapFileName(const _tchar * _szHeightMapFileName)
+{
+	if (!_szHeightMapFileName)
+		return;
+	m_szHeightMapFileName = _szHeightMapFileName;
+	m_pTerrain->SetTerrainInfo(m_iNumOfVerticesW, m_iNumOfVerticesD, m_fWidth, m_fDepth, m_szHeightMapFileName);
+}
+
+void CTerrain::SetVtxNum(_uint _iNumOfVerticesW, _uint _iNumOfVerticesD)
+{
+	m_iNumOfVerticesW = _iNumOfVerticesW;
+	m_iNumOfVerticesD = _iNumOfVerticesD;
+	if (_iNumOfVerticesW < 2)
+		m_iNumOfVerticesW = 2;
+	if (_iNumOfVerticesD < 2)
+		m_iNumOfVerticesD = 2;
+	m_pTerrain->SetTerrainInfo(m_iNumOfVerticesW, m_iNumOfVerticesD, m_fWidth, m_fDepth, m_szHeightMapFileName);
+}
+
+void CTerrain::SetSize(_float _fWidth, _float _fDepth)
+{
+	m_fWidth = _fWidth;
+	m_fDepth = _fDepth;
+	m_pTerrain->SetTerrainInfo(m_iNumOfVerticesW, m_iNumOfVerticesD, m_fWidth, m_fDepth, m_szHeightMapFileName);
+}
+
+void CTerrain::SetUV(_float _fU, _float _fV)
+{
+	m_fU = _fU;
+	m_fV = _fV;
+	abort();	// 아직 미구현
+	//m_pTerrain->SetTerrainInfo(m_iNumOfVerticesW, m_iNumOfVerticesD, m_fWidth, m_fDepth, m_szHeightMapFileName);
 }
 
 CTerrain * CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)

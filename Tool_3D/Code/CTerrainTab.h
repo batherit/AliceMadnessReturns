@@ -37,4 +37,20 @@ private:
 	_vec3 m_vAngle{ 0.f, 0.f, 0.f };
 	_vec3 m_vScale{ 1.f, 1.f, 1.f };
 
+public:
+	CListBox m_lbxTexture;
+	afx_msg void OnEnChangeEditWidth();
+	afx_msg void OnEnChangeEditDepth();
+	afx_msg void OnEnChangeEditVtxNumWidth();
+	afx_msg void OnEnChangeEditVtxNumDepth();
+	afx_msg void OnEnChangeEditU();
+	afx_msg void OnEnChangeEditV();
+	_float m_fSizeWidth;
+	_float m_fSizeDepth;
+	_uint m_uiVtxNumWidth;
+	_uint m_uiVtxNumHeight;
+	_float m_fU;
+	_float m_fV;
+	afx_msg void OnBnClickedButtonSave();
+	afx_msg void OnBnClickedButtonLoad();
 };

@@ -51,7 +51,7 @@ HRESULT CEditScene::Ready(void)
 	pGameObject = CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
-	dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(2, 2, 129.f, 129.f, nullptr);
+	dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(2, 2, 129.f, 129.f, 1.f, 1.f, nullptr);
 	//dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
 
 	// 네비메쉬 오브젝트 생성

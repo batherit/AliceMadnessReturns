@@ -15,6 +15,12 @@ IMPLEMENT_DYNAMIC(CTerrainTab, CDialogEx)
 
 CTerrainTab::CTerrainTab(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_TERRAIN_TAB, pParent)
+	, m_fSizeWidth(0)
+	, m_fSizeDepth(0)
+	, m_uiVtxNumWidth(0)
+	, m_uiVtxNumHeight(0)
+	, m_fU(0)
+	, m_fV(0)
 {
 
 }
@@ -35,6 +41,13 @@ void CTerrainTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT7, m_vScale.x);
 	DDX_Text(pDX, IDC_EDIT8, m_vScale.y);
 	DDX_Text(pDX, IDC_EDIT9, m_vScale.z);
+	DDX_Control(pDX, IDC_LIST2, m_lbxTexture);
+	DDX_Text(pDX, IDC_EDIT11, m_fSizeWidth);
+	DDX_Text(pDX, IDC_EDIT12, m_fSizeDepth);
+	DDX_Text(pDX, IDC_EDIT14, m_uiVtxNumWidth);
+	DDX_Text(pDX, IDC_EDIT15, m_uiVtxNumHeight);
+	DDX_Text(pDX, IDC_EDIT16, m_fU);
+	DDX_Text(pDX, IDC_EDIT17, m_fV);
 }
 
 BEGIN_MESSAGE_MAP(CTerrainTab, CDialogEx)
@@ -47,6 +60,14 @@ BEGIN_MESSAGE_MAP(CTerrainTab, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT7, &CTerrainTab::OnEnChangeEditScaleX)
 	ON_EN_CHANGE(IDC_EDIT8, &CTerrainTab::OnEnChangeEditScaleX)
 	ON_EN_CHANGE(IDC_EDIT9, &CTerrainTab::OnEnChangeEditScaleX)
+	ON_EN_CHANGE(IDC_EDIT11, &CTerrainTab::OnEnChangeEditWidth)
+	ON_EN_CHANGE(IDC_EDIT12, &CTerrainTab::OnEnChangeEditDepth)
+	ON_EN_CHANGE(IDC_EDIT14, &CTerrainTab::OnEnChangeEditVtxNumWidth)
+	ON_EN_CHANGE(IDC_EDIT15, &CTerrainTab::OnEnChangeEditVtxNumDepth)
+	ON_EN_CHANGE(IDC_EDIT16, &CTerrainTab::OnEnChangeEditU)
+	ON_EN_CHANGE(IDC_EDIT17, &CTerrainTab::OnEnChangeEditV)
+	ON_BN_CLICKED(IDC_BUTTON9, &CTerrainTab::OnBnClickedButtonSave)
+	ON_BN_CLICKED(IDC_BUTTON6, &CTerrainTab::OnBnClickedButtonLoad)
 END_MESSAGE_MAP()
 
 
@@ -225,4 +246,81 @@ void CTerrainTab::OnEnChangeEditScaleZ()
 	}
 
 	UpdateData(FALSE);
+}
+
+void CTerrainTab::OnEnChangeEditWidth()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CTerrainTab::OnEnChangeEditDepth()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CTerrainTab::OnEnChangeEditVtxNumWidth()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CTerrainTab::OnEnChangeEditVtxNumDepth()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CTerrainTab::OnEnChangeEditU()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CTerrainTab::OnEnChangeEditV()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CTerrainTab::OnBnClickedButtonSave()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CTerrainTab::OnBnClickedButtonLoad()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

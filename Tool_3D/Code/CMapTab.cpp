@@ -275,11 +275,11 @@ void CMapTab::UpdateAngle(const _vec3 & vAngle)
 {
 	UpdateData(TRUE);
 	CString strValue = L"";
-	strValue.Format(_T("%f"), vAngle.x);
+	strValue.Format(_T("%f"), D3DXToDegree(vAngle.x));
 	m_editRotX.SetWindowTextW(strValue);
-	strValue.Format(_T("%f"), vAngle.y);
+	strValue.Format(_T("%f"), D3DXToDegree(vAngle.y));
 	m_editRotY.SetWindowTextW(strValue);
-	strValue.Format(_T("%f"), vAngle.z);
+	strValue.Format(_T("%f"), D3DXToDegree(vAngle.z));
 	m_editRotZ.SetWindowTextW(strValue);
 	UpdateData(FALSE);
 }
@@ -403,7 +403,7 @@ void CMapTab::OnEnChangeEditRotX()
 	CString strRotX;
 	m_editRotX.GetWindowTextW(strRotX);
 	_float fRotX = static_cast<_float>(_tstof(strRotX));
-	m_pSelectedStaticObject->GetTransform()->SetAngleZ(fRotX);
+	m_pSelectedStaticObject->GetTransform()->SetAngleX(D3DXToRadian(fRotX));
 
 	UpdateData(FALSE);
 }
@@ -422,7 +422,7 @@ void CMapTab::OnEnChangeEditRotY()
 	CString strRotY;
 	m_editRotY.GetWindowTextW(strRotY);
 	_float fRotY = static_cast<_float>(_tstof(strRotY));
-	m_pSelectedStaticObject->GetTransform()->SetAngleY(fRotY);
+	m_pSelectedStaticObject->GetTransform()->SetAngleY(D3DXToRadian(fRotY));
 
 	UpdateData(FALSE);
 }
@@ -441,7 +441,7 @@ void CMapTab::OnEnChangeEditRotZ()
 	CString strRotZ;
 	m_editRotZ.GetWindowTextW(strRotZ);
 	_float fRotZ = static_cast<_float>(_tstof(strRotZ));
-	m_pSelectedStaticObject->GetTransform()->SetAngleZ(fRotZ);
+	m_pSelectedStaticObject->GetTransform()->SetAngleZ(D3DXToRadian(fRotZ));
 
 	UpdateData(FALSE);
 }
@@ -498,7 +498,7 @@ void CMapTab::OnEnChangeEditScaleZ()
 	CString strScaleZ;
 	m_editScaleZ.GetWindowTextW(strScaleZ);
 	_float fScaleZ = static_cast<_float>(_tstof(strScaleZ));
-	m_pSelectedStaticObject->GetTransform()->SetScaleY(fScaleZ);
+	m_pSelectedStaticObject->GetTransform()->SetScaleZ(fScaleZ);
 
 	UpdateData(FALSE);
 }

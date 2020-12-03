@@ -410,19 +410,28 @@ namespace Engine
 	inline _vec3 ConvQuaternionToYawPitchRoll(const _qt& pQt) {
 		_vec3 vResult;
 
-		_float q2sqr = pQt.y * pQt.y;
-		_float t0 = -2.f * (q2sqr + pQt.z * pQt.z) + 1.f;
-		_float t1 = +2.f * (pQt.x * pQt.y + pQt.w * pQt.z);
-		_float t2 = -2.f * (pQt.x * pQt.z - pQt.w * pQt.y);
-		_float t3 = +2.f * (pQt.y * pQt.z + pQt.w * pQt.x);
-		_float t4 = -2.f * (pQt.x * pQt.x + q2sqr) + 1.f;
+		_float sqw = pQt.w * pQt.w;
+		_float sqx = pQt.x * pQt.x;
+		_float sqy = pQt.y * pQt.y;
+		_float sqz = pQt.z * pQt.z;
 
-		t2 = t2 > 1.f ? 1.f : t2;
-		t2 = t2 < -1.f ? -1.f : t2;
+		vResult.x = asinf(2.f * (pQt.w * pQt.x - pQt.y * pQt.z));
+		vResult.y = atan2f(2.f * (pQt.x * pQt.z + pQt.w * pQt.y), (-sqx - sqy + sqz + sqw));
+		vResult.z = atan2f(2.f * (pQt.x * pQt.y + pQt.w * pQt.z), (-sqx + sqy - sqz + sqw));
+		
+		//_float q2sqr = pQt.y * pQt.y;
+		//_float t0 = -2.f * (q2sqr + pQt.z * pQt.z) + 1.f;
+		//_float t1 = +2.f * (pQt.x * pQt.y + pQt.w * pQt.z);
+		//_float t2 = -2.f * (pQt.x * pQt.z - pQt.w * pQt.y);
+		//_float t3 = +2.f * (pQt.y * pQt.z + pQt.w * pQt.x);
+		//_float t4 = -2.f * (pQt.x * pQt.x + q2sqr) + 1.f;
 
-		vResult.y = asinf(t2);			// Yaw
-		vResult.x = atan2f(t3, t4);		// Pitch
-		vResult.z = atan2f(t1, t0);		// Roll
+		//t2 = t2 > 1.f ? 1.f : t2;
+		//t2 = t2 < -1.f ? -1.f : t2;
+
+		//vResult.y = asinf(t2);			// Yaw
+		//vResult.x = atan2f(t3, t4);		// Pitch
+		//vResult.z = atan2f(t1, t0);		// Roll
 
 		return vResult;					// _vec3(Pitch, Yaw, Roll);
 	}

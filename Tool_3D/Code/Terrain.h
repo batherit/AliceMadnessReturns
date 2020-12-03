@@ -33,6 +33,7 @@ public:
 private:
 	Engine::CPolygonRenderer* m_pRenderer = nullptr;
 	Engine::CTerrainTex* m_pTerrain = nullptr;
+	Engine::CTexture*	m_pTexture = nullptr;
 };
 
 END

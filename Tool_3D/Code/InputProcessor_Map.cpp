@@ -19,8 +19,6 @@ CInputProcessor_Map::CInputProcessor_Map(Engine::CInputProcessorMgr * _pInputPro
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
 	m_pMapTab = pTabForm->GetMapTab();
-
-	
 }
 
 CInputProcessor_Map::~CInputProcessor_Map(void)
@@ -62,7 +60,7 @@ _int CInputProcessor_Map::ProcessInput(const _float & _fDeltaTime)
 		if (!pGizmo->IsGizmoActivated()) {
 			if (!vecCollidedSphereIndex.empty()) {
 				// 충돌한 정적 오브젝트를 찾은 경우, 기즈모에 해당 오브젝트를 세팅하고 활성화한다.
-
+				m_pMapTab->SetSelectedObject(rStaticObjectList[vecCollidedSphereIndex[0]]);
 				pGizmo->SetObject(rStaticObjectList[vecCollidedSphereIndex[0]]);
 				pGizmo->ActivateGizmo(true);
 			}

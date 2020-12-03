@@ -43,10 +43,12 @@ public:
 	static CLoading*		Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID eLoading);
 private:
 	virtual void	Free(void);
+	HRESULT LoadMapObjectData();
 
 private:
 	CMapTab* m_pMapTab = nullptr;
 
+	map<const _tchar*, vector<const _tchar*>> m_mapMapObjects;
 };
 END
 

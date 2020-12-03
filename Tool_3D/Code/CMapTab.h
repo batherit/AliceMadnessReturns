@@ -29,6 +29,10 @@ public:
 
 public:
 	void UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects);
+	void UpdatePos(const _vec3& vPos);
+	void UpdateAngle(const _vec3& vAngle);
+	void UpdateScale(const _vec3& vScale);
+	void SetSelectedObject(CStaticObject* _pStaticObject);
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.

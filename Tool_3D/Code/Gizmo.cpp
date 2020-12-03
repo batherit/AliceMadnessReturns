@@ -4,6 +4,7 @@
 #include "CNaviMeshTab.h"
 #include "MainFrm.h"
 #include "CTabForm.h"
+#include "CMapTab.h"
 #include "Gizmo.h"
 
 CGizmo::CGizmo(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -25,6 +26,12 @@ HRESULT CGizmo::Ready_Object(void)
 	m_pRenderer = AddComponent<Engine::CRenderer>();
 
 	GetTransform()->SetScale(_vec3(10.f, 10.f, 10.f));
+
+	// 맵 탭 포인터를 얻어온다.
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+	m_pMapTab = pTabForm->GetMapTab();
+
 	return S_OK;
 }
 
@@ -238,6 +245,7 @@ void CGizmo::DragObject()
 			CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
 			CNaviMeshTab* pNaviMeshTab = pTabForm->GetNaviMeshTab();
 			pNaviMeshTab->UpdateVertexPos(vHitPos);
+			m_pMapTab->UpdatePos(m_pGameObject->GetTransform()->GetPos());
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -273,6 +281,7 @@ void CGizmo::DragObject()
 			CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
 			CNaviMeshTab* pNaviMeshTab = pTabForm->GetNaviMeshTab();
 			pNaviMeshTab->UpdateVertexPos(vHitPos);
+			m_pMapTab->UpdatePos(m_pGameObject->GetTransform()->GetPos());
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -304,6 +313,7 @@ void CGizmo::DragObject()
 			// 충돌 지점으로 오브젝트와 기즈모를 이동시킨다.
 			m_pGameObject->GetTransform()->SetPos(vHitPos);
 			GetTransform()->SetPos(vHitPos);
+			m_pMapTab->UpdatePos(m_pGameObject->GetTransform()->GetPos());
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -346,6 +356,7 @@ void CGizmo::RotateObject()
 			POINT ptDeltaMousePos = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
 			_float fDeltaMousePosX = static_cast<_float>(ptDeltaMousePos.x);
 			m_pGameObject->GetTransform()->RotateByAxis(-D3DXToRadian(fDeltaMousePosX / WINCX * 360.f), WORLD_Z_AXIS);
+			m_pMapTab->UpdateAngle(m_pGameObject->GetTransform()->GetAngle());
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -377,6 +388,7 @@ void CGizmo::RotateObject()
 			POINT ptDeltaMousePos = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
 			_float fDeltaMousePosX = static_cast<_float>(ptDeltaMousePos.x);
 			m_pGameObject->GetTransform()->RotateByAxis(-D3DXToRadian(fDeltaMousePosX / WINCX * 360.f), WORLD_Y_AXIS);
+			m_pMapTab->UpdateAngle(m_pGameObject->GetTransform()->GetAngle());
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -408,6 +420,7 @@ void CGizmo::RotateObject()
 			POINT ptDeltaMousePos = Engine::CDirectInputMgr::GetInstance()->GetDeltaMousePos();
 			_float fDeltaMousePosX = static_cast<_float>(ptDeltaMousePos.x);
 			m_pGameObject->GetTransform()->RotateByAxis(D3DXToRadian(fDeltaMousePosX / WINCX * 360.f), WORLD_X_AXIS);
+			m_pMapTab->UpdateAngle(m_pGameObject->GetTransform()->GetAngle());
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -426,7 +439,7 @@ void CGizmo::ScaleObject()
 {
 	switch (m_ePlaneType) {
 	case PLANE::TYPE_XY:
-		// TODO : XY 평면에 대한 회전 갱신
+		// TODO : XY 평면에 대한 스케일 갱신
 	{
 		// XY 평면을 구한다.
 		D3DXPLANE planeXY;
@@ -452,6 +465,7 @@ void CGizmo::ScaleObject()
 			m_pGameObject->GetTransform()->Scaling(
 				static_cast<_float>(ptDeltaMousePos.x) / WINCX * 10.f, 
 				-static_cast<_float>(ptDeltaMousePos.y) / WINCY * 10.f, 0.f);
+			m_pMapTab->UpdateScale(m_pGameObject->GetTransform()->GetScale());
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -460,7 +474,7 @@ void CGizmo::ScaleObject()
 	}
 	break;
 	case PLANE::TYPE_XZ:
-		// TODO : XZ 평면에 대한 회전 갱신
+		// TODO : XZ 평면에 대한 스케일 갱신
 	{
 		D3DXPLANE planeXZ;
 		_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
@@ -485,6 +499,7 @@ void CGizmo::ScaleObject()
 			m_pGameObject->GetTransform()->Scaling(
 				static_cast<_float>(ptDeltaMousePos.x) / WINCX * 10.f,
 				0.f, static_cast<_float>(ptDeltaMousePos.y) / WINCY * 10.f);
+			m_pMapTab->UpdateScale(m_pGameObject->GetTransform()->GetScale());
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;
@@ -493,7 +508,7 @@ void CGizmo::ScaleObject()
 	}
 	break;
 	case PLANE::TYPE_YZ:
-		// TODO : YZ 평면에 대한 회전 갱신
+		// TODO : YZ 평면에 대한 스케일 갱신
 	{
 		D3DXPLANE planeYZ;
 		_vec3 vWorldTriVtx[TRI_VERTEX_NUM];
@@ -519,6 +534,7 @@ void CGizmo::ScaleObject()
 				0.f,
 				-static_cast<_float>(ptDeltaMousePos.y) / WINCY * 10.f
 				, -static_cast<_float>(ptDeltaMousePos.x) / WINCX * 10.f);
+			m_pMapTab->UpdateScale(m_pGameObject->GetTransform()->GetScale());
 		}
 		else {
 			m_ePlaneType = PLANE::TYPE_END;

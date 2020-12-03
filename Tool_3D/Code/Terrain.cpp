@@ -24,14 +24,12 @@ HRESULT CTerrain::Ready_Object(void)
 	m_pRenderer = AddComponent<Engine::CPolygonRenderer>();
 
 	m_pTerrain = AddComponent<Engine::CTerrainTex>();
-	m_pTerrain->SetTerrainInfo(129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height1.bmp");
 
-//	pComponent = m_pTextureCom = ;
-//	Engine::GetOriResource()
-//	NULL_CHECK_RETURN(pComponent, E_FAIL);
-//	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent, );
-	
-	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pTerrain, dynamic_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"Height")));
+	//m_pTexture = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SkyBox"));
+	//m_mapComponent[Engine::CTexture::GetComponentID()].emplace(Engine::CTexture::GetComponentTag(), m_pTexture);
+	//dynamic_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"Height"));
+
+	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pTerrain, nullptr);
 	return S_OK;
 }
 

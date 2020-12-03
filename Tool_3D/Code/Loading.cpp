@@ -46,6 +46,13 @@ _uint	CALLBACK CLoading::Thread_Main(void* pArg)
 
 HRESULT CLoading::Ready_Loading(LOADINGID eLoading)
 {
+	m_mapMapObjects[L"Chapter1/"].emplace_back(L"CobbledStreet");
+	m_mapMapObjects[L"Chapter1/"].emplace_back(L"CobbledStreet_Even");
+	m_mapMapObjects[L"Chapter1/"].emplace_back(L"PoorBuildingE01");
+	m_mapMapObjects[L"Chapter1/"].emplace_back(L"Curb_90");
+	m_mapMapObjects[L"Chapter1/"].emplace_back(L"Curb_Uneven");
+	m_mapMapObjects[L"Chapter1/"].emplace_back(L"Curb_Section");
+
 	InitializeCriticalSection(&m_Crt);		// 农府萍拿 冀记 积己
 
 	// 静饭靛 积己 窃荐
@@ -179,6 +186,8 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Collider_Stone", pComponent);
 
+	//LoadMapObjectData();
+
 	// CobbledStreet 积己
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -189,6 +198,17 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"CobbledStreet", NULL, NULL);
 
+	// CobbledStreet_Even
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"CobbledStreet_Even",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"CobbledStreet_Even.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"CobbledStreet_Even", NULL, NULL);
+
+	// PoorBuildingE01
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"PoorBuildingE01",
@@ -197,6 +217,37 @@ _uint CLoading::Loading_ForStage(void)
 		L"PoorBuildingE01.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"PoorBuildingE01", NULL, NULL);
+
+	// Curb_90
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Curb_90",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"Curb_90.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_90", NULL, NULL);
+
+	// Curb_Uneven
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Curb_Uneven",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"Curb_Uneven.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_Uneven", NULL, NULL);
+
+	// Curb_Section
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Curb_Section",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"Curb_Section.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_Section", NULL, NULL);
+
 
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -258,5 +309,28 @@ void CLoading::Free(void)
 	DeleteCriticalSection(&m_Crt);
 
 	Engine::Safe_Release(m_pGraphicDev);
+}
+
+HRESULT CLoading::LoadMapObjectData()
+{
+	for (auto& mapData : m_mapMapObjects) {
+		for (auto& tcStr : mapData.second) {
+			CString tcPath = L"../Bin/Resource/Mesh/StaticMesh/";
+			tcPath += mapData.first;
+			CString tcFileName = tcStr;
+			CString tcFileNameWithExt = tcFileName + L".X";
+			
+			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+				Engine::RESOURCE_STAGE,
+				tcFileName,
+				Engine::TYPE_STATIC,
+				tcPath,
+				tcFileNameWithExt),
+				E_FAIL);
+			m_pMapTab->m_treeObjectList.InsertItem(tcFileName, NULL, NULL);
+		}
+	}
+
+	return S_OK;
 }
 

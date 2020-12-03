@@ -6,6 +6,7 @@
 #include "Engine_Define.h"
 #include "Export_Function.h"
 
+class CMapTab;
 BEGIN(Client)
 
 class CGizmo : public Engine::CGameObject
@@ -44,6 +45,7 @@ public:
 
 private:
 	Engine::CGameObject* m_pGameObject = nullptr;
+	CMapTab* m_pMapTab = nullptr;
 
 	const _vec3 m_vAxisVertices[AXIS_NUM][2] =
 	{

@@ -258,6 +258,81 @@ void CMapTab::UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects)
 	}
 }
 
+void CMapTab::UpdatePos(const _vec3 & vPos)
+{
+	UpdateData(TRUE);
+	CString strValue = L"";
+	strValue.Format(_T("%f"), vPos.x);
+	m_editPosX.SetWindowTextW(strValue);
+	strValue.Format(_T("%f"), vPos.y);
+	m_editPosY.SetWindowTextW(strValue);
+	strValue.Format(_T("%f"), vPos.z);
+	m_editPosZ.SetWindowTextW(strValue);
+	UpdateData(FALSE);
+}
+
+void CMapTab::UpdateAngle(const _vec3 & vAngle)
+{
+	UpdateData(TRUE);
+	CString strValue = L"";
+	strValue.Format(_T("%f"), vAngle.x);
+	m_editRotX.SetWindowTextW(strValue);
+	strValue.Format(_T("%f"), vAngle.y);
+	m_editRotY.SetWindowTextW(strValue);
+	strValue.Format(_T("%f"), vAngle.z);
+	m_editRotZ.SetWindowTextW(strValue);
+	UpdateData(FALSE);
+}
+
+void CMapTab::UpdateScale(const _vec3 & vScale)
+{
+	UpdateData(TRUE);
+	CString strValue = L"";
+	strValue.Format(_T("%f"), vScale.x);
+	m_editScaleX.SetWindowTextW(strValue);
+	strValue.Format(_T("%f"), vScale.y);
+	m_editScaleY.SetWindowTextW(strValue);
+	strValue.Format(_T("%f"), vScale.z);
+	m_editScaleZ.SetWindowTextW(strValue);
+	UpdateData(FALSE);
+}
+
+void CMapTab::SetSelectedObject(CStaticObject * _pStaticObject)
+{
+	if (_pStaticObject)
+		return;
+
+	m_pSelectedStaticObject = _pStaticObject;
+
+	auto& rStaticObjectList = g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList();
+
+	m_iSelectedStaticObjectIndex = 0;
+	for (auto& rObj : rStaticObjectList) {
+		if (rObj == _pStaticObject) {
+			break;
+		}
+		++m_iSelectedStaticObjectIndex;
+	}
+
+	if (m_iSelectedStaticObjectIndex == rStaticObjectList.size()) {
+		m_iSelectedStaticObjectIndex = -1;
+		abort();
+		return;
+	}
+
+	m_editPosX.EnableWindow(TRUE);
+	m_editPosY.EnableWindow(TRUE);
+	m_editPosZ.EnableWindow(TRUE);
+	m_editRotX.EnableWindow(TRUE);
+	m_editRotY.EnableWindow(TRUE);
+	m_editRotZ.EnableWindow(TRUE);
+	m_editScaleX.EnableWindow(TRUE);
+	m_editScaleY.EnableWindow(TRUE);
+	m_editScaleZ.EnableWindow(TRUE);
+	m_btnAdd.EnableWindow(FALSE);
+	m_btnDelete.EnableWindow(TRUE);
+}
+
 void CMapTab::OnEnChangeEditPosX()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은

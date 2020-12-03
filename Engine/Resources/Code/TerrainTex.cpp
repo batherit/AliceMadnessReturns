@@ -41,6 +41,7 @@ HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVertice
 
 	m_iBitmapSizeW = _iNumOfVerticesW;
 	m_iBitmapSizeH = _iNumOfVerticesH;
+
 	// 높이맵 로드하기
 	LoadHeightMap(_szHeightMapFileName);
 
@@ -178,9 +179,12 @@ CComponent * CTerrainTex::Clone(void)
 
 _bool CTerrainTex::LoadHeightMap(const _tchar * _szHeightMapFileName)
 {
-	if (!_szHeightMapFileName)
+	if (!_szHeightMapFileName) {
+		delete m_pHeightMapData;
+		m_pHeightMapData = nullptr;
 		return false;
-
+	}
+		
 	// 바이너리 모드로 높이맵 파일 열기
 	FILE* fp = nullptr;
 	errno_t err = _wfopen_s(&fp, _szHeightMapFileName, L"rb");

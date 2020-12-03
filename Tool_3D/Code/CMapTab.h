@@ -33,6 +33,7 @@ public:
 	void UpdateAngle(const _vec3& vAngle);
 	void UpdateScale(const _vec3& vScale);
 	void SetSelectedObject(CStaticObject* _pStaticObject);
+	_bool AddStaticObject(const _tchar* _pMeshTag);
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.

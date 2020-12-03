@@ -134,6 +134,38 @@ _bool CDirectInputMgr::IsKeyNone(KEY_STRING _szKeyString) const
 	return false;
 }
 
+_bool CDirectInputMgr::IsKeyUp(KEY_MACRO _iKeyMacro) const
+{
+	if (DI_IS_ON_KEY(m_byOldKeyState, _iKeyMacro) && !DI_IS_ON_KEY(m_byCurrentKeyState, _iKeyMacro))
+		return true;
+
+	return false;
+}
+
+_bool CDirectInputMgr::IsKeyDown(KEY_MACRO _iKeyMacro) const
+{
+	if (!DI_IS_ON_KEY(m_byOldKeyState, _iKeyMacro) && DI_IS_ON_KEY(m_byCurrentKeyState, _iKeyMacro))
+		return true;
+
+	return false;
+}
+
+_bool CDirectInputMgr::IsKeyPressing(KEY_MACRO _iKeyMacro) const
+{
+	if (DI_IS_ON_KEY(m_byOldKeyState, _iKeyMacro) && DI_IS_ON_KEY(m_byCurrentKeyState, _iKeyMacro))
+		return true;
+
+	return false;
+}
+
+_bool CDirectInputMgr::IsKeyNone(KEY_MACRO _iKeyMacro) const
+{
+	if (!DI_IS_ON_KEY(m_byOldKeyState, _iKeyMacro) && !DI_IS_ON_KEY(m_byCurrentKeyState, _iKeyMacro))
+		return true;
+
+	return false;
+}
+
 _bool CDirectInputMgr::IsKeyUp(const MOUSEKEYSTATE& _eMouseKey) const
 {
 	if (DI_IS_ON_MB(m_tOldMouseState, _eMouseKey) && !DI_IS_ON_MB(m_tCurrentMouseState, _eMouseKey))

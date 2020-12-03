@@ -79,6 +79,8 @@ private:
 	MAP_TAB::E_GIZMO_MODE m_eGizmoMode = MAP_TAB::MODE_POSITION;
 	// 이동자를 렌더링 하기 위한 렌더러
 	Engine::CRenderer* m_pRenderer = nullptr;
+
+
 };
 
 END

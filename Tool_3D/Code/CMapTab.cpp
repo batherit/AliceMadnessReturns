@@ -88,9 +88,7 @@ void CMapTab::OnBnClickedButtonAdd()
 
 	//const _tchar* pMeshTag =  m_treeObjectList.GetItemText(m_hSelectedTreeItem);
 	CString pMeshTag = m_treeObjectList.GetItemText(m_hSelectedTreeItem);
-	if (g_pTool3D_Kernel->GetEditScene()->AddStaticObject(pMeshTag)) {
-		m_treeAddedObject.InsertItem(pMeshTag, NULL, NULL);
-	}
+	AddStaticObject(pMeshTag);
 }
 
 
@@ -331,6 +329,15 @@ void CMapTab::SetSelectedObject(CStaticObject * _pStaticObject)
 	m_editScaleZ.EnableWindow(TRUE);
 	m_btnAdd.EnableWindow(FALSE);
 	m_btnDelete.EnableWindow(TRUE);
+}
+
+_bool CMapTab::AddStaticObject(const _tchar * _pMeshTag)
+{
+	if (g_pTool3D_Kernel->GetEditScene()->AddStaticObject(_pMeshTag)) {
+		m_treeAddedObject.InsertItem(_pMeshTag, NULL, NULL);
+		return true;
+	}
+	return false;
 }
 
 void CMapTab::OnEnChangeEditPosX()

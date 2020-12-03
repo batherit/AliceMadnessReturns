@@ -6,6 +6,8 @@
 #include "CTabForm.h"
 #include "CMapTab.h"
 #include "Gizmo.h"
+#include "StaticObject.h"
+#include "EditScene.h"
 
 CGizmo::CGizmo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -40,6 +42,29 @@ int CGizmo::Update_Object(const _float & _fDeltaTime)
 	if (!m_bIsGizmoActivated)
 		return 0;
 
+	// D버튼을 누르면 복제가 된다.
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_C)) {
+		CString pMeshTag = dynamic_cast<CStaticObject*>(m_pGameObject)->GetMeshTag();
+		if (m_pMapTab->AddStaticObject(pMeshTag)) {
+			auto& rStaticObjectList = g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList();
+			CStaticObject* pNewStaticObject = rStaticObjectList[rStaticObjectList.size() - 1];
+			_vec3 vPos = m_pGameObject->GetTransform()->GetPos();
+			vPos.x += 4;
+			_vec3 vAngle = m_pGameObject->GetTransform()->GetAngle();
+			_vec3 vScale = m_pGameObject->GetTransform()->GetScale();
+			pNewStaticObject->GetTransform()->SetPos(vPos);
+			pNewStaticObject->GetTransform()->SetAngle(vAngle);
+			pNewStaticObject->GetTransform()->SetScale(vScale);
+			SetObject(pNewStaticObject);
+
+			m_pMapTab->SetSelectedObject(pNewStaticObject);
+			m_pMapTab->UpdatePos(vPos);
+			m_pMapTab->UpdateAngle(vAngle);
+			m_pMapTab->UpdateScale(vScale);
+			return 0;
+		}
+	}
+
 	// 컴바인 상태가 아닐때 업데이트됩니다.
 	auto ptCurrentCursor = Engine::GetClientCursorPoint(g_hWnd);
 	if (!Engine::IsPointInClient(g_hWnd, ptCurrentCursor))
@@ -47,8 +72,6 @@ int CGizmo::Update_Object(const _float & _fDeltaTime)
 		m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 		return 0;
 	}
-		
-
 
 	if (!m_bIsPicking) {
 		if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {

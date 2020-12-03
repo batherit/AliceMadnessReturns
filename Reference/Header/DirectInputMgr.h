@@ -14,6 +14,7 @@ public:
 
 private:
 	typedef const _tchar* KEY_STRING;
+	typedef _int KEY_MACRO;
 	typedef _ubyte KEY;
 
 private:
@@ -31,6 +32,11 @@ public:
 	_bool IsKeyDown(KEY_STRING _szKeyString) const;
 	_bool IsKeyPressing(KEY_STRING _szKeyString) const;
 	_bool IsKeyNone(KEY_STRING _szKeyString) const;
+
+	_bool IsKeyUp(KEY_MACRO _iKeyMacro) const;
+	_bool IsKeyDown(KEY_MACRO _iKeyMacro) const;
+	_bool IsKeyPressing(KEY_MACRO _iKeyMacro) const;
+	_bool IsKeyNone(KEY_MACRO _iKeyMacro) const;
 
 	_bool IsKeyUp(const MOUSEKEYSTATE& _eMouseKey) const;
 	_bool IsKeyDown(const MOUSEKEYSTATE& _eMouseKey) const;

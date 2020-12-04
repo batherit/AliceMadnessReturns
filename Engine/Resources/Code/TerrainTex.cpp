@@ -26,12 +26,12 @@ HRESULT Engine::CTerrainTex::Ready_Buffer(void)
 
 void CTerrainTex::Render_Buffer(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, sizeof(VTXTEX));
 	m_pGraphicDev->SetFVF(m_dwFVF);
 	m_pGraphicDev->SetIndices(m_pIB);
 	m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVerticesH, _float _fWidth, _float _fHeight, _float _fU, _float _fV, const _tchar* _szHeightMapFileName)

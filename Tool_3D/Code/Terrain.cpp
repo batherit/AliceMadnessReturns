@@ -44,8 +44,9 @@ int CTerrain::Update_Object(const _float & fTimeDelta)
 void CTerrain::Render_Object(void)
 {
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
-	//Engine::Render_Texture(Engine::RESOURCE_STATIC, L"Height", 0);
+	//Engine::Render_Texture(Engine::RESOURCE_STAGE, m_szTextureTag, 0);
 	//m_pTerrain->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pRenderer->Render();
 }
 
@@ -107,6 +108,17 @@ void CTerrain::SetUV(_float _fU, _float _fV)
 		_fU,
 		_fV,
 		m_szHeightMapFileName);
+}
+
+void CTerrain::SetTextureTag(const _tchar * _pTextureTag)
+{
+	if (!_pTextureTag) {
+		lstrcpy(m_szTextureTag, L"");
+		m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pTerrain, nullptr);
+		return;
+	}
+	lstrcpy(m_szTextureTag, _pTextureTag);
+	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pTerrain, static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, m_szTextureTag)));
 }
 
 CTerrain * CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)

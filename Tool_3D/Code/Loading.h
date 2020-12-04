@@ -4,6 +4,7 @@
 #include "Define.h"
 #include "Base.h"
 
+class CTerrainTab;
 class CMapTab;
 BEGIN(Client)
 
@@ -43,12 +44,13 @@ public:
 	static CLoading*		Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID eLoading);
 private:
 	virtual void	Free(void);
-	HRESULT LoadMapObjectData();
+	//HRESULT LoadMapObjectData();
 
 private:
+	CTerrainTab* m_pTerrainTab = nullptr;
 	CMapTab* m_pMapTab = nullptr;
 
-	map<const _tchar*, vector<const _tchar*>> m_mapMapObjects;
+	//map<const _tchar*, vector<const _tchar*>> m_mapMapObjects;
 };
 END
 

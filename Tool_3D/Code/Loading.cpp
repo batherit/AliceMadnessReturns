@@ -4,6 +4,7 @@
 #include "Export_Function.h"
 #include "MainFrm.h"
 #include "CTabForm.h"
+#include "CTerrainTab.h"
 #include "CMapTab.h"
 
 
@@ -46,12 +47,12 @@ _uint	CALLBACK CLoading::Thread_Main(void* pArg)
 
 HRESULT CLoading::Ready_Loading(LOADINGID eLoading)
 {
-	m_mapMapObjects[L"Chapter1/"].emplace_back(L"CobbledStreet");
+	/*m_mapMapObjects[L"Chapter1/"].emplace_back(L"CobbledStreet");
 	m_mapMapObjects[L"Chapter1/"].emplace_back(L"CobbledStreet_Even");
 	m_mapMapObjects[L"Chapter1/"].emplace_back(L"PoorBuildingE01");
 	m_mapMapObjects[L"Chapter1/"].emplace_back(L"Curb_90");
 	m_mapMapObjects[L"Chapter1/"].emplace_back(L"Curb_Uneven");
-	m_mapMapObjects[L"Chapter1/"].emplace_back(L"Curb_Section");
+	m_mapMapObjects[L"Chapter1/"].emplace_back(L"Curb_Section");*/
 
 	InitializeCriticalSection(&m_Crt);		// 크리티컬 섹션 생성
 
@@ -63,6 +64,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eLoading)
 	// MapTab에서 쓰일 정적 오브젝트를 세팅한다.
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+	m_pTerrainTab = pTabForm->GetTerrainTab();
 	m_pMapTab = pTabForm->GetMapTab();
 
 	return S_OK;
@@ -159,13 +161,11 @@ _uint CLoading::Loading_ForStage(void)
 												E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Height", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Height2.bmp"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Texture_SkyBox",
-		Engine::TEX_CUBE,
-		L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4),
-		E_FAIL);
-	
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkyBox", Engine::TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4),  E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"CobbledStreet_DM", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/TerrainTab/Texture/CobbledStreet_DM.tga"), E_FAIL);
+	m_pTerrainTab->m_lbxTexture.AddString(L"CobbledStreet_DM");
+
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	
 
@@ -311,26 +311,26 @@ void CLoading::Free(void)
 	Engine::Safe_Release(m_pGraphicDev);
 }
 
-HRESULT CLoading::LoadMapObjectData()
-{
-	for (auto& mapData : m_mapMapObjects) {
-		for (auto& tcStr : mapData.second) {
-			CString tcPath = L"../Bin/Resource/Mesh/StaticMesh/";
-			tcPath += mapData.first;
-			CString tcFileName = tcStr;
-			CString tcFileNameWithExt = tcFileName + L".X";
-			
-			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-				Engine::RESOURCE_STAGE,
-				tcFileName,
-				Engine::TYPE_STATIC,
-				tcPath,
-				tcFileNameWithExt),
-				E_FAIL);
-			m_pMapTab->m_treeObjectList.InsertItem(tcFileName, NULL, NULL);
-		}
-	}
-
-	return S_OK;
-}
+//HRESULT CLoading::LoadMapObjectData()
+//{
+//	for (auto& mapData : m_mapMapObjects) {
+//		for (auto& tcStr : mapData.second) {
+//			CString tcPath = L"../Bin/Resource/Mesh/StaticMesh/";
+//			tcPath += mapData.first;
+//			CString tcFileName = tcStr;
+//			CString tcFileNameWithExt = tcFileName + L".X";
+//			
+//			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+//				Engine::RESOURCE_STAGE,
+//				tcFileName,
+//				Engine::TYPE_STATIC,
+//				tcPath,
+//				tcFileNameWithExt),
+//				E_FAIL);
+//			m_pMapTab->m_treeObjectList.InsertItem(tcFileName, NULL, NULL);
+//		}
+//	}
+//
+//	return S_OK;
+//}
 

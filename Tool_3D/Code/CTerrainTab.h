@@ -54,4 +54,5 @@ public:
 	afx_msg void OnBnClickedButtonSave();
 	afx_msg void OnBnClickedButtonLoad();
 	virtual BOOL OnInitDialog();
+	afx_msg void OnLbnSelchangeListTexture();
 };

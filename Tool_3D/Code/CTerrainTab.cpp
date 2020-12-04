@@ -68,6 +68,7 @@ BEGIN_MESSAGE_MAP(CTerrainTab, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT17, &CTerrainTab::OnEnChangeEditV)
 	ON_BN_CLICKED(IDC_BUTTON9, &CTerrainTab::OnBnClickedButtonSave)
 	ON_BN_CLICKED(IDC_BUTTON6, &CTerrainTab::OnBnClickedButtonLoad)
+	ON_LBN_SELCHANGE(IDC_LIST2, &CTerrainTab::OnLbnSelchangeListTexture)
 END_MESSAGE_MAP()
 
 
@@ -409,4 +410,13 @@ BOOL CTerrainTab::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
+}
+
+
+void CTerrainTab::OnLbnSelchangeListTexture()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString szTextureTag;
+	m_lbxTexture.GetText(m_lbxTexture.GetCurSel(), szTextureTag);
+	g_pTool3D_Kernel->GetEditScene()->GetTerrain()->SetTextureTag(szTextureTag);
 }

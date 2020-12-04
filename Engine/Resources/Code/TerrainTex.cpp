@@ -21,7 +21,7 @@ Engine::CTerrainTex::~CTerrainTex(void)
 HRESULT Engine::CTerrainTex::Ready_Buffer(void)
 {
 	// default
-	return SetTerrainInfo(3, 3, 1.f, 1.f);
+	return SetTerrainInfo();
 }
 
 void CTerrainTex::Render_Buffer(void)
@@ -34,7 +34,7 @@ void CTerrainTex::Render_Buffer(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
-HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVerticesH, _float _fWidth, _float _fHeight, const _tchar* _szHeightMapFileName)
+HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVerticesH, _float _fWidth, _float _fHeight, _float _fU, _float _fV, const _tchar* _szHeightMapFileName)
 {
 	Safe_Release(m_pVB);
 	Safe_Release(m_pIB);
@@ -50,6 +50,8 @@ HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVertice
 	m_iNumOfVerticesH = _iNumOfVerticesH;
 	m_fWidth = _fWidth;
 	m_fHeight = _fHeight;
+	m_fU = _fU;
+	m_fV = _fV;
 
 	m_dwFVF = FVF_TEX;
 	m_dwTriCnt = (_iNumOfVerticesW - 1) * (_iNumOfVerticesH - 1) * 2;	
@@ -72,8 +74,8 @@ HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVertice
 	// 시스템 메모리에 둘 정점 버퍼
 	m_vecVertices.resize(_iNumOfVerticesW * _iNumOfVerticesH);
 
-	_float fCU = 1.f / (_iNumOfVerticesW - 1);
-	_float fCV = 1.f / (_iNumOfVerticesH - 1);
+	_float fCU = m_fU / (_iNumOfVerticesW - 1);
+	_float fCV = m_fV / (_iNumOfVerticesH - 1);
 	_float fCX = _fWidth / (_iNumOfVerticesW - 1);
 	_float fCY = _fHeight / (_iNumOfVerticesH - 1);
 	_int iIndexVB = 0;

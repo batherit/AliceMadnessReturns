@@ -24,7 +24,7 @@ public:
 	_float GetHeight(_vec3 _vPos) const {
 		return m_pTerrain->GetHeight(_vPos);
 	}
-	void CreateTerrain(_uint _iNumOfVerticesW, _uint _iNumOfVerticesD, _float _fWidth, _float _fDepth, _float _fU, _float _fV, const _tchar* _szHeightMapFileName);
+	void CreateTerrain(_uint _iNumOfVerticesW = 2, _uint _iNumOfVerticesD = 2, _float _fWidth = 100.f, _float _fDepth = 100.f, _float _fU = 1.f, _float _fV = 1.f, const _tchar* _szHeightMapFileName = nullptr);
 	void SetHeightMapFileName(const _tchar* _szHeightMapFileName);
 	void SetVtxNum(_uint _iNumOfVerticesW, _uint _iNumOfVerticesH);
 	void SetSize(_float _fWidth, _float _fDepth);
@@ -40,12 +40,12 @@ private:
 	Engine::CTexture*	m_pTexture = nullptr;
 
 	const _tchar* m_szHeightMapFileName = nullptr;
-	_uint m_iNumOfVerticesW = 2;
+	/*_uint m_iNumOfVerticesW = 2;
 	_uint m_iNumOfVerticesD = 2;
 	_float m_fWidth = 100.f;
 	_float m_fDepth = 100.f;
 	_float m_fU = 1.f;
-	_float m_fV = 1.f;
+	_float m_fV = 1.f;*/
 };
 
 END

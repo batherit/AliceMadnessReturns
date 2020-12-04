@@ -24,7 +24,11 @@ public:
 	_float GetHeight(_vec3 _vPos) const {
 		return m_pTerrain->GetHeight(_vPos);
 	}
-	void CreateTerrain(_uint _iNumOfVerticesW, _uint _iNumOfVerticesH, _float _fWidth, _float _fHeight, const _tchar* _szHeightMapFileName);
+	void CreateTerrain(_uint _iNumOfVerticesW = 2, _uint _iNumOfVerticesD = 2, _float _fWidth = 100.f, _float _fDepth = 100.f, _float _fU = 1.f, _float _fV = 1.f, const _tchar* _szHeightMapFileName = nullptr);
+	void SetHeightMapFileName(const _tchar* _szHeightMapFileName);
+	void SetVtxNum(_uint _iNumOfVerticesW, _uint _iNumOfVerticesH);
+	void SetSize(_float _fWidth, _float _fDepth);
+	void SetUV(_float _fU, _float _fV);
 
 public:
 	static CTerrain*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -33,6 +37,15 @@ public:
 private:
 	Engine::CPolygonRenderer* m_pRenderer = nullptr;
 	Engine::CTerrainTex* m_pTerrain = nullptr;
+	Engine::CTexture*	m_pTexture = nullptr;
+
+	const _tchar* m_szHeightMapFileName = nullptr;
+	/*_uint m_iNumOfVerticesW = 2;
+	_uint m_iNumOfVerticesD = 2;
+	_float m_fWidth = 100.f;
+	_float m_fDepth = 100.f;
+	_float m_fU = 1.f;
+	_float m_fV = 1.f;*/
 };
 
 END

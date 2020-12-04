@@ -256,6 +256,21 @@ void CTerrainTab::OnEnChangeEditWidth()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
+	auto pTerrain = pEditScene->GetTerrain();
+
+	if (pTerrain) {
+		/*if (m_fSizeWidth < 2) {
+			UpdateData(FALSE);
+			m_fSizeWidth = 2;
+			UpdateData(TRUE);
+		}*/
+			
+		pTerrain->SetSize(m_fSizeWidth, m_fSizeDepth);
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -267,6 +282,21 @@ void CTerrainTab::OnEnChangeEditDepth()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
+	auto pTerrain = pEditScene->GetTerrain();
+
+	if (pTerrain) {
+		/*if (m_fSizeDepth < 2) {
+			UpdateData(FALSE);
+			m_fSizeDepth = 2;
+			UpdateData(TRUE);
+		}*/
+			
+		pTerrain->SetSize(m_fSizeWidth, m_fSizeDepth);
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -278,6 +308,15 @@ void CTerrainTab::OnEnChangeEditVtxNumWidth()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
+	auto pTerrain = pEditScene->GetTerrain();
+
+	if (pTerrain) {
+		pTerrain->SetVtxNum(m_uiVtxNumWidth, m_uiVtxNumHeight);
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -289,6 +328,15 @@ void CTerrainTab::OnEnChangeEditVtxNumDepth()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
+	auto pTerrain = pEditScene->GetTerrain();
+
+	if (pTerrain) {
+		pTerrain->SetVtxNum(m_uiVtxNumWidth, m_uiVtxNumHeight);
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -300,6 +348,15 @@ void CTerrainTab::OnEnChangeEditU()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
+	auto pTerrain = pEditScene->GetTerrain();
+
+	if (pTerrain) {
+		pTerrain->SetUV(m_fU, m_fV);
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -311,6 +368,15 @@ void CTerrainTab::OnEnChangeEditV()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
+	auto pTerrain = pEditScene->GetTerrain();
+
+	if (pTerrain) {
+		pTerrain->SetUV(m_fU, m_fV);
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -323,4 +389,24 @@ void CTerrainTab::OnBnClickedButtonSave()
 void CTerrainTab::OnBnClickedButtonLoad()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+BOOL CTerrainTab::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+	UpdateData(TRUE);
+	m_fSizeWidth = 100.f;
+	m_fSizeDepth = 100.f;
+	m_uiVtxNumWidth = 2;
+	m_uiVtxNumHeight = 2;
+	m_fU = 1.f;
+	m_fV = 1.f;
+
+	UpdateData(FALSE);
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }

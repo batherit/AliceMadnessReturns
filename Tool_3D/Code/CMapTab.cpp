@@ -297,7 +297,7 @@ void CMapTab::UpdateScale(const _vec3 & vScale)
 
 void CMapTab::SetSelectedObject(CStaticObject * _pStaticObject)
 {
-	if (_pStaticObject)
+	if (!_pStaticObject)
 		return;
 
 	m_pSelectedStaticObject = _pStaticObject;

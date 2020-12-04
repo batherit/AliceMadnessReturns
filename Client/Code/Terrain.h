@@ -29,6 +29,7 @@ public:
 	void SetVtxNum(_uint _iNumOfVerticesW, _uint _iNumOfVerticesH);
 	void SetSize(_float _fWidth, _float _fDepth);
 	void SetUV(_float _fU, _float _fV);
+	void SetTextureTag(const _tchar* _pTextureTag);
 
 public:
 	static CTerrain*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -38,6 +39,7 @@ private:
 	Engine::CPolygonRenderer* m_pRenderer = nullptr;
 	Engine::CTerrainTex* m_pTerrain = nullptr;
 	Engine::CTexture*	m_pTexture = nullptr;
+	_tchar m_szTextureTag[MAX_PATH] = L"";
 
 	const _tchar* m_szHeightMapFileName = nullptr;
 	/*_uint m_iNumOfVerticesW = 2;

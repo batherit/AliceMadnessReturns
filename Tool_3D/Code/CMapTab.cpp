@@ -354,6 +354,8 @@ void CMapTab::OnEnChangeEditPosX()
 	m_editPosX.GetWindowTextW(strPosX);
 	_float fPosX = static_cast<_float>(_tstof(strPosX));
 	m_pSelectedStaticObject->GetTransform()->SetPosX(fPosX);
+
+	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->GetTransform()->SetPos(m_pSelectedStaticObject->GetTransform()->GetPos());
 	
 	UpdateData(FALSE);
 }
@@ -373,6 +375,8 @@ void CMapTab::OnEnChangeEditPosY()
 	m_editPosY.GetWindowTextW(strPosY);
 	_float fPosY = static_cast<_float>(_tstof(strPosY));
 	m_pSelectedStaticObject->GetTransform()->SetPosY(fPosY);
+
+	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->GetTransform()->SetPos(m_pSelectedStaticObject->GetTransform()->GetPos());
 	
 	UpdateData(FALSE);
 }
@@ -392,6 +396,8 @@ void CMapTab::OnEnChangeEditPosZ()
 	m_editPosZ.GetWindowTextW(strPosZ);
 	_float fPosZ = static_cast<_float>(_tstof(strPosZ));
 	m_pSelectedStaticObject->GetTransform()->SetPosZ(fPosZ);
+
+	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->GetTransform()->SetPos(m_pSelectedStaticObject->GetTransform()->GetPos());
 
 	UpdateData(FALSE);
 }

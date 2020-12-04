@@ -58,11 +58,11 @@ int CPlayScene::Update(const _float& fTimeDelta)
 		_int iW = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetNumOfVerticesW();
 		_int iH = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetNumOfVerticesH();
 		if (Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree().z > 0) {
-			m_pTerrain->CreateTerrain(iW + 1, iH + 1, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
+			m_pTerrain->CreateTerrain(iW + 1, iH + 1, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
 		}
 		else {
 			if(iW > 10 && iH > 10)
-				m_pTerrain->CreateTerrain(iW - 1, iH - 1, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
+				m_pTerrain->CreateTerrain(iW - 1, iH - 1, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
 		}
 	}
 
@@ -129,7 +129,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pTerrain = CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pTerrain, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", m_pTerrain), E_FAIL);
-	m_pTerrain->CreateTerrain(129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
+	m_pTerrain->CreateTerrain(129, 129, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);

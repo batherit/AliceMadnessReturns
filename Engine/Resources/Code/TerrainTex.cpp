@@ -8,7 +8,15 @@ Engine::CTerrainTex::CTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev)
 }
 
 Engine::CTerrainTex::CTerrainTex(const CTerrainTex& rhs)
-	: CVIBuffer(rhs)
+	: CVIBuffer(rhs),
+	m_iNumOfVerticesW(rhs.m_iNumOfVerticesW),
+	m_iNumOfVerticesH(rhs.m_iNumOfVerticesH),
+	m_fWidth(rhs.m_fWidth),
+	m_fHeight(rhs.m_fHeight),
+	m_fU(rhs.m_fU),
+	m_fV(rhs.m_fV),
+	m_vecVertices(rhs.m_vecVertices),
+	m_vecIndexes(rhs.m_vecIndexes)
 {
 
 }

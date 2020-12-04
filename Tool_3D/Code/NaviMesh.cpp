@@ -36,6 +36,7 @@ int CNaviMesh::Update_Object(const _float & fTimeDelta)
 
 void CNaviMesh::Render_Object(void)
 {
+	// 삼각형 그리기
 	DWORD dwCullMode;
 	m_pGraphicDev->GetRenderState(D3DRS_CULLMODE, &dwCullMode);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -46,7 +47,7 @@ void CNaviMesh::Render_Object(void)
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, dwCullMode);
 
-
+	
 
 	// 삼각형 라인 그리기
 	_matrix matWorld, matView, matProj;
@@ -74,6 +75,17 @@ void CNaviMesh::Render_Object(void)
 	pLine->End();
 	pLine->Release();
 
+	// 정점 구 그리기. (정점 이동자에 있어야 할 것 같다.)
+	_matrix matTrans;
+	_matrix matScale;
+	for (auto& rPos : vecVertices) {
+		D3DXMatrixIdentity(&matTrans);
+		D3DXMatrixTranslation(&matTrans, rPos.x, rPos.y, rPos.z);
+
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, &matTrans);
+		m_pGraphicDev->SetTexture(0, NULL);
+		Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"Buffer_SphereCol");
+	}
 }
 
 CNaviMesh * CNaviMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev)

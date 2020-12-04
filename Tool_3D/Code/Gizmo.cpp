@@ -42,7 +42,7 @@ int CGizmo::Update_Object(const _float & _fDeltaTime)
 	if (!m_bIsGizmoActivated)
 		return 0;
 
-	// D버튼을 누르면 복제가 된다.
+	// C버튼을 누르면 복제가 된다.
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_C)) {
 		CString pMeshTag = dynamic_cast<CStaticObject*>(m_pGameObject)->GetMeshTag();
 		if (m_pMapTab->AddStaticObject(pMeshTag)) {
@@ -125,12 +125,16 @@ void CGizmo::Render_Object(void)
 	m_pGraphicDev->SetTexture(0, NULL);
 
 	// 축 그리기
+	
 	ID3DXLine *pLine;
 	D3DXCreateLine(m_pGraphicDev, &pLine);
 	pLine->SetWidth(2.f);
 	pLine->SetAntialias(true);
 	pLine->Begin();
 
+	//DWORD bIsZBufferEnabled;
+	//m_pGraphicDev->GetRenderState(D3DRS_ZENABLE, &bIsZBufferEnabled);
+	//m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 	for (_int i = 0; i < AXIS_NUM; ++i) {
 		if (m_ePlaneType == PLANE::TYPE_XY && i == 2) continue;
 		else if (m_ePlaneType == PLANE::TYPE_XZ && i == 1) continue;
@@ -138,9 +142,11 @@ void CGizmo::Render_Object(void)
 
 		pLine->DrawTransform(m_vAxisVertices[i], 2, &(matWorld * matView * matProj), m_clAxisColor[i]);
 	}
+	//m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, bIsZBufferEnabled);
+
 	pLine->End();
 	pLine->Release();
-
+	
 }
 
 CGizmo * CGizmo::Create(LPDIRECT3DDEVICE9 pGraphicDev)

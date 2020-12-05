@@ -63,8 +63,8 @@ public:
 	void SetPosX(_float _fX) { m_vPos.x = _fX; }
 	void SetPosY(_float _fY) { m_vPos.y = _fY; }
 	void SetPosZ(_float _fZ) { m_vPos.z = _fZ; }
-	void SetPos(_float _fX, _float _fY, _float _fZ) { SetPosX(_fX); SetPosY(_fY); SetPosZ(_fZ); }
-	void SetPos(_vec3 _vPos) { m_vPos = _vPos; }
+	void SetPos(const _vec3& _vPos) { m_vPos = _vPos; }
+	void SetPos(_float _fX, _float _fY, _float _fZ) { SetPos(_vec3(_fX, _fY, _fZ)); }
 
 	// 본 행렬 세팅
 	void SetParentBoneMatrix(const _matrix* _pParentBoneMatrix) { m_pParentBoneMatrix = _pParentBoneMatrix; }
@@ -89,11 +89,8 @@ private:
 	_vec3 m_vScale{ 1.f, 1.f, 1.f };
 	_vec3 m_vAngle{ 0.f, 0.f, 0.f };			// Radian
 	_vec3 m_vPos{ 0.f, 0.f, 0.f };
-	// _vec3 m_vDir{ 1.f, 0.f, 0.f };
 	_matrix m_matWorld;
 	const _matrix* m_pParentBoneMatrix = nullptr;
-	//_float m_fMaxSpeed = 9876543210.f;
-	//_float m_fSpeed = 0.f;
 };
 
 END

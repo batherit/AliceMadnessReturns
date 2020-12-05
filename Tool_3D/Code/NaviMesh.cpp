@@ -190,9 +190,7 @@ _bool CNaviMesh::SaveInfo(HANDLE & _hfOut)
 	WriteFile(_hfOut, &iVerticesSize, sizeof(_int), nullptr, nullptr);
 
 	for (auto& rPos : GetNaviVertices()) {
-		WriteFile(_hfOut, &rPos.x, sizeof(rPos.x), nullptr, nullptr);
-		WriteFile(_hfOut, &rPos.y, sizeof(rPos.y), nullptr, nullptr);
-		WriteFile(_hfOut, &rPos.z, sizeof(rPos.z), nullptr, nullptr);
+		WriteFile(_hfOut, &rPos, sizeof(rPos), nullptr, nullptr);
 	}
 
 	return true;
@@ -207,9 +205,7 @@ _bool CNaviMesh::LoadInfo(HANDLE & _hfIn)
 
 	_vec3 vPos;
 	for (_int i = 0; i < iVerticesSize; ++i) {
-		ReadFile(_hfIn, &vPos.x, sizeof(vPos.x), nullptr, nullptr);
-		ReadFile(_hfIn, &vPos.y, sizeof(vPos.y), nullptr, nullptr);
-		ReadFile(_hfIn, &vPos.z, sizeof(vPos.z), nullptr, nullptr);
+		ReadFile(_hfIn, &vPos, sizeof(vPos), nullptr, nullptr);
 		vecVertices.emplace_back(vPos);
 	}
 

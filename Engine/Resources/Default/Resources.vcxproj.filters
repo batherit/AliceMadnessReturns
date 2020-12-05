@@ -52,6 +52,15 @@
     <Filter Include="00. Resources\00. VIBuffer\06. ManualCol">
       <UniqueIdentifier>{8ea89dd2-0364-4551-95d6-6995df80562e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Resources\02. Mesh\02. NaviMesh">
+      <UniqueIdentifier>{b1e30892-8d0e-47b5-b77c-a22bc306b900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\02. Mesh\02. NaviMesh\00. Cell">
+      <UniqueIdentifier>{31f9d685-9c65-411f-a5f7-0f9a936ab7a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\02. Mesh\02. NaviMesh\01. Line">
+      <UniqueIdentifier>{5bc90f4b-e210-43b8-a077-aaaa47d84599}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Resouces.h">
@@ -104,6 +113,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\ManualCol.h">
       <Filter>00. Resources\00. VIBuffer\06. ManualCol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Cell.h">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh\00. Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Line.h">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh\01. Line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\NaviMesh.h">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +177,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\ManualCol.cpp">
       <Filter>00. Resources\00. VIBuffer\06. ManualCol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Cell.cpp">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh\00. Cell</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Line.cpp">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh\01. Line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\NaviMesh.cpp">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

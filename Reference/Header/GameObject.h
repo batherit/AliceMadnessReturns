@@ -55,9 +55,9 @@ public:
 	
 
 	// 파일 입출력 관련
-	virtual _bool SaveInfo(FILE* _fpOut)	{ return true; };	// ANSI
+	virtual _bool SaveInfo(FILE* _fpOut)	{ return true; };
 	virtual _bool LoadInfo(FILE* _fpIn)		{ return true; };
-	virtual _bool SaveInfo(HANDLE& _hfOut)	{ return true; };	// API
+	virtual _bool SaveInfo(HANDLE& _hfOut)	{ return true; };
 	virtual _bool LoadInfo(HANDLE& _hfIn)	{ return true; };
 
 	virtual void Free(void);

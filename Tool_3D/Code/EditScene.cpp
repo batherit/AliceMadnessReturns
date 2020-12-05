@@ -284,7 +284,8 @@ void CEditScene::LoadTerrain()
 	TCHAR szDataPath[MAX_PATH] = L"";
 	GetCurrentDirectory(MAX_PATH, szCurPath);
 	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Bin\\Resource\\Terrain");
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Resource\\Terrain");
 	Dlg.m_ofn.lpstrInitialDir = szDataPath;
 	if (IDOK == Dlg.DoModal())
 	{
@@ -310,7 +311,8 @@ void CEditScene::SaveNaviMesh()
 	TCHAR szDataPath[MAX_PATH] = L"";
 	GetCurrentDirectory(MAX_PATH, szCurPath);
 	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Bin\\Resource\\Navi");
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Resource\\Navi");
 	Dlg.m_ofn.lpstrInitialDir = szDataPath;
 	if (IDOK == Dlg.DoModal())
 	{
@@ -337,7 +339,8 @@ void CEditScene::LoadNaviMesh()
 	TCHAR szDataPath[MAX_PATH] = L"";
 	GetCurrentDirectory(MAX_PATH, szCurPath);
 	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Bin\\Resource\\Navi");
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Resource\\Navi");
 	Dlg.m_ofn.lpstrInitialDir = szDataPath;
 	if (IDOK == Dlg.DoModal())
 	{
@@ -364,7 +367,8 @@ void CEditScene::SaveMap()
 	TCHAR szDataPath[MAX_PATH] = L"";
 	GetCurrentDirectory(MAX_PATH, szCurPath);
 	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Bin\\Resource\\Map");
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Resource\\Map");
 	Dlg.m_ofn.lpstrInitialDir = szDataPath;
 	if (IDOK == Dlg.DoModal())
 	{
@@ -394,7 +398,8 @@ void CEditScene::LoadMap()
 	TCHAR szDataPath[MAX_PATH] = L"";
 	GetCurrentDirectory(MAX_PATH, szCurPath);
 	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Bin\\Resource\\Map");
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Resource\\Map");
 	Dlg.m_ofn.lpstrInitialDir = szDataPath;
 	if (IDOK == Dlg.DoModal())
 	{

@@ -35,19 +35,16 @@ public:
 	static CTerrain*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
 
+public:
+	virtual _bool SaveInfo(HANDLE& _hfOut);	// API
+	virtual _bool LoadInfo(HANDLE& _hfIn);
+
 private:
 	Engine::CPolygonRenderer* m_pRenderer = nullptr;
 	Engine::CTerrainTex* m_pTerrain = nullptr;
 	Engine::CTexture*	m_pTexture = nullptr;
 	_tchar m_szTextureTag[MAX_PATH] = L"";
-
-	const _tchar* m_szHeightMapFileName = nullptr;
-	/*_uint m_iNumOfVerticesW = 2;
-	_uint m_iNumOfVerticesD = 2;
-	_float m_fWidth = 100.f;
-	_float m_fDepth = 100.f;
-	_float m_fU = 1.f;
-	_float m_fV = 1.f;*/
+	_tchar m_szHeightMapFileName[MAX_PATH] = L"";
 };
 
 END

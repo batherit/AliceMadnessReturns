@@ -22,10 +22,8 @@ public:
 	void		Render_NaviMeshes(void);
 	_vec3		Move_OnNaviMesh(const _vec3* pTargetPos, const _vec3* pTargetDir);
 	_bool		LoadNaviMeshFromFile(const _tchar* _pFilePath);
-
-private:
 	HRESULT		AddCell(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3);
-	HRESULT		Link_Cell(void);
+	HRESULT		Link_Cell(void);	
 
 private:
 	vector<CCell*>			m_vecCell;

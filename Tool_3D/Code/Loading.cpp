@@ -149,21 +149,21 @@ _uint CLoading::Loading_ForStage(void)
 
 	// ÅØ½ºÃÄ
 	lstrcpy(m_szLoading, L"Texture Loading.............................");
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Player", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ma.jpg"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Logo", Engine::TEX_NORMAL, L"../../Resource/Texture/Logo/Logo.jpg"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Player", Engine::TEX_NORMAL, L"../../Resource/Texture/Player/Ma.jpg"), E_FAIL);
 
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
 												L"Texture_Terrain",
 												Engine::TEX_NORMAL,
-												L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2),
+												L"../../Resource/Texture/Terrain/Grass_%d.tga", 2),
 												E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Height", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Height2.bmp"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkyBox", Engine::TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4),  E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Texture_Logo", Engine::TEX_NORMAL, L"../../Resource/Texture/Logo/Logo.jpg"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Height", Engine::TEX_NORMAL, L"../../Resource/Texture/Terrain/Height2.bmp"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkyBox", Engine::TEX_CUBE, L"../../Resource/Texture/SkyBox/burger%d.dds", 4),  E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"CobbledStreet_DM", Engine::TEX_NORMAL, L"../Bin/Resource/Terrain/Texture/CobbledStreet_DM.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"CobbledStreet_DM", Engine::TEX_NORMAL, L"../../Resource/Terrain/Texture/CobbledStreet_DM.tga"), E_FAIL);
 	m_pTerrainTab->m_lbxTexture.AddString(L"CobbledStreet_DM");
 
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
@@ -174,7 +174,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Stone",
 		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+		L"../../Resource/Mesh/StaticMesh/TombStone/",
 		L"TombStone.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"Mesh_Stone", NULL, NULL);
@@ -193,7 +193,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"CobbledStreet",
 		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"CobbledStreet.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"CobbledStreet", NULL, NULL);
@@ -203,7 +203,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"CobbledStreet_Even",
 		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"CobbledStreet_Even.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"CobbledStreet_Even", NULL, NULL);
@@ -213,7 +213,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"PoorBuildingE01",
 		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"PoorBuildingE01.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"PoorBuildingE01", NULL, NULL);
@@ -223,7 +223,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Curb_90",
 		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"Curb_90.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_90", NULL, NULL);
@@ -233,7 +233,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Curb_Uneven",
 		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"Curb_Uneven.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_Uneven", NULL, NULL);
@@ -243,7 +243,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Curb_Section",
 		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/Chapter1/",
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"Curb_Section.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_Section", NULL, NULL);
@@ -254,7 +254,7 @@ _uint CLoading::Loading_ForStage(void)
 	//	RESOURCE_STAGE,
 	//	L"Mesh_Player",
 	//	Engine::TYPE_DYNAMIC,
-	//	L"../Bin/Resource/Mesh/DynamicMesh/PlayerXfile/",
+	//	L"../../Resource/Mesh/DynamicMesh/PlayerXfile/",
 	//	L"Player.X"),
 	//	E_FAIL);
 
@@ -262,7 +262,7 @@ _uint CLoading::Loading_ForStage(void)
 	//	RESOURCE_STAGE,
 	//	L"Mesh_Sword",
 	//	Engine::TYPE_STATIC,
-	//	L"../Bin/Resource/Mesh/StaticMesh/Sword/",
+	//	L"../../Resource/Mesh/StaticMesh/Sword/",
 	//	L"Sword.X"),
 	//	E_FAIL);
 
@@ -270,7 +270,7 @@ _uint CLoading::Loading_ForStage(void)
 	//	RESOURCE_STAGE,
 	//	L"Mesh_Tree",
 	//	Engine::TYPE_STATIC,
-	//	L"../Bin/Resource/Mesh/StaticMesh/Tree/",
+	//	L"../../Resource/Mesh/StaticMesh/Tree/",
 	//	L"Tree01.X"),
 	//	E_FAIL);
 
@@ -315,7 +315,7 @@ void CLoading::Free(void)
 //{
 //	for (auto& mapData : m_mapMapObjects) {
 //		for (auto& tcStr : mapData.second) {
-//			CString tcPath = L"../Bin/Resource/Mesh/StaticMesh/";
+//			CString tcPath = L"../../Resource/Mesh/StaticMesh/";
 //			tcPath += mapData.first;
 //			CString tcFileName = tcStr;
 //			CString tcFileNameWithExt = tcFileName + L".X";

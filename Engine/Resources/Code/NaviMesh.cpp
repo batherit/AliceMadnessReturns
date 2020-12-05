@@ -24,31 +24,31 @@ Engine::CNaviMesh::~CNaviMesh(void)
 
 HRESULT Engine::CNaviMesh::Ready_NaviMeshes(void)
 {
-	m_vecCell.reserve(4);
+	//m_vecCell.reserve(4);
 
-	CCell*		pCell = nullptr;
+	//CCell*		pCell = nullptr;
 
-	// 0번 
-	pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vec3(0.f, 0.f, 2.f), &_vec3(2.f, 0.f, 0.f), &_vec3(0.f, 0.f, 0.f));
-	NULL_CHECK_RETURN(pCell, E_FAIL);
-	m_vecCell.push_back(pCell);
+	//// 0번 
+	//pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vec3(0.f, 0.f, 2.f), &_vec3(2.f, 0.f, 0.f), &_vec3(0.f, 0.f, 0.f));
+	//NULL_CHECK_RETURN(pCell, E_FAIL);
+	//m_vecCell.push_back(pCell);
 
-	// 1번 
-	pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vec3(0.f, 0.f, 2.f), &_vec3(2.f, 0.f, 2.f), &_vec3(2.f, 0.f, 0.f));
-	NULL_CHECK_RETURN(pCell, E_FAIL);
-	m_vecCell.push_back(pCell);
+	//// 1번 
+	//pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vec3(0.f, 0.f, 2.f), &_vec3(2.f, 0.f, 2.f), &_vec3(2.f, 0.f, 0.f));
+	//NULL_CHECK_RETURN(pCell, E_FAIL);
+	//m_vecCell.push_back(pCell);
 
-	// 2번 
-	pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vec3(0.f, 0.f, 4.f), &_vec3(2.f, 0.f, 2.f), &_vec3(0.f, 0.f, 2.f));
-	NULL_CHECK_RETURN(pCell, E_FAIL);
-	m_vecCell.push_back(pCell);
+	//// 2번 
+	//pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vec3(0.f, 0.f, 4.f), &_vec3(2.f, 0.f, 2.f), &_vec3(0.f, 0.f, 2.f));
+	//NULL_CHECK_RETURN(pCell, E_FAIL);
+	//m_vecCell.push_back(pCell);
 
-	// 3번 
-	pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vec3(2.f, 0.f, 2.f), &_vec3(4.f, 0.f, 0.f), &_vec3(2.f, 0.f, 0.f));
-	NULL_CHECK_RETURN(pCell, E_FAIL);
-	m_vecCell.push_back(pCell);
+	//// 3번 
+	//pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vec3(2.f, 0.f, 2.f), &_vec3(4.f, 0.f, 0.f), &_vec3(2.f, 0.f, 0.f));
+	//NULL_CHECK_RETURN(pCell, E_FAIL);
+	//m_vecCell.push_back(pCell);
 
-	FAILED_CHECK_RETURN(Link_Cell(), E_FAIL);
+	//FAILED_CHECK_RETURN(Link_Cell(), E_FAIL);
 
 	return S_OK;
 }
@@ -102,7 +102,7 @@ _bool CNaviMesh::LoadNaviMeshFromFile(const _tchar* _pFilePath)
 
 HRESULT CNaviMesh::AddCell(const _vec3 & _vV1, const _vec3 & _vV2, const _vec3 & _vV3)
 {
-	CCell*		pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vec3(0.f, 0.f, 2.f), &_vec3(2.f, 0.f, 0.f), &_vec3(0.f, 0.f, 0.f));
+	CCell*		pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vV1, &_vV2, &_vV3);
 	NULL_CHECK_RETURN(pCell, E_FAIL);
 	m_vecCell.push_back(pCell);
 

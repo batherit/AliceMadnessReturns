@@ -135,7 +135,19 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	// 맵 생성
 	CMap* pMap = CMap::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pMap, E_FAIL);
+	pMap->LoadMap(
+		L"../../Resource/Terrain/Terrain.trr",
+		L"../../Resource/Navi/NaviTest.navi",
+		L"../../Resource/Map/Map.map"
+	);
+	// 로딩 두 번하기 테스트
+	/*pMap->LoadMap(
+		L"../Bin/Resource/Terrain/Terrain.trr",
+		L"../Bin/Resource/Navi/NaviTest.navi",
+		L"../Bin/Resource/Map/Map.map"
+	);*/
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Map", pMap), E_FAIL);
+	
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);

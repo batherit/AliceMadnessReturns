@@ -32,6 +32,7 @@ public:
 	void LoadStaticObjects(const _tchar* pFilePath);
 
 private:
+	Engine::CRenderer* m_pRenderer = nullptr;
 	Engine::CNaviMesh* m_pNaviMesh = nullptr;
 	CTerrain* m_pTerrain = nullptr;
 	vector<CStaticObject*> m_vecStaticObjects;

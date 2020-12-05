@@ -59,7 +59,7 @@ void CTerrain::SetHeightMapFileName(const _tchar * _szHeightMapFileName)
 {
 	if (!_szHeightMapFileName)
 		return;
-	m_szHeightMapFileName = _szHeightMapFileName;
+	lstrcpy(m_szHeightMapFileName, _szHeightMapFileName);
 	m_pTerrain->SetTerrainInfo(
 		m_pTerrain->GetNumOfVerticesW(),
 		m_pTerrain->GetNumOfVerticesH(),
@@ -134,4 +134,87 @@ CTerrain * CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CTerrain::Free(void)
 {
 	CGameObject::Free();
+}
+
+_bool CTerrain::SaveInfo(HANDLE & _hfOut)
+{
+	// 1) 높이맵 태그
+	_int iStrLen = lstrlen(m_szHeightMapFileName);
+	WriteFile(_hfOut, &iStrLen, sizeof(iStrLen), nullptr, nullptr);
+	WriteFile(_hfOut, &m_szHeightMapFileName, sizeof(_tchar) * (iStrLen + 1), nullptr, nullptr);
+
+	// 2) 텍스쳐 태그
+	iStrLen = lstrlen(m_szTextureTag);
+	WriteFile(_hfOut, &iStrLen, sizeof(iStrLen), nullptr, nullptr);
+	WriteFile(_hfOut, &m_szTextureTag, sizeof(_tchar) * (iStrLen + 1), nullptr, nullptr);
+
+	// 3) 트랜스폼 정보 세팅
+	_vec3 vPos = GetTransform()->GetPos();
+	_vec3 vAngle = GetTransform()->GetAngle();
+	_vec3 vScale = GetTransform()->GetScale();
+	WriteFile(_hfOut, &vPos, sizeof(vPos), nullptr, nullptr);
+	WriteFile(_hfOut, &vAngle, sizeof(vAngle), nullptr, nullptr);
+	WriteFile(_hfOut, &vScale, sizeof(vScale), nullptr, nullptr);
+
+	// 4) 터레인 사이즈
+	_float fWidth = m_pTerrain->GetWidth(); 
+	_float fHeight = m_pTerrain->GetHeight();
+	WriteFile(_hfOut, &fWidth, sizeof(fWidth), nullptr, nullptr);
+	WriteFile(_hfOut, &fHeight, sizeof(fHeight), nullptr, nullptr);
+
+	// 5) 터레인 정점 수
+	_uint uiVtxNumW = m_pTerrain->GetNumOfVerticesW();
+	_uint uiVtxNumD = m_pTerrain->GetNumOfVerticesH();
+	WriteFile(_hfOut, &uiVtxNumW, sizeof(uiVtxNumW), nullptr, nullptr);
+	WriteFile(_hfOut, &uiVtxNumD, sizeof(uiVtxNumD), nullptr, nullptr);
+
+	// 6) 터레인 UV
+	_float fU = m_pTerrain->GetU();
+	_float fV = m_pTerrain->GetV();
+	WriteFile(_hfOut, &fU, sizeof(fU), nullptr, nullptr);
+	WriteFile(_hfOut, &fV, sizeof(fV), nullptr, nullptr);
+
+	return true;
+}
+
+_bool CTerrain::LoadInfo(HANDLE & _hfIn)
+{
+	// 1) 높이맵 태그
+	_int iStrLen = 0;
+	ReadFile(_hfIn, &iStrLen, sizeof(iStrLen), nullptr, nullptr);
+	ReadFile(_hfIn, &m_szHeightMapFileName, sizeof(_tchar) * (iStrLen + 1), nullptr, nullptr);
+
+	// 2) 텍스쳐 태그
+	iStrLen = 0;
+	ReadFile(_hfIn, &iStrLen, sizeof(iStrLen), nullptr, nullptr);
+	ReadFile(_hfIn, &m_szTextureTag, sizeof(_tchar) * (iStrLen + 1), nullptr, nullptr);
+
+	// 3) 트랜스폼 정보 세팅
+	_vec3 vPos, vAngle, vScale;
+	ReadFile(_hfIn, &vPos, sizeof(vPos), nullptr, nullptr);
+	ReadFile(_hfIn, &vAngle, sizeof(vAngle), nullptr, nullptr);
+	ReadFile(_hfIn, &vScale, sizeof(vScale), nullptr, nullptr);
+	GetTransform()->SetPos(vPos);
+	GetTransform()->SetAngle(vAngle);
+	GetTransform()->SetScale(vScale);
+
+	// 4) 터레인 사이즈
+	_float fWidth, fHeight;
+	ReadFile(_hfIn, &fWidth, sizeof(fWidth), nullptr, nullptr);
+	ReadFile(_hfIn, &fHeight, sizeof(fHeight), nullptr, nullptr);
+
+	// 5) 터레인 정점 수
+	_uint uiVtxNumW, uiVtxNumD;
+	ReadFile(_hfIn, &uiVtxNumW, sizeof(uiVtxNumW), nullptr, nullptr);
+	ReadFile(_hfIn, &uiVtxNumD, sizeof(uiVtxNumD), nullptr, nullptr);
+
+	// 6) 터레인 UV
+	_float fU, fV;
+	ReadFile(_hfIn, &fU, sizeof(fU), nullptr, nullptr);
+	ReadFile(_hfIn, &fV, sizeof(fV), nullptr, nullptr);
+
+	CreateTerrain(uiVtxNumW, uiVtxNumD, fWidth, fHeight, fU, fV, m_szHeightMapFileName);
+	SetTextureTag(m_szTextureTag);
+
+	return true;
 }

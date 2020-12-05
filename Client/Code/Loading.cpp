@@ -94,9 +94,9 @@ _uint CLoading::Loading_ForStage(void)
 	Engine::Ready_Proto(Engine::CTransform::GetComponentTag(), pComponent);
 
 	// Renderer (지금은 터레인 같은 애들이 쓰고 있기 때문에 일단 놔둠.)
-	//pComponent = Engine::CRenderer::GetInstance();
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//Engine::Ready_Proto(Engine::CRenderer::GetComponentTag(), pComponent);
+	pComponent = Engine::CRenderer::GetInstance();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(Engine::CRenderer::GetComponentTag(), pComponent);
 
 	// PolygonRenderer
 	pComponent = Engine::CPolygonRenderer::Create();
@@ -128,26 +128,33 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::COptimization::GetComponentTag(), pComponent);
 
+
+
+
+
+
 	// 텍스쳐
 	lstrcpy(m_szLoading, L"Texture Loading.............................");
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Player", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ma.jpg"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Logo", Engine::TEX_NORMAL, L"../../Resource/Texture/Logo/Logo.jpg"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Player", Engine::TEX_NORMAL, L"../../Resource/Texture/Player/Ma.jpg"), E_FAIL);
 
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
 												L"Texture_Terrain",
 												Engine::TEX_NORMAL,
-												L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2),
+												L"../../Resource/Texture/Terrain/Grass_%d.tga", 2),
 												E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Height", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Height2.bmp"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Texture_Logo", Engine::TEX_NORMAL, L"../../Resource/Texture/Logo/Logo.jpg"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Height", Engine::TEX_NORMAL, L"../../Resource/Texture/Terrain/Height2.bmp"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Texture_SkyBox",
 		Engine::TEX_CUBE,
-		L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4),
+		L"../../Resource/Texture/SkyBox/burger%d.dds", 4),
 		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"CobbledStreet_DM", Engine::TEX_NORMAL, L"../../Resource/Terrain/Texture/CobbledStreet_DM.tga"), E_FAIL);
 	
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	// Stone 메쉬 원본 생성
@@ -155,7 +162,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Stone",
 		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+		L"../../Resource/Mesh/StaticMesh/TombStone/",
 		L"TombStone.X"),
 		E_FAIL);
 
@@ -171,7 +178,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Player",
 		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/PlayerXfile/",
+		L"../../Resource/Mesh/DynamicMesh/PlayerXfile/",
 		L"Player.X"),
 		E_FAIL);
 
@@ -180,7 +187,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Alice",
 		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/Alice/",
+		L"../../Resource/Mesh/DynamicMesh/Alice/",
 		L"testalice.X"),
 		E_FAIL);*/
 
@@ -195,7 +202,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Sword",
 		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/Sword/",
+		L"../../Resource/Mesh/StaticMesh/Sword/",
 		L"Sword.X"),
 		E_FAIL);
 
@@ -203,7 +210,7 @@ _uint CLoading::Loading_ForStage(void)
 	//	RESOURCE_STAGE,
 	//	L"Mesh_Tree",
 	//	Engine::TYPE_STATIC,
-	//	L"../Bin/Resource/Mesh/StaticMesh/Tree/",
+	//	L"../../Resource/Mesh/StaticMesh/Tree/",
 	//	L"Tree01.X"),
 	//	E_FAIL);
 
@@ -214,6 +221,60 @@ _uint CLoading::Loading_ForStage(void)
 	//	NULL,
 	//	NULL),
 	//	E_FAIL);
+
+	// CobbledStreet 생성
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"CobbledStreet",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
+		L"CobbledStreet.X"),
+		E_FAIL);
+
+	// CobbledStreet_Even
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"CobbledStreet_Even",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
+		L"CobbledStreet_Even.X"),
+		E_FAIL);
+
+	// PoorBuildingE01
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PoorBuildingE01",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
+		L"PoorBuildingE01.X"),
+		E_FAIL);
+
+	// Curb_90
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Curb_90",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
+		L"Curb_90.X"),
+		E_FAIL);
+
+	// Curb_Uneven
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Curb_Uneven",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
+		L"Curb_Uneven.X"),
+		E_FAIL);
+
+	// Curb_Section
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Curb_Section",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/",
+		L"Curb_Section.X"),
+		E_FAIL);
 
 	
 	lstrcpy(m_szLoading, L"Loading Complete!!!");

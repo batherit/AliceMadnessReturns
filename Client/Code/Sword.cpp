@@ -27,7 +27,7 @@ HRESULT Client::CSword::Add_Component(void)
 	//pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
 	//m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
-	m_pTransformCom = AddComponent<Engine::CTransform>();
+	//m_pTransformCom = AddComponent<Engine::CTransform>();
 
 	// Renderer
 	//pComponent = m_pRendererCom = Engine::Get_Renderer();
@@ -71,7 +71,7 @@ HRESULT CSword::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->RotateByAxis(D3DXToRadian(90.f), WORLD_X_AXIS);
+	m_pTransform->RotateByAxis(D3DXToRadian(90.f), WORLD_X_AXIS);
 
 	return S_OK;
 }

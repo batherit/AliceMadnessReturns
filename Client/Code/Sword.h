@@ -33,7 +33,6 @@ private:
 private:
 
 	Engine::CStaticMesh*		m_pMeshCom = nullptr;
-	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::CMeshRenderer*		m_pRendererCom = nullptr;
 	//Engine::CCalculator*		m_pCalculatorCom = nullptr;
 	//Engine::CCollider*		m_pColliderCom = nullptr;

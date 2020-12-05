@@ -62,6 +62,8 @@ HRESULT CPlayer::Ready_Object(void)
 
 int CPlayer::Update_Object(const _float & _fDeltaTime)
 {
+	CGameObject::Update_Object(_fDeltaTime);
+
 	// 쿼터니언 회전을 통해 카메라 축과 일치시키기
 	_matrix matView, matViewRot, matRotSlerp;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);

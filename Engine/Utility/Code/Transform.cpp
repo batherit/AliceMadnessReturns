@@ -4,14 +4,14 @@ USING(Engine)
 
 CTransform::CTransform()
 {
-	D3DXMatrixIdentity(&m_matWorld);
+	//D3DXMatrixIdentity(&m_matWorld);
 }
 
 CTransform::CTransform(const CTransform & rhs)
 	:
 	CComponent(rhs)
 {
-	m_matWorld = rhs.m_matWorld;
+	//m_matWorld = rhs.m_matWorld;
 }
 
 CTransform::~CTransform()
@@ -164,6 +164,11 @@ _matrix CTransform::GetParentBoneMatrix() const
 	if (m_pParentBoneMatrix) return *m_pParentBoneMatrix;
 	
 	return matIdentity;
+}
+
+const _matrix * CTransform::GetParentBoneMatrixPointer()
+{
+	return m_pParentBoneMatrix;
 }
 
 _matrix CTransform::GetObjectMatrix(E_COORD_TYPE _eCoordType) const {

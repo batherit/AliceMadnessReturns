@@ -71,6 +71,7 @@ public:
 	
 	_matrix GetParentMatrix(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const;
 	_matrix GetParentBoneMatrix() const;
+	const _matrix* GetParentBoneMatrixPointer();
 	_matrix GetObjectMatrix(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const;
 	_vec3 GetPos(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const;
 	_vec3 GetAngle() const { return m_vAngle; }
@@ -89,7 +90,7 @@ private:
 	_vec3 m_vScale{ 1.f, 1.f, 1.f };
 	_vec3 m_vAngle{ 0.f, 0.f, 0.f };			// Radian
 	_vec3 m_vPos{ 0.f, 0.f, 0.f };
-	_matrix m_matWorld;
+	//_matrix m_matWorld;
 	const _matrix* m_pParentBoneMatrix = nullptr;
 };
 

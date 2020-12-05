@@ -21,7 +21,7 @@ public:
 
 public:
 	virtual HRESULT Ready_Object(void) = 0;
-	virtual _int Update_Object(const _float& _fDeltaTime) = 0;
+	virtual _int Update_Object(const _float& _fDeltaTime);
 	virtual void Render_Object(void) {};
 
 public:
@@ -44,8 +44,15 @@ public:
 		const COMPONENTID id = T::GetComponentID();
 		return static_cast<T*>(AddComponent(id, tag));
 	}
-	_bool SetParent(CGameObject* _pParent, const char* _pBoneName = nullptr);
+	
+	const _matrix* GetBoneMatrixPointer(const char* _pBoneName);
+	void SetParent(CGameObject* _pParent, const char* _pBoneName = nullptr);
+	_bool AddChild(CGameObject* _pChild, const char* _pBoneName = nullptr);
+	_bool IsChildExist(CGameObject* _pChild);
+	void ReleaseParent();
+	void ReleaseChild(CGameObject* _pChild);
 	CGameObject* GetParent() const { return m_pParent; }
+	
 
 	// 파일 입출력 관련
 	virtual _bool SaveInfo(FILE* _fpOut)	{ return true; };
@@ -62,6 +69,7 @@ protected:
 	_bool m_bIsValid = true;
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 	CGameObject* m_pParent = nullptr;
+	vector<CGameObject*> m_vecChildList;
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
 	CTransform* m_pTransform = nullptr;
 };

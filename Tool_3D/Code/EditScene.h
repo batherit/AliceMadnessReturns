@@ -51,6 +51,9 @@ public:
 	vector<CStaticObject*>& GetStaticObjectList() { return m_vecStaticObjects; }
 	_bool DeleteStaticObject(_int _iObjectIndex);
 
+	// 터레인탭 편집 내용 세이브/로드
+	void SaveTerrain();
+	void LoadTerrain();
 	// 네비메쉬탭 편집 내용 세이브/로드
 	void SaveNaviMesh();
 	void LoadNaviMesh();

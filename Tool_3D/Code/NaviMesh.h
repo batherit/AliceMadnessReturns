@@ -1,5 +1,5 @@
-#ifndef NaviMesh_h__
-#define NaviMesh_h__
+#ifndef NaviMesh_Tool_h__
+#define NaviMesh_Tool_h__
 
 #include "Define.h"
 #include "Base.h"

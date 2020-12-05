@@ -19,32 +19,11 @@
     <Filter Include="02. Object\00. Camera">
       <UniqueIdentifier>{f74bf0ce-950b-4592-9f5a-e6972899e445}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\01. SpricteObject">
-      <UniqueIdentifier>{b9e3876b-06d4-4744-8577-14c804088c11}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\02. Public">
       <UniqueIdentifier>{af091aa3-bbbf-4962-ad07-2b35aa38f3b7}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Scene\00. LoadScene">
       <UniqueIdentifier>{ba4b59d1-dd55-4e49-8542-b30ca2c8defe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. Object">
-      <UniqueIdentifier>{201ca04f-c72e-4f0b-846f-dc77d7047bdd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. Object\Monster">
-      <UniqueIdentifier>{ff1602f6-035f-4927-b2d7-e852e51a510b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. Object\Player">
-      <UniqueIdentifier>{32cb0994-47c5-4825-bbdf-cd871b863a1a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. Object\SkyBox">
-      <UniqueIdentifier>{2ec60084-704c-447a-aecd-b75b1226b5f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. Object\Stone">
-      <UniqueIdentifier>{128134c3-5108-4598-a6bf-359411d51126}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. Object\ColliderRenderer">
-      <UniqueIdentifier>{3d6a4757-c873-4862-929a-b6793d7b549e}</UniqueIdentifier>
     </Filter>
     <Filter Include="99. Default">
       <UniqueIdentifier>{be38746a-b6c0-45a1-9830-3eca1a6c3ce9}</UniqueIdentifier>
@@ -61,8 +40,38 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="02. Object\02. Object\Sword">
+    <Filter Include="02. Object\03. Terrain">
+      <UniqueIdentifier>{6d35baf7-0dc4-49a1-85f2-fa1076266dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\01. SpriteObject">
+      <UniqueIdentifier>{b9e3876b-06d4-4744-8577-14c804088c11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\04. Map">
+      <UniqueIdentifier>{35ef0868-16d1-4034-bc28-41446d79da0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject">
+      <UniqueIdentifier>{201ca04f-c72e-4f0b-846f-dc77d7047bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Monster">
+      <UniqueIdentifier>{ff1602f6-035f-4927-b2d7-e852e51a510b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Player">
+      <UniqueIdentifier>{32cb0994-47c5-4825-bbdf-cd871b863a1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\SkyBox">
+      <UniqueIdentifier>{2ec60084-704c-447a-aecd-b75b1226b5f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Stone">
+      <UniqueIdentifier>{128134c3-5108-4598-a6bf-359411d51126}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\ColliderRenderer">
+      <UniqueIdentifier>{3d6a4757-c873-4862-929a-b6793d7b549e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Sword">
       <UniqueIdentifier>{4ca1a64c-645b-4d98-b389-a71890a34b42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\05. StaticObject">
+      <UniqueIdentifier>{5f69bfc7-2e04-49d8-920a-4c6a5d8b0004}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -106,7 +115,7 @@
       <Filter>02. Object</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SpriteObject.h">
-      <Filter>02. Object\01. SpricteObject</Filter>
+      <Filter>02. Object\01. SpriteObject</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Struct.h">
       <Filter>98. Header</Filter>
@@ -130,25 +139,31 @@
       <Filter>02. Object\00. Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Monster.h">
-      <Filter>02. Object\02. Object\Monster</Filter>
+      <Filter>02. Object\02. GameObject\Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Player.h">
-      <Filter>02. Object\02. Object\Player</Filter>
+      <Filter>02. Object\02. GameObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SkyBox.h">
-      <Filter>02. Object\02. Object\SkyBox</Filter>
+      <Filter>02. Object\02. GameObject\SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Stone.h">
-      <Filter>02. Object\02. Object\Stone</Filter>
+      <Filter>02. Object\02. GameObject\Stone</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SphereRenderer.h">
-      <Filter>02. Object\02. Object\ColliderRenderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Terrain.h">
-      <Filter>02. Object</Filter>
+      <Filter>02. Object\02. GameObject\ColliderRenderer</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Sword.h">
-      <Filter>02. Object\02. Object\Sword</Filter>
+      <Filter>02. Object\02. GameObject\Sword</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Terrain.h">
+      <Filter>02. Object\03. Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map.h">
+      <Filter>02. Object\04. Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\StaticObject.h">
+      <Filter>02. Object\05. StaticObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +183,7 @@
       <Filter>02. Object</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SpriteObject.cpp">
-      <Filter>02. Object\01. SpricteObject</Filter>
+      <Filter>02. Object\01. SpriteObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Loading.cpp">
       <Filter>01. Scene\02. Public</Filter>
@@ -186,25 +201,31 @@
       <Filter>02. Object\00. Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>02. Object\02. Object\Monster</Filter>
+      <Filter>02. Object\02. GameObject\Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
-      <Filter>02. Object\02. Object\Player</Filter>
+      <Filter>02. Object\02. GameObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
-      <Filter>02. Object\02. Object\SkyBox</Filter>
+      <Filter>02. Object\02. GameObject\SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Stone.cpp">
-      <Filter>02. Object\02. Object\Stone</Filter>
+      <Filter>02. Object\02. GameObject\Stone</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SphereRenderer.cpp">
-      <Filter>02. Object\02. Object\ColliderRenderer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Terrain.cpp">
-      <Filter>02. Object</Filter>
+      <Filter>02. Object\02. GameObject\ColliderRenderer</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Sword.cpp">
-      <Filter>02. Object\02. Object\Sword</Filter>
+      <Filter>02. Object\02. GameObject\Sword</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Terrain.cpp">
+      <Filter>02. Object\03. Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Map.cpp">
+      <Filter>02. Object\04. Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticObject.cpp">
+      <Filter>02. Object\05. StaticObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -175,9 +175,6 @@
     <ClInclude Include="..\Code\PointObject.h">
       <Filter>04. Object\PointObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\NaviMesh.h">
-      <Filter>04. Object\NaviMesh</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\NaviMeshVtxCtrl.h">
       <Filter>04. Object\NaviMeshVtxCtrl</Filter>
     </ClInclude>
@@ -207,6 +204,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Gizmo.h">
       <Filter>04. Object\Gizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\NaviMesh.h">
+      <Filter>04. Object\NaviMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -270,9 +270,6 @@
     <ClCompile Include="..\Code\PointObject.cpp">
       <Filter>04. Object\PointObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\NaviMesh.cpp">
-      <Filter>04. Object\NaviMesh</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\NaviMeshVtxCtrl.cpp">
       <Filter>04. Object\NaviMeshVtxCtrl</Filter>
     </ClCompile>
@@ -302,6 +299,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Gizmo.cpp">
       <Filter>04. Object\Gizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\NaviMesh.cpp">
+      <Filter>04. Object\NaviMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

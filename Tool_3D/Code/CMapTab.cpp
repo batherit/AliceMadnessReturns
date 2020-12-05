@@ -247,6 +247,7 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CMapTab::UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects)
 {
+	UpdateData(TRUE);
 	m_treeAddedObject.DeleteAllItems();
 
 	for (auto& rStaticObj : rStaticObjects) {
@@ -254,6 +255,7 @@ void CMapTab::UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects)
 			m_treeAddedObject.InsertItem(rStaticObj->GetMeshTag() , NULL, NULL);
 		}
 	}
+	UpdateData(FALSE);
 }
 
 void CMapTab::UpdatePos(const _vec3 & vPos)

@@ -163,7 +163,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Height", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Height2.bmp"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkyBox", Engine::TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4),  E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"CobbledStreet_DM", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/TerrainTab/Texture/CobbledStreet_DM.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"CobbledStreet_DM", Engine::TEX_NORMAL, L"../Bin/Resource/Terrain/Texture/CobbledStreet_DM.tga"), E_FAIL);
 	m_pTerrainTab->m_lbxTexture.AddString(L"CobbledStreet_DM");
 
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");

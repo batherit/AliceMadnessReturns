@@ -384,12 +384,38 @@ void CTerrainTab::OnEnChangeEditV()
 void CTerrainTab::OnBnClickedButtonSave()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	g_pTool3D_Kernel->GetEditScene()->SaveTerrain();
 }
 
 
 void CTerrainTab::OnBnClickedButtonLoad()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	g_pTool3D_Kernel->GetEditScene()->LoadTerrain();
+	CTerrain* pTerrain = g_pTool3D_Kernel->GetEditScene()->GetTerrain();
+	Engine::CTerrainTex* pTerrainTex = pTerrain->GetComponent<Engine::CTerrainTex>();
+
+	// 트랜스폼 갱신
+	UpdateData(TRUE);
+	m_vPos = pTerrain->GetTransform()->GetPos();
+	_vec3 vAngle = pTerrain->GetTransform()->GetAngle();
+	m_vAngle.x = D3DXToDegree(vAngle.x);
+	m_vAngle.y = D3DXToDegree(vAngle.y);
+	m_vAngle.z = D3DXToDegree(vAngle.z);
+	m_vScale = pTerrain->GetTransform()->GetScale();
+	
+	// 사이즈 갱신
+	m_fSizeWidth = pTerrainTex->GetWidth();
+	m_fSizeDepth = pTerrainTex->GetHeight();
+
+	// 정점 수 갱신
+	m_uiVtxNumWidth = pTerrainTex->GetNumOfVerticesW();
+	m_uiVtxNumHeight = pTerrainTex->GetNumOfVerticesH();
+
+	// UV 갱신
+	m_fU = pTerrainTex->GetU();
+	m_fV = pTerrainTex->GetV();
+	UpdateData(FALSE);
 }
 
 

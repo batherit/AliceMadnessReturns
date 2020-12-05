@@ -93,6 +93,7 @@ void CNaviMeshTab::UpdateNaviTree(Client::CNaviMesh * _pNaviMesh)
 
 	HTREEITEM hTriangleIndex = nullptr;
 
+	UpdateData(TRUE);
 	m_treeNavi.DeleteAllItems();
 	for (_int i = 0; i < iVerticesNum; ++i) {
 		if (i % 3 == 0) {
@@ -106,6 +107,7 @@ void CNaviMeshTab::UpdateNaviTree(Client::CNaviMesh * _pNaviMesh)
 		m_treeNavi.InsertItem(cstVertexIndex, hTriangleIndex, NULL);
 		m_treeNavi.Expand(hTriangleIndex, TVE_EXPAND);
 	}
+	UpdateData(FALSE);
 }
 
 void CNaviMeshTab::UpdateVertexPos(const _vec3& _vPos)

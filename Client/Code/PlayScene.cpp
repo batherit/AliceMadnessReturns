@@ -9,6 +9,7 @@
 #include "SkyBox.h"
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
+#include "Map.h"
 
 CPlayScene::CPlayScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -51,41 +52,41 @@ HRESULT CPlayScene::Ready(void)
 int CPlayScene::Update(const _float& fTimeDelta)
 {
 	// TODO : 네모를 움직이는 코드를 작성합니다.
-	_float fHeight = m_pTerrain->GetHeight(m_pPlayer->GetComponent<Engine::CTransform>()->GetPos());
-	m_pPlayer->GetComponent<Engine::CTransform>()->SetPosY(fHeight);
+	//_float fHeight = m_pTerrain->GetHeight(m_pPlayer->GetComponent<Engine::CTransform>()->GetPos());
+	//m_pPlayer->GetComponent<Engine::CTransform>()->SetPosY(fHeight);
 
-	if (Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree().z != 0) {
-		_int iW = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetNumOfVerticesW();
-		_int iH = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetNumOfVerticesH();
-		if (Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree().z > 0) {
-			m_pTerrain->CreateTerrain(iW + 1, iH + 1, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
-		}
-		else {
-			if(iW > 10 && iH > 10)
-				m_pTerrain->CreateTerrain(iW - 1, iH - 1, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
-		}
-	}
+	//if (Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree().z != 0) {
+	//	_int iW = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetNumOfVerticesW();
+	//	_int iH = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetNumOfVerticesH();
+	//	if (Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree().z > 0) {
+	//		m_pTerrain->CreateTerrain(iW + 1, iH + 1, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
+	//	}
+	//	else {
+	//		if(iW > 10 && iH > 10)
+	//			m_pTerrain->CreateTerrain(iW - 1, iH - 1, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
+	//	}
+	//}
 
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB)) {
-		// 픽킹을 하기 위한 기본 변수들 세팅.
-		auto& pVertices = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetVertices();
-		auto stPickingRayInfo = Engine::GetPickingRayInfo(m_pGraphicDev, Engine::GetClientCursorPoint(g_hWnd));
-		_float fU, fV, fDist;
-		_vec3 vV1, vV2, vV3;
-		
-		// 픽킹 검사를 진행한다.
-		for (auto& pIndex : m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetIndexes()) {
-			vV1 = pVertices[pIndex._0];
-			vV2 = pVertices[pIndex._1];
-			vV3 = pVertices[pIndex._2];
-			if (D3DXIntersectTri(&vV1, &vV2, &vV3, &stPickingRayInfo.vRayPos, &stPickingRayInfo.vRayDir, &fU, &fV, &fDist)) {
-				// 픽킹이 성공했다면, 픽킹 히트 지점을 플레이어 이동 지점으로 세팅
-				//m_pPlayer->SetTartgetPos(stPickingRayInfo.vRayPos + stPickingRayInfo.vRayDir * fDist);
-				m_pPlayer->SetTartgetPos(Engine::GetHitPos(vV1, vV2, vV3, fU, fV));
-				break;
-			}
-		}
-	}	
+	//if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB)) {
+	//	// 픽킹을 하기 위한 기본 변수들 세팅.
+	//	auto& pVertices = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetVertices();
+	//	auto stPickingRayInfo = Engine::GetPickingRayInfo(m_pGraphicDev, Engine::GetClientCursorPoint(g_hWnd));
+	//	_float fU, fV, fDist;
+	//	_vec3 vV1, vV2, vV3;
+	//	
+	//	// 픽킹 검사를 진행한다.
+	//	for (auto& pIndex : m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetIndexes()) {
+	//		vV1 = pVertices[pIndex._0];
+	//		vV2 = pVertices[pIndex._1];
+	//		vV3 = pVertices[pIndex._2];
+	//		if (D3DXIntersectTri(&vV1, &vV2, &vV3, &stPickingRayInfo.vRayPos, &stPickingRayInfo.vRayDir, &fU, &fV, &fDist)) {
+	//			// 픽킹이 성공했다면, 픽킹 히트 지점을 플레이어 이동 지점으로 세팅
+	//			//m_pPlayer->SetTartgetPos(stPickingRayInfo.vRayPos + stPickingRayInfo.vRayDir * fDist);
+	//			m_pPlayer->SetTartgetPos(Engine::GetHitPos(vV1, vV2, vV3, fU, fV));
+	//			break;
+	//		}
+	//	}
+	//}	
 
 	return CScene::Update(fTimeDelta);
 }
@@ -126,10 +127,15 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", m_pCamera), E_FAIL);
 
 	// 지형 생성
-	m_pTerrain = CTerrain::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(m_pTerrain, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", m_pTerrain), E_FAIL);
-	m_pTerrain->CreateTerrain(129, 129, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
+	//m_pTerrain = CTerrain::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(m_pTerrain, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", m_pTerrain), E_FAIL);
+	//m_pTerrain->CreateTerrain(129, 129, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
+
+	// 맵 생성
+	CMap* pMap = CMap::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pMap, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Map", pMap), E_FAIL);
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);

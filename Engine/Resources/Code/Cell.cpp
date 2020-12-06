@@ -44,6 +44,11 @@ _vec3 CCell::GetPosInCell(const _vec3 & _vPos)
 	return _vec3(vPos.x, _vPos.y, vPos.y);
 }
 
+_float CCell::GetHeight(const _vec3 & _vPos)
+{
+	return GetPointProjectedOntoTriangle(m_vPoint[POINT_A], m_vPoint[POINT_B], m_vPoint[POINT_C], _vPos).y;
+}
+
 HRESULT Engine::CCell::Ready_Cell(const _ulong& dwIndex,
 								const _vec3* pPointA, 
 								const _vec3* pPointB, 

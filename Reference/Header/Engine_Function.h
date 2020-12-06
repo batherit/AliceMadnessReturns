@@ -211,6 +211,12 @@ namespace Engine
 		return _vPos - fK * vPlaneNormal;
 	}
 
+	// 삼각형에 투영된 점 위치얻기
+	inline _vec3 GetPointProjectedOntoTriangle(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3, const _vec3& _vPos) {
+		_plane plPlane;
+		return GetPointProjectedOntoPlane(*D3DXPlaneFromPoints(&plPlane, &_vV1, &_vV2, &_vV3), _vPos);
+	}
+
 	// 평면과 벡터가 직교 관계에 있는지? => 직교라면 충돌할 가능성이 없다. 
 	inline _bool IsPlaneAndVectorOrthogonal(const _vec3& _vV, const _plane& _plPlane) {
 		_vec3 vPlaneNormal = _vec3(_plPlane.a, _plPlane.b, _plPlane.c);

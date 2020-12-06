@@ -26,6 +26,8 @@ public:
 	const _ulong*	Get_Index(void) { return &m_dwIndex; }
 	CLine*			GetLine(const CCell::LINE& _eLine) const { return m_pLine[_eLine]; }
 	_vec3			GetPosInCell(const _vec3& _vPos);
+	_float			GetHeight(const _vec3& _vPos);
+
 public:
 	HRESULT				Ready_Cell(	const _ulong& dwIndex,
 									const _vec3* pPointA,

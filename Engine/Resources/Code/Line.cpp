@@ -22,6 +22,9 @@ HRESULT Engine::CLine::Ready_Line(const _vec2* pPointA, const _vec2* pPointB)
 	m_vNormal = _vec2(m_vDirection.y * -1.f, m_vDirection.x);
 	D3DXVec2Normalize(&m_vNormal, &m_vNormal);
 
+	m_fGradient = (m_vPoint[POINT_FINISH].y - m_vPoint[POINT_START].y) / (m_vPoint[POINT_FINISH].x - m_vPoint[POINT_START].x);
+	// 절편 구하기(b = y - ax)
+	m_fIntercept = m_vPoint[POINT_START].y - m_fGradient * m_vPoint[POINT_START].x;
 
 	return S_OK;
 }

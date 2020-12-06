@@ -7,7 +7,7 @@
 #include "Export_Function.h"
 
 BEGIN(Client)
-
+class CMap;
 class CPlayer : public Engine::CGameObject
 {
 private: // 持失切, 社瑚切
@@ -31,6 +31,7 @@ public:
 
 private:
 	//Engine::CStaticMesh* m_pMesh = nullptr;
+	CMap* m_pMap = nullptr;
 	Engine::CDynamicMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CPhysics* m_pPhysics = nullptr;

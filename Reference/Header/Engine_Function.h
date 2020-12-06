@@ -342,6 +342,18 @@ namespace Engine
 	inline float GetWeightByDegree(float _fDegree) {
 		return cosf(D3DXToRadian(_fDegree)) * 0.5f + 0.5f;
 	}
+	inline _float GetWeightByCos(_float _fCosRadian) {	// 0~2pi의 값을 집어넣으면 0~1의 값을 반환
+		return 0.5f * cosf(_fCosRadian) + 0.5f;
+	}
+	inline _float GetWeightByValue(_float _fValue, _float _fMin, _float _fMax) {	// _fMin에 가까울수록 0에 가까운 값을, _fMax에 가까울수록 1에 가까운 값을 반환
+		if (_fMin > _fMax) abort();
+
+		return Clamp((_fValue - _fMin) / (_fMax - _fMin), 0.f, 1.f);
+	}
+	inline _float GetValueByWeight(_float _fWeight, _float _fZero, _float _fOne) {	// 0~1을 fZero, fOne에 대응된 값을 전달 => 보간
+		Clamp(&_fWeight, 0.f, 1.f);
+		return _fZero * (1.f - _fWeight) + _fOne * _fWeight;
+	}
 
 	// 뷰포트 행렬 얻기
 	inline _matrix GetViewportMatrix(const D3DVIEWPORT9& _vp) {
@@ -372,6 +384,14 @@ namespace Engine
 		
 		// 음수이면 마주 보고 있는 것이다.
 		return D3DXVec3Dot(&vNormalizedDir1, &vNormalizedDir2) < 0.f;
+	}
+
+	//반사벡터
+	inline _vec3 GetReflectionVector(const _vec3& _vIncident, const _vec3& _vNormal) {	
+		_vec3 vNormal;
+		D3DXVec3Normalize(&vNormal, &_vNormal);
+
+		return _vIncident + 2.f * vNormal * (-D3DXVec3Dot(&_vIncident, &vNormal));
 	}
 
 	// 광선벡터

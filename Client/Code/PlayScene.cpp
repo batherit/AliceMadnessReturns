@@ -113,6 +113,17 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 {
 	Engine::CLayer* pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
+	m_mapLayer.emplace(pLayerTag, pLayer);
+
+	// 맵 생성
+	CMap* pMap = CMap::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pMap, E_FAIL);
+	pMap->LoadMap(
+		L"../../Resource/Terrain/Terrain.trr",
+		L"../../Resource/Navi/NaviTest.navi",
+		L"../../Resource/Map/Map.map"
+	);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Map", pMap), E_FAIL);
 
 	// 플레이어 생성
 	m_pPlayer = CPlayer::Create(m_pGraphicDev);
@@ -132,21 +143,8 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", m_pTerrain), E_FAIL);
 	//m_pTerrain->CreateTerrain(129, 129, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
 
-	// 맵 생성
-	CMap* pMap = CMap::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pMap, E_FAIL);
-	pMap->LoadMap(
-		L"../../Resource/Terrain/Terrain.trr",
-		L"../../Resource/Navi/NaviTest.navi",
-		L"../../Resource/Map/Map.map"
-	);
-	// 로딩 두 번하기 테스트
-	/*pMap->LoadMap(
-		L"../Bin/Resource/Terrain/Terrain.trr",
-		L"../Bin/Resource/Navi/NaviTest.navi",
-		L"../Bin/Resource/Map/Map.map"
-	);*/
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Map", pMap), E_FAIL);
+	
+	
 	
 
 	// 스카이 박스 생성
@@ -170,7 +168,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
 	pGameObject->SetParent(m_pPlayer, "R_Hand");	// 스워드를 플레이어의 오른쪽 팔에 부착
 
-	m_mapLayer.emplace(pLayerTag, pLayer);
+	
 	
 	// 몬스터에 카메라를 세팅함.
 	//m_pMonster->SetCameraForBillboard(m_pCamera);
@@ -184,7 +182,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	//_float fHeight = m_pTerrain->GetHeight(m_pMonster->GetComponent<Engine::CTransform>()->GetPos());
 	//m_pMonster->GetComponent<Engine::CTransform>()->SetPosY(fHeight);
 
-	m_mapLayer.emplace(pLayerTag, pLayer);
+	//m_mapLayer.emplace(pLayerTag, pLayer);
 
 	return S_OK;
 }

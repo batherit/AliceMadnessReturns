@@ -66,8 +66,11 @@ _vec3 CNaviMesh::Move_OnNaviMesh(const _vec3 * pTargetPos, const _vec3 * pTarget
 	if (CCell::MOVE == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex))
 		return vEndPos;
 
-	else if (CCell::STOP == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex))
-		return *pTargetPos;
+	else if (CCell::STOP == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex)) {
+		//return *pTargetPos;
+		return m_vecCell[m_dwIndex]->GetPosInCell(vEndPos);
+	}
+		
 }
 
 _bool CNaviMesh::LoadNaviMeshFromFile(const _tchar* _pFilePath)

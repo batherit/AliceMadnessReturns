@@ -31,6 +31,8 @@ public:
 	void LoadNaviMesh(const _tchar* _pFilePath);
 	void LoadStaticObjects(const _tchar* pFilePath);
 
+	Engine::CNaviMesh* GetNaviMesh() const { return m_pNaviMesh; }
+
 private:
 	Engine::CRenderer* m_pRenderer = nullptr;
 	Engine::CNaviMesh* m_pNaviMesh = nullptr;

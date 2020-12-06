@@ -24,7 +24,8 @@ public:
 	CCell*			Get_Neighbor(NEIGHBOR eType) const { return m_pNeighbor[eType]; }
 	void			Set_Neighbor(NEIGHBOR eType, CCell* pNeighbor) { m_pNeighbor[eType] = pNeighbor; }
 	const _ulong*	Get_Index(void) { return &m_dwIndex; }
-
+	CLine*			GetLine(const CCell::LINE& _eLine) const { return m_pLine[_eLine]; }
+	_vec3			GetPosInCell(const _vec3& _vPos);
 public:
 	HRESULT				Ready_Cell(	const _ulong& dwIndex,
 									const _vec3* pPointA,
@@ -32,8 +33,7 @@ public:
 									const _vec3* pPointC);
 
 	_bool				Compare_Point(const _vec3* pFirstPoint, const _vec3* pSecondPoint, CCell* pCell);
-	MOVING			CompareCell(const _vec3* pEndPos, _ulong* pCellIndex);
-
+	MOVING				CompareCell(const _vec3* pEndPos, _ulong* pCellIndex);
 	void				Render_Cell(void);
 
 private:

@@ -138,10 +138,10 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", m_pCamera), E_FAIL);
 
 	// 지형 생성
-	//m_pTerrain = CTerrain::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(m_pTerrain, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", m_pTerrain), E_FAIL);
-	//m_pTerrain->CreateTerrain(129, 129, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
+	/*m_pTerrain = CTerrain::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pTerrain, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", m_pTerrain), E_FAIL);
+	m_pTerrain->CreateTerrain(129, 129, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");*/
 
 	
 	
@@ -165,8 +165,8 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	// 스워드 생성
 	pGameObject = CSword::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
-	pGameObject->SetParent(m_pPlayer, "R_Hand");	// 스워드를 플레이어의 오른쪽 팔에 부착
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
+	//pGameObject->SetParent(m_pPlayer, "R_Hand");	// 스워드를 플레이어의 오른쪽 팔에 부착
 
 	
 	

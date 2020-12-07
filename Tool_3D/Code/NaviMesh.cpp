@@ -186,11 +186,12 @@ void CNaviMesh::GenerateNewNaviMesh(vector<_vec3>& _rVertices)
 _bool CNaviMesh::SaveInfo(HANDLE & _hfOut)
 {
 	auto& rVertices = GetNaviVertices();
+	DWORD dwByte = 0;
 	_int iVerticesSize = static_cast<_int>(GetNaviVertices().size());
-	WriteFile(_hfOut, &iVerticesSize, sizeof(_int), nullptr, nullptr);
+	WriteFile(_hfOut, &iVerticesSize, sizeof(_int), &dwByte, nullptr);
 
 	for (auto& rPos : GetNaviVertices()) {
-		WriteFile(_hfOut, &rPos, sizeof(rPos), nullptr, nullptr);
+		WriteFile(_hfOut, &rPos, sizeof(rPos), &dwByte, nullptr);
 	}
 
 	return true;
@@ -199,13 +200,14 @@ _bool CNaviMesh::SaveInfo(HANDLE & _hfOut)
 _bool CNaviMesh::LoadInfo(HANDLE & _hfIn)
 {
 	_int iVerticesSize = 0;
-	ReadFile(_hfIn, &iVerticesSize, sizeof(_int), nullptr, nullptr);
+	DWORD dwByte = 0;
+	ReadFile(_hfIn, &iVerticesSize, sizeof(_int), &dwByte, nullptr);
 	vector<_vec3> vecVertices;
 	vecVertices.reserve(iVerticesSize + 10);
 
 	_vec3 vPos;
 	for (_int i = 0; i < iVerticesSize; ++i) {
-		ReadFile(_hfIn, &vPos, sizeof(vPos), nullptr, nullptr);
+		ReadFile(_hfIn, &vPos, sizeof(vPos), &dwByte, nullptr);
 		vecVertices.emplace_back(vPos);
 	}
 

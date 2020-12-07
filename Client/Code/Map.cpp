@@ -102,14 +102,15 @@ void CMap::LoadNaviMesh(const _tchar * _pFilePath)
 		m_mapComponent[Engine::ID_STATIC][L"COM_NAVIMESH"] = m_pNaviMesh;
 	//}
 
+	DWORD dwByte = 0;
 	_int iVerticesSize = 0;
-	ReadFile(hFile, &iVerticesSize, sizeof(_int), nullptr, nullptr);
+	ReadFile(hFile, &iVerticesSize, sizeof(_int), &dwByte, nullptr);
 	vector<_vec3> vecVertices;
 	vecVertices.reserve(iVerticesSize + 10);
 
 	_vec3 vPos;
 	for (_int i = 0; i < iVerticesSize; ++i) {
-		ReadFile(hFile, &vPos, sizeof(vPos), nullptr, nullptr);
+		ReadFile(hFile, &vPos, sizeof(vPos), &dwByte, nullptr);
 		vecVertices.emplace_back(vPos);
 	}
 	
@@ -145,7 +146,8 @@ void CMap::LoadStaticObjects(const _tchar * _pFilePath)
 	}
 
 	_int iVecSize = 0;
-	ReadFile(hFile, &iVecSize, sizeof(iVecSize), nullptr, nullptr);
+	DWORD dwByte = 0;
+	ReadFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
 	CStaticObject* pStaticObject = nullptr;
 	for (_int i = 0; i < iVecSize; ++i) {
 		pStaticObject = CStaticObject::Create(m_pGraphicDev);

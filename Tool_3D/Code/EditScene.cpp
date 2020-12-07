@@ -262,7 +262,7 @@ void CEditScene::SaveTerrain()
 	if (IDOK == Dlg.DoModal())
 	{
 		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 		if (INVALID_HANDLE_VALUE == hFile)
 			return;
@@ -290,7 +290,7 @@ void CEditScene::LoadTerrain()
 	if (IDOK == Dlg.DoModal())
 	{
 		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 		if (INVALID_HANDLE_VALUE == hFile)
 			return;
@@ -317,7 +317,7 @@ void CEditScene::SaveNaviMesh()
 	if (IDOK == Dlg.DoModal())
 	{
 		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 		if (INVALID_HANDLE_VALUE == hFile)
 			return;
@@ -345,7 +345,7 @@ void CEditScene::LoadNaviMesh()
 	if (IDOK == Dlg.DoModal())
 	{
 		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 		if (INVALID_HANDLE_VALUE == hFile)
 			return;
@@ -373,13 +373,14 @@ void CEditScene::SaveMap()
 	if (IDOK == Dlg.DoModal())
 	{
 		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 		if (INVALID_HANDLE_VALUE == hFile)
 			return;
 
 		_int iVecSize = m_vecStaticObjects.size();
-		WriteFile(hFile, &iVecSize, sizeof(iVecSize), nullptr, nullptr);
+		DWORD dwByte = 0;
+		WriteFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
 		for (auto& rStaticObj : m_vecStaticObjects)
 			rStaticObj->SaveInfo(hFile);
 
@@ -404,7 +405,7 @@ void CEditScene::LoadMap()
 	if (IDOK == Dlg.DoModal())
 	{
 		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 		if (INVALID_HANDLE_VALUE == hFile)
 			return;
@@ -417,7 +418,8 @@ void CEditScene::LoadMap()
 
 		// 객체 정보를 로드한다.
 		_int iVecSize = 0;
-		ReadFile(hFile, &iVecSize, sizeof(iVecSize), nullptr, nullptr);
+		DWORD dwByte = 0;
+		ReadFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
 		CStaticObject* pStaticObject = nullptr;
 		for (_int i = 0; i < iVecSize; ++i) {
 			pStaticObject = CStaticObject::Create(m_pGraphicDev);

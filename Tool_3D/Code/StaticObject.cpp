@@ -82,42 +82,46 @@ void CStaticObject::Free(void)
 
 _bool CStaticObject::SaveInfo(HANDLE & _hfOut)
 {
+	DWORD dwByte = 0;
+
 	// 1) 메시 태그
 	_int iStrLen = lstrlen(m_tcMeshTag);
-	WriteFile(_hfOut, &iStrLen, sizeof(iStrLen), nullptr, nullptr);
-	WriteFile(_hfOut, &m_tcMeshTag, sizeof(_tchar) * (iStrLen + 1), nullptr, nullptr);
+	WriteFile(_hfOut, &iStrLen, sizeof(iStrLen), &dwByte, nullptr);
+	WriteFile(_hfOut, &m_tcMeshTag, sizeof(_tchar) * (iStrLen + 1), &dwByte, nullptr);
 	
 	// 2) 렌더 아이디
 	Engine::RENDERID eRenderID = m_pRenderer->GetRenderID();
-	WriteFile(_hfOut, &eRenderID, sizeof(eRenderID), nullptr, nullptr);
+	WriteFile(_hfOut, &eRenderID, sizeof(eRenderID), &dwByte, nullptr);
 
 	// 3) 트랜스폼 정보 세팅
 	_vec3 vPos = GetTransform()->GetPos();
 	_vec3 vAngle = GetTransform()->GetAngle();
 	_vec3 vScale = GetTransform()->GetScale();
-	WriteFile(_hfOut, &vPos, sizeof(vPos), nullptr, nullptr);
-	WriteFile(_hfOut, &vAngle, sizeof(vAngle), nullptr, nullptr);
-	WriteFile(_hfOut, &vScale, sizeof(vScale), nullptr, nullptr);
+	WriteFile(_hfOut, &vPos, sizeof(vPos), &dwByte, nullptr);
+	WriteFile(_hfOut, &vAngle, sizeof(vAngle), &dwByte, nullptr);
+	WriteFile(_hfOut, &vScale, sizeof(vScale), &dwByte, nullptr);
 
 	return true;
 }
 
 _bool CStaticObject::LoadInfo(HANDLE & _hfIn)
 {
+	DWORD dwByte = 0;
+
 	// 1) 메시 태그 로드
 	_int iStrLen = 0;
-	ReadFile(_hfIn, &iStrLen, sizeof(iStrLen), nullptr, nullptr);
-	ReadFile(_hfIn, &m_tcMeshTag, sizeof(_tchar) * (iStrLen + 1), nullptr, nullptr);
+	ReadFile(_hfIn, &iStrLen, sizeof(iStrLen), &dwByte, nullptr);
+	ReadFile(_hfIn, &m_tcMeshTag, sizeof(_tchar) * (iStrLen + 1), &dwByte, nullptr);
 
 	// 2) 렌더 아이디
 	Engine::RENDERID eRenderID = Engine::RENDER_END;
-	ReadFile(_hfIn, &eRenderID, sizeof(eRenderID), nullptr, nullptr);
+	ReadFile(_hfIn, &eRenderID, sizeof(eRenderID), &dwByte, nullptr);
 	
 	// 3) 트랜스폼 정보 세팅
 	_vec3 vPos, vAngle, vScale;
-	ReadFile(_hfIn, &vPos, sizeof(vPos), nullptr, nullptr);
-	ReadFile(_hfIn, &vAngle, sizeof(vAngle), nullptr, nullptr);
-	ReadFile(_hfIn, &vScale, sizeof(vScale), nullptr, nullptr);
+	ReadFile(_hfIn, &vPos, sizeof(vPos), &dwByte, nullptr);
+	ReadFile(_hfIn, &vAngle, sizeof(vAngle), &dwByte, nullptr);
+	ReadFile(_hfIn, &vScale, sizeof(vScale), &dwByte, nullptr);
 	GetTransform()->SetPos(vPos);
 	GetTransform()->SetAngle(vAngle);
 	GetTransform()->SetScale(vScale);

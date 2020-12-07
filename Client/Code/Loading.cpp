@@ -174,12 +174,20 @@ _uint CLoading::Loading_ForStage(void)
 	Engine::Ready_Proto(L"Collider_Stone", pComponent);
 
 	// Player 메쉬 원본 생성
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Player",
 		Engine::TYPE_DYNAMIC,
 		L"../../Resource/Mesh/DynamicMesh/PlayerXfile/",
 		L"Player.X"),
+		E_FAIL);*/
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Player",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/Alice/",
+		L"AliceW.X"),
 		E_FAIL);
 
 	// Alice 메쉬 원본 생성

@@ -39,7 +39,7 @@ HRESULT CPlayer::Ready_Object(void)
 	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
 	m_pTransform->SetScale(_vec3(0.01f, 0.01f, 0.01f));
-	m_pMesh->Set_AnimationSet(57);
+	m_pMesh->Set_AnimationSet(0);
 	//m_pMesh->Set_AnimationSet(0);
 	
 	// Physics
@@ -100,10 +100,10 @@ int CPlayer::Update_Object(const _float & _fDeltaTime)
 	}
 
 	m_pPhysics->SetDirection(vDir);
-	if(vDir.x == 0.f && vDir.y == 0.f && vDir.z == 0.f)
+	/*if(vDir.x == 0.f && vDir.y == 0.f && vDir.z == 0.f)
 		m_pMesh->Set_AnimationSet(57);
 	else
-		m_pMesh->Set_AnimationSet(54);
+		m_pMesh->Set_AnimationSet(54);*/
 	
 	m_pTransform->SetPos(m_pMap->GetNaviMesh()->Move_OnNaviMesh(&m_pTransform->GetPos(), &(vDir * _fDeltaTime * m_pPhysics->GetSpeed())));
 

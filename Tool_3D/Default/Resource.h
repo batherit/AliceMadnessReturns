@@ -16,6 +16,7 @@
 #define IDD_MESH_TAB                    319
 #define IDD_NAVI_MESH_TAB               319
 #define IDD_MAP_TAB                     323
+#define IDD_COLLIDER_TAB                324
 #define IDC_EDIT1                       1000
 #define IDC_EDIT2                       1003
 #define IDC_TREE1                       1003
@@ -61,9 +62,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        324
+#define _APS_NEXT_RESOURCE_VALUE        325
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1021
-#define _APS_NEXT_SYMED_VALUE           324
+#define _APS_NEXT_SYMED_VALUE           325
 #endif
 #endif

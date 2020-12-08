@@ -40,6 +40,7 @@ using namespace std;
 #include <afxcontrolbars.h>
 #include <afxcontrolbars.h>
 #include <afxcontrolbars.h>
+#include <afxcontrolbars.h>
 
 
 #ifndef DBG_NEW 

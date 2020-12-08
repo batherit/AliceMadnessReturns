@@ -7,13 +7,14 @@
 #include "CTerrainTab.h"
 #include "CNaviMeshTab.h"
 #include "CMapTab.h"
+#include "CColliderTab.h"
 #include "NaviMesh.h"
 #include "NaviMeshVtxCtrl.h"
 #include "EditScene.h"
 #include "InputProcessor_Terrain.h"
-// #include "InputProcessor_Navi.h"
 #include "InputProcessor_Navi.h"
 #include "InputProcessor_Map.h"
+#include "InputProcessor_Collider.h"
 
 
 // CTabForm
@@ -34,6 +35,16 @@ void CTabForm::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TAB1, m_Tab);
+}
+
+void CTabForm::ActivateTab(const E_TAB_TYPE & _eTabType)
+{
+	for (auto& pTab : m_vecTabs) {
+		pTab->ShowWindow(SW_HIDE);
+	}
+
+	m_Tab.SetCurSel(_eTabType);
+	m_vecTabs[_eTabType]->ShowWindow(SW_SHOW);
 }
 
 BEGIN_MESSAGE_MAP(CTabForm, CFormView)
@@ -69,9 +80,7 @@ void CTabForm::OnInitialUpdate()
 	m_Tab.InsertItem(0, _T("Terrain"));
 	m_Tab.InsertItem(1, _T("Navi Mesh"));
 	m_Tab.InsertItem(2, _T("Map"));
-
-	// 초기 터레인 탭으로 설정
-	m_Tab.SetCurSel(0);		
+	m_Tab.InsertItem(3, _T("Collider"));
 
 	CRect rect;
 	m_Tab.GetWindowRect(&rect);
@@ -79,17 +88,25 @@ void CTabForm::OnInitialUpdate()
 	m_pTerrainTab = new CTerrainTab;
 	m_pTerrainTab->Create(IDD_TERRAIN_TAB, &m_Tab);
 	m_pTerrainTab->MoveWindow(0, 25, rect.Width(), rect.Height());
-	m_pTerrainTab->ShowWindow(SW_SHOW);
+	m_vecTabs.emplace_back(m_pTerrainTab);
 
 	m_pNaviMeshTab = new CNaviMeshTab;
 	m_pNaviMeshTab->Create(IDD_NAVI_MESH_TAB, &m_Tab);
 	m_pNaviMeshTab->MoveWindow(0, 25, rect.Width(), rect.Height());
-	m_pNaviMeshTab->ShowWindow(SW_HIDE);
+	m_vecTabs.emplace_back(m_pNaviMeshTab);
 
 	m_pMapTab = new CMapTab;
 	m_pMapTab->Create(IDD_MAP_TAB, &m_Tab);
 	m_pMapTab->MoveWindow(0, 25, rect.Width(), rect.Height());
-	m_pMapTab->ShowWindow(SW_HIDE);
+	m_vecTabs.emplace_back(m_pMapTab);
+
+	m_pColliderTab = new CColliderTab;
+	m_pColliderTab->Create(IDD_COLLIDER_TAB, &m_Tab);
+	m_pColliderTab->MoveWindow(0, 25, rect.Width(), rect.Height());
+	m_vecTabs.emplace_back(m_pColliderTab);
+	
+	// 초기 터레인 탭으로 설정
+	ActivateTab(TYPE_TERRAIN);
 }
 
 
@@ -98,9 +115,11 @@ void CTabForm::OnDestroy()
 	CFormView::OnDestroy();
 
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
-	Safe_Delete(m_pTerrainTab);
-	Safe_Delete(m_pNaviMeshTab);
-	Safe_Delete(m_pMapTab);
+	for (auto& pTab : m_vecTabs) {
+		Safe_Delete(pTab);
+	}
+	m_vecTabs.clear();
+	m_vecTabs.shrink_to_fit();
 }
 
 
@@ -117,27 +136,26 @@ void CTabForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 	case 0: {
 		if(pInputProcessorMgr)
 			pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Terrain(pInputProcessorMgr));
-		m_pTerrainTab->ShowWindow(SW_SHOW);
-		m_pNaviMeshTab->ShowWindow(SW_HIDE);
-		m_pMapTab->ShowWindow(SW_HIDE);
+		ActivateTab(TYPE_TERRAIN);
 		break;
 	}
 		
 	case 1: {
 		if (pInputProcessorMgr)
 			pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Navi(pInputProcessorMgr));
-		m_pTerrainTab->ShowWindow(SW_HIDE);
-		m_pNaviMeshTab->ShowWindow(SW_SHOW);
-		m_pMapTab->ShowWindow(SW_HIDE);
+		ActivateTab(TYPE_NAVI);
 		break;
-	}
-			
+	}		
 	case 2: {
 		if (pInputProcessorMgr)
 			pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Map(pInputProcessorMgr));
-		m_pTerrainTab->ShowWindow(SW_HIDE);
-		m_pNaviMeshTab->ShowWindow(SW_HIDE);
-		m_pMapTab->ShowWindow(SW_SHOW);
+		ActivateTab(TYPE_MAP);
+		break;
+	}
+	case 3: {
+		if (pInputProcessorMgr)
+			pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Collider(pInputProcessorMgr));
+		ActivateTab(TYPE_COLLIDER);
 		break;
 	}
 	default:

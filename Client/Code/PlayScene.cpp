@@ -166,7 +166,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pGameObject = CSword::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
-	//pGameObject->SetParent(m_pPlayer, "R_Hand");	// 스워드를 플레이어의 오른쪽 팔에 부착
+	pGameObject->SetParent(m_pPlayer, "R_Hand");	// 스워드를 플레이어의 오른쪽 팔에 부착
 
 	
 	

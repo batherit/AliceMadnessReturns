@@ -208,6 +208,12 @@
     <ClInclude Include="..\Code\NaviMesh.h">
       <Filter>04. Object\NaviMesh</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\CColliderTab.h">
+      <Filter>00. View%28Workspace%29\Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InputProcessor_Collider.h">
+      <Filter>03. InputProcessor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -302,6 +308,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\NaviMesh.cpp">
       <Filter>04. Object\NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CColliderTab.cpp">
+      <Filter>00. View%28Workspace%29\Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputProcessor_Collider.cpp">
+      <Filter>03. InputProcessor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

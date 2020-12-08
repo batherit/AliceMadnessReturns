@@ -6,6 +6,7 @@
 class CTerrainTab;
 class CNaviMeshTab;
 class CMapTab;
+class CColliderTab;
 
 class CTabForm : public CFormView
 {
@@ -32,15 +33,20 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
+	enum E_TAB_TYPE { TYPE_TERRAIN, TYPE_NAVI, TYPE_MAP, TYPE_COLLIDER, TYPE_END };
+	void ActivateTab(const E_TAB_TYPE& _eTabType);
 	CTerrainTab* GetTerrainTab() const		{ return m_pTerrainTab; }
 	CNaviMeshTab* GetNaviMeshTab() const	{ return m_pNaviMeshTab; }
 	CMapTab* GetMapTab() const { return m_pMapTab; }
+	CColliderTab* GetColliderTab() const { return m_pColliderTab; }
 	
 public:
 	CTabCtrl		m_Tab;
 	CTerrainTab*	m_pTerrainTab = nullptr;
 	CNaviMeshTab*	m_pNaviMeshTab = nullptr;
 	CMapTab*		m_pMapTab = nullptr;
+	CColliderTab*	m_pColliderTab = nullptr;
+	vector<CDialogEx*> m_vecTabs;
 
 	virtual void OnInitialUpdate();
 	afx_msg void OnDestroy();

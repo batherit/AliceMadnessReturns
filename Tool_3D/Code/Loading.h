@@ -6,6 +6,7 @@
 
 class CTerrainTab;
 class CMapTab;
+class CColliderTab;
 BEGIN(Client)
 
 class CLoading : public CBase 
@@ -49,6 +50,7 @@ private:
 private:
 	CTerrainTab* m_pTerrainTab = nullptr;
 	CMapTab* m_pMapTab = nullptr;
+	CColliderTab* m_pColliderTab = nullptr;
 
 	//map<const _tchar*, vector<const _tchar*>> m_mapMapObjects;
 };

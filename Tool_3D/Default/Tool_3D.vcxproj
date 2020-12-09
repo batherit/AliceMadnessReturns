@@ -28,6 +28,7 @@
     <ClInclude Include="..\Code\CTabForm.h" />
     <ClInclude Include="..\Code\CTerrainPage.h" />
     <ClInclude Include="..\Code\CTerrainTab.h" />
+    <ClInclude Include="..\Code\DynamicObject.h" />
     <ClInclude Include="..\Code\EditScene.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\Gizmo.h" />
@@ -94,6 +95,7 @@
     <ClCompile Include="..\Code\CTabForm.cpp" />
     <ClCompile Include="..\Code\CTerrainPage.cpp" />
     <ClCompile Include="..\Code\CTerrainTab.cpp" />
+    <ClCompile Include="..\Code\DynamicObject.cpp" />
     <ClCompile Include="..\Code\EditScene.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Gizmo.cpp" />

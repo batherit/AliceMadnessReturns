@@ -48,7 +48,7 @@ VS_OUT VS_MAIN(VS_IN In)
 	matWVP = mul(matWV, g_matProj);
 	
 	Out.vPosition = mul(vector(In.vPosition.xyz, 1.f), matWVP);
-	Out.vNormal = In.vNormal;
+	Out.vNormal = mul(vector(In.vNormal.xyz, 0.f), g_matWorld);
 	Out.vTexUV = In.vTexUV;
 
 	return Out;

@@ -6,6 +6,7 @@
 #include "CTabForm.h"
 #include "CTerrainTab.h"
 #include "CMapTab.h"
+#include "CColliderTab.h"
 
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -66,6 +67,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eLoading)
 	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
 	m_pTerrainTab = pTabForm->GetTerrainTab();
 	m_pMapTab = pTabForm->GetMapTab();
+	m_pColliderTab = pTabForm->GetColliderTab();
 
 	return S_OK;
 }
@@ -248,7 +250,15 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_Section", NULL, NULL);
 
-
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"AliceW",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/Alice/",
+		L"AliceW.X"),
+		E_FAIL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"AliceW");
+	
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	RESOURCE_STAGE,

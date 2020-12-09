@@ -131,17 +131,18 @@ _uint CLoading::Loading_ForStage(void)
 	Engine::CShader* pShader = nullptr;
 
 	// Sample
-	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Reference/Header/Shader_Sample.hpp");
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Sample.hpp");
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Sample", pShader), E_FAIL);
 
 	// Terrain
-	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Reference/Header/Shader_Terrain.hpp");
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Terrain.hpp");
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain", pShader), E_FAIL);
 
-	// Terrain
-	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Reference/Header/Shader_Object.hpp");
+	// Object
+	//pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Reference/Header/Shader_Object.hpp");
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Object.hpp");
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Object", pShader), E_FAIL);
 
@@ -199,7 +200,7 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
-		L"Mesh_Player",
+		L"AliceW",
 		Engine::TYPE_DYNAMIC,
 		L"../../Resource/Mesh/DynamicMesh/Alice/",
 		L"AliceW.X"),

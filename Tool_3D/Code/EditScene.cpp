@@ -12,6 +12,7 @@
 #include "CTabForm.h"
 #include "CMapTab.h"
 #include "StaticObject.h"
+#include "DynamicObject.h"
 //#include "InputProcessor_Navi.h"
 
 CEditScene::CEditScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -228,12 +229,38 @@ _bool CEditScene::AddStaticObject(const _tchar * _pMeshTag)
 	return false;
 }
 
+_bool CEditScene::AddDynamicObject(const _tchar * _pMeshTag)
+{
+	CDynamicObject* pDynamicObject = CDynamicObject::Create(m_pGraphicDev);
+	pDynamicObject->SetRenderInfo(_pMeshTag);
+
+	if (pDynamicObject->GetComponent(Engine::ID_STATIC, L"Com_Mesh")) {
+		GetLayer(L"EditLayer")->Add_GameObject(pDynamicObject);
+		m_vecDynamicObjects.emplace_back(pDynamicObject);
+		return true;
+	}
+
+	Engine::Safe_Release(pDynamicObject);
+	return false;
+}
+
 CStaticObject * CEditScene::GetStaticObject(_int _iObjectIndex)
 {
 	if(!IsValidObjectIndex(_iObjectIndex))
 		return nullptr;
 
 	return m_vecStaticObjects[_iObjectIndex];
+}
+
+CDynamicObject * CEditScene::GetDynamicObject(const _tchar * _pMeshTag)
+{
+	for (auto& rObj : m_vecDynamicObjects) {
+		if (lstrcmp(rObj->GetMeshTag(), _pMeshTag) == 0) {
+			return rObj;
+		}
+	}
+
+	return nullptr;
 }
 
 _bool CEditScene::DeleteStaticObject(_int _iObjectIndex)

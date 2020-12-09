@@ -12,6 +12,7 @@ class CTerrain;
 class CNaviMesh;
 class CNaviMeshVtxMover;
 class CStaticObject;
+class CDynamicObject;
 class CGizmo;
 //class CNaviMeshInputProcessor;
 class CEditScene : public Engine::CScene
@@ -47,8 +48,11 @@ public:
 
 	
 	_bool AddStaticObject(const _tchar* _pMeshTag);
+	_bool AddDynamicObject(const _tchar* _pMeshTag);
 	CStaticObject* GetStaticObject(_int _iObjectIndex);
+	CDynamicObject* GetDynamicObject(const _tchar* _pMeshTag);
 	vector<CStaticObject*>& GetStaticObjectList() { return m_vecStaticObjects; }
+	vector<CDynamicObject*>& GetDynamicObjectList() { return m_vecDynamicObjects; }
 	_bool DeleteStaticObject(_int _iObjectIndex);
 
 	// 터레인탭 편집 내용 세이브/로드
@@ -60,6 +64,7 @@ public:
 	// 맵탭 편집 내용 세이브/로드
 	void SaveMap();
 	void LoadMap();
+	// 콜라이더탭 편집 내용 세이브/로드
 
 private:
 	_bool IsValidObjectIndex(_int _iObjectIndex);
@@ -67,6 +72,7 @@ private:
 private:
 	Engine::CInputProcessorMgr* m_pInputProcessorMgr = nullptr;
 	vector<CStaticObject*> m_vecStaticObjects;
+	vector<CDynamicObject*> m_vecDynamicObjects;
 };
 
 END

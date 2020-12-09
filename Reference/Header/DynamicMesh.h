@@ -19,6 +19,8 @@ public:
 	virtual void			Render_Meshes(LPD3DXEFFECT _pEffect = 0) override;
 	const  D3DXFRAME_DERIVED*	Get_FrameByName(const char* pFrameName);
 	_bool							Is_AnimationSetEnd(void);
+	D3DXFRAME* GetRootFrame() const { return m_pRootFrame; }
+
 public:
 	void			Set_AnimationSet(const _uint& iIndex);
 	void			Play_Animation(const _float& fTimeDelta);

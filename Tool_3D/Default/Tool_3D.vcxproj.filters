@@ -83,6 +83,9 @@
     <Filter Include="04. Object\Gizmo">
       <UniqueIdentifier>{d40701dd-7645-4739-a459-5b8f27deb3a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Object\DynamicObject">
+      <UniqueIdentifier>{d45c0c64-b55f-4f6f-8364-28f885e4812f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -214,6 +217,9 @@
     <ClInclude Include="..\Code\InputProcessor_Collider.h">
       <Filter>03. InputProcessor</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\DynamicObject.h">
+      <Filter>04. Object\DynamicObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -314,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\InputProcessor_Collider.cpp">
       <Filter>03. InputProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicObject.cpp">
+      <Filter>04. Object\DynamicObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

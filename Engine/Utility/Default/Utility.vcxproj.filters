@@ -52,9 +52,6 @@
     <Filter Include="98. Manager\01. SceneMgr">
       <UniqueIdentifier>{abde659e-8343-48b5-940f-a9d99fea1b95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. InputMode">
-      <UniqueIdentifier>{9fe0f35d-6972-46c5-bc30-cb7df8ceed77}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98. Manager\03. InputModeMgr">
       <UniqueIdentifier>{99d2baa9-153f-4324-b9db-50a20d3a2b81}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,21 @@
     </Filter>
     <Filter Include="04. Component\01. Renderer\01. PolygonRenderer">
       <UniqueIdentifier>{db091eaa-b99c-4f76-adcc-89f1f670e972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. InputProcessor">
+      <UniqueIdentifier>{9fe0f35d-6972-46c5-bc30-cb7df8ceed77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Light">
+      <UniqueIdentifier>{53ceb71f-1fce-4e57-bc34-ae9c0441ae93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Shader">
+      <UniqueIdentifier>{3e2f7485-187c-40c1-b87f-a6d03e0a938c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Shader\hpp">
+      <UniqueIdentifier>{d7957de2-ed35-4d6d-b3d1-c5927374c097}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager\04. LightMgr">
+      <UniqueIdentifier>{1f2bd9f3-3ccd-4c62-89c5-0facd387739d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,10 +148,28 @@
       <Filter>04. Component\01. Renderer\01. PolygonRenderer</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\InputProcessor.h">
-      <Filter>05. InputMode</Filter>
+      <Filter>05. InputProcessor</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\InputProcessorMgr.h">
       <Filter>98. Manager\03. InputModeMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Light.h">
+      <Filter>06. Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\LightMgr.h">
+      <Filter>98. Manager\04. LightMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Sample.hpp">
+      <Filter>07. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Terrain.hpp">
+      <Filter>07. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader.h">
+      <Filter>07. Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Object.hpp">
+      <Filter>07. Shader\hpp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -201,10 +231,19 @@
       <Filter>04. Component\01. Renderer\01. PolygonRenderer</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InputProcessor.cpp">
-      <Filter>05. InputMode</Filter>
+      <Filter>05. InputProcessor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InputProcessorMgr.cpp">
       <Filter>98. Manager\03. InputModeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Light.cpp">
+      <Filter>06. Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LightMgr.cpp">
+      <Filter>98. Manager\04. LightMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shader.cpp">
+      <Filter>07. Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

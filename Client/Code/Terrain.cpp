@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Terrain.h"
+#include "Shader.h"
 
 
 CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -25,11 +26,13 @@ HRESULT CTerrain::Ready_Object(void)
 
 	m_pTerrain = AddComponent<Engine::CTerrainTex>();
 
-	//m_pTexture = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SkyBox"));
-	//m_mapComponent[Engine::CTexture::GetComponentID()].emplace(Engine::CTexture::GetComponentTag(), m_pTexture);
-	//dynamic_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"Height"));
-
 	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pTerrain, nullptr);
+
+	// Shader
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Terrain"));
+	NULL_CHECK_RETURN(m_pShader, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", m_pShader);
+
 	return S_OK;
 }
 
@@ -46,8 +49,51 @@ void CTerrain::Render_Object(void)
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	//Engine::Render_Texture(Engine::RESOURCE_STAGE, m_szTextureTag, 0);
 	//m_pTerrain->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	m_pRenderer->Render();
+
+	LPD3DXEFFECT	 pEffect = m_pShader->Get_EffectHandle();
+	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
+
+	//pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
+	m_vDir = Engine::GetRotatedVector(WORLD_Z_AXIS, D3DXToRadian(30.f) * 0.1f, m_vDir);
+	pEffect->SetVector("g_vLightDir", &_vec4(m_vDir, 0.f));
+	pEffect->SetVector("g_LightDiffuse", (_vec4*)&pLightInfo->Diffuse);
+	pEffect->SetVector("g_LightAmbient", (_vec4*)&pLightInfo->Ambient);
+
+	D3DMATERIAL9			tMtrlInfo;
+	ZeroMemory(&tMtrlInfo, sizeof(D3DMATERIAL9));
+
+	tMtrlInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrlInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrlInfo.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	tMtrlInfo.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	tMtrlInfo.Power = 0.f;
+
+	pEffect->SetVector("g_MtrlDiffuse", (_vec4*)&tMtrlInfo.Diffuse);
+	pEffect->SetVector("g_MtrlAmbient", (_vec4*)&tMtrlInfo.Ambient);
+	m_pRenderer->Render(pEffect);
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	//LPD3DXEFFECT	 pEffect = m_pShader->Get_EffectHandle();
+	//NULL_CHECK(pEffect);
+	//Engine::Safe_AddRef(pEffect);
+
+	//_uint	iMaxPass = 0;
+
+	//pEffect->Begin(&iMaxPass, 0);	// 현재 쉐이더 파일이 갖고 있는 최대 패스의 개수를 리턴, 사용하는 방식
+	//pEffect->BeginPass(0);
+
+	//FAILED_CHECK_RETURN(SetUpConstantTable(pEffect), );
+
+	//m_pBuffer->Render_Buffer();
+
+	//pEffect->EndPass();
+	//pEffect->End();
+
+	//Engine::Safe_Release(pEffect);
 }
 
 void CTerrain::CreateTerrain(_uint _iNumOfVerticesW, _uint _iNumOfVerticesD, _float _fWidth, _float _fDepth, _float _fU, _float _fV, const _tchar * _szHeightMapFileName)

@@ -16,10 +16,10 @@ protected:
 public:
 	// CComponent을(를) 통해 상속됨
 	virtual HRESULT Ready(void) PURE;
-	virtual int Update(const _float & _fDeltaTime) PURE;
-	virtual void	Render() PURE;
+	virtual _int Update(const _float & _fDeltaTime) PURE;
+	virtual void	Render(LPD3DXEFFECT _pEffect = 0, _uint _uiPassIndex = 0) PURE;
 	void SetRenderID(RENDERID _eRenderID) { m_eRenderID = _eRenderID; }
-	RENDERID GetRenderID() const { return m_eRenderID; }
+	RENDERID GetRenderID() const { return m_eRenderID; };
 
 protected:
 	void RegisterToRenderer();

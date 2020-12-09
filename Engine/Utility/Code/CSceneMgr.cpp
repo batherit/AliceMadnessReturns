@@ -1,4 +1,5 @@
 #include "CSceneMgr.h"
+#include "Export_Utility.h"
 
 USING(Engine)
 

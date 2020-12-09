@@ -23,22 +23,57 @@ HRESULT CPolygonRenderer::Ready(void)
 	return S_OK;
 }
 
-int CPolygonRenderer::Update(const _float & _fDeltaTime)
+_int CPolygonRenderer::Update(const _float & _fDeltaTime)
 {
 	RegisterToRenderer();
 	return 0;
 }
 
-void CPolygonRenderer::Render()
+void CPolygonRenderer::Render(LPD3DXEFFECT _pEffect, _uint _uiPassIndex)
 {
-	if (m_pBuffer && m_eRenderID < RENDERID::RENDER_END) {
+	if (!m_pBuffer || m_eRenderID >= RENDERID::RENDER_END)
+		return;
+
+	if (!_pEffect) {
 		m_pOwner->GetGraphicDev()->SetTransform(D3DTS_WORLD, &m_pOwner->GetTransform()->GetObjectMatrix());
 		if (m_pTexture)
+			// 텍스처가 있는 경우
 			m_pTexture->Render_Texture(m_uiTextureIndex);
 		else
+			// 텍스처가 없는 경우
 			m_pOwner->GetGraphicDev()->SetTexture(0, NULL);
 
 		m_pBuffer->Render_Buffer();
+	}
+	else {
+		Engine::Safe_AddRef(_pEffect);
+		_uint iMaxPass = 0;
+
+		_pEffect->Begin(&iMaxPass, 0);
+		_pEffect->BeginPass(_uiPassIndex);
+
+		_matrix	matView, matProj;
+		m_pOwner->GetGraphicDev()->GetTransform(D3DTS_VIEW, &matView);
+		m_pOwner->GetGraphicDev()->GetTransform(D3DTS_PROJECTION, &matProj);
+
+		// 렌더러는 기본적으로 월드, 뷰, 프로젝션까지는 세팅해준다.
+		// 재질이나 조명같은 것은 렌더러 외부에서 미리 세팅해야 한다.
+		_pEffect->SetMatrix("g_matWorld", &m_pOwner->GetTransform()->GetObjectMatrix());
+		_pEffect->SetMatrix("g_matView", &matView);
+		_pEffect->SetMatrix("g_matProj", &matProj);
+
+		if (m_pTexture)
+			// 텍스처가 있는 경우 
+			m_pTexture->Set_Texture(_pEffect, "g_BaseTexture");
+		else
+			// 텍스처가 없는 경우
+			_pEffect->SetTexture("g_BaseTexture", NULL);
+
+		m_pBuffer->Render_Buffer();
+
+		_pEffect->EndPass();
+		_pEffect->End();
+		Engine::Safe_Release(_pEffect);
 	}
 }
 
@@ -57,7 +92,7 @@ CComponent * CPolygonRenderer::Clone()
 	return new CPolygonRenderer(*this);
 }
 
-void CPolygonRenderer::SetRenderInfo(RENDERID _eRenderID, CVIBuffer * _pBuffer, CTexture * _pTexture)
+void CPolygonRenderer::SetRenderInfo(RENDERID _eRenderID, CVIBuffer * _pBuffer, CTexture * _pTexture, LPD3DXEFFECT _pEffect)
 {
 	if (_eRenderID >= RENDERID::RENDER_END || !_pBuffer)
 		return;

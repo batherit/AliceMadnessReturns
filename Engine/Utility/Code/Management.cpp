@@ -29,6 +29,23 @@ void CManagement::SetNextScene(CScene * _pNextScene)
 	m_pSceneMgr->SetNextScene(_pNextScene);
 }
 
+//HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & _pGraphicDev)
+//{
+//	CShader* pShader = nullptr;
+//
+//	// Sample
+//	pShader = CShader::Create(_pGraphicDev, L"../../Reference/Header/Shader_Sample.hpp");
+//	NULL_CHECK_RETURN(pShader, E_FAIL);
+//	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Sample", pShader), E_FAIL);
+//
+//	// Terrain
+//	pShader = CShader::Create(_pGraphicDev, L"../../Reference/Header/Shader_Terrain.hpp");
+//	NULL_CHECK_RETURN(pShader, E_FAIL);
+//	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain", pShader), E_FAIL);
+//
+//	return S_OK;
+//}
+
 _bool CManagement::ConfirmValidScene()
 {
 	return m_pSceneMgr->ConfirmValidScene();

@@ -16,8 +16,8 @@ private:
 public:
 	// CComponent을(를) 통해 상속됨
 	virtual HRESULT Ready(void) override;
-	virtual int Update(const _float & _fDeltaTime) override;
-	virtual void Render() override;
+	virtual _int Update(const _float & _fDeltaTime) override;
+	virtual void Render(LPD3DXEFFECT _pEffect = 0, _uint _uiPassIndex = 0) override;
 
 	static CMeshRenderer* Create();
 	virtual CComponent*	Clone();

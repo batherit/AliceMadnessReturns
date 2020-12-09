@@ -313,6 +313,15 @@ namespace Engine
 		return acosf(fDot);
 	}
 
+	inline _vec3 GetRotatedVector(const _vec3& _vAxis, const _float& _fAngle, const _vec3& _vV) {
+		_vec3 vRotatedVector;
+		_matrix matRot;
+		D3DXMatrixRotationAxis(&matRot, &_vAxis, _fAngle);
+		D3DXVec3TransformNormal(&vRotatedVector, &_vV, &matRot);
+
+		return vRotatedVector;
+	}
+
 	// 쿼터니언 보간된 회전 행렬 얻기
 	inline _matrix* GetRotationMatrixSlerp(_matrix *_pOut, const _matrix* _pFromM, const _matrix* _pToM, const _float& _fT) {
 		_qt _FromQ, _ToQ, _LerpQ;

@@ -1,4 +1,5 @@
 #include "StaticMesh.h"
+#include "Transform.h"
 
 USING(Engine)
 
@@ -123,12 +124,38 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 	return S_OK;
 }
 
-void Engine::CStaticMesh::Render_Meshes(void)
+void Engine::CStaticMesh::Render_Meshes(LPD3DXEFFECT _pEffect)
 {
-	for (_ulong i = 0; i < m_dwSubsetCnt; ++i)
-	{
-		m_pGraphicDev->SetTexture(0, m_ppTextures[i]);
-		m_pMesh->DrawSubset(i);
+	if(!_pEffect)
+		for (_ulong i = 0; i < m_dwSubsetCnt; ++i)
+		{
+			m_pGraphicDev->SetTexture(0, m_ppTextures[i]);
+			m_pMesh->DrawSubset(i);
+		}
+	else {
+		for (_ulong i = 0; i < m_dwSubsetCnt; ++i)
+		{
+			//_uint iMaxPass = 0;
+		//	_pEffect->BeginPass(0);
+
+		//	_matrix	matView, matProj;
+		////	m_pOwner->GetGraphicDev()->GetTransform(D3DTS_VIEW, &matView);
+		//	m_pOwner->GetGraphicDev()->GetTransform(D3DTS_PROJECTION, &matProj);
+
+			// 렌더러는 기본적으로 월드, 뷰, 프로젝션까지는 세팅해준다.
+			// 재질이나 조명같은 것은 렌더러 외부에서 미리 세팅해야 한다.
+		//	_pEffect->SetMatrix("g_matWorld", &m_pOwner->GetTransform()->GetObjectMatrix());
+		//	_pEffect->SetMatrix("g_matView", &matView);
+		//	_pEffect->SetMatrix("g_matProj", &matProj);
+			_pEffect->SetTexture("g_BaseTexture", m_ppTextures[i]);
+			m_pMesh->DrawSubset(i);
+
+		//	_pEffect->EndPass();
+			
+			//m_pGraphicDev->SetTexture(0, m_ppTextures[i]);
+			
+
+		}
 	}
 }
 

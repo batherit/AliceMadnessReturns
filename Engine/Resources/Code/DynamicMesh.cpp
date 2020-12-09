@@ -61,7 +61,7 @@ HRESULT Engine::CDynamicMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar
 	return S_OK;
 }
 
-void Engine::CDynamicMesh::Render_Meshes(void)
+void Engine::CDynamicMesh::Render_Meshes(LPD3DXEFFECT _pEffect)
 {
 	for (auto& iter : m_MeshContainerList)
 	{
@@ -85,12 +85,20 @@ void Engine::CDynamicMesh::Render_Meshes(void)
 														pSrcVtx,						// 변하지 않는 원본 메쉬의 정점 정보
 														pDestVtx);						// 변환된 정보를 담기 위한 메쉬의 정점 정보
 
-
-		for (_ulong i = 0; i < pMeshContainer->NumMaterials; ++i)
-		{
-			m_pGraphicDev->SetTexture(0, pMeshContainer->ppTexture[i]);
-			pMeshContainer->MeshData.pMesh->DrawSubset(i);
+		if (!_pEffect)
+			for (_ulong i = 0; i < pMeshContainer->NumMaterials; ++i)
+			{
+				m_pGraphicDev->SetTexture(0, pMeshContainer->ppTexture[i]);
+				pMeshContainer->MeshData.pMesh->DrawSubset(i);
+			}
+		else {
+			for (_ulong i = 0; i < pMeshContainer->NumMaterials; ++i)
+			{
+				_pEffect->SetTexture("g_BaseTexture", pMeshContainer->ppTexture[i]);
+				pMeshContainer->MeshData.pMesh->DrawSubset(i);
+			}
 		}
+		
 
 		pMeshContainer->pOriMesh->UnlockVertexBuffer();
 		pMeshContainer->MeshData.pMesh->UnlockVertexBuffer();

@@ -128,7 +128,22 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::COptimization::GetComponentTag(), pComponent);
 
+	Engine::CShader* pShader = nullptr;
 
+	// Sample
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Reference/Header/Shader_Sample.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Sample", pShader), E_FAIL);
+
+	// Terrain
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Reference/Header/Shader_Terrain.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain", pShader), E_FAIL);
+
+	// Terrain
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Reference/Header/Shader_Object.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Object", pShader), E_FAIL);
 
 
 

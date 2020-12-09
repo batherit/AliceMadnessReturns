@@ -15,11 +15,12 @@ namespace Engine
 	typedef	struct tagVertexTexture
 	{
 		_vec3			vPos;
+		_vec3			vNormal;
 		_vec2		 	vTexUV;
 
 	}VTXTEX;
 
-	const _ulong		FVF_TEX = D3DFVF_XYZ  | D3DFVF_TEX1;
+	const _ulong		FVF_TEX = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 
 	typedef	struct tagVertexCubeTexture
 	{

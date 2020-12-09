@@ -94,17 +94,18 @@ HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVertice
 			iIndexPixel = static_cast<_int>(m_iBitmapSizeW * static_cast<_int>(i * static_cast<_float>(m_iBitmapSizeH - 1) 
 				/ (_iNumOfVerticesH - 1)) + j * static_cast<_float>(m_iBitmapSizeW - 1) / (_iNumOfVerticesW - 1));
 			m_vecVertices[iIndexVB] = pVertex[iIndexVB].vPos = _vec3(j * fCX, (m_pHeightMapData ? (m_pHeightMapData[m_stBitmapInfoHeader.biBitCount/CHAR_BIT * iIndexPixel] / 10.f) : 0.f), (i * fCY));
+			pVertex[iIndexVB].vNormal = _vec3(0.f, 0.f, 0.f);		// 인덱스 버퍼를 생성할 때 노멀 벡터를 생성한다.
 			pVertex[iIndexVB].vTexUV = _vec2(fCU * j, 1.f - fCV * i);
 		}
 	}
 
-	m_pVB->Unlock();
-
-	vector<INDEX16> indices;
+	//vector<INDEX16> indices;
 	m_vecIndexes.resize(2 * (_iNumOfVerticesW - 1) * (_iNumOfVerticesH - 1));
 	m_vecIndexes.clear();
 
 	INDEX16 Indexes;
+	_ulong	dwTriIdx = 0;
+	_vec3	vDest, vSour, vNormal;
 	for (_uint i = 1; i < _iNumOfVerticesH; ++i) {
 		for (_uint j = 0; j < _iNumOfVerticesW - 1; ++j) {
 			// 좌상 우상 우하
@@ -113,7 +114,17 @@ HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVertice
 				static_cast<_ushort>(1 + i * _iNumOfVerticesW + j),
 				static_cast<_ushort>(1 + (i - 1) * _iNumOfVerticesW + j) };
 			m_vecIndexes.emplace_back(Indexes);
-			indices.emplace_back(Indexes);
+			//indices.emplace_back(Indexes);
+
+			// 법선 벡터 구하기
+			vDest = pVertex[m_vecIndexes[dwTriIdx]._1].vPos - pVertex[m_vecIndexes[dwTriIdx]._0].vPos;
+			vSour = pVertex[m_vecIndexes[dwTriIdx]._2].vPos - pVertex[m_vecIndexes[dwTriIdx]._1].vPos;
+
+			D3DXVec3Cross(&vNormal, &vDest, &vSour);
+			pVertex[m_vecIndexes[dwTriIdx]._0].vNormal += vNormal;
+			pVertex[m_vecIndexes[dwTriIdx]._1].vNormal += vNormal;
+			pVertex[m_vecIndexes[dwTriIdx]._2].vNormal += vNormal;
+			++dwTriIdx;
 
 			// 우하 좌하 좌상
 			Indexes = INDEX16{
@@ -121,13 +132,29 @@ HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVertice
 				static_cast<_ushort>(0 + (i - 1) * _iNumOfVerticesW + j),
 				static_cast<_ushort>(0 + i * _iNumOfVerticesW + j) };
 			m_vecIndexes.emplace_back(Indexes);
-			indices.emplace_back(Indexes);
+			//indices.emplace_back(Indexes);
+
+			// 법선 벡터 구하기
+			vDest = pVertex[m_vecIndexes[dwTriIdx]._1].vPos - pVertex[m_vecIndexes[dwTriIdx]._0].vPos;
+			vSour = pVertex[m_vecIndexes[dwTriIdx]._2].vPos - pVertex[m_vecIndexes[dwTriIdx]._1].vPos;
+
+			D3DXVec3Cross(&vNormal, &vDest, &vSour);
+			pVertex[m_vecIndexes[dwTriIdx]._0].vNormal += vNormal;
+			pVertex[m_vecIndexes[dwTriIdx]._1].vNormal += vNormal;
+			pVertex[m_vecIndexes[dwTriIdx]._2].vNormal += vNormal;
+			++dwTriIdx;
 		}
 	}
 
+	// 합해진 노멀벡터는 단위벡터가 아닐 수 있으므로 단위벡터로 만들어 준다.
+	for (_ulong i = 0; i < m_dwVtxCnt; ++i)
+		D3DXVec3Normalize(&pVertex[i].vNormal, &pVertex[i].vNormal);
+
 	VOID* pIndices;
-	m_pIB->Lock(0, sizeof(INDEX16) * indices.size(), (void**)&pIndices, 0);
-	memcpy(pIndices, indices.data(), sizeof(INDEX16) * indices.size());
+	m_pIB->Lock(0, sizeof(INDEX16) * m_vecIndexes.size(), (void**)&pIndices, 0);
+	memcpy(pIndices, m_vecIndexes.data(), sizeof(INDEX16) * m_vecIndexes.size());
+
+	m_pVB->Unlock();
 	m_pIB->Unlock();
 
 	return S_OK;

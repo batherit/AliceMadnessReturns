@@ -40,11 +40,14 @@ public:
 	virtual _bool LoadInfo(HANDLE& _hfIn);
 
 private:
+	Engine::CShader* m_pShader = nullptr;
 	Engine::CPolygonRenderer* m_pRenderer = nullptr;
 	Engine::CTerrainTex* m_pTerrain = nullptr;
 	Engine::CTexture*	m_pTexture = nullptr;
 	_tchar m_szTextureTag[MAX_PATH] = L"";
 	_tchar m_szHeightMapFileName[MAX_PATH] = L"";
+
+	_vec3 m_vDir = _vec3(0.f, -1.f, 0.f);
 };
 
 END

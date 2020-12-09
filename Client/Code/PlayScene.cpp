@@ -42,6 +42,7 @@ HRESULT CPlayScene::Ready(void)
 {
 	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -107,6 +108,25 @@ CPlayScene * CPlayScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		Client::Safe_Release(pInstance);
 
 	return pInstance;
+}
+
+HRESULT CPlayScene::Ready_LightInfo()
+{
+	D3DLIGHT9		tLightInfo;
+	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
+
+	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
+
+	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+
+	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
+
+	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0)))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)

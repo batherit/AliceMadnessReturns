@@ -66,6 +66,14 @@ void Engine::CTexture::Render_Texture(const _uint& iIndex /*= 0*/)
 	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
 }
 
+void CTexture::Set_Texture(LPD3DXEFFECT & pEffect, const char * pConstantName, const _uint & iIndex)
+{
+	if (m_vecTexture.size() < iIndex)
+		return;
+
+	pEffect->SetTexture(pConstantName, m_vecTexture[iIndex]);
+}
+
 Engine::CTexture* Engine::CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pPath, TEXTURETYPE eType, const _uint& iCnt)
 {
 	CTexture*	pInstance = new CTexture(pGraphicDev);

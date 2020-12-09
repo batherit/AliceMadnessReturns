@@ -22,7 +22,10 @@ private:
 	//CComponent * Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID);
 
 public:
-	// ¾À °ü·Ã
+	// ¾À ¼ÎÀÌ´õ °ü·Ã
+	//HRESULT Ready_Shader(LPDIRECT3DDEVICE9& pGraphicDev);
+
+	// ¾À ±³Ã¼ °ü·Ã
 	_bool ConfirmValidScene();
 	void SetNextScene(CScene* _pNextScene);
 	void RequestSceneInit();

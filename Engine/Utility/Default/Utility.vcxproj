@@ -35,6 +35,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\KeyMgr.cpp" />
+    <ClCompile Include="..\Code\Light.cpp" />
+    <ClCompile Include="..\Code\LightMgr.cpp" />
     <ClCompile Include="..\Code\Management.cpp" />
     <ClCompile Include="..\Code\MeshCollider.cpp" />
     <ClCompile Include="..\Code\MeshRenderer.cpp">
@@ -50,6 +52,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\Shader.cpp" />
     <ClCompile Include="..\Code\SphereCollider.cpp" />
     <ClCompile Include="..\Code\Transform.cpp" />
     <ClCompile Include="..\Code\Component.cpp" />
@@ -77,6 +80,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\KeyMgr.h" />
+    <ClInclude Include="..\Code\Light.h" />
+    <ClInclude Include="..\Code\LightMgr.h" />
     <ClInclude Include="..\Code\Management.h" />
     <ClInclude Include="..\Code\MeshCollider.h" />
     <ClInclude Include="..\Code\MeshRenderer.h">
@@ -92,6 +97,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Code\Shader.h" />
+    <ClInclude Include="..\Code\Shader_Object.hpp" />
+    <ClInclude Include="..\Code\Shader_Sample.hpp" />
+    <ClInclude Include="..\Code\Shader_Terrain.hpp" />
     <ClInclude Include="..\Code\SphereCollider.h" />
     <ClInclude Include="..\Code\Transform.h" />
     <ClInclude Include="..\Code\Component.h" />

@@ -32,6 +32,7 @@ HRESULT CDynamicObject::Ready_Object(void)
 
 int CDynamicObject::Update_Object(const _float & _fDeltaTime)
 {
+	m_pMesh->Play_Animation(_fDeltaTime);
 	m_pRenderer->Update(_fDeltaTime);
 
 	return 0;

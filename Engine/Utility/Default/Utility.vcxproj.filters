@@ -85,6 +85,15 @@
     <Filter Include="98. Manager\04. LightMgr">
       <UniqueIdentifier>{1f2bd9f3-3ccd-4c62-89c5-0facd387739d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. GameObject\ColliderObject">
+      <UniqueIdentifier>{7eb6bc7d-5827-423c-bfde-c250cb7eaa92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\ColliderObject\Sphere">
+      <UniqueIdentifier>{41610a71-abfa-45b7-909b-199d5e0bce6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\ColliderObject\Box">
+      <UniqueIdentifier>{f4cc285c-8896-4354-9a63-70761817dd24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -171,6 +180,15 @@
     <ClInclude Include="..\Code\Shader_Object.hpp">
       <Filter>07. Shader\hpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\ColliderObject.h">
+      <Filter>03. GameObject\ColliderObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ColliderObject_Sphere.h">
+      <Filter>03. GameObject\ColliderObject\Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ColliderObject_Box.h">
+      <Filter>03. GameObject\ColliderObject\Box</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -244,6 +262,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\Shader.cpp">
       <Filter>07. Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ColliderObject.cpp">
+      <Filter>03. GameObject\ColliderObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ColliderObject_Sphere.cpp">
+      <Filter>03. GameObject\ColliderObject\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ColliderObject_Box.cpp">
+      <Filter>03. GameObject\ColliderObject\Box</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@
 BEGIN(Engine)
 class CComponent;
 class CTransform;
+class CColliderObject;
 
 class ENGINE_DLL CGameObject abstract : public CBase
 {
@@ -48,11 +49,16 @@ public:
 	const _matrix* GetBoneMatrixPointer(const char* _pBoneName);
 	void SetParent(CGameObject* _pParent, const char* _pBoneName = nullptr);
 	_bool AddChild(CGameObject* _pChild, const char* _pBoneName = nullptr);
+	_bool AddCollider(CColliderObject* _pCollider, const char* _pBoneName = nullptr);
 	_bool IsChildExist(CGameObject* _pChild);
+	_bool IsColliderExist(CColliderObject* _pCollider);
 	void ReleaseParent();
 	void ReleaseChild(CGameObject* _pChild);
+	//void ReleaseCollider(CColliderObject* _pCollider);
+
 	CGameObject* GetParent() const { return m_pParent; }
-	
+	vector<CGameObject*>& GetChildList() { return m_vecChildList; }
+	vector<CColliderObject*>& GetColliderList() { return m_vecColliderList; }
 
 	// 파일 입출력 관련
 	virtual _bool SaveInfo(FILE* _fpOut)	{ return true; };
@@ -62,7 +68,7 @@ public:
 
 	virtual void Free(void);
 
-private:
+protected:
 	CComponent*		Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
 
 protected:
@@ -70,6 +76,7 @@ protected:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 	CGameObject* m_pParent = nullptr;
 	vector<CGameObject*> m_vecChildList;
+	vector<CColliderObject*> m_vecColliderList;
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
 	CTransform* m_pTransform = nullptr;
 };

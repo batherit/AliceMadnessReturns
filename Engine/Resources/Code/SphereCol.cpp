@@ -4,13 +4,16 @@ USING(Engine)
 Engine::CSphereCol::CSphereCol(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CVIBuffer(pGraphicDev)
 {
-
+	D3DXCreateSphere(m_pGraphicDev, 1.f, 10, 10, &m_pSphereMesh, NULL);
 }
 
 Engine::CSphereCol::CSphereCol(const CSphereCol& rhs)
-	: CVIBuffer(rhs)
+	: CVIBuffer(rhs),
+	m_pSphereMesh(rhs.m_pSphereMesh),
+	m_pClone(rhs.m_pClone)
 {
-
+	// 색깔은 새로 지정해주어야 하나 보다.
+	//m_pSphereMesh->CloneMeshFVF(0, FVF_COL, m_pGraphicDev, &m_pClone);
 }
 
 Engine::CSphereCol::~CSphereCol(void)
@@ -20,7 +23,6 @@ Engine::CSphereCol::~CSphereCol(void)
 
 HRESULT Engine::CSphereCol::Ready_Buffer(void)
 {
-	D3DXCreateSphere(m_pGraphicDev, 1.f, 10, 10, &m_pSphereMesh, NULL);
 	m_pSphereMesh->CloneMeshFVF(0, FVF_COL, m_pGraphicDev, &m_pClone);
 
 	if (SUCCEEDED(m_pClone->GetVertexBuffer(&m_pVB))) {

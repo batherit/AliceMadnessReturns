@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "ProtoMgr.h"
 #include "DynamicMesh.h"
+#include "ColliderObject.h"
 
 
 USING(Engine)
@@ -167,6 +168,30 @@ _bool CGameObject::AddChild(CGameObject * _pChild, const char* _pBoneName)
 	return true;
 }
 
+_bool CGameObject::AddCollider(CColliderObject * _pCollider, const char * _pBoneName)
+{
+	if (!_pCollider || IsColliderExist(_pCollider) || _pCollider->GetParent())
+		return false;
+
+	if (_pBoneName) {
+		const _matrix* pBoneMatrixPointer = GetBoneMatrixPointer(_pBoneName);
+		if (!pBoneMatrixPointer)
+			return false;	// 본 행렬이 존재하지 않으면 기존 상태를 유지한다.
+		else
+			_pCollider->GetTransform()->SetParentBoneMatrix(pBoneMatrixPointer);
+	}
+	else {
+		_pCollider->GetTransform()->SetParentBoneMatrix(nullptr);
+	}
+
+	// _pChild는 유효한 객체이며, 현재 부모가 존재하지 않는 상황
+	m_vecChildList.emplace_back(_pCollider);
+	_pCollider->m_pParent = this;
+	//Safe_AddRef(_pChild->m_pParent);
+
+	return true;
+}
+
 _bool CGameObject::IsChildExist(CGameObject * _pChild)
 {
 	if (!_pChild)
@@ -174,6 +199,19 @@ _bool CGameObject::IsChildExist(CGameObject * _pChild)
 
 	for (auto& rChild : m_vecChildList) {
 		if (rChild == _pChild) {
+			return true;
+		}
+	}
+	return false;
+}
+
+_bool CGameObject::IsColliderExist(CColliderObject * _pCollider)
+{
+	if (!_pCollider)
+		abort();
+
+	for (auto& rCollider : m_vecColliderList) {
+		if (rCollider == _pCollider) {
 			return true;
 		}
 	}

@@ -38,7 +38,7 @@ HRESULT CPlayer::Ready_Object(void)
 	pComponent = m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
-	m_pTransform->SetScale(_vec3(0.01f, 0.01f, 0.01f));
+	m_pTransform->SetScale(_vec3(1.f, 1.f, 1.f));
 	m_pMesh->Set_AnimationSet(0);
 	//m_pMesh->Set_AnimationSet(0);
 	

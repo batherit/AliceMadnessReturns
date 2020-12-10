@@ -157,6 +157,17 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	//m_pCamera->SetParent(m_pPlayer);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", m_pCamera), E_FAIL);
 
+	// 面倒备 积己
+	Engine::CColliderObject_Sphere* pCollider = Engine::CColliderObject_Sphere::Create(m_pGraphicDev);
+	pCollider->GetTransform()->Translate(_vec3(0.f, 0.f, -10.f));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Collider", pCollider), E_FAIL);
+
+	pCollider = Engine::CColliderObject_Sphere::Create(m_pGraphicDev);
+	pCollider->GetTransform()->Translate(_vec3(0.f, 0.f, -20.f));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Collider", pCollider), E_FAIL);
+
 	// 瘤屈 积己
 	/*m_pTerrain = CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pTerrain, E_FAIL);

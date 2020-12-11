@@ -40,6 +40,7 @@ HRESULT CColliderObject_Sphere::Ready_Object(void)
 
 _int CColliderObject_Sphere::Update_Object(const _float & _fDeltaTime)
 {
+	
 	m_pRenderer->Update(_fDeltaTime);
 	return 0;
 }
@@ -59,13 +60,20 @@ CColliderObject_Sphere * CColliderObject_Sphere::Create(LPDIRECT3DDEVICE9 pGraph
 	return pInstance;
 }
 
+// 부모를 세팅하고 SetRadius를 호출해야 정상적으로 보인다.
 void CColliderObject_Sphere::SetRadius(_float _fRadius)
 {
 	if (_fRadius <= 0.f)
 		return;
 
 	m_fRadius = _fRadius;
-	GetTransform()->SetScale(_vec3(_fRadius, _fRadius, _fRadius));
+
+	if (GetParent()) {
+		_vec3 vParentScale = GetParent()->GetTransform()->GetScale();
+		GetTransform()->SetScale(_vec3(_fRadius / vParentScale.x, _fRadius / vParentScale.y, _fRadius / vParentScale.z));
+	}
+	else 
+		GetTransform()->SetScale(_vec3(_fRadius, _fRadius, _fRadius));
 }
 
 void CColliderObject_Sphere::Free(void)

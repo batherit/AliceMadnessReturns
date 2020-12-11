@@ -6,6 +6,7 @@ BEGIN(Client)
 class CDynamicObject;
 END
 
+class CSphereColTab;
 class CColliderTab : public CDialogEx
 {
 	DECLARE_DYNAMIC(CColliderTab)
@@ -30,6 +31,9 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	void ActivateColTab(const Engine::E_COLLIDER_TYPE _eColTabType);
+
+public:
 	CTreeCtrl m_treeObjectList;
 	HTREEITEM m_itemStatic = NULL;
 	HTREEITEM m_itemDynamic = NULL;
@@ -37,4 +41,12 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult);
 	CTreeCtrl m_treeBoneTree;
+
+	// 콜라이더 타입 탭
+	CTabCtrl m_ColTab;
+	CSphereColTab* m_pSphereColTab = nullptr;
+	vector<CDialogEx*> m_vecColTabs;
+	afx_msg void OnTcnSelchangeColTab(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnDestroy();
+	afx_msg void OnBnClickedButtonAdd();
 };

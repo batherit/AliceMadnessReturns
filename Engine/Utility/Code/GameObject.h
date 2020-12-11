@@ -58,7 +58,8 @@ public:
 
 	CGameObject* GetParent() const { return m_pParent; }
 	vector<CGameObject*>& GetChildList() { return m_vecChildList; }
-	vector<CColliderObject*>& GetColliderList() { return m_vecColliderList; }
+	//vector<CColliderObject*>& GetColliderList() { return m_vecColliderList; }
+	map<const char*, vector<CColliderObject*>>& GetColliderMap() { return m_mapColliders; }
 
 	// 파일 입출력 관련
 	virtual _bool SaveInfo(FILE* _fpOut)	{ return true; };
@@ -76,7 +77,8 @@ protected:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 	CGameObject* m_pParent = nullptr;
 	vector<CGameObject*> m_vecChildList;
-	vector<CColliderObject*> m_vecColliderList;
+	map<const char*, vector<CColliderObject*>> m_mapColliders;
+	//vector<CColliderObject*> m_vecColliderList;
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
 	CTransform* m_pTransform = nullptr;
 };

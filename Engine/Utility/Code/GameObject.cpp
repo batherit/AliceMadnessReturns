@@ -88,6 +88,13 @@ void Engine::CGameObject::Free(void)
 	m_vecChildList.clear();
 	m_vecChildList.shrink_to_fit();
 
+	for (auto& rMap : m_mapColliders) {
+		for_each(rMap.second.begin(), rMap.second.end(), Engine::CDeleteObj());
+		rMap.second.clear();
+		rMap.second.shrink_to_fit();
+	}
+	m_mapColliders.clear();
+
 	Safe_Release(m_pGraphicDev);
 }
 
@@ -185,7 +192,12 @@ _bool CGameObject::AddCollider(CColliderObject * _pCollider, const char * _pBone
 	}
 
 	// _pChild는 유효한 객체이며, 현재 부모가 존재하지 않는 상황
-	m_vecChildList.emplace_back(_pCollider);
+	//m_vecChildList.emplace_back(_pCollider);
+	if (_pBoneName)
+		m_mapColliders[_pBoneName].emplace_back(_pCollider);
+	else
+		// 본이 없거나 뼈가 설정되어있지 않은 경우 None키에 콜라이더를 할당한다.
+		m_mapColliders["None"].emplace_back(_pCollider);
 	_pCollider->m_pParent = this;
 	//Safe_AddRef(_pChild->m_pParent);
 
@@ -210,11 +222,14 @@ _bool CGameObject::IsColliderExist(CColliderObject * _pCollider)
 	if (!_pCollider)
 		abort();
 
-	for (auto& rCollider : m_vecColliderList) {
-		if (rCollider == _pCollider) {
-			return true;
+	for (auto& rMap : m_mapColliders) {
+		for (auto& rCollider : rMap.second) {
+			if (rCollider == _pCollider) {
+				return true;
+			}
 		}
 	}
+
 	return false;
 }
 

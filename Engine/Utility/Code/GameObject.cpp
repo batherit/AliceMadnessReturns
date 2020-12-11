@@ -35,6 +35,11 @@ _int CGameObject::Update_Object(const _float & _fDeltaTime)
 		rChild->Update_Object(_fDeltaTime);
 	}
 
+	for (auto& rMap : m_mapColliders) {
+		for (auto& rObj : rMap.second) {
+			rObj->Update_Object(_fDeltaTime);
+		}
+	}
 	return 0;
 }
 

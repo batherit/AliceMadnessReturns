@@ -21,6 +21,9 @@ public:
 	_bool							Is_AnimationSetEnd(void);
 	D3DXFRAME* GetRootFrame() const { return m_pRootFrame; }
 
+	static const _tchar* GetComponentTag() { return L"DynamicMesh"; }
+	static const Engine::COMPONENTID GetComponentID() { return Engine::ID_STATIC; }
+
 public:
 	void			Set_AnimationSet(const _uint& iIndex);
 	void			Play_Animation(const _float& fTimeDelta);

@@ -32,6 +32,7 @@ HRESULT CDynamicObject::Ready_Object(void)
 
 int CDynamicObject::Update_Object(const _float & _fDeltaTime)
 {
+	CGameObject::Update_Object(_fDeltaTime);
 	m_pMesh->Play_Animation(_fDeltaTime);
 	m_pRenderer->Update(_fDeltaTime);
 
@@ -64,14 +65,14 @@ _bool CDynamicObject::SetRenderInfo(const _tchar * _pMeshTag, Engine::RENDERID _
 	if (!m_pMesh)
 		return false;
 
-	Engine::CComponent* pComponent = m_mapComponent[Engine::ID_STATIC][L"Com_Mesh"];
+	Engine::CComponent* pComponent = m_mapComponent[Engine::ID_STATIC][Engine::CDynamicMesh::GetComponentTag()];
 	if (pComponent) {
 		// 기존 세팅된 메쉬가 있다면 제거한다.
 		Engine::Safe_Release(pComponent);
 	}
 
 	// 새로운 메시로 세팅한다.
-	m_mapComponent[Engine::ID_STATIC][L"Com_Mesh"] = m_pMesh;
+	m_mapComponent[Engine::ID_STATIC][Engine::CDynamicMesh::GetComponentTag()] = m_pMesh;
 	m_pRenderer->SetRenderInfo(_eRenderID, m_pMesh);
 	return true;
 }

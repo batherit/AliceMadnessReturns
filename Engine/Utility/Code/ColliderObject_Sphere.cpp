@@ -40,7 +40,6 @@ HRESULT CColliderObject_Sphere::Ready_Object(void)
 
 _int CColliderObject_Sphere::Update_Object(const _float & _fDeltaTime)
 {
-	
 	m_pRenderer->Update(_fDeltaTime);
 	return 0;
 }

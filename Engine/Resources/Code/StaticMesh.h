@@ -37,6 +37,9 @@ private:
 	LPDIRECT3DTEXTURE9*	m_ppTextures;
 
 public:
+	static const _tchar* GetComponentTag() { return L"StaticMesh"; }
+	static const Engine::COMPONENTID GetComponentID() { return Engine::ID_STATIC; }
+
 	static CStaticMesh*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFilePath, const _tchar* pFileName);
 	virtual CComponent* Clone(void) override;
 	virtual void Free(void) override;

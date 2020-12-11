@@ -219,7 +219,7 @@ _bool CEditScene::AddStaticObject(const _tchar * _pMeshTag)
 	CStaticObject* pStaticObject = CStaticObject::Create(m_pGraphicDev);
 	pStaticObject->SetRenderInfo(_pMeshTag);
 
-	if (pStaticObject->GetComponent(Engine::ID_STATIC, L"Com_Mesh")) {
+	if (pStaticObject->GetComponent<Engine::CStaticMesh>()) {
 		GetLayer(L"EditLayer")->Add_GameObject(pStaticObject);
 		m_vecStaticObjects.emplace_back(pStaticObject);
 		return true;
@@ -234,7 +234,7 @@ _bool CEditScene::AddDynamicObject(const _tchar * _pMeshTag)
 	CDynamicObject* pDynamicObject = CDynamicObject::Create(m_pGraphicDev);
 	pDynamicObject->SetRenderInfo(_pMeshTag);
 
-	if (pDynamicObject->GetComponent(Engine::ID_STATIC, L"Com_Mesh")) {
+	if (pDynamicObject->GetComponent<Engine::CDynamicMesh>()) {
 		GetLayer(L"EditLayer")->Add_GameObject(pDynamicObject);
 		m_vecDynamicObjects.emplace_back(pDynamicObject);
 		return true;

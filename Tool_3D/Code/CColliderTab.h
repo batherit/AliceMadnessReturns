@@ -22,6 +22,7 @@ public:
 
 public:
 	void UpdateBoneTree(CDynamicObject* _pDynamicObject);
+	void UpdateAttachedColliders(CDynamicObject* _pDynamicObject);
 	void RegisterMeshTag(Engine::MESHTYPE _eMeshType, const _tchar* _pMeshTag);
 
 protected:
@@ -30,6 +31,13 @@ protected:
 	
 
 	DECLARE_MESSAGE_MAP()
+
+public:
+	afx_msg void OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMClickTreeBoneTree(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnDestroy();
+	afx_msg void OnBnClickedButtonAdd();
+
 public:
 	void ActivateColTab(const Engine::E_COLLIDER_TYPE _eColTabType);
 
@@ -38,15 +46,16 @@ public:
 	HTREEITEM m_itemStatic = NULL;
 	HTREEITEM m_itemDynamic = NULL;
 	HTREEITEM m_hSelectedMesh = NULL;
+	HTREEITEM m_hSelectedBone = NULL;
 	virtual BOOL OnInitDialog();
-	afx_msg void OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult);
 	CTreeCtrl m_treeBoneTree;
 
 	// 콜라이더 타입 탭
 	CTabCtrl m_ColTab;
 	CSphereColTab* m_pSphereColTab = nullptr;
 	vector<CDialogEx*> m_vecColTabs;
-	afx_msg void OnTcnSelchangeColTab(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnDestroy();
-	afx_msg void OnBnClickedButtonAdd();
+	
+	CTreeCtrl m_treeColliders;
+	CButton m_btnAdd;
+	CButton m_btdDelete;
 };

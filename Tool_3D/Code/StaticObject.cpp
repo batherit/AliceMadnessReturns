@@ -63,14 +63,14 @@ _bool CStaticObject::SetRenderInfo(const _tchar * _pMeshTag, Engine::RENDERID _e
 	if (!m_pMesh)
 		return false;
 
-	Engine::CComponent* pComponent = m_mapComponent[Engine::ID_STATIC][L"Com_Mesh"];
+	Engine::CComponent* pComponent = m_mapComponent[Engine::ID_STATIC][Engine::CStaticMesh::GetComponentTag()];
 	if (pComponent) {
 		// 기존 세팅된 메쉬가 있다면 제거한다.
 		Engine::Safe_Release(pComponent);
 	}
 
 	// 새로운 메시로 세팅한다.
-	m_mapComponent[Engine::ID_STATIC][L"Com_Mesh"] = m_pMesh;
+	m_mapComponent[Engine::ID_STATIC][Engine::CStaticMesh::GetComponentTag()] = m_pMesh;
 	m_pRenderer->SetRenderInfo(_eRenderID, m_pMesh);
 	return true;
 }

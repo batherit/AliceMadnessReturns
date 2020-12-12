@@ -37,7 +37,7 @@ protected:
 public:
 	afx_msg void OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMClickTreeBoneTree(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnDestroy();
+//	afx_msg void OnDestroy();
 	afx_msg void OnBnClickedButtonAdd();
 
 public:
@@ -49,6 +49,7 @@ public:
 	HTREEITEM m_itemDynamic = NULL;
 	HTREEITEM m_hSelectedMesh = NULL;
 	HTREEITEM m_hSelectedBone = NULL;
+	HTREEITEM m_hSelectedCollider = NULL;
 	virtual BOOL OnInitDialog();
 	CTreeCtrl m_treeBoneTree;
 
@@ -62,6 +63,8 @@ public:
 	
 	CTreeCtrl m_treeColliders;
 	CButton m_btnAdd;
-	CButton m_btdDelete;
+	CButton m_btnDelete;
 	afx_msg void OnTcnSelchangeColTab(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButtonDelete();
+	afx_msg void OnNMClickTreeColliders(NMHDR *pNMHDR, LRESULT *pResult);
 };

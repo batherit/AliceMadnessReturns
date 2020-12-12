@@ -14,6 +14,8 @@ Engine::CCubeCol::CCubeCol(const CCubeCol& rhs)
 {
 	// 색깔은 새로 지정해주어야 하나 보다.
 	//m_pCubeMesh->CloneMeshFVF(0, FVF_COL, m_pGraphicDev, &m_pClone);
+	Safe_AddRef(m_pCubeMesh);
+	Safe_AddRef(m_pClone);
 }
 
 Engine::CCubeCol::~CCubeCol(void)

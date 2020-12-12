@@ -59,7 +59,7 @@ void CColliderTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TAB2, m_ColTab);
 	DDX_Control(pDX, IDC_TREE3, m_treeColliders);
 	DDX_Control(pDX, IDC_BUTTON10, m_btnAdd);
-	DDX_Control(pDX, IDC_BUTTON1, m_btdDelete);
+	DDX_Control(pDX, IDC_BUTTON1, m_btnDelete);
 }
 
 void CColliderTab::ActivateColTab(const Engine::E_COLLIDER_TYPE _eColTabType)
@@ -96,6 +96,7 @@ void CColliderTab::UpdateAttachedColliders(CDynamicObject * _pDynamicObject)
 		for (auto& rObj : rPair.second) {
 			strTemp.Format(L"%d", iColliderIndex);
 			m_treeColliders.InsertItem(strTemp, treeBoneItem, NULL);
+			++iColliderIndex;
 		}
 	}
 }
@@ -118,9 +119,11 @@ void CColliderTab::RegisterMeshTag(Engine::MESHTYPE _eMeshType, const _tchar * _
 BEGIN_MESSAGE_MAP(CColliderTab, CDialogEx)
 	ON_NOTIFY(NM_CLICK, IDC_TREE2, &CColliderTab::OnNMClickTreeObjectList)
 	ON_NOTIFY(NM_CLICK, IDC_TREE1, &CColliderTab::OnNMClickTreeBoneTree)
-	ON_WM_DESTROY()
+//	ON_WM_DESTROY()
 	ON_BN_CLICKED(IDC_BUTTON10, &CColliderTab::OnBnClickedButtonAdd)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB2, &CColliderTab::OnTcnSelchangeColTab)
+	ON_BN_CLICKED(IDC_BUTTON1, &CColliderTab::OnBnClickedButtonDelete)
+	ON_NOTIFY(NM_CLICK, IDC_TREE3, &CColliderTab::OnNMClickTreeColliders)
 END_MESSAGE_MAP()
 
 
@@ -175,10 +178,13 @@ void CColliderTab::OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult)
 
 	// Add버튼을 비활성화합니다.
 	m_btnAdd.EnableWindow(FALSE);
+	// Delete버튼을 비활성화합니다.
+	m_btnDelete.EnableWindow(FALSE);
 
 	// 선택된 아이템을 해제합니다.
 	m_hSelectedMesh = NULL;
 	m_hSelectedBone = NULL;
+	m_hSelectedCollider = NULL;
 
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 
@@ -220,7 +226,7 @@ void CColliderTab::OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 	else {
 		// 부모가 없다면, 메쉬 태그와 상관없는 항목을 픽킹한 것이다.
-		m_hSelectedMesh = 0;
+		m_hSelectedMesh = NULL;
 	}
 
 	*pResult = 0;
@@ -232,6 +238,10 @@ void CColliderTab::OnNMClickTreeBoneTree(NMHDR *pNMHDR, LRESULT *pResult)
 
 	// Add버튼을 일단 비활성화한다.
 	m_btnAdd.EnableWindow(FALSE);
+	// Delete버튼을 비활성화합니다.
+	m_btnDelete.EnableWindow(FALSE);
+	m_hSelectedBone = NULL;
+	m_hSelectedCollider = NULL;
 
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 
@@ -250,15 +260,15 @@ void CColliderTab::OnNMClickTreeBoneTree(NMHDR *pNMHDR, LRESULT *pResult)
 }
 
 
-void CColliderTab::OnDestroy()
-{
-	
-
-	CDialogEx::OnDestroy();
-
-	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
-	// => 이 함수는 호출이 안되더라.
-}
+//void CColliderTab::OnDestroy()
+//{
+//	
+//
+//	CDialogEx::OnDestroy();
+//
+//	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
+//	// => 이 함수는 호출이 안되더라.
+//}
 
 
 void CColliderTab::OnBnClickedButtonAdd()
@@ -327,6 +337,75 @@ void CColliderTab::OnTcnSelchangeColTab(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 	default:
 		break;
+	}
+
+	*pResult = 0;
+}
+
+
+void CColliderTab::OnBnClickedButtonDelete()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// m_hSelectedMesh, m_hSelectedBone, m_hSelectedCollider이 유효하다는 것을 보장해야 합니다.
+
+	CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
+	CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
+	CDynamicObject* pDynamicObject = pEditScene->GetDynamicObject(strMeshTag);
+
+	CString cstrBoneName = m_treeColliders.GetItemText(m_treeColliders.GetParentItem(m_hSelectedCollider));
+	_int iColliderIndex = _ttoi(m_treeColliders.GetItemText(m_hSelectedCollider));
+
+	if (pDynamicObject) {
+		auto& rColliderList = pDynamicObject->GetColliderList();
+		if (!rColliderList.empty()) {
+			for (auto& iter = rColliderList.begin(); iter != rColliderList.end(); ++iter) {
+				if (cstrBoneName == iter->first.c_str()) {
+					Engine::Safe_Release(iter->second[iColliderIndex]);
+					iter->second.erase(iter->second.begin() + iColliderIndex);
+
+					if (iter->second.empty()) {
+						// 해당 본에 충돌체가 존재하지 않는다면, iter부분을 리스트에서 제거한다.
+						rColliderList.erase(iter);
+					}
+
+					// 콜라이더 트리를 새로 갱신한다.
+					UpdateAttachedColliders(pDynamicObject);
+					break;
+				}
+			}
+		}
+	}
+
+	m_btnDelete.EnableWindow(FALSE);
+}
+
+
+void CColliderTab::OnNMClickTreeColliders(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// Delete버튼을 비활성화합니다.
+	m_btnDelete.EnableWindow(FALSE);
+	m_hSelectedCollider = NULL;
+
+	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+
+	POINT point = Engine::GetClientCursorPoint(m_treeColliders.m_hWnd);
+	UINT nFlags = 0;
+	HTREEITEM hItem = m_treeColliders.HitTest(point, &nFlags);
+
+	if (!hItem)
+		return;
+
+	m_hSelectedCollider = hItem;
+
+	hItem = m_treeObjectList.GetParentItem(m_hSelectedCollider);
+
+	if (hItem) {
+		// 충돌체를 클릭했다는 것이다. => 삭제할 것이 골라졌으므로 삭제 버튼 활성화
+		m_btnDelete.EnableWindow(TRUE);
+	}
+	else {
+		m_hSelectedCollider = NULL;
 	}
 
 	*pResult = 0;

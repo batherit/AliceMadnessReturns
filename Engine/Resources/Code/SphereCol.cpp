@@ -14,6 +14,8 @@ Engine::CSphereCol::CSphereCol(const CSphereCol& rhs)
 {
 	// 색깔은 새로 지정해주어야 하나 보다.
 	//m_pSphereMesh->CloneMeshFVF(0, FVF_COL, m_pGraphicDev, &m_pClone);
+	Safe_AddRef(m_pSphereMesh);
+	Safe_AddRef(m_pClone);
 }
 
 Engine::CSphereCol::~CSphereCol(void)

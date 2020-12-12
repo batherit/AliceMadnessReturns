@@ -39,6 +39,7 @@ int CStaticObject::Update_Object(const _float & _fDeltaTime)
 
 void CStaticObject::Render_Object(void)
 {
+	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Render();
 }
 

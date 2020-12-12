@@ -70,6 +70,7 @@ void Client::CSkyBox::Render_Object(void)
 
 	//m_pTexture->Render_Texture(3);
 	//m_pCubeTex->Render_Buffer();
+	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Render();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);

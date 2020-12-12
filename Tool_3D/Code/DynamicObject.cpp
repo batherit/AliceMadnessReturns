@@ -41,6 +41,7 @@ int CDynamicObject::Update_Object(const _float & _fDeltaTime)
 
 void CDynamicObject::Render_Object(void)
 {
+	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Render();
 }
 

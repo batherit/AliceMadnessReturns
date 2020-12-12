@@ -94,6 +94,12 @@
     <Filter Include="03. GameObject\ColliderObject\Box">
       <UniqueIdentifier>{f4cc285c-8896-4354-9a63-70761817dd24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. GameObject\ColliderObject\Box\AABB">
+      <UniqueIdentifier>{99a50654-d8b1-4b61-9e94-545c618f5747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\ColliderObject\Box\OBB">
+      <UniqueIdentifier>{9131b613-92c3-4aa1-b7a1-1f16bbca963f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -189,6 +195,12 @@
     <ClInclude Include="..\Code\ColliderObject_Box.h">
       <Filter>03. GameObject\ColliderObject\Box</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\ColliderObject_AABB.h">
+      <Filter>03. GameObject\ColliderObject\Box\AABB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ColliderObject_OBB.h">
+      <Filter>03. GameObject\ColliderObject\Box\OBB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -271,6 +283,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\ColliderObject_Box.cpp">
       <Filter>03. GameObject\ColliderObject\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ColliderObject_AABB.cpp">
+      <Filter>03. GameObject\ColliderObject\Box\AABB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ColliderObject_OBB.cpp">
+      <Filter>03. GameObject\ColliderObject\Box\OBB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

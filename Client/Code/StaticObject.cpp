@@ -66,6 +66,8 @@ void CStaticObject::Render_Object(void)
 
 	pEffect->SetVector("g_MtrlDiffuse", (_vec4*)&tMtrlInfo.Diffuse);
 	pEffect->SetVector("g_MtrlAmbient", (_vec4*)&tMtrlInfo.Ambient);
+
+	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Render(pEffect);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);

@@ -226,6 +226,12 @@
     <ClInclude Include="CSphereColTab.h">
       <Filter>00. View%28Workspace%29\Tab\ColTab</Filter>
     </ClInclude>
+    <ClInclude Include="CAABBColTab.h">
+      <Filter>00. View%28Workspace%29\Tab\ColTab</Filter>
+    </ClInclude>
+    <ClInclude Include="COBBColTab.h">
+      <Filter>00. View%28Workspace%29\Tab\ColTab</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -331,6 +337,12 @@
       <Filter>04. Object\DynamicObject</Filter>
     </ClCompile>
     <ClCompile Include="CSphereColTab.cpp">
+      <Filter>00. View%28Workspace%29\Tab\ColTab</Filter>
+    </ClCompile>
+    <ClCompile Include="CAABBColTab.cpp">
+      <Filter>00. View%28Workspace%29\Tab\ColTab</Filter>
+    </ClCompile>
+    <ClCompile Include="COBBColTab.cpp">
       <Filter>00. View%28Workspace%29\Tab\ColTab</Filter>
     </ClCompile>
   </ItemGroup>

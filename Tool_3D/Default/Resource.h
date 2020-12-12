@@ -18,6 +18,8 @@
 #define IDD_MAP_TAB                     323
 #define IDD_COLLIDER_TAB                324
 #define IDD_SPHERE_COLTAB               325
+#define IDD_AABB_COLTAB                 327
+#define IDD_OBB_COLTAB                  328
 #define IDC_EDIT1                       1000
 #define IDC_EDIT18                      1001
 #define IDC_EDIT2                       1003
@@ -67,9 +69,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        327
+#define _APS_NEXT_RESOURCE_VALUE        331
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1023
+#define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           325
 #endif
 #endif

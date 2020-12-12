@@ -145,15 +145,25 @@ void CTransform::ResetRightUpLook(const _vec3 *pAt, const _vec3 *pUp) {
 	m_vAngle = ConvQuaternionToYawPitchRoll(qtRot);
 }
 
-_matrix CTransform::GetParentMatrix(E_COORD_TYPE _eCoordType) const {
+_matrix CTransform::GetParentMatrix() const {
 	D3DXMATRIX matParent;
 	D3DXMatrixIdentity(&matParent);
 
 	CGameObject* pParent = m_pOwner->GetParent();
-	if (pParent) matParent = pParent->GetTransform()->GetObjectMatrix(_eCoordType);
+	if (pParent) matParent = GetParentBoneMatrix() * pParent->GetTransform()->GetObjectMatrix(COORD_TYPE_WORLD);
 
 	// 부모행렬을 얻지 못했다면, 항등행렬을 반환한다.
 	return matParent;
+}
+
+void CTransform::SeparateParentMatrix(_matrix * _pScale, _matrix * _pRotation, _matrix * _pPosition)
+{
+	if (!m_pOwner->GetParent())
+		return;
+
+	const _matrix& matParent = GetParentMatrix();
+
+	Engine::SeparateMatrix(_pScale, _pRotation, _pPosition, &matParent);
 }
 
 _matrix CTransform::GetParentBoneMatrix() const
@@ -164,6 +174,14 @@ _matrix CTransform::GetParentBoneMatrix() const
 	if (m_pParentBoneMatrix) return *m_pParentBoneMatrix;
 	
 	return matIdentity;
+}
+
+void CTransform::SeparateBoneMatrix(_matrix * _pScale, _matrix * _pRotation, _matrix * _pPosition)
+{
+	if (!m_pParentBoneMatrix)
+		return;
+
+	Engine::SeparateMatrix(_pScale, _pRotation, _pPosition, m_pParentBoneMatrix);
 }
 
 const _matrix * CTransform::GetParentBoneMatrixPointer()
@@ -191,18 +209,24 @@ _matrix CTransform::GetObjectMatrix(E_COORD_TYPE _eCoordType) const {
 	{
 	case COORD_TYPE_WORLD:
 		// 부
-		matWorld *= GetParentBoneMatrix() * GetParentMatrix(_eCoordType);
+		matWorld *= GetParentMatrix();
 		break;
 	}
 
 	return matWorld;
+}
+void CTransform::SeparateObjectMatrix(_matrix * _pScale, _matrix * _pRotation, _matrix * _pPosition, E_COORD_TYPE _eCoordType)
+{
+	const _matrix& matObject = GetObjectMatrix(_eCoordType);
+
+	Engine::SeparateMatrix(_pScale, _pRotation, _pPosition, &matObject);
 }
 _vec3 CTransform::GetPos(E_COORD_TYPE _eCoordType) const {
 	D3DXVECTOR3 vPos = m_vPos;
 
 	switch (_eCoordType) {
 	case COORD_TYPE_WORLD:
-		D3DXVec3TransformCoord(&vPos, &vPos, &GetParentMatrix(COORD_TYPE_WORLD));
+		D3DXVec3TransformCoord(&vPos, &vPos, &GetParentMatrix());
 		break;
 	}
 

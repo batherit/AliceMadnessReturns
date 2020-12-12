@@ -1,19 +1,18 @@
-#ifndef ColliderObject_Sphere_h__
-#define	ColliderObject_Sphere_h__
+#ifndef ColliderObject_OBB_h__
+#define	ColliderObject_OBB_h__
 
 #include "Engine_Define.h"
 #include "ColliderObject.h"
 
 BEGIN(Engine)
-class CSphereCol;
-//class CCubeCol;
+class CCubeCol;
 class CPolygonRenderer;
-class ENGINE_DLL CColliderObject_Sphere : public CColliderObject
+class ENGINE_DLL CColliderObject_OBB : public CColliderObject
 {
 protected:
-	explicit CColliderObject_Sphere(LPDIRECT3DDEVICE9	pGraphicDev);	// 老馆 积己磊
-	explicit CColliderObject_Sphere(const CColliderObject_Sphere& rhs);			// 汗荤 积己磊
-	virtual ~CColliderObject_Sphere();
+	explicit CColliderObject_OBB(LPDIRECT3DDEVICE9	pGraphicDev);	// 老馆 积己磊
+	explicit CColliderObject_OBB(const CColliderObject_OBB& rhs);			// 汗荤 积己磊
+	virtual ~CColliderObject_OBB();
 
 public:
 	virtual HRESULT Ready_Object(void);
@@ -28,17 +27,15 @@ public:
 	virtual _bool LoadInfo(HANDLE& _hfIn) { return true; };
 
 	virtual void Free(void) override;
-	static CColliderObject_Sphere* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-public:
-	void SetColliderTag(const _tchar* _pColliderTag) { lstrcpy(m_tcColliderTag, _pColliderTag); }
-	const _tchar* GetColliderTag() const { return m_tcColliderTag; }
+	static CColliderObject_OBB* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
+public:
 	void SetRadius(_float _fRadius);
 	_float GetRadius() const { return m_fRadius; }
 	_float GetRadiusW() const;
 
 private:
-	CSphereCol* m_pSphereBuffer = nullptr;
+	CCubeCol* m_pCubeBuffer = nullptr;
 	CPolygonRenderer* m_pRenderer = nullptr;
 	_float m_fRadius = 1.f;
 };

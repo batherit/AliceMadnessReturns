@@ -69,10 +69,13 @@ public:
 	// 본 행렬 세팅
 	void SetParentBoneMatrix(const _matrix* _pParentBoneMatrix) { m_pParentBoneMatrix = _pParentBoneMatrix; }
 	
-	_matrix GetParentMatrix(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const;
+	_matrix GetParentMatrix() const;
+	void SeparateParentMatrix(_matrix* _pScale, _matrix* _pRotation, _matrix* _pPosition);
 	_matrix GetParentBoneMatrix() const;
+	void SeparateBoneMatrix(_matrix* _pScale, _matrix* _pRotation, _matrix* _pPosition);
 	const _matrix* GetParentBoneMatrixPointer();
 	_matrix GetObjectMatrix(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const;
+	void SeparateObjectMatrix(_matrix* _pScale, _matrix* _pRotation, _matrix* _pPosition, E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD);
 	_vec3 GetPos(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const;
 	_vec3 GetAngle() const { return m_vAngle; }
 	_vec3 GetScale() const { return m_vScale; }

@@ -29,6 +29,8 @@ public:
 	void SetRenderInfo(RENDERID _eRenderID, CVIBuffer* _pBuffer, CTexture* _pTexture = nullptr, LPD3DXEFFECT _pEffect = nullptr);
 	void SetTextureIndex(const _uint& _uiTextureIndex) { m_uiTextureIndex = _uiTextureIndex; }
 
+	void SetWorldMatrix(const _matrix& _matWorld) { m_matWorld = _matWorld; }
+
 private:
 	virtual void Free(void);
 
@@ -37,6 +39,7 @@ protected:
 	CTexture* m_pTexture = nullptr;
 	_uint m_uiTextureIndex = 0;
 	D3DMATERIAL9 m_stMtrl;
+	_matrix m_matWorld;
 };
 
 END

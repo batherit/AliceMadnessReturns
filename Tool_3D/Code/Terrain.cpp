@@ -47,6 +47,7 @@ void CTerrain::Render_Object(void)
 	//Engine::Render_Texture(Engine::RESOURCE_STAGE, m_szTextureTag, 0);
 	//m_pTerrain->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Render();
 }
 

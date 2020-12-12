@@ -7,6 +7,8 @@ class CDynamicObject;
 END
 
 class CSphereColTab;
+class CAABBColTab;
+class COBBColTab;
 class CColliderTab : public CDialogEx
 {
 	DECLARE_DYNAMIC(CColliderTab)
@@ -53,9 +55,13 @@ public:
 	// 콜라이더 타입 탭
 	CTabCtrl m_ColTab;
 	CSphereColTab* m_pSphereColTab = nullptr;
+	CAABBColTab* m_pAABBColTab = nullptr;
+	COBBColTab* m_pOBBColTab = nullptr;
+
 	vector<CDialogEx*> m_vecColTabs;
 	
 	CTreeCtrl m_treeColliders;
 	CButton m_btnAdd;
 	CButton m_btdDelete;
+	afx_msg void OnTcnSelchangeColTab(NMHDR *pNMHDR, LRESULT *pResult);
 };

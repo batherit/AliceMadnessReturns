@@ -6,6 +6,7 @@
 
 BEGIN(Engine)
 class CSphereCol;
+//class CCubeCol;
 class CPolygonRenderer;
 class ENGINE_DLL CColliderObject_Sphere : public CColliderObject
 {
@@ -34,11 +35,12 @@ public:
 
 	void SetRadius(_float _fRadius);
 	_float GetRadius() const { return m_fRadius; }
+	_float GetRadiusW() const;
 
 private:
-	_float m_fRadius = 1.f;
 	CSphereCol* m_pSphereBuffer = nullptr;
 	CPolygonRenderer* m_pRenderer = nullptr;
+	_float m_fRadius = 1.f;
 };
 
 END

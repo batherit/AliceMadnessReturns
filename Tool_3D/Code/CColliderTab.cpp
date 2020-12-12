@@ -5,6 +5,8 @@
 #include "Tool_3D.h"
 #include "CColliderTab.h"
 #include "CSphereColTab.h"
+#include "CAABBColTab.h"
+#include "COBBColTab.h"
 #include "afxdialogex.h"
 #include "EditScene.h"
 #include "DynamicObject.h"
@@ -118,6 +120,7 @@ BEGIN_MESSAGE_MAP(CColliderTab, CDialogEx)
 	ON_NOTIFY(NM_CLICK, IDC_TREE1, &CColliderTab::OnNMClickTreeBoneTree)
 	ON_WM_DESTROY()
 	ON_BN_CLICKED(IDC_BUTTON10, &CColliderTab::OnBnClickedButtonAdd)
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB2, &CColliderTab::OnTcnSelchangeColTab)
 END_MESSAGE_MAP()
 
 
@@ -135,8 +138,8 @@ BOOL CColliderTab::OnInitDialog()
 	m_itemDynamic = m_treeObjectList.InsertItem(L"Dynamic", NULL, NULL);
 
 	m_ColTab.InsertItem(0, _T("Sphere"));
-	//m_Tab.InsertItem(1, _T("Navi Mesh"));
-	//m_Tab.InsertItem(2, _T("Map"));
+	m_ColTab.InsertItem(1, _T("AABB"));
+	m_ColTab.InsertItem(2, _T("OBB"));
 	
 
 	CRect rect;
@@ -147,15 +150,15 @@ BOOL CColliderTab::OnInitDialog()
 	m_pSphereColTab->MoveWindow(0, 25, rect.Width(), rect.Height());
 	m_vecColTabs.emplace_back(m_pSphereColTab);
 
-	/*m_pNaviMeshTab = new CNaviMeshTab;
-	m_pNaviMeshTab->Create(IDD_NAVI_MESH_TAB, &m_Tab);
-	m_pNaviMeshTab->MoveWindow(0, 25, rect.Width(), rect.Height());
-	m_vecTabs.emplace_back(m_pNaviMeshTab);
+	m_pAABBColTab = new CAABBColTab;
+	m_pAABBColTab->Create(IDD_AABB_COLTAB, &m_ColTab);
+	m_pAABBColTab->MoveWindow(0, 25, rect.Width(), rect.Height());
+	m_vecColTabs.emplace_back(m_pAABBColTab);
 
-	m_pMapTab = new CMapTab;
-	m_pMapTab->Create(IDD_MAP_TAB, &m_Tab);
-	m_pMapTab->MoveWindow(0, 25, rect.Width(), rect.Height());
-	m_vecTabs.emplace_back(m_pMapTab);*/
+	m_pOBBColTab = new COBBColTab;
+	m_pOBBColTab->Create(IDD_OBB_COLTAB, &m_ColTab);
+	m_pOBBColTab->MoveWindow(0, 25, rect.Width(), rect.Height());
+	m_vecColTabs.emplace_back(m_pOBBColTab);
 
 	// 초기 터레인 탭으로 설정
 	ActivateColTab(Engine::TYPE_SPHERE);
@@ -191,6 +194,7 @@ void CColliderTab::OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult)
 	hItem = m_treeObjectList.GetParentItem(m_hSelectedMesh);
 
 	m_treeBoneTree.DeleteAllItems();
+	m_treeColliders.DeleteAllItems();
 	if (hItem) {
 		// 부모가 있다면, 메쉬 태그를 선택한 것이다.
 		if (m_treeObjectList.GetItemText(hItem) == L"Dynamic") {
@@ -276,6 +280,16 @@ void CColliderTab::OnBnClickedButtonAdd()
 		pCollider = Engine::CColliderObject_Sphere::Create(g_pTool3D_Kernel->GetGraphicDev());
 		dynamic_cast<Engine::CColliderObject_Sphere*>(pCollider)->SetRadius(50.f);
 		break;
+	case Engine::TYPE_AABB:
+		// TODO : AABB 콜라이더 장착 코드 구현
+		pCollider = Engine::CColliderObject_AABB::Create(g_pTool3D_Kernel->GetGraphicDev());
+		pCollider->GetTransform()->SetScale(_vec3(25.f, 25.f, 25.f));
+		break;
+	case Engine::TYPE_OBB:
+		// TODO : OBB 콜라이더 장착 코드 구현
+		pCollider = Engine::CColliderObject_OBB::Create(g_pTool3D_Kernel->GetGraphicDev());
+		pCollider->GetTransform()->SetScale(_vec3(25.f, 25.f, 25.f));
+		break;
 	}
 
 	CStringA straConv(strBoneName);
@@ -290,3 +304,30 @@ void CColliderTab::OnBnClickedButtonAdd()
 }
 
 
+
+
+void CColliderTab::OnTcnSelchangeColTab(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	int iSelIndex = m_ColTab.GetCurSel();
+
+	switch (iSelIndex)
+	{
+	case 0: {
+		ActivateColTab(Engine::TYPE_SPHERE);
+		break;
+	}
+	case 1: {
+		ActivateColTab(Engine::TYPE_AABB);
+		break;
+	}
+	case 2: {
+		ActivateColTab(Engine::TYPE_OBB);
+		break;
+	}
+	default:
+		break;
+	}
+
+	*pResult = 0;
+}

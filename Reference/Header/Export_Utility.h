@@ -12,7 +12,8 @@
 // Object
 #include "GameObject.h"
 #include "ColliderObject_Sphere.h"
-//#include "ColliderObject_Box.h"
+#include "ColliderObject_AABB.h"
+#include "ColliderObject_OBB.h"
 #include "Camera.h"
 
 // Components

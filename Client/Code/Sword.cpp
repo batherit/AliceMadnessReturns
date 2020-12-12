@@ -112,6 +112,7 @@ void CSword::Render_Object(void)
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &(GetTransform()->GetObjectMatrix() * *m_pParentBoneMatrix * m_ParentWorldMatrix));
 
 	//m_pMeshCom->Render_Meshes();
+	m_pRendererCom->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRendererCom->Render();
 
 	//_matrix matWorld;

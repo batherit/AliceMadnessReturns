@@ -26,12 +26,14 @@ public:
 	static const Engine::COMPONENTID GetComponentID() { return Engine::ID_STATIC; }
 
 	void SetRenderInfo(RENDERID _eRenderID, CMesh* _pMesh);
+	void SetWorldMatrix(const _matrix& _matWorld) { m_matWorld = _matWorld; }
 
 private:
 	virtual void Free(void);
 
 private:
 	CMesh* m_pMesh = nullptr;
+	_matrix m_matWorld;
 };
 
 END

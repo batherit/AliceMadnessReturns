@@ -353,6 +353,35 @@ namespace Engine
 		return _pOut;
 	}
 
+	// 행렬을 크자이 행렬로 분리하기
+	inline void SeparateMatrix(_matrix* _pmatScale, _matrix* _pmatRotation, _matrix* _pmatPosition, const _matrix* _pmatInput) {
+		_vec3 vRight = _vec3(_pmatInput->_11, _pmatInput->_12, _pmatInput->_13);
+		_float fRightLen = D3DXVec3Length(&vRight);
+		_vec3 vUp = _vec3(_pmatInput->_21, _pmatInput->_22, _pmatInput->_23);
+		_float fUpLen = D3DXVec3Length(&vUp);
+		_vec3 vLook = _vec3(_pmatInput->_31, _pmatInput->_32, _pmatInput->_33);
+		_float fLookLen = D3DXVec3Length(&vLook);
+
+		if (_pmatScale) {
+			D3DXMatrixIdentity(_pmatScale);
+			_pmatScale->_11 = fRightLen;
+			_pmatScale->_22 = fUpLen;
+			_pmatScale->_33 = fLookLen;
+		}
+
+		if (_pmatRotation) {
+			D3DXMatrixIdentity(_pmatRotation);
+			_pmatRotation->_11 = vRight.x / fRightLen;	_pmatRotation->_12 = vRight.y / fRightLen;	_pmatRotation->_13 = vRight.z / fRightLen;
+			_pmatRotation->_21 = vUp.x / fUpLen;		_pmatRotation->_22 = vUp.y / fUpLen;		_pmatRotation->_23 = vUp.z / fUpLen;
+			_pmatRotation->_31 = vLook.x / fLookLen;	_pmatRotation->_32 = vLook.y / fLookLen;	_pmatRotation->_33 = vLook.z / fLookLen;
+		}
+
+		if (_pmatPosition) {
+			D3DXMatrixIdentity(_pmatPosition);
+			_pmatPosition->_41 = _pmatInput->_41;	_pmatPosition->_42 = _pmatInput->_42;	_pmatPosition->_43 = _pmatInput->_43;
+		}
+	}
+
 	// 가중치
 	inline float GetWeightByDegree(float _fDegree) {
 		return cosf(D3DXToRadian(_fDegree)) * 0.5f + 0.5f;

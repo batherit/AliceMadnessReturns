@@ -105,6 +105,12 @@ int CEditScene::Update(const _float& fTimeDelta)
 {
 	m_pInputProcessorMgr->ProcessInput(fTimeDelta);
 
+	/*static _float fGapX = 0.f;
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
+		AddDynamicObject(L"AliceW", _vec3(fGapX, 0.f, 0.f));
+		fGapX += 20.f;
+	}*/
+
 	return CScene::Update(fTimeDelta);
 }
 
@@ -229,13 +235,14 @@ _bool CEditScene::AddStaticObject(const _tchar * _pMeshTag)
 	return false;
 }
 
-_bool CEditScene::AddDynamicObject(const _tchar * _pMeshTag)
+_bool CEditScene::AddDynamicObject(const _tchar * _pMeshTag, const _vec3& _vPos)
 {
 	CDynamicObject* pDynamicObject = CDynamicObject::Create(m_pGraphicDev);
 	pDynamicObject->SetRenderInfo(_pMeshTag);
 
 	if (pDynamicObject->GetComponent<Engine::CDynamicMesh>()) {
 		GetLayer(L"EditLayer")->Add_GameObject(pDynamicObject);
+		pDynamicObject->GetTransform()->SetPos(_vPos);
 		m_vecDynamicObjects.emplace_back(pDynamicObject);
 		return true;
 	}

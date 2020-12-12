@@ -48,7 +48,7 @@ public:
 
 	
 	_bool AddStaticObject(const _tchar* _pMeshTag);
-	_bool AddDynamicObject(const _tchar* _pMeshTag);
+	_bool AddDynamicObject(const _tchar* _pMeshTag, const _vec3& _vPos = _vec3(0.f, 0.f, 0.f));
 	CStaticObject* GetStaticObject(_int _iObjectIndex);
 	CDynamicObject* GetDynamicObject(const _tchar* _pMeshTag);
 	vector<CStaticObject*>& GetStaticObjectList() { return m_vecStaticObjects; }

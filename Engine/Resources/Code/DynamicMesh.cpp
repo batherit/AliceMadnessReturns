@@ -63,6 +63,8 @@ HRESULT Engine::CDynamicMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar
 
 void Engine::CDynamicMesh::Render_Meshes(LPD3DXEFFECT _pEffect)
 {
+	UpdateAnimation(m_fDeltaTime);
+
 	for (auto& iter : m_MeshContainerList)
 	{
 		D3DXMESHCONTAINER_DERIVED*			pMeshContainer = iter;
@@ -122,7 +124,21 @@ void CDynamicMesh::Set_AnimationSet(const _uint & iIndex)
 
 void CDynamicMesh::Play_Animation(const _float & fTimeDelta)
 {
-	m_pAniCtrl->Play_Animation(fTimeDelta);
+	//m_pAniCtrl->Play_Animation(fTimeDelta);
+
+	//_matrix		matTemp;
+	//Update_FrameMatrices((D3DXFRAME_DERIVED*)m_pRootFrame, D3DXMatrixRotationY(&matTemp, D3DXToRadian(180.f)));
+	m_fDeltaTime = fTimeDelta;
+}
+
+//void CDynamicMesh::UpdateDeltaTime(const _float & _fDeltaTime)
+//{
+//	m_fDeltaTime = _fDeltaTime;
+//}
+
+void CDynamicMesh::UpdateAnimation(const _float & fTimeDelta)
+{
+	m_pAniCtrl->Play_Animation(m_fDeltaTime);
 
 	_matrix		matTemp;
 	Update_FrameMatrices((D3DXFRAME_DERIVED*)m_pRootFrame, D3DXMatrixRotationY(&matTemp, D3DXToRadian(180.f)));

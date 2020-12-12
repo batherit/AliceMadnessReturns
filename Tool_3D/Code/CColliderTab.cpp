@@ -84,14 +84,14 @@ void CColliderTab::UpdateAttachedColliders(CDynamicObject * _pDynamicObject)
 
 	m_treeColliders.DeleteAllItems();
 	CString strTemp;
-	auto& CollidersMap = _pDynamicObject->GetColliderMap();
+	auto& rColliders = _pDynamicObject->GetColliderList();
 	HTREEITEM treeBoneItem;
 	_int iColliderIndex = 0;
-	for (auto& rMap : CollidersMap) {
-		strTemp = rMap.first;	// const char*형의 본 이름을 CString 형태로 전환
+	for (auto& rPair : rColliders) {
+		strTemp = rPair.first.c_str();	// const char*형의 본 이름을 CString 형태로 전환
 		treeBoneItem = m_treeColliders.InsertItem(strTemp, NULL, NULL);
 		iColliderIndex = 0;
-		for (auto& rObj : rMap.second) {
+		for (auto& rObj : rPair.second) {
 			strTemp.Format(L"%d", iColliderIndex);
 			m_treeColliders.InsertItem(strTemp, treeBoneItem, NULL);
 		}
@@ -278,12 +278,12 @@ void CColliderTab::OnBnClickedButtonAdd()
 		break;
 	}
 
+	CStringA straConv(strBoneName);
+	const char* szBoneName = straConv;
 	if (strBoneName == L"None") {
 		pDynamicObject->AddCollider(pCollider);
 	}
 	else {
-		CStringA straConv(strBoneName);
-		const char* szBoneName = straConv;
 		pDynamicObject->AddCollider(pCollider, szBoneName);
 	}
 	UpdateAttachedColliders(pDynamicObject);

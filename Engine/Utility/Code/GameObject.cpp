@@ -35,8 +35,8 @@ _int CGameObject::Update_Object(const _float & _fDeltaTime)
 		rChild->Update_Object(_fDeltaTime);
 	}
 
-	for (auto& rMap : m_mapColliders) {
-		for (auto& rObj : rMap.second) {
+	for (auto& rPair : m_vecColliders) {
+		for (auto& rObj : rPair.second) {
 			rObj->Update_Object(_fDeltaTime);
 		}
 	}
@@ -93,12 +93,12 @@ void Engine::CGameObject::Free(void)
 	m_vecChildList.clear();
 	m_vecChildList.shrink_to_fit();
 
-	for (auto& rMap : m_mapColliders) {
-		for_each(rMap.second.begin(), rMap.second.end(), Engine::CDeleteObj());
-		rMap.second.clear();
-		rMap.second.shrink_to_fit();
+	for (auto& rPair : m_vecColliders) {
+		for_each(rPair.second.begin(), rPair.second.end(), Engine::CDeleteObj());
+		rPair.second.clear();
+		rPair.second.shrink_to_fit();
 	}
-	m_mapColliders.clear();
+	m_vecColliders.clear();
 
 	Safe_Release(m_pGraphicDev);
 }
@@ -198,13 +198,33 @@ _bool CGameObject::AddCollider(CColliderObject * _pCollider, const char * _pBone
 
 	// _pChild는 유효한 객체이며, 현재 부모가 존재하지 않는 상황
 	//m_vecChildList.emplace_back(_pCollider);
-	if (_pBoneName)
-		m_mapColliders[_pBoneName].emplace_back(_pCollider);
-	else
-		// 본이 없거나 뼈가 설정되어있지 않은 경우 None키에 콜라이더를 할당한다.
-		m_mapColliders["None"].emplace_back(_pCollider);
+	string strBoneName = "None";
+	vector<CColliderObject*>* pColliders = nullptr;
+	if (_pBoneName) {
+		strBoneName = _pBoneName;
+	}
+
+	for (auto& rPair : m_vecColliders) {
+		if (rPair.first == strBoneName) {
+			pColliders = &rPair.second;
+			break;
+		}
+	}
+
+	if (pColliders)
+		pColliders->emplace_back(_pCollider);
+	else {
+		GetColliderList().emplace_back(make_pair(strBoneName, vector<CColliderObject*>()));
+		for (auto& rPair : m_vecColliders) {
+			if (rPair.first == strBoneName) {
+				pColliders = &rPair.second;
+				break;
+			}
+		}
+		pColliders->emplace_back(_pCollider);
+	}
+		
 	_pCollider->m_pParent = this;
-	//Safe_AddRef(_pChild->m_pParent);
 
 	return true;
 }
@@ -227,8 +247,8 @@ _bool CGameObject::IsColliderExist(CColliderObject * _pCollider)
 	if (!_pCollider)
 		abort();
 
-	for (auto& rMap : m_mapColliders) {
-		for (auto& rCollider : rMap.second) {
+	for (auto& rPair : m_vecColliders) {
+		for (auto& rCollider : rPair.second) {
 			if (rCollider == _pCollider) {
 				return true;
 			}
@@ -268,4 +288,3 @@ void CGameObject::ReleaseChild(CGameObject * _pChild)
 	_pChild->m_pParent = nullptr;
 	_pChild->GetTransform()->SetParentBoneMatrix(nullptr);
 }
-

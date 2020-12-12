@@ -27,8 +27,11 @@ public:
 public:
 	void			Set_AnimationSet(const _uint& iIndex);
 	void			Play_Animation(const _float& fTimeDelta);
+	//void			UpdateDeltaTime(const _float& _fDeltaTime);
 
 private:
+	// 렌더 부분에서 호출됩니다.
+	void			UpdateAnimation(const _float& fTimeDelta);
 
 	// 모든 뼈들을 순회하면서 뼈들이 갖고 있는 TransformationMatrix와 pParentMatrix를 결합하여 CombinedTransformationMatrix를 만들어주는 함수
 	void			Update_FrameMatrices(D3DXFRAME_DERIVED* pFrame, const _matrix* pParentMatrix);
@@ -41,6 +44,7 @@ private:
 	CHierarchyLoader*		m_pLoader;
 	CAniCtrl*				m_pAniCtrl;
 	list<D3DXMESHCONTAINER_DERIVED*>			m_MeshContainerList;
+	_float					m_fDeltaTime = 0.f;
 
 public:
 	static	CDynamicMesh*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFilePath, const _tchar* pFileName);

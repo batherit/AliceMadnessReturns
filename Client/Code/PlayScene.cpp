@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "PlayScene.h"
 #include "Terrain.h"
-#include "Player.h"
+#include "Alice.h"
 #include "Monster.h"
 #include "Stone.h"
 #include "Sword.h"
@@ -146,7 +146,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Map", pMap), E_FAIL);
 
 	// 플레이어 생성
-	m_pPlayer = CPlayer::Create(m_pGraphicDev);
+	m_pPlayer = CAlice::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
 	
@@ -157,63 +157,10 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	//m_pCamera->SetParent(m_pPlayer);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", m_pCamera), E_FAIL);
 
-	// 충돌구 생성
-	Engine::CColliderObject_Sphere* pCollider = Engine::CColliderObject_Sphere::Create(m_pGraphicDev);
-	pCollider->GetTransform()->Translate(_vec3(0.f, 0.f, -10.f));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Collider", pCollider), E_FAIL);
-
-	pCollider = Engine::CColliderObject_Sphere::Create(m_pGraphicDev);
-	pCollider->GetTransform()->Translate(_vec3(0.f, 0.f, -20.f));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Collider", pCollider), E_FAIL);
-
-	// 지형 생성
-	/*m_pTerrain = CTerrain::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(m_pTerrain, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", m_pTerrain), E_FAIL);
-	m_pTerrain->CreateTerrain(129, 129, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");*/
-
-	
-	
-	
-
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pSkyBox, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", m_pSkyBox), E_FAIL);
-
-	// 몬스터 생성
-	//m_pMonster = CMonster::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(m_pMonster, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", m_pMonster), E_FAIL);
-
-	// 스톤 생성
-	Engine::CGameObject* pGameObject = CStone::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
-
-	// 스워드 생성
-	pGameObject = CSword::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
-	pGameObject->SetParent(m_pPlayer, "R_Hand");	// 스워드를 플레이어의 오른쪽 팔에 부착
-
-	
-	
-	// 몬스터에 카메라를 세팅함.
-	//m_pMonster->SetCameraForBillboard(m_pCamera);
-
-	// 몬스터를 임의의 위치에 둠.
-	//m_pMonster->GetComponent<Engine::CTransform>()->SetPos(
-	//	Engine::GetNumberMinBetweenMax(10.f, 20.f),
-	//	0.f,
-	//	Engine::GetNumberMinBetweenMax(10.f, 20.f)
-	//);
-	//_float fHeight = m_pTerrain->GetHeight(m_pMonster->GetComponent<Engine::CTransform>()->GetPos());
-	//m_pMonster->GetComponent<Engine::CTransform>()->SetPosY(fHeight);
-
-	//m_mapLayer.emplace(pLayerTag, pLayer);
 
 	return S_OK;
 }

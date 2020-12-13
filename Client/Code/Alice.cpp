@@ -1,69 +1,50 @@
 #include "pch.h"
-#include "Player.h"
+#include "Alice.h"
 #include "Map.h"
 
-CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
+CAlice::CAlice(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
 	CGameObject(pGraphicDev)
 {
 }
 
-CPlayer::CPlayer(const CPlayer & rhs)
+CAlice::CAlice(const CAlice & rhs)
 	:
 	CGameObject(rhs)
 {
 }
 
-CPlayer::~CPlayer(void)
+CAlice::~CAlice(void)
 {
 }
 
-HRESULT CPlayer::Ready_Object(void)
+HRESULT CAlice::Ready_Object(void)
 {
-	m_vTargetPos = m_pTransform->GetPos();
-
 	Engine::CComponent* pComponent = nullptr;
 
-	//m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
-
-	// Clone Mesh
-	//pComponent = m_pMesh = dynamic_cast<Engine::CStaticMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Stone"));
+	// Mesh
 	pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"AliceW"));
-	//pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Alice"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::CDynamicMesh::GetComponentID()].emplace(Engine::CDynamicMesh::GetComponentTag(), pComponent);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
+	m_pMesh->Set_AnimationSet(0);
+
+	// Load Colliders
+	LoadColliders(L"AliceW.col");
 
 	// MeshRenderer
 	pComponent = m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
-	m_pTransform->SetScale(_vec3(1.f, 1.f, 1.f));
-	m_pMesh->Set_AnimationSet(0);
-	//m_pMesh->Set_AnimationSet(0);
+	m_pTransform->SetScale(_vec3(0.01f, 0.01f, 0.01f));
 	
 	// Physics
 	pComponent = m_pPhysics = AddComponent<Engine::CPhysics>();
 	m_pPhysics->SetSpeed(20.f, 20.f);
-
-	// Renderer
-	//pComponent = m_pRenderer = AddComponent<Engine::CRenderer>();
-
-	// Collider
-	//pComponent = m_pCollider = AddComponent<Engine::CSphereCollider>();
-	//m_pCollider->SetSphereColliderInfo(2.f);
-
-	// MeshCollider
-	//pComponent = m_pCollider = dynamic_cast<Engine::CMeshCollider*>(Engine::GetOriProto(L"Collider_Stone"));
-	//pComponent = m_pCollider = dynamic_cast<Engine::CMeshCollider*>(Engine::GetOriProto(L"Collider_Player"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
-	//Engine::Safe_AddRef(pComponent);
 		
 	return S_OK;
 }
 
-int CPlayer::Update_Object(const _float & _fDeltaTime)
+int CAlice::Update_Object(const _float & _fDeltaTime)
 {
 	if (!m_pMap) {
 		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
@@ -100,25 +81,19 @@ int CPlayer::Update_Object(const _float & _fDeltaTime)
 	}
 
 	m_pPhysics->SetDirection(vDir);
-	/*if(vDir.x == 0.f && vDir.y == 0.f && vDir.z == 0.f)
-		m_pMesh->Set_AnimationSet(57);
-	else
-		m_pMesh->Set_AnimationSet(54);*/
-	
 	m_pTransform->SetPos(m_pMap->GetNaviMesh()->Move_OnNaviMesh(&m_pTransform->GetPos(), &(vDir * _fDeltaTime * m_pPhysics->GetSpeed())));
-
-	//m_pMesh->Set_AnimationSet(54);
 	m_pMesh->Play_Animation(_fDeltaTime);
 
-	//m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+
+	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
+		return 0;
+	}
 	m_pRenderer->Update(_fDeltaTime);
-
-
 
 	return 0;
 }
 
-void CPlayer::Render_Object(void)
+void CAlice::Render_Object(void)
 {
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
@@ -127,17 +102,40 @@ void CPlayer::Render_Object(void)
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
 }
 
-//void CPlayer::AttachItemToBone(Engine::CGameObject * _pItemObject, const _tchar * _pBoneName)
+_bool CAlice::LoadColliders(const _tchar* _pFileName)
+{
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Resource\\Colliders\\");
+
+	lstrcat(szDataPath, _pFileName);
+
+	HANDLE hFile = CreateFileW(szDataPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return false;
+
+	LoadCollidersInfo(hFile);
+
+	CloseHandle(hFile);
+
+	return true;
+}
+
+//void CAlice::AttachItemToBone(Engine::CGameObject * _pItemObject, const _tchar * _pBoneName)
 //{
 //}
 //
-//void CPlayer::DetachFromBone()
+//void CAlice::DetachFromBone()
 //{
 //}
 
-CPlayer * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CAlice * CAlice::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CPlayer*	pInstance = new CPlayer(pGraphicDev);
+	CAlice*	pInstance = new CAlice(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -145,7 +143,7 @@ CPlayer * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CPlayer::Free(void)
+void CAlice::Free(void)
 {
 	CGameObject::Free();
 }

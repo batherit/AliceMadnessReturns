@@ -55,9 +55,6 @@
     <Filter Include="02. Object\02. GameObject\Monster">
       <UniqueIdentifier>{ff1602f6-035f-4927-b2d7-e852e51a510b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\02. GameObject\Player">
-      <UniqueIdentifier>{32cb0994-47c5-4825-bbdf-cd871b863a1a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\02. GameObject\SkyBox">
       <UniqueIdentifier>{2ec60084-704c-447a-aecd-b75b1226b5f6}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,12 @@
     </Filter>
     <Filter Include="02. Object\05. StaticObject">
       <UniqueIdentifier>{5f69bfc7-2e04-49d8-920a-4c6a5d8b0004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\06. DynamicObject">
+      <UniqueIdentifier>{bef18fc3-6e17-4744-87e0-9d40113da4d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Alice">
+      <UniqueIdentifier>{32cb0994-47c5-4825-bbdf-cd871b863a1a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -141,9 +144,6 @@
     <ClInclude Include="..\Code\Monster.h">
       <Filter>02. Object\02. GameObject\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Player.h">
-      <Filter>02. Object\02. GameObject\Player</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\SkyBox.h">
       <Filter>02. Object\02. GameObject\SkyBox</Filter>
     </ClInclude>
@@ -164,6 +164,12 @@
     </ClInclude>
     <ClInclude Include="..\Code\StaticObject.h">
       <Filter>02. Object\05. StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\DynamicObject.h">
+      <Filter>02. Object\06. DynamicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Alice.h">
+      <Filter>02. Object\02. GameObject\Alice</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +209,6 @@
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. Object\02. GameObject\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Player.cpp">
-      <Filter>02. Object\02. GameObject\Player</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
       <Filter>02. Object\02. GameObject\SkyBox</Filter>
     </ClCompile>
@@ -226,6 +229,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\StaticObject.cpp">
       <Filter>02. Object\05. StaticObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicObject.cpp">
+      <Filter>02. Object\06. DynamicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Alice.cpp">
+      <Filter>02. Object\02. GameObject\Alice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

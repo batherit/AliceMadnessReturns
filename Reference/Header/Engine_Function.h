@@ -281,18 +281,18 @@ namespace Engine
 			_vec3(-1.f, 1.f, 1.f), _vec3(1.f, 1.f, 1.f), _vec3(1.f, -1.f, 1.f), _vec3(-1.f, -1.f, 1.f)
 		};
 
-		_matrix matProj, matView, matToWorld;
+		_matrix matProj, matView;
 		rDevice->GetTransform(D3DTS_PROJECTION, &matProj);
 		rDevice->GetTransform(D3DTS_VIEW, &matView);
 
 		D3DXMatrixInverse(&matProj, NULL, &matProj);
 		D3DXMatrixInverse(&matView, NULL, &matView);
-		matToWorld = matProj * matView;
 
 		_vec3 vPointW[8];
 		for (_uint i = 0; i < 8; ++i)
 		{
-			D3DXVec3TransformCoord(&vPointW[i], &vPoint[i], &matToWorld);
+			D3DXVec3TransformCoord(&vPointW[i], &vPoint[i], &matProj);
+			D3DXVec3TransformCoord(&vPointW[i], &vPointW[i], &matView);
 		}
 
 		_plane plPlane[6];

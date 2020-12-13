@@ -9,6 +9,8 @@ class CComponent;
 class CTransform;
 class CColliderObject;
 class CColliderObject_Sphere;
+class CColliderObject_AABB;
+class CColliderObject_OBB;
 
 class ENGINE_DLL CGameObject abstract : public CBase
 {
@@ -69,8 +71,8 @@ public:
 	virtual _bool LoadInfo(FILE* _fpIn)		{ return true; }
 	virtual _bool SaveInfo(HANDLE& _hfOut)	{ return true; }
 	virtual _bool LoadInfo(HANDLE& _hfIn)	{ return true; }
-	virtual _bool SaveCollidersInfo(HANDLE& _hfOut) { return true; }
-	virtual _bool LoadCollidersInfo(HANDLE& _hfIn)	{ return true; }
+	_bool SaveCollidersInfo(HANDLE& _hfOut);
+	_bool LoadCollidersInfo(HANDLE& _hfIn);
 
 	virtual void Free(void);
 

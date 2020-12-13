@@ -292,7 +292,7 @@ namespace Engine
 		for (_uint i = 0; i < 8; ++i)
 		{
 			D3DXVec3TransformCoord(&vPointW[i], &vPoint[i], &matProj);
-			D3DXVec3TransformCoord(&vPointW[i], &vPoint[i], &matView);
+			D3DXVec3TransformCoord(&vPointW[i], &vPointW[i], &matView);
 		}
 
 		_plane plPlane[6];
@@ -312,8 +312,10 @@ namespace Engine
 		for (_uint i = 0; i < 6; ++i)
 		{
 			if (D3DXPlaneDotCoord(&plPlane[i], &_vPos) > _fRadius)
-				return false;
+				return true;
 		}
+
+		return false;
 	}
 
 	// ·£´ý À¯Æ¿

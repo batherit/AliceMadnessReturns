@@ -135,6 +135,8 @@ BEGIN_MESSAGE_MAP(CColliderTab, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &CColliderTab::OnBnClickedButtonDelete)
 	ON_NOTIFY(NM_CLICK, IDC_TREE3, &CColliderTab::OnNMClickTreeColliders)
 	ON_EN_CHANGE(IDC_EDIT1, &CColliderTab::OnEnChangeEditColliderTag)
+	ON_BN_CLICKED(IDC_BUTTON7, &CColliderTab::OnBnClickedButtonSave)
+	ON_BN_CLICKED(IDC_BUTTON8, &CColliderTab::OnBnClickedButtonLoad)
 END_MESSAGE_MAP()
 
 
@@ -502,4 +504,28 @@ void CColliderTab::OnEnChangeEditColliderTag()
 		m_pSelectedCollider->SetColliderTag(m_cstrColliderTag);
 	}
 	UpdateData(FALSE);
+}
+
+
+void CColliderTab::OnBnClickedButtonSave()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
+	CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
+	CDynamicObject* pDynamicObject = pEditScene->GetDynamicObject(strMeshTag);
+
+	pEditScene->SaveColliders(pDynamicObject);
+}
+
+
+void CColliderTab::OnBnClickedButtonLoad()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
+	CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
+	CDynamicObject* pDynamicObject = pEditScene->GetDynamicObject(strMeshTag);
+
+	pEditScene->LoadColliders(pDynamicObject);
+	
+	UpdateAttachedColliders(pDynamicObject);
 }

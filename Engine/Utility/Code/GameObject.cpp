@@ -93,12 +93,7 @@ void Engine::CGameObject::Free(void)
 	m_vecChildList.clear();
 	m_vecChildList.shrink_to_fit();
 
-	for (auto& rPair : m_vecColliders) {
-		for_each(rPair.second.begin(), rPair.second.end(), Engine::CDeleteObj());
-		rPair.second.clear();
-		rPair.second.shrink_to_fit();
-	}
-	m_vecColliders.clear();
+	ClearColliders();
 
 	Safe_Release(m_pGraphicDev);
 }
@@ -287,4 +282,14 @@ void CGameObject::ReleaseChild(CGameObject * _pChild)
 	//Safe_Release(_pChild->m_pParent);
 	_pChild->m_pParent = nullptr;
 	_pChild->GetTransform()->SetParentBoneMatrix(nullptr);
+}
+
+void CGameObject::ClearColliders()
+{
+	for (auto& rPair : m_vecColliders) {
+		for_each(rPair.second.begin(), rPair.second.end(), Engine::CDeleteObj());
+		rPair.second.clear();
+		rPair.second.shrink_to_fit();
+	}
+	m_vecColliders.clear();
 }

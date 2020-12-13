@@ -66,6 +66,8 @@ public:
 	void SaveMap();
 	void LoadMap();
 	// 콜라이더탭 편집 내용 세이브/로드
+	void SaveColliders(Engine::CGameObject* _pObject);
+	void LoadColliders(Engine::CGameObject* _pObject);
 
 private:
 	_bool IsValidObjectIndex(_int _iObjectIndex);

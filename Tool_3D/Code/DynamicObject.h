@@ -30,6 +30,8 @@ public:
 
 	virtual _bool SaveInfo(HANDLE& _hfOut) override;
 	virtual _bool LoadInfo(HANDLE& _hfIn) override;
+	virtual _bool SaveCollidersInfo(HANDLE& _hfOut) override;
+	virtual _bool LoadCollidersInfo(HANDLE& _hfIn) override;
 
 private:
 	Engine::CDynamicMesh* m_pMesh = nullptr;

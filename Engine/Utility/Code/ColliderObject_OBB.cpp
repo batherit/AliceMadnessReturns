@@ -51,6 +51,35 @@ void CColliderObject_OBB::Render_Object(void)
 	m_pRenderer->Render();
 }
 
+_bool CColliderObject_OBB::SaveInfo(HANDLE& _hfOut)
+{
+	DWORD dwByte = 0;
+
+	_vec3 vPos = GetTransform()->GetPos(Engine::CTransform::COORD_TYPE_LOCAL);
+	_vec3 vAngle = GetTransform()->GetAngle();
+	_vec3 vScale = GetTransform()->GetScale();
+	WriteFile(_hfOut, &vPos, sizeof(vPos), &dwByte, nullptr);
+	WriteFile(_hfOut, &vAngle, sizeof(vAngle), &dwByte, nullptr);
+	WriteFile(_hfOut, &vScale, sizeof(vScale), &dwByte, nullptr);
+
+	return true;
+}
+
+_bool CColliderObject_OBB::LoadInfo(HANDLE& _hfIn)
+{
+	DWORD dwByte = 0;
+
+	_vec3 vPos, vAngle, vScale;
+	ReadFile(_hfIn, &vPos, sizeof(vPos), &dwByte, nullptr);
+	ReadFile(_hfIn, &vAngle, sizeof(vAngle), &dwByte, nullptr);
+	ReadFile(_hfIn, &vScale, sizeof(vScale), &dwByte, nullptr);
+	GetTransform()->SetPos(vPos);
+	GetTransform()->SetAngle(vAngle);
+	GetTransform()->SetScale(vScale);
+
+	return true;
+}
+
 CColliderObject_OBB * CColliderObject_OBB::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CColliderObject_OBB*	pInstance = new CColliderObject_OBB(pGraphicDev);

@@ -54,6 +54,7 @@ public:
 	_bool IsColliderExist(CColliderObject* _pCollider);
 	void ReleaseParent();
 	void ReleaseChild(CGameObject* _pChild);
+	void ClearColliders();
 	//void ReleaseCollider(CColliderObject* _pCollider);
 
 	CGameObject* GetParent() const { return m_pParent; }
@@ -62,10 +63,12 @@ public:
 	vector<pair<string, vector<CColliderObject*>>>& GetColliderList() { return m_vecColliders; }
 
 	// 파일 입출력 관련
-	virtual _bool SaveInfo(FILE* _fpOut)	{ return true; };
-	virtual _bool LoadInfo(FILE* _fpIn)		{ return true; };
-	virtual _bool SaveInfo(HANDLE& _hfOut)	{ return true; };
-	virtual _bool LoadInfo(HANDLE& _hfIn)	{ return true; };
+	virtual _bool SaveInfo(FILE* _fpOut)	{ return true; }
+	virtual _bool LoadInfo(FILE* _fpIn)		{ return true; }
+	virtual _bool SaveInfo(HANDLE& _hfOut)	{ return true; }
+	virtual _bool LoadInfo(HANDLE& _hfIn)	{ return true; }
+	virtual _bool SaveCollidersInfo(HANDLE& _hfOut) { return true; }
+	virtual _bool LoadCollidersInfo(HANDLE& _hfIn)	{ return true; }
 
 	virtual void Free(void);
 

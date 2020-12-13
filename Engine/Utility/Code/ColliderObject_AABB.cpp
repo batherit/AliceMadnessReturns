@@ -56,6 +56,31 @@ void CColliderObject_AABB::Render_Object(void)
 	m_pRenderer->Render();
 }
 
+_bool CColliderObject_AABB::SaveInfo(HANDLE& _hfOut)
+{
+	DWORD dwByte = 0;
+
+	_vec3 vPos = GetTransform()->GetPos(Engine::CTransform::COORD_TYPE_LOCAL);
+	_vec3 vScale = GetTransform()->GetScale();
+	WriteFile(_hfOut, &vPos, sizeof(vPos), &dwByte, nullptr);
+	WriteFile(_hfOut, &vScale, sizeof(vScale), &dwByte, nullptr);
+
+	return true;
+}
+
+_bool CColliderObject_AABB::LoadInfo(HANDLE& _hfIn)
+{
+	DWORD dwByte = 0;
+
+	_vec3 vPos, vScale;
+	ReadFile(_hfIn, &vPos, sizeof(vPos), &dwByte, nullptr);
+	ReadFile(_hfIn, &vScale, sizeof(vScale), &dwByte, nullptr);
+	GetTransform()->SetPos(vPos);
+	GetTransform()->SetScale(vScale);
+
+	return true;
+}
+
 CColliderObject_AABB * CColliderObject_AABB::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CColliderObject_AABB*	pInstance = new CColliderObject_AABB(pGraphicDev);

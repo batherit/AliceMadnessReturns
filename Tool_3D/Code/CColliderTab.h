@@ -72,4 +72,6 @@ public:
 	CEdit m_editColliderTag;
 	CString m_cstrColliderTag;
 	afx_msg void OnEnChangeEditColliderTag();
+	afx_msg void OnBnClickedButtonSave();
+	afx_msg void OnBnClickedButtonLoad();
 };

@@ -471,6 +471,67 @@ void CEditScene::LoadMap()
 	//UpdateData(FALSE);
 }
 
+void CEditScene::SaveColliders(Engine::CGameObject* _pObject)
+{
+	if (!_pObject)
+		return;
+
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+
+	CFileDialog Dlg(FALSE, L"col", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.col) | *.col||", pTabForm);
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Resource\\Colliders");
+	Dlg.m_ofn.lpstrInitialDir = szDataPath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString strPath = Dlg.GetPathName();
+		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		_pObject->SaveCollidersInfo(hFile);
+
+		CloseHandle(hFile);
+	}
+}
+
+void CEditScene::LoadColliders(Engine::CGameObject* _pObject)
+{
+	if (!_pObject)
+		return;
+
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
+
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CFileDialog Dlg(TRUE, L"col", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.col) | *.col||", pTabForm);
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Resource\\Colliders");
+	Dlg.m_ofn.lpstrInitialDir = szDataPath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString strPath = Dlg.GetPathName();
+		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		_pObject->LoadCollidersInfo(hFile);
+
+		CloseHandle(hFile);
+	}
+}
+
 _bool CEditScene::IsValidObjectIndex(_int _iObjectIndex)
 {
 	if (_iObjectIndex < 0 || _iObjectIndex >= static_cast<_int>(m_vecStaticObjects.size()))

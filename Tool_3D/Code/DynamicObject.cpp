@@ -131,3 +131,105 @@ _bool CDynamicObject::LoadInfo(HANDLE & _hfIn)
 
 	return SetRenderInfo(m_tcMeshTag, eRenderID);
 }
+
+_bool CDynamicObject::SaveCollidersInfo(HANDLE & _hfOut)
+{
+	DWORD dwByte = 0;
+
+	char cBoneName[MAX_PATH] = "";
+	_tchar tcColliderTag[MAX_PATH] = L"";
+	Engine::E_COLLIDER_TYPE eColliderType = Engine::TYPE_END;
+
+	_int iBoneNameSize = m_vecColliders.size();
+	_int iCollidersSize = 0;
+	_int iStrLen = 0;
+	Engine::CColliderObject* pCollider = nullptr;
+
+	WriteFile(_hfOut, &iBoneNameSize, sizeof(iBoneNameSize), &dwByte, nullptr);					// 뼈 개수 저장
+	// 콜라이더가 부착된 뼈 개수만큼 순회
+	for (_int i = 0; i < iBoneNameSize; ++i) {
+		strcpy_s(cBoneName, m_vecColliders[i].first.c_str());
+		iStrLen = strlen(cBoneName);
+		WriteFile(_hfOut, &iStrLen, sizeof(iStrLen), &dwByte, nullptr);							// 뼈 이름 길이 저장
+		WriteFile(_hfOut, &cBoneName, sizeof(char) * (iStrLen + 1), &dwByte, nullptr);			// 뼈 이름 저장
+
+		// 하나의 뼈에 붙은 콜라이더 수를 저장한다.
+		iCollidersSize = m_vecColliders[i].second.size();
+		WriteFile(_hfOut, &iCollidersSize, sizeof(iCollidersSize), &dwByte, nullptr);			// 콜라이더 수 저장
+
+		for (_int j = 0; j < iCollidersSize; ++j) {
+			pCollider = m_vecColliders[i].second[j];
+
+			lstrcpy(tcColliderTag, pCollider->GetColliderTag());
+			iStrLen = lstrlen(pCollider->GetColliderTag());
+			WriteFile(_hfOut, &iStrLen, sizeof(iStrLen), &dwByte, nullptr);
+			WriteFile(_hfOut, &tcColliderTag, sizeof(_tchar) * (iStrLen + 1), &dwByte, nullptr);// 콜라이더 태그 저장
+			// 어떤 콜라이더 타입인지를 저장한다.
+			eColliderType = pCollider->GetColliderType();
+			WriteFile(_hfOut, &eColliderType, sizeof(eColliderType), &dwByte, nullptr);			// 콜라이더 타입 저장
+
+			pCollider->SaveInfo(_hfOut);														// 콜라이더 트랜스폼 저장
+		}
+	}
+
+	return true;
+}
+
+_bool CDynamicObject::LoadCollidersInfo(HANDLE & _hfIn)
+{
+	ClearColliders();
+
+	DWORD dwByte = 0;
+
+	char cBoneName[MAX_PATH] = "";
+	_tchar tcColliderTag[MAX_PATH] = L"";
+	Engine::E_COLLIDER_TYPE eColliderType = Engine::TYPE_END;
+
+	_int iBoneNameSize = 0;
+	_int iCollidersSize = 0;
+	_int iStrLen = 0;
+	Engine::CColliderObject* pCollider = nullptr;
+
+	ReadFile(_hfIn, &iBoneNameSize, sizeof(iBoneNameSize), &dwByte, nullptr);						// 뼈 개수 읽기
+	// 콜라이더가 부착된 뼈 개수만큼 순회
+	for (_int i = 0; i < iBoneNameSize; ++i) {
+		ReadFile(_hfIn, &iStrLen, sizeof(iStrLen), &dwByte, nullptr);								// 뼈 이름 길이 읽기
+		ReadFile(_hfIn, &cBoneName, sizeof(char) * (iStrLen + 1), &dwByte, nullptr);				// 뼈 이름 읽기
+
+		// 하나의 뼈에 붙은 콜라이더 수를 저장한다.
+		ReadFile(_hfIn, &iCollidersSize, sizeof(iCollidersSize), &dwByte, nullptr);					// 콜라이더 수 읽기
+
+		for (_int j = 0; j < iCollidersSize; ++j) {
+			ReadFile(_hfIn, &iStrLen, sizeof(iStrLen), &dwByte, nullptr);
+			ReadFile(_hfIn, &tcColliderTag, sizeof(_tchar) * (iStrLen + 1), &dwByte, nullptr);		// 콜라이더 태그 읽기
+
+			// 어떤 콜라이더 타입인지를 저장한다.
+			ReadFile(_hfIn, &eColliderType, sizeof(eColliderType), &dwByte, nullptr);				// 콜라이더 타입 읽기
+
+			switch (eColliderType) {																// 콜라이더 트랜스폼 읽기
+			case Engine::TYPE_SPHERE:
+				pCollider = Engine::CColliderObject_Sphere::Create(m_pGraphicDev);
+				pCollider->LoadInfo(_hfIn);
+				if (!AddCollider(pCollider, cBoneName))
+					abort();
+				break;
+			case Engine::TYPE_AABB:
+				pCollider = Engine::CColliderObject_AABB::Create(m_pGraphicDev);
+				pCollider->LoadInfo(_hfIn);
+				if (!AddCollider(pCollider, cBoneName))
+					abort();
+				break;
+			case Engine::TYPE_OBB:
+				pCollider = Engine::CColliderObject_OBB::Create(m_pGraphicDev);
+				pCollider->LoadInfo(_hfIn);
+				if (!AddCollider(pCollider, cBoneName))
+					abort();
+				break;
+			}
+
+			pCollider->SetColliderTag(tcColliderTag);
+		}
+	}
+
+	return true;
+}

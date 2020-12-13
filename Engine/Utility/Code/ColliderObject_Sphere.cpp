@@ -52,6 +52,32 @@ void CColliderObject_Sphere::Render_Object(void)
 	m_pRenderer->Render();
 }
 
+_bool CColliderObject_Sphere::SaveInfo(HANDLE& _hfOut) 
+{
+	DWORD dwByte = 0;
+
+	_vec3 vPos = GetTransform()->GetPos(Engine::CTransform::COORD_TYPE_LOCAL);
+	WriteFile(_hfOut, &vPos, sizeof(vPos), &dwByte, nullptr);
+	WriteFile(_hfOut, &m_fRadius, sizeof(m_fRadius), &dwByte, nullptr);
+
+	return true;
+}
+
+_bool CColliderObject_Sphere::LoadInfo(HANDLE& _hfIn) 
+{
+	DWORD dwByte = 0;
+
+	_vec3 vPos;
+	_float fRadius = 0.f;
+	ReadFile(_hfIn, &vPos, sizeof(vPos), &dwByte, nullptr);
+	ReadFile(_hfIn, &fRadius, sizeof(m_fRadius), &dwByte, nullptr);
+
+	GetTransform()->SetPos(vPos);
+	SetRadius(fRadius);
+
+	return true;
+}
+
 CColliderObject_Sphere * CColliderObject_Sphere::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CColliderObject_Sphere*	pInstance = new CColliderObject_Sphere(pGraphicDev);

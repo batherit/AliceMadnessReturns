@@ -293,3 +293,16 @@ void CGameObject::ClearColliders()
 	}
 	m_vecColliders.clear();
 }
+
+CColliderObject * CGameObject::GetColliderFromTag(const _tchar * _pColliderTag)
+{
+	for (auto& rPair : m_vecColliders) {
+		for (auto& rObj : rPair.second) {
+			if (lstrcmp(rObj->GetColliderTag(), _pColliderTag) == 0) {
+				return rObj;
+			}
+		}
+	}
+
+	return nullptr;
+}

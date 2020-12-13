@@ -274,6 +274,50 @@ namespace Engine
 		return _stPickingInfo.vRayPos + fT * _stPickingInfo.vRayDir;
 	}
 
+	// 절두체 컬링
+	inline _bool IsSphereCulled(const LPDIRECT3DDEVICE9& rDevice, const _vec3& _vPos, _float _fRadius) {
+		static const _vec3 vPoint[8] = {
+			_vec3(-1.f, 1.f, 0.f), _vec3(1.f, 1.f, 0.f), _vec3(1.f, -1.f, 0.f), _vec3(-1.f, -1.f, 0.f),
+			_vec3(-1.f, 1.f, 1.f), _vec3(1.f, 1.f, 1.f), _vec3(1.f, -1.f, 1.f), _vec3(-1.f, -1.f, 1.f)
+		};
+
+		_matrix matProj, matView, matToWorld;
+		rDevice->GetTransform(D3DTS_PROJECTION, &matProj);
+		rDevice->GetTransform(D3DTS_VIEW, &matView);
+
+		D3DXMatrixInverse(&matProj, NULL, &matProj);
+		D3DXMatrixInverse(&matView, NULL, &matView);
+		matToWorld = matProj * matView;
+
+		_vec3 vPointW[8];
+		for (_uint i = 0; i < 8; ++i)
+		{
+			D3DXVec3TransformCoord(&vPointW[i], &vPoint[i], &matToWorld);
+		}
+
+		_plane plPlane[6];
+		//x+
+		D3DXPlaneFromPoints(&plPlane[0], &vPointW[1], &vPointW[5], &vPointW[6]);
+		//x-				 				
+		D3DXPlaneFromPoints(&plPlane[1], &vPointW[4], &vPointW[0], &vPointW[3]);
+		//y+				 					
+		D3DXPlaneFromPoints(&plPlane[2], &vPointW[4], &vPointW[5], &vPointW[1]);
+		//y-				 					
+		D3DXPlaneFromPoints(&plPlane[3], &vPointW[3], &vPointW[2], &vPointW[6]);
+		//z+								
+		D3DXPlaneFromPoints(&plPlane[4], &vPointW[7], &vPointW[6], &vPointW[5]);
+		//z-									
+		D3DXPlaneFromPoints(&plPlane[5], &vPointW[0], &vPointW[1], &vPointW[2]);
+
+		for (_uint i = 0; i < 6; ++i)
+		{
+			if (D3DXPlaneDotCoord(&plPlane[i], &_vPos) > _fRadius)
+				return true;
+		}
+
+		return false;
+	}
+
 	// 랜덤 유틸
 	inline _float GetRandomFloat(void) {
 		return static_cast <_float> (rand()) / static_cast <_float> (RAND_MAX);

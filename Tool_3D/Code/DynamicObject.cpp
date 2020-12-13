@@ -34,6 +34,11 @@ int CDynamicObject::Update_Object(const _float & _fDeltaTime)
 {
 	CGameObject::Update_Object(_fDeltaTime);
 	m_pMesh->Play_Animation(_fDeltaTime);
+
+	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
+		return 0;
+	}
+
 	m_pRenderer->Update(_fDeltaTime);
 
 	return 0;
@@ -230,6 +235,8 @@ _bool CDynamicObject::LoadCollidersInfo(HANDLE & _hfIn)
 			pCollider->SetColliderTag(tcColliderTag);
 		}
 	}
+
+	m_pCullingSphere = dynamic_cast<Engine::CColliderObject_Sphere*>(GetColliderFromTag(L"CULL"));
 
 	return true;
 }

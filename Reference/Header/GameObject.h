@@ -8,6 +8,7 @@ BEGIN(Engine)
 class CComponent;
 class CTransform;
 class CColliderObject;
+class CColliderObject_Sphere;
 
 class ENGINE_DLL CGameObject abstract : public CBase
 {
@@ -61,6 +62,7 @@ public:
 	vector<CGameObject*>& GetChildList() { return m_vecChildList; }
 	//vector<CColliderObject*>& GetColliderList() { return m_vecColliderList; }
 	vector<pair<string, vector<CColliderObject*>>>& GetColliderList() { return m_vecColliders; }
+	CColliderObject* GetColliderFromTag(const _tchar* _pColliderTag);
 
 	// 파일 입출력 관련
 	virtual _bool SaveInfo(FILE* _fpOut)	{ return true; }
@@ -81,6 +83,7 @@ protected:
 	CGameObject* m_pParent = nullptr;
 	vector<CGameObject*> m_vecChildList;
 	vector<pair<string, vector<CColliderObject*>>> m_vecColliders;
+	CColliderObject_Sphere* m_pCullingSphere = nullptr;		// 충돌체로부터 추출함.
 	//vector<CColliderObject*> m_vecColliderList;
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
 	CTransform* m_pTransform = nullptr;

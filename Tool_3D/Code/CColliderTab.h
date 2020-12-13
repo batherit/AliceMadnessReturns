@@ -42,6 +42,7 @@ public:
 
 public:
 	void ActivateColTab(const Engine::E_COLLIDER_TYPE _eColTabType);
+	void UpdateColliderTag(Engine::CColliderObject* _pCollider);
 
 public:
 	CTreeCtrl m_treeObjectList;
@@ -68,4 +69,7 @@ public:
 	afx_msg void OnTcnSelchangeColTab(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonDelete();
 	afx_msg void OnNMClickTreeColliders(NMHDR *pNMHDR, LRESULT *pResult);
+	CEdit m_editColliderTag;
+	CString m_cstrColliderTag;
+	afx_msg void OnEnChangeEditColliderTag();
 };

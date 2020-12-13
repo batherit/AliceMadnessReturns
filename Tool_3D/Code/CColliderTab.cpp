@@ -17,6 +17,7 @@ IMPLEMENT_DYNAMIC(CColliderTab, CDialogEx)
 
 CColliderTab::CColliderTab(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_COLLIDER_TAB, pParent)
+	, m_cstrColliderTag(_T(""))
 {
 
 }
@@ -60,6 +61,8 @@ void CColliderTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TREE3, m_treeColliders);
 	DDX_Control(pDX, IDC_BUTTON10, m_btnAdd);
 	DDX_Control(pDX, IDC_BUTTON1, m_btnDelete);
+	DDX_Control(pDX, IDC_EDIT1, m_editColliderTag);
+	DDX_Text(pDX, IDC_EDIT1, m_cstrColliderTag);
 }
 
 void CColliderTab::ActivateColTab(const Engine::E_COLLIDER_TYPE _eColTabType)
@@ -70,6 +73,13 @@ void CColliderTab::ActivateColTab(const Engine::E_COLLIDER_TYPE _eColTabType)
 
 	m_ColTab.SetCurSel(_eColTabType);
 	m_vecColTabs[_eColTabType]->ShowWindow(SW_SHOW);
+}
+
+void CColliderTab::UpdateColliderTag(Engine::CColliderObject * _pCollider)
+{
+	UpdateData(TRUE);
+	m_cstrColliderTag = _pCollider->GetColliderTag();
+	UpdateData(FALSE);
 }
 
 void CColliderTab::UpdateBoneTree(CDynamicObject* _pDynamicObject)
@@ -124,6 +134,7 @@ BEGIN_MESSAGE_MAP(CColliderTab, CDialogEx)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB2, &CColliderTab::OnTcnSelchangeColTab)
 	ON_BN_CLICKED(IDC_BUTTON1, &CColliderTab::OnBnClickedButtonDelete)
 	ON_NOTIFY(NM_CLICK, IDC_TREE3, &CColliderTab::OnNMClickTreeColliders)
+	ON_EN_CHANGE(IDC_EDIT1, &CColliderTab::OnEnChangeEditColliderTag)
 END_MESSAGE_MAP()
 
 
@@ -189,6 +200,7 @@ void CColliderTab::OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult)
 	m_hSelectedBone = NULL;
 	m_hSelectedCollider = NULL;
 	m_pSelectedCollider = nullptr;
+	m_editColliderTag.EnableWindow(FALSE);
 	m_pSphereColTab->EnableTab(FALSE);
 	m_pAABBColTab->EnableTab(FALSE);
 	m_pOBBColTab->EnableTab(FALSE);
@@ -250,6 +262,7 @@ void CColliderTab::OnNMClickTreeBoneTree(NMHDR *pNMHDR, LRESULT *pResult)
 	m_hSelectedBone = NULL;
 	m_hSelectedCollider = NULL;
 	m_pSelectedCollider = nullptr;
+	m_editColliderTag.EnableWindow(FALSE);
 	m_pSphereColTab->EnableTab(FALSE);
 	m_pAABBColTab->EnableTab(FALSE);
 	m_pOBBColTab->EnableTab(FALSE);
@@ -289,6 +302,7 @@ void CColliderTab::OnBnClickedButtonAdd()
 	// m_hSelectedMesh를 통해 DynamicObject를 얻어옵니다.
 	// m_hSelectedBone을 통해 해당 뼈에 콜라이더를 붙입니다.
 
+	m_editColliderTag.EnableWindow(FALSE);
 	m_pSphereColTab->EnableTab(FALSE);
 	m_pAABBColTab->EnableTab(FALSE);
 	m_pOBBColTab->EnableTab(FALSE);
@@ -322,6 +336,8 @@ void CColliderTab::OnBnClickedButtonAdd()
 		m_pOBBColTab->EnableTab(TRUE);
 		break;
 	}
+	UpdateColliderTag(m_pSelectedCollider);
+	m_editColliderTag.EnableWindow(TRUE);
 
 	CStringA straConv(strBoneName);
 	const char* szBoneName = straConv;
@@ -376,6 +392,7 @@ void CColliderTab::OnBnClickedButtonDelete()
 
 					m_hSelectedCollider = NULL;
 					m_pSelectedCollider = nullptr;
+					m_editColliderTag.EnableWindow(FALSE);
 					m_pSphereColTab->EnableTab(FALSE);
 					m_pAABBColTab->EnableTab(FALSE);
 					m_pOBBColTab->EnableTab(FALSE);
@@ -397,6 +414,7 @@ void CColliderTab::OnNMClickTreeColliders(NMHDR *pNMHDR, LRESULT *pResult)
 	m_btnDelete.EnableWindow(FALSE);
 	m_hSelectedCollider = NULL;
 	m_pSelectedCollider = nullptr;
+	m_editColliderTag.EnableWindow(FALSE);
 	m_pSphereColTab->EnableTab(FALSE);
 	m_pAABBColTab->EnableTab(FALSE);
 	m_pOBBColTab->EnableTab(FALSE);
@@ -449,7 +467,8 @@ void CColliderTab::OnNMClickTreeColliders(NMHDR *pNMHDR, LRESULT *pResult)
 							break;
 						}
 
-
+						UpdateColliderTag(m_pSelectedCollider);
+						m_editColliderTag.EnableWindow(TRUE);
 						break;
 					}
 				}
@@ -468,3 +487,19 @@ void CColliderTab::OnNMClickTreeColliders(NMHDR *pNMHDR, LRESULT *pResult)
 
 
 
+
+
+void CColliderTab::OnEnChangeEditColliderTag()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	if (m_pSelectedCollider) {
+		m_pSelectedCollider->SetColliderTag(m_cstrColliderTag);
+	}
+	UpdateData(FALSE);
+}

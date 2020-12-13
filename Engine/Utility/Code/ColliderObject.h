@@ -28,7 +28,10 @@ public:
 
 public:
 	void SetColliderTag(const _tchar* _pColliderTag) { lstrcpy(m_tcColliderTag, _pColliderTag); }
+	void SetColliderType(const E_COLLIDER_TYPE& _eColliderType) { m_eColliderType = _eColliderType; }
+	
 	const _tchar* GetColliderTag() const { return m_tcColliderTag; }
+	E_COLLIDER_TYPE GetColliderType() const { return m_eColliderType; }
 
 protected:
 	_tchar m_tcColliderTag[MAX_PATH] = L"NULL";

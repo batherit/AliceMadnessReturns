@@ -50,6 +50,7 @@ public:
 	HTREEITEM m_hSelectedMesh = NULL;
 	HTREEITEM m_hSelectedBone = NULL;
 	HTREEITEM m_hSelectedCollider = NULL;
+	Engine::CColliderObject* m_pSelectedCollider = nullptr;
 	virtual BOOL OnInitDialog();
 	CTreeCtrl m_treeBoneTree;
 

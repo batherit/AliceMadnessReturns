@@ -151,16 +151,19 @@ BOOL CColliderTab::OnInitDialog()
 	m_pSphereColTab = new CSphereColTab;
 	m_pSphereColTab->Create(IDD_SPHERE_COLTAB, &m_ColTab);
 	m_pSphereColTab->MoveWindow(0, 25, rect.Width(), rect.Height());
+	m_pSphereColTab->m_pColTab = this;
 	m_vecColTabs.emplace_back(m_pSphereColTab);
 
 	m_pAABBColTab = new CAABBColTab;
 	m_pAABBColTab->Create(IDD_AABB_COLTAB, &m_ColTab);
 	m_pAABBColTab->MoveWindow(0, 25, rect.Width(), rect.Height());
+	m_pAABBColTab->m_pColTab = this;
 	m_vecColTabs.emplace_back(m_pAABBColTab);
 
 	m_pOBBColTab = new COBBColTab;
 	m_pOBBColTab->Create(IDD_OBB_COLTAB, &m_ColTab);
 	m_pOBBColTab->MoveWindow(0, 25, rect.Width(), rect.Height());
+	m_pOBBColTab->m_pColTab = this;
 	m_vecColTabs.emplace_back(m_pOBBColTab);
 
 	// 초기 터레인 탭으로 설정
@@ -185,6 +188,10 @@ void CColliderTab::OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult)
 	m_hSelectedMesh = NULL;
 	m_hSelectedBone = NULL;
 	m_hSelectedCollider = NULL;
+	m_pSelectedCollider = nullptr;
+	m_pSphereColTab->EnableTab(FALSE);
+	m_pAABBColTab->EnableTab(FALSE);
+	m_pOBBColTab->EnableTab(FALSE);
 
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 
@@ -242,6 +249,10 @@ void CColliderTab::OnNMClickTreeBoneTree(NMHDR *pNMHDR, LRESULT *pResult)
 	m_btnDelete.EnableWindow(FALSE);
 	m_hSelectedBone = NULL;
 	m_hSelectedCollider = NULL;
+	m_pSelectedCollider = nullptr;
+	m_pSphereColTab->EnableTab(FALSE);
+	m_pAABBColTab->EnableTab(FALSE);
+	m_pOBBColTab->EnableTab(FALSE);
 
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 
@@ -278,37 +289,47 @@ void CColliderTab::OnBnClickedButtonAdd()
 	// m_hSelectedMesh를 통해 DynamicObject를 얻어옵니다.
 	// m_hSelectedBone을 통해 해당 뼈에 콜라이더를 붙입니다.
 
+	m_pSphereColTab->EnableTab(FALSE);
+	m_pAABBColTab->EnableTab(FALSE);
+	m_pOBBColTab->EnableTab(FALSE);
+
 	CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
 	CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
 	CDynamicObject* pDynamicObject = pEditScene->GetDynamicObject(strMeshTag);
 
 	CString strBoneName = m_treeBoneTree.GetItemText(m_hSelectedBone);
 
-	Engine::CColliderObject* pCollider = nullptr;
+	m_pSelectedCollider = nullptr;
 	switch (static_cast<Engine::E_COLLIDER_TYPE>(m_ColTab.GetCurSel())) {
 	case Engine::TYPE_SPHERE:
-		pCollider = Engine::CColliderObject_Sphere::Create(g_pTool3D_Kernel->GetGraphicDev());
-		dynamic_cast<Engine::CColliderObject_Sphere*>(pCollider)->SetRadius(50.f);
+		m_pSelectedCollider = Engine::CColliderObject_Sphere::Create(g_pTool3D_Kernel->GetGraphicDev());
+		dynamic_cast<Engine::CColliderObject_Sphere*>(m_pSelectedCollider)->SetRadius(25.f);
+		m_pSphereColTab->UpdateTab(dynamic_cast<Engine::CColliderObject_Sphere*>(m_pSelectedCollider));
+		m_pSphereColTab->EnableTab(TRUE);
 		break;
 	case Engine::TYPE_AABB:
 		// TODO : AABB 콜라이더 장착 코드 구현
-		pCollider = Engine::CColliderObject_AABB::Create(g_pTool3D_Kernel->GetGraphicDev());
-		pCollider->GetTransform()->SetScale(_vec3(25.f, 25.f, 25.f));
+		m_pSelectedCollider = Engine::CColliderObject_AABB::Create(g_pTool3D_Kernel->GetGraphicDev());
+		m_pSelectedCollider->GetTransform()->SetScale(_vec3(25.f, 25.f, 25.f));
+		m_pAABBColTab->UpdateTab(dynamic_cast<Engine::CColliderObject_AABB*>(m_pSelectedCollider));
+		m_pAABBColTab->EnableTab(TRUE);
 		break;
 	case Engine::TYPE_OBB:
 		// TODO : OBB 콜라이더 장착 코드 구현
-		pCollider = Engine::CColliderObject_OBB::Create(g_pTool3D_Kernel->GetGraphicDev());
-		pCollider->GetTransform()->SetScale(_vec3(25.f, 25.f, 25.f));
+		m_pSelectedCollider = Engine::CColliderObject_OBB::Create(g_pTool3D_Kernel->GetGraphicDev());
+		m_pSelectedCollider->GetTransform()->SetScale(_vec3(25.f, 25.f, 25.f));
+		m_pOBBColTab->UpdateTab(dynamic_cast<Engine::CColliderObject_OBB*>(m_pSelectedCollider));
+		m_pOBBColTab->EnableTab(TRUE);
 		break;
 	}
 
 	CStringA straConv(strBoneName);
 	const char* szBoneName = straConv;
 	if (strBoneName == L"None") {
-		pDynamicObject->AddCollider(pCollider);
+		pDynamicObject->AddCollider(m_pSelectedCollider);
 	}
 	else {
-		pDynamicObject->AddCollider(pCollider, szBoneName);
+		pDynamicObject->AddCollider(m_pSelectedCollider, szBoneName);
 	}
 	UpdateAttachedColliders(pDynamicObject);
 }
@@ -319,25 +340,7 @@ void CColliderTab::OnBnClickedButtonAdd()
 void CColliderTab::OnTcnSelchangeColTab(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	int iSelIndex = m_ColTab.GetCurSel();
-
-	switch (iSelIndex)
-	{
-	case 0: {
-		ActivateColTab(Engine::TYPE_SPHERE);
-		break;
-	}
-	case 1: {
-		ActivateColTab(Engine::TYPE_AABB);
-		break;
-	}
-	case 2: {
-		ActivateColTab(Engine::TYPE_OBB);
-		break;
-	}
-	default:
-		break;
-	}
+	ActivateColTab(static_cast<Engine::E_COLLIDER_TYPE>(m_ColTab.GetCurSel()));
 
 	*pResult = 0;
 }
@@ -370,12 +373,19 @@ void CColliderTab::OnBnClickedButtonDelete()
 
 					// 콜라이더 트리를 새로 갱신한다.
 					UpdateAttachedColliders(pDynamicObject);
+
+					m_hSelectedCollider = NULL;
+					m_pSelectedCollider = nullptr;
+					m_pSphereColTab->EnableTab(FALSE);
+					m_pAABBColTab->EnableTab(FALSE);
+					m_pOBBColTab->EnableTab(FALSE);
 					break;
 				}
 			}
 		}
 	}
 
+	
 	m_btnDelete.EnableWindow(FALSE);
 }
 
@@ -386,6 +396,10 @@ void CColliderTab::OnNMClickTreeColliders(NMHDR *pNMHDR, LRESULT *pResult)
 	// Delete버튼을 비활성화합니다.
 	m_btnDelete.EnableWindow(FALSE);
 	m_hSelectedCollider = NULL;
+	m_pSelectedCollider = nullptr;
+	m_pSphereColTab->EnableTab(FALSE);
+	m_pAABBColTab->EnableTab(FALSE);
+	m_pOBBColTab->EnableTab(FALSE);
 
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 
@@ -402,11 +416,55 @@ void CColliderTab::OnNMClickTreeColliders(NMHDR *pNMHDR, LRESULT *pResult)
 
 	if (hItem) {
 		// 충돌체를 클릭했다는 것이다. => 삭제할 것이 골라졌으므로 삭제 버튼 활성화
+		CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
+		CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
+		CDynamicObject* pDynamicObject = pEditScene->GetDynamicObject(strMeshTag);
+
+		CString cstrBoneName = m_treeColliders.GetItemText(m_treeColliders.GetParentItem(m_hSelectedCollider));
+		_int iColliderIndex = _ttoi(m_treeColliders.GetItemText(m_hSelectedCollider));
+
+		if (pDynamicObject) {
+			auto& rColliderList = pDynamicObject->GetColliderList();
+			if (!rColliderList.empty()) {
+				for (auto& iter = rColliderList.begin(); iter != rColliderList.end(); ++iter) {
+					if (cstrBoneName == iter->first.c_str()) {
+						// 찾은 충돌체를 저장해둔다.
+						m_pSelectedCollider = iter->second[iColliderIndex];
+
+						switch (m_pSelectedCollider->GetColliderType()) {
+						case Engine::TYPE_SPHERE:
+							ActivateColTab(Engine::TYPE_SPHERE);
+							m_pSphereColTab->UpdateTab(dynamic_cast<Engine::CColliderObject_Sphere*>(m_pSelectedCollider));
+							m_pSphereColTab->EnableTab(TRUE);
+							break;
+						case Engine::TYPE_AABB:
+							ActivateColTab(Engine::TYPE_AABB);
+							m_pAABBColTab->UpdateTab(dynamic_cast<Engine::CColliderObject_AABB*>(m_pSelectedCollider));
+							m_pAABBColTab->EnableTab(TRUE);
+							break;
+						case Engine::TYPE_OBB:
+							ActivateColTab(Engine::TYPE_OBB);
+							m_pOBBColTab->UpdateTab(dynamic_cast<Engine::CColliderObject_OBB*>(m_pSelectedCollider));
+							m_pOBBColTab->EnableTab(TRUE);
+							break;
+						}
+
+
+						break;
+					}
+				}
+			}
+		}
+		
 		m_btnDelete.EnableWindow(TRUE);
 	}
 	else {
 		m_hSelectedCollider = NULL;
+		m_pSelectedCollider = nullptr;
 	}
 
 	*pResult = 0;
 }
+
+
+

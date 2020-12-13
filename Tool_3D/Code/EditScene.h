@@ -44,6 +44,7 @@ public:
 	Engine::CInputProcessor* GetInputProcessor() const;
 
 	Engine::CGameObject* GetPickedObject() const;
+
 	Engine::CInputProcessorMgr* GetInputProcessorMgr() const { return m_pInputProcessorMgr; }
 
 	

@@ -26,7 +26,7 @@ CColliderObject_OBB::~CColliderObject_OBB()
 HRESULT CColliderObject_OBB::Ready_Object(void)
 {
 	SetColliderTag(L"Col_OBB");
-	m_eColliderType = TYPE_OBB;
+	SetColliderType(TYPE_OBB);
 
 	m_pCubeBuffer = dynamic_cast<CCubeCol*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_CubeCol"));
 	NULL_CHECK_RETURN(m_pCubeBuffer, E_FAIL);

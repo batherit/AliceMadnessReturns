@@ -27,7 +27,7 @@ CColliderObject_Sphere::~CColliderObject_Sphere()
 HRESULT CColliderObject_Sphere::Ready_Object(void)
 {
 	SetColliderTag(L"Col_Sphere");
-	m_eColliderType = TYPE_SPHERE;
+	SetColliderType(TYPE_SPHERE);
 
 	m_pSphereBuffer = dynamic_cast<CSphereCol*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_SphereCol"));
 	NULL_CHECK_RETURN(m_pSphereBuffer, E_FAIL);

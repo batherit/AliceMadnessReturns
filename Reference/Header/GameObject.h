@@ -27,6 +27,7 @@ public:
 	virtual HRESULT Ready_Object(void) = 0;
 	virtual _int Update_Object(const _float& _fDeltaTime);
 	virtual void Render_Object(void) {};
+	virtual void OnCollision(CollisionInfo _tCollisionInfo) {};
 
 public:
 	LPDIRECT3DDEVICE9 GetGraphicDev() const { return m_pGraphicDev; }
@@ -67,6 +68,7 @@ public:
 	//vector<CColliderObject*>& GetColliderList() { return m_vecColliderList; }
 	vector<pair<string, vector<CColliderObject*>>>& GetColliderList() { return m_vecColliders; }
 	CColliderObject* GetColliderFromTag(const _tchar* _pColliderTag);
+	CColliderObject_Sphere* GetCullingSphere() const { return m_pCullingSphere; }
 
 	// 파일 입출력 관련
 	virtual _bool SaveInfo(FILE* _fpOut)	{ return true; }

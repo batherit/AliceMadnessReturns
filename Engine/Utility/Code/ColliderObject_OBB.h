@@ -30,9 +30,7 @@ public:
 	static CColliderObject_OBB* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 public:
-	void SetRadius(_float _fRadius);
-	_float GetRadius() const { return m_fRadius; }
-	_float GetRadiusW() const;
+	BOXINFO GetBoxInfo();
 
 private:
 	CCubeCol* m_pCubeBuffer = nullptr;

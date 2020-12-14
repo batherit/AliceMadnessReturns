@@ -1,6 +1,11 @@
 #ifndef Engine_Struct_h__
 #define Engine_Struct_h__
 
+BEGIN(Engine)
+class CGameObject;
+class CColliderObject;
+END
+
 namespace Engine
 {
 	typedef	struct tagVertexColor
@@ -72,6 +77,19 @@ namespace Engine
 
 
 	}D3DXMESHCONTAINER_DERIVED;
+
+	typedef struct _collision_info {
+		CGameObject* pCollidedObject = nullptr;
+		CColliderObject* pCollidedCollider = nullptr;
+		//_vec3 vCollidedPos{0.f, 0.f, 0.f};
+	}CollisionInfo;
+
+	typedef struct _box_info {
+		_vec3		vPoint[8];
+		_vec3		vCenter;
+		_vec3		vProjAxis[3]; // 박스의 중점으로부터 각 축으로 뻗어나가는 벡터
+		_vec3		vAxis[3];	 // 면체와 평행한 축 벡터
+	}BOXINFO;
 }
 
 #endif // Engine_Struct_h__

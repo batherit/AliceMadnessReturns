@@ -262,8 +262,68 @@ namespace Engine
 	}
 
 	// 구와 점의 충돌
-	inline _bool IsPointAndSphereCollided(const _vec3 _vPoint, _float _fRadius, const _vec3 _vSpherePos) {
+	inline _bool IsPointAndSphereCollided(const _vec3& _vPoint, _float _fRadius, const _vec3& _vSpherePos) {
 		return D3DXVec3Length(&(_vPoint - _vSpherePos)) <= _fRadius;
+	}
+
+	// 구와 구 충돌
+	inline _bool IsSpheresCollided(const _vec3& _vPoint1, _float _fRadius1, const _vec3& _vPoint2, _float _fRadius2) {
+		return D3DXVec3Length(&(_vPoint1 - _vPoint2)) <= (_fRadius1 + _fRadius2);
+	}
+
+	// AABB 충돌
+	inline _bool IsAABBCollided(const _vec3& _vMin1, const _vec3& _vMax1, const _vec3& _vMin2, const _vec3& _vMax2) {
+		if (_vMax1.x < _vMin2.x) return false;
+		if (_vMax2.x < _vMin1.x) return false;
+		if (_vMax1.y < _vMin2.y) return false;
+		if (_vMax2.y < _vMin1.y) return false;
+		if (_vMax1.z < _vMin2.z) return false;
+		if (_vMax2.z < _vMin1.z) return false;
+
+		return true;
+	}
+
+	// OBB 충돌
+	inline _bool IsOBBCollided(const BOXINFO& tBoxInfo1, const BOXINFO& tBoxInfo2) {
+		_float		fDistance[3];		// 1. 첫 번째 obb에서 임의의 축으로 투영한 길이의 합
+									// 2. 두 번째 obb에서 임의의 축으로 투영한 길이의 합
+									// 3. 두 obb의 중점을 이은 벡터를 각 축에 투영한 길이의 합
+
+		for (_uint j = 0; j < 3; ++j)
+		{
+			fDistance[0] = fabs(D3DXVec3Dot(&tBoxInfo1.vProjAxis[0], &tBoxInfo1.vAxis[j])) +
+				fabs(D3DXVec3Dot(&tBoxInfo1.vProjAxis[1], &tBoxInfo1.vAxis[j])) +
+				fabs(D3DXVec3Dot(&tBoxInfo1.vProjAxis[2], &tBoxInfo1.vAxis[j]));
+
+
+			fDistance[1] = fabs(D3DXVec3Dot(&tBoxInfo2.vProjAxis[0], &tBoxInfo1.vAxis[j])) +
+				fabs(D3DXVec3Dot(&tBoxInfo2.vProjAxis[1], &tBoxInfo1.vAxis[j])) +
+				fabs(D3DXVec3Dot(&tBoxInfo2.vProjAxis[2], &tBoxInfo1.vAxis[j]));
+
+			fDistance[2] = fabs(D3DXVec3Dot(&(tBoxInfo2.vCenter - tBoxInfo1.vCenter), &tBoxInfo1.vAxis[j]));
+
+			if (fDistance[0] + fDistance[1] < fDistance[2])
+				return false;
+		}
+
+		for (_uint j = 0; j < 3; ++j)
+		{
+			fDistance[0] = fabs(D3DXVec3Dot(&tBoxInfo1.vProjAxis[0], &tBoxInfo2.vAxis[j])) +
+				fabs(D3DXVec3Dot(&tBoxInfo1.vProjAxis[1], &tBoxInfo2.vAxis[j])) +
+				fabs(D3DXVec3Dot(&tBoxInfo1.vProjAxis[2], &tBoxInfo2.vAxis[j]));
+
+
+			fDistance[1] = fabs(D3DXVec3Dot(&tBoxInfo2.vProjAxis[0], &tBoxInfo2.vAxis[j])) +
+				fabs(D3DXVec3Dot(&tBoxInfo2.vProjAxis[1], &tBoxInfo2.vAxis[j])) +
+				fabs(D3DXVec3Dot(&tBoxInfo2.vProjAxis[2], &tBoxInfo2.vAxis[j]));
+
+			fDistance[2] = fabs(D3DXVec3Dot(&(tBoxInfo2.vCenter - tBoxInfo1.vCenter), &tBoxInfo2.vAxis[j]));
+
+			if (fDistance[0] + fDistance[1] < fDistance[2])
+				return false;
+		}
+
+		return true;
 	}
 
 	// 광선 평면 교차하는 지점 좌표 얻기

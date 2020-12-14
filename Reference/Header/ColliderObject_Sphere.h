@@ -36,6 +36,7 @@ public:
 	void SetRadius(_float _fRadius);
 	_float GetRadius() const { return m_fRadius; }
 	_float GetRadiusW() const;
+	void GetCollisionInfo(_vec3& vPos, _float& fRadius);
 
 private:
 	CSphereCol* m_pSphereBuffer = nullptr;

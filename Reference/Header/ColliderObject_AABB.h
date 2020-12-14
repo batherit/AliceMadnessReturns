@@ -30,14 +30,12 @@ public:
 	static CColliderObject_AABB* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 public:
-	void SetRadius(_float _fRadius);
-	_float GetRadius() const { return m_fRadius; }
-	_float GetRadiusW() const;
+	void GetCollisionInfo(_vec3& _vMin, _vec3& _vMax);
+	BOXINFO GetBoxInfo();
 
 private:
 	CCubeCol* m_pCubeBuffer = nullptr;
 	CPolygonRenderer* m_pRenderer = nullptr;
-	_float m_fRadius = 1.f;
 };
 
 END

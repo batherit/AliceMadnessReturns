@@ -115,9 +115,22 @@ _float CColliderObject_Sphere::GetRadiusW() const {
 	
 	// xyz에 대한 각 스케일 값들의 평균에 반지름을 곱한다. (X)
 	// xyz중 가장 큰 스케일값을 기준으로 삼는다.
-	_float fMaxScale = max(matScale._11, max(matScale._22, matScale._33));
+	return m_fRadius * max(matScale._11, max(matScale._22, matScale._33));
+}
 
-	return m_fRadius * fMaxScale;
+void CColliderObject_Sphere::GetCollisionInfo(_vec3 & vPos, _float & fRadius)
+{
+	vPos = GetTransform()->GetPos(CTransform::COORD_TYPE_LOCAL);
+	fRadius = m_fRadius;
+
+	if (GetParent()) {
+		 _matrix matParent = GetTransform()->GetParentMatrix();
+		 D3DXVec3TransformCoord(&vPos, &vPos, &matParent);
+
+		 _matrix matScale;
+		 Engine::SeparateMatrix(&matScale, nullptr, nullptr, &matParent);
+		 fRadius *= max(matScale._11, max(matScale._22, matScale._33));
+	}
 }
 
 void CColliderObject_Sphere::Free(void)

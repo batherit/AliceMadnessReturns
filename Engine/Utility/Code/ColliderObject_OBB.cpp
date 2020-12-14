@@ -90,26 +90,39 @@ CColliderObject_OBB * CColliderObject_OBB::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-// 부모를 세팅하고 SetRadius를 호출해야 정상적으로 보인다.
-void CColliderObject_OBB::SetRadius(_float _fRadius)
+BOXINFO CColliderObject_OBB::GetBoxInfo()
 {
-	if (_fRadius <= 0.f)
-		return;
+	static const _vec3 vPoint[8] = {
+		_vec3(-0.5f, 0.5f, -0.5f), _vec3(0.5f, 0.5f, -0.5f), _vec3(0.5f, -0.5f, -0.5f), _vec3(-0.5f, -0.5f, -0.5f),
+		_vec3(-0.5f, 0.5f, 0.5f), _vec3(0.5f , 0.5f, 0.5f), _vec3(0.5f , -0.5f, 0.5f), _vec3(-0.5f, -0.5f, 0.5f)
 
-	m_fRadius = _fRadius;
-	GetTransform()->SetScale(_vec3(_fRadius, _fRadius, _fRadius));
-}
+	};
 
-_float CColliderObject_OBB::GetRadiusW() const {
-	_matrix matScale;
+	BOXINFO tBoxInfo;
 
-	D3DXMatrixIdentity(&matScale);
-	if (GetParent()) {
-		Engine::SeparateMatrix(&matScale, nullptr, nullptr, &GetTransform()->GetParentMatrix());
+	_matrix matWorld = GetTransform()->GetObjectMatrix();
+	// 월드 정점 세팅하기
+	for (_uint i = 0; i < 8; ++i)
+	{
+		D3DXVec3TransformCoord(&tBoxInfo.vPoint[i], &vPoint[i], &matWorld);
 	}
+	// 센터 포지션 구하기
+	D3DXVec3TransformCoord(&tBoxInfo.vCenter, &_vec3(0.f, 0.f, 0.f), &matWorld);
 
-	// xyz에 대한 각 스케일 값들의 평균에 반지름을 곱한다.
-	return m_fRadius * (matScale._11 + matScale._22 + matScale._33) / 3.f;
+	// 모서리 구하기
+	tBoxInfo.vProjAxis[0] = (tBoxInfo.vPoint[2] + tBoxInfo.vPoint[5]) * 0.5f - tBoxInfo.vCenter;
+	tBoxInfo.vProjAxis[1] = (tBoxInfo.vPoint[0] + tBoxInfo.vPoint[5]) * 0.5f - tBoxInfo.vCenter;
+	tBoxInfo.vProjAxis[2] = (tBoxInfo.vPoint[7] + tBoxInfo.vPoint[5]) * 0.5f - tBoxInfo.vCenter;
+
+	// 축 구하기
+	tBoxInfo.vAxis[0] = tBoxInfo.vPoint[2] - tBoxInfo.vPoint[3];
+	tBoxInfo.vAxis[1] = tBoxInfo.vPoint[0] - tBoxInfo.vPoint[3];
+	tBoxInfo.vAxis[2] = tBoxInfo.vPoint[7] - tBoxInfo.vPoint[3];
+
+	for (_uint i = 0; i < 3; ++i)
+		D3DXVec3Normalize(&tBoxInfo.vAxis[i], &tBoxInfo.vAxis[i]);
+	
+	return tBoxInfo;
 }
 
 void CColliderObject_OBB::Free(void)

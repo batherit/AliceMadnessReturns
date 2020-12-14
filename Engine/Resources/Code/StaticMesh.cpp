@@ -148,6 +148,7 @@ void Engine::CStaticMesh::Render_Meshes(LPD3DXEFFECT _pEffect)
 		//	_pEffect->SetMatrix("g_matView", &matView);
 		//	_pEffect->SetMatrix("g_matProj", &matProj);
 			_pEffect->SetTexture("g_BaseTexture", m_ppTextures[i]);
+			_pEffect->CommitChanges();
 			m_pMesh->DrawSubset(i);
 
 		//	_pEffect->EndPass();

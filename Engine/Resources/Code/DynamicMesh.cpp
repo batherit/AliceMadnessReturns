@@ -97,6 +97,7 @@ void Engine::CDynamicMesh::Render_Meshes(LPD3DXEFFECT _pEffect)
 			for (_ulong i = 0; i < pMeshContainer->NumMaterials; ++i)
 			{
 				_pEffect->SetTexture("g_BaseTexture", pMeshContainer->ppTexture[i]);
+				_pEffect->CommitChanges();
 				pMeshContainer->MeshData.pMesh->DrawSubset(i);
 			}
 		}

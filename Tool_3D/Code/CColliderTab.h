@@ -23,8 +23,8 @@ public:
 #endif
 
 public:
-	void UpdateBoneTree(CDynamicObject* _pDynamicObject);
-	void UpdateAttachedColliders(CDynamicObject* _pDynamicObject);
+	void UpdateBoneTree(Engine::CGameObject* _pObject);
+	void UpdateAttachedColliders(Engine::CGameObject* _pObject);
 	void RegisterMeshTag(Engine::MESHTYPE _eMeshType, const _tchar* _pMeshTag);
 
 protected:

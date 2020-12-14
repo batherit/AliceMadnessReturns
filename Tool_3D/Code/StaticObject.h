@@ -29,6 +29,7 @@ public:
 
 	virtual _bool SaveInfo(HANDLE& _hfOut) override;
 	virtual _bool LoadInfo(HANDLE& _hfIn) override;
+	_bool LoadCollidersInfo();
 
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;

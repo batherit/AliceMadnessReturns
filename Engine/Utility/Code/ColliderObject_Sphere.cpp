@@ -41,14 +41,21 @@ HRESULT CColliderObject_Sphere::Ready_Object(void)
 
 _int CColliderObject_Sphere::Update_Object(const _float & _fDeltaTime)
 {
-	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Update(_fDeltaTime);
 	return 0;
 }
 
 void CColliderObject_Sphere::Render_Object(void)
 {
-	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
+	_matrix matWorld, matScale, matTrans;
+	Engine::SeparateMatrix(nullptr, nullptr, &matTrans, &GetTransform()->GetObjectMatrix());
+	
+	_float fRadiusW = GetRadiusW();
+	D3DXMatrixScaling(&matScale, fRadiusW, fRadiusW, fRadiusW);
+
+	matWorld = matScale * matTrans;
+
+	m_pRenderer->SetWorldMatrix(matWorld);
 	m_pRenderer->Render();
 }
 
@@ -106,8 +113,11 @@ _float CColliderObject_Sphere::GetRadiusW() const {
 		Engine::SeparateMatrix(&matScale, nullptr, nullptr, &GetTransform()->GetParentMatrix());
 	}
 	
-	// xyz에 대한 각 스케일 값들의 평균에 반지름을 곱한다.
-	return m_fRadius * (matScale._11 + matScale._22 + matScale._33) / 3.f;
+	// xyz에 대한 각 스케일 값들의 평균에 반지름을 곱한다. (X)
+	// xyz중 가장 큰 스케일값을 기준으로 삼는다.
+	_float fMaxScale = max(matScale._11, max(matScale._22, matScale._33));
+
+	return m_fRadius * fMaxScale;
 }
 
 void CColliderObject_Sphere::Free(void)

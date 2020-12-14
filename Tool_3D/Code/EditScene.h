@@ -51,7 +51,10 @@ public:
 	_bool AddStaticObject(const _tchar* _pMeshTag);
 	_bool AddDynamicObject(const _tchar* _pMeshTag, const _vec3& _vPos = _vec3(0.f, 0.f, 0.f));
 	CStaticObject* GetStaticObject(_int _iObjectIndex);
+	CStaticObject* GetStaticObject(const _tchar* _pMeshTag);
 	CDynamicObject* GetDynamicObject(const _tchar* _pMeshTag);
+	Engine::CGameObject* GetObjectFromTag(const _tchar* _pMeshTag);
+
 	vector<CStaticObject*>& GetStaticObjectList() { return m_vecStaticObjects; }
 	vector<CDynamicObject*>& GetDynamicObjectList() { return m_vecDynamicObjects; }
 	_bool DeleteStaticObject(_int _iObjectIndex);

@@ -34,6 +34,9 @@ Engine::CGameObject::~CGameObject()
 
 _int CGameObject::Update_Object(const _float & _fDeltaTime)
 {
+	if (!IsActivated())
+		return 1;
+
 	for (auto& rChild : m_vecChildList) {
 		rChild->Update_Object(_fDeltaTime);
 	}
@@ -386,20 +389,38 @@ _bool CGameObject::LoadCollidersInfo(HANDLE& _hfIn) {
 			case Engine::TYPE_SPHERE:
 				pCollider = Engine::CColliderObject_Sphere::Create(m_pGraphicDev);
 				pCollider->LoadInfo(_hfIn);
-				if (!AddCollider(pCollider, cBoneName))
-					abort();
+				if (strcmp(cBoneName, "None") == 0) {
+					if (!AddCollider(pCollider))
+						abort();
+				}
+				else {
+					if (!AddCollider(pCollider, cBoneName))
+						abort();
+				}
 				break;
 			case Engine::TYPE_AABB:
 				pCollider = Engine::CColliderObject_AABB::Create(m_pGraphicDev);
 				pCollider->LoadInfo(_hfIn);
-				if (!AddCollider(pCollider, cBoneName))
-					abort();
+				if (strcmp(cBoneName, "None") == 0) {
+					if (!AddCollider(pCollider))
+						abort();
+				}
+				else {
+					if (!AddCollider(pCollider, cBoneName))
+						abort();
+				}
 				break;
 			case Engine::TYPE_OBB:
 				pCollider = Engine::CColliderObject_OBB::Create(m_pGraphicDev);
 				pCollider->LoadInfo(_hfIn);
-				if (!AddCollider(pCollider, cBoneName))
-					abort();
+				if (strcmp(cBoneName, "None") == 0) {
+					if (!AddCollider(pCollider))
+						abort();
+				}
+				else {
+					if (!AddCollider(pCollider, cBoneName))
+						abort();
+				}
 				break;
 			}
 

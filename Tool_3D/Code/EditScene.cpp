@@ -259,6 +259,17 @@ CStaticObject * CEditScene::GetStaticObject(_int _iObjectIndex)
 	return m_vecStaticObjects[_iObjectIndex];
 }
 
+CStaticObject * CEditScene::GetStaticObject(const _tchar * _pMeshTag)
+{
+	for (auto& rObj : m_vecStaticObjects) {
+		if (lstrcmp(rObj->GetMeshTag(), _pMeshTag) == 0) {
+			return rObj;
+		}
+	}
+
+	return nullptr;
+}
+
 CDynamicObject * CEditScene::GetDynamicObject(const _tchar * _pMeshTag)
 {
 	for (auto& rObj : m_vecDynamicObjects) {
@@ -268,6 +279,17 @@ CDynamicObject * CEditScene::GetDynamicObject(const _tchar * _pMeshTag)
 	}
 
 	return nullptr;
+}
+
+Engine::CGameObject * CEditScene::GetObjectFromTag(const _tchar * _pMeshTag)
+{
+	Engine::CGameObject* pObject = nullptr;
+
+	pObject = GetDynamicObject(_pMeshTag);
+	if (pObject)
+		return pObject;
+	pObject = GetStaticObject(_pMeshTag);
+	return pObject;
 }
 
 _bool CEditScene::DeleteStaticObject(_int _iObjectIndex)

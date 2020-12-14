@@ -32,6 +32,9 @@ HRESULT CStaticObject::Ready_Object(void)
 
 int CStaticObject::Update_Object(const _float & _fDeltaTime)
 {
+	if (1 == CGameObject::Update_Object(_fDeltaTime))	// 1-> 비활성화
+		return 1;
+
 	m_pRenderer->Update(_fDeltaTime);
 
 	return 0;
@@ -73,6 +76,9 @@ _bool CStaticObject::SetRenderInfo(const _tchar * _pMeshTag, Engine::RENDERID _e
 	// 새로운 메시로 세팅한다.
 	m_mapComponent[Engine::ID_STATIC][Engine::CStaticMesh::GetComponentTag()] = m_pMesh;
 	m_pRenderer->SetRenderInfo(_eRenderID, m_pMesh);
+
+	LoadCollidersInfo();
+
 	return true;
 }
 
@@ -128,4 +134,27 @@ _bool CStaticObject::LoadInfo(HANDLE & _hfIn)
 	GetTransform()->SetScale(vScale);
 	
 	return SetRenderInfo(m_tcMeshTag, eRenderID);
+}
+
+_bool CStaticObject::LoadCollidersInfo()
+{
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Resource\\Colliders\\");
+
+	lstrcat(szDataPath, m_tcMeshTag);
+	lstrcat(szDataPath, L".col");
+
+	HANDLE hFile = CreateFileW(szDataPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return false;
+
+	CGameObject::LoadCollidersInfo(hFile);
+
+	CloseHandle(hFile);
+	return true;
 }

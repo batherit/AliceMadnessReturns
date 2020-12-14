@@ -50,7 +50,8 @@ int CAlice::Update_Object(const _float & _fDeltaTime)
 		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
 	}
 
-	CGameObject::Update_Object(_fDeltaTime);
+	if(1 == CGameObject::Update_Object(_fDeltaTime))
+		return 1;
 
 	_matrix matView;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);

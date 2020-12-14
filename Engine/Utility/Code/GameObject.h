@@ -33,6 +33,8 @@ public:
 
 	void SetValid(_bool _bIsValid) { m_bIsValid = _bIsValid; }
 	_bool IsValid() const { return m_bIsValid; }
+	void SetActivated(_bool _bIsActivated) { m_bIsActivated = _bIsActivated; }
+	_bool IsActivated() const { return m_bIsActivated; }
 
 	CComponent* GetComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);
 	CComponent*	AddComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);
@@ -81,6 +83,7 @@ protected:
 
 protected:
 	_bool m_bIsValid = true;
+	_bool m_bIsActivated = true;
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 	CGameObject* m_pParent = nullptr;
 	vector<CGameObject*> m_vecChildList;

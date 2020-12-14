@@ -200,6 +200,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"CobbledStreet.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"CobbledStreet", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet");
 
 	// CobbledStreet_Even
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -210,6 +211,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"CobbledStreet_Even.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"CobbledStreet_Even", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet_Even");
 
 	// PoorBuildingE01
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -220,6 +222,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"PoorBuildingE01.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"PoorBuildingE01", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorBuildingE01");
 
 	// Curb_90
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -230,6 +233,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"Curb_90.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_90", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_90");
 
 	// Curb_Uneven
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -240,6 +244,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"Curb_Uneven.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_Uneven", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Uneven");
 
 	// Curb_Section
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -250,6 +255,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"Curb_Section.X"),
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_Section", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Section");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

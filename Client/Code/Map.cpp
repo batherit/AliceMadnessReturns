@@ -61,11 +61,11 @@ void CMap::Free(void)
 	CGameObject::Free();
 }
 
-void CMap::LoadMap(const _tchar * _pTerrainFilePath, const _tchar * _pNaviFilePath, const _tchar * _pObjectsFilePath)
+void CMap::LoadMap(Engine::CLayer* pLayer, const _tchar * _pTerrainFilePath, const _tchar * _pNaviFilePath, const _tchar * _pObjectsFilePath)
 {
 	LoadTerrain(_pTerrainFilePath);
 	LoadNaviMesh(_pNaviFilePath);
-	LoadStaticObjects(_pObjectsFilePath);
+	LoadStaticObjects(pLayer, _pObjectsFilePath);
 }
 
 void CMap::LoadTerrain( const _tchar * _pFilePath)
@@ -127,7 +127,7 @@ void CMap::LoadNaviMesh(const _tchar * _pFilePath)
 	CloseHandle(hFile);
 }
 
-void CMap::LoadStaticObjects(const _tchar * _pFilePath)
+void CMap::LoadStaticObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 {
 	if (!_pFilePath)
 		return;
@@ -154,7 +154,7 @@ void CMap::LoadStaticObjects(const _tchar * _pFilePath)
 		if (!pStaticObject->LoadInfo(hFile))
 			Engine::Safe_Release(pStaticObject);
 		else {
-			AddChild(pStaticObject);
+			pLayer->Add_GameObject(L"StaticObjects", pStaticObject);
 		}
 	}
 

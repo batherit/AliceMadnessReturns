@@ -19,7 +19,8 @@ private: // 持失切, 社瑚切
 	virtual HRESULT Ready_Object(void) override;
 	virtual int Update_Object(const _float & _fDeltaTime) override;
 	virtual void Render_Object(void) override;
-	virtual _bool LoadColliders(const _tchar* _pFileName);
+	_bool LoadColliders(const _tchar* _pFileName);
+	virtual void OnCollision(Engine::CollisionInfo _tCollisionInfo) override;
 
 public:
 	static CAlice*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -29,15 +29,13 @@ public:
 
 	virtual _bool SaveInfo(HANDLE& _hfOut) override;
 	virtual _bool LoadInfo(HANDLE& _hfIn) override;
+	_bool LoadCollidersInfo();
 
 private:
-	Engine::CShader* m_pShader = nullptr;
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	//const _tchar* m_pMeshTag = nullptr;
 	_tchar m_tcMeshTag[MAX_PATH] = L"";
-
-	_vec3 m_vDir = _vec3(0.f, 0.f, 1.f);
 };
 
 END

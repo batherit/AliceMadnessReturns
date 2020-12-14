@@ -337,6 +337,7 @@ namespace Engine
 	// 절두체 컬링
 	inline _bool IsSphereCulled(const LPDIRECT3DDEVICE9& rDevice, const _vec3& _vPos, _float _fRadius) {
 		static const _vec3 vPoint[8] = {
+			// 투영공간에서의 뷰프러스텀 정점들
 			_vec3(-1.f, 1.f, 0.f), _vec3(1.f, 1.f, 0.f), _vec3(1.f, -1.f, 0.f), _vec3(-1.f, -1.f, 0.f),
 			_vec3(-1.f, 1.f, 1.f), _vec3(1.f, 1.f, 1.f), _vec3(1.f, -1.f, 1.f), _vec3(-1.f, -1.f, 1.f)
 		};

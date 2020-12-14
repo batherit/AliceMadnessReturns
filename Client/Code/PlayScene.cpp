@@ -139,6 +139,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	CMap* pMap = CMap::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pMap, E_FAIL);
 	pMap->LoadMap(
+		pLayer,
 		L"../../Resource/Terrain/Terrain.trr",
 		L"../../Resource/Navi/NaviTest.navi",
 		L"../../Resource/Map/Map.map"
@@ -149,6 +150,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pPlayer = CAlice::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
+	m_pPlayer->GetTransform()->Translate(_vec3(45.f, 0.f, -10.f));
 	
 	// 카메라 생성
 	m_pCamera = CDynamicCamera::Create(m_pGraphicDev);		// 동적 카메라

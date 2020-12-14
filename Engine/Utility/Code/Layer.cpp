@@ -86,8 +86,8 @@ Engine::_int Engine::CLayer::Update_Layer(const _float& fTimeDelta)
 	// 충돌 체크를 진행한다.
 	CollisionInfo tCollisionInfo;
 	for (auto& iter1 : m_mapObjectList) {
-		for (auto& iter2 : m_mapObjectList) {
-			for (auto& rObj1 : iter1.second) {
+		for (auto& rObj1 : iter1.second) {
+			for (auto& iter2 : m_mapObjectList) {
 				for (auto& rObj2 : iter2.second) {
 					if (rObj1 == rObj2)
 						continue;

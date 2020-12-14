@@ -26,10 +26,10 @@ public:
 	virtual void	Free(void);
 
 public:
-	void LoadMap(const _tchar* _pTerrainFilePath, const _tchar* _pNaviFilePath, const _tchar* _pObjectsFilePath);
+	void LoadMap(Engine::CLayer* pLayer, const _tchar* _pTerrainFilePath, const _tchar* _pNaviFilePath, const _tchar* _pObjectsFilePath);
 	void LoadTerrain(const _tchar* _pFilePath);
 	void LoadNaviMesh(const _tchar* _pFilePath);
-	void LoadStaticObjects(const _tchar* pFilePath);
+	void LoadStaticObjects(Engine::CLayer* pLayer, const _tchar* pFilePath);
 
 	Engine::CNaviMesh* GetNaviMesh() const { return m_pNaviMesh; }
 

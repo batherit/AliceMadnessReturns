@@ -26,17 +26,15 @@ HRESULT CStaticObject::Ready_Object(void)
 	// Renderer
 	m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	//m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
-	// Shader
-	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Object"));
-	NULL_CHECK_RETURN(m_pShader, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", m_pShader);
-
 
 	return S_OK;
 }
 
 int CStaticObject::Update_Object(const _float & _fDeltaTime)
 {
+	if (1 == CGameObject::Update_Object(_fDeltaTime))	// 1-> 비활성화
+		return 1;
+
 	m_pRenderer->Update(_fDeltaTime);
 
 	return 0;
@@ -44,33 +42,8 @@ int CStaticObject::Update_Object(const _float & _fDeltaTime)
 
 void CStaticObject::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-
-	LPD3DXEFFECT	 pEffect = m_pShader->Get_EffectHandle();
-	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
-
-	//pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
-	m_vDir = Engine::GetRotatedVector(WORLD_X_AXIS, D3DXToRadian(30.f) * 0.1f, m_vDir);
-	pEffect->SetVector("g_vLightDir", &_vec4(m_vDir, 0.f));
-	pEffect->SetVector("g_LightDiffuse", (_vec4*)&pLightInfo->Diffuse);
-	pEffect->SetVector("g_LightAmbient", (_vec4*)&pLightInfo->Ambient);
-
-	D3DMATERIAL9			tMtrlInfo;
-	ZeroMemory(&tMtrlInfo, sizeof(D3DMATERIAL9));
-
-	tMtrlInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrlInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrlInfo.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
-	tMtrlInfo.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
-	tMtrlInfo.Power = 0.f;
-
-	pEffect->SetVector("g_MtrlDiffuse", (_vec4*)&tMtrlInfo.Diffuse);
-	pEffect->SetVector("g_MtrlAmbient", (_vec4*)&tMtrlInfo.Ambient);
-
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
-	m_pRenderer->Render(pEffect);
-
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pRenderer->Render();
 }
 
 CStaticObject * CStaticObject::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -94,16 +67,18 @@ _bool CStaticObject::SetRenderInfo(const _tchar * _pMeshTag, Engine::RENDERID _e
 	if (!m_pMesh)
 		return false;
 
-	Engine::CComponent* pComponent = m_mapComponent[Engine::ID_STATIC][L"Com_Mesh"];
+	Engine::CComponent* pComponent = m_mapComponent[Engine::ID_STATIC][Engine::CStaticMesh::GetComponentTag()];
 	if (pComponent) {
 		// 기존 세팅된 메쉬가 있다면 제거한다.
 		Engine::Safe_Release(pComponent);
 	}
 
 	// 새로운 메시로 세팅한다.
-	m_mapComponent[Engine::ID_STATIC][L"Com_Mesh"] = m_pMesh;
-	m_pMesh->SetOwner(this);
+	m_mapComponent[Engine::ID_STATIC][Engine::CStaticMesh::GetComponentTag()] = m_pMesh;
 	m_pRenderer->SetRenderInfo(_eRenderID, m_pMesh);
+
+	LoadCollidersInfo();
+
 	return true;
 }
 
@@ -159,4 +134,27 @@ _bool CStaticObject::LoadInfo(HANDLE & _hfIn)
 	GetTransform()->SetScale(vScale);
 	
 	return SetRenderInfo(m_tcMeshTag, eRenderID);
+}
+
+_bool CStaticObject::LoadCollidersInfo()
+{
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Resource\\Colliders\\");
+
+	lstrcat(szDataPath, m_tcMeshTag);
+	lstrcat(szDataPath, L".col");
+
+	HANDLE hFile = CreateFileW(szDataPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return false;
+
+	CGameObject::LoadCollidersInfo(hFile);
+
+	CloseHandle(hFile);
+	return true;
 }

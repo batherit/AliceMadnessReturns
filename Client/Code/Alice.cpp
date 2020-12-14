@@ -126,6 +126,19 @@ _bool CAlice::LoadColliders(const _tchar* _pFileName)
 	return true;
 }
 
+void CAlice::OnCollision(Engine::CollisionInfo _tCollisionInfo)
+{
+	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
+		_int a = 10;
+	}
+	else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
+		_int a = 10;
+	}
+	else {
+		_int a = 10;
+	}
+}
+
 //void CAlice::AttachItemToBone(Engine::CGameObject * _pItemObject, const _tchar * _pBoneName)
 //{
 //}

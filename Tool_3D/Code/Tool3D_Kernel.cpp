@@ -5,6 +5,8 @@
 #include "ColliderScene.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
+#include "Terrain.h"
+#include "NaviMesh.h"
 #include "InputProcessor_Terrain.h"
 
 
@@ -113,10 +115,21 @@ void CTool3D_Kernel::Free(void)
 
 	Engine::Release_Resoures();
 	Engine::Release_Utility();
+
 	for_each(m_vecStoredDynamicObjects.begin(), m_vecStoredDynamicObjects.end(), Engine::CDeleteObj());
+	m_vecStoredDynamicObjects.clear();
+	m_vecStoredDynamicObjects.shrink_to_fit();
 	for_each(m_vecStoredStaticObjects.begin(), m_vecStoredStaticObjects.end(), Engine::CDeleteObj());
+	m_vecStoredStaticObjects.clear();
+	m_vecStoredStaticObjects.shrink_to_fit();
+	Engine::Safe_Release(m_pStoredTerrain);
+	Engine::Safe_Release(m_pStoredNaviMesh);
 	for_each(m_vecStoredDynamicObjects_Collider.begin(), m_vecStoredDynamicObjects_Collider.end(), Engine::CDeleteObj());
+	m_vecStoredDynamicObjects_Collider.clear();
+	m_vecStoredDynamicObjects_Collider.shrink_to_fit();
 	for_each(m_vecStoredStaticObjects_Collider.begin(), m_vecStoredStaticObjects_Collider.end(), Engine::CDeleteObj());
+	m_vecStoredStaticObjects_Collider.clear();
+	m_vecStoredStaticObjects_Collider.shrink_to_fit();
 
 	Engine::Release_System();
 }

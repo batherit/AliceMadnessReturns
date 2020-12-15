@@ -16,6 +16,8 @@ class CEditScene;
 class CColliderScene;
 class CStaticObject;
 class CDynamicObject;
+class CTerrain;
+class CNaviMesh;
 class CTool3D_Kernel : public CBase
 {
 private: // 생성자, 소멸자
@@ -51,7 +53,10 @@ public:
 	// 입력 처리 매니져 객체
 	Engine::CInputProcessorMgr* m_pInputProcessorMgr = nullptr;
 	
-	// 임시 저장 
+	// EditScene 임시 저장
+	CTerrain* m_pStoredTerrain = nullptr;
+	CNaviMesh* m_pStoredNaviMesh = nullptr;
+
 	vector<CStaticObject*> m_vecStoredStaticObjects;
 	vector<CDynamicObject*> m_vecStoredDynamicObjects;
 

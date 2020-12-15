@@ -60,14 +60,21 @@ HRESULT CEditScene::Ready(void)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", pGameObject), E_FAIL);
 
 	// 지형 생성
-	pGameObject = CTerrain::Create(m_pGraphicDev);
+	if (g_pTool3D_Kernel->m_pStoredTerrain)
+		pGameObject = g_pTool3D_Kernel->m_pStoredTerrain;
+	else
+		pGameObject = CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
 	//dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(2, 2, 129.f, 129.f, 1.f, 1.f, nullptr);
 	//dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
 
 	// 네비메쉬 오브젝트 생성
-	CNaviMesh* pNaviMesh = CNaviMesh::Create(m_pGraphicDev);
+	CNaviMesh* pNaviMesh = nullptr;
+	if (g_pTool3D_Kernel->m_pStoredNaviMesh)
+		pNaviMesh = g_pTool3D_Kernel->m_pStoredNaviMesh;
+	else
+		pNaviMesh = CNaviMesh::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pNaviMesh, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMesh", pNaviMesh), E_FAIL);
 
@@ -155,14 +162,20 @@ void CEditScene::Free(void)
 	//Engine::Safe_Release(m_pInputProcessorMgr);
 
 	// 씬을 지우기 전에 오브젝트를 저장해둔다.
-	// 저장되어 있던 정보를 읽어온다.
+	// 터레인 저장하기
+	g_pTool3D_Kernel->m_pStoredTerrain = GetTerrain();
+	Engine::Safe_AddRef(g_pTool3D_Kernel->m_pStoredTerrain);
+	// 네비 메쉬 저장하기
+	g_pTool3D_Kernel->m_pStoredNaviMesh = GetNaviMesh();
+	Engine::Safe_AddRef(g_pTool3D_Kernel->m_pStoredNaviMesh);
+	// 동적 메쉬 저장하기
 	for (auto& rObj : m_vecDynamicObjects) {
 		g_pTool3D_Kernel->m_vecStoredDynamicObjects.emplace_back(rObj);
 		Engine::Safe_AddRef(rObj);
 	}
 	m_vecDynamicObjects.clear();
 	m_vecDynamicObjects.shrink_to_fit();
-
+	// 정적 메쉬 저장하기
 	for (auto& rObj : m_vecStaticObjects) {
 		g_pTool3D_Kernel->m_vecStoredStaticObjects.emplace_back(rObj);
 		Engine::Safe_AddRef(rObj);

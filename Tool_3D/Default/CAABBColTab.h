@@ -46,4 +46,7 @@ public:
 	CEdit m_editScaleY;
 	CEdit m_editScaleZ;
 	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedCheckAutoGenerate();
+	BOOL m_bIsAutoGenerating;
+	CButton m_chkAuto;
 };

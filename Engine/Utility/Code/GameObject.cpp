@@ -409,6 +409,8 @@ _bool CGameObject::LoadCollidersInfo(HANDLE& _hfIn) {
 					if (!AddCollider(pCollider, cBoneName))
 						abort();
 				}
+				if (static_cast<Engine::CColliderObject_AABB*>(pCollider)->IsAutoGenerating())
+					static_cast<Engine::CColliderObject_AABB*>(pCollider)->GenerateAABB();
 				break;
 			case Engine::TYPE_OBB:
 				pCollider = Engine::CColliderObject_OBB::Create(m_pGraphicDev);

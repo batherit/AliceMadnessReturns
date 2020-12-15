@@ -47,12 +47,17 @@ _int CColliderObject_AABB::Update_Object(const _float & _fDeltaTime)
 
 void CColliderObject_AABB::Render_Object(void)
 {
-	_matrix matNRotWorld = GetTransform()->GetObjectMatrix();
-	_matrix matScale, matTrans;
-	Engine::SeparateMatrix(&matScale, nullptr, &matTrans, &matNRotWorld);
-	matNRotWorld = matScale * matTrans;
-
-	m_pRenderer->SetWorldMatrix(matNRotWorld);
+	if (m_bIsAutoGenerating) {
+		m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix(Engine::CTransform::COORD_TYPE_LOCAL));
+	}
+	else {
+		_matrix matNRotWorld = GetTransform()->GetObjectMatrix();
+		_matrix matScale, matTrans;
+		Engine::SeparateMatrix(&matScale, nullptr, &matTrans, &matNRotWorld);
+		matNRotWorld = matScale * matTrans;
+		m_pRenderer->SetWorldMatrix(matNRotWorld);
+	}
+	
 	m_pRenderer->Render();
 }
 
@@ -64,6 +69,9 @@ _bool CColliderObject_AABB::SaveInfo(HANDLE& _hfOut)
 	_vec3 vScale = GetTransform()->GetScale();
 	WriteFile(_hfOut, &vPos, sizeof(vPos), &dwByte, nullptr);
 	WriteFile(_hfOut, &vScale, sizeof(vScale), &dwByte, nullptr);
+	
+	// 자동 생성 AABB인지?
+	WriteFile(_hfOut, &m_bIsAutoGenerating, sizeof(m_bIsAutoGenerating), &dwByte, nullptr);
 
 	return true;
 }
@@ -77,6 +85,9 @@ _bool CColliderObject_AABB::LoadInfo(HANDLE& _hfIn)
 	ReadFile(_hfIn, &vScale, sizeof(vScale), &dwByte, nullptr);
 	GetTransform()->SetPos(vPos);
 	GetTransform()->SetScale(vScale);
+
+	// 자동 생성 AABB인지?
+	ReadFile(_hfIn, &m_bIsAutoGenerating, sizeof(m_bIsAutoGenerating), &dwByte, nullptr);
 
 	return true;
 }
@@ -93,13 +104,19 @@ CColliderObject_AABB * CColliderObject_AABB::Create(LPDIRECT3DDEVICE9 pGraphicDe
 
 void CColliderObject_AABB::GetCollisionInfo(_vec3 & _vMin, _vec3 & _vMax)
 {
-	_matrix matNRotWorld = GetTransform()->GetObjectMatrix();
-	_matrix matScale, matTrans;
-	Engine::SeparateMatrix(&matScale, nullptr, &matTrans, &matNRotWorld);
-	matNRotWorld = matScale * matTrans;
+	if (m_bIsAutoGenerating) {
+		_vMin = m_vMinW;
+		_vMax = m_vMaxW;
+	}
+	else {
+		_matrix matNRotWorld = GetTransform()->GetObjectMatrix();
+		_matrix matScale, matTrans;
+		Engine::SeparateMatrix(&matScale, nullptr, &matTrans, &matNRotWorld);
+		matNRotWorld = matScale * matTrans;
 
-	D3DXVec3TransformCoord(&_vMin, &_vec3(-0.5f, -0.5f, -0.5f), &matNRotWorld);
-	D3DXVec3TransformCoord(&_vMax, &_vec3(0.5f, 0.5f, 0.5f), &matNRotWorld);
+		D3DXVec3TransformCoord(&_vMin, &_vec3(-0.5f, -0.5f, -0.5f), &matNRotWorld);
+		D3DXVec3TransformCoord(&_vMax, &_vec3(0.5f, 0.5f, 0.5f), &matNRotWorld);
+	}
 }
 
 BOXINFO CColliderObject_AABB::GetBoxInfo()
@@ -139,6 +156,40 @@ BOXINFO CColliderObject_AABB::GetBoxInfo()
 		D3DXVec3Normalize(&tBoxInfo.vAxis[i], &tBoxInfo.vAxis[i]);
 
 	return tBoxInfo;
+}
+
+_bool CColliderObject_AABB::GenerateAABB()
+{
+	// 메쉬 구해서 자동으로 AABB 만들어줌.
+	if (!GetParent())
+		return false;
+
+	Engine::CStaticMesh* pStaticMesh = GetParent()->GetComponent<Engine::CStaticMesh>();
+
+	if (!pStaticMesh)
+		return false;
+
+	const _vec3* pVtxPosL = pStaticMesh->Get_VtxPos();
+	const _ulong dwNumVtxCnt = pStaticMesh->Get_NumVtx();
+	const _ulong dwStride = pStaticMesh->Get_Stride();
+
+	_vec3* pVtxPosW = new _vec3[dwNumVtxCnt];
+	_matrix matWorld = GetTransform()->GetParentMatrix();
+	for (_int i = 0; i < dwNumVtxCnt; ++i) {
+		// 월드 정점으로 변환
+		D3DXVec3TransformCoord(&pVtxPosW[i], &pVtxPosL[i], &matWorld);
+	}
+	D3DXComputeBoundingBox(pVtxPosW, dwNumVtxCnt, sizeof(_vec3), &m_vMinW, &m_vMaxW);
+	delete[] pVtxPosW;
+
+	_vec3 vCenter = (m_vMaxW + m_vMinW) * 0.5f;
+	GetTransform()->SetPos(vCenter);
+	GetTransform()->SetAngle(0.f, 0.f, 0.f);
+	GetTransform()->SetScale(_vec3((m_vMaxW.x - vCenter.x) / 0.5f, 
+		(m_vMaxW.y - vCenter.y) / 0.5f, 
+		(m_vMaxW.z - vCenter.z) / 0.5f));
+
+	return true;
 }
 
 void CColliderObject_AABB::Free(void)

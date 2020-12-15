@@ -33,9 +33,16 @@ public:
 	void GetCollisionInfo(_vec3& _vMin, _vec3& _vMax);
 	BOXINFO GetBoxInfo();
 
+	void SetAutoGenerating(_bool _bIsAutoGenerating) { m_bIsAutoGenerating = _bIsAutoGenerating; if (_bIsAutoGenerating) GenerateAABB(); }
+	_bool IsAutoGenerating() const { return m_bIsAutoGenerating; }
+	_bool GenerateAABB();	// 콜라이더의 부모가 세팅된 이후 호출해야 유효하다.
+
 private:
 	CCubeCol* m_pCubeBuffer = nullptr;
 	CPolygonRenderer* m_pRenderer = nullptr;
+	_bool m_bIsAutoGenerating = false;
+	_vec3 m_vMinW = _vec3(-0.5f, -0.5f, -0.5f);
+	_vec3 m_vMaxW = _vec3(0.5f, 0.5f, 0.5f);
 };
 
 END

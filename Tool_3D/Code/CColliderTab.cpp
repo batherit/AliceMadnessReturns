@@ -231,18 +231,23 @@ void CColliderTab::OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult)
 		if (m_treeObjectList.GetItemText(hItem) == L"Dynamic") {
 			CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
 			CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
+			if (m_pSelectedObject)
+				m_pSelectedObject->SetActivated(false);
 			CDynamicObject* pDynamicObject = pEditScene->GetDynamicObject(strMeshTag);
-
+			m_pSelectedObject = pDynamicObject;
 			if (!pDynamicObject) {
 				if (pEditScene->AddDynamicObject(strMeshTag)) {
 					// 생성해둔 동적 메쉬가 없다면, 동적 메쉬를 생성한다.
 					pDynamicObject = pEditScene->GetDynamicObject(strMeshTag);
-
+					m_pSelectedObject = pDynamicObject;
 				}
 				else {
 					// 오브젝트 리스트에 있는데 생성을 못한다? => 이상한 걸 뻥!
 					abort();
 				}
+			}
+			else {
+				pDynamicObject->SetActivated(true);
 			}
 
 			UpdateBoneTree(pDynamicObject);
@@ -251,18 +256,23 @@ void CColliderTab::OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult)
 		else if (m_treeObjectList.GetItemText(hItem) == L"Static") {
 			CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
 			CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
+			//if (m_pSelectedObject)
+			//	m_pSelectedObject->SetActivated(false);
 			CStaticObject* pStaticObject = pEditScene->GetStaticObject(strMeshTag);
-
+			m_pSelectedObject = pStaticObject;
 			if (!pStaticObject) {
 				if (pEditScene->AddStaticObject(strMeshTag)) {
 					// 생성해둔 동적 메쉬가 없다면, 동적 메쉬를 생성한다.
 					pStaticObject = pEditScene->GetStaticObject(strMeshTag);
-
+					m_pSelectedObject = pStaticObject;
 				}
 				else {
 					// 오브젝트 리스트에 있는데 생성을 못한다? => 이상한 걸 뻥!
 					abort();
 				}
+			}
+			else {
+				pStaticObject->SetActivated(true);
 			}
 
 			UpdateBoneTree(pStaticObject);

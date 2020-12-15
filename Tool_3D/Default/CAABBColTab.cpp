@@ -20,6 +20,7 @@ CAABBColTab::CAABBColTab(CWnd* pParent /*=nullptr*/)
 	, m_cstrScaleX(_T(""))
 	, m_cstrScaleY(_T(""))
 	, m_cstrScaleZ(_T(""))
+	, m_bIsAutoGenerating(FALSE)
 {
 
 }
@@ -43,6 +44,8 @@ void CAABBColTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT7, m_editScaleX);
 	DDX_Control(pDX, IDC_EDIT8, m_editScaleY);
 	DDX_Control(pDX, IDC_EDIT9, m_editScaleZ);
+	DDX_Check(pDX, IDC_CHECK1, m_bIsAutoGenerating);
+	DDX_Control(pDX, IDC_CHECK1, m_chkAuto);
 }
 
 void CAABBColTab::UpdateTab(Engine::CColliderObject_AABB * _pCollider)
@@ -60,6 +63,7 @@ void CAABBColTab::UpdateTab(Engine::CColliderObject_AABB * _pCollider)
 	m_cstrScaleX.Format(L"%f", vScale.x);
 	m_cstrScaleY.Format(L"%f", vScale.y);
 	m_cstrScaleZ.Format(L"%f", vScale.z);
+	m_bIsAutoGenerating = _pCollider->IsAutoGenerating();
 
 	UpdateData(FALSE);
 }
@@ -72,6 +76,8 @@ void CAABBColTab::EnableTab(_bool _bEnable)
 	m_editScaleX.EnableWindow(_bEnable);
 	m_editScaleY.EnableWindow(_bEnable);
 	m_editScaleZ.EnableWindow(_bEnable);
+
+	m_chkAuto.EnableWindow(_bEnable);
 }
 
 
@@ -82,6 +88,7 @@ BEGIN_MESSAGE_MAP(CAABBColTab, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT7, &CAABBColTab::OnEnChangeEditScaleX)
 	ON_EN_CHANGE(IDC_EDIT8, &CAABBColTab::OnEnChangeEditScaleY)
 	ON_EN_CHANGE(IDC_EDIT9, &CAABBColTab::OnEnChangeEditScaleZ)
+	ON_BN_CLICKED(IDC_CHECK1, &CAABBColTab::OnBnClickedCheckAutoGenerate)
 END_MESSAGE_MAP()
 
 
@@ -199,4 +206,18 @@ BOOL CAABBColTab::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
+}
+
+
+void CAABBColTab::OnBnClickedCheckAutoGenerate()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	Engine::CColliderObject_AABB* pCollider = dynamic_cast<Engine::CColliderObject_AABB*>(m_pColTab->m_pSelectedCollider);
+	if (pCollider) {
+		pCollider->SetAutoGenerating(m_bIsAutoGenerating);
+	}
+
+	UpdateData(FALSE);
 }

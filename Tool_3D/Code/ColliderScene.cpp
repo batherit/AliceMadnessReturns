@@ -20,17 +20,17 @@ CColliderScene::CColliderScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	CScene(pGraphicDev)
 {
 	// 저장되어 있던 정보를 읽어온다.
-	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredDynamicObjects) {
+	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredDynamicObjects_Collider) {
 		m_vecDynamicObjects.emplace_back(rObj);
-		Engine::Safe_Release(rObj);
 	}
-	g_pTool3D_Kernel->m_vecStoredDynamicObjects.clear();
+	g_pTool3D_Kernel->m_vecStoredDynamicObjects_Collider.clear();
 
-	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredStaticObjects) {
+	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredStaticObjects_Collider) {
 		m_vecStaticObjects.emplace_back(rObj);
-		Engine::Safe_Release(rObj);
 	}
-	g_pTool3D_Kernel->m_vecStoredStaticObjects.clear();
+	g_pTool3D_Kernel->m_vecStoredStaticObjects_Collider.clear();
+
+	m_pSelectedObject = g_pTool3D_Kernel->m_pStoredSelectedObject_Collider;
 }
 
 CColliderScene::CColliderScene(const CColliderScene & rhs)
@@ -60,6 +60,16 @@ HRESULT CColliderScene::Ready(void)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//m_pCamera->SetParent(m_pPlayer);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", pGameObject), E_FAIL);
+
+	// 저장된 정보를 레이어에 집어넣는다.
+	for (auto& rObj : m_vecDynamicObjects) {
+		pLayer->Add_GameObject(rObj);
+		//Engine::Safe_AddRef(rObj);
+	}
+	for (auto& rObj : m_vecStaticObjects) {
+		pLayer->Add_GameObject(rObj);
+		//Engine::Safe_AddRef(rObj);
+	}
 
 	// 편집 레이어 등록
 	m_mapLayer.emplace(L"ColliderLayer", pLayer);
@@ -104,81 +114,24 @@ void CColliderScene::Free(void)
 	// 씬을 지우기 전에 오브젝트를 저장해둔다.
 	// 저장되어 있던 정보를 읽어온다.
 	for (auto& rObj : m_vecDynamicObjects) {
-		g_pTool3D_Kernel->m_vecStoredDynamicObjects.emplace_back(rObj);
+		g_pTool3D_Kernel->m_vecStoredDynamicObjects_Collider.emplace_back(rObj);
 		Engine::Safe_AddRef(rObj);
 	}
 	m_vecDynamicObjects.clear();
 	m_vecDynamicObjects.shrink_to_fit();
 
 	for (auto& rObj : m_vecStaticObjects) {
-		g_pTool3D_Kernel->m_vecStoredStaticObjects.emplace_back(rObj);
+		g_pTool3D_Kernel->m_vecStoredStaticObjects_Collider.emplace_back(rObj);
 		Engine::Safe_AddRef(rObj);
 	}
 	m_vecStaticObjects.clear();
 	m_vecStaticObjects.shrink_to_fit();
 
+	g_pTool3D_Kernel->m_pStoredSelectedObject_Collider = m_pSelectedObject;
+
 	CScene::Free();
 }
 
-CTerrain * CColliderScene::GetTerrain() const
-{
-	auto pLayer = GetLayer(L"ColliderLayer");
-
-	if (!pLayer)
-		return nullptr;
-
-	auto& rLayerList = pLayer->GetLayerList(L"Terrain");
-
-	if (rLayerList.empty())
-		return nullptr;
-
-	return static_cast<CTerrain*>(*rLayerList.begin());
-}
-
-CNaviMesh * CColliderScene::GetNaviMesh() const
-{
-	auto pLayer = GetLayer(L"ColliderLayer");
-
-	if (!pLayer)
-		return nullptr;
-
-	auto& rLayerList = pLayer->GetLayerList(L"NaviMesh");
-
-	if (rLayerList.empty())
-		return nullptr;
-
-	return static_cast<CNaviMesh*>(*rLayerList.begin());
-}
-
-CNaviMeshVtxMover * CColliderScene::GetNaviMeshVtxMover() const
-{
-	auto pLayer = GetLayer(L"ColliderLayer");
-
-	if (!pLayer)
-		return nullptr;
-
-	auto& rLayerList = pLayer->GetLayerList(L"NaviMeshVtxMover");
-
-	if (rLayerList.empty())
-		return nullptr;
-
-	return static_cast<CNaviMeshVtxMover*>(*rLayerList.begin());
-}
-
-CGizmo * CColliderScene::GetGizmo() const
-{
-	auto pLayer = GetLayer(L"ColliderLayer");
-
-	if (!pLayer)
-		return nullptr;
-
-	auto& rLayerList = pLayer->GetLayerList(L"Gizmo");
-
-	if (rLayerList.empty())
-		return nullptr;
-
-	return static_cast<CGizmo*>(*rLayerList.begin());
-}
 //CNaviMeshInputProcessor * CColliderScene::GetNaviMeshInputProcessor() const
 //{
 //	auto pLayer = GetLayer(L"ColliderLayer");
@@ -194,10 +147,10 @@ CGizmo * CColliderScene::GetGizmo() const
 //	return static_cast<CNaviMeshInputProcessor*>(*rLayerList.begin());
 //}
 
-Engine::CGameObject * CColliderScene::GetPickedObject() const
-{
-	return GetTerrain();
-}
+//Engine::CGameObject * CColliderScene::GetPickedObject() const
+//{
+//	return GetTerrain();
+//}
 
 _bool CColliderScene::AddStaticObject(const _tchar * _pMeshTag)
 {
@@ -271,6 +224,23 @@ Engine::CGameObject * CColliderScene::GetObjectFromTag(const _tchar * _pMeshTag)
 	return pObject;
 }
 
+_bool CColliderScene::ActivateObject(const _tchar * _pMeshTag)
+{
+	if (m_pSelectedObject)
+		// 기존 것은 비활성화한다.
+		m_pSelectedObject->SetActivated(false);
+
+	m_pSelectedObject = GetObjectFromTag(_pMeshTag);
+	
+	if (!m_pSelectedObject) {
+		return false;
+	}
+	
+	m_pSelectedObject->SetActivated(true);
+
+	return false;
+}
+
 _bool CColliderScene::DeleteStaticObject(_int _iObjectIndex)
 {
 	if (!IsValidObjectIndex(_iObjectIndex))
@@ -282,195 +252,8 @@ _bool CColliderScene::DeleteStaticObject(_int _iObjectIndex)
 	return true;
 }
 
-void CColliderScene::SaveTerrain()
-{
-	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
 
-	CFileDialog Dlg(FALSE, L"trr", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.trr) | *.trr||", pTabForm);
-	TCHAR szCurPath[MAX_PATH] = L"";
-	TCHAR szDataPath[MAX_PATH] = L"";
-	GetCurrentDirectory(MAX_PATH, szCurPath);
-	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Bin\\Resource\\Terrain");
-	Dlg.m_ofn.lpstrInitialDir = szDataPath;
-	if (IDOK == Dlg.DoModal())
-	{
-		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
-		if (INVALID_HANDLE_VALUE == hFile)
-			return;
-
-		GetTerrain()->SaveInfo(hFile);
-
-		CloseHandle(hFile);
-	}
-}
-
-void CColliderScene::LoadTerrain()
-{
-	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
-
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CFileDialog Dlg(TRUE, L"trr", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.trr) | *.trr||", pTabForm);
-	TCHAR szCurPath[MAX_PATH] = L"";
-	TCHAR szDataPath[MAX_PATH] = L"";
-	GetCurrentDirectory(MAX_PATH, szCurPath);
-	PathRemoveFileSpec(szCurPath);
-	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Resource\\Terrain");
-	Dlg.m_ofn.lpstrInitialDir = szDataPath;
-	if (IDOK == Dlg.DoModal())
-	{
-		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-
-		if (INVALID_HANDLE_VALUE == hFile)
-			return;
-
-		GetTerrain()->LoadInfo(hFile);
-
-		CloseHandle(hFile);
-	}
-}
-
-void CColliderScene::SaveNaviMesh()
-{
-	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
-
-	CFileDialog Dlg(FALSE, L"navi", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.navi) | *.navi||", pTabForm);
-	TCHAR szCurPath[MAX_PATH] = L"";
-	TCHAR szDataPath[MAX_PATH] = L"";
-	GetCurrentDirectory(MAX_PATH, szCurPath);
-	PathRemoveFileSpec(szCurPath);
-	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Resource\\Navi");
-	Dlg.m_ofn.lpstrInitialDir = szDataPath;
-	if (IDOK == Dlg.DoModal())
-	{
-		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
-
-		if (INVALID_HANDLE_VALUE == hFile)
-			return;
-
-		GetNaviMesh()->SaveInfo(hFile);
-
-		CloseHandle(hFile);
-	}
-}
-
-void CColliderScene::LoadNaviMesh()
-{
-	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
-
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CFileDialog Dlg(TRUE, L"navi", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.navi) | *.navi||", pTabForm);
-	TCHAR szCurPath[MAX_PATH] = L"";
-	TCHAR szDataPath[MAX_PATH] = L"";
-	GetCurrentDirectory(MAX_PATH, szCurPath);
-	PathRemoveFileSpec(szCurPath);
-	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Resource\\Navi");
-	Dlg.m_ofn.lpstrInitialDir = szDataPath;
-	if (IDOK == Dlg.DoModal())
-	{
-		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-
-		if (INVALID_HANDLE_VALUE == hFile)
-			return;
-
-		GetNaviMesh()->LoadInfo(hFile);
-
-		CloseHandle(hFile);
-	}
-	//UpdateData(FALSE);
-}
-
-void CColliderScene::SaveMap()
-{
-	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
-
-	CFileDialog Dlg(FALSE, L"map", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.map) | *.map||", pTabForm);
-	TCHAR szCurPath[MAX_PATH] = L"";
-	TCHAR szDataPath[MAX_PATH] = L"";
-	GetCurrentDirectory(MAX_PATH, szCurPath);
-	PathRemoveFileSpec(szCurPath);
-	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Resource\\Map");
-	Dlg.m_ofn.lpstrInitialDir = szDataPath;
-	if (IDOK == Dlg.DoModal())
-	{
-		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
-
-		if (INVALID_HANDLE_VALUE == hFile)
-			return;
-
-		_int iVecSize = m_vecStaticObjects.size();
-		DWORD dwByte = 0;
-		WriteFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
-		for (auto& rStaticObj : m_vecStaticObjects)
-			rStaticObj->SaveInfo(hFile);
-
-		CloseHandle(hFile);
-	}
-}
-
-void CColliderScene::LoadMap()
-{
-	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
-
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CFileDialog Dlg(TRUE, L"map", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.map) | *.map||", pTabForm);
-	TCHAR szCurPath[MAX_PATH] = L"";
-	TCHAR szDataPath[MAX_PATH] = L"";
-	GetCurrentDirectory(MAX_PATH, szCurPath);
-	PathRemoveFileSpec(szCurPath);
-	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Resource\\Map");
-	Dlg.m_ofn.lpstrInitialDir = szDataPath;
-	if (IDOK == Dlg.DoModal())
-	{
-		CString strPath = Dlg.GetPathName();
-		HANDLE hFile = CreateFileW(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-
-		if (INVALID_HANDLE_VALUE == hFile)
-			return;
-
-		// 기존 정보들은 파기한다.
-		for (auto& rObj : m_vecStaticObjects) {
-			rObj->SetValid(false);
-		}
-		m_vecStaticObjects.clear();
-
-		// 객체 정보를 로드한다.
-		_int iVecSize = 0;
-		DWORD dwByte = 0;
-		ReadFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
-		CStaticObject* pStaticObject = nullptr;
-		for (_int i = 0; i < iVecSize; ++i) {
-			pStaticObject = CStaticObject::Create(m_pGraphicDev);
-			if (!pStaticObject->LoadInfo(hFile))
-				Engine::Safe_Release(pStaticObject);
-			else {
-				GetLayer(L"ColliderLayer")->Add_GameObject(pStaticObject);
-				m_vecStaticObjects.emplace_back(pStaticObject);
-			}
-
-		}
-
-		CloseHandle(hFile);
-	}
-	//UpdateData(FALSE);
-}
 
 void CColliderScene::SaveColliders(Engine::CGameObject* _pObject)
 {

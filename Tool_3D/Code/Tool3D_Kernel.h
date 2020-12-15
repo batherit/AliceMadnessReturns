@@ -60,8 +60,10 @@ public:
 	vector<CStaticObject*> m_vecStoredStaticObjects;
 	vector<CDynamicObject*> m_vecStoredDynamicObjects;
 
+	// ColliderScene 임시 저장
 	vector<CStaticObject*> m_vecStoredStaticObjects_Collider;
 	vector<CDynamicObject*> m_vecStoredDynamicObjects_Collider;
+	Engine::CGameObject* m_pStoredSelectedObject_Collider = nullptr;
 };
 
 END

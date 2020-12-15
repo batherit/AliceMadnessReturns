@@ -8,7 +8,8 @@
 #include "CAABBColTab.h"
 #include "COBBColTab.h"
 #include "afxdialogex.h"
-#include "EditScene.h"
+//#include "ColliderScene.h"
+#include "ColliderScene.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
 
@@ -230,51 +231,39 @@ void CColliderTab::OnNMClickTreeObjectList(NMHDR *pNMHDR, LRESULT *pResult)
 		// 부모가 있다면, 메쉬 태그를 선택한 것이다.
 		if (m_treeObjectList.GetItemText(hItem) == L"Dynamic") {
 			CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
-			CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
-			if (m_pSelectedObject)
-				m_pSelectedObject->SetActivated(false);
-			CDynamicObject* pDynamicObject = pEditScene->GetDynamicObject(strMeshTag);
-			m_pSelectedObject = pDynamicObject;
+			CColliderScene* pColliderScene = g_pTool3D_Kernel->GetColliderScene();
+			CDynamicObject* pDynamicObject = pColliderScene->GetDynamicObject(strMeshTag);
 			if (!pDynamicObject) {
-				if (pEditScene->AddDynamicObject(strMeshTag)) {
+				if (pColliderScene->AddDynamicObject(strMeshTag)) {
 					// 생성해둔 동적 메쉬가 없다면, 동적 메쉬를 생성한다.
-					pDynamicObject = pEditScene->GetDynamicObject(strMeshTag);
-					m_pSelectedObject = pDynamicObject;
+					pDynamicObject = pColliderScene->GetDynamicObject(strMeshTag);
 				}
 				else {
 					// 오브젝트 리스트에 있는데 생성을 못한다? => 이상한 걸 뻥!
 					abort();
 				}
 			}
-			else {
-				pDynamicObject->SetActivated(true);
-			}
 
+			pColliderScene->ActivateObject(pDynamicObject->GetMeshTag());
 			UpdateBoneTree(pDynamicObject);
 			UpdateAttachedColliders(pDynamicObject);
 		}
 		else if (m_treeObjectList.GetItemText(hItem) == L"Static") {
 			CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
-			CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
-			//if (m_pSelectedObject)
-			//	m_pSelectedObject->SetActivated(false);
-			CStaticObject* pStaticObject = pEditScene->GetStaticObject(strMeshTag);
-			m_pSelectedObject = pStaticObject;
+			CColliderScene* pColliderScene = g_pTool3D_Kernel->GetColliderScene();
+			CStaticObject* pStaticObject = pColliderScene->GetStaticObject(strMeshTag);
 			if (!pStaticObject) {
-				if (pEditScene->AddStaticObject(strMeshTag)) {
-					// 생성해둔 동적 메쉬가 없다면, 동적 메쉬를 생성한다.
-					pStaticObject = pEditScene->GetStaticObject(strMeshTag);
-					m_pSelectedObject = pStaticObject;
+				if (pColliderScene->AddStaticObject(strMeshTag)) {
+					// 생성해둔 정적 메쉬가 없다면, 정적 메쉬를 생성한다.
+					pStaticObject = pColliderScene->GetStaticObject(strMeshTag);
 				}
 				else {
 					// 오브젝트 리스트에 있는데 생성을 못한다? => 이상한 걸 뻥!
 					abort();
 				}
 			}
-			else {
-				pStaticObject->SetActivated(true);
-			}
 
+			pColliderScene->ActivateObject(pStaticObject->GetMeshTag());
 			UpdateBoneTree(pStaticObject);
 			UpdateAttachedColliders(pStaticObject);
 		}
@@ -347,8 +336,8 @@ void CColliderTab::OnBnClickedButtonAdd()
 	m_pOBBColTab->EnableTab(FALSE);
 
 	CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
-	CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
-	Engine::CGameObject* pObject = pEditScene->GetObjectFromTag(strMeshTag);
+	CColliderScene* pColliderScene = g_pTool3D_Kernel->GetColliderScene();
+	Engine::CGameObject* pObject = pColliderScene->GetObjectFromTag(strMeshTag);
 
 	CString strBoneName = m_treeBoneTree.GetItemText(m_hSelectedBone);
 
@@ -407,8 +396,8 @@ void CColliderTab::OnBnClickedButtonDelete()
 	// m_hSelectedMesh, m_hSelectedBone, m_hSelectedCollider이 유효하다는 것을 보장해야 합니다.
 
 	CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
-	CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
-	Engine::CGameObject* pObject = pEditScene->GetObjectFromTag(strMeshTag);
+	CColliderScene* pColliderScene = g_pTool3D_Kernel->GetColliderScene();
+	Engine::CGameObject* pObject = pColliderScene->GetObjectFromTag(strMeshTag);
 
 	CString cstrBoneName = m_treeColliders.GetItemText(m_treeColliders.GetParentItem(m_hSelectedCollider));
 	_int iColliderIndex = _ttoi(m_treeColliders.GetItemText(m_hSelectedCollider));
@@ -474,8 +463,8 @@ void CColliderTab::OnNMClickTreeColliders(NMHDR *pNMHDR, LRESULT *pResult)
 	if (hItem) {
 		// 충돌체를 클릭했다는 것이다. => 삭제할 것이 골라졌으므로 삭제 버튼 활성화
 		CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
-		CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
-		Engine::CGameObject* pObject = pEditScene->GetObjectFromTag(strMeshTag);
+		CColliderScene* pColliderScene = g_pTool3D_Kernel->GetColliderScene();
+		Engine::CGameObject* pObject = pColliderScene->GetObjectFromTag(strMeshTag);
 
 		CString cstrBoneName = m_treeColliders.GetItemText(m_treeColliders.GetParentItem(m_hSelectedCollider));
 		_int iColliderIndex = _ttoi(m_treeColliders.GetItemText(m_hSelectedCollider));
@@ -548,10 +537,10 @@ void CColliderTab::OnBnClickedButtonSave()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
-	CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
-	Engine::CGameObject* pObject = pEditScene->GetObjectFromTag(strMeshTag);
+	CColliderScene* pColliderScene = g_pTool3D_Kernel->GetColliderScene();
+	Engine::CGameObject* pObject = pColliderScene->GetObjectFromTag(strMeshTag);
 
-	pEditScene->SaveColliders(pObject);
+	pColliderScene->SaveColliders(pObject);
 }
 
 
@@ -559,10 +548,10 @@ void CColliderTab::OnBnClickedButtonLoad()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CString strMeshTag = m_treeObjectList.GetItemText(m_hSelectedMesh);
-	CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
-	Engine::CGameObject* pObject = pEditScene->GetObjectFromTag(strMeshTag);
+	CColliderScene* pColliderScene = g_pTool3D_Kernel->GetColliderScene();
+	Engine::CGameObject* pObject = pColliderScene->GetObjectFromTag(strMeshTag);
 
-	pEditScene->LoadColliders(pObject);
+	pColliderScene->LoadColliders(pObject);
 	
 	UpdateAttachedColliders(pObject);
 }

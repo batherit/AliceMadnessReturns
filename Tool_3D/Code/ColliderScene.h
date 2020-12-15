@@ -38,12 +38,7 @@ private:
 	virtual void		Free(void);
 
 public:
-	CTerrain* GetTerrain() const;
-	CNaviMesh* GetNaviMesh() const;
-	CNaviMeshVtxMover* GetNaviMeshVtxMover() const;
-	CGizmo* GetGizmo() const;
-
-	Engine::CGameObject* GetPickedObject() const;
+	//Engine::CGameObject* GetPickedObject() const;
 
 	_bool AddStaticObject(const _tchar* _pMeshTag);
 	_bool AddDynamicObject(const _tchar* _pMeshTag, const _vec3& _vPos = _vec3(0.f, 0.f, 0.f));
@@ -51,20 +46,13 @@ public:
 	CStaticObject* GetStaticObject(const _tchar* _pMeshTag);
 	CDynamicObject* GetDynamicObject(const _tchar* _pMeshTag);
 	Engine::CGameObject* GetObjectFromTag(const _tchar* _pMeshTag);
+	_bool ActivateObject(const _tchar* _pMeshTag);
+	Engine::CGameObject* GetActivatedObject() const { return m_pSelectedObject; }
 
 	vector<CStaticObject*>& GetStaticObjectList() { return m_vecStaticObjects; }
 	vector<CDynamicObject*>& GetDynamicObjectList() { return m_vecDynamicObjects; }
 	_bool DeleteStaticObject(_int _iObjectIndex);
 
-	// 터레인탭 편집 내용 세이브/로드
-	void SaveTerrain();
-	void LoadTerrain();
-	// 네비메쉬탭 편집 내용 세이브/로드
-	void SaveNaviMesh();
-	void LoadNaviMesh();
-	// 맵탭 편집 내용 세이브/로드
-	void SaveMap();
-	void LoadMap();
 	// 콜라이더탭 편집 내용 세이브/로드
 	void SaveColliders(Engine::CGameObject* _pObject);
 	void LoadColliders(Engine::CGameObject* _pObject);
@@ -75,6 +63,7 @@ private:
 private:
 	vector<CStaticObject*> m_vecStaticObjects;
 	vector<CDynamicObject*> m_vecDynamicObjects;
+	Engine::CGameObject* m_pSelectedObject = nullptr;
 };
 
 END

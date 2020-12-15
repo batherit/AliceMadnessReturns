@@ -47,6 +47,7 @@ public:
 	CMapTab*		m_pMapTab = nullptr;
 	CColliderTab*	m_pColliderTab = nullptr;
 	vector<CDialogEx*> m_vecTabs;
+	E_TAB_TYPE		m_eActivatedTabType = TYPE_TERRAIN;
 
 	virtual void OnInitialUpdate();
 	afx_msg void OnDestroy();

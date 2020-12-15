@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -25,6 +25,7 @@
     <ClInclude Include="..\Code\CMapTab.h" />
     <ClInclude Include="..\Code\CMeshPage.h" />
     <ClInclude Include="..\Code\CNaviMeshTab.h" />
+    <ClInclude Include="..\Code\ColliderScene.h" />
     <ClInclude Include="..\Code\CTabForm.h" />
     <ClInclude Include="..\Code\CTerrainPage.h" />
     <ClInclude Include="..\Code\CTerrainTab.h" />
@@ -95,6 +96,7 @@
     <ClCompile Include="..\Code\CMapTab.cpp" />
     <ClCompile Include="..\Code\CMeshPage.cpp" />
     <ClCompile Include="..\Code\CNaviMeshTab.cpp" />
+    <ClCompile Include="..\Code\ColliderScene.cpp" />
     <ClCompile Include="..\Code\CTabForm.cpp" />
     <ClCompile Include="..\Code\CTerrainPage.cpp" />
     <ClCompile Include="..\Code\CTerrainTab.cpp" />

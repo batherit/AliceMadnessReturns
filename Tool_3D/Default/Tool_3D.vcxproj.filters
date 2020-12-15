@@ -89,6 +89,9 @@
     <Filter Include="00. View%28Workspace%29\Tab\ColTab">
       <UniqueIdentifier>{f1e85b37-946e-4a6d-8263-cc9c845df9d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Scene\02. ColliderScene">
+      <UniqueIdentifier>{c8ed9b50-9fd8-4a87-b753-619e7a3a3c99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -232,6 +235,9 @@
     <ClInclude Include="COBBColTab.h">
       <Filter>00. View%28Workspace%29\Tab\ColTab</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\ColliderScene.h">
+      <Filter>02. Scene\02. ColliderScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -344,6 +350,9 @@
     </ClCompile>
     <ClCompile Include="COBBColTab.cpp">
       <Filter>00. View%28Workspace%29\Tab\ColTab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ColliderScene.cpp">
+      <Filter>02. Scene\02. ColliderScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -23,7 +23,6 @@ CInputProcessor_Collider::CInputProcessor_Collider(Engine::CInputProcessorMgr * 
 
 CInputProcessor_Collider::~CInputProcessor_Collider(void)
 {
-	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->ActivateGizmo(false);
 }
 
 _int CInputProcessor_Collider::ProcessInput(const _float & _fDeltaTime)

@@ -304,7 +304,7 @@ void CNaviMeshTab::OnEnChangeEditGroupRange()
 void CNaviMeshTab::OnBnClickedRadioNavi()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetEditScene()->GetInputProcessor());
+	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetInputProcessor());
 	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
 	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
 
@@ -335,7 +335,7 @@ void CNaviMeshTab::OnBnClickedCheckNaviMagnet()
 void CNaviMeshTab::OnBnClickedRadioVertex()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetEditScene()->GetInputProcessor());
+	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetInputProcessor());
 	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
 	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
 
@@ -358,7 +358,7 @@ void CNaviMeshTab::OnBnClickedRadioVertex()
 void CNaviMeshTab::OnBnClickedRadioTriangle()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetEditScene()->GetInputProcessor());
+	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetInputProcessor());
 	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
 
 	UpdateData(TRUE);
@@ -419,7 +419,7 @@ void CNaviMeshTab::OnNMClickTree1(NMHDR *pNMHDR, LRESULT *pResult)
 	m_hSelectedTreeItem = hItem;
 	auto hParent = m_treeNavi.GetParentItem(m_hSelectedTreeItem);
 	CNaviMeshVtxMover* pNaviMeshVtxMover = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover();
-	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetEditScene()->GetInputProcessor());
+	CInputProcessor_Navi* pInputProcessor = dynamic_cast<CInputProcessor_Navi*>(g_pTool3D_Kernel->GetInputProcessor());
 
 	if (hParent) {
 		// 삼각형의 정점 중 하나를 선택한 경우

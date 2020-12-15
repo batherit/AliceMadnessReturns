@@ -15,6 +15,8 @@
 #include "InputProcessor_Navi.h"
 #include "InputProcessor_Map.h"
 #include "InputProcessor_Collider.h"
+#include "EditScene.h"
+#include "ColliderScene.h"
 
 
 // CTabForm
@@ -45,6 +47,7 @@ void CTabForm::ActivateTab(const E_TAB_TYPE & _eTabType)
 
 	m_Tab.SetCurSel(_eTabType);
 	m_vecTabs[_eTabType]->ShowWindow(SW_SHOW);
+	m_eActivatedTabType = _eTabType;
 }
 
 BEGIN_MESSAGE_MAP(CTabForm, CFormView)
@@ -127,15 +130,17 @@ void CTabForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	int iSelIndex = m_Tab.GetCurSel();
-	CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
+	//CEditScene* pEditScene = g_pTool3D_Kernel->GetEditScene();
 	//pEditScene->GetNaviMeshVtxCtrl()->SetActive(false);
-	auto pInputProcessorMgr = pEditScene->GetInputProcessorMgr();
+	auto pInputProcessorMgr = g_pTool3D_Kernel->GetInputProcessorMgr();
 	
 	switch (iSelIndex)
 	{
 	case 0: {
 		if(pInputProcessorMgr)
 			pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Terrain(pInputProcessorMgr));
+		if (m_eActivatedTabType == TYPE_COLLIDER)
+			Engine::CManagement::GetInstance()->SetNextScene(CEditScene::Create(g_pTool3D_Kernel->GetGraphicDev()));
 		ActivateTab(TYPE_TERRAIN);
 		break;
 	}
@@ -143,18 +148,24 @@ void CTabForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 	case 1: {
 		if (pInputProcessorMgr)
 			pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Navi(pInputProcessorMgr));
+		if (m_eActivatedTabType == TYPE_COLLIDER)
+			Engine::CManagement::GetInstance()->SetNextScene(CEditScene::Create(g_pTool3D_Kernel->GetGraphicDev()));
 		ActivateTab(TYPE_NAVI);
 		break;
 	}		
 	case 2: {
 		if (pInputProcessorMgr)
 			pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Map(pInputProcessorMgr));
+		if (m_eActivatedTabType == TYPE_COLLIDER)
+			Engine::CManagement::GetInstance()->SetNextScene(CEditScene::Create(g_pTool3D_Kernel->GetGraphicDev()));
 		ActivateTab(TYPE_MAP);
 		break;
 	}
 	case 3: {
 		if (pInputProcessorMgr)
 			pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Collider(pInputProcessorMgr));
+		if (m_eActivatedTabType != TYPE_COLLIDER)
+			Engine::CManagement::GetInstance()->SetNextScene(CColliderScene::Create(g_pTool3D_Kernel->GetGraphicDev()));
 		ActivateTab(TYPE_COLLIDER);
 		break;
 	}

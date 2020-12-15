@@ -13,6 +13,9 @@ class CGraphicDev;
 END
 BEGIN(Client)
 class CEditScene;
+class CColliderScene;
+class CStaticObject;
+class CDynamicObject;
 class CTool3D_Kernel : public CBase
 {
 private: // 생성자, 소멸자
@@ -39,10 +42,21 @@ public:
 public:
 	LPDIRECT3DDEVICE9 GetGraphicDev() { return m_pGraphicDev; }
 	CEditScene* GetEditScene() const;
+	CColliderScene* GetColliderScene() const;
+	Engine::CScene* GetCurScene() const;
+
+	Engine::CInputProcessor* GetInputProcessor() const;
+	Engine::CInputProcessorMgr* GetInputProcessorMgr() const { return m_pInputProcessorMgr; }
+
+	// 입력 처리 매니져 객체
+	Engine::CInputProcessorMgr* m_pInputProcessorMgr = nullptr;
 	
+	// 임시 저장 
+	vector<CStaticObject*> m_vecStoredStaticObjects;
+	vector<CDynamicObject*> m_vecStoredDynamicObjects;
 
-	//void OnLButtonDown(UINT nFlags, CPoint point);
-
+	vector<CStaticObject*> m_vecStoredStaticObjects_Collider;
+	vector<CDynamicObject*> m_vecStoredDynamicObjects_Collider;
 };
 
 END

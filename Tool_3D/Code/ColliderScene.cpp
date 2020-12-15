@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "EditScene.h"
+#include "ColliderScene.h"
 #include "DynamicCamera.h"
 #include "Terrain.h"
 #include "NaviMesh.h"
@@ -15,39 +15,41 @@
 #include "DynamicObject.h"
 //#include "InputProcessor_Navi.h"
 
-CEditScene::CEditScene(LPDIRECT3DDEVICE9 pGraphicDev)
+CColliderScene::CColliderScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
 	CScene(pGraphicDev)
 {
 	// 저장되어 있던 정보를 읽어온다.
 	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredDynamicObjects) {
 		m_vecDynamicObjects.emplace_back(rObj);
+		Engine::Safe_Release(rObj);
 	}
 	g_pTool3D_Kernel->m_vecStoredDynamicObjects.clear();
 
 	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredStaticObjects) {
 		m_vecStaticObjects.emplace_back(rObj);
+		Engine::Safe_Release(rObj);
 	}
 	g_pTool3D_Kernel->m_vecStoredStaticObjects.clear();
 }
 
-CEditScene::CEditScene(const CEditScene & rhs)
+CColliderScene::CColliderScene(const CColliderScene & rhs)
 	:
 	CScene(rhs)
 {
 }
 
-CEditScene::~CEditScene(void)
+CColliderScene::~CColliderScene(void)
 {
 	// 저장한다.
 }
 
-void CEditScene::ResetScene(void)
+void CColliderScene::ResetScene(void)
 {
 
 }
 
-HRESULT CEditScene::Ready(void)
+HRESULT CColliderScene::Ready(void)
 {
 	Engine::CLayer* pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
@@ -59,57 +61,12 @@ HRESULT CEditScene::Ready(void)
 	//m_pCamera->SetParent(m_pPlayer);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", pGameObject), E_FAIL);
 
-	// 지형 생성
-	pGameObject = CTerrain::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
-	//dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(2, 2, 129.f, 129.f, 1.f, 1.f, nullptr);
-	//dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
-
-	// 네비메쉬 오브젝트 생성
-	CNaviMesh* pNaviMesh = CNaviMesh::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pNaviMesh, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMesh", pNaviMesh), E_FAIL);
-
-	// 네비메쉬버텍스컨트롤러 생성
-	//CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = CNaviMeshVtxCtrl::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pNaviMeshVtxCtrl, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxCtrl", pNaviMeshVtxCtrl), E_FAIL);
-	//pNaviMeshVtxCtrl->SetNaviMesh(pNaviMesh);
-	//pNaviMeshVtxCtrl->SetActive(false);
-
-	// 네비메쉬정점이동자 생성
-	CNaviMeshVtxMover* pNaviMeshVtxMover = CNaviMeshVtxMover::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pNaviMeshVtxMover, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxMover", pNaviMeshVtxMover), E_FAIL);
-
-	// 오브젝트 기즈모 생성
-	CGizmo* pGizmo = CGizmo::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGizmo, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Gizmo", pGizmo), E_FAIL);
-	pGizmo->ActivateGizmo(false);
-
-	// 저장된 정보를 레이어에 집어넣는다.
-	for (auto& rObj : m_vecDynamicObjects) {
-		pLayer->Add_GameObject(rObj);
-		//Engine::Safe_AddRef(rObj);
-	}
-	for (auto& rObj : m_vecStaticObjects) {
-		pLayer->Add_GameObject(rObj);
-		//Engine::Safe_AddRef(rObj);
-	}
-
 	// 편집 레이어 등록
-	m_mapLayer.emplace(L"EditLayer", pLayer);
-
-	// 입력 모드 매니저 생성
-	/*m_pInputProcessorMgr = Engine::CInputProcessorMgr::Create();
-	NULL_CHECK_RETURN(m_pInputProcessorMgr, E_FAIL);
-	m_pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Terrain(m_pInputProcessorMgr));*/
+	m_mapLayer.emplace(L"ColliderLayer", pLayer);
 
 	// 컬모드 설정
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	
+
 	// 조명 설정
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
@@ -122,27 +79,19 @@ HRESULT CEditScene::Ready(void)
 	return S_OK;
 }
 
-int CEditScene::Update(const _float& fTimeDelta)
+int CColliderScene::Update(const _float& fTimeDelta)
 {
-	//m_pInputProcessorMgr->ProcessInput(fTimeDelta);
-
-	/*static _float fGapX = 0.f;
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
-		AddDynamicObject(L"AliceW", _vec3(fGapX, 0.f, 0.f));
-		fGapX += 20.f;
-	}*/
-
 	return CScene::Update(fTimeDelta);
 }
 
-void CEditScene::Render(void)
+void CColliderScene::Render(void)
 {
 	Engine::Get_Renderer()->Render_GameObject();
 }
 
-CEditScene * CEditScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CColliderScene * CColliderScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CEditScene*	pInstance = new CEditScene(pGraphicDev);
+	CColliderScene*	pInstance = new CColliderScene(pGraphicDev);
 
 	if (FAILED(pInstance->Ready()))
 		Client::Safe_Release(pInstance);
@@ -150,10 +99,8 @@ CEditScene * CEditScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CEditScene::Free(void)
+void CColliderScene::Free(void)
 {
-	//Engine::Safe_Release(m_pInputProcessorMgr);
-
 	// 씬을 지우기 전에 오브젝트를 저장해둔다.
 	// 저장되어 있던 정보를 읽어온다.
 	for (auto& rObj : m_vecDynamicObjects) {
@@ -173,9 +120,9 @@ void CEditScene::Free(void)
 	CScene::Free();
 }
 
-CTerrain * CEditScene::GetTerrain() const
+CTerrain * CColliderScene::GetTerrain() const
 {
-	auto pLayer = GetLayer(L"EditLayer");
+	auto pLayer = GetLayer(L"ColliderLayer");
 
 	if (!pLayer)
 		return nullptr;
@@ -188,9 +135,9 @@ CTerrain * CEditScene::GetTerrain() const
 	return static_cast<CTerrain*>(*rLayerList.begin());
 }
 
-CNaviMesh * CEditScene::GetNaviMesh() const
+CNaviMesh * CColliderScene::GetNaviMesh() const
 {
-	auto pLayer = GetLayer(L"EditLayer");
+	auto pLayer = GetLayer(L"ColliderLayer");
 
 	if (!pLayer)
 		return nullptr;
@@ -203,9 +150,9 @@ CNaviMesh * CEditScene::GetNaviMesh() const
 	return static_cast<CNaviMesh*>(*rLayerList.begin());
 }
 
-CNaviMeshVtxMover * CEditScene::GetNaviMeshVtxMover() const
+CNaviMeshVtxMover * CColliderScene::GetNaviMeshVtxMover() const
 {
-	auto pLayer = GetLayer(L"EditLayer");
+	auto pLayer = GetLayer(L"ColliderLayer");
 
 	if (!pLayer)
 		return nullptr;
@@ -218,9 +165,9 @@ CNaviMeshVtxMover * CEditScene::GetNaviMeshVtxMover() const
 	return static_cast<CNaviMeshVtxMover*>(*rLayerList.begin());
 }
 
-CGizmo * CEditScene::GetGizmo() const
+CGizmo * CColliderScene::GetGizmo() const
 {
-	auto pLayer = GetLayer(L"EditLayer");
+	auto pLayer = GetLayer(L"ColliderLayer");
 
 	if (!pLayer)
 		return nullptr;
@@ -232,15 +179,9 @@ CGizmo * CEditScene::GetGizmo() const
 
 	return static_cast<CGizmo*>(*rLayerList.begin());
 }
-
-//Engine::CInputProcessor * CEditScene::GetInputProcessor() const
+//CNaviMeshInputProcessor * CColliderScene::GetNaviMeshInputProcessor() const
 //{
-//	return m_pInputProcessorMgr->GetCurInputProcessor();
-//}
-
-//CNaviMeshInputProcessor * CEditScene::GetNaviMeshInputProcessor() const
-//{
-//	auto pLayer = GetLayer(L"EditLayer");
+//	auto pLayer = GetLayer(L"ColliderLayer");
 //
 //	if (!pLayer)
 //		return nullptr;
@@ -253,18 +194,18 @@ CGizmo * CEditScene::GetGizmo() const
 //	return static_cast<CNaviMeshInputProcessor*>(*rLayerList.begin());
 //}
 
-Engine::CGameObject * CEditScene::GetPickedObject() const
+Engine::CGameObject * CColliderScene::GetPickedObject() const
 {
 	return GetTerrain();
 }
 
-_bool CEditScene::AddStaticObject(const _tchar * _pMeshTag)
+_bool CColliderScene::AddStaticObject(const _tchar * _pMeshTag)
 {
 	CStaticObject* pStaticObject = CStaticObject::Create(m_pGraphicDev);
 	pStaticObject->SetRenderInfo(_pMeshTag);
 
 	if (pStaticObject->GetComponent<Engine::CStaticMesh>()) {
-		GetLayer(L"EditLayer")->Add_GameObject(pStaticObject);
+		GetLayer(L"ColliderLayer")->Add_GameObject(pStaticObject);
 		m_vecStaticObjects.emplace_back(pStaticObject);
 		return true;
 	}
@@ -273,13 +214,13 @@ _bool CEditScene::AddStaticObject(const _tchar * _pMeshTag)
 	return false;
 }
 
-_bool CEditScene::AddDynamicObject(const _tchar * _pMeshTag, const _vec3& _vPos)
+_bool CColliderScene::AddDynamicObject(const _tchar * _pMeshTag, const _vec3& _vPos)
 {
 	CDynamicObject* pDynamicObject = CDynamicObject::Create(m_pGraphicDev);
 	pDynamicObject->SetRenderInfo(_pMeshTag);
 
 	if (pDynamicObject->GetComponent<Engine::CDynamicMesh>()) {
-		GetLayer(L"EditLayer")->Add_GameObject(pDynamicObject);
+		GetLayer(L"ColliderLayer")->Add_GameObject(pDynamicObject);
 		pDynamicObject->GetTransform()->SetPos(_vPos);
 		m_vecDynamicObjects.emplace_back(pDynamicObject);
 		return true;
@@ -289,15 +230,15 @@ _bool CEditScene::AddDynamicObject(const _tchar * _pMeshTag, const _vec3& _vPos)
 	return false;
 }
 
-CStaticObject * CEditScene::GetStaticObject(_int _iObjectIndex)
+CStaticObject * CColliderScene::GetStaticObject(_int _iObjectIndex)
 {
-	if(!IsValidObjectIndex(_iObjectIndex))
+	if (!IsValidObjectIndex(_iObjectIndex))
 		return nullptr;
 
 	return m_vecStaticObjects[_iObjectIndex];
 }
 
-CStaticObject * CEditScene::GetStaticObject(const _tchar * _pMeshTag)
+CStaticObject * CColliderScene::GetStaticObject(const _tchar * _pMeshTag)
 {
 	for (auto& rObj : m_vecStaticObjects) {
 		if (lstrcmp(rObj->GetMeshTag(), _pMeshTag) == 0) {
@@ -308,7 +249,7 @@ CStaticObject * CEditScene::GetStaticObject(const _tchar * _pMeshTag)
 	return nullptr;
 }
 
-CDynamicObject * CEditScene::GetDynamicObject(const _tchar * _pMeshTag)
+CDynamicObject * CColliderScene::GetDynamicObject(const _tchar * _pMeshTag)
 {
 	for (auto& rObj : m_vecDynamicObjects) {
 		if (lstrcmp(rObj->GetMeshTag(), _pMeshTag) == 0) {
@@ -319,7 +260,7 @@ CDynamicObject * CEditScene::GetDynamicObject(const _tchar * _pMeshTag)
 	return nullptr;
 }
 
-Engine::CGameObject * CEditScene::GetObjectFromTag(const _tchar * _pMeshTag)
+Engine::CGameObject * CColliderScene::GetObjectFromTag(const _tchar * _pMeshTag)
 {
 	Engine::CGameObject* pObject = nullptr;
 
@@ -330,7 +271,7 @@ Engine::CGameObject * CEditScene::GetObjectFromTag(const _tchar * _pMeshTag)
 	return pObject;
 }
 
-_bool CEditScene::DeleteStaticObject(_int _iObjectIndex)
+_bool CColliderScene::DeleteStaticObject(_int _iObjectIndex)
 {
 	if (!IsValidObjectIndex(_iObjectIndex))
 		return false;
@@ -341,7 +282,7 @@ _bool CEditScene::DeleteStaticObject(_int _iObjectIndex)
 	return true;
 }
 
-void CEditScene::SaveTerrain()
+void CColliderScene::SaveTerrain()
 {
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
@@ -367,7 +308,7 @@ void CEditScene::SaveTerrain()
 	}
 }
 
-void CEditScene::LoadTerrain()
+void CColliderScene::LoadTerrain()
 {
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
@@ -395,7 +336,7 @@ void CEditScene::LoadTerrain()
 	}
 }
 
-void CEditScene::SaveNaviMesh()
+void CColliderScene::SaveNaviMesh()
 {
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
@@ -422,7 +363,7 @@ void CEditScene::SaveNaviMesh()
 	}
 }
 
-void CEditScene::LoadNaviMesh()
+void CColliderScene::LoadNaviMesh()
 {
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
@@ -451,7 +392,7 @@ void CEditScene::LoadNaviMesh()
 	//UpdateData(FALSE);
 }
 
-void CEditScene::SaveMap()
+void CColliderScene::SaveMap()
 {
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
@@ -482,7 +423,7 @@ void CEditScene::SaveMap()
 	}
 }
 
-void CEditScene::LoadMap()
+void CColliderScene::LoadMap()
 {
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	CTabForm* pTabForm = dynamic_cast<CTabForm*>(pMain->m_MainSplitter.GetPane(0, 0));
@@ -520,10 +461,10 @@ void CEditScene::LoadMap()
 			if (!pStaticObject->LoadInfo(hFile))
 				Engine::Safe_Release(pStaticObject);
 			else {
-				GetLayer(L"EditLayer")->Add_GameObject(pStaticObject);
+				GetLayer(L"ColliderLayer")->Add_GameObject(pStaticObject);
 				m_vecStaticObjects.emplace_back(pStaticObject);
 			}
-				
+
 		}
 
 		CloseHandle(hFile);
@@ -531,7 +472,7 @@ void CEditScene::LoadMap()
 	//UpdateData(FALSE);
 }
 
-void CEditScene::SaveColliders(Engine::CGameObject* _pObject)
+void CColliderScene::SaveColliders(Engine::CGameObject* _pObject)
 {
 	if (!_pObject)
 		return;
@@ -561,7 +502,7 @@ void CEditScene::SaveColliders(Engine::CGameObject* _pObject)
 	}
 }
 
-void CEditScene::LoadColliders(Engine::CGameObject* _pObject)
+void CColliderScene::LoadColliders(Engine::CGameObject* _pObject)
 {
 	if (!_pObject)
 		return;
@@ -592,7 +533,7 @@ void CEditScene::LoadColliders(Engine::CGameObject* _pObject)
 	}
 }
 
-_bool CEditScene::IsValidObjectIndex(_int _iObjectIndex)
+_bool CColliderScene::IsValidObjectIndex(_int _iObjectIndex)
 {
 	if (_iObjectIndex < 0 || _iObjectIndex >= static_cast<_int>(m_vecStaticObjects.size()))
 		return false;

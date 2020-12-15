@@ -1,5 +1,5 @@
-#ifndef EditScene_h__
-#define EditScene_h__
+#ifndef DefaultScene_h__
+#define DefaultScene_h__
 
 #include "Define.h"
 #include "Base.h"
@@ -17,12 +17,12 @@ class CGizmo;
 class CStaticObject;
 class CDynamicObject;
 //class CNaviMeshInputProcessor;
-class CEditScene : public Engine::CScene
+class CColliderScene : public Engine::CScene
 {
 private: // 생성자, 소멸자
-	explicit CEditScene(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CEditScene(const CEditScene& rhs);
-	virtual ~CEditScene(void);
+	explicit CColliderScene(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CColliderScene(const CColliderScene& rhs);
+	virtual ~CColliderScene(void);
 
 public:
 	// CScene을(를) 통해 상속됨
@@ -32,7 +32,7 @@ public:
 	virtual void Render(void);
 
 public:
-	static CEditScene*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CColliderScene*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void		Free(void);
@@ -43,11 +43,8 @@ public:
 	CNaviMeshVtxMover* GetNaviMeshVtxMover() const;
 	CGizmo* GetGizmo() const;
 
-	//Engine::CInputProcessor* GetInputProcessor() const;
 	Engine::CGameObject* GetPickedObject() const;
-	//Engine::CInputProcessorMgr* GetInputProcessorMgr() const { return m_pInputProcessorMgr; }
 
-	
 	_bool AddStaticObject(const _tchar* _pMeshTag);
 	_bool AddDynamicObject(const _tchar* _pMeshTag, const _vec3& _vPos = _vec3(0.f, 0.f, 0.f));
 	CStaticObject* GetStaticObject(_int _iObjectIndex);
@@ -76,7 +73,6 @@ private:
 	_bool IsValidObjectIndex(_int _iObjectIndex);
 
 private:
-	//Engine::CInputProcessorMgr* m_pInputProcessorMgr = nullptr;
 	vector<CStaticObject*> m_vecStaticObjects;
 	vector<CDynamicObject*> m_vecDynamicObjects;
 };

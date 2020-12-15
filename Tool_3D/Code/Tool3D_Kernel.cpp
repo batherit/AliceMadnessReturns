@@ -2,6 +2,11 @@
 #include "Tool3D_Kernel.h"
 #include "LoadScene.h"
 #include "EditScene.h"
+#include "ColliderScene.h"
+#include "StaticObject.h"
+#include "DynamicObject.h"
+#include "InputProcessor_Terrain.h"
+
 
 CTool3D_Kernel::CTool3D_Kernel(void)
 {
@@ -55,6 +60,11 @@ HRESULT CTool3D_Kernel::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"바탕", 15, 20, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"궁서", 30, 30, FW_HEAVY), E_FAIL);
 
+	// 입력 처리기 세팅
+	m_pInputProcessorMgr = Engine::CInputProcessorMgr::Create();
+	NULL_CHECK_RETURN(m_pInputProcessorMgr, E_FAIL);
+	m_pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Terrain(m_pInputProcessorMgr));
+
 	// 첫 씬을 Logo로 설정한다.
 	Engine::CManagement::GetInstance()->SetNextScene(CLoadScene::Create(m_pGraphicDev));
 	
@@ -63,6 +73,7 @@ HRESULT CTool3D_Kernel::Ready_MainApp(void)
 
 _int CTool3D_Kernel::Update_MainApp(const _float& fTimeDelta)
 {
+	m_pInputProcessorMgr->ProcessInput(fTimeDelta);
 	if (!Engine::CManagement::GetInstance()->ConfirmValidScene())
 		return -1;
 	Engine::CDirectInputMgr::GetInstance()->Update();
@@ -96,16 +107,38 @@ CTool3D_Kernel* CTool3D_Kernel::Create(void)
 
 void CTool3D_Kernel::Free(void)
 {
+	Engine::Safe_Release(m_pInputProcessorMgr);
+
 	Client::Safe_Release(m_pGraphicDev);
 
 	Engine::Release_Resoures();
 	Engine::Release_Utility();
+	for_each(m_vecStoredDynamicObjects.begin(), m_vecStoredDynamicObjects.end(), Engine::CDeleteObj());
+	for_each(m_vecStoredStaticObjects.begin(), m_vecStoredStaticObjects.end(), Engine::CDeleteObj());
+	for_each(m_vecStoredDynamicObjects_Collider.begin(), m_vecStoredDynamicObjects_Collider.end(), Engine::CDeleteObj());
+	for_each(m_vecStoredStaticObjects_Collider.begin(), m_vecStoredStaticObjects_Collider.end(), Engine::CDeleteObj());
+
 	Engine::Release_System();
 }
 
 CEditScene * CTool3D_Kernel::GetEditScene() const
 {
 	return dynamic_cast<CEditScene*>(Engine::CManagement::GetInstance()->GetSceneMgr()->GetCurScene());
+}
+
+CColliderScene * CTool3D_Kernel::GetColliderScene() const
+{
+	return dynamic_cast<CColliderScene*>(Engine::CManagement::GetInstance()->GetSceneMgr()->GetCurScene());
+}
+
+Engine::CScene * CTool3D_Kernel::GetCurScene() const
+{
+	return Engine::CManagement::GetInstance()->GetSceneMgr()->GetCurScene();
+}
+
+Engine::CInputProcessor * CTool3D_Kernel::GetInputProcessor() const
+{
+	return m_pInputProcessorMgr->GetCurInputProcessor();
 }
 
 //void CTool3D_Kernel::OnLButtonDown(UINT nFlags, CPoint point)

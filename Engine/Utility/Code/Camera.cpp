@@ -49,6 +49,16 @@ void Engine::CCamera::SetProjectionMatrix(const _float & _fFOV, const _float & _
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
+CCamera * CCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CCamera*	pInstance = new CCamera(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_Object()))
+		Safe_Release(pInstance);
+
+	return pInstance;
+}
+
 void Engine::CCamera::Free(void)
 {
 	CGameObject::Free();

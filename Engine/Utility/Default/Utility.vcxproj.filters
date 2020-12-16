@@ -100,6 +100,12 @@
     <Filter Include="03. GameObject\ColliderObject\Box\OBB">
       <UniqueIdentifier>{9131b613-92c3-4aa1-b7a1-1f16bbca963f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. GameObject\CameraController">
+      <UniqueIdentifier>{c6298ba8-025e-46e5-a6c3-006dd86e6afb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager\05. CameraMgr">
+      <UniqueIdentifier>{b8b1b0a5-6586-4f2d-ac36-9201db1df64d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -201,6 +207,12 @@
     <ClInclude Include="..\Code\ColliderObject_OBB.h">
       <Filter>03. GameObject\ColliderObject\Box\OBB</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\CameraMgr.h">
+      <Filter>98. Manager\05. CameraMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CameraController.h">
+      <Filter>03. GameObject\CameraController</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -289,6 +301,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\ColliderObject_OBB.cpp">
       <Filter>03. GameObject\ColliderObject\Box\OBB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraMgr.cpp">
+      <Filter>98. Manager\05. CameraMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraController.cpp">
+      <Filter>03. GameObject\CameraController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

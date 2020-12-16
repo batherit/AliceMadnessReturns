@@ -440,6 +440,24 @@ namespace Engine
 		return _pOut;
 	}
 
+	inline _matrix* GetRotateMatrixEyeAtUp(_matrix* _pOut, const _vec3* _pEye, const _vec3* _pAt, const _vec3* _pUp) {
+		_vec3 vLook, vRight, vUp;
+		// Look축을 구합니다.
+		D3DXVec3Normalize(&vLook, &(*_pAt - *_pEye));
+		// Right축을 구합니다.
+		D3DXVec3Cross(&vRight, _pUp, &vLook);
+		D3DXVec3Normalize(&vRight, &vRight);
+		// Up축을 구합니다.
+		D3DXVec3Cross(&vUp, &vLook, &vRight);
+
+		_pOut->_11 = vRight.x;				_pOut->_12 = vRight.y;			_pOut->_13 = vRight.z;				_pOut->_14 = 0.f;
+		_pOut->_21 = vUp.x;					_pOut->_22 = vUp.y;				_pOut->_23 = vUp.z;					_pOut->_24 = 0.f;
+		_pOut->_31 = vLook.x;				_pOut->_32 = vLook.y;			_pOut->_33 = vLook.z;				_pOut->_34 = 0.f;
+		_pOut->_41 = 0.f;					_pOut->_42 = 0.f;				_pOut->_43 = 0.f;					_pOut->_44 = 1.f;
+
+		return _pOut;
+	}
+
 	// 월드 행렬에서 회전 행렬 정보 추출하기
 	inline _matrix* ExtractRotationMatrix(_matrix* _pOut, const _matrix* _pWorldM) {
 		_vec3 vRight = _vec3(_pWorldM->_11, _pWorldM->_12, _pWorldM->_13);

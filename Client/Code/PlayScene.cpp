@@ -9,6 +9,8 @@
 #include "SkyBox.h"
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
+#include "CameraController_Player.h"
+#include "CameraController_Crowd.h"
 #include "Map.h"
 
 CPlayScene::CPlayScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -89,6 +91,19 @@ int CPlayScene::Update(const _float& fTimeDelta)
 	//	}
 	//}	
 
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_0)) {
+		Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
+		pCameraMgr->ChangeCameraController(0, 0.1f);
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_1)) {
+		Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
+		pCameraMgr->ChangeCameraController(1, 0.1f);
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_2)) {
+		Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
+		pCameraMgr->ChangeCameraController(2, 0.1f);
+	}
+
 	return CScene::Update(fTimeDelta);
 }
 
@@ -146,18 +161,48 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Map", pMap), E_FAIL);
 
+	// 카메라 매니져 생성
+	Engine::CCameraMgr* pCameraMgr = Engine::CCameraMgr::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pCameraMgr, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraMgr", pCameraMgr), E_FAIL);
+
+	// 카메라 생성
+	//m_pCamera = CDynamicCamera::Create(m_pGraphicDev);		// 동적 카메라
+	//m_pCamera = CStaticCamera::Create(m_pGraphicDev);			// 정적 카메라
+	m_pCamera = CStaticCamera::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
+	//m_pCamera->SetParent(m_pPlayer);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", m_pCamera), E_FAIL);
+	pCameraMgr->SetCamera(m_pCamera);
+
 	// 플레이어 생성
 	m_pPlayer = CAlice::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
 	m_pPlayer->GetTransform()->Translate(_vec3(45.f, 0.f, -10.f));
-	
-	// 카메라 생성
-	m_pCamera = CDynamicCamera::Create(m_pGraphicDev);		// 동적 카메라
-	//m_pCamera = CStaticCamera::Create(m_pGraphicDev);			// 정적 카메라
-	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
-	//m_pCamera->SetParent(m_pPlayer);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", m_pCamera), E_FAIL);
+
+	// 플레이어 카메라 컨트롤러 생성
+	Engine::CCameraController* pCameraController = CCameraController_Player::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pCameraController, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
+	static_cast<CCameraController_Player*>(pCameraController)->SetPlayer(m_pPlayer);
+	pCameraMgr->AddCameraController(pCameraController);
+	pCameraMgr->ChangeCameraController(0, 0.4f);
+
+	// 관중형 카메라 컨트롤러 생성
+	pCameraController = CCameraController_Crowd::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pCameraController, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
+	static_cast<CCameraController_Crowd*>(pCameraController)->SetTarget(m_pPlayer);
+	pCameraController->GetTransform()->SetPos(_vec3(20.f, 10.f, 10.f));
+	pCameraMgr->AddCameraController(pCameraController);
+
+	pCameraController = CCameraController_Crowd::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pCameraController, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
+	static_cast<CCameraController_Crowd*>(pCameraController)->SetTarget(m_pPlayer);
+	pCameraController->GetTransform()->SetPos(_vec3(-10.f, 30.f, 10.f));
+	pCameraMgr->AddCameraController(pCameraController);
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);

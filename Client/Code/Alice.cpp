@@ -26,7 +26,7 @@ HRESULT CAlice::Ready_Object(void)
 	pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"AliceW"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::CDynamicMesh::GetComponentID()].emplace(Engine::CDynamicMesh::GetComponentTag(), pComponent);
-	m_pMesh->Set_AnimationSet(0);
+	//m_pMesh->Set_AnimationSet(48);
 
 	// Load Colliders
 	LoadColliders(L"AliceW.col");
@@ -39,7 +39,8 @@ HRESULT CAlice::Ready_Object(void)
 	
 	// Physics
 	pComponent = m_pPhysics = AddComponent<Engine::CPhysics>();
-	m_pPhysics->SetSpeed(20.f, 20.f);
+	//m_pPhysics->SetDirection(_vec3(0.f, 0.f, -1.f));
+	m_pPhysics->SetSpeed(4.5f, 4.5f);
 		
 	return S_OK;
 }
@@ -80,6 +81,20 @@ int CAlice::Update_Object(const _float & _fDeltaTime)
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_DOWN)) {
 		vDir -= vCamLook;
 	}
+
+	if (D3DXVec3LengthSq(&vDir) > 0.f) {
+		// 플레이어 회전시키기
+		_vec3 vRotAxis = Engine::GetRotationAxis(GetTransform()->GetLook(), vDir);
+		_float vRotAngle = Engine::GetRotationAngle(GetTransform()->GetLook(), vDir) * 0.25f;
+		GetTransform()->RotateByAxis(vRotAngle, vRotAxis);
+		//_vec3 vRotatedDir = Engine::GetRotatedVector(vRotAxis, vRotAngle, m_pPhysics->GetDirection());
+		m_pMesh->Set_AnimationSet(ALICE::AliceW_Run);
+	}
+	else {
+		m_pMesh->Set_AnimationSet(ALICE::AliceW_Idle);
+	}
+
+	
 
 	m_pPhysics->SetDirection(vDir);
 	m_pTransform->SetPos(m_pMap->GetNaviMesh()->Move_OnNaviMesh(&m_pTransform->GetPos(), &(vDir * _fDeltaTime * m_pPhysics->GetSpeed())));

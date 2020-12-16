@@ -69,6 +69,7 @@ public:
 	vector<pair<string, vector<CColliderObject*>>>& GetColliderList() { return m_vecColliders; }
 	CColliderObject* GetColliderFromTag(const _tchar* _pColliderTag);
 	CColliderObject_Sphere* GetCullingSphere() const { return m_pCullingSphere; }
+	void SetCullingSphere(CColliderObject_Sphere* _pCullingSphere) { m_pCullingSphere = _pCullingSphere; }
 
 	// 파일 입출력 관련
 	virtual _bool SaveInfo(FILE* _fpOut)	{ return true; }

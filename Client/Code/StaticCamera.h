@@ -22,13 +22,6 @@ private: // 持失切, 社瑚切
 public:
 	static CStaticCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
-
-public:
-	void SetOffset(const _vec3& _vOffset) { m_vOffset = _vOffset; }
-
-private:
-	Engine::CTransform* m_pTransform = nullptr;
-	_vec3 m_vOffset{ 0.f, 0.f, 0.f };
 };
 
 END

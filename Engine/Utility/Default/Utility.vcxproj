@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="..\Code\BaseRenderer.cpp" />
     <ClCompile Include="..\Code\Camera.cpp" />
+    <ClCompile Include="..\Code\CameraController.cpp" />
+    <ClCompile Include="..\Code\CameraMgr.cpp" />
     <ClCompile Include="..\Code\ColliderObject.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
@@ -80,6 +82,8 @@
     <ClInclude Include="..\..\Header\Export_Utility.h" />
     <ClInclude Include="..\Code\BaseRenderer.h" />
     <ClInclude Include="..\Code\Camera.h" />
+    <ClInclude Include="..\Code\CameraController.h" />
+    <ClInclude Include="..\Code\CameraMgr.h" />
     <ClInclude Include="..\Code\ColliderObject.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>

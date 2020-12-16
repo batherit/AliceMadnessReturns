@@ -76,6 +76,15 @@
     <Filter Include="02. Object\02. GameObject\Alice">
       <UniqueIdentifier>{32cb0994-47c5-4825-bbdf-cd871b863a1a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\00. Camera\DynamicCamera">
+      <UniqueIdentifier>{ee03a7bc-4036-41a7-bcb5-ce81960048cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\00. Camera\StaticCamera">
+      <UniqueIdentifier>{6e68f0a4-3083-44dc-a0fd-d889b7872d82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\07. CameraController">
+      <UniqueIdentifier>{3988a148-edee-4c5d-a8f8-452201f794fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -135,12 +144,6 @@
     <ClInclude Include="..\Code\LoadScene.h">
       <Filter>01. Scene\00. LoadScene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\DynamicCamera.h">
-      <Filter>02. Object\00. Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\StaticCamera.h">
-      <Filter>02. Object\00. Camera</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Monster.h">
       <Filter>02. Object\02. GameObject\Monster</Filter>
     </ClInclude>
@@ -171,6 +174,18 @@
     <ClInclude Include="..\Code\Alice.h">
       <Filter>02. Object\02. GameObject\Alice</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\DynamicCamera.h">
+      <Filter>02. Object\00. Camera\DynamicCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\StaticCamera.h">
+      <Filter>02. Object\00. Camera\StaticCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CameraController_Player.h">
+      <Filter>02. Object\07. CameraController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CameraController_Crowd.h">
+      <Filter>02. Object\07. CameraController</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -199,12 +214,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\LoadScene.cpp">
       <Filter>01. Scene\00. LoadScene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\DynamicCamera.cpp">
-      <Filter>02. Object\00. Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\StaticCamera.cpp">
-      <Filter>02. Object\00. Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. Object\02. GameObject\Monster</Filter>
@@ -235,6 +244,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\Alice.cpp">
       <Filter>02. Object\02. GameObject\Alice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicCamera.cpp">
+      <Filter>02. Object\00. Camera\DynamicCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticCamera.cpp">
+      <Filter>02. Object\00. Camera\StaticCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraController_Player.cpp">
+      <Filter>02. Object\07. CameraController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraController_Crowd.cpp">
+      <Filter>02. Object\07. CameraController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

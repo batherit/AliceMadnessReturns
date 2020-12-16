@@ -8,6 +8,7 @@
 #include "InputProcessor.h"
 #include "InputProcessorMgr.h"
 #include "LightMgr.h"
+#include "CameraMgr.h"
 
 // Object
 #include "GameObject.h"
@@ -15,6 +16,7 @@
 #include "ColliderObject_AABB.h"
 #include "ColliderObject_OBB.h"
 #include "Camera.h"
+#include "CameraController.h"
 
 // Components
 #include "Component.h"

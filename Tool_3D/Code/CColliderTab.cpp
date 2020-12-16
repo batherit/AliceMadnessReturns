@@ -407,6 +407,8 @@ void CColliderTab::OnBnClickedButtonDelete()
 		if (!rColliderList.empty()) {
 			for (auto& iter = rColliderList.begin(); iter != rColliderList.end(); ++iter) {
 				if (cstrBoneName == iter->first.c_str()) {
+					if (pObject->GetCullingSphere() == iter->second[iColliderIndex])
+						pObject->SetCullingSphere(nullptr);
 					Engine::Safe_Release(iter->second[iColliderIndex]);
 					iter->second.erase(iter->second.begin() + iColliderIndex);
 

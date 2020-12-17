@@ -12,7 +12,7 @@
 
 //END
 BEGIN(Client)
-class CAlice;
+class CAliceW;
 class CMonster;
 class CSkyBox;
 class CTerrain;
@@ -44,7 +44,7 @@ private:
 
 private:
 	Engine::CCamera* m_pCamera = nullptr;
-	CAlice* m_pPlayer = nullptr;
+	CAliceW* m_pPlayer = nullptr;
 	//CMonster* m_pMonster = nullptr;
 	CSkyBox* m_pSkyBox = nullptr;
 	CTerrain* m_pTerrain = nullptr;

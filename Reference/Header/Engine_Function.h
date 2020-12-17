@@ -394,6 +394,11 @@ namespace Engine
 		float fT = GetRandomFloat();
 		return _fMin * (1.f - fT) + _fMax * fT;
 	}
+
+	inline _bool GetRandomBoolean() {
+		return rand() % 2 == 0;
+	}
+
 	inline void ToggleBoolean(_bool& _bValue) {
 		if (_bValue) _bValue = false;
 		else _bValue = true;

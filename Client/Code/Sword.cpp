@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Sword.h"
-#include "Alice.h"
+#include "AliceW.h"
 #include "Export_Function.h"
 
 CSword::CSword(LPDIRECT3DDEVICE9 pGraphicDev)

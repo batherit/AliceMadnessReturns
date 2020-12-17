@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "PlayScene.h"
 #include "Terrain.h"
-#include "Alice.h"
+#include "AliceW.h"
 #include "Monster.h"
 #include "Stone.h"
 #include "Sword.h"
@@ -176,7 +176,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pCameraMgr->SetCamera(m_pCamera);
 
 	// 플레이어 생성
-	m_pPlayer = CAlice::Create(m_pGraphicDev);
+	m_pPlayer = CAliceW::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
 	m_pPlayer->GetTransform()->Translate(_vec3(45.f, 0.f, -10.f));

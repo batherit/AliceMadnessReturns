@@ -16,6 +16,7 @@ private:
 public: 
 	LPD3DXANIMATIONCONTROLLER		Get_AnimationCtrl(void) { return m_pAniCtrl; }
 	_bool							Is_AnimationSetEnd(void);
+	_float							GetAnimationProgress(void);
 
 public:
 	HRESULT			Ready_AnimationCtrl(void);

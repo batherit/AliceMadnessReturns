@@ -118,6 +118,11 @@ _bool Engine::CDynamicMesh::Is_AnimationSetEnd(void)
 	return m_pAniCtrl->Is_AnimationSetEnd();
 }
 
+_float CDynamicMesh::GetAnimationProgress(void)
+{
+	return m_pAniCtrl->GetAnimationProgress();
+}
+
 void CDynamicMesh::Set_AnimationSet(const _uint & iIndex)
 {
 	m_pAniCtrl->Set_AnimationSet(iIndex);

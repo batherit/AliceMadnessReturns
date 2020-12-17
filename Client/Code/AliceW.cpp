@@ -1,24 +1,26 @@
 #include "pch.h"
-#include "Alice.h"
+#include "AliceW.h"
 #include "Map.h"
+#include "StateMgr.h"
+#include "AliceWState_Idle.h"
 
-CAlice::CAlice(LPDIRECT3DDEVICE9 pGraphicDev)
+CAliceW::CAliceW(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
 	CGameObject(pGraphicDev)
 {
 }
 
-CAlice::CAlice(const CAlice & rhs)
+CAliceW::CAliceW(const CAliceW & rhs)
 	:
 	CGameObject(rhs)
 {
 }
 
-CAlice::~CAlice(void)
+CAliceW::~CAliceW(void)
 {
 }
 
-HRESULT CAlice::Ready_Object(void)
+HRESULT CAliceW::Ready_Object(void)
 {
 	Engine::CComponent* pComponent = nullptr;
 
@@ -41,65 +43,31 @@ HRESULT CAlice::Ready_Object(void)
 	pComponent = m_pPhysics = AddComponent<Engine::CPhysics>();
 	//m_pPhysics->SetDirection(_vec3(0.f, 0.f, -1.f));
 	m_pPhysics->SetSpeed(4.5f, 4.5f);
+
+	m_pStateMgr = new CStateMgr<CAliceW>(*this);
+	m_pStateMgr->SetNextState(new CAliceWState_Idle(*this));
 		
 	return S_OK;
 }
 
-int CAlice::Update_Object(const _float & _fDeltaTime)
+int CAliceW::Update_Object(const _float & _fDeltaTime)
 {
 	if (!m_pMap) {
 		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
 	}
 
-	if(1 == CGameObject::Update_Object(_fDeltaTime))
+	if (!m_pStateMgr->ConfirmValidState())
 		return 1;
 
-	_matrix matView;
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixInverse(&matView, nullptr, &matView);
-
-	_vec3 vCamRight = _vec3(matView._11, matView._12, matView._13);
-	vCamRight.y = 0.f;
-	D3DXVec3Normalize(&vCamRight, &vCamRight);
-	_vec3 vCamLook = _vec3(matView._31, matView._32, matView._33);
-	vCamLook.y = 0.f;
-	D3DXVec3Normalize(&vCamLook, &vCamLook);
-	_vec3 vDir = _vec3(0.f, 0.f, 0.f);
-
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_LEFT)) {
-		vDir -= vCamRight;
-	}
-	
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_RIGHT)) {
-		vDir += vCamRight;
+	// TEST : 테스트용이므로 삭제 요망
+	if (!IsDead() && Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
+		SetDead(true);
 	}
 
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_UP)) {
-		vDir += vCamLook;
-	}
-
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_DOWN)) {
-		vDir -= vCamLook;
-	}
-
-	if (D3DXVec3LengthSq(&vDir) > 0.f) {
-		// 플레이어 회전시키기
-		_vec3 vRotAxis = Engine::GetRotationAxis(GetTransform()->GetLook(), vDir);
-		_float vRotAngle = Engine::GetRotationAngle(GetTransform()->GetLook(), vDir) * 0.25f;
-		GetTransform()->RotateByAxis(vRotAngle, vRotAxis);
-		//_vec3 vRotatedDir = Engine::GetRotatedVector(vRotAxis, vRotAngle, m_pPhysics->GetDirection());
-		m_pMesh->Set_AnimationSet(ALICE::AliceW_Run);
-	}
-	else {
-		m_pMesh->Set_AnimationSet(ALICE::AliceW_Idle);
-	}
-
-	
-
-	m_pPhysics->SetDirection(vDir);
-	m_pTransform->SetPos(m_pMap->GetNaviMesh()->Move_OnNaviMesh(&m_pTransform->GetPos(), &(vDir * _fDeltaTime * m_pPhysics->GetSpeed())));
+	if(1 == CGameObject::Update_Object(_fDeltaTime))
+		return 1;
+	m_pStateMgr->Update(_fDeltaTime);
 	m_pMesh->Play_Animation(_fDeltaTime);
-
 
 	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
 		return 0;
@@ -109,7 +77,7 @@ int CAlice::Update_Object(const _float & _fDeltaTime)
 	return 0;
 }
 
-void CAlice::Render_Object(void)
+void CAliceW::Render_Object(void)
 {
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
@@ -118,7 +86,7 @@ void CAlice::Render_Object(void)
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
 }
 
-_bool CAlice::LoadColliders(const _tchar* _pFileName)
+_bool CAliceW::LoadColliders(const _tchar* _pFileName)
 {
 	TCHAR szCurPath[MAX_PATH] = L"";
 	TCHAR szDataPath[MAX_PATH] = L"";
@@ -141,7 +109,7 @@ _bool CAlice::LoadColliders(const _tchar* _pFileName)
 	return true;
 }
 
-void CAlice::OnCollision(Engine::CollisionInfo _tCollisionInfo)
+void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
 	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
 		_int a = 10;
@@ -154,17 +122,17 @@ void CAlice::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 	}
 }
 
-//void CAlice::AttachItemToBone(Engine::CGameObject * _pItemObject, const _tchar * _pBoneName)
+//void CAliceW::AttachItemToBone(Engine::CGameObject * _pItemObject, const _tchar * _pBoneName)
 //{
 //}
 //
-//void CAlice::DetachFromBone()
+//void CAliceW::DetachFromBone()
 //{
 //}
 
-CAlice * CAlice::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CAliceW * CAliceW::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CAlice*	pInstance = new CAlice(pGraphicDev);
+	CAliceW*	pInstance = new CAliceW(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -172,9 +140,74 @@ CAlice * CAlice::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CAlice::Free(void)
+void CAliceW::Free(void)
 {
+	Engine::Safe_Release(m_pStateMgr);
 	CGameObject::Free();
+}
+
+_bool CAliceW::IsAttackOn(const _float & _fDeltaTime)
+{
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB))
+		return true;
+	return false;
+}
+
+_bool CAliceW::IsJumpOn(const _float & _fDeltaTime)
+{
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_SPACE))
+		return true;
+	return false;
+}
+
+_bool CAliceW::IsFloatingOn(const _float & _fDeltaTime)
+{
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_SPACE))
+		return true;
+	return false;
+}
+
+_bool CAliceW::ProcessMove(const _float& _fDeltaTime)
+{
+	_matrix matView;
+	GetGraphicDev()->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, nullptr, &matView);
+
+	_vec3 vCamRight = _vec3(matView._11, matView._12, matView._13);
+	vCamRight.y = 0.f;
+	D3DXVec3Normalize(&vCamRight, &vCamRight);
+	_vec3 vCamLook = _vec3(matView._31, matView._32, matView._33);
+	vCamLook.y = 0.f;
+	D3DXVec3Normalize(&vCamLook, &vCamLook);
+	_vec3 vDir = _vec3(0.f, 0.f, 0.f);
+
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_A)) {
+		vDir -= vCamRight;
+	}
+
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_D)) {
+		vDir += vCamRight;
+	}
+
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_W)) {
+		vDir += vCamLook;
+	}
+
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_S)) {
+		vDir -= vCamLook;
+	}
+
+	if (D3DXVec3LengthSq(&vDir) > 0.f) {
+		// 플레이어 회전시키기
+		_vec3 vRotAxis = Engine::GetRotationAxis(GetTransform()->GetLook(), vDir);
+		_float vRotAngle = Engine::GetRotationAngle(GetTransform()->GetLook(), vDir) * 0.25f;
+		GetTransform()->RotateByAxis(vRotAngle, vRotAxis);
+		m_pPhysics->SetDirection(vDir);
+		m_pTransform->SetPos(m_pMap->GetNaviMesh()->Move_OnNaviMesh(&m_pTransform->GetPos(), &(vDir * _fDeltaTime * m_pPhysics->GetSpeed())));
+		return true;
+	}
+
+	return false;
 }
 
 

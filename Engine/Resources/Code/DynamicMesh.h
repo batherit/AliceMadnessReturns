@@ -18,7 +18,8 @@ public:
 	HRESULT			Ready_Meshes(const _tchar* pFilePath, const _tchar* pFileName);
 	virtual void			Render_Meshes(LPD3DXEFFECT _pEffect = 0) override;
 	const  D3DXFRAME_DERIVED*	Get_FrameByName(const char* pFrameName);
-	_bool							Is_AnimationSetEnd(void);
+	_bool						Is_AnimationSetEnd(void);
+	_float						GetAnimationProgress(void);
 	D3DXFRAME* GetRootFrame() const { return m_pRootFrame; }
 
 	static const _tchar* GetComponentTag() { return L"DynamicMesh"; }

@@ -85,6 +85,18 @@
     <Filter Include="02. Object\07. CameraController">
       <UniqueIdentifier>{3988a148-edee-4c5d-a8f8-452201f794fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. State">
+      <UniqueIdentifier>{64f27f79-894f-4b69-9aec-9ecf8c382b2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. State\AliceW">
+      <UniqueIdentifier>{8bccb86f-8988-41fc-96da-ddd84198a589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager">
+      <UniqueIdentifier>{f5368c3b-6ab7-4571-8ba8-a480e1246459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\StateMgr">
+      <UniqueIdentifier>{6906ec20-968e-4a6e-8ce6-5ab470edc44c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -171,9 +183,6 @@
     <ClInclude Include="..\Code\DynamicObject.h">
       <Filter>02. Object\06. DynamicObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Alice.h">
-      <Filter>02. Object\02. GameObject\Alice</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\DynamicCamera.h">
       <Filter>02. Object\00. Camera\DynamicCamera</Filter>
     </ClInclude>
@@ -185,6 +194,30 @@
     </ClInclude>
     <ClInclude Include="..\Code\CameraController_Crowd.h">
       <Filter>02. Object\07. CameraController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceW.h">
+      <Filter>02. Object\02. GameObject\Alice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_Attack.h">
+      <Filter>03. State\AliceW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_Death.h">
+      <Filter>03. State\AliceW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_Idle.h">
+      <Filter>03. State\AliceW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_Jump.h">
+      <Filter>03. State\AliceW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_Run.h">
+      <Filter>03. State\AliceW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\State.h">
+      <Filter>03. State</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\StateMgr.h">
+      <Filter>04. Manager\StateMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +275,6 @@
     <ClCompile Include="..\Code\DynamicObject.cpp">
       <Filter>02. Object\06. DynamicObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Alice.cpp">
-      <Filter>02. Object\02. GameObject\Alice</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\DynamicCamera.cpp">
       <Filter>02. Object\00. Camera\DynamicCamera</Filter>
     </ClCompile>
@@ -256,6 +286,30 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraController_Crowd.cpp">
       <Filter>02. Object\07. CameraController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceW.cpp">
+      <Filter>02. Object\02. GameObject\Alice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_Attack.cpp">
+      <Filter>03. State\AliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_Death.cpp">
+      <Filter>03. State\AliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_Idle.cpp">
+      <Filter>03. State\AliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_Jump.cpp">
+      <Filter>03. State\AliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_Run.cpp">
+      <Filter>03. State\AliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\State.cpp">
+      <Filter>03. State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StateMgr.cpp">
+      <Filter>04. Manager\StateMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

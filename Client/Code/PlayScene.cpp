@@ -179,7 +179,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pPlayer = CAliceW::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
-	m_pPlayer->GetTransform()->Translate(_vec3(45.f, 0.f, -10.f));
+	m_pPlayer->GetTransform()->Translate(_vec3(15.f, 0.f, -5.f));
 
 	// 플레이어 카메라 컨트롤러 생성
 	Engine::CCameraController* pCameraController = CCameraController_Player::Create(m_pGraphicDev);
@@ -187,7 +187,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
 	static_cast<CCameraController_Player*>(pCameraController)->SetPlayer(m_pPlayer);
 	pCameraMgr->AddCameraController(pCameraController);
-	pCameraMgr->ChangeCameraController(0, 0.4f);
+	pCameraMgr->ChangeCameraController(0, 0.5f);
 
 	// 관중형 카메라 컨트롤러 생성
 	pCameraController = CCameraController_Crowd::Create(m_pGraphicDev);

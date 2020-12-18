@@ -33,7 +33,9 @@ public:
 	void MarkTriangle(_int _iTriangleIndex);
 	void ReleaseMarkedTriangle();
 	void SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex, const _vec3& _vNewPosition);
+	void SetTriangleTagIndex(_int _iTriangleIndex, _int _iTriangleTagIndex);
 	_vec3 GetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex) const;
+	_int GetTriangleTagIndex(_int _iTriangleIndex);
 	vector<_vec3>& GetNaviVertices();
 	_int GetMarkedTriangleIndex() const { return m_iMarkedTriangleIndex; }
 	void GenerateNewNaviMesh(vector<_vec3>& _rVertices);
@@ -45,6 +47,7 @@ public:
 private:
 	Engine::CPolygonRenderer* m_pRenderer = nullptr;
 	Engine::CManualCol* m_pManualCol = nullptr;
+	vector<_int> m_vecTriangleTagIndices;
 	_int m_iMarkedTriangleIndex = -1;		//-1 => 선택된 삼각형이 없다.
 };
 

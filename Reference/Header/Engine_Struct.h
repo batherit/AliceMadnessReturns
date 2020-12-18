@@ -90,6 +90,11 @@ namespace Engine
 		_vec3		vProjAxis[3]; // 박스의 중점으로부터 각 축으로 뻗어나가는 벡터
 		_vec3		vAxis[3];	 // 면체와 평행한 축 벡터
 	}BOXINFO;
+
+	typedef struct _triangle_info {
+		_vec3 vVertex[3];
+		_int iTagIndex = 0;
+	}TriangleInfo;
 }
 
 #endif // Engine_Struct_h__

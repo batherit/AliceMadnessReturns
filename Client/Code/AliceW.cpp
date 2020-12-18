@@ -54,6 +54,8 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 {
 	if (!m_pMap) {
 		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
+		m_pMap->GetNaviMesh()->Set_NaviIndex(0);
+		m_pTransform->SetPos(m_pMap->GetNaviMesh()->Move_OnNaviMesh(&m_pTransform->GetPos(), &_vec3(0.f, 0.f, 0.f)));
 	}
 
 	if (!m_pStateMgr->ConfirmValidState())

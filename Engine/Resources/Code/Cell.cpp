@@ -49,12 +49,12 @@ _float CCell::GetHeight(const _vec3 & _vPos)
 	return GetPointProjectedOntoTriangle(m_vPoint[POINT_A], m_vPoint[POINT_B], m_vPoint[POINT_C], _vPos).y;
 }
 
-HRESULT Engine::CCell::Ready_Cell(const _ulong& dwIndex,
+HRESULT Engine::CCell::Ready_Cell(const _int& iIndex,
 								const _vec3* pPointA, 
 								const _vec3* pPointB, 
 								const _vec3* pPointC)
 {
-	m_dwIndex = dwIndex;
+	m_iIndex = iIndex;
 
 	m_vPoint[POINT_A] = *pPointA;
 	m_vPoint[POINT_B] = *pPointB;
@@ -93,7 +93,7 @@ void Engine::CCell::Render_Cell(void)
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 
-	for (_ulong i = 0; i < 4; ++i)
+	for (_int i = 0; i < 4; ++i)
 	{
 		D3DXVec3TransformCoord(&vPoint[i], &vPoint[i], &matView);
 		
@@ -119,11 +119,11 @@ void Engine::CCell::Render_Cell(void)
 
 }
 
-Engine::CCell* Engine::CCell::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong& dwIndex, const _vec3* pPointA, const _vec3* pPointB, const _vec3* pPointC)
+Engine::CCell* Engine::CCell::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _int& iIndex, const _vec3* pPointA, const _vec3* pPointB, const _vec3* pPointC)
 {
 	CCell*	pInstance = new CCell(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Cell(dwIndex, pPointA, pPointB, pPointC)))
+	if (FAILED(pInstance->Ready_Cell(iIndex, pPointA, pPointB, pPointC)))
 		Safe_Release(pInstance);
 
 	return pInstance;
@@ -131,7 +131,7 @@ Engine::CCell* Engine::CCell::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong
 
 void Engine::CCell::Free(void)
 {
-	for (_ulong i = 0; i < LINE_END; ++i)
+	for (_int i = 0; i < LINE_END; ++i)
 	{
 		Safe_Release(m_pLine[i]);
 	}
@@ -189,9 +189,9 @@ Engine::_bool Engine::CCell::Compare_Point(const _vec3* pFirstPoint, const _vec3
 	return false;
 }
 
-Engine::CCell::MOVING Engine::CCell::CompareCell(const _vec3 * pEndPos, _ulong * pCellIndex)
+Engine::CCell::MOVING Engine::CCell::CompareCell(const _vec3 * pEndPos, _int * pCellIndex)
 {
-	for (_ulong i = 0; i < LINE_END; ++i)
+	for (_int i = 0; i < LINE_END; ++i)
 	{
 		if (CLine::COMPARE_LEFT == m_pLine[i]->Compare(&_vec2(pEndPos->x, pEndPos->z)))
 		{

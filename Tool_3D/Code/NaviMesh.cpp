@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "NaviMesh.h"
+#include "NaviMesh.h"
 
 
 CNaviMesh::CNaviMesh(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -99,6 +100,8 @@ CNaviMesh * CNaviMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CNaviMesh::Free(void)
 {
+	m_vecTriangleTagIndices.clear();
+	m_vecTriangleTagIndices.shrink_to_fit();
 	CGameObject::Free();
 }
 
@@ -120,11 +123,15 @@ _bool CNaviMesh::IsValidIndex(_int _iTriangleIndex, _int _iVertexIndex)
 void CNaviMesh::PushTriangleVertices(_vec3 _vTriPos1, _vec3 _vTriPos2, _vec3 _vTriPos3)
 {
 	m_pManualCol->PushTriangleVertices(_vTriPos1, _vTriPos2, _vTriPos3);
+	m_vecTriangleTagIndices.emplace_back(0);
 }
 
 void CNaviMesh::PopTriangleVertices(_int _iTriangleIndex)
 {
 	m_pManualCol->PopTriangleVertices(_iTriangleIndex);
+
+	if (IsValidTriangleIndex(_iTriangleIndex))
+		m_vecTriangleTagIndices.erase(m_vecTriangleTagIndices.begin() + _iTriangleIndex);
 
 	if (-1 == m_iMarkedTriangleIndex)
 		return;
@@ -166,9 +173,25 @@ void CNaviMesh::SetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexInd
 	m_pManualCol->SetTriangleVertexPosition(_iTriangleIndex, _iVertexIndex, _vNewPosition);
 }
 
+void CNaviMesh::SetTriangleTagIndex(_int _iTriangleIndex, _int _iTriangleTagIndex)
+{
+	if (!IsValidTriangleIndex(_iTriangleIndex))
+		return;
+
+	m_vecTriangleTagIndices[_iTriangleIndex] = _iTriangleTagIndex;
+}
+
 _vec3 CNaviMesh::GetTriangleVertexPosition(_int _iTriangleIndex, _int _iVertexIndex) const
 {
 	return m_pManualCol->GetTriangleVertexPosition(_iTriangleIndex, _iVertexIndex);
+}
+
+_int CNaviMesh::GetTriangleTagIndex(_int _iTriangleIndex)
+{
+	if (!IsValidTriangleIndex(_iTriangleIndex))
+		return -1;
+
+	return m_vecTriangleTagIndices[_iTriangleIndex];
 }
 
 vector<_vec3>& CNaviMesh::GetNaviVertices()
@@ -189,8 +212,13 @@ _bool CNaviMesh::SaveInfo(HANDLE & _hfOut)
 	_int iVerticesSize = static_cast<_int>(GetNaviVertices().size());
 	WriteFile(_hfOut, &iVerticesSize, sizeof(_int), &dwByte, nullptr);
 
-	for (auto& rPos : GetNaviVertices()) {
-		WriteFile(_hfOut, &rPos, sizeof(rPos), &dwByte, nullptr);
+	_int iTriangleSize = iVerticesSize / 3;
+	
+	for (_int i = 0; i < iTriangleSize; ++i) {
+		for (_int j = 0; j < 3; ++j) {
+			WriteFile(_hfOut, &rVertices[3 * i + j], sizeof(rVertices[3 * i + j]), &dwByte, nullptr);
+		}
+		WriteFile(_hfOut, &m_vecTriangleTagIndices[i], sizeof(m_vecTriangleTagIndices[i]), &dwByte, nullptr);
 	}
 
 	return true;
@@ -205,9 +233,16 @@ _bool CNaviMesh::LoadInfo(HANDLE & _hfIn)
 	vecVertices.reserve(iVerticesSize + 10);
 
 	_vec3 vPos;
-	for (_int i = 0; i < iVerticesSize; ++i) {
-		ReadFile(_hfIn, &vPos, sizeof(vPos), &dwByte, nullptr);
-		vecVertices.emplace_back(vPos);
+	_int iTriangleIndex = 0;
+	_int iTriangleSize = iVerticesSize / 3;
+
+	for (_int i = 0; i < iTriangleSize; ++i) {
+		for (_int j = 0; j < 3; ++j) {
+			ReadFile(_hfIn, &vPos, sizeof(vPos), &dwByte, nullptr);
+			vecVertices.emplace_back(vPos);
+		}
+		ReadFile(_hfIn, &iTriangleIndex, sizeof(iTriangleIndex), &dwByte, nullptr);
+		m_vecTriangleTagIndices.emplace_back(iTriangleIndex);
 	}
 
 	GenerateNewNaviMesh(vecVertices);

@@ -38,6 +38,7 @@ public:
 	void SetVelocity(_vec3 _vVelocity) { m_fSpeed = D3DXVec3Length(&_vVelocity); D3DXVec3Normalize(&m_vDir, &_vVelocity); }
 	void SetMaxTurnRateInRadian(_float _fMaxTurnRate) { m_fMaxTurnRate = _fMaxTurnRate; }
 	void SetMaxTurnRateInDegree(_float _fMaxTurnRate) { m_fMaxTurnRate = D3DXToRadian(_fMaxTurnRate); }
+	void SetGravity(_float _fGravity) { m_fGravity = _fGravity; }
 
 	// Get
 	_float GetSpeed() const { return m_fSpeed; }
@@ -46,9 +47,12 @@ public:
 	_vec3 GetVelocity() const { return m_fSpeed * m_vDir; }
 	_float GetMaxTurnRateInRadian() const { return m_fMaxTurnRate; }
 	_float GetMaxTurnRateInDegree() const { return D3DXToDegree(m_fMaxTurnRate); }
+	_float GetGravity() const { return m_fGravity; }
 
 	// Util
 	void MoveByDelta(const float& _fDeltaTime) {
+		_vec3 vDownVelocity = _vec3(0.f, m_fGravity * _fDeltaTime, 0.f);
+		SetVelocity(GetVelocity() - vDownVelocity);
 		m_pOwner->GetTransform()->Translate(GetVelocity() * _fDeltaTime);
 	}
 
@@ -60,6 +64,6 @@ private:
 	_float m_fMaxTurnRate = 2.f * D3DX_PI;	// (rad/s)
 	_float m_fTurnRate = 2.f * D3DX_PI;
 	_vec3 m_vDir = WORLD_X_AXIS;
-
+	_float m_fGravity = 0.f;
 };
 END

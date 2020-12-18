@@ -46,6 +46,7 @@ public:
 public:
 	void UpdateNaviTree(Client::CNaviMesh* _pNaviMesh);
 	void UpdateVertexPos(const _vec3& _vPos);
+	void UpdateTriangleTagIndex(const _int& _iIndex);
 
 public:
 	virtual BOOL OnInitDialog();
@@ -80,4 +81,7 @@ public:
 	BOOL m_bIsNaviMagnet;
 	
 	//afx_msg void OnTvnBeginrdragTree1(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnEnChangeEditTriangleTagIndex();
+	_int m_iTriangleTagIndex;
+	CEdit m_editTriangleTagIndex;
 };

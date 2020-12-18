@@ -15,7 +15,9 @@ private:
 	virtual ~CNaviMesh(void);
 
 public:
-	void		Set_NaviIndex(const _ulong& dwIndex) { m_dwIndex = dwIndex; }
+	void		Set_NaviIndex(const _int& _iIndex) { m_iIndex = _iIndex; }
+	_int		GetNaviIndex() const { return m_iIndex; }
+	_int		GetNaviIndexByPos(const _vec3& _vPos) const;
 
 public:
 	HRESULT		Ready_NaviMeshes(void);
@@ -23,11 +25,11 @@ public:
 	_vec3		Move_OnNaviMesh(const _vec3* pTargetPos, const _vec3* pTargetDir);
 	_bool		LoadNaviMeshFromFile(const _tchar* _pFilePath);
 	HRESULT		AddCell(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3);
-	HRESULT		Link_Cell(void);	
+	HRESULT		Link_Cell(void);
 
 private:
 	vector<CCell*>			m_vecCell;
-	_ulong					m_dwIndex;
+	_int					m_iIndex;
 
 public:
 	static CNaviMesh*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -35,6 +37,7 @@ public:
 	virtual void			Free(void);
 
 };
+
 
 END
 #endif // NaviMesh_h__

@@ -23,7 +23,6 @@ HRESULT CPhysics::Ready() {
 }
 
 _int CPhysics::Update(const _float& fTimeDelta) {
-
 	return 0;
 }
 

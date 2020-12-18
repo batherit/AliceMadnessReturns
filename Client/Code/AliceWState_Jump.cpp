@@ -36,6 +36,8 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 
 	// TODO : 바닥에 닿았는지 여부를 따져야합니다.
 
+	if (m_eJumpStep != STEP_LAND)
+		m_rOwner.ProcessMove(_fDeltaTime);
 
 	// Jump => Death, Jump, Run, Attack
 	switch (m_eJumpStep) {

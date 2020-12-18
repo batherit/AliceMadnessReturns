@@ -3,7 +3,7 @@ USING(Engine)
 
 Engine::CNaviMesh::CNaviMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMesh(pGraphicDev)
-	, m_dwIndex(0)
+	, m_iIndex(0)
 {
 	
 }
@@ -11,7 +11,7 @@ Engine::CNaviMesh::CNaviMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 Engine::CNaviMesh::CNaviMesh(const CNaviMesh& rhs)
 	: CMesh(rhs)
 	, m_vecCell(rhs.m_vecCell)
-	, m_dwIndex(rhs.m_dwIndex)
+	, m_iIndex(rhs.m_iIndex)
 {
 	for (auto& iter : m_vecCell)
 		Safe_AddRef(iter);
@@ -20,6 +20,11 @@ Engine::CNaviMesh::CNaviMesh(const CNaviMesh& rhs)
 Engine::CNaviMesh::~CNaviMesh(void)
 {
 
+}
+
+_int CNaviMesh::GetNaviIndexByPos(const _vec3 & _vPos) const
+{
+	return _int();
 }
 
 HRESULT Engine::CNaviMesh::Ready_NaviMeshes(void)
@@ -63,17 +68,17 @@ _vec3 CNaviMesh::Move_OnNaviMesh(const _vec3 * pTargetPos, const _vec3 * pTarget
 {
 	_vec3		vEndPos = *pTargetPos + *pTargetDir;
 
-	if (CCell::MOVE == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex)) {
-		_float fHeight = m_vecCell[m_dwIndex]->GetHeight(vEndPos);
+	if (CCell::MOVE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
+		_float fHeight = m_vecCell[m_iIndex]->GetHeight(vEndPos);
 
 		//if (fHeight > vEndPos.y)
 			vEndPos.y = fHeight;
 
 		return vEndPos;
 	}
-	else if (CCell::STOP == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex)) {
-		vEndPos = m_vecCell[m_dwIndex]->GetPosInCell(vEndPos);
-		_float fHeight = m_vecCell[m_dwIndex]->GetHeight(vEndPos);
+	else if (CCell::STOP == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
+		vEndPos = m_vecCell[m_iIndex]->GetPosInCell(vEndPos);	// 슬라이딩 벡터 얻기
+		_float fHeight = m_vecCell[m_iIndex]->GetHeight(vEndPos);
 		//if (fHeight > vEndPos.y)
 			vEndPos.y = fHeight;
 		return vEndPos;

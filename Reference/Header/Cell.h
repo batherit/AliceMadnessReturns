@@ -23,19 +23,19 @@ public:
 	const _vec3*	Get_Point(POINT eType) const { return &m_vPoint[eType]; }
 	CCell*			Get_Neighbor(NEIGHBOR eType) const { return m_pNeighbor[eType]; }
 	void			Set_Neighbor(NEIGHBOR eType, CCell* pNeighbor) { m_pNeighbor[eType] = pNeighbor; }
-	const _ulong*	Get_Index(void) { return &m_dwIndex; }
+	const _int*	Get_Index(void) { return &m_iIndex; }
 	CLine*			GetLine(const CCell::LINE& _eLine) const { return m_pLine[_eLine]; }
 	_vec3			GetPosInCell(const _vec3& _vPos);
 	_float			GetHeight(const _vec3& _vPos);
 
 public:
-	HRESULT				Ready_Cell(	const _ulong& dwIndex,
+	HRESULT				Ready_Cell(	const _int& iIndex,
 									const _vec3* pPointA,
 									const _vec3* pPointB,
 									const _vec3* pPointC);
 
 	_bool				Compare_Point(const _vec3* pFirstPoint, const _vec3* pSecondPoint, CCell* pCell);
-	MOVING				CompareCell(const _vec3* pEndPos, _ulong* pCellIndex);
+	MOVING				CompareCell(const _vec3* pEndPos, _int* pCellIndex);
 	void				Render_Cell(void);
 
 private:
@@ -44,10 +44,10 @@ private:
 	CLine*				m_pLine[LINE_END];
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
 	LPD3DXLINE			m_pD3DXLine;
-	_ulong				m_dwIndex = 0;
+	_int				m_iIndex = 0;
 
 public:
-	static CCell*			Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong& dwIndex, const _vec3* pPointA, const _vec3* pPointB, const _vec3* pPointC);
+	static CCell*			Create(LPDIRECT3DDEVICE9 pGraphicDev, const _int& iIndex, const _vec3* pPointA, const _vec3* pPointB, const _vec3* pPointC);
 	virtual void			Free(void);
 
 };

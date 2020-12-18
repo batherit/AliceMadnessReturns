@@ -23,6 +23,7 @@ CNaviMeshTab::CNaviMeshTab(CWnd* pParent /*=nullptr*/)
 	, m_fGroupRange(0)
 	//, m_chkNaviMagnet(FALSE)
 	, m_bIsNaviMagnet(FALSE)
+	, m_iTriangleTagIndex(0)
 {
 }
 
@@ -52,6 +53,8 @@ void CNaviMeshTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RADIO5, m_rbtnTriangle);
 	//DDX_Check(pDX, IDC_CHECK1, m_chkNaviMagnet);
 	DDX_Check(pDX, IDC_CHECK1, m_bIsNaviMagnet);
+	DDX_Text(pDX, IDC_EDIT6, m_iTriangleTagIndex);
+	DDX_Control(pDX, IDC_EDIT6, m_editTriangleTagIndex);
 }
 
 
@@ -77,6 +80,7 @@ BEGIN_MESSAGE_MAP(CNaviMeshTab, CDialogEx)
 	//ON_NOTIFY(TVN_KEYDOWN, IDC_TREE1, &CNaviMeshTab::OnTvnKeydownTree1)
 	ON_NOTIFY(NM_CLICK, IDC_TREE1, &CNaviMeshTab::OnNMClickTree1)
 	//ON_NOTIFY(TVN_BEGINRDRAG, IDC_TREE1, &CNaviMeshTab::OnTvnBeginrdragTree1)
+	ON_EN_CHANGE(IDC_EDIT6, &CNaviMeshTab::OnEnChangeEditTriangleTagIndex)
 END_MESSAGE_MAP()
 
 
@@ -114,6 +118,13 @@ void CNaviMeshTab::UpdateVertexPos(const _vec3& _vPos)
 {
 	UpdateData(TRUE);
 	m_vVertexPos = _vPos;
+	UpdateData(FALSE);
+}
+
+void CNaviMeshTab::UpdateTriangleTagIndex(const _int & _iIndex)
+{
+	UpdateData(TRUE);
+	m_iTriangleTagIndex = _iIndex;
 	UpdateData(FALSE);
 }
 
@@ -155,6 +166,7 @@ void CNaviMeshTab::OnBnClickedButtonDelete()
 	UpdateNaviTree(pNaviMesh);
 	// 삭제 버튼 비활성화
 	m_btnDelete.EnableWindow(FALSE);
+	m_editTriangleTagIndex.EnableWindow(FALSE);
 }
 
 
@@ -321,6 +333,7 @@ void CNaviMeshTab::OnBnClickedRadioNavi()
 	m_btnDelete.EnableWindow(FALSE);
 	m_chkGroup.SetCheck(FALSE);
 	m_chkGroup.EnableWindow(FALSE);
+	m_editTriangleTagIndex.EnableWindow(FALSE);
 }
 
 
@@ -352,6 +365,7 @@ void CNaviMeshTab::OnBnClickedRadioVertex()
 	pNaviMesh->ReleaseMarkedTriangle();
 	m_btnDelete.EnableWindow(FALSE);
 	m_chkGroup.EnableWindow(TRUE);
+	m_editTriangleTagIndex.EnableWindow(FALSE);
 }
 
 
@@ -506,6 +520,8 @@ void CNaviMeshTab::OnNMClickTree1(NMHDR *pNMHDR, LRESULT *pResult)
 
 		// 삼각형 삭제 버튼을 활성화한다.
 		m_btnDelete.EnableWindow(TRUE);
+		m_editTriangleTagIndex.EnableWindow(TRUE);
+		UpdateTriangleTagIndex(pNaviMesh->GetTriangleTagIndex(iIndex));
 
 		// 삼각형 픽모드로 세팅한다.
 		m_rbtnNavi.SetCheck(FALSE);
@@ -531,3 +547,21 @@ void CNaviMeshTab::OnNMClickTree1(NMHDR *pNMHDR, LRESULT *pResult)
 //	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 //	*pResult = 0;
 //}
+
+
+void CNaviMeshTab::OnEnChangeEditTriangleTagIndex()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
+	CString strIndex = m_treeNavi.GetItemText(m_hSelectedTreeItem);
+	_int iTriangleIndex = _ttoi(strIndex);
+
+	UpdateData(TRUE);
+	pNaviMesh->SetTriangleTagIndex(iTriangleIndex, m_iTriangleTagIndex);
+	UpdateData(FALSE);
+}

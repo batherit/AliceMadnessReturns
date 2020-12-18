@@ -343,11 +343,13 @@ void CInputProcessor_Navi::PickTriangle()
 
 			// 삼각형 삭제 버튼을 활성화한다.
 			m_pNaviMeshTab->m_btnDelete.EnableWindow(TRUE);
+			m_pNaviMeshTab->m_editTriangleTagIndex.EnableWindow(TRUE);
 
 			// 삼각형 픽모드로 세팅한다.
 			m_pNaviMeshTab->m_rbtnNavi.SetCheck(FALSE);
 			m_pNaviMeshTab->m_rbtnVertex.SetCheck(FALSE);
 			m_pNaviMeshTab->m_rbtnTriangle.SetCheck(TRUE);
+			m_pNaviMeshTab->UpdateTriangleTagIndex(pNaviMesh->GetTriangleTagIndex(i));
 
 			// 초기 상태로 돌아간다.
 			m_pNaviMeshTab->m_btnCombine.EnableWindow(FALSE);

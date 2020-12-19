@@ -5,6 +5,9 @@
 #include "Typedef.h"
 #include "State.h"
 
+BEGIN(Engine)
+class CNaviMesh;
+END
 
 BEGIN(Client)
 class CAliceW;
@@ -29,6 +32,7 @@ private:
 	enum E_JUMP_STEP { STEP_START, STEP_RISE, STEP_FALL, STEP_LAND, STEP_END };
 
 private:
+	Engine::CNaviMesh* m_pNaviMesh = nullptr;
 	_int m_iJumpNum = 0;
 	_bool m_bIsJumping = true;
 	E_JUMP_TYPE m_eJumpType = TYPE_FORWARD;

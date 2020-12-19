@@ -5,6 +5,7 @@
 #include "AliceWState_Death.h"
 #include "StateMgr.h"
 #include "AliceW.h"
+#include "Map.h"
 
 
 CAliceWState_Attack::CAliceWState_Attack(CAliceW & _rOwner)
@@ -21,6 +22,7 @@ void CAliceWState_Attack::OnLoaded(void)
 {
 	m_bIsAttacking = true;
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_WP1_Mele_Attack_1_A);
+	m_rOwner.GetPhysics()->SetSpeed(0.f);
 	++m_iAttackNum;
 }
 
@@ -71,11 +73,14 @@ int CAliceWState_Attack::Update(const _float& _fDeltaTime)
 		}
 	}
 	else if(m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()){
+		_vec3 vDir;
 		// 공격 종료 모션이 끝나고 이후 움직임에 따라 상태를 변경한다.
 		if (m_rOwner.IsAttackOn(_fDeltaTime)) {
 			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack(m_rOwner));
 		}
-		else if(m_rOwner.ProcessMove(_fDeltaTime)){
+		else if (m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
+			_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
+			m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
 			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Run(m_rOwner));
 		}
 		else {

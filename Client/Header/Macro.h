@@ -103,6 +103,9 @@ namespace Client
 #define TOGGLE_FLAG(_State, _Mask) (_State ^= _Mask)
 #define IS_ON_FLAG(_State, _Mask) ((bool)((_State & _Mask) != 0))
 
+#define ALICE_RUN_SPEED 4.5f
+#define ALICE_JUMP_SPEED 15.f
+
 // 키입력 관련
 //#define	KM_LEFT		0x00000001
 //#define	KM_RIGHT	0x00000002 

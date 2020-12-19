@@ -41,6 +41,11 @@ _vec3 CCell::GetPosInCell(const _vec3 & _vPos)
 		}
 	}
 
+	/*_vec3 vPointAvg = (m_vPoint[POINT_A] + m_vPoint[POINT_B] + m_vPoint[POINT_C]) / 3.f;
+	_vec2 vToPointAvgDir = _vec2(vPointAvg.x, vPointAvg.z) - vPos;
+	D3DXVec2Normalize(&vToPointAvgDir, &vToPointAvgDir);
+	vPos = vPos + vToPointAvgDir * 0.1f;*/
+	
 	return _vec3(vPos.x, _vPos.y, vPos.y);
 }
 
@@ -49,10 +54,62 @@ _float CCell::GetHeight(const _vec3 & _vPos)
 	return GetPointProjectedOntoTriangle(m_vPoint[POINT_A], m_vPoint[POINT_B], m_vPoint[POINT_C], _vPos).y;
 }
 
+_bool CCell::IsPosInCell(const _vec3 & _vPos)
+{
+	_float fDotToLine = 0.f;
+	_float fDotToPosition = 0.f;
+	_vec2 vPos = _vec2(_vPos.x, _vPos.z);
+	_float fLength = 0.f;
+	for (int i = 0; i < CCell::LINE_END; ++i) {
+		// 포지션과 원점간 내적을 구한다. (n.p)
+		fDotToPosition = D3DXVec2Dot(&m_pLine[i]->GetNormal(), &vPos);
+		// 라인과 원점간 내적을 구한다. (-d)
+		fDotToLine = D3DXVec2Dot(&m_pLine[i]->GetNormal(), &m_pLine[i]->GetPoint(CLine::POINT_START));
+
+		if (fDotToPosition - fDotToLine > 0.f) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+_bool CCell::IsCollided(const _vec3& _vFromPos, const _vec3& _vToPos, _vec3* _pHitPos)
+{
+	if (_vFromPos == _vToPos)
+		return false;
+
+	_float fU, fV, fDist;
+
+	_vec3 vDir = _vToPos - _vFromPos;
+
+	// 위로 상승하고 있는 상황에 대해서는 고려하지 않겠다.
+	if (vDir.y > 0.f)
+		return false;
+
+	if (D3DXIntersectTri(&m_vPoint[POINT_A], &m_vPoint[POINT_B], &m_vPoint[POINT_C], &_vToPos, &WORLD_Y_AXIS, &fU, &fV, &fDist)) {
+		if (fDist > -2.f * vDir.y + 0.2f) {	// 이거 좀 고칠 필요가 있엉ㅅㅇ
+			// 충돌 허용 두께(y축에서의 이동 격차 + 일반 충돌 허용 두께)를 넘어간 거리에 대해서는 허용x
+			return false;
+		}
+
+		// 충돌했다면, 충돌 지점을 찾는다.
+		_vec3 vHitPos= Engine::GetHitPos(m_vPoint[POINT_A], m_vPoint[POINT_B], m_vPoint[POINT_C], fU, fV);
+
+		if (_pHitPos)
+			*_pHitPos = vHitPos;
+
+		return true;
+	}
+
+	return false;
+}
+
 HRESULT Engine::CCell::Ready_Cell(const _int& iIndex,
 								const _vec3* pPointA, 
 								const _vec3* pPointB, 
-								const _vec3* pPointC)
+								const _vec3* pPointC,
+								const _int& _iTagIndex)
 {
 	m_iIndex = iIndex;
 
@@ -68,6 +125,8 @@ HRESULT Engine::CCell::Ready_Cell(const _int& iIndex,
 
 	m_pLine[LINE_CA] = CLine::Create(&_vec2(m_vPoint[POINT_C].x, m_vPoint[POINT_C].z),
 									 &_vec2(m_vPoint[POINT_A].x, m_vPoint[POINT_A].z));
+
+	m_iTagIndex = _iTagIndex;
 
 #ifdef _DEBUG
 	if (FAILED(D3DXCreateLine(m_pGraphicDev, &m_pD3DXLine)))
@@ -119,11 +178,11 @@ void Engine::CCell::Render_Cell(void)
 
 }
 
-Engine::CCell* Engine::CCell::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _int& iIndex, const _vec3* pPointA, const _vec3* pPointB, const _vec3* pPointC)
+Engine::CCell* Engine::CCell::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _int& iIndex, const _vec3* pPointA, const _vec3* pPointB, const _vec3* pPointC, const _int& _iTagIndex)
 {
 	CCell*	pInstance = new CCell(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Cell(iIndex, pPointA, pPointB, pPointC)))
+	if (FAILED(pInstance->Ready_Cell(iIndex, pPointA, pPointB, pPointC, _iTagIndex)))
 		Safe_Release(pInstance);
 
 	return pInstance;
@@ -196,15 +255,15 @@ Engine::CCell::MOVING Engine::CCell::CompareCell(const _vec3 * pEndPos, _int * p
 		if (CLine::COMPARE_LEFT == m_pLine[i]->Compare(&_vec2(pEndPos->x, pEndPos->z)))
 		{
 			if (nullptr == m_pNeighbor[i])
-				return CCell::STOP;
+				return CCell::OUTSIDE;
 			else
 			{
 				*pCellIndex = *m_pNeighbor[i]->Get_Index();
-				return CCell::MOVE;
+				return CCell::INSIDE;
 			}
 		}
 	}
 	
-	return CCell::MOVE;
+	return CCell::INSIDE;
 }
 

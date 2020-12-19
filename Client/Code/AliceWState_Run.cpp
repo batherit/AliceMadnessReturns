@@ -6,6 +6,7 @@
 #include "AliceWState_Death.h"
 #include "StateMgr.h"
 #include "AliceW.h"
+#include "Map.h"
 
 
 CAliceWState_Run::CAliceWState_Run(CAliceW & _rOwner)
@@ -30,6 +31,8 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
+	_vec3 vDir;
+	_vec3 vSettedPos = m_rOwner.GetTransform()->GetPos();
 	// Run => Death, Jump, Idle, Attack
 	if (m_rOwner.IsJumpOn(_fDeltaTime)) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Jump(m_rOwner));
@@ -37,7 +40,11 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 	else if (m_rOwner.IsAttackOn(_fDeltaTime)) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack(m_rOwner));
 	}
-	else if (!m_rOwner.ProcessMove(_fDeltaTime)) {
+	else if (m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
+		_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
+		m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
+	}
+	else {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Idle(m_rOwner));
 	}
 

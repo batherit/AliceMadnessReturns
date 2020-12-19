@@ -104,24 +104,19 @@ void CMap::LoadNaviMesh(const _tchar * _pFilePath)
 
 	DWORD dwByte = 0;
 	_int iVerticesSize = 0;
+	_int iTriangleSize = 0;
 	ReadFile(hFile, &iVerticesSize, sizeof(_int), &dwByte, nullptr);
-	vector<_vec3> vecVertices;
-	vecVertices.reserve(iVerticesSize + 10);
+	iTriangleSize = iVerticesSize / 3;
 
-	_vec3 vPos;
-	for (_int i = 0; i < iVerticesSize; ++i) {
-		ReadFile(hFile, &vPos, sizeof(vPos), &dwByte, nullptr);
-		vecVertices.emplace_back(vPos);
-	}
-	
-	_int iTriangleSize = iVerticesSize / 3;
-	_vec3 vPosArr[3];
+	_vec3 vPos[3];
+	_int iTriangleTagIndex = 0;
 	for (_int i = 0; i < iTriangleSize; ++i) {
 		for (_int j = 0; j < 3; ++j) {
-			vPosArr[j] = vecVertices[i * 3 + j];
+			ReadFile(hFile, &vPos[j], sizeof(vPos[j]), &dwByte, nullptr);
 		}
-		m_pNaviMesh->AddCell(vPosArr[0], vPosArr[1], vPosArr[2]);
-	}
+		ReadFile(hFile, &iTriangleTagIndex, sizeof(iTriangleTagIndex), &dwByte, nullptr);
+		m_pNaviMesh->AddCell(vPos[0], vPos[1], vPos[2], iTriangleTagIndex);
+	};
 	m_pNaviMesh->Link_Cell();
 
 	CloseHandle(hFile);

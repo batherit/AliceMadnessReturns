@@ -42,7 +42,9 @@ HRESULT CAliceW::Ready_Object(void)
 	// Physics
 	pComponent = m_pPhysics = AddComponent<Engine::CPhysics>();
 	//m_pPhysics->SetDirection(_vec3(0.f, 0.f, -1.f));
-	m_pPhysics->SetSpeed(4.5f, 4.5f);
+	m_pPhysics->SetSpeed(ALICE_RUN_SPEED, ALICE_RUN_SPEED);
+	m_pPhysics->SetResistanceCoefficientXZ(0.95f);
+	m_pPhysics->SetGravity(9.8f * 3.f);
 
 	m_pStateMgr = new CStateMgr<CAliceW>(*this);
 	m_pStateMgr->SetNextState(new CAliceWState_Idle(*this));
@@ -54,8 +56,6 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 {
 	if (!m_pMap) {
 		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
-		m_pMap->GetNaviMesh()->Set_NaviIndex(0);
-		m_pTransform->SetPos(m_pMap->GetNaviMesh()->Move_OnNaviMesh(&m_pTransform->GetPos(), &_vec3(0.f, 0.f, 0.f)));
 	}
 
 	if (!m_pStateMgr->ConfirmValidState())
@@ -69,6 +69,23 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	if(1 == CGameObject::Update_Object(_fDeltaTime))
 		return 1;
 	m_pStateMgr->Update(_fDeltaTime);
+
+	_vec3 vCurrentPos = GetTransform()->GetPos();
+	_vec3 vTargetPos = m_pPhysics->GetUpdatedPos(_fDeltaTime);
+	if (!m_bIsLanded) {
+		Engine::CNaviMesh* pNaviMesh = m_pMap->GetNaviMesh();
+		_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos);
+		if (-1 != iCellIndex) {
+			m_bIsLanded = true;
+			pNaviMesh->Set_NaviIndex(iCellIndex);
+		}
+	}
+	_vec3 vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(&GetTransform()->GetPos(), &vTargetPos);
+
+	
+	
+	GetTransform()->SetPos(vSettedPos);
+
 	m_pMesh->Play_Animation(_fDeltaTime);
 
 	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
@@ -169,7 +186,7 @@ _bool CAliceW::IsFloatingOn(const _float & _fDeltaTime)
 	return false;
 }
 
-_bool CAliceW::ProcessMove(const _float& _fDeltaTime)
+_bool CAliceW::IsRunOn(const _float &, _vec3 * _pDir)
 {
 	_matrix matView;
 	GetGraphicDev()->GetTransform(D3DTS_VIEW, &matView);
@@ -186,31 +203,69 @@ _bool CAliceW::ProcessMove(const _float& _fDeltaTime)
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_A)) {
 		vDir -= vCamRight;
 	}
-
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_D)) {
 		vDir += vCamRight;
 	}
-
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_W)) {
 		vDir += vCamLook;
 	}
-
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_S)) {
 		vDir -= vCamLook;
 	}
 
-	if (D3DXVec3LengthSq(&vDir) > 0.f) {
-		// 플레이어 회전시키기
+	_float fLengthSq = D3DXVec3LengthSq(&vDir);
+	if (fLengthSq > 0.f) {
+		// 플레이어 방향 전환이 이루어졌다면 회전시키기
 		_vec3 vRotAxis = Engine::GetRotationAxis(GetTransform()->GetLook(), vDir);
 		_float vRotAngle = Engine::GetRotationAngle(GetTransform()->GetLook(), vDir) * 0.25f;
 		GetTransform()->RotateByAxis(vRotAngle, vRotAxis);
-		m_pPhysics->SetDirection(vDir);
-		m_pTransform->SetPos(m_pMap->GetNaviMesh()->Move_OnNaviMesh(&m_pTransform->GetPos(), &(vDir * _fDeltaTime * m_pPhysics->GetSpeed())));
+
+		if (_pDir)
+			*_pDir = vDir;
 		return true;
 	}
 
 	return false;
 }
+
+//_bool CAliceW::ProcessMoveXZ(const _float& _fDeltaTime)
+//{
+//	_matrix matView;
+//	GetGraphicDev()->GetTransform(D3DTS_VIEW, &matView);
+//	D3DXMatrixInverse(&matView, nullptr, &matView);
+//
+//	_vec3 vCamRight = _vec3(matView._11, matView._12, matView._13);
+//	vCamRight.y = 0.f;
+//	D3DXVec3Normalize(&vCamRight, &vCamRight);
+//	_vec3 vCamLook = _vec3(matView._31, matView._32, matView._33);
+//	vCamLook.y = 0.f;
+//	D3DXVec3Normalize(&vCamLook, &vCamLook);
+//	_vec3 vDir = _vec3(0.f, 0.f, 0.f);
+//
+//	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_A)) {
+//		vDir -= vCamRight;
+//	}
+//	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_D)) {
+//		vDir += vCamRight;
+//	}
+//	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_W)) {
+//		vDir += vCamLook;
+//	}
+//	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_S)) {
+//		vDir -= vCamLook;
+//	}
+//
+//	_float fLengthSq = D3DXVec3LengthSq(&vDir);
+//	if (fLengthSq > 0.f) {
+//		// 플레이어 방향 전환이 이루어졌다면 회전시키기
+//		_vec3 vRotAxis = Engine::GetRotationAxis(GetTransform()->GetLook(), vDir);
+//		_float vRotAngle = Engine::GetRotationAngle(GetTransform()->GetLook(), vDir) * 0.25f;
+//		GetTransform()->RotateByAxis(vRotAngle, vRotAxis);
+//		return true;
+//	}
+//
+//	return false;
+//}
 
 
 // 쿼터니언 회전을 통해 카메라 축과 일치시키기

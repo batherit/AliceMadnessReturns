@@ -80,9 +80,11 @@ int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(L"KEY_D")) {
 		vDir += m_pTransform->GetRight();
 	}
-
-	m_pPhysics->SetDirection(vDir);
-	m_pPhysics->MoveByDelta(fTimeDelta);
+	
+	if (D3DXVec3Length(&vDir) > 0.f) {
+		m_pPhysics->SetDirection(vDir);
+		m_pPhysics->MoveByDelta(fTimeDelta);
+	}
 
 	// 뷰 스페이스 변환 행렬 생성 함수(즉, 카메라 월드 행렬의 역 행렬을 만들어주는 함수)
 	m_vEye = m_pTransform->GetPos();		// 카메라 위치

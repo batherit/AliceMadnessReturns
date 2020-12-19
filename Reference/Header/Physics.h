@@ -35,7 +35,11 @@ public:
 		Clamp(&m_fSpeed, 0.f, m_fMaxSpeed);
 	}
 	void SetDirection(_vec3 _vDir) { m_vDir = _vDir; D3DXVec3Normalize(&m_vDir, &m_vDir); }
-	void SetVelocity(_vec3 _vVelocity) { m_fSpeed = D3DXVec3Length(&_vVelocity); D3DXVec3Normalize(&m_vDir, &_vVelocity); }
+	void SetVelocity(_vec3 _vVelocity) { 
+		m_fSpeed = D3DXVec3Length(&_vVelocity); 
+		if(m_fSpeed > 0.f)
+			D3DXVec3Normalize(&m_vDir, &_vVelocity); 
+	}
 	void SetMaxTurnRateInRadian(_float _fMaxTurnRate) { m_fMaxTurnRate = _fMaxTurnRate; }
 	void SetMaxTurnRateInDegree(_float _fMaxTurnRate) { m_fMaxTurnRate = D3DXToRadian(_fMaxTurnRate); }
 	void SetGravity(_float _fGravity) { m_fGravity = _fGravity; }
@@ -49,12 +53,36 @@ public:
 	_float GetMaxTurnRateInDegree() const { return D3DXToDegree(m_fMaxTurnRate); }
 	_float GetGravity() const { return m_fGravity; }
 
-	// Util
-	void MoveByDelta(const float& _fDeltaTime) {
-		_vec3 vDownVelocity = _vec3(0.f, m_fGravity * _fDeltaTime, 0.f);
-		SetVelocity(GetVelocity() - vDownVelocity);
+	void SetResistanceCoefficientXZ(const _float& _fResistanceCoefficient) { m_fResistanceCoefficientXZ = _fResistanceCoefficient; }
+
+	void SetVelocityXZ(const _vec2& _vVelocityXZ) {
+		_float fVelocityY = GetVelocity().y;
+		SetVelocity(_vec3(_vVelocityXZ.x, fVelocityY, _vVelocityXZ.y));
+	}
+
+	void SetVelocityY(const _float& _fVelocityY) {
+		_vec3 fVelocity = GetVelocity();
+		SetVelocity(_vec3(fVelocity.x, _fVelocityY, fVelocity.z));
+	}
+
+	// Update
+	_vec3 GetUpdatedVelocity(const _float& _fDeltaTime) {
+		_vec3 vCurrentVelocity = GetVelocity();
+		SetVelocity(_vec3(vCurrentVelocity.x * m_fResistanceCoefficientXZ, vCurrentVelocity.y - m_fGravity * _fDeltaTime, vCurrentVelocity.z * m_fResistanceCoefficientXZ));
+		return GetVelocity();
+	}
+
+	_vec3 GetUpdatedPos(const _float& _fDeltaTime) {
+		GetUpdatedVelocity(_fDeltaTime);
+		return m_pOwner->GetTransform()->GetPos() + GetVelocity() * _fDeltaTime;
+	}
+
+	void MoveByDelta(const _float& _fDeltaTime) {
+		GetUpdatedVelocity(_fDeltaTime);
 		m_pOwner->GetTransform()->Translate(GetVelocity() * _fDeltaTime);
 	}
+
+
 
 private:
 	//_float m_fMass = 0.f;
@@ -65,5 +93,6 @@ private:
 	_float m_fTurnRate = 2.f * D3DX_PI;
 	_vec3 m_vDir = WORLD_X_AXIS;
 	_float m_fGravity = 0.f;
+	_float m_fResistanceCoefficientXZ = 1.f;
 };
 END

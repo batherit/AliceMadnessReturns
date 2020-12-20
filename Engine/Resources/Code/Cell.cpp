@@ -128,6 +128,8 @@ HRESULT Engine::CCell::Ready_Cell(const _int& iIndex,
 
 	m_iTagIndex = _iTagIndex;
 
+	m_vNormal = GetNormalFromPoints(*pPointA, *pPointB, *pPointC);
+
 #ifdef _DEBUG
 	if (FAILED(D3DXCreateLine(m_pGraphicDev, &m_pD3DXLine)))
 		return S_OK;

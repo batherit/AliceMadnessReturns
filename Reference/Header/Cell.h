@@ -44,6 +44,7 @@ public:
 
 private:
 	_vec3				m_vPoint[POINT_END];
+	_vec3				m_vNormal;
 	CCell*				m_pNeighbor[NEIGHBOR_END];
 	CLine*				m_pLine[LINE_END];
 	LPDIRECT3DDEVICE9	m_pGraphicDev;

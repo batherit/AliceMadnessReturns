@@ -70,88 +70,89 @@ void CNaviMesh::Render_NaviMeshes(void)
 {
 	for (auto& iter : m_vecCell)
 		iter->Render_Cell();
+
+	for (auto& iter : m_vecSlidingCell)
+		iter->Render_Cell();
 }
 
-_vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3 * pTargetPos/*, const _vec3 * pTargetDir*/)
+_vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3 * pTargetPos)
 {
 	if (*pCurrentPos == *pTargetPos)
 		return *pTargetPos;
 
-	_vec3		vEndPos = *pTargetPos/* + *pTargetDir*/;
+	_vec3	vEndPos = *pTargetPos;
 
-	switch (m_vecCell[m_iIndex]->GetTagIndex()) {
-	case 0:	// 막힘
-		if (CCell::INSIDE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
-			_vec3 vHitPos;
-			if (m_vecCell[m_iIndex]->IsCollided(*pCurrentPos, *pTargetPos, &vHitPos)) {
-				vEndPos.y = m_vecCell[m_iIndex]->GetHeight(vEndPos);
-				return vEndPos;
-			}
-			else {
-				// 안에 있기는 하지만 앞으로의 이동에서 셀과 충돌할 일이 없기 때문에
-				// 해당 타겟 포스로 그냥 간다.
-				return *pTargetPos;
-			}
+	if (CCell::INSIDE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
+		_vec3 vHitPos;
+		if (m_vecCell[m_iIndex]->IsCollided(*pCurrentPos, *pTargetPos, &vHitPos)) {
+			vEndPos.y = m_vecCell[m_iIndex]->GetHeight(vEndPos);
+			return vEndPos;
 		}
-		else if (CCell::OUTSIDE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
-			// 밖에 있으므로 일단 밀어넣는다. (xz에 평행한 이동)
-			vEndPos = m_vecCell[m_iIndex]->GetPosInCell(vEndPos);
-			_vec3 vHitPos;
-			if (m_vecCell[m_iIndex]->IsCollided(*pCurrentPos, vEndPos, &vHitPos)) {
-				// 안에 있으면서, 앞으로의 이동에서 셀과 충돌하기 때문에
-				// 타겟 포스의 높이값을 충돌 지점과 동일하게 보정한다.
-				return vHitPos;
-			}
-			else {
-				// 안에 있기는 하지만 앞으로의 이동에서 셀과 충돌할 일이 없기 때문에
-				// 해당 타겟 포스로 그냥 간다.
-				return vEndPos;
-			}
-		}
-		break;
-	case 1:	// 열림
-		break;
 	}
-
 	return *pTargetPos;
 }
 
-_bool CNaviMesh::LoadNaviMeshFromFile(const _tchar* _pFilePath)
+_vec3 CNaviMesh::GetSlidedPos(const _vec3 & _vPos)
 {
-	if (!_pFilePath)
-		return false;
+	_vec3 vSlidedPos = _vPos;
+	_bool bIsForward = false;
+	_vec3 vHitPos;
+	for (auto& rSlidingCell : m_vecSlidingCell) {
+		if (Engine::IsSphereAndTriangleCollided(
+			*rSlidingCell->Get_Point(CCell::POINT_A),
+			*rSlidingCell->Get_Point(CCell::POINT_B),
+			*rSlidingCell->Get_Point(CCell::POINT_C),
+			vSlidedPos, 1.f, &bIsForward, &vHitPos)) {
 
-	HANDLE hFile = CreateFile(_pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-
-	if (INVALID_HANDLE_VALUE == hFile)
-		return false;
-
-	_int iVerticesSize = 0;
-	ReadFile(hFile, &iVerticesSize, sizeof(_int), nullptr, nullptr);
-	
-	m_vecCell.reserve(iVerticesSize + 10);
-	m_vecCell.clear();
-
-	_vec3 vPos[3];
-	_int iTriangleSize = iVerticesSize / 3;
-	for (_int i = 0; i < iTriangleSize; ++i) {
-		for (_int j = 0; j < 3; ++j) {
-			ReadFile(hFile, &vPos[j], sizeof(_vec3), nullptr, nullptr);
+			if (!bIsForward) {
+				// 뒷편에 있었다면 앞으로 밀어낸다.
+				vSlidedPos = vHitPos;
+			}
 		}
-		AddCell(vPos[0], vPos[1], vPos[2]);
 	}
 
-	CloseHandle(hFile);
-
-	return true;
+	return vSlidedPos;
 }
+
+//_bool CNaviMesh::LoadNaviMeshFromFile(const _tchar* _pFilePath)
+//{
+//	if (!_pFilePath)
+//		return false;
+//
+//	HANDLE hFile = CreateFile(_pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+//
+//	if (INVALID_HANDLE_VALUE == hFile)
+//		return false;
+//
+//	_int iVerticesSize = 0;
+//	ReadFile(hFile, &iVerticesSize, sizeof(_int), nullptr, nullptr);
+//	
+//	m_vecCell.reserve(iVerticesSize + 10);
+//	m_vecCell.clear();
+//
+//	_vec3 vPos[3];
+//	_int iTriangleSize = iVerticesSize / 3;
+//	for (_int i = 0; i < iTriangleSize; ++i) {
+//		for (_int j = 0; j < 3; ++j) {
+//			ReadFile(hFile, &vPos[j], sizeof(_vec3), nullptr, nullptr);
+//		}
+//		AddCell(vPos[0], vPos[1], vPos[2]);
+//	}
+//
+//	CloseHandle(hFile);
+//
+//	return true;
+//}
 
 HRESULT CNaviMesh::AddCell(const _vec3 & _vV1, const _vec3 & _vV2, const _vec3 & _vV3, const _int& _iTagIndex)
 {
 	CCell*		pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vV1, &_vV2, &_vV3, _iTagIndex);
 	NULL_CHECK_RETURN(pCell, E_FAIL);
-	m_vecCell.push_back(pCell);
 
+	if (_iTagIndex == 0)
+		m_vecCell.push_back(pCell);
+	else
+		m_vecSlidingCell.push_back(pCell);
 	return S_OK;
 }
 
@@ -217,7 +218,8 @@ void Engine::CNaviMesh::Free(void)
 
 	for_each(m_vecCell.begin(), m_vecCell.end(), CDeleteObj());
 	m_vecCell.clear();
-
+	for_each(m_vecSlidingCell.begin(), m_vecSlidingCell.end(), CDeleteObj());
+	m_vecSlidingCell.clear();
 
 	CMesh::Free();
 }

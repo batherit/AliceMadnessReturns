@@ -22,14 +22,16 @@ public:
 public:
 	HRESULT		Ready_NaviMeshes(void);
 	void		Render_NaviMeshes(void);
-	_vec3		Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3* pTargetPos/*, const _vec3* pTargetDir*/);
-	_bool		LoadNaviMeshFromFile(const _tchar* _pFilePath);
+	_vec3		Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3* pTargetPos);
+	_vec3		GetSlidedPos(const _vec3& _vPos);
+	//_bool		LoadNaviMeshFromFile(const _tchar* _pFilePath);
 	HRESULT		AddCell(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3, const _int& _iTagIndex = 0);
 	HRESULT		Link_Cell(void);
 	CCell*		GetCurCell() const { if (m_iIndex == -1) return nullptr;  return m_vecCell[m_iIndex]; }
 
 private:
 	vector<CCell*>			m_vecCell;
+	vector<CCell*>			m_vecSlidingCell;
 	_int					m_iIndex;
 
 public:

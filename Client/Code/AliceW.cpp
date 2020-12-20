@@ -70,10 +70,13 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 		return 1;
 	m_pStateMgr->Update(_fDeltaTime);
 
+	Engine::CNaviMesh* pNaviMesh = m_pMap->GetNaviMesh();
 	_vec3 vCurrentPos = GetTransform()->GetPos();
 	_vec3 vTargetPos = m_pPhysics->GetUpdatedPos(_fDeltaTime);
+
+	vTargetPos = pNaviMesh->GetSlidedPos(vTargetPos);
 	_vec3 vSettedPos = vTargetPos;
-	Engine::CNaviMesh* pNaviMesh = m_pMap->GetNaviMesh();
+	
 	if (IsFalling(_fDeltaTime)) {
 		// 추락 중이라면, 적절한 셀을 찾는다.
 		_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos);
@@ -238,6 +241,7 @@ _bool CAliceW::IsRunOn(const _float &, _vec3 * _pDir)
 
 		if (_pDir)
 			*_pDir = vDir;
+
 		return true;
 	}
 

@@ -379,6 +379,45 @@ namespace Engine
 		return false;
 	}
 
+	// 광선 충돌 지점 얻기
+	inline _vec3 GetHitPos(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3, const _float& _fU, const _float& _fV) {
+		return _vV1 + _fU * (_vV2 - _vV1) + _fV * (_vV3 - _vV1);
+	}
+
+	// 구와 삼각형 충돌
+	inline _bool IsSphereAndTriangleCollided(const _vec3& _vV0, const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vPos, const _float& _fRadius, _bool* _bIsForward = nullptr, _vec3* _pHitPos = nullptr) {
+		_plane plTrianglePlane;
+		D3DXPlaneFromPoints(&plTrianglePlane, &_vV0, &_vV1, &_vV2);
+
+		// 삼각형에 평행한 평면에 투영된 점을 찾습니당.
+		_vec3 vDirToProjectedPos = GetPointProjectedOntoPlane(plTrianglePlane, _vPos) - _vPos;
+		D3DXVec3Normalize(&vDirToProjectedPos, &vDirToProjectedPos);
+
+		_float fU, fV, fDist;
+		if (D3DXIntersectTri(&_vV0, &_vV1, &_vV2, &_vPos, &vDirToProjectedPos, &fU, &fV, &fDist)) {
+			if (fDist > _fRadius)
+				return false;
+
+			if (_bIsForward) {
+				// 평면의 밖에 있다.
+				*_bIsForward = D3DXPlaneDotCoord(&plTrianglePlane, &_vPos) > 0.f;
+			}
+
+			if (_pHitPos) {
+				*_pHitPos = GetHitPos(_vV0, _vV1, _vV2, fU, fV);
+			}
+			return true;
+		}
+
+		return false;
+	}
+
+	// 정점 3개로부터 법선 벡터 얻기
+	inline _vec3 GetNormalFromPoints(const _vec3& _vV0, const _vec3& _vV1, const _vec3& _vV2) {
+		_vec3 vNormal;
+		return *D3DXVec3Normalize(&vNormal, D3DXVec3Cross(&vNormal, &(_vV1 - _vV0), &(_vV2 - _vV0)));
+	}
+
 	// 랜덤 유틸
 	inline _float GetRandomFloat(void) {
 		return static_cast <_float> (rand()) / static_cast <_float> (RAND_MAX);
@@ -591,11 +630,6 @@ namespace Engine
 		D3DXVec3Normalize(&vRay, &vRay);
 
 		return PICKINGRAYINFO{ vRay, vCameraPos };
-	}
-
-	// 광선 충돌 지점 얻기
-	inline _vec3 GetHitPos(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3, const _float& _fU, const _float& _fV) {
-		return _vV1 + _fU * (_vV2 - _vV1) + _fV * (_vV3 - _vV1);
 	}
 
 	// 쿼터니언 -> YawPitchRoll

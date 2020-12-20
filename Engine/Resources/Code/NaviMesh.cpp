@@ -84,7 +84,8 @@ _vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3 * pTarget
 		if (CCell::INSIDE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
 			_vec3 vHitPos;
 			if (m_vecCell[m_iIndex]->IsCollided(*pCurrentPos, *pTargetPos, &vHitPos)) {
-				return vHitPos;
+				vEndPos.y = m_vecCell[m_iIndex]->GetHeight(vEndPos);
+				return vEndPos;
 			}
 			else {
 				// 안에 있기는 하지만 앞으로의 이동에서 셀과 충돌할 일이 없기 때문에

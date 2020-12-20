@@ -88,7 +88,7 @@ _bool CCell::IsCollided(const _vec3& _vFromPos, const _vec3& _vToPos, _vec3* _pH
 		return false;
 
 	if (D3DXIntersectTri(&m_vPoint[POINT_A], &m_vPoint[POINT_B], &m_vPoint[POINT_C], &_vToPos, &WORLD_Y_AXIS, &fU, &fV, &fDist)) {
-		if (fDist > -2.f * vDir.y + 0.2f) {	// 이거 좀 고칠 필요가 있엉ㅅㅇ
+		if (fDist > -2.f * vDir.y + 1.f) {	// 이거 좀 고칠 필요가 있엉ㅅㅇ
 			// 충돌 허용 두께(y축에서의 이동 격차 + 일반 충돌 허용 두께)를 넘어간 거리에 대해서는 허용x
 			return false;
 		}

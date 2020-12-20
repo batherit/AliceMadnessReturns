@@ -15,7 +15,7 @@ class CAliceWState_Jump :
 	public CState<CAliceW>
 {
 public:
-	CAliceWState_Jump(CAliceW& _rOwner);
+	CAliceWState_Jump(CAliceW& _rOwner, _bool _bIsJumping = true);
 	virtual ~CAliceWState_Jump();
 
 	// CState을(를) 통해 상속됨

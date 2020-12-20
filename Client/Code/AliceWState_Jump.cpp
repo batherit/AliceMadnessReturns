@@ -9,10 +9,11 @@
 #include "Map.h"
 
 
-CAliceWState_Jump::CAliceWState_Jump(CAliceW & _rOwner)
+CAliceWState_Jump::CAliceWState_Jump(CAliceW & _rOwner, _bool _bIsJumping)
 	:
 	CState(_rOwner)
 {
+	m_bIsJumping = _bIsJumping;
 }
 
 CAliceWState_Jump::~CAliceWState_Jump()
@@ -21,14 +22,19 @@ CAliceWState_Jump::~CAliceWState_Jump()
 
 void CAliceWState_Jump::OnLoaded(void)
 {
-	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpFwd_Start);
-	m_rOwner.GetPhysics()->SetVelocityY(ALICE_JUMP_SPEED);
+	if (m_bIsJumping) {
+		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpFwd_Start);
+		m_rOwner.GetPhysics()->SetVelocityY(ALICE_JUMP_SPEED);
+		m_eJumpStep = STEP_START;
+	}
+	else{
+		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpFwd_Fall);
+		m_eJumpStep = STEP_FALL;
+	}
+	++m_iJumpNum;
+	m_eJumpType = TYPE_FORWARD;
 	m_rOwner.SetLanded(false);
 	m_pNaviMesh = m_rOwner.GetMap()->GetNaviMesh();
-	++m_iJumpNum;
-	m_bIsJumping = true;
-	m_eJumpStep = STEP_START;
-	m_eJumpType = TYPE_FORWARD;
 }
 
 int CAliceWState_Jump::Update(const _float& _fDeltaTime)

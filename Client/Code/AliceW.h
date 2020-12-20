@@ -38,6 +38,7 @@ public:
 	_bool IsAttackOn(const _float& _fDeltaTime);
 	_bool IsJumpOn(const _float& _fDeltaTime);
 	_bool IsFloatingOn(const _float& _fDeltaTime);
+	_bool IsFalling(const _float& _fDeltaTime);
 	_bool IsRunOn(const _float&, _vec3* _pDir = nullptr);
 	//_bool ProcessMoveXZ(const _float& _fDeltaTime);
 	//_bool ProcessMoveY(const _float& _fDeltaTime);

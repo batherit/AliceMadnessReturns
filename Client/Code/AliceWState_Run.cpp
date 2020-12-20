@@ -37,6 +37,9 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 	if (m_rOwner.IsJumpOn(_fDeltaTime)) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Jump(m_rOwner));
 	}
+	else if (m_rOwner.IsFalling(_fDeltaTime)) {
+		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Jump(m_rOwner, false));
+	}
 	else if (m_rOwner.IsAttackOn(_fDeltaTime)) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack(m_rOwner));
 	}

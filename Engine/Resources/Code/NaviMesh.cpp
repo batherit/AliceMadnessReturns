@@ -85,7 +85,7 @@ _vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3 * pTarget
 	if (CCell::INSIDE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
 		_vec3 vHitPos;
 		if (m_vecCell[m_iIndex]->IsCollided(*pCurrentPos, *pTargetPos, &vHitPos)) {
-			vEndPos.y = m_vecCell[m_iIndex]->GetHeight(vEndPos);
+			vEndPos.y = vHitPos.y;//m_vecCell[m_iIndex]->GetHeight(vEndPos);
 			return vEndPos;
 		}
 	}
@@ -106,7 +106,8 @@ _vec3 CNaviMesh::GetSlidedPos(const _vec3 & _vPos)
 
 			if (!bIsForward) {
 				// 뒷편에 있었다면 앞으로 밀어낸다.
-				vSlidedPos = vHitPos;
+				vSlidedPos.x = vHitPos.x;
+				vSlidedPos.z = vHitPos.z;
 			}
 		}
 	}

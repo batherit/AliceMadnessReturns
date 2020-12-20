@@ -32,10 +32,10 @@ public:
 	afx_msg void OnEnChangeEditScaleY();
 	afx_msg void OnEnChangeEditScaleZ();
 
-private:
-	_vec3 m_vPos{ 0.f, 0.f, 0.f };
-	_vec3 m_vAngle{ 0.f, 0.f, 0.f };
-	_vec3 m_vScale{ 1.f, 1.f, 1.f };
+//private:
+//	_vec3 m_vPos{ 0.f, 0.f, 0.f };
+//	_vec3 m_vAngle{ 0.f, 0.f, 0.f };
+//	_vec3 m_vScale{ 1.f, 1.f, 1.f };
 
 public:
 	CListBox m_lbxTexture;
@@ -55,4 +55,13 @@ public:
 	afx_msg void OnBnClickedButtonLoad();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnLbnSelchangeListTexture();
+	CString m_cstrPosX;
+	CString m_cstrPosY;
+	CString m_cstrPosZ;
+	CString m_cstrAngleX;
+	CString m_cstrAngleY;
+	CString m_cstrAngleZ;
+	CString m_cstrScaleX;
+	CString m_cstrScaleY;
+	CString m_cstrScaleZ;
 };

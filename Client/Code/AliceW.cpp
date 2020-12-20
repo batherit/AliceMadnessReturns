@@ -92,7 +92,7 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 		else {
 			// 점프 중 상태도 아닌 착지 상태라면,
 			GetPhysics()->SetVelocityY(0.f);
-			vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(&GetTransform()->GetPos(), &(vTargetPos+_vec3(0.f, -1.0f, 0.f)));
+			vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(&GetTransform()->GetPos(), &(vTargetPos + _vec3(0.f, -1.0f, 0.f)));
 		}
 	}
 	

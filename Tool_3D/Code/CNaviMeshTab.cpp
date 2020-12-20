@@ -558,10 +558,10 @@ void CNaviMeshTab::OnEnChangeEditTriangleTagIndex()
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CNaviMesh* pNaviMesh = g_pTool3D_Kernel->GetEditScene()->GetNaviMesh();
-	CString strIndex = m_treeNavi.GetItemText(m_hSelectedTreeItem);
-	_int iTriangleIndex = _ttoi(strIndex);
+	if (pNaviMesh->GetMarkedTriangleIndex() == -1)
+		return;
 
 	UpdateData(TRUE);
-	pNaviMesh->SetTriangleTagIndex(iTriangleIndex, m_iTriangleTagIndex);
+	pNaviMesh->SetTriangleTagIndex(pNaviMesh->GetMarkedTriangleIndex(), m_iTriangleTagIndex);
 	UpdateData(FALSE);
 }

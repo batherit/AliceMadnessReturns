@@ -179,7 +179,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pPlayer = CAliceW::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
-	m_pPlayer->GetTransform()->Translate(_vec3(15.f, 25.f, 10.f));
+	m_pPlayer->GetTransform()->Translate(_vec3(15.f, 55.f, 10.f));
 
 	// 플레이어 카메라 컨트롤러 생성
 	Engine::CCameraController* pCameraController = CCameraController_Player::Create(m_pGraphicDev);

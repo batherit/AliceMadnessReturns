@@ -325,39 +325,49 @@ void CInputProcessor_Navi::PickTriangle()
 
 	_vec3 vV1, vV2, vV3;
 	_float fU, fV, fDist;
+	_float fMinDist = 9876543210.f;
+	_int iMinTriangleIndex = -1;
 	for (_int i = 0; i < iVecSize / 3; ++i) {
 		vV1 = vecNaviVertices[3 * i];
 		vV2 = vecNaviVertices[3 * i + 1];
 		vV3 = vecNaviVertices[3 * i + 2];
 		if (D3DXIntersectTri(&vV1, &vV2, &vV3, &stPickingRayInfo.vRayPos, &stPickingRayInfo.vRayDir, &fU, &fV, &fDist)) {
-			// 충돌했다면, 해당 인덱스의 삼각형을 활성화시킨다.
-			pNaviMesh->MarkTriangle(i);
-
+			if (fDist < fMinDist) {
+				fMinDist = fDist;
+				iMinTriangleIndex = i;
+			}
 			
-			// Position Edit Ctrl 비활성화
-			m_pNaviMeshTab->m_editPosX.EnableWindow(FALSE);
-			m_pNaviMeshTab->m_editPosY.EnableWindow(FALSE);
-			m_pNaviMeshTab->m_editPosZ.EnableWindow(FALSE);
-			m_pNaviMeshTab->m_chkGroup.EnableWindow(FALSE);
-			m_pNaviMeshTab->m_editGroupRange.EnableWindow(FALSE);
-
-			// 삼각형 삭제 버튼을 활성화한다.
-			m_pNaviMeshTab->m_btnDelete.EnableWindow(TRUE);
-			m_pNaviMeshTab->m_editTriangleTagIndex.EnableWindow(TRUE);
-
-			// 삼각형 픽모드로 세팅한다.
-			m_pNaviMeshTab->m_rbtnNavi.SetCheck(FALSE);
-			m_pNaviMeshTab->m_rbtnVertex.SetCheck(FALSE);
-			m_pNaviMeshTab->m_rbtnTriangle.SetCheck(TRUE);
-			m_pNaviMeshTab->UpdateTriangleTagIndex(pNaviMesh->GetTriangleTagIndex(i));
-
-			// 초기 상태로 돌아간다.
-			m_pNaviMeshTab->m_btnCombine.EnableWindow(FALSE);
-			m_pNaviMeshTab->m_btnCombine.ShowWindow(TRUE);
-			m_pNaviMeshTab->m_btnCancel.EnableWindow(FALSE);
-			m_pNaviMeshTab->m_btnCancel.ShowWindow(FALSE);
-			break;
+			
 		}
+	}
+
+	if (iMinTriangleIndex != -1) {
+		// 충돌했다면, 해당 인덱스의 삼각형을 활성화시킨다.
+		pNaviMesh->MarkTriangle(iMinTriangleIndex);
+
+
+		// Position Edit Ctrl 비활성화
+		m_pNaviMeshTab->m_editPosX.EnableWindow(FALSE);
+		m_pNaviMeshTab->m_editPosY.EnableWindow(FALSE);
+		m_pNaviMeshTab->m_editPosZ.EnableWindow(FALSE);
+		m_pNaviMeshTab->m_chkGroup.EnableWindow(FALSE);
+		m_pNaviMeshTab->m_editGroupRange.EnableWindow(FALSE);
+
+		// 삼각형 삭제 버튼을 활성화한다.
+		m_pNaviMeshTab->m_btnDelete.EnableWindow(TRUE);
+		m_pNaviMeshTab->m_editTriangleTagIndex.EnableWindow(TRUE);
+
+		// 삼각형 픽모드로 세팅한다.
+		m_pNaviMeshTab->m_rbtnNavi.SetCheck(FALSE);
+		m_pNaviMeshTab->m_rbtnVertex.SetCheck(FALSE);
+		m_pNaviMeshTab->m_rbtnTriangle.SetCheck(TRUE);
+		m_pNaviMeshTab->UpdateTriangleTagIndex(pNaviMesh->GetTriangleTagIndex(iMinTriangleIndex));
+
+		// 초기 상태로 돌아간다.
+		m_pNaviMeshTab->m_btnCombine.EnableWindow(FALSE);
+		m_pNaviMeshTab->m_btnCombine.ShowWindow(TRUE);
+		m_pNaviMeshTab->m_btnCancel.EnableWindow(FALSE);
+		m_pNaviMeshTab->m_btnCancel.ShowWindow(FALSE);
 	}
 }
 

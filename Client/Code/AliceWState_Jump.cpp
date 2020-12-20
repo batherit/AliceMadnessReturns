@@ -164,11 +164,8 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 		}
 		break;
 	case STEP_FALL:
-		if (m_rOwner.IsFloatingOn(_fDeltaTime)) {
-			m_rOwner.GetPhysics()->SetGravity(9.8f);
-		}
-		else {
-			m_rOwner.GetPhysics()->SetGravity(9.8f * 3.f);
+		if (m_rOwner.IsFalling(_fDeltaTime) && m_rOwner.IsFloatingOn(_fDeltaTime)) {
+			m_rOwner.GetPhysics()->SetVelocityY(-2.f);
 		}
 		// 활강 상태에선 점프를 다시 할 수 있습니다.
 		if (m_rOwner.IsJumpOn(_fDeltaTime) && m_iJumpNum < 4) {

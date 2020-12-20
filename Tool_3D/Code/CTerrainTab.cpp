@@ -21,6 +21,15 @@ CTerrainTab::CTerrainTab(CWnd* pParent /*=nullptr*/)
 	, m_uiVtxNumHeight(0)
 	, m_fU(0)
 	, m_fV(0)
+	, m_cstrPosX(_T("0"))
+	, m_cstrPosY(_T("0"))
+	, m_cstrPosZ(_T("0"))
+	, m_cstrAngleX(_T("0"))
+	, m_cstrAngleY(_T("0"))
+	, m_cstrAngleZ(_T("0"))
+	, m_cstrScaleX(_T("1"))
+	, m_cstrScaleY(_T("1"))
+	, m_cstrScaleZ(_T("1"))
 {
 
 }
@@ -32,7 +41,7 @@ CTerrainTab::~CTerrainTab()
 void CTerrainTab::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_EDIT1, m_vPos.x);
+	/*DDX_Text(pDX, IDC_EDIT1, m_vPos.x);
 	DDX_Text(pDX, IDC_EDIT2, m_vPos.y);
 	DDX_Text(pDX, IDC_EDIT3, m_vPos.z);
 	DDX_Text(pDX, IDC_EDIT4, m_vAngle.x);
@@ -40,7 +49,7 @@ void CTerrainTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT6, m_vAngle.z);
 	DDX_Text(pDX, IDC_EDIT7, m_vScale.x);
 	DDX_Text(pDX, IDC_EDIT8, m_vScale.y);
-	DDX_Text(pDX, IDC_EDIT9, m_vScale.z);
+	DDX_Text(pDX, IDC_EDIT9, m_vScale.z);*/
 	DDX_Control(pDX, IDC_LIST2, m_lbxTexture);
 	DDX_Text(pDX, IDC_EDIT11, m_fSizeWidth);
 	DDX_Text(pDX, IDC_EDIT12, m_fSizeDepth);
@@ -48,6 +57,15 @@ void CTerrainTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT15, m_uiVtxNumHeight);
 	DDX_Text(pDX, IDC_EDIT16, m_fU);
 	DDX_Text(pDX, IDC_EDIT17, m_fV);
+	DDX_Text(pDX, IDC_EDIT1, m_cstrPosX);
+	DDX_Text(pDX, IDC_EDIT2, m_cstrPosY);
+	DDX_Text(pDX, IDC_EDIT3, m_cstrPosZ);
+	DDX_Text(pDX, IDC_EDIT4, m_cstrAngleX);
+	DDX_Text(pDX, IDC_EDIT5, m_cstrAngleY);
+	DDX_Text(pDX, IDC_EDIT6, m_cstrAngleZ);
+	DDX_Text(pDX, IDC_EDIT7, m_cstrScaleX);
+	DDX_Text(pDX, IDC_EDIT8, m_cstrScaleY);
+	DDX_Text(pDX, IDC_EDIT9, m_cstrScaleZ);
 }
 
 BEGIN_MESSAGE_MAP(CTerrainTab, CDialogEx)
@@ -85,8 +103,11 @@ void CTerrainTab::OnEnChangeEditPosX()
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
 	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pTerrain)
-		pTerrain->GetTransform()->SetPos(m_vPos);
+	if (pTerrain) {
+		_float fPosX = static_cast<_float>(_tstof(m_cstrPosX));
+		pTerrain->GetTransform()->SetPosX(fPosX);
+	}
+		
 	UpdateData(FALSE);
 }
 
@@ -103,8 +124,10 @@ void CTerrainTab::OnEnChangeEditPosY()
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
 	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pTerrain)
-		pTerrain->GetTransform()->SetPos(m_vPos);
+	if (pTerrain) {
+		_float fPosY = static_cast<_float>(_tstof(m_cstrPosY));
+		pTerrain->GetTransform()->SetPosY(fPosY);
+	}
 	UpdateData(FALSE);
 }
 
@@ -121,8 +144,10 @@ void CTerrainTab::OnEnChangeEditPosZ()
 	auto pEditScene = g_pTool3D_Kernel->GetEditScene();
 	auto pTerrain = pEditScene->GetTerrain();
 
-	if (pTerrain)
-		pTerrain->GetTransform()->SetPos(m_vPos);
+	if (pTerrain) {
+		_float fPosZ = static_cast<_float>(_tstof(m_cstrPosZ));
+		pTerrain->GetTransform()->SetPosX(fPosZ);
+	}
 	UpdateData(FALSE);
 }
 
@@ -140,8 +165,8 @@ void CTerrainTab::OnEnChangeEditRotX()
 	auto pTerrain = pEditScene->GetTerrain();
 
 	if (pTerrain) {
-		_vec3 vRadian = _vec3(D3DXToRadian(m_vAngle.x), D3DXToRadian(m_vAngle.y), D3DXToRadian(m_vAngle.z));
-		pTerrain->GetTransform()->SetAngle(vRadian);
+		_float fAngleX = D3DXToRadian(static_cast<_float>(_tstof(m_cstrAngleX)));
+		pTerrain->GetTransform()->SetAngleX(fAngleX);
 	}
 
 	UpdateData(FALSE);
@@ -161,8 +186,8 @@ void CTerrainTab::OnEnChangeEditRotY()
 	auto pTerrain = pEditScene->GetTerrain();
 
 	if (pTerrain) {
-		_vec3 vRadian = _vec3(D3DXToRadian(m_vAngle.x), D3DXToRadian(m_vAngle.y), D3DXToRadian(m_vAngle.z));
-		pTerrain->GetTransform()->SetAngle(vRadian);
+		_float fAngleY = D3DXToRadian(static_cast<_float>(_tstof(m_cstrAngleY)));
+		pTerrain->GetTransform()->SetAngleX(fAngleY);
 	}
 
 	UpdateData(FALSE);
@@ -182,8 +207,8 @@ void CTerrainTab::OnEnChangeEditRotZ()
 	auto pTerrain = pEditScene->GetTerrain();
 
 	if (pTerrain) {
-		_vec3 vRadian = _vec3(D3DXToRadian(m_vAngle.x), D3DXToRadian(m_vAngle.y), D3DXToRadian(m_vAngle.z));
-		pTerrain->GetTransform()->SetAngle(vRadian);
+		_float fAngleZ = D3DXToRadian(static_cast<_float>(_tstof(m_cstrAngleZ)));
+		pTerrain->GetTransform()->SetAngleX(fAngleZ);
 	}
 
 	UpdateData(FALSE);
@@ -203,7 +228,8 @@ void CTerrainTab::OnEnChangeEditScaleX()
 	auto pTerrain = pEditScene->GetTerrain();
 
 	if (pTerrain) {
-		pTerrain->GetTransform()->SetScale(m_vScale);
+		_float fScaleX = static_cast<_float>(_tstof(m_cstrScaleX));
+		pTerrain->GetTransform()->SetScaleX(fScaleX);
 	}
 
 	UpdateData(FALSE);
@@ -223,7 +249,8 @@ void CTerrainTab::OnEnChangeEditScaleY()
 	auto pTerrain = pEditScene->GetTerrain();
 
 	if (pTerrain) {
-		pTerrain->GetTransform()->SetScale(m_vScale);
+		_float fScaleY = static_cast<_float>(_tstof(m_cstrScaleY));
+		pTerrain->GetTransform()->SetScaleX(fScaleY);
 	}
 
 	UpdateData(FALSE);
@@ -243,7 +270,8 @@ void CTerrainTab::OnEnChangeEditScaleZ()
 	auto pTerrain = pEditScene->GetTerrain();
 
 	if (pTerrain) {
-		pTerrain->GetTransform()->SetScale(m_vScale);
+		_float fScaleZ = static_cast<_float>(_tstof(m_cstrScaleZ));
+		pTerrain->GetTransform()->SetScaleX(fScaleZ);
 	}
 
 	UpdateData(FALSE);
@@ -397,12 +425,18 @@ void CTerrainTab::OnBnClickedButtonLoad()
 
 	// 트랜스폼 갱신
 	UpdateData(TRUE);
-	m_vPos = pTerrain->GetTransform()->GetPos();
+	_vec3 vPos = pTerrain->GetTransform()->GetPos();
+	m_cstrPosX.Format(L"%f", vPos.x);
+	m_cstrPosY.Format(L"%f", vPos.y);
+	m_cstrPosZ.Format(L"%f", vPos.z);
 	_vec3 vAngle = pTerrain->GetTransform()->GetAngle();
-	m_vAngle.x = D3DXToDegree(vAngle.x);
-	m_vAngle.y = D3DXToDegree(vAngle.y);
-	m_vAngle.z = D3DXToDegree(vAngle.z);
-	m_vScale = pTerrain->GetTransform()->GetScale();
+	m_cstrAngleX.Format(L"%f", D3DXToDegree(vAngle.x));
+	m_cstrAngleY.Format(L"%f", D3DXToDegree(vAngle.y));
+	m_cstrAngleZ.Format(L"%f", D3DXToDegree(vAngle.z));
+	_vec3 vScale = pTerrain->GetTransform()->GetScale();
+	m_cstrScaleX.Format(L"%f", vScale.x);
+	m_cstrScaleY.Format(L"%f", vScale.y);
+	m_cstrScaleZ.Format(L"%f", vScale.z);
 	
 	// 사이즈 갱신
 	m_fSizeWidth = pTerrainTex->GetWidth();

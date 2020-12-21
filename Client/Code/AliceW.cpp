@@ -79,21 +79,30 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	
 	if (IsFalling(_fDeltaTime)) {
 		// 추락 중이라면, 적절한 셀을 찾는다.
-		_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos);
+		_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos + _vec3(0.f, -1.0f, 0.f));
 		if (-1 != iCellIndex) {
 			m_bIsLanded = true;
 			pNaviMesh->Set_NaviIndex(iCellIndex);
 			GetPhysics()->SetVelocityY(0.f);
 		}
 	}
-	else if(IsLanded()){
-		if (!pNaviMesh->GetCurCell()->IsCollided(vCurrentPos, vTargetPos))
-			m_bIsLanded = false;
-		else {
-			// 점프 중 상태도 아닌 착지 상태라면,
-			GetPhysics()->SetVelocityY(0.f);
-			vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(&GetTransform()->GetPos(), &(vTargetPos + _vec3(0.f, -1.0f, 0.f)));
+	else if(IsLanded()){	
+		GetPhysics()->SetVelocityY(0.f);
+		// 점프 중 상태도 아닌 착지 상태라면,
+		if (!pNaviMesh->GetCurCell()->IsCollided(vCurrentPos, vTargetPos + _vec3(0.f, -1.0f, 0.f))) {
+			_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos + _vec3(0.f, -1.0f, 0.f));
+			if (-1 != iCellIndex) {
+				m_bIsLanded = true;
+				pNaviMesh->Set_NaviIndex(iCellIndex);
+				GetPhysics()->SetVelocityY(0.f);
+				vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(&vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f)));
+			}
+			else {
+				m_bIsLanded = false;
+			}
 		}
+		else 
+			vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(&vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f)));
 	}
 	
 	GetTransform()->SetPos(vSettedPos);

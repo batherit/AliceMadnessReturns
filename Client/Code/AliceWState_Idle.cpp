@@ -21,7 +21,7 @@ CAliceWState_Idle::~CAliceWState_Idle()
 
 void CAliceWState_Idle::OnLoaded(void)
 {
-	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_Idle);
+	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_Idle);
 	m_rOwner.GetPhysics()->SetSpeed(0.f);
 }
 

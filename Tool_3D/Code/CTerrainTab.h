@@ -38,6 +38,7 @@ public:
 //	_vec3 m_vScale{ 1.f, 1.f, 1.f };
 
 public:
+	CListBox m_lbxHeightMap;
 	CListBox m_lbxTexture;
 	afx_msg void OnEnChangeEditWidth();
 	afx_msg void OnEnChangeEditDepth();
@@ -64,4 +65,5 @@ public:
 	CString m_cstrScaleX;
 	CString m_cstrScaleY;
 	CString m_cstrScaleZ;
+	afx_msg void OnLbnSelchangeListHeightMap();
 };

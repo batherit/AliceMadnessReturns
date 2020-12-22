@@ -21,7 +21,7 @@ CAliceWState_Run::~CAliceWState_Run()
 
 void CAliceWState_Run::OnLoaded(void)
 {
-	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_Run);
+	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_Run);
 }
 
 int CAliceWState_Run::Update(const _float& _fDeltaTime)

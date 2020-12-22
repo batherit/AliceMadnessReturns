@@ -23,12 +23,12 @@ CAliceWState_Jump::~CAliceWState_Jump()
 void CAliceWState_Jump::OnLoaded(void)
 {
 	if (m_bIsJumping) {
-		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpFwd_Start);
+		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpFwd_Start);
 		m_rOwner.GetPhysics()->SetVelocityY(ALICE_JUMP_SPEED);
 		m_eJumpStep = STEP_START;
 	}
 	else{
-		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpFwd_Fall);
+		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpFwd_Fall);
 		m_eJumpStep = STEP_FALL;
 	}
 	++m_iJumpNum;
@@ -55,13 +55,13 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 	else {
 		switch (m_eJumpType) {
 		case TYPE_FORWARD:
-			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpFwd_LandLow);
+			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpFwd_LandLow);
 			break;
 		case TYPE_RIGHT:
-			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Rgt_Land);
+			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Rgt_Land);
 			break;
 		case TYPE_LEFT:
-			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Lft_Land);
+			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Lft_Land);
 			break;
 		}
 		m_eJumpStep = STEP_LAND;
@@ -74,13 +74,13 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 			// Start 애니메이션이 끝난 상황
 			switch (m_eJumpType) {
 			case TYPE_FORWARD:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpFwd_Rise);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpFwd_Rise);
 				break;
 			case TYPE_RIGHT:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Rgt_Rise);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Rgt_Rise);
 				break;
 			case TYPE_LEFT:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Lft_Rise);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Lft_Rise);
 				break;
 			}
 			// Rise 상태로 전환
@@ -101,10 +101,10 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 
 					switch (m_eJumpType) {
 					case TYPE_RIGHT:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Rgt_Start);
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Rgt_Start);
 						break;
 					case TYPE_LEFT:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Lft_Start);
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Lft_Start);
 						break;
 					}
 					++m_iJumpNum;
@@ -116,13 +116,13 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 					// 어떤 입력도 없다면 활강 애니메이션을 진행한다.
 					switch (m_eJumpType) {
 					case TYPE_FORWARD:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpFwd_Fall);
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpFwd_Fall);
 						break;
 					case TYPE_RIGHT:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Rgt_Fall);
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Rgt_Fall);
 						break;
 					case TYPE_LEFT:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Lft_Fall);
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Lft_Fall);
 						break;
 					}
 					m_eJumpStep = STEP_FALL;
@@ -140,10 +140,10 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 
 				switch (m_eJumpType) {
 				case TYPE_RIGHT:
-					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Rgt_Start);
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Rgt_Start);
 					break;
 				case TYPE_LEFT:
-					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Lft_Start);
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Lft_Start);
 					break;
 				}
 				++m_iJumpNum;
@@ -153,10 +153,10 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 				// 어떤 입력도 없다면 활강 애니메이션을 진행한다.
 				switch (m_eJumpType) {
 				case TYPE_RIGHT:
-					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Rgt_Fall);
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Rgt_Fall);
 					break;
 				case TYPE_LEFT:
-					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Lft_Fall);
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Lft_Fall);
 					break;
 				}
 				m_eJumpStep = STEP_FALL;
@@ -178,10 +178,10 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 
 			switch (m_eJumpType) {
 			case TYPE_RIGHT:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Rgt_Start);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Rgt_Start);
 				break;
 			case TYPE_LEFT:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_JumpD_Lft_Start);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpD_Lft_Start);
 				break;
 			}
 			++m_iJumpNum;

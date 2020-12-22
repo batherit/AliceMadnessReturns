@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "StateMgr.h"
 #include "AliceWState_Idle.h"
+#include "StaticObject.h"
 
 CAliceW::CAliceW(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -37,7 +38,7 @@ HRESULT CAliceW::Ready_Object(void)
 	pComponent = m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
-	m_pTransform->SetScale(_vec3(0.01f, 0.01f, 0.01f));
+	//m_pTransform->SetScale(_vec3(0.01f, 0.01f, 0.01f));
 	
 	// Physics
 	pComponent = m_pPhysics = AddComponent<Engine::CPhysics>();
@@ -48,6 +49,13 @@ HRESULT CAliceW::Ready_Object(void)
 
 	m_pStateMgr = new CStateMgr<CAliceW>(*this);
 	m_pStateMgr->SetNextState(new CAliceWState_Idle(*this));
+
+
+	CStaticObject* pStaticObject = CStaticObject::Create(m_pGraphicDev);
+	pStaticObject->SetRenderInfo(L"VorpalBlade");
+	pStaticObject->GetTransform()->Rotate(D3DXToRadian(45.f), D3DXToRadian(90.f), D3DXToRadian(160.f));
+	pStaticObject->GetTransform()->Translate(0.07f, 0.f, 0.02f);
+	AddChild(pStaticObject, "Bip01-R-Hand");
 		
 	return S_OK;
 }
@@ -72,14 +80,14 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 
 	Engine::CNaviMesh* pNaviMesh = m_pMap->GetNaviMesh();
 	_vec3 vCurrentPos = GetTransform()->GetPos();
-	_vec3 vTargetPos = m_pPhysics->GetUpdatedPos(_fDeltaTime);
+	_vec3 vTargetPos = m_pPhysics->GetUpdatedPos(_fDeltaTime);		// 물리 계산
 
 	vTargetPos = pNaviMesh->GetSlidedPos(vTargetPos);
 	_vec3 vSettedPos = vTargetPos;
 	
 	if (IsFalling(_fDeltaTime)) {
 		// 추락 중이라면, 적절한 셀을 찾는다.
-		_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos + _vec3(0.f, -1.0f, 0.f));
+		_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos /*+ _vec3(0.f, -1.0f, 0.f)*/);
 		if (-1 != iCellIndex) {
 			m_bIsLanded = true;
 			pNaviMesh->Set_NaviIndex(iCellIndex);
@@ -104,11 +112,10 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 		else 
 			vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(&vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f)));
 	}
-	
+	// 이동 확정
 	GetTransform()->SetPos(vSettedPos);
 
 	m_pMesh->Play_Animation(_fDeltaTime);
-
 	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
 		return 0;
 	}

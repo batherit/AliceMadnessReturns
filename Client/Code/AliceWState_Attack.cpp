@@ -21,7 +21,7 @@ CAliceWState_Attack::~CAliceWState_Attack()
 void CAliceWState_Attack::OnLoaded(void)
 {
 	m_bIsAttacking = true;
-	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_WP1_Mele_Attack_1_A);
+	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_1_A);
 	m_rOwner.GetPhysics()->SetSpeed(0.f);
 	++m_iAttackNum;
 }
@@ -41,13 +41,13 @@ int CAliceWState_Attack::Update(const _float& _fDeltaTime)
 			switch (m_iAttackNum)
 			{
 			case 1:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_WP1_Mele_Attack_1_B);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_1_B);
 				break;
 			case 2:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_WP1_Mele_Attack_2_B);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_2_B);
 				break;
 			case 3:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_WP1_Mele_Attack_5_B);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_5_B);
 				break;
 			}
 			m_bIsAttacking = false;
@@ -60,10 +60,10 @@ int CAliceWState_Attack::Update(const _float& _fDeltaTime)
 					switch (m_iAttackNum)
 					{
 					case 1:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_WP1_Mele_Attack_2_A);
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_2_A);
 						break;
 					case 2:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ALICE::AliceW_WP1_Mele_Attack_5_A);
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_5_A);
 						break;
 					}
 					++m_iAttackNum;

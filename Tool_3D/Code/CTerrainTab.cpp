@@ -66,6 +66,7 @@ void CTerrainTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT7, m_cstrScaleX);
 	DDX_Text(pDX, IDC_EDIT8, m_cstrScaleY);
 	DDX_Text(pDX, IDC_EDIT9, m_cstrScaleZ);
+	DDX_Control(pDX, IDC_LIST1, m_lbxHeightMap);
 }
 
 BEGIN_MESSAGE_MAP(CTerrainTab, CDialogEx)
@@ -87,6 +88,7 @@ BEGIN_MESSAGE_MAP(CTerrainTab, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON9, &CTerrainTab::OnBnClickedButtonSave)
 	ON_BN_CLICKED(IDC_BUTTON6, &CTerrainTab::OnBnClickedButtonLoad)
 	ON_LBN_SELCHANGE(IDC_LIST2, &CTerrainTab::OnLbnSelchangeListTexture)
+	ON_LBN_SELCHANGE(IDC_LIST1, &CTerrainTab::OnLbnSelchangeListHeightMap)
 END_MESSAGE_MAP()
 
 
@@ -479,4 +481,14 @@ void CTerrainTab::OnLbnSelchangeListTexture()
 	CString szTextureTag;
 	m_lbxTexture.GetText(m_lbxTexture.GetCurSel(), szTextureTag);
 	g_pTool3D_Kernel->GetEditScene()->GetTerrain()->SetTextureTag(szTextureTag);
+}
+
+
+
+void CTerrainTab::OnLbnSelchangeListHeightMap()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString szHeightMapTag;
+	m_lbxHeightMap.GetText(m_lbxHeightMap.GetCurSel(), szHeightMapTag);
+	g_pTool3D_Kernel->GetEditScene()->GetTerrain()->SetHeightMapFileName(szHeightMapTag + L".bmp");
 }

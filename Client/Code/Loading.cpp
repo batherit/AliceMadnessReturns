@@ -199,6 +199,15 @@ _uint CLoading::Loading_ForStage(void)
 		L"Player.X"),
 		E_FAIL);*/
 
+	// º¸ÆÈ°Ë »ý¼º
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"VorpalBlade",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/VorpalBlade/",
+		L"VorpalBlade.X"),
+		E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"AliceW",

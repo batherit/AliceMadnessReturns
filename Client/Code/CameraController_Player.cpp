@@ -11,7 +11,7 @@ CCameraController_Player::CCameraController_Player(LPDIRECT3DDEVICE9 pGraphicDev
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	SetStickDir(vDir);
-	SetStickLen(3.5f);
+	SetStickLen(4.5f);
 
 	
 }

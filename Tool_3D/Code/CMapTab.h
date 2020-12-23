@@ -81,4 +81,13 @@ public:
 	
 	afx_msg void OnBnClickedButtonSave();
 	afx_msg void OnBnClickedButtonLoad();
+	CString m_cstrPosX;
+	CString m_cstrPosY;
+	CString m_cstrPosZ;
+	CString m_cstrRotX;
+	CString m_cstrRotY;
+	CString m_cstrRotZ;
+	CString m_cstrScaleX;
+	CString m_cstrScaleY;
+	CString m_cstrScaleZ;
 };

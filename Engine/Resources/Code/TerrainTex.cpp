@@ -93,7 +93,7 @@ HRESULT CTerrainTex::SetTerrainInfo(_uint _iNumOfVerticesW, _uint _iNumOfVertice
 			iIndexVB = _iNumOfVerticesW * i + j;
 			iIndexPixel = static_cast<_int>(m_iBitmapSizeW * static_cast<_int>(i * static_cast<_float>(m_iBitmapSizeH - 1) 
 				/ (_iNumOfVerticesH - 1)) + j * static_cast<_float>(m_iBitmapSizeW - 1) / (_iNumOfVerticesW - 1));
-			m_vecVertices[iIndexVB] = pVertex[iIndexVB].vPos = _vec3(j * fCX, (m_pHeightMapData ? (m_pHeightMapData[m_stBitmapInfoHeader.biBitCount/CHAR_BIT * iIndexPixel] / 10.f) : 0.f), (i * fCY));
+			m_vecVertices[iIndexVB] = pVertex[iIndexVB].vPos = _vec3(j * fCX, (m_pHeightMapData ? (m_pHeightMapData[m_stBitmapInfoHeader.biBitCount/CHAR_BIT * iIndexPixel] * 1.f) : 0.f), (i * fCY));
 			pVertex[iIndexVB].vNormal = _vec3(0.f, 0.f, 0.f);		// 인덱스 버퍼를 생성할 때 노멀 벡터를 생성한다.
 			pVertex[iIndexVB].vTexUV = _vec2(fCU * j, 1.f - fCV * i);
 		}
@@ -269,6 +269,11 @@ _bool CTerrainTex::LoadHeightMap(const _tchar * _szHeightMapFileName)
 				fclose(fp);
 			return false;
 		}
+	}
+	else if(m_pHeightMapData){
+		delete m_pHeightMapData;
+		m_pHeightMapData = nullptr;
+		return false;
 	}
 
 	// 파일 닫기

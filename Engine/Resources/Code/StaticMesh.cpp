@@ -17,8 +17,10 @@ Engine::CStaticMesh::CStaticMesh(const CStaticMesh& rhs)
 	, m_pOriMesh(rhs.m_pOriMesh)
 	, m_pMtrl(rhs.m_pMtrl)
 	, m_dwSubsetCnt(rhs.m_dwSubsetCnt)
-	, m_dwNumVtx(rhs.m_dwNumVtx)	
+	, m_dwNumVtx(rhs.m_dwNumVtx)
 	, m_pVtxPos(rhs.m_pVtxPos)
+	, m_pIndices(rhs.m_pIndices)
+	, m_dwNumIndices(rhs.m_dwNumIndices)
 	, m_dwStride(rhs.m_dwStride)
 {
 	m_ppTextures = new LPDIRECT3DTEXTURE9[rhs.m_dwSubsetCnt];
@@ -78,7 +80,6 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 	m_pMesh->GetDeclaration(Decl);
 
 	_ubyte byOffset = 0;
-
 	for (_ulong i = 0; i < MAX_FVF_DECL_SIZE; ++i)
 	{
 		if(Decl[i].Usage == D3DDECLUSAGE_POSITION)
@@ -87,15 +88,25 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 			break;
 		}
 	}
+
 	// FVF 정보를 토대로 정점의 크기를 반환하는 함수
 	m_dwStride = D3DXGetFVFVertexSize(dwFVF);
-
 	for (_ulong i = 0; i < m_dwNumVtx; ++i)
 	{
 		m_pVtxPos[i] = *((_vec3*)(((_ubyte*)pVertex) + (i * m_dwStride + byOffset)));
 	}
 	
 	m_pMesh->UnlockVertexBuffer();
+
+	void*	pIndices = nullptr;
+	m_dwNumIndices = m_pMesh->GetNumFaces();
+	m_pIndices = new INDEX16[m_dwNumIndices];
+	m_pMesh->LockIndexBuffer(0, &pIndices);
+	for (_ulong i = 0; i < m_dwNumIndices; ++i) {
+		m_pIndices[i] = ((INDEX16*)pIndices)[i];
+	}
+
+	m_pMesh->UnlockIndexBuffer();
 
 	// 메쉬가 지닌 재질 정보 중 첫 번째 주소를 반환하여 저장
 	m_pMtrl = (D3DXMATERIAL*)m_pSubset->GetBufferPointer();
@@ -183,9 +194,11 @@ void Engine::CStaticMesh::Free(void)
 
 	Safe_Delete_Array(m_ppTextures);
 
-	if (false == m_bClone)
+	if (false == m_bClone) {
 		Safe_Delete_Array(m_pVtxPos);
-
+		Safe_Delete_Array(m_pIndices);
+	}
+		
 
 	Safe_Release(m_pSubset);
 	Safe_Release(m_pAdjacency);

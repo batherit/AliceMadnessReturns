@@ -167,10 +167,15 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkyBox", Engine::TEX_CUBE, L"../../Resource/Texture/SkyBox/burger%d.dds", 4),  E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"PlayTerrain", Engine::TEX_NORMAL, L"../../Resource/Texture/Terrain/PlayTerrain.bmp"), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"PlayTerrain", Engine::TEX_NORMAL, L"../../Resource/Texture/Terrain/PlayTerrain.bmp"), E_FAIL);
+	m_pTerrainTab->m_lbxHeightMap.AddString(L"None");
 	m_pTerrainTab->m_lbxHeightMap.AddString(L"PlayTerrain");
+	
+	m_pTerrainTab->m_lbxTexture.AddString(L"None");
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"CobbledStreet_DM", Engine::TEX_NORMAL, L"../../Resource/Terrain/Texture/CobbledStreet_DM.tga"), E_FAIL);
 	m_pTerrainTab->m_lbxTexture.AddString(L"CobbledStreet_DM");
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Rock", Engine::TEX_NORMAL, L"../../Resource/Terrain/Texture/Rock.png"), E_FAIL);
+	m_pTerrainTab->m_lbxTexture.AddString(L"Rock");
 
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	
@@ -303,6 +308,148 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_Section", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Section");
+
+	// 돌과 나무들
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"DecoMushroom_AlienGroup",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"DecoMushroom_AlienGroup.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"DecoMushroom_AlienGroup", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DecoMushroom_AlienGroup");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"RockPillarARockPillarA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"RockPillarARockPillarA.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"RockPillarARockPillarA", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarARockPillarA");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"GiantMossRockA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"GiantMossRockA.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"GiantMossRockA", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"GiantMossRockA");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MossRockA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"MossRockA.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"MossRockA", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MossRockA");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MossRockB",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"MossRockB.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"MossRockB", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MossRockB");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"GiantOrientalRock_Wall",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"GiantOrientalRock_Wall.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"GiantOrientalRock_Wall", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"GiantOrientalRock_Wall");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"RockPillarA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"RockPillarA.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"RockPillarA", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarA");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"RockPillarB",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"RockPillarB.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"RockPillarB", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarB");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"RockPillarB2",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"RockPillarB2.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"RockPillarB2", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarB2");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"RockPillarC",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"RockPillarC.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"RockPillarC", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarC");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"TearsRock",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"TearsRock.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"TearsRock", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"TearsRock");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"GloryTree_Base",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"GloryTree_Base.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"GloryTree_Base", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"GloryTree_Base");
+
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MossRock_Walkable",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"MossRock_Walkable.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"MossRock_Walkable", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MossRock_Walkable");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Keyhole_Glory",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"Keyhole_Glory.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"Keyhole_Glory", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Keyhole_Glory");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

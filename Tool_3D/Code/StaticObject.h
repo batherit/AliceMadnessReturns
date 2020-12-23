@@ -24,6 +24,7 @@ public:
 	static CStaticObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	_bool SetRenderInfo(const _tchar* _pMeshTag, Engine::RENDERID _eRenderID = Engine::RENDER_NONALPHA);
 	const _tchar* GetMeshTag() const { return m_tcMeshTag; }
+	Engine::CStaticMesh* GetStaticMesh() const { return m_pMesh; }
 
 	virtual void		Free(void);
 

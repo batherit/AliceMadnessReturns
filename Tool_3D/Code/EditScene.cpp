@@ -364,7 +364,7 @@ void CEditScene::SaveTerrain()
 	TCHAR szDataPath[MAX_PATH] = L"";
 	GetCurrentDirectory(MAX_PATH, szCurPath);
 	PathRemoveFileSpec(szCurPath);
-	PathCombine(szDataPath, szCurPath, L"Bin\\Resource\\Terrain");
+	PathCombine(szDataPath, szCurPath, L"Resource\\Terrain");
 	Dlg.m_ofn.lpstrInitialDir = szDataPath;
 	if (IDOK == Dlg.DoModal())
 	{

@@ -10,6 +10,7 @@
 #include "MainFrm.h"
 #include "CTabForm.h"
 #include "CNaviMeshTab.h"
+#include "StaticObject.h"
 
 
 CInputProcessor_Navi::CInputProcessor_Navi(Engine::CInputProcessorMgr * _pInputProcessorMgr)
@@ -100,8 +101,8 @@ void CInputProcessor_Navi::PickTerrain()
 	_float fU, fV, fDist;
 	_vec3 vV1, vV2, vV3;
 
-	// 픽킹 검사를 진행한다.
-	_matrix matTerrainWorld = pTerrain->GetTransform()->GetObjectMatrix();
+	// 터레인에서 픽킹 검사를 진행한다.
+	_matrix matWorld = pTerrain->GetTransform()->GetObjectMatrix();
 	_bool bIsNearestPosFinded = false;
 	_vec3 vCross;
 	_float fMinLengthSq = FLT_MAX;
@@ -109,9 +110,9 @@ void CInputProcessor_Navi::PickTerrain()
 	_vec3 vHitPos;
 	_vec3 vNearestPos;
 	for (auto& pIndex : pTerrain->GetComponent<Engine::CTerrainTex>()->GetIndexes()) {
-		vV1 = pVertices[pIndex._0];	/*From Local To World*/ D3DXVec3TransformCoord(&vV1, &vV1, &matTerrainWorld);
-		vV2 = pVertices[pIndex._1];	/*From Local To World*/ D3DXVec3TransformCoord(&vV2, &vV2, &matTerrainWorld);
-		vV3 = pVertices[pIndex._2];	/*From Local To World*/ D3DXVec3TransformCoord(&vV3, &vV3, &matTerrainWorld);
+		vV1 = pVertices[pIndex._0];	/*From Local To World*/ D3DXVec3TransformCoord(&vV1, &vV1, &matWorld);
+		vV2 = pVertices[pIndex._1];	/*From Local To World*/ D3DXVec3TransformCoord(&vV2, &vV2, &matWorld);
+		vV3 = pVertices[pIndex._2];	/*From Local To World*/ D3DXVec3TransformCoord(&vV3, &vV3, &matWorld);
 
 		vCross = Engine::GetCross(vV1, vV2, vV3);
 		if (!Engine::IsFacing(vCross, stPickingRayInfo.vRayDir)) {
@@ -135,6 +136,50 @@ void CInputProcessor_Navi::PickTerrain()
 				if (fMinLengthSq > fLengthSq) {
 					vNearestPos = vHitPos;
 					fMinLengthSq = fLengthSq;
+				}
+			}
+		}
+	}
+
+	// 정적 오브젝트에서 픽킹 검사를 한다.
+	auto& vecStaticObjects = m_pEditScene->GetStaticObjectList();
+	_ulong iIndicesNum = 0;
+	Engine::INDEX16* pIndices = nullptr;
+	_vec3* pStaticObjectVtx = nullptr;
+	for (auto& rObj : vecStaticObjects) {
+		pIndices = rObj->GetStaticMesh()->GetIndices();
+		iIndicesNum = rObj->GetStaticMesh()->GetNumIndices();
+		pStaticObjectVtx = rObj->GetStaticMesh()->Get_VtxPos();
+		matWorld = rObj->GetTransform()->GetObjectMatrix();
+
+		for (_ulong i = 0; i < iIndicesNum; ++i) {
+			vV1 = pStaticObjectVtx[pIndices[i]._0];	/*From Local To World*/ D3DXVec3TransformCoord(&vV1, &vV1, &matWorld);
+			vV2 = pStaticObjectVtx[pIndices[i]._1];	/*From Local To World*/ D3DXVec3TransformCoord(&vV2, &vV2, &matWorld);
+			vV3 = pStaticObjectVtx[pIndices[i]._2];	/*From Local To World*/ D3DXVec3TransformCoord(&vV3, &vV3, &matWorld);
+
+			vCross = Engine::GetCross(vV1, vV2, vV3);
+			if (!Engine::IsFacing(vCross, stPickingRayInfo.vRayDir)) {
+				// 마주보고 있는 삼각형이 아니라면, 건너뛴다.
+				continue;
+			}
+
+			if (D3DXIntersectTri(&vV1, &vV2, &vV3, &stPickingRayInfo.vRayPos, &stPickingRayInfo.vRayDir, &fU, &fV, &fDist)) {
+				// 충돌했다면, 충돌 지점을 찾는다.
+				vHitPos = Engine::GetHitPos(vV1, vV2, vV3, fU, fV);
+				fLengthSq = D3DXVec3LengthSq(&(vHitPos - stPickingRayInfo.vRayPos));
+
+				// 가장 가까운 점을 찾지 못한 상황이라면, 초기 세팅을 해준다.
+				if (!bIsNearestPosFinded) {
+					vNearestPos = vHitPos;
+					fMinLengthSq = fLengthSq;
+					bIsNearestPosFinded = true;
+				}
+				else {
+					// 가장 가까운 점을 찾으면 변수들을 새로이 갱신한다.
+					if (fMinLengthSq > fLengthSq) {
+						vNearestPos = vHitPos;
+						fMinLengthSq = fLengthSq;
+					}
 				}
 			}
 		}

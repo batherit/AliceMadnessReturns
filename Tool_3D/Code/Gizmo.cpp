@@ -111,7 +111,7 @@ int CGizmo::Update_Object(const _float & _fDeltaTime)
 		}
 	}
 
-	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	m_pRenderer->Add_RenderGroup(Engine::RENDER_UI, this);
 	return 0;
 }
 
@@ -132,9 +132,10 @@ void CGizmo::Render_Object(void)
 	pLine->SetAntialias(true);
 	pLine->Begin();
 
-	//DWORD bIsZBufferEnabled;
-	//m_pGraphicDev->GetRenderState(D3DRS_ZENABLE, &bIsZBufferEnabled);
-	//m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+	DWORD bIsZBufferEnabled;
+	m_pGraphicDev->GetRenderState(D3DRS_ZENABLE, &bIsZBufferEnabled);
+	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+
 	for (_int i = 0; i < AXIS_NUM; ++i) {
 		if (m_ePlaneType == PLANE::TYPE_XY && i == 2) continue;
 		else if (m_ePlaneType == PLANE::TYPE_XZ && i == 1) continue;
@@ -142,7 +143,7 @@ void CGizmo::Render_Object(void)
 
 		pLine->DrawTransform(m_vAxisVertices[i], 2, &(matWorld * matView * matProj), m_clAxisColor[i]);
 	}
-	//m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, bIsZBufferEnabled);
+	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, bIsZBufferEnabled);
 
 	pLine->End();
 	pLine->Release();

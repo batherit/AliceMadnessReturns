@@ -175,7 +175,7 @@ _bool CColliderObject_AABB::GenerateAABB()
 
 	_vec3* pVtxPosW = new _vec3[dwNumVtxCnt];
 	_matrix matWorld = GetTransform()->GetParentMatrix();
-	for (_int i = 0; i < dwNumVtxCnt; ++i) {
+	for (_ulong i = 0; i < dwNumVtxCnt; ++i) {
 		// 월드 정점으로 변환
 		D3DXVec3TransformCoord(&pVtxPosW[i], &pVtxPosL[i], &matWorld);
 	}

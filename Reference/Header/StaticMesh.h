@@ -15,7 +15,9 @@ private:
 public:
 	const _ulong&		Get_NumVtx(void) { return m_dwNumVtx; }
 	const _ulong&		Get_Stride(void) { return m_dwStride; }
-	const _vec3*		Get_VtxPos(void) { return m_pVtxPos; }
+	_vec3*		Get_VtxPos(void) { return m_pVtxPos; }
+	_ulong		GetNumIndices() const { return m_dwNumIndices; }
+	INDEX16*		GetIndices() const { return m_pIndices; }
 
 public:
 	HRESULT		Ready_Meshes(const _tchar* pFilePath, const _tchar* pFileName);
@@ -33,6 +35,8 @@ private:
 	_ulong				m_dwStride;
 	_ulong				m_dwNumVtx;
 	_vec3*				m_pVtxPos;
+	_ulong				m_dwNumIndices;
+	INDEX16*			m_pIndices;
 
 	LPDIRECT3DTEXTURE9*	m_ppTextures;
 

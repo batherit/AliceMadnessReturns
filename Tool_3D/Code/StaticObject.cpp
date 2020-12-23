@@ -44,6 +44,19 @@ void CStaticObject::Render_Object(void)
 {
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Render();
+
+	DWORD bIsZBufferEnabled;
+	m_pGraphicDev->GetRenderState(D3DRS_ZENABLE, &bIsZBufferEnabled);
+	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+	_matrix matTrans;
+	_vec3 vPos = GetTransform()->GetPos();
+	D3DXMatrixIdentity(&matTrans);
+	D3DXMatrixTranslation(&matTrans, vPos.x, vPos.y, vPos.z);
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matTrans);
+	m_pGraphicDev->SetTexture(0, NULL);
+	Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"Buffer_SphereCol");
+	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, bIsZBufferEnabled);
 }
 
 CStaticObject * CStaticObject::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -16,6 +16,15 @@ IMPLEMENT_DYNAMIC(CMapTab, CDialogEx)
 
 CMapTab::CMapTab(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MAP_TAB, pParent)
+	, m_cstrPosX(_T(""))
+	, m_cstrPosY(_T(""))
+	, m_cstrPosZ(_T(""))
+	, m_cstrRotX(_T(""))
+	, m_cstrRotY(_T(""))
+	, m_cstrRotZ(_T(""))
+	, m_cstrScaleX(_T(""))
+	, m_cstrScaleY(_T(""))
+	, m_cstrScaleZ(_T(""))
 {
 
 }
@@ -43,6 +52,15 @@ void CMapTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RADIO5, m_rbtnPosition);
 	DDX_Control(pDX, IDC_RADIO6, m_rbtnRotation);
 	DDX_Control(pDX, IDC_RADIO7, m_rbtnScale);
+	DDX_Text(pDX, IDC_EDIT1, m_cstrPosX);
+	DDX_Text(pDX, IDC_EDIT3, m_cstrPosY);
+	DDX_Text(pDX, IDC_EDIT11, m_cstrPosZ);
+	DDX_Text(pDX, IDC_EDIT6, m_cstrRotX);
+	DDX_Text(pDX, IDC_EDIT8, m_cstrRotY);
+	DDX_Text(pDX, IDC_EDIT12, m_cstrRotZ);
+	DDX_Text(pDX, IDC_EDIT7, m_cstrScaleX);
+	DDX_Text(pDX, IDC_EDIT9, m_cstrScaleY);
+	DDX_Text(pDX, IDC_EDIT13, m_cstrScaleZ);
 }
 
 
@@ -208,11 +226,11 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 		m_editPosZ.SetWindowTextW(strValue);
 
 		// 회전
-		strValue.Format(_T("%f"), vAngle.x);
+		strValue.Format(_T("%f"), D3DXToDegree(vAngle.x));
 		m_editRotX.SetWindowTextW(strValue);
-		strValue.Format(_T("%f"), vAngle.y);
+		strValue.Format(_T("%f"), D3DXToDegree(vAngle.y));
 		m_editRotY.SetWindowTextW(strValue);
-		strValue.Format(_T("%f"), vAngle.z);
+		strValue.Format(_T("%f"), D3DXToDegree(vAngle.z));
 		m_editRotZ.SetWindowTextW(strValue);
 
 		// 스케일

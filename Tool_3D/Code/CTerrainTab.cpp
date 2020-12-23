@@ -77,8 +77,8 @@ BEGIN_MESSAGE_MAP(CTerrainTab, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT5, &CTerrainTab::OnEnChangeEditRotY)
 	ON_EN_CHANGE(IDC_EDIT6, &CTerrainTab::OnEnChangeEditRotZ)
 	ON_EN_CHANGE(IDC_EDIT7, &CTerrainTab::OnEnChangeEditScaleX)
-	ON_EN_CHANGE(IDC_EDIT8, &CTerrainTab::OnEnChangeEditScaleX)
-	ON_EN_CHANGE(IDC_EDIT9, &CTerrainTab::OnEnChangeEditScaleX)
+	ON_EN_CHANGE(IDC_EDIT8, &CTerrainTab::OnEnChangeEditScaleY)
+	ON_EN_CHANGE(IDC_EDIT9, &CTerrainTab::OnEnChangeEditScaleZ)
 	ON_EN_CHANGE(IDC_EDIT11, &CTerrainTab::OnEnChangeEditWidth)
 	ON_EN_CHANGE(IDC_EDIT12, &CTerrainTab::OnEnChangeEditDepth)
 	ON_EN_CHANGE(IDC_EDIT14, &CTerrainTab::OnEnChangeEditVtxNumWidth)
@@ -148,7 +148,7 @@ void CTerrainTab::OnEnChangeEditPosZ()
 
 	if (pTerrain) {
 		_float fPosZ = static_cast<_float>(_tstof(m_cstrPosZ));
-		pTerrain->GetTransform()->SetPosX(fPosZ);
+		pTerrain->GetTransform()->SetPosZ(fPosZ);
 	}
 	UpdateData(FALSE);
 }
@@ -189,7 +189,7 @@ void CTerrainTab::OnEnChangeEditRotY()
 
 	if (pTerrain) {
 		_float fAngleY = D3DXToRadian(static_cast<_float>(_tstof(m_cstrAngleY)));
-		pTerrain->GetTransform()->SetAngleX(fAngleY);
+		pTerrain->GetTransform()->SetAngleY(fAngleY);
 	}
 
 	UpdateData(FALSE);
@@ -210,7 +210,7 @@ void CTerrainTab::OnEnChangeEditRotZ()
 
 	if (pTerrain) {
 		_float fAngleZ = D3DXToRadian(static_cast<_float>(_tstof(m_cstrAngleZ)));
-		pTerrain->GetTransform()->SetAngleX(fAngleZ);
+		pTerrain->GetTransform()->SetAngleZ(fAngleZ);
 	}
 
 	UpdateData(FALSE);
@@ -252,7 +252,7 @@ void CTerrainTab::OnEnChangeEditScaleY()
 
 	if (pTerrain) {
 		_float fScaleY = static_cast<_float>(_tstof(m_cstrScaleY));
-		pTerrain->GetTransform()->SetScaleX(fScaleY);
+		pTerrain->GetTransform()->SetScaleY(fScaleY);
 	}
 
 	UpdateData(FALSE);
@@ -273,7 +273,7 @@ void CTerrainTab::OnEnChangeEditScaleZ()
 
 	if (pTerrain) {
 		_float fScaleZ = static_cast<_float>(_tstof(m_cstrScaleZ));
-		pTerrain->GetTransform()->SetScaleX(fScaleZ);
+		pTerrain->GetTransform()->SetScaleZ(fScaleZ);
 	}
 
 	UpdateData(FALSE);
@@ -490,5 +490,5 @@ void CTerrainTab::OnLbnSelchangeListHeightMap()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CString szHeightMapTag;
 	m_lbxHeightMap.GetText(m_lbxHeightMap.GetCurSel(), szHeightMapTag);
-	g_pTool3D_Kernel->GetEditScene()->GetTerrain()->SetHeightMapFileName(szHeightMapTag + L".bmp");
+	g_pTool3D_Kernel->GetEditScene()->GetTerrain()->SetHeightMapFileName(L"../../Resource/Texture/Terrain/" + szHeightMapTag + L".bmp");
 }

@@ -193,7 +193,7 @@ void CInputProcessor_Navi::PickTerrain()
 			auto& rNaviVertices = m_pEditScene->GetNaviMesh()->GetNaviVertices();
 
 			for (auto& rPos : rNaviVertices) {
-				if (Engine::IsPointAndSphereCollided(vNearestPos, 5.f, rPos)) {
+				if (Engine::IsPointAndSphereCollided(vNearestPos, m_pEditScene->GetNaviMeshVtxMover()->GetGroupRange(), rPos)) {
 					vNearestPos = rPos;
 					break;
 				}
@@ -231,7 +231,7 @@ void CInputProcessor_Navi::PickVertex()
 		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
 
 		for (_int i = 0; i < iVecSize; ++i) {
-			if (Engine::IsRayAndSphereCollided(stPickingRayInfo, 2.f, vecNaviVertices[i])) {
+			if (Engine::IsRayAndSphereCollided(stPickingRayInfo, pNaviMeshVtxMover->GetGroupRange(), vecNaviVertices[i])) {
 				if (vecCollidedSphereIndex.empty()) {
 					vecCollidedSphereIndex.emplace_back(i);
 				}
@@ -253,9 +253,16 @@ void CInputProcessor_Navi::PickVertex()
 			pNaviMeshVtxMover->SelectVertex(pNaviMesh, iTriangleIndex, iVertexIndex);
 			pNaviMeshVtxMover->ActivateMoverGizmo(true);
 			m_pNaviMeshTab->m_btnCombine.EnableWindow(TRUE);
+
+			//// Position Edit Ctrl 활성화
+			//m_pNaviMeshTab->m_editPosX.EnableWindow(TRUE);
+			//m_pNaviMeshTab->m_editPosY.EnableWindow(TRUE);
+			//m_pNaviMeshTab->m_editPosZ.EnableWindow(TRUE);
+
+			//// 그룹 체크 박스 활성화
+			//m_pNaviMeshTab->m_chkGroup.EnableWindow(TRUE);
 		}
 	}
-
 
 	if(m_pNaviMeshTab->m_btnCancel.IsWindowEnabled()) {
 		// 컴바인 버튼을 누른 상태
@@ -272,7 +279,7 @@ void CInputProcessor_Navi::PickVertex()
 		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
 
 		for (_int i = 0; i < iVecSize; ++i) {
-			if (Engine::IsRayAndSphereCollided(stPickingRayInfo, 2.f, vecNaviVertices[i])) {
+			if (Engine::IsRayAndSphereCollided(stPickingRayInfo, pNaviMeshVtxMover->GetGroupRange(), vecNaviVertices[i])) {
 				if (vecCollidedSphereIndex.empty()) {
 					vecCollidedSphereIndex.emplace_back(i);
 				}
@@ -396,7 +403,7 @@ void CInputProcessor_Navi::PickTriangle()
 		m_pNaviMeshTab->m_editPosY.EnableWindow(FALSE);
 		m_pNaviMeshTab->m_editPosZ.EnableWindow(FALSE);
 		m_pNaviMeshTab->m_chkGroup.EnableWindow(FALSE);
-		m_pNaviMeshTab->m_editGroupRange.EnableWindow(FALSE);
+		//m_pNaviMeshTab->m_editGroupRange.EnableWindow(FALSE);
 
 		// 삼각형 삭제 버튼을 활성화한다.
 		m_pNaviMeshTab->m_btnDelete.EnableWindow(TRUE);

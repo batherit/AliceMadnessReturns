@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "NaviMesh.h"
-#include "NaviMesh.h"
+#include "EditScene.h"
+#include "NaviMeshVtxMover.h"
 
 
 CNaviMesh::CNaviMesh(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -76,13 +77,14 @@ void CNaviMesh::Render_Object(void)
 	pLine->Release();
 
 	// 정점 구 그리기. (정점 이동자에 있어야 할 것 같다.)
+	_float fRadius = g_pTool3D_Kernel->GetEditScene()->GetNaviMeshVtxMover()->GetGroupRange();
 	_matrix matTrans;
 	_matrix matScale;
+	D3DXMatrixScaling(&matScale, fRadius, fRadius, fRadius);
 	for (auto& rPos : vecVertices) {
-		D3DXMatrixIdentity(&matTrans);
 		D3DXMatrixTranslation(&matTrans, rPos.x, rPos.y, rPos.z);
 
-		m_pGraphicDev->SetTransform(D3DTS_WORLD, &matTrans);
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, &(matScale * matTrans));
 		m_pGraphicDev->SetTexture(0, NULL);
 		Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"Buffer_SphereCol");
 	}

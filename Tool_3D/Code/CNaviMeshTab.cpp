@@ -20,10 +20,11 @@ IMPLEMENT_DYNAMIC(CNaviMeshTab, CDialogEx)
 CNaviMeshTab::CNaviMeshTab(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_NAVI_MESH_TAB, pParent)
 	, m_bIsGrouping(FALSE)
-	, m_fGroupRange(0)
+//	, m_fGroupRange(0)
 	//, m_chkNaviMagnet(FALSE)
 	, m_bIsNaviMagnet(FALSE)
 	, m_iTriangleTagIndex(0)
+	, m_cstrVtxValidRange(_T(""))
 {
 }
 
@@ -46,7 +47,7 @@ void CNaviMeshTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON4, m_btnCancel);
 	DDX_Check(pDX, IDC_CHECK2, m_bIsGrouping);
 	DDX_Control(pDX, IDC_CHECK2, m_chkGroup);
-	DDX_Text(pDX, IDC_EDIT5, m_fGroupRange);
+	//	DDX_Text(pDX, IDC_EDIT5, m_fGroupRange);
 	DDX_Control(pDX, IDC_EDIT5, m_editGroupRange);
 	DDX_Control(pDX, IDC_RADIO3, m_rbtnNavi);
 	DDX_Control(pDX, IDC_RADIO4, m_rbtnVertex);
@@ -55,6 +56,7 @@ void CNaviMeshTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK1, m_bIsNaviMagnet);
 	DDX_Text(pDX, IDC_EDIT6, m_iTriangleTagIndex);
 	DDX_Control(pDX, IDC_EDIT6, m_editTriangleTagIndex);
+	DDX_Text(pDX, IDC_EDIT5, m_cstrVtxValidRange);
 }
 
 
@@ -280,12 +282,12 @@ void CNaviMeshTab::OnBnClickedCheckGroup()
 
 	if (m_chkGroup.GetCheck()) {
 		// 활성화된 상태라면,
-		m_editGroupRange.EnableWindow(TRUE);
-		m_fGroupRange = pNaviMeshVtxCtrl->GetGroupRange();
+		//m_editGroupRange.EnableWindow(TRUE);
+		m_cstrVtxValidRange.Format(L"%f", pNaviMeshVtxCtrl->GetGroupRange());
 		pNaviMeshVtxCtrl->FormGroup();
 	}
 	else {
-		m_editGroupRange.EnableWindow(FALSE);
+		//m_editGroupRange.EnableWindow(FALSE);
 		pNaviMeshVtxCtrl->ReleaseGroup();
 	}
 	
@@ -306,7 +308,7 @@ void CNaviMeshTab::OnEnChangeEditGroupRange()
 	UpdateData(TRUE);
 
 	// 새로 지정된 그룹 범위를 이동자에 세팅하고, 새로이 그룹을 지정합니다.
-	pNaviMeshVtxMover->SetGroupRange(m_fGroupRange);
+	pNaviMeshVtxMover->SetGroupRange(static_cast<_float>(_tstof(m_cstrVtxValidRange)));
 	pNaviMeshVtxMover->FormGroup();
 
 	UpdateData(FALSE);
@@ -360,8 +362,15 @@ void CNaviMeshTab::OnBnClickedRadioVertex()
 
 	UpdateData(FALSE);
 
-	if(pNaviMeshVtxMover->GetVertexIndex() != -1)
+	if (pNaviMeshVtxMover->GetVertexIndex() != -1) {
 		pNaviMeshVtxMover->ActivateMoverGizmo(true);
+		m_editPosX.EnableWindow(TRUE);
+		m_editPosY.EnableWindow(TRUE);
+		m_editPosZ.EnableWindow(TRUE);
+		m_chkGroup.EnableWindow(TRUE);
+	//	m_editGroupRange.EnableWindow(TRUE);
+	}
+		
 	pNaviMesh->ReleaseMarkedTriangle();
 	m_btnDelete.EnableWindow(FALSE);
 	m_chkGroup.EnableWindow(TRUE);
@@ -516,7 +525,7 @@ void CNaviMeshTab::OnNMClickTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		m_editPosY.EnableWindow(FALSE);
 		m_editPosZ.EnableWindow(FALSE);
 		m_chkGroup.EnableWindow(FALSE);
-		m_editGroupRange.EnableWindow(FALSE);
+		//m_editGroupRange.EnableWindow(FALSE);
 
 		// 삼각형 삭제 버튼을 활성화한다.
 		m_btnDelete.EnableWindow(TRUE);

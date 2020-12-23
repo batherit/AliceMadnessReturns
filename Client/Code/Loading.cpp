@@ -232,13 +232,13 @@ _uint CLoading::Loading_ForStage(void)
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
 	//Engine::Ready_Proto(L"Collider_Stone", pComponent);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Sword",
-		Engine::TYPE_STATIC,
-		L"../../Resource/Mesh/StaticMesh/Sword/",
-		L"Sword.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Sword",
+	//	Engine::TYPE_STATIC,
+	//	L"../../Resource/Mesh/StaticMesh/Sword/",
+	//	L"Sword.X"),
+	//	E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	RESOURCE_STAGE,
@@ -310,6 +310,128 @@ _uint CLoading::Loading_ForStage(void)
 		L"Curb_Section.X"),
 		E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Domino",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Domino/",
+		L"Domino.X"),
+		E_FAIL);
+
+	// 돌과 나무들
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"DecoMushroom_AlienGroup",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"DecoMushroom_AlienGroup.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"RockPillarARockPillarA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"RockPillarARockPillarA.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"GiantMossRockA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"GiantMossRockA.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MossRockA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"MossRockA.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MossRockB",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"MossRockB.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"GiantOrientalRock_Wall",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"GiantOrientalRock_Wall.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"RockPillarA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"RockPillarA.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"RockPillarB",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"RockPillarB.X"),
+		E_FAIL);
+
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"RockPillarB2",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"RockPillarB2.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"RockPillarC",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"RockPillarC.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"TearsRock",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"TearsRock.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"GloryTree_Base",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"GloryTree_Base.X"),
+		E_FAIL);
+
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MossRock_Walkable",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"MossRock_Walkable.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Keyhole_Glory",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
+		L"Keyhole_Glory.X"),
+		E_FAIL);
 	
 	lstrcpy(m_szLoading, L"Loading Complete!!!");
 

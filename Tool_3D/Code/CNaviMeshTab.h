@@ -70,7 +70,7 @@ public:
 	BOOL m_bIsGrouping;
 	
 	// 그룹
-	_float m_fGroupRange;
+	//_float m_fGroupRange;
 	CEdit m_editGroupRange;
 	
 	
@@ -84,4 +84,5 @@ public:
 	afx_msg void OnEnChangeEditTriangleTagIndex();
 	_int m_iTriangleTagIndex;
 	CEdit m_editTriangleTagIndex;
+	CString m_cstrVtxValidRange;
 };

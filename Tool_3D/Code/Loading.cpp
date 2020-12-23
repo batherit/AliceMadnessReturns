@@ -451,6 +451,7 @@ _uint CLoading::Loading_ForStage(void)
 	m_pMapTab->m_treeObjectList.InsertItem(L"Keyhole_Glory", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Keyhole_Glory");
 
+	// ¾Ù¸®½º
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"AliceW",

@@ -155,7 +155,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pMap, E_FAIL);
 	pMap->LoadMap(
 		pLayer,
-		L"../../Resource/Terrain/Terrain.trr",
+		nullptr,
 		L"../../Resource/Navi/NaviTest.navi",
 		L"../../Resource/Map/Map.map"
 	);

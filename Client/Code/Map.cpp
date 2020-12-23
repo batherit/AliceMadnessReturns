@@ -27,10 +27,6 @@ HRESULT CMap::Ready_Object(void)
 	m_pNaviMesh = Engine::CNaviMesh::Create(m_pGraphicDev);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"COM_NAVIMESH", m_pNaviMesh);
 
-	m_pTerrain = CTerrain::Create(m_pGraphicDev);
-
-	AddChild(m_pTerrain);
-
 	return S_OK;
 }
 
@@ -77,6 +73,11 @@ void CMap::LoadTerrain( const _tchar * _pFilePath)
 	HANDLE hFile = CreateFile(_pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
+
+	ReleaseChild(m_pTerrain);
+	Engine::Safe_Release(m_pTerrain);
+	m_pTerrain = CTerrain::Create(m_pGraphicDev);
+	AddChild(m_pTerrain);
 
 	m_pTerrain->LoadInfo(hFile);
 

@@ -402,6 +402,9 @@ void CNaviMeshVtxMover::FormGroup()
 	// 기존 그룹을 해제한다.
 	ReleaseGroup();
 
+	if (!m_pNaviMesh)
+		return;
+
 	auto& rVertices = m_pNaviMesh->GetNaviVertices();
 
 	_int iVerticesSize = static_cast<_int>(rVertices.size());

@@ -177,7 +177,11 @@ void CMapTab::OnNMClickTreeObjectToAdd(NMHDR *pNMHDR, LRESULT *pResult)
 	m_btnAdd.EnableWindow(TRUE);
 	m_btnDelete.EnableWindow(FALSE);
 
+	CGizmo* pGizmo = g_pTool3D_Kernel->GetEditScene()->GetGizmo();
+	pGizmo->SetObject(nullptr);
+	pGizmo->ActivateGizmo(false);
 	m_pSelectedStaticObject = nullptr;
+
 	m_iSelectedStaticObjectIndex = -1;
 
 	*pResult = 0;

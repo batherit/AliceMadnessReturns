@@ -261,6 +261,9 @@ void CInputProcessor_Navi::PickVertex()
 
 			//// 그룹 체크 박스 활성화
 			//m_pNaviMeshTab->m_chkGroup.EnableWindow(TRUE);
+
+			if (m_pNaviMeshTab->m_chkGroup.GetCheck())
+				pNaviMeshVtxMover->FormGroup();
 		}
 	}
 

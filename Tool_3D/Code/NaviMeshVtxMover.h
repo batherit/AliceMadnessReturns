@@ -82,7 +82,7 @@ private:
 	CNaviMesh* m_pNaviMesh = nullptr;
 	_int m_iTriangleIndex = -1;
 	_int m_iVertexIndex = -1;
-	_float m_fGroupRange = 3.f;
+	_float m_fGroupRange = 1.f;
 
 	// 이동자를 렌더링 하기 위한 렌더러
 	Engine::CRenderer* m_pRenderer = nullptr;

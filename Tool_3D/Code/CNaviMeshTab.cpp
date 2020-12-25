@@ -24,7 +24,7 @@ CNaviMeshTab::CNaviMeshTab(CWnd* pParent /*=nullptr*/)
 	//, m_chkNaviMagnet(FALSE)
 	, m_bIsNaviMagnet(FALSE)
 	, m_iTriangleTagIndex(0)
-	, m_cstrVtxValidRange(_T(""))
+	, m_cstrVtxValidRange(_T("1"))
 {
 }
 
@@ -333,7 +333,8 @@ void CNaviMeshTab::OnBnClickedRadioNavi()
 	pNaviMeshVtxMover->ActivateMoverGizmo(false);
 	pNaviMesh->ReleaseMarkedTriangle();
 	m_btnDelete.EnableWindow(FALSE);
-	m_chkGroup.SetCheck(FALSE);
+	//m_chkGroup.SetCheck(FALSE);
+	//pNaviMeshVtxMover->ReleaseGroup();
 	m_chkGroup.EnableWindow(FALSE);
 	m_editTriangleTagIndex.EnableWindow(FALSE);
 }
@@ -362,7 +363,7 @@ void CNaviMeshTab::OnBnClickedRadioVertex()
 
 	UpdateData(FALSE);
 
-	if (pNaviMeshVtxMover->GetVertexIndex() != -1) {
+	if (pNaviMesh->GetMarkedTriangleIndex() != -1 && pNaviMeshVtxMover->GetVertexIndex() != -1) {
 		pNaviMeshVtxMover->ActivateMoverGizmo(true);
 		m_editPosX.EnableWindow(TRUE);
 		m_editPosY.EnableWindow(TRUE);
@@ -393,7 +394,8 @@ void CNaviMeshTab::OnBnClickedRadioTriangle()
 	UpdateData(FALSE);
 
 	pNaviMeshVtxMover->ActivateMoverGizmo(false);
-	m_chkGroup.SetCheck(FALSE);
+	//m_chkGroup.SetCheck(FALSE);
+	//pNaviMeshVtxMover->ReleaseGroup();
 	m_chkGroup.EnableWindow(FALSE);
 }
 

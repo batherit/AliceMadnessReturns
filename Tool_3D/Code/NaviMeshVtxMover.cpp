@@ -406,9 +406,9 @@ void CNaviMeshVtxMover::FormGroup()
 		return;
 
 	auto& rVertices = m_pNaviMesh->GetNaviVertices();
-
 	_int iVerticesSize = static_cast<_int>(rVertices.size());
 	_int iTriangleSize = iVerticesSize / 3;
+
 	_vec3 vVtxPos = m_pNaviMesh->GetTriangleVertexPosition(m_iTriangleIndex, m_iVertexIndex);
 	_vec3 vExtractedVtxPos;
 

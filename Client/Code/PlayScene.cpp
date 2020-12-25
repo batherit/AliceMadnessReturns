@@ -167,8 +167,6 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraMgr", pCameraMgr), E_FAIL);
 
 	// 카메라 생성
-	//m_pCamera = CDynamicCamera::Create(m_pGraphicDev);		// 동적 카메라
-	//m_pCamera = CStaticCamera::Create(m_pGraphicDev);			// 정적 카메라
 	m_pCamera = CStaticCamera::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
 	//m_pCamera->SetParent(m_pPlayer);
@@ -179,7 +177,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pPlayer = CAliceW::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
-	m_pPlayer->GetTransform()->Translate(_vec3(15.f, 55.f, 10.f));
+	m_pPlayer->GetTransform()->Translate(_vec3(0.f, 55.f, 0.f));
 
 	// 플레이어 카메라 컨트롤러 생성
 	Engine::CCameraController* pCameraController = CCameraController_Player::Create(m_pGraphicDev);

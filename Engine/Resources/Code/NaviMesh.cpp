@@ -80,13 +80,17 @@ _vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3 * pTarget
 	if (*pCurrentPos == *pTargetPos)
 		return *pTargetPos;
 
-	_vec3	vEndPos = *pTargetPos;
-
+	_vec3 vEndPos = *pTargetPos;
+	_vec3 vHitPos;
 	if (CCell::INSIDE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
-		_vec3 vHitPos;
-		if (m_vecCell[m_iIndex]->IsCollided(*pCurrentPos, *pTargetPos, &vHitPos)) {
-			vEndPos.y = vHitPos.y;//m_vecCell[m_iIndex]->GetHeight(vEndPos);
-			return vEndPos;
+		switch (m_vecCell[m_iIndex]->GetTagIndex()) {
+		case CCell::TYPE_NORMAL:
+		case CCell::TYPE_SLIDE:
+			if (m_vecCell[m_iIndex]->IsCollided(*pCurrentPos, *pTargetPos, &vHitPos)) {
+				vEndPos.y = vHitPos.y;
+				return vEndPos;
+			}
+			break;
 		}
 	}
 	return *pTargetPos;
@@ -150,9 +154,9 @@ HRESULT CNaviMesh::AddCell(const _vec3 & _vV1, const _vec3 & _vV2, const _vec3 &
 	CCell*		pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vV1, &_vV2, &_vV3, _iTagIndex);
 	NULL_CHECK_RETURN(pCell, E_FAIL);
 
-	if (_iTagIndex == 0)
+	if (_iTagIndex == CCell::TYPE_NORMAL || _iTagIndex == CCell::TYPE_SLIDE)
 		m_vecCell.push_back(pCell);
-	else
+	else if(_iTagIndex == CCell::TYPE_WALL)
 		m_vecSlidingCell.push_back(pCell);
 	return S_OK;
 }

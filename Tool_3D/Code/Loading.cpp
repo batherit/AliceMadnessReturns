@@ -451,6 +451,36 @@ _uint CLoading::Loading_ForStage(void)
 	m_pMapTab->m_treeObjectList.InsertItem(L"Keyhole_Glory", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Keyhole_Glory");
 
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"DollSlide_CurveA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Slide/",
+		L"DollSlide_CurveA.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"DollSlide_CurveA", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_CurveA");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"DollSlide_CurveD",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Slide/",
+		L"DollSlide_CurveD.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"DollSlide_CurveD", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_CurveD");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"DollSlide_StraightA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Slide/",
+		L"DollSlide_StraightA.X"),
+		E_FAIL);
+	m_pMapTab->m_treeObjectList.InsertItem(L"DollSlide_StraightA", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_StraightA");
+
 	// ¾Ù¸®½º
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

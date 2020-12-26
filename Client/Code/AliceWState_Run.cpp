@@ -4,6 +4,7 @@
 #include "AliceWState_Attack.h"
 #include "AliceWState_Jump.h"
 #include "AliceWState_Death.h"
+#include "AliceWState_Slide.h"
 #include "StateMgr.h"
 #include "AliceW.h"
 #include "Map.h"
@@ -34,7 +35,14 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 	_vec3 vDir;
 	_vec3 vSettedPos = m_rOwner.GetTransform()->GetPos();
 	// Run => Death, Jump, Idle, Attack
-	if (m_rOwner.IsJumpOn(_fDeltaTime)) {
+	if (m_rOwner.IsSliding(_fDeltaTime)) {
+		if (m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
+			_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
+			m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
+		}
+		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Slide(m_rOwner));
+	}
+	else if (m_rOwner.IsJumpOn(_fDeltaTime)) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Jump(m_rOwner));
 	}
 	else if (m_rOwner.IsFalling(_fDeltaTime)) {

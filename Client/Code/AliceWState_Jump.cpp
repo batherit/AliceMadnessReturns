@@ -4,6 +4,7 @@
 #include "AliceWState_Run.h"
 #include "AliceWState_Attack.h"
 #include "AliceWState_Death.h"
+#include "AliceWState_Slide.h"
 #include "StateMgr.h"
 #include "AliceW.h"
 #include "Map.h"
@@ -193,7 +194,14 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 	case STEP_LAND:
 		if (m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()) {
 			m_rOwner.GetPhysics()->SetGravity(9.8f * 3.f);
-			if (m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
+			if (m_rOwner.IsSliding(_fDeltaTime)) {
+				if (m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
+					_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
+					m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
+				}
+				m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Slide(m_rOwner));
+			}
+			else if (m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
 				_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
 				m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
 				m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Run(m_rOwner));

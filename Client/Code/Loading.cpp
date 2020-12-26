@@ -432,6 +432,30 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"Keyhole_Glory.X"),
 		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"DollSlide_CurveA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Slide/",
+		L"DollSlide_CurveA.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"DollSlide_CurveD",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Slide/",
+		L"DollSlide_CurveD.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"DollSlide_StraightA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Slide/",
+		L"DollSlide_StraightA.X"),
+		E_FAIL);
 	
 	lstrcpy(m_szLoading, L"Loading Complete!!!");
 

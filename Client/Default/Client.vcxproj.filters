@@ -219,6 +219,9 @@
     <ClInclude Include="..\Code\StateMgr.h">
       <Filter>04. Manager\StateMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_Slide.h">
+      <Filter>03. State\AliceW</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -310,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\StateMgr.cpp">
       <Filter>04. Manager\StateMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_Slide.cpp">
+      <Filter>03. State\AliceW</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

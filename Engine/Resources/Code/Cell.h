@@ -10,6 +10,7 @@ BEGIN(Engine)
 class ENGINE_DLL CCell : public CBase
 {
 public:
+	enum E_CELL_TYPE { TYPE_NORMAL, TYPE_WALL, TYPE_SLIDE, TYPE_END };
 	enum POINT {	POINT_A, POINT_B,POINT_C, POINT_END};
 	enum LINE  { LINE_AB, LINE_BC, LINE_CA, LINE_END };
 	enum NEIGHBOR {	NEIGHBOR_AB, NEIGHBOR_BC, NEIGHBOR_CA, NEIGHBOR_END };
@@ -23,11 +24,12 @@ public:
 	const _vec3*	Get_Point(POINT eType) const { return &m_vPoint[eType]; }
 	CCell*			Get_Neighbor(NEIGHBOR eType) const { return m_pNeighbor[eType]; }
 	void			Set_Neighbor(NEIGHBOR eType, CCell* pNeighbor) { m_pNeighbor[eType] = pNeighbor; }
-	const _int*	Get_Index(void) { return &m_iIndex; }
+	const _int*		Get_Index(void) { return &m_iIndex; }
 	CLine*			GetLine(const CCell::LINE& _eLine) const { return m_pLine[_eLine]; }
 	_vec3			GetPosInCell(const _vec3& _vPos);
 	_float			GetHeight(const _vec3& _vPos);
 	_int			GetTagIndex() const { return m_iTagIndex; }
+	_vec3			GetNormal() const { return m_vNormal; }
 	_bool			IsPosInCell(const _vec3& _vPos);
 	_bool			IsCollided(const _vec3& _vFromPos, const _vec3& _vToPos, _vec3* _pHitPos = nullptr);
 

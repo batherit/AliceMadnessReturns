@@ -36,6 +36,7 @@ void CAliceWState_Jump::OnLoaded(void)
 	m_eJumpType = TYPE_FORWARD;
 	m_rOwner.SetLanded(false);
 	m_pNaviMesh = m_rOwner.GetMap()->GetNaviMesh();
+	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.95f);
 }
 
 int CAliceWState_Jump::Update(const _float& _fDeltaTime)
@@ -218,6 +219,7 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 
 void CAliceWState_Jump::OnExited(void)
 {
+	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(1.f);
 }
 
 void CAliceWState_Jump::Free(void)

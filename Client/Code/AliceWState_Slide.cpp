@@ -34,12 +34,17 @@ int CAliceWState_Slide::Update(const _float& _fDeltaTime)
 
 	_vec3 vDir;
 	_vec3 vSettedPos = m_rOwner.GetTransform()->GetPos();
-	if (m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
-		_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
-		m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
+	if (m_rOwner.IsSliding(_fDeltaTime)) {
+		_vec3 vCellNormalXZ = m_rOwner.GetMap()->GetNaviMesh()->GetCurCell()->GetNormal();
+		vCellNormalXZ.y = 0.f;
+		vCellNormalXZ *= 20.f;
+		m_rOwner.GetPhysics()->AddVelocityXZ(_vec2(vCellNormalXZ.x, vCellNormalXZ.z) * _fDeltaTime);
+		if (m_rOwner.IsMoving(_fDeltaTime, &vDir)) {
+			m_rOwner.GetPhysics()->AddVelocityXZ(_vec2(vDir.x, vDir.z) * _fDeltaTime);
+		}
 	}
 	// Slide => Death, Jump, Idle, Attack
-	if (!m_rOwner.IsSliding(_fDeltaTime) && m_rOwner.IsFalling(_fDeltaTime)) {
+	else if (m_rOwner.IsFalling(_fDeltaTime)) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Jump(m_rOwner, false));
 	}
 

@@ -35,14 +35,13 @@ public:
 	void SetDead(const _bool& _bIsDead) { m_bIsDead = _bIsDead; }
 	void SetLanded(const _bool& _bIsLanded) { m_bIsLanded = _bIsLanded; }
 
+	_bool IsMoving(const _float& _fDeltaTime, _vec3* _pDir = nullptr);
 	_bool IsAttackOn(const _float& _fDeltaTime);
 	_bool IsJumpOn(const _float& _fDeltaTime);
 	_bool IsSliding(const _float& _fDeltaTime);
 	_bool IsFloatingOn(const _float& _fDeltaTime);
 	_bool IsFalling(const _float& _fDeltaTime);
 	_bool IsRunOn(const _float&, _vec3* _pDir = nullptr);
-	//_bool ProcessMoveXZ(const _float& _fDeltaTime);
-	//_bool ProcessMoveY(const _float& _fDeltaTime);
 	_bool IsDead() const { return m_bIsDead; }
 	_bool IsLanded() const { return m_bIsLanded; }
 	CMap* GetMap() const { return m_pMap; }

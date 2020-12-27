@@ -34,11 +34,14 @@ public:
 			m_fMaxSpeed = 0.f;
 		Clamp(&m_fSpeed, 0.f, m_fMaxSpeed);
 	}
-	void SetDirection(_vec3 _vDir) { m_vDir = _vDir; D3DXVec3Normalize(&m_vDir, &m_vDir); }
-	void SetVelocity(_vec3 _vVelocity) { 
+	void SetDirection(const _vec3& _vDir) { m_vDir = _vDir; D3DXVec3Normalize(&m_vDir, &m_vDir); }
+	void SetVelocity(const _vec3& _vVelocity) { 
 		m_fSpeed = D3DXVec3Length(&_vVelocity); 
 		if(m_fSpeed > 0.f)
 			D3DXVec3Normalize(&m_vDir, &_vVelocity); 
+	}
+	void AddVelocity(const _vec3& _vDeltaVelocity) {
+		SetVelocity(GetVelocity() + _vDeltaVelocity);
 	}
 	void SetMaxTurnRateInRadian(_float _fMaxTurnRate) { m_fMaxTurnRate = _fMaxTurnRate; }
 	void SetMaxTurnRateInDegree(_float _fMaxTurnRate) { m_fMaxTurnRate = D3DXToRadian(_fMaxTurnRate); }
@@ -59,7 +62,10 @@ public:
 		_float fVelocityY = GetVelocity().y;
 		SetVelocity(_vec3(_vVelocityXZ.x, fVelocityY, _vVelocityXZ.y));
 	}
-
+	void AddVelocityXZ(const _vec2& _vDeltaVelocityXZ) {
+		_vec3 vVelocity = GetVelocity();
+		SetVelocity(_vec3(vVelocity.x + _vDeltaVelocityXZ.x, vVelocity.y, vVelocity.z + _vDeltaVelocityXZ.y));
+	}
 	void SetVelocityY(const _float& _fVelocityY) {
 		_vec3 fVelocity = GetVelocity();
 		SetVelocity(_vec3(fVelocity.x, _fVelocityY, fVelocity.z));

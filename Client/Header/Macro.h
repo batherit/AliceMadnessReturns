@@ -105,6 +105,7 @@ namespace Client
 
 #define ALICE_RUN_SPEED 4.5f
 #define ALICE_JUMP_SPEED 15.f
+#define PHYSICS_MIN_VEL_Y	-400.f
 
 // 키입력 관련
 //#define	KM_LEFT		0x00000001

@@ -191,6 +191,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Code\CameraController_Sliding.h" />
     <ClInclude Include="..\Code\DynamicObject.h" />
     <ClInclude Include="..\Code\Map.h" />
     <ClInclude Include="..\Code\SphereRenderer.h">
@@ -263,6 +264,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\CameraController_Sliding.cpp" />
     <ClCompile Include="..\Code\DynamicObject.cpp" />
     <ClCompile Include="..\Code\Map.cpp" />
     <ClCompile Include="..\Code\SphereRenderer.cpp">

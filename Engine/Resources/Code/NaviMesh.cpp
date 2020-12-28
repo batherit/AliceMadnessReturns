@@ -1,4 +1,5 @@
 #include "NaviMesh.h"
+#include "Physics.h"
 USING(Engine)
 
 Engine::CNaviMesh::CNaviMesh(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -75,24 +76,61 @@ void CNaviMesh::Render_NaviMeshes(void)
 		iter->Render_Cell();
 }
 
-_vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3 * pTargetPos)
+_vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3 * pTargetPos, CPhysics* _pPhysics)
 {
 	if (*pCurrentPos == *pTargetPos)
 		return *pTargetPos;
 
 	_vec3 vEndPos = *pTargetPos;
 	_vec3 vHitPos;
-	if (CCell::INSIDE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
-		switch (m_vecCell[m_iIndex]->GetTagIndex()) {
-		case CCell::TYPE_NORMAL:
-		case CCell::TYPE_SLIDE:
+
+	switch (m_vecCell[m_iIndex]->GetTagIndex())
+	{
+	case CCell::TYPE_NORMAL:
+		if (CCell::INSIDE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
 			if (m_vecCell[m_iIndex]->IsCollided(*pCurrentPos, *pTargetPos, &vHitPos)) {
 				vEndPos.y = vHitPos.y;
 				return vEndPos;
 			}
-			break;
 		}
+		break;
+	case CCell::TYPE_SLIDE:
+		if (CCell::INSIDE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
+			//if (m_vecCell[m_iIndex]->IsCollided(*pCurrentPos, *pTargetPos, &vHitPos)) {
+			vEndPos.y = m_vecCell[m_iIndex]->GetHeight(vEndPos);
+
+			//if (_pPhysics) {
+			//	_vec3 vTemp = _vec3((m_vecCell[m_iIndex]->GetCenterPoint().x - pCurrentPos->x) * 0.05f /*+ vVel.x * 0.02f*/, 0.f, (m_vecCell[m_iIndex]->GetCenterPoint().z - pCurrentPos->z)  * 0.05f /*+ vVel.z* 0.02f*/);
+			//	_pPhysics->AddVelocityXZ(_vec2(vTemp.x, vTemp.z));
+			//}
+
+			return vEndPos;
+			//}
+			//else
+			//	int a = 10;
+		}
+		else {
+			_vec3 vCorrectedPos;
+			vCorrectedPos = m_vecCell[m_iIndex]->GetPosInCell(vEndPos);
+			vCorrectedPos.y = m_vecCell[m_iIndex]->GetHeight(vCorrectedPos);
+			if (_pPhysics) {
+				_vec3 vTemp;
+				vTemp = GetReflectionVector(_pPhysics->GetVelocity() ,*D3DXVec3Normalize(&vTemp, &_vec3(vCorrectedPos.x - vEndPos.x, 0.f, vCorrectedPos.z - vEndPos.z)), 1.1f);
+				//_vec3 vVel = _pPhysics->GetVelocity();
+				//vTemp = _vec3((m_vecCell[m_iIndex]->GetCenterPoint().x - pCurrentPos->x) /*+ vVel.x * 0.02f*/, 0.f, (m_vecCell[m_iIndex]->GetCenterPoint().z - pCurrentPos->z) /*+ vVel.z* 0.02f*/);
+				_pPhysics->SetVelocityXZ(_vec2(0.f, 0.f));
+				_pPhysics->AddVelocityXZ(_vec2(vTemp.x, vTemp.z));
+			}
+			return *pCurrentPos + (m_vecCell[m_iIndex]->GetCenterPoint() - *pCurrentPos) * 0.006f;
+		}
+		break;
+	case CCell::TYPE_SLIDE_EXIT:
+		break;
+	default:
+		break;
 	}
+
+
 	return *pTargetPos;
 }
 

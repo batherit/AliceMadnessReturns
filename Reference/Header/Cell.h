@@ -10,7 +10,7 @@ BEGIN(Engine)
 class ENGINE_DLL CCell : public CBase
 {
 public:
-	enum E_CELL_TYPE { TYPE_NORMAL, TYPE_WALL, TYPE_SLIDE, TYPE_END };
+	enum E_CELL_TYPE { TYPE_NORMAL, TYPE_WALL, TYPE_SLIDE, TYPE_SLIDE_EXIT, TYPE_END };
 	enum POINT {	POINT_A, POINT_B,POINT_C, POINT_END};
 	enum LINE  { LINE_AB, LINE_BC, LINE_CA, LINE_END };
 	enum NEIGHBOR {	NEIGHBOR_AB, NEIGHBOR_BC, NEIGHBOR_CA, NEIGHBOR_END };
@@ -27,6 +27,7 @@ public:
 	const _int*		Get_Index(void) { return &m_iIndex; }
 	CLine*			GetLine(const CCell::LINE& _eLine) const { return m_pLine[_eLine]; }
 	_vec3			GetPosInCell(const _vec3& _vPos);
+	_vec3			GetCenterPoint() const { return m_vCenterPoint; }
 	_float			GetHeight(const _vec3& _vPos);
 	_int			GetTagIndex() const { return m_iTagIndex; }
 	_vec3			GetNormal() const { return m_vNormal; }
@@ -46,6 +47,7 @@ public:
 
 private:
 	_vec3				m_vPoint[POINT_END];
+	_vec3				m_vCenterPoint;
 	_vec3				m_vNormal;
 	CCell*				m_pNeighbor[NEIGHBOR_END];
 	CLine*				m_pLine[LINE_END];

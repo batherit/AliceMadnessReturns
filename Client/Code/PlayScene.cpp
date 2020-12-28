@@ -11,6 +11,7 @@
 #include "StaticCamera.h"
 #include "CameraController_Player.h"
 #include "CameraController_Crowd.h"
+#include "CameraController_Sliding.h"
 #include "Map.h"
 
 CPlayScene::CPlayScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -97,11 +98,11 @@ int CPlayScene::Update(const _float& fTimeDelta)
 	}
 	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_1)) {
 		Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
-		pCameraMgr->ChangeCameraController(1, 0.1f);
+		pCameraMgr->ChangeCameraController(2, 0.1f);
 	}
 	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_2)) {
 		Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
-		pCameraMgr->ChangeCameraController(2, 0.1f);
+		pCameraMgr->ChangeCameraController(3, 0.1f);
 	}
 
 	return CScene::Update(fTimeDelta);
@@ -186,6 +187,14 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	static_cast<CCameraController_Player*>(pCameraController)->SetPlayer(m_pPlayer);
 	pCameraMgr->AddCameraController(pCameraController);
 	pCameraMgr->ChangeCameraController(0, 0.5f);
+
+	// 슬라이딩 카메라 컨트롤러 생성
+	pCameraController = CCameraController_Sliding::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pCameraController, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
+	static_cast<CCameraController_Sliding*>(pCameraController)->SetPlayer(m_pPlayer);
+	pCameraMgr->AddCameraController(pCameraController);
+	//pCameraMgr->ChangeCameraController(0, 0.5f);
 
 	// 관중형 카메라 컨트롤러 생성
 	pCameraController = CCameraController_Crowd::Create(m_pGraphicDev);

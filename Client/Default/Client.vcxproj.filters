@@ -222,6 +222,9 @@
     <ClInclude Include="..\Code\AliceWState_Slide.h">
       <Filter>03. State\AliceW</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\CameraController_Sliding.h">
+      <Filter>02. Object\07. CameraController</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -316,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_Slide.cpp">
       <Filter>03. State\AliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraController_Sliding.cpp">
+      <Filter>02. Object\07. CameraController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

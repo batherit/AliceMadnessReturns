@@ -597,12 +597,10 @@ namespace Engine
 		return D3DXVec3Dot(&vNormalizedDir1, &vNormalizedDir2) < 0.f;
 	}
 
-	//π›ªÁ∫§≈Õ
-	inline _vec3 GetReflectionVector(const _vec3& _vIncident, const _vec3& _vNormal) {	
+	//π›ªÁ∫§≈Õ (1.fπÃ∏∏ => ±º¿˝, 1.f => ΩΩ∂Û¿Ãµ˘, 1.f√ ∞˙ => π›ªÁ )
+	inline _vec3 GetReflectionVector(const _vec3& _vIncident, const _vec3& _vNormal, const _float& _fReflectivity = 2.f) {
 		_vec3 vNormal;
-		D3DXVec3Normalize(&vNormal, &_vNormal);
-
-		return _vIncident + 2.f * vNormal * (-D3DXVec3Dot(&_vIncident, &vNormal));
+		return _vIncident + _fReflectivity * vNormal * (-D3DXVec3Dot(&_vIncident, D3DXVec3Normalize(&vNormal, &_vNormal)));
 	}
 
 	// ±§º±∫§≈Õ

@@ -87,7 +87,7 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	
 	if (IsFalling(_fDeltaTime)) {
 		// 추락 중이라면, 적절한 셀을 찾는다.
-		_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos /*+ _vec3(0.f, -1.0f, 0.f)*/);
+		_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos + _vec3(0.f, -1.0f, 0.f));
 		if (-1 != iCellIndex) {
 			m_bIsLanded = true;
 			pNaviMesh->Set_NaviIndex(iCellIndex);
@@ -95,42 +95,17 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 		}
 	}
 	else if(IsLanded()){	
-		if (IsSliding(_fDeltaTime)) {
-			//GetPhysics()->SetVelocityY(0.f);
-			// 땅에 붙어 있는데 그 땅이 슬라이딩 통로라면 슬라이딩 속도를 적용하여 타겟포스를 재조정한다.
-			//_vec3 vSlide = D3DXVec3Dot(&pNaviMesh->GetCurCell()->GetNormal(), &(vTargetPos - vCurrentPos)) * pNaviMesh->GetCurCell()->GetNormal();
-			//vTargetPos += ((vTargetPos - vCurrentPos) - vSlide);
-			//_float fAngle = D3DXToDegree(Engine::GetRotationAngle(pNaviMesh->GetCurCell()->GetNormal(), WORLD_Y_AXIS));
-			//_float len = D3DXVec3Length(&pNaviMesh->GetCurCell()->GetNormal());
-			_float fMaxVelY = PHYSICS_MIN_VEL_Y * (1.f - Engine::Clamp(D3DXVec3Dot(&pNaviMesh->GetCurCell()->GetNormal(), &WORLD_Y_AXIS), 0.f, 1.f));
-			if (GetPhysics()->GetVelocity().y < fMaxVelY) {
-				GetPhysics()->SetVelocityY(fMaxVelY);
-			}
-		}
-		else 
+		if (!IsSliding(_fDeltaTime))  
 			GetPhysics()->SetVelocityY(0.f);
 
-		if (!pNaviMesh->GetCurCell()->IsCollided(vCurrentPos, vTargetPos + _vec3(0.f, -1.0f, 0.f))) {
-			_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos + _vec3(0.f, -1.0f, 0.f));
-			if (-1 != iCellIndex) {
-				m_bIsLanded = true;
-				pNaviMesh->Set_NaviIndex(iCellIndex);
-				//if(!IsSliding(_fDeltaTime))
-				//	GetPhysics()->SetVelocityY(0.f);
-				vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(&vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f)));
-			}
-			else {	
-				m_bIsLanded = false;
-			}
-		}
-		else {
-			vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(&vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f)));
+		vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(&vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f)), GetPhysics());
+
+		if (vSettedPos == vTargetPos + _vec3(0.f, -1.0f, 0.f)) {
+			vSettedPos += _vec3(0.f, 1.f, 0.f);
+			m_bIsLanded = false;
 		}
 	}
 	// 이동 확정
-
-	//_vec2 vVelocityXZ = _vec2((vSettedPos.x - vCurrentPos.x) / _fDeltaTime, (vSettedPos.z - vCurrentPos.z) / _fDeltaTime);
-	//GetPhysics()->SetVelocityXZ(vVelocityXZ);
 	GetTransform()->SetPos(vSettedPos);
 
 	m_pMesh->Play_Animation(_fDeltaTime);

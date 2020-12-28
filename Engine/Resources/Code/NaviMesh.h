@@ -6,7 +6,7 @@
 #include "Cell.h"
 
 BEGIN(Engine)
-
+class CPhysics;
 class ENGINE_DLL CNaviMesh : public CMesh
 {
 private:
@@ -22,7 +22,7 @@ public:
 public:
 	HRESULT		Ready_NaviMeshes(void);
 	void		Render_NaviMeshes(void);
-	_vec3		Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3* pTargetPos);
+	_vec3		Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3* pTargetPos, CPhysics* _pPhysics = nullptr);
 	_vec3		GetSlidedPos(const _vec3& _vPos);
 	//_bool		LoadNaviMeshFromFile(const _tchar* _pFilePath);
 	HRESULT		AddCell(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3, const _int& _iTagIndex = 0);

@@ -28,6 +28,7 @@ public:
 	HRESULT		AddCell(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3, const _int& _iTagIndex = 0);
 	HRESULT		Link_Cell(void);
 	CCell*		GetCurCell() const { if (m_iIndex == -1) return nullptr;  return m_vecCell[m_iIndex]; }
+	CCell*		GetCell(const _int& _iCellIndex) { if (_iCellIndex < 0 || _iCellIndex >= m_vecCell.size()) return nullptr; return m_vecCell[_iCellIndex]; }
 
 private:
 	vector<CCell*>			m_vecCell;

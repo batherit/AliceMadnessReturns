@@ -49,6 +49,8 @@ public:
 
 	// Get
 	_float GetSpeed() const { return m_fSpeed; }
+	_float GetSpeedY() const { return GetVelocity().y; }
+	_float GetSpeedXZ() const { _vec3 vVel = GetVelocity();  return D3DXVec2Length(&_vec2(vVel.x, vVel.y)); }
 	_float GetMaxSpeed() const { return m_fMaxSpeed; }
 	_vec3 GetDirection() const { return m_vDir; }
 	_vec3 GetVelocity() const { return m_fSpeed * m_vDir; }

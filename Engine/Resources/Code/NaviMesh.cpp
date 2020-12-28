@@ -192,7 +192,7 @@ HRESULT CNaviMesh::AddCell(const _vec3 & _vV1, const _vec3 & _vV2, const _vec3 &
 	CCell*		pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vV1, &_vV2, &_vV3, _iTagIndex);
 	NULL_CHECK_RETURN(pCell, E_FAIL);
 
-	if (_iTagIndex == CCell::TYPE_NORMAL || _iTagIndex == CCell::TYPE_SLIDE)
+	if (_iTagIndex == CCell::TYPE_NORMAL || _iTagIndex == CCell::TYPE_SLIDE || _iTagIndex == CCell::TYPE_SLIDE_EXIT)
 		m_vecCell.push_back(pCell);
 	else if(_iTagIndex == CCell::TYPE_WALL)
 		m_vecSlidingCell.push_back(pCell);

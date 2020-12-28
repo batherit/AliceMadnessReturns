@@ -88,7 +88,7 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	if (IsFalling(_fDeltaTime)) {
 		// 추락 중이라면, 적절한 셀을 찾는다.
 		_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos + _vec3(0.f, -1.0f, 0.f));
-		if (-1 != iCellIndex) {
+		if (-1 != iCellIndex && pNaviMesh->GetCell(iCellIndex)->GetTagIndex() != Engine::CCell::TYPE_SLIDE_EXIT) {
 			m_bIsLanded = true;
 			pNaviMesh->Set_NaviIndex(iCellIndex);
 			GetPhysics()->SetVelocityY(0.f);

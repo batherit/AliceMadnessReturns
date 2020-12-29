@@ -34,9 +34,6 @@ Engine::CGameObject::~CGameObject()
 
 _int CGameObject::Update_Object(const _float & _fDeltaTime)
 {
-	if (!IsActivated())
-		return 1;
-
 	for (auto& rChild : m_vecChildList) {
 		rChild->Update_Object(_fDeltaTime);
 	}

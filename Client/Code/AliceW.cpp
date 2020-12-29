@@ -74,8 +74,16 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 		SetDead(true);
 	}
 
-	if(1 == CGameObject::Update_Object(_fDeltaTime))
+	if (!IsActivated())
 		return 1;
+
+	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
+		return 0;
+	}
+	// 부모 먼저 렌더러에 들어가야 올바르게 자식도 transform 됨.
+	m_pRenderer->Update(_fDeltaTime);	
+
+	CGameObject::Update_Object(_fDeltaTime);
 	m_pStateMgr->Update(_fDeltaTime);
 
 	Engine::CNaviMesh* pNaviMesh = m_pMap->GetNaviMesh();
@@ -90,15 +98,16 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 		_int iCellIndex = pNaviMesh->GetNaviIndexByPos(vCurrentPos, vTargetPos + _vec3(0.f, -1.0f, 0.f));
 		if (-1 != iCellIndex && pNaviMesh->GetCell(iCellIndex)->GetTagIndex() != Engine::CCell::TYPE_SLIDE_EXIT) {
 			m_bIsLanded = true;
-			pNaviMesh->Set_NaviIndex(iCellIndex);
+			m_iCellIndex = iCellIndex;
+			//pNaviMesh->Set_NaviIndex(iCellIndex);
 			GetPhysics()->SetVelocityY(0.f);
 		}
 	}
 	else if(IsLanded()){	
-		if (!IsSliding(_fDeltaTime))  
+		if (!IsSliding(_fDeltaTime))
 			GetPhysics()->SetVelocityY(0.f);
 
-		vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(&vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f)), GetPhysics());
+		vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(m_iCellIndex, &vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f)), GetPhysics());
 
 		if (vSettedPos == vTargetPos + _vec3(0.f, -1.0f, 0.f)) {
 			vSettedPos += _vec3(0.f, 1.f, 0.f);
@@ -112,7 +121,6 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
 		return 0;
 	}
-	m_pRenderer->Update(_fDeltaTime);
 
 	return 0;
 }
@@ -239,7 +247,7 @@ _bool CAliceW::IsJumpOn(const _float & _fDeltaTime)
 
 _bool CAliceW::IsSliding(const _float & _fDeltaTime)
 {
-	return IsLanded() && GetMap()->GetNaviMesh()->GetCurCell()->GetTagIndex() == Engine::CCell::TYPE_SLIDE;
+	return IsLanded() && GetMap()->GetNaviMesh()->GetCell(m_iCellIndex)->GetTagIndex() == Engine::CCell::TYPE_SLIDE;
 }
 
 _bool CAliceW::IsFloatingOn(const _float & _fDeltaTime)

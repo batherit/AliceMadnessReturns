@@ -80,6 +80,7 @@ _bool CDynamicObject::SetRenderInfo(const _tchar * _pMeshTag, Engine::RENDERID _
 
 	// 새로운 메시로 세팅한다.
 	m_mapComponent[Engine::ID_STATIC][Engine::CDynamicMesh::GetComponentTag()] = m_pMesh;
+	m_pMesh->Set_AnimationSet(0);
 	m_pRenderer->SetRenderInfo(_eRenderID, m_pMesh);
 
 	LoadCollidersInfo();

@@ -216,6 +216,26 @@ _uint CLoading::Loading_ForStage(void)
 		L"AliceW.X"),
 		E_FAIL);
 
+	// 포크 생성
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Fork",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Fork/",
+		L"Fork.X"),
+		E_FAIL);
+	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
+
+
+	// 매드캡A
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MadCapA",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/MadCap/",
+		L"MadCapA.X"),
+		E_FAIL);
+
 	// Alice 메쉬 원본 생성
 	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

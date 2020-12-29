@@ -107,6 +107,9 @@ namespace Client
 #define ALICE_JUMP_SPEED 15.f
 #define PHYSICS_MIN_VEL_Y	-400.f
 
+#define MADCAPA_COGNITIVE_RANGE 3.f
+#define MADCAPA_ATTACK_RANGE	2.f
+
 // 키입력 관련
 //#define	KM_LEFT		0x00000001
 //#define	KM_RIGHT	0x00000002 

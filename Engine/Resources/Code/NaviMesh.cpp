@@ -4,7 +4,7 @@ USING(Engine)
 
 Engine::CNaviMesh::CNaviMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMesh(pGraphicDev)
-	, m_iIndex(0)
+	//, m_iIndex(0)
 {
 	
 }
@@ -12,7 +12,7 @@ Engine::CNaviMesh::CNaviMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 Engine::CNaviMesh::CNaviMesh(const CNaviMesh& rhs)
 	: CMesh(rhs)
 	, m_vecCell(rhs.m_vecCell)
-	, m_iIndex(rhs.m_iIndex)
+	//, m_iIndex(rhs.m_iIndex)
 {
 	for (auto& iter : m_vecCell)
 		Safe_AddRef(iter);
@@ -76,7 +76,7 @@ void CNaviMesh::Render_NaviMeshes(void)
 		iter->Render_Cell();
 }
 
-_vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3 * pTargetPos, CPhysics* _pPhysics)
+_vec3 CNaviMesh::Move_OnNaviMesh(_int& _iCellIndex, const _vec3* pCurrentPos, const _vec3 * pTargetPos, CPhysics* _pPhysics)
 {
 	if (*pCurrentPos == *pTargetPos)
 		return *pTargetPos;
@@ -84,20 +84,20 @@ _vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3 * pTarget
 	_vec3 vEndPos = *pTargetPos;
 	_vec3 vHitPos;
 
-	switch (m_vecCell[m_iIndex]->GetTagIndex())
+	switch (m_vecCell[_iCellIndex]->GetTagIndex())
 	{
 	case CCell::TYPE_NORMAL:
-		if (CCell::INSIDE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
-			if (m_vecCell[m_iIndex]->IsCollided(*pCurrentPos, *pTargetPos, &vHitPos)) {
+		if (CCell::INSIDE == m_vecCell[_iCellIndex]->CompareCell(&vEndPos, &_iCellIndex)) {
+			if (m_vecCell[_iCellIndex]->IsCollided(*pCurrentPos, *pTargetPos, &vHitPos)) {
 				vEndPos.y = vHitPos.y;
 				return vEndPos;
 			}
 		}
 		break;
 	case CCell::TYPE_SLIDE:
-		if (CCell::INSIDE == m_vecCell[m_iIndex]->CompareCell(&vEndPos, &m_iIndex)) {
+		if (CCell::INSIDE == m_vecCell[_iCellIndex]->CompareCell(&vEndPos, &_iCellIndex)) {
 			//if (m_vecCell[m_iIndex]->IsCollided(*pCurrentPos, *pTargetPos, &vHitPos)) {
-			vEndPos.y = m_vecCell[m_iIndex]->GetHeight(vEndPos);
+			vEndPos.y = m_vecCell[_iCellIndex]->GetHeight(vEndPos);
 
 			//if (_pPhysics) {
 			//	_vec3 vTemp = _vec3((m_vecCell[m_iIndex]->GetCenterPoint().x - pCurrentPos->x) * 0.05f /*+ vVel.x * 0.02f*/, 0.f, (m_vecCell[m_iIndex]->GetCenterPoint().z - pCurrentPos->z)  * 0.05f /*+ vVel.z* 0.02f*/);
@@ -111,8 +111,8 @@ _vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3 * pTarget
 		}
 		else {
 			_vec3 vCorrectedPos;
-			vCorrectedPos = m_vecCell[m_iIndex]->GetPosInCell(vEndPos);
-			vCorrectedPos.y = m_vecCell[m_iIndex]->GetHeight(vCorrectedPos);
+			vCorrectedPos = m_vecCell[_iCellIndex]->GetPosInCell(vEndPos);
+			vCorrectedPos.y = m_vecCell[_iCellIndex]->GetHeight(vCorrectedPos);
 			if (_pPhysics) {
 				_vec3 vTemp;
 				vTemp = GetReflectionVector(_pPhysics->GetVelocity() ,*D3DXVec3Normalize(&vTemp, &_vec3(vCorrectedPos.x - vEndPos.x, 0.f, vCorrectedPos.z - vEndPos.z)), 1.1f);
@@ -121,7 +121,7 @@ _vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pCurrentPos, const _vec3 * pTarget
 				_pPhysics->SetVelocityXZ(_vec2(0.f, 0.f));
 				_pPhysics->AddVelocityXZ(_vec2(vTemp.x, vTemp.z));
 			}
-			return *pCurrentPos + (m_vecCell[m_iIndex]->GetCenterPoint() - *pCurrentPos) * 0.006f;
+			return vCorrectedPos + (m_vecCell[_iCellIndex]->GetCenterPoint() - vCorrectedPos) * 0.004f;
 		}
 		break;
 	case CCell::TYPE_SLIDE_EXIT:

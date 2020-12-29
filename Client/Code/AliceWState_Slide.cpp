@@ -38,7 +38,7 @@ int CAliceWState_Slide::Update(const _float& _fDeltaTime)
 	_vec3 vDir;
 	_vec3 vSettedPos = m_rOwner.GetTransform()->GetPos();
 	if (m_rOwner.IsSliding(_fDeltaTime)) {
-		_float fMaxVelY = PHYSICS_MIN_VEL_Y * (1.f - Engine::Clamp(D3DXVec3Dot(&m_rOwner.GetMap()->GetNaviMesh()->GetCurCell()->GetNormal(), &WORLD_Y_AXIS), 0.f, 1.f));
+		_float fMaxVelY = PHYSICS_MIN_VEL_Y * (1.f - Engine::Clamp(D3DXVec3Dot(&m_rOwner.GetMap()->GetNaviMesh()->GetCell(m_rOwner.GetCellIndex())->GetNormal(), &WORLD_Y_AXIS), 0.f, 1.f));
 		if (m_rOwner.GetPhysics()->GetVelocity().y < fMaxVelY) {
 			m_rOwner.GetPhysics()->SetVelocityY(fMaxVelY);
 		}

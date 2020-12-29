@@ -73,9 +73,6 @@
     <Filter Include="02. Object\06. DynamicObject">
       <UniqueIdentifier>{bef18fc3-6e17-4744-87e0-9d40113da4d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\02. GameObject\Alice">
-      <UniqueIdentifier>{32cb0994-47c5-4825-bbdf-cd871b863a1a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\00. Camera\DynamicCamera">
       <UniqueIdentifier>{ee03a7bc-4036-41a7-bcb5-ce81960048cd}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,15 @@
     </Filter>
     <Filter Include="04. Manager\StateMgr">
       <UniqueIdentifier>{6906ec20-968e-4a6e-8ce6-5ab470edc44c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. State\MadCapA">
+      <UniqueIdentifier>{8e309adf-b60c-4a28-9163-e48212430b00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\MadCapA">
+      <UniqueIdentifier>{3c3bef53-bfa4-4fdf-9c15-b36966bc1924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\AliceW">
+      <UniqueIdentifier>{32cb0994-47c5-4825-bbdf-cd871b863a1a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -196,7 +202,7 @@
       <Filter>02. Object\07. CameraController</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\AliceW.h">
-      <Filter>02. Object\02. GameObject\Alice</Filter>
+      <Filter>02. Object\02. GameObject\AliceW</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\AliceWState_Attack.h">
       <Filter>03. State\AliceW</Filter>
@@ -224,6 +230,30 @@
     </ClInclude>
     <ClInclude Include="..\Code\CameraController_Sliding.h">
       <Filter>02. Object\07. CameraController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MadCapA.h">
+      <Filter>02. Object\02. GameObject\MadCapA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_Damage.h">
+      <Filter>03. State\AliceW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MadCapAState_Alert.h">
+      <Filter>03. State\MadCapA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MadCapAState_Attack.h">
+      <Filter>03. State\MadCapA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MadCapAState_Damage.h">
+      <Filter>03. State\MadCapA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MadCapAState_Death.h">
+      <Filter>03. State\MadCapA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MadCapAState_Idle.h">
+      <Filter>03. State\MadCapA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MadCapAState_Run.h">
+      <Filter>03. State\MadCapA</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -294,7 +324,7 @@
       <Filter>02. Object\07. CameraController</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\AliceW.cpp">
-      <Filter>02. Object\02. GameObject\Alice</Filter>
+      <Filter>02. Object\02. GameObject\AliceW</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_Attack.cpp">
       <Filter>03. State\AliceW</Filter>
@@ -322,6 +352,30 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraController_Sliding.cpp">
       <Filter>02. Object\07. CameraController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MadCapA.cpp">
+      <Filter>02. Object\02. GameObject\MadCapA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_Damage.cpp">
+      <Filter>03. State\AliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MadCapAState_Alert.cpp">
+      <Filter>03. State\MadCapA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MadCapAState_Attack.cpp">
+      <Filter>03. State\MadCapA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MadCapAState_Damage.cpp">
+      <Filter>03. State\MadCapA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MadCapAState_Death.cpp">
+      <Filter>03. State\MadCapA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MadCapAState_Idle.cpp">
+      <Filter>03. State\MadCapA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MadCapAState_Run.cpp">
+      <Filter>03. State\MadCapA</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

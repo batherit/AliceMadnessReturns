@@ -3,6 +3,7 @@
 #include "Terrain.h"
 #include "AliceW.h"
 #include "Monster.h"
+#include "MadCapA.h"
 #include "Stone.h"
 #include "Sword.h"
 #include "SphereRenderer.h"
@@ -210,6 +211,17 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	static_cast<CCameraController_Crowd*>(pCameraController)->SetTarget(m_pPlayer);
 	pCameraController->GetTransform()->SetPos(_vec3(-10.f, 30.f, 10.f));
 	pCameraMgr->AddCameraController(pCameraController);
+
+	// 테스트 몬스터(MadCapA) 생성
+	Engine::CGameObject* pGameObject = CMadCapA::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, 0.f));
+
+	pGameObject = CMadCapA::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, -2.f));
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);

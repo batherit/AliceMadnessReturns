@@ -45,6 +45,7 @@ public:
 	_bool IsDead() const { return m_bIsDead; }
 	_bool IsLanded() const { return m_bIsLanded; }
 	CMap* GetMap() const { return m_pMap; }
+	_int GetCellIndex() const { return m_iCellIndex; }
 
 private:
 	CMap* m_pMap = nullptr;
@@ -53,6 +54,7 @@ private:
 	Engine::CDynamicMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CPhysics* m_pPhysics = nullptr;
+	_int m_iCellIndex = -1;
 
 	_bool m_bIsDead = false;
 	_bool m_bIsLanded = false;

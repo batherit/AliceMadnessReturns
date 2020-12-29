@@ -232,6 +232,17 @@ _uint CLoading::Loading_ForStage(void)
 	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HobbyHorse");
 
+	// 器农 积己
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Fork",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Fork/",
+		L"Fork.X"),
+		E_FAIL);
+	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Fork");
+
 	// 痢橇 菩靛 积己
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -481,7 +492,7 @@ _uint CLoading::Loading_ForStage(void)
 	m_pMapTab->m_treeObjectList.InsertItem(L"DollSlide_StraightA", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_StraightA");
 
-	// 举府胶
+	// 举府胶W
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"AliceW",
@@ -490,6 +501,16 @@ _uint CLoading::Loading_ForStage(void)
 		L"AliceW.X"),
 		E_FAIL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"AliceW");
+
+	// 概靛母A
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MadCapA",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/MadCap/",
+		L"MadCapA.X"),
+		E_FAIL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"MadCapA");
 	
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

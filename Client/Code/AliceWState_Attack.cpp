@@ -22,7 +22,8 @@ void CAliceWState_Attack::OnLoaded(void)
 {
 	m_bIsAttacking = true;
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_1_A);
-	m_rOwner.GetPhysics()->SetSpeed(0.f);
+	m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 2.f);
+	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
 	++m_iAttackNum;
 }
 
@@ -34,6 +35,7 @@ int CAliceWState_Attack::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
+	_vec3 vDir;
 	if (m_bIsAttacking) {
 		// 공격 모션이 진행되고 있는 상태에서,,,
 		if (m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()) {
@@ -52,7 +54,7 @@ int CAliceWState_Attack::Update(const _float& _fDeltaTime)
 			}
 			m_bIsAttacking = false;
 		}
-		else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.35f) {
+		else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.28f) {
 			// 입력 가능 상태(공격 애니메이션이 70퍼센트 진행됐을때)가 됐을때,
 			// 공격에 대한 입력을 살피고 새로운 공격 입력이 들어왔으면 다음 공격을 실행한다.
 			if (m_rOwner.IsAttackOn(_fDeltaTime)) {
@@ -64,16 +66,22 @@ int CAliceWState_Attack::Update(const _float& _fDeltaTime)
 						break;
 					case 2:
 						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_5_A);
+						m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 3.f);
+						m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
 						break;
 					}
 					++m_iAttackNum;
 				}
 			}
+			else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.6f && m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
+				_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
+				m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
+				m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Run(m_rOwner));
+			}
 			// else 어떤 입력도 받지 못했다면 아무것도 하지 않는다.
 		}
 	}
 	else if(m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()){
-		_vec3 vDir;
 		// 공격 종료 모션이 끝나고 이후 움직임에 따라 상태를 변경한다.
 		if (m_rOwner.IsAttackOn(_fDeltaTime)) {
 			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack(m_rOwner));

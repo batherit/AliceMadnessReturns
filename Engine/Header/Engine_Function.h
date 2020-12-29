@@ -443,30 +443,35 @@ namespace Engine
 		else _bValue = true;
 	}
 
+	// 회전축 구하는 것이 가능한지?
+	inline _bool IsRotationAxisFounded(const _vec3& vU, const _vec3& vV) {
+		_vec3 vUnitU;
+		_vec3 vUnitV;
+		_float fDot;
+		fDot = D3DXVec3Dot(D3DXVec3Normalize(&vUnitU, &vU), D3DXVec3Normalize(&vUnitV, &vV));
+		if (fDot == 1.f || fDot == -1.f) {
+			return false;
+		}
+		return true;
+	}
+
 	// 회전축 얻기
 	inline _vec3 GetRotationAxis(const _vec3& vU, const _vec3& vV) {
 		_vec3 vRotAxis;
-		D3DXVec3Cross(&vRotAxis, &vU, &vV);
-		D3DXVec3Normalize(&vRotAxis, &vRotAxis);
-		return vRotAxis;
+		return *D3DXVec3Normalize(&vRotAxis, D3DXVec3Cross(&vRotAxis, &vU, &vV));
 	}
 
 	// 회전각 얻기
 	inline _float GetRotationAngle(const _vec3& vU, const _vec3& vV) {
 		_vec3 vUnitU;
 		_vec3 vUnitV;
-		_float fDot;
-		D3DXVec3Normalize(&vUnitU, &vU);
-		D3DXVec3Normalize(&vUnitV, &vV);
-		fDot = Clamp(D3DXVec3Dot(&vUnitU, &vUnitV), -1.f, 1.f);
-		return acosf(fDot);
+		return acosf(Clamp(D3DXVec3Dot(D3DXVec3Normalize(&vUnitU, &vU), D3DXVec3Normalize(&vUnitV, &vV)), -1.f, 1.f));
 	}
 
 	inline _vec3 GetRotatedVector(const _vec3& _vAxis, const _float& _fAngle, const _vec3& _vV) {
 		_vec3 vRotatedVector;
 		_matrix matRot;
-		D3DXMatrixRotationAxis(&matRot, &_vAxis, _fAngle);
-		D3DXVec3TransformNormal(&vRotatedVector, &_vV, &matRot);
+		D3DXVec3TransformNormal(&vRotatedVector, &_vV, D3DXMatrixRotationAxis(&matRot, &_vAxis, _fAngle));
 
 		return vRotatedVector;
 	}
@@ -596,6 +601,20 @@ namespace Engine
 		// 음수이면 마주 보고 있는 것이다.
 		return D3DXVec3Dot(&vNormalizedDir1, &vNormalizedDir2) < 0.f;
 	}
+
+	/*float GetRadianByVector(float _fToX, float _fToY)
+	{
+		float fRadian = acosf(_fToX / GetVectorLength(_fToX, _fToY));
+		if (_fToY < 0) fRadian *= -1.f;
+
+		return fRadian;
+	}
+
+	float GetPositiveDegreeByVector(float _fToX, float _fToY) {
+		float fDegree = TO_DEGREE(GetRadianByVector(_fToX, _fToY));
+		if (fDegree < 0.f) fDegree += 360.f;
+		return fDegree;
+	}*/
 
 	//반사벡터 (1.f미만 => 굴절, 1.f => 슬라이딩, 1.f초과 => 반사 )
 	inline _vec3 GetReflectionVector(const _vec3& _vIncident, const _vec3& _vNormal, const _float& _fReflectivity = 2.f) {

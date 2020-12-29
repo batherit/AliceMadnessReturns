@@ -43,9 +43,9 @@ HRESULT CMadCapA::Ready_Object(void)
 	// Physics
 	pComponent = m_pPhysics = AddComponent<Engine::CPhysics>();
 	//m_pPhysics->SetDirection(_vec3(0.f, 0.f, -1.f));
-	m_pPhysics->SetSpeed(ALICE_RUN_SPEED, ALICE_RUN_SPEED);
+	m_pPhysics->SetSpeed(MADCAPA_RUN_SPEED, MADCAPA_RUN_SPEED);
 	//m_pPhysics->SetResistanceCoefficientXZ(0.95f);
-	m_pPhysics->SetGravity(9.8f * 3.f);
+	m_pPhysics->SetGravity(9.8f * 2.f);
 
 	m_pStateMgr = new CStateMgr<CMadCapA>(*this);
 	m_pStateMgr->SetNextState(new CMadCapAState_Idle(*this));
@@ -103,13 +103,14 @@ int CMadCapA::Update_Object(const _float & _fDeltaTime)
 		}
 	}
 	else if (IsLanded()) {
-		GetPhysics()->SetVelocityY(0.f);
-
 		vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(m_iCellIndex, &vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f)), GetPhysics());
 
 		if (vSettedPos == vTargetPos + _vec3(0.f, -1.0f, 0.f)) {
 			vSettedPos += _vec3(0.f, 1.f, 0.f);
 			m_bIsLanded = false;
+		}
+		else {
+			GetPhysics()->SetVelocityY(0.f);
 		}
 	}
 	// 이동 확정

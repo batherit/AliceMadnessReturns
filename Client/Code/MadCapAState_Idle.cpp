@@ -48,12 +48,9 @@ int CMadCapAState_Idle::Update(const _float& _fDeltaTime)
 			m_bIsAttackIdle = false;
 			m_fElapsedTime = 0.f;
 		}
-		else if((m_fElapsedTime += _fDeltaTime) >= 1.f){
+		else if((m_fElapsedTime += _fDeltaTime) >= 2.f){
 			// TODO : 인지 후 1초가 지났다면 경계 태세로 전환합니다.
-			//m_rOwner.GetStateMgr()->SetNextState(new CMadCapAState_Alert(m_rOwner));
-			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::MadCap_Idle);
-			m_bIsAttackIdle = false;
-			m_fElapsedTime = 0.f;
+			m_rOwner.GetStateMgr()->SetNextState(new CMadCapAState_Alert(m_rOwner));
 		}
 		else {
 			// 타겟 위치를 향해 회전합니다.
@@ -62,7 +59,7 @@ int CMadCapAState_Idle::Update(const _float& _fDeltaTime)
 			D3DXVec3Normalize(&vToTargetDirXZ, &vToTargetDirXZ);
 			_vec3 vRotAxis = Engine::GetRotationAxis(vLook, vToTargetDirXZ);
 			_float fRotAngle = Engine::GetRotationAngle(vLook, vToTargetDirXZ);
-			m_rOwner.GetTransform()->RotateByAxis(fRotAngle, vRotAxis);
+			m_rOwner.GetTransform()->RotateByAxis(fRotAngle * 0.1f, vRotAxis);
 		}
 	}
 	else {

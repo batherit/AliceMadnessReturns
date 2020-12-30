@@ -69,17 +69,9 @@ int CMadCapA::Update_Object(const _float & _fDeltaTime)
 	if (!m_pStateMgr->ConfirmValidState())
 		return 1;
 
-	// TEST : 테스트용이므로 삭제 요망
-	if (!IsDead() && Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
-		SetDead(true);
-	}
-
 	if (!IsActivated())
 		return 1;
 
-	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
-		return 0;
-	}
 	m_pRenderer->Update(_fDeltaTime);
 
 	CGameObject::Update_Object(_fDeltaTime);
@@ -117,9 +109,6 @@ int CMadCapA::Update_Object(const _float & _fDeltaTime)
 	GetTransform()->SetPos(vSettedPos);
 
 	m_pMesh->Play_Animation(_fDeltaTime);
-	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
-		return 0;
-	}
 	
 
 	return 0;
@@ -129,6 +118,9 @@ void CMadCapA::Render_Object(void)
 {
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
+
+	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
+		return;
 	m_pRenderer->Render();
 	//Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
@@ -159,6 +151,9 @@ _bool CMadCapA::LoadColliders(const _tchar* _pFileName)
 
 void CMadCapA::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
+	if (IsDead())
+		return;
+
 	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
 		_int a = 10;
 	}
@@ -166,7 +161,8 @@ void CMadCapA::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		_int a = 10;
 	}
 	else {
-		_int a = 10;
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0)
+			SetDead(true);
 	}
 }
 

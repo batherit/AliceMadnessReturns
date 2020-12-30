@@ -20,6 +20,7 @@ CAliceWState_Death::~CAliceWState_Death()
 void CAliceWState_Death::OnLoaded(void)
 {
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::Alice_Death);
+	m_rOwner.GetPhysics()->SetSpeed(0.f);
 }
 
 int CAliceWState_Death::Update(const _float& _fDeltaTime)

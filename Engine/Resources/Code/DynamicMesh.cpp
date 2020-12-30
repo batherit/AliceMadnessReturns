@@ -134,6 +134,11 @@ void CDynamicMesh::Play_Animation(const _float & fTimeDelta)
 
 	//_matrix		matTemp;
 	//Update_FrameMatrices((D3DXFRAME_DERIVED*)m_pRootFrame, D3DXMatrixRotationY(&matTemp, D3DXToRadian(180.f)));
+	if (m_bIsAnimStopping) {
+		m_fDeltaTime = 0.f;
+		return;
+	}
+
 	m_fDeltaTime = fTimeDelta;
 }
 

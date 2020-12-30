@@ -69,11 +69,6 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	if (!m_pStateMgr->ConfirmValidState())
 		return 1;
 
-	// TEST : 테스트용이므로 삭제 요망
-	if (!IsDead() && Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
-		SetDead(true);
-	}
-
 	if (!IsActivated())
 		return 1;
 
@@ -129,6 +124,9 @@ void CAliceW::Render_Object(void)
 {
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
+
+	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
+		return;
 	m_pRenderer->Render();
 	//Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());

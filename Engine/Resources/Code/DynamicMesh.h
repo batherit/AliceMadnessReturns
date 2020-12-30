@@ -28,6 +28,8 @@ public:
 public:
 	void			Set_AnimationSet(const _uint& iIndex);
 	void			Play_Animation(const _float& fTimeDelta);
+	void			SetAnimationStop(const _bool& _bIsAnimStopping) { m_bIsAnimStopping = _bIsAnimStopping; }
+	_bool			IsAnimStopping() const { return m_bIsAnimStopping; }
 	//void			UpdateDeltaTime(const _float& _fDeltaTime);
 
 private:
@@ -46,6 +48,7 @@ private:
 	CAniCtrl*				m_pAniCtrl;
 	list<D3DXMESHCONTAINER_DERIVED*>			m_MeshContainerList;
 	_float					m_fDeltaTime = 0.f;
+	_bool					m_bIsAnimStopping = false;
 
 public:
 	static	CDynamicMesh*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFilePath, const _tchar* pFileName);

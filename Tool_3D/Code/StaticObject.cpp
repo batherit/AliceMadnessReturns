@@ -32,6 +32,9 @@ HRESULT CStaticObject::Ready_Object(void)
 
 int CStaticObject::Update_Object(const _float & _fDeltaTime)
 {
+	if (!IsActivated())
+		return 1;
+
 	if (1 == CGameObject::Update_Object(_fDeltaTime))	// 1-> 비활성화
 		return 1;
 
@@ -43,6 +46,9 @@ int CStaticObject::Update_Object(const _float & _fDeltaTime)
 void CStaticObject::Render_Object(void)
 {
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
+
+	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
+		return;
 	m_pRenderer->Render();
 
 	DWORD bIsZBufferEnabled;

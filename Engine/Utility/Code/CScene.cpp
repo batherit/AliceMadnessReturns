@@ -1,5 +1,6 @@
 #include "CScene.h"
 #include "Renderer.h"
+#include "CollisionMgr.h"
 
 USING(Engine)
 
@@ -8,6 +9,7 @@ Engine::CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_pGraphicDev(pGraphicDev)
 {
 	Safe_AddRef(m_pGraphicDev);
+	CCollisionMgr::GetInstance()->ClearGameObjectList();
 }
 
 Engine::CScene::CScene(const CScene & rhs)
@@ -56,6 +58,8 @@ _int CScene::Update(const _float & _fDeltaTime)
 			return iExit;
 		}
 	}
+
+	CCollisionMgr::GetInstance()->ProcessCollision();
 
 	return iExit;
 }

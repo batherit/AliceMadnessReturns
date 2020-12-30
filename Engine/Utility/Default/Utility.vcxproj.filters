@@ -106,6 +106,9 @@
     <Filter Include="98. Manager\05. CameraMgr">
       <UniqueIdentifier>{b8b1b0a5-6586-4f2d-ac36-9201db1df64d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98. Manager\06. CollisionMgr">
+      <UniqueIdentifier>{a0f7aca1-23d2-454e-ac54-3e13fef2067e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -213,6 +216,9 @@
     <ClInclude Include="..\Code\CameraController.h">
       <Filter>03. GameObject\CameraController</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\CollisionMgr.h">
+      <Filter>98. Manager\06. CollisionMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -307,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraController.cpp">
       <Filter>03. GameObject\CameraController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CollisionMgr.cpp">
+      <Filter>98. Manager\06. CollisionMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

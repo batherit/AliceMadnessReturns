@@ -25,6 +25,7 @@ public:
 	virtual void Free(void) override;
 
 private:
+	const _float m_fEntryTime[4] = { 0.f, 0.2f, 0.5f, 0.6f };
 	_int m_iAttackNum = 0;
 	_bool m_bIsAttacking = true;
 };

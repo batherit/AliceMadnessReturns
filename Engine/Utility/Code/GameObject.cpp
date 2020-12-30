@@ -7,6 +7,7 @@
 #include "ColliderObject_Sphere.h"
 #include "ColliderObject_AABB.h"
 #include "ColliderObject_OBB.h"
+#include "CollisionMgr.h"
 
 
 USING(Engine)
@@ -38,12 +39,28 @@ _int CGameObject::Update_Object(const _float & _fDeltaTime)
 		rChild->Update_Object(_fDeltaTime);
 	}
 
-	for (auto& rPair : m_vecColliders) {
+	for (auto& rCollider : m_vecOptimizedColliders) {
+		rCollider->Update_Object(_fDeltaTime);
+	}
+
+	/*for (auto& rPair : m_vecColliders) {
 		for (auto& rObj : rPair.second) {
 			rObj->Update_Object(_fDeltaTime);
 		}
-	}
+	}*/
 	return 0;
+}
+
+void CGameObject::SetValid(_bool _bIsValid) {
+	m_bIsValid = _bIsValid;
+
+	for (auto& rChild : m_vecChildList) {
+		rChild->SetValid(_bIsValid);
+	}
+
+	for (auto& rCollider : m_vecOptimizedColliders) {
+		rCollider->SetValid(_bIsValid);
+	}
 }
 
 //CComponent * Engine::CGameObject::Get_Component(const _tchar * pComponentTag, COMPONENTID eID)
@@ -204,14 +221,14 @@ _bool CGameObject::AddCollider(CColliderObject * _pCollider, const char * _pBone
 
 	for (auto& rPair : m_vecColliders) {
 		if (rPair.first == strBoneName) {
+			// 본에 해당하는 콜라이더 리스트를 auto 변수에 담기
 			pColliders = &rPair.second;
 			break;
 		}
 	}
 
-	if (pColliders)
-		pColliders->emplace_back(_pCollider);
-	else {
+	if(!pColliders){
+		// 본에 해당하는 콜라이더 리스트를 찾지 못했다면 콜라이더 리스트를 생성한다.
 		GetColliderList().emplace_back(make_pair(strBoneName, vector<CColliderObject*>()));
 		for (auto& rPair : m_vecColliders) {
 			if (rPair.first == strBoneName) {
@@ -219,8 +236,11 @@ _bool CGameObject::AddCollider(CColliderObject * _pCollider, const char * _pBone
 				break;
 			}
 		}
-		pColliders->emplace_back(_pCollider);
+		
 	}
+
+	pColliders->emplace_back(_pCollider);					// 본래 콜라이더 리스트에 삽입
+	m_vecOptimizedColliders.emplace_back(_pCollider);		// 최적 콜라이더 리스트에 삽입
 		
 	_pCollider->m_pParent = this;
 
@@ -230,7 +250,7 @@ _bool CGameObject::AddCollider(CColliderObject * _pCollider, const char * _pBone
 _bool CGameObject::IsChildExist(CGameObject * _pChild)
 {
 	if (!_pChild)
-		abort();
+		return false;
 
 	for (auto& rChild : m_vecChildList) {
 		if (rChild == _pChild) {
@@ -245,11 +265,16 @@ _bool CGameObject::IsColliderExist(CColliderObject * _pCollider)
 	if (!_pCollider)
 		abort();
 
-	for (auto& rPair : m_vecColliders) {
+	/*for (auto& rPair : m_vecColliders) {
 		for (auto& rCollider : rPair.second) {
 			if (rCollider == _pCollider) {
 				return true;
 			}
+		}
+	}*/
+	for (auto& rCollider : m_vecOptimizedColliders) {
+		if (rCollider == _pCollider) {
+			return true;
 		}
 	}
 
@@ -287,6 +312,38 @@ void CGameObject::ReleaseChild(CGameObject * _pChild)
 	_pChild->GetTransform()->SetParentBoneMatrix(nullptr);
 }
 
+//CColliderObject * CGameObject::ExtractColliderFromList(const _tchar * _pColliderTag)
+//{
+//	if (!_pColliderTag)
+//		return nullptr;
+//		
+//	_int iSize = m_vecColliders.size()
+//	for(_int i = 0; i < )
+//	for (auto& rPair : m_vecColliders) {
+//		auto find_iter = find_if(rPair.second.begin(), rPair.second.end(), [_pColliderTag](CColliderObject* _pCollider) {
+//			return lstrcmp(_pCollider->GetColliderTag(), _pColliderTag) == 0;
+//		});
+//		if (find_iter == rPair.second.end())
+//			continue; // 찾지 못했다면 다음 뼈에서 찾아봅니다.
+//		
+//		// 본래 콜라이더 리스트에서 제거
+//		CColliderObject* pCollider = *find_iter;
+//		rPair.second.erase(find_iter);		
+//
+//		// 최적 콜라이더 리스트에서 제거
+//		for (auto iter = m_vecOptimizedColliders.begin(); iter != m_vecOptimizedColliders.end(); ++iter) {
+//			if (lstrcmp((*iter)->GetColliderTag(), _pColliderTag) == 0) {
+//				m_vecOptimizedColliders.erase(iter);
+//				break;
+//			}
+//		}
+//
+//		//return pCollider;
+//		return nullptr;
+//	}
+//	return nullptr;
+//}
+
 void CGameObject::ClearColliders()
 {
 	for (auto& rPair : m_vecColliders) {
@@ -295,15 +352,22 @@ void CGameObject::ClearColliders()
 		rPair.second.shrink_to_fit();
 	}
 	m_vecColliders.clear();
+	m_vecOptimizedColliders.clear();
 }
 
 CColliderObject * CGameObject::GetColliderFromTag(const _tchar * _pColliderTag)
 {
-	for (auto& rPair : m_vecColliders) {
+	/*for (auto& rPair : m_vecColliders) {
 		for (auto& rObj : rPair.second) {
 			if (lstrcmp(rObj->GetColliderTag(), _pColliderTag) == 0) {
 				return rObj;
 			}
+		}
+	}*/
+
+	for (auto& rCollider : m_vecOptimizedColliders) {
+		if (lstrcmp(rCollider->GetColliderTag(), _pColliderTag) == 0) {
+			return rCollider;
 		}
 	}
 
@@ -428,6 +492,7 @@ _bool CGameObject::LoadCollidersInfo(HANDLE& _hfIn) {
 	}
 
 	m_pCullingSphere = dynamic_cast<Engine::CColliderObject_Sphere*>(GetColliderFromTag(L"CULL"));
+	CCollisionMgr::GetInstance()->AddGameObject(this);
 
 	return true;
 }

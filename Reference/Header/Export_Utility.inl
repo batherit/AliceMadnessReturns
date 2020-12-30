@@ -68,4 +68,5 @@ void Release_Utility(void)
 	CKeyMgr::GetInstance()->DestroyInstance();
 	CProtoMgr::GetInstance()->DestroyInstance();
 	CManagement::GetInstance()->DestroyInstance();
+	CCollisionMgr::GetInstance()->DestroyInstance();
 }

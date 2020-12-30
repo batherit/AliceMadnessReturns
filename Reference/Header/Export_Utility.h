@@ -9,6 +9,7 @@
 #include "InputProcessorMgr.h"
 #include "LightMgr.h"
 #include "CameraMgr.h"
+#include "CollisionMgr.h"
 
 // Object
 #include "GameObject.h"

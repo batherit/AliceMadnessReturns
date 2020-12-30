@@ -32,7 +32,7 @@ public:
 public:
 	LPDIRECT3DDEVICE9 GetGraphicDev() const { return m_pGraphicDev; }
 
-	void SetValid(_bool _bIsValid) { m_bIsValid = _bIsValid; }
+	void SetValid(_bool _bIsValid);
 	_bool IsValid() const { return m_bIsValid; }
 	void SetActivated(_bool _bIsActivated) { m_bIsActivated = _bIsActivated; }
 	_bool IsActivated() const { return m_bIsActivated; }
@@ -60,6 +60,7 @@ public:
 	_bool IsColliderExist(CColliderObject* _pCollider);
 	void ReleaseParent();
 	void ReleaseChild(CGameObject* _pChild);
+	//CColliderObject* ExtractColliderFromList(const _tchar* _pColliderTag);	// 부모 자식은 유지하지만 콜라이더 리스트에서 제거함. => 제거시 수동 제거해야 함.
 	void ClearColliders();
 	//void ReleaseCollider(CColliderObject* _pCollider);
 
@@ -67,6 +68,7 @@ public:
 	vector<CGameObject*>& GetChildList() { return m_vecChildList; }
 	//vector<CColliderObject*>& GetColliderList() { return m_vecColliderList; }
 	vector<pair<string, vector<CColliderObject*>>>& GetColliderList() { return m_vecColliders; }
+	vector<CColliderObject*>& GetOptimizedColliderList() { return m_vecOptimizedColliders; }
 	CColliderObject* GetColliderFromTag(const _tchar* _pColliderTag);
 	CColliderObject_Sphere* GetCullingSphere() const { return m_pCullingSphere; }
 	void SetCullingSphere(CColliderObject_Sphere* _pCullingSphere) { m_pCullingSphere = _pCullingSphere; }
@@ -91,6 +93,7 @@ protected:
 	CGameObject* m_pParent = nullptr;
 	vector<CGameObject*> m_vecChildList;
 	vector<pair<string, vector<CColliderObject*>>> m_vecColliders;
+	vector<CColliderObject*> m_vecOptimizedColliders;
 	CColliderObject_Sphere* m_pCullingSphere = nullptr;		// 충돌체로부터 추출함.
 	//vector<CColliderObject*> m_vecColliderList;
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];

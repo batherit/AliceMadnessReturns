@@ -409,6 +409,14 @@ void CColliderTab::OnBnClickedButtonDelete()
 				if (cstrBoneName == iter->first.c_str()) {
 					if (pObject->GetCullingSphere() == iter->second[iColliderIndex])
 						pObject->SetCullingSphere(nullptr);
+
+					// 최적 콜라이더 리스트에서도 제거한다.
+					auto& rOpColList = pObject->GetOptimizedColliderList();
+					auto& opIter = find(rOpColList.begin(), rOpColList.end(), iter->second[iColliderIndex]);
+					if (opIter != rOpColList.end()) {
+						rOpColList.erase(opIter);
+					}
+
 					Engine::Safe_Release(iter->second[iColliderIndex]);
 					iter->second.erase(iter->second.begin() + iColliderIndex);
 

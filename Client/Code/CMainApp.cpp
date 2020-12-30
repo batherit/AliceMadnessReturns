@@ -51,6 +51,9 @@ HRESULT CMainApp::Ready_MainApp(void)
 
 	// Ã¹ ¾ÀÀ» Logo·Î ¼³Á¤ÇÑ´Ù.
 	Engine::CManagement::GetInstance()->SetNextScene(CLoadScene::Create(m_pGraphicDev));
+
+	// ·£´ý ¾¾µå ÇÒ´ç
+	srand((_uint)time(NULL));
 	
 	return S_OK;
 }

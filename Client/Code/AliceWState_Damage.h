@@ -12,7 +12,7 @@ class CAliceWState_Damage :
 	public CState<CAliceW>
 {
 public:
-	CAliceWState_Damage(CAliceW& _rOwner, _bool _bIsBigAttack = false);
+	CAliceWState_Damage(CAliceW& _rOwner);
 	virtual ~CAliceWState_Damage();
 
 	// CState을(를) 통해 상속됨
@@ -23,9 +23,6 @@ public:
 
 	// CState을(를) 통해 상속됨
 	virtual void Free(void) override;
-
-private:
-	_bool m_bIsBigAttack = false;
 };
 
 END

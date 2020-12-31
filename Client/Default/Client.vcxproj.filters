@@ -88,12 +88,6 @@
     <Filter Include="03. State\AliceW">
       <UniqueIdentifier>{8bccb86f-8988-41fc-96da-ddd84198a589}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Manager">
-      <UniqueIdentifier>{f5368c3b-6ab7-4571-8ba8-a480e1246459}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\StateMgr">
-      <UniqueIdentifier>{6906ec20-968e-4a6e-8ce6-5ab470edc44c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. State\MadCapA">
       <UniqueIdentifier>{8e309adf-b60c-4a28-9163-e48212430b00}</UniqueIdentifier>
     </Filter>
@@ -102,6 +96,18 @@
     </Filter>
     <Filter Include="02. Object\02. GameObject\AliceW">
       <UniqueIdentifier>{32cb0994-47c5-4825-bbdf-cd871b863a1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Manager">
+      <UniqueIdentifier>{f5368c3b-6ab7-4571-8ba8-a480e1246459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Manager\StateMgr">
+      <UniqueIdentifier>{6906ec20-968e-4a6e-8ce6-5ab470edc44c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component">
+      <UniqueIdentifier>{a7a0280c-8c3b-47bd-b45a-74af6d1d5991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Attribute">
+      <UniqueIdentifier>{0db9cfe8-1f30-47ca-9e3d-f717ccd55683}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,9 +210,6 @@
     <ClInclude Include="..\Code\AliceW.h">
       <Filter>02. Object\02. GameObject\AliceW</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\AliceWState_Attack.h">
-      <Filter>03. State\AliceW</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\AliceWState_Death.h">
       <Filter>03. State\AliceW</Filter>
     </ClInclude>
@@ -223,7 +226,7 @@
       <Filter>03. State</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\StateMgr.h">
-      <Filter>04. Manager\StateMgr</Filter>
+      <Filter>05. Manager\StateMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\AliceWState_Slide.h">
       <Filter>03. State\AliceW</Filter>
@@ -254,6 +257,12 @@
     </ClInclude>
     <ClInclude Include="..\Code\MadCapAState_Run.h">
       <Filter>03. State\MadCapA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Attribute.h">
+      <Filter>04. Component\Attribute</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_Attack_Blade.h">
+      <Filter>03. State\AliceW</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -326,9 +335,6 @@
     <ClCompile Include="..\Code\AliceW.cpp">
       <Filter>02. Object\02. GameObject\AliceW</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\AliceWState_Attack.cpp">
-      <Filter>03. State\AliceW</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\AliceWState_Death.cpp">
       <Filter>03. State\AliceW</Filter>
     </ClCompile>
@@ -345,7 +351,7 @@
       <Filter>03. State</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\StateMgr.cpp">
-      <Filter>04. Manager\StateMgr</Filter>
+      <Filter>05. Manager\StateMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_Slide.cpp">
       <Filter>03. State\AliceW</Filter>
@@ -376,6 +382,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\MadCapAState_Run.cpp">
       <Filter>03. State\MadCapA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Attribute.cpp">
+      <Filter>04. Component\Attribute</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_Attack_Blade.cpp">
+      <Filter>03. State\AliceW</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

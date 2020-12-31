@@ -40,7 +40,9 @@ HRESULT CColliderObject_AABB::Ready_Object(void)
 
 _int CColliderObject_AABB::Update_Object(const _float & _fDeltaTime)
 {
-	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
+	if (!IsActivated())
+		return 1;
+	//m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Update(_fDeltaTime);
 	return 0;
 }

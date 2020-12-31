@@ -36,7 +36,7 @@ public:
 	}
 	void SetDirection(const _vec3& _vDir) { m_vDir = _vDir; D3DXVec3Normalize(&m_vDir, &m_vDir); }
 	void SetVelocity(const _vec3& _vVelocity) { 
-		m_fSpeed = D3DXVec3Length(&_vVelocity); 
+		SetSpeed(D3DXVec3Length(&_vVelocity)); // ±âÁ¸ m_fSpeed = D3DXVec3Length(&_vVelocity);
 		if(m_fSpeed > 0.f)
 			D3DXVec3Normalize(&m_vDir, &_vVelocity); 
 	}

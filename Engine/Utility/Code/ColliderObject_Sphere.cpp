@@ -41,6 +41,9 @@ HRESULT CColliderObject_Sphere::Ready_Object(void)
 
 _int CColliderObject_Sphere::Update_Object(const _float & _fDeltaTime)
 {
+	if (!IsActivated())
+		return 1;
+
 	m_pRenderer->Update(_fDeltaTime);
 	return 0;
 }

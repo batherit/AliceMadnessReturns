@@ -26,6 +26,7 @@ public:
 
 private:
 	_bool m_bIsAttacking = false;
+	Engine::CGameObject* m_pWeaponCollider = nullptr;
 };
 
 END

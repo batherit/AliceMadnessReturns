@@ -2,6 +2,7 @@
 #include "MadCapAState_Idle.h"
 #include "MadCapAState_Death.h"
 #include "MadCapAState_Alert.h"
+#include "MadCapAState_Damage.h"
 //#include "MadCapAState_Run.h"
 //#include "MadCapAState_Attack.h"
 //#include "MadCapAState_Jump.h"
@@ -9,6 +10,7 @@
 #include "StateMgr.h"
 #include "MadCapA.h"
 #include "Map.h"
+#include "Attribute.h"
 
 
 CMadCapAState_Idle::CMadCapAState_Idle(CMadCapA & _rOwner)
@@ -35,6 +37,11 @@ int CMadCapAState_Idle::Update(const _float& _fDeltaTime)
 {
 	if (m_rOwner.IsDead()) {
 		m_rOwner.GetStateMgr()->SetNextState(new CMadCapAState_Death(m_rOwner));
+		return 0;
+	}
+
+	if (m_rOwner.GetAttribute()->IsDamaged()) {
+		m_rOwner.GetStateMgr()->SetNextState(new CMadCapAState_Damage(m_rOwner));
 		return 0;
 	}
 

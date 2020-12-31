@@ -2,6 +2,7 @@
 #include "Loading.h"
 
 #include "Export_Function.h"
+#include "Attribute.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -128,6 +129,10 @@ _uint CLoading::Loading_ForStage(void)
 	pComponent = Engine::COptimization::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(Engine::COptimization::GetComponentTag(), pComponent);
+
+	pComponent = CAttribute::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(CAttribute::GetComponentTag(), pComponent);
 
 	Engine::CShader* pShader = nullptr;
 

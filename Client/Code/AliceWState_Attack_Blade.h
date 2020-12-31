@@ -8,12 +8,12 @@
 
 BEGIN(Client)
 class CAliceW;
-class CAliceWState_Attack :
+class CAliceWState_Attack_Blade :
 	public CState<CAliceW>
 {
 public:
-	CAliceWState_Attack(CAliceW& _rOwner);
-	virtual ~CAliceWState_Attack();
+	CAliceWState_Attack_Blade(CAliceW& _rOwner);
+	virtual ~CAliceWState_Attack_Blade();
 
 	// CState을(를) 통해 상속됨
 	virtual void OnLoaded(void) override;
@@ -28,6 +28,7 @@ private:
 	const _float m_fEntryTime[4] = { 0.f, 0.2f, 0.5f, 0.6f };
 	_int m_iAttackNum = 0;
 	_bool m_bIsAttacking = true;
+	Engine::CGameObject* m_pWeaponCollider = nullptr;
 };
 
 END

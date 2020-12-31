@@ -10,6 +10,7 @@
 #include "StateMgr.h"
 #include "MadCapA.h"
 #include "Map.h"
+#include "Attribute.h"
 
 
 CMadCapAState_Damage::CMadCapAState_Damage(CMadCapA & _rOwner, _bool _bIsBigAttack)
@@ -39,8 +40,8 @@ void CMadCapAState_Damage::OnLoaded(void)
 		else {
 			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::MadCap_Damaged_Light02);
 		}
-		//m_rOwner.GetPhysics()->SetVelocityXZ(_vec2(vToOwner.x, vToOwner.z) * MADCAPA_RUN_SPEED * 2.f);
-		//m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.8f);
+		m_rOwner.GetPhysics()->SetVelocityXZ(_vec2(vToOwner.x, vToOwner.z) * MADCAPA_RUN_SPEED * 2.f);
+		m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.8f);
 	}
 	else {
 		if (Engine::GetRandomBoolean()) {
@@ -49,15 +50,22 @@ void CMadCapAState_Damage::OnLoaded(void)
 		else {
 			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::MadCap_Damaged_Heave02);
 		}
-		//m_rOwner.GetPhysics()->SetVelocityXZ(_vec2(vToOwner.x, vToOwner.z) * MADCAPA_RUN_SPEED * 3.f);
-		//m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.8f);
+		m_rOwner.GetPhysics()->SetVelocityXZ(_vec2(vToOwner.x, vToOwner.z) * MADCAPA_RUN_SPEED * 3.f);
+		m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.8f);
 	}
+
+	m_rOwner.GetAttribute()->SetDamaged(false);
 }
 
 int CMadCapAState_Damage::Update(const _float& _fDeltaTime)
 {
 	if (m_rOwner.IsDead()) {
 		m_rOwner.GetStateMgr()->SetNextState(new CMadCapAState_Death(m_rOwner));
+		return 0;
+	}
+
+	if (m_rOwner.GetAttribute()->IsDamaged()) {
+		m_rOwner.GetStateMgr()->SetNextState(new CMadCapAState_Damage(m_rOwner));
 		return 0;
 	}
 

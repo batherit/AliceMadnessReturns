@@ -41,7 +41,7 @@ _bool CCollisionMgr::AddGameObject(CGameObject * _pGameObject)
 void CCollisionMgr::ProcessCollision()
 {
 	// 충돌 체크를 진행한다.
-	CollisionInfo tCollisionInfo;
+	CollisionInfo tCollisionInfo1, tCollisionInfo2;
 
 	for (auto& rObj1 : m_ObjectList) {
 		for (auto& rObj2 : m_ObjectList) {
@@ -55,13 +55,18 @@ void CCollisionMgr::ProcessCollision()
 							if (rCollider1 == rObj1->GetCullingSphere() || rCollider2 == rObj2->GetCullingSphere())
 								continue;
 							
-							if (IsCollided(rCollider1, rCollider2)) {
-								tCollisionInfo.pCollidedObject = rObj2;
-								tCollisionInfo.pCollidedCollider = rCollider2;
-								rObj1->OnCollision(tCollisionInfo);
-								tCollisionInfo.pCollidedObject = rObj1;
-								tCollisionInfo.pCollidedCollider = rCollider1;
-								rObj2->OnCollision(tCollisionInfo);
+							tCollisionInfo1.pCollidedObject = rObj2;
+							tCollisionInfo1.pCollidedCollider = rCollider2;
+							tCollisionInfo2.pCollidedObject = rObj1;
+							tCollisionInfo2.pCollidedCollider = rCollider1;
+
+							if (rCollider1->IsActivated() && rCollider2->IsActivated() && IsCollided(rCollider1, rCollider2)) {
+								rObj1->OnCollision(tCollisionInfo1);
+								rObj2->OnCollision(tCollisionInfo2);
+							}
+							else {
+								rObj1->OnNotCollision(tCollisionInfo1);
+								rObj2->OnNotCollision(tCollisionInfo2);
 							}
 							if (!rObj1->IsValid() || !rObj2->IsValid())
 								throw false;

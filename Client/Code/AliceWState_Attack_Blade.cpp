@@ -1,43 +1,54 @@
 #include "pch.h"
-#include "AliceWState_Attack.h"
+#include "AliceWState_Attack_Blade.h"
 #include "AliceWState_Run.h"
 #include "AliceWState_Idle.h"
 #include "AliceWState_Death.h"
+#include "AliceWState_Damage.h"
 #include "StateMgr.h"
 #include "AliceW.h"
 #include "Map.h"
+#include "Attribute.h"
 
 
-CAliceWState_Attack::CAliceWState_Attack(CAliceW & _rOwner)
+CAliceWState_Attack_Blade::CAliceWState_Attack_Blade(CAliceW & _rOwner)
 	:
 	CState(_rOwner)
 {
 }
 
-CAliceWState_Attack::~CAliceWState_Attack()
+CAliceWState_Attack_Blade::~CAliceWState_Attack_Blade()
 {
 }
 
-void CAliceWState_Attack::OnLoaded(void)
+void CAliceWState_Attack_Blade::OnLoaded(void)
 {
 	m_bIsAttacking = true;
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_1_A);
 	m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 2.f);
 	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.85f);
 	++m_iAttackNum;
+
+	m_pWeaponCollider = m_rOwner.GetWeapon()->GetColliderFromTag(L"PlayerAttack");
+	m_pWeaponCollider->SetActivated(true);
 }
 
-int CAliceWState_Attack::Update(const _float& _fDeltaTime)
+int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
 {
-	// Attack => Death, Jump, Idle, Attack
+	// Attack_Blade => Death, Jump, Idle, Attack_Blade
 	if (m_rOwner.IsDead()) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Death(m_rOwner));
+		return 0;
+	}
+
+	if (m_rOwner.GetAttribute()->IsDamaged()) {
+		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Damage(m_rOwner));
 		return 0;
 	}
 
 	_vec3 vDir;
 	if (m_bIsAttacking) {
 		// 공격 모션이 진행되고 있는 상태에서,,,
+
 		if (m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()) {
 			// 공격이 종료되었으면, 종료 모션 애니메이션을 돌린다.
 			switch (m_iAttackNum)
@@ -92,7 +103,7 @@ int CAliceWState_Attack::Update(const _float& _fDeltaTime)
 	else if(m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()){
 		// 공격 종료 모션이 끝나고 이후 움직임에 따라 상태를 변경한다.
 		if (m_rOwner.IsAttackOn(_fDeltaTime)) {
-			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack(m_rOwner));
+			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack_Blade(m_rOwner));
 		}
 		else if (m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
 			_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
@@ -107,10 +118,11 @@ int CAliceWState_Attack::Update(const _float& _fDeltaTime)
 	return 0;
 }
 
-void CAliceWState_Attack::OnExited(void)
+void CAliceWState_Attack_Blade::OnExited(void)
 {
+	m_pWeaponCollider->SetActivated(false);
 }
 
-void CAliceWState_Attack::Free(void)
+void CAliceWState_Attack_Blade::Free(void)
 {
 }

@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "AliceWState_Death.h"
 #include "AliceWState_Run.h"
-#include "AliceWState_Attack.h"
 #include "AliceWState_Jump.h"
 #include "StateMgr.h"
 #include "AliceW.h"
@@ -27,7 +26,6 @@ int CAliceWState_Death::Update(const _float& _fDeltaTime)
 {
 	if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.99f) {
 		m_rOwner.SetActivated(false);
-		abort();
 	}
 
 	return 0;

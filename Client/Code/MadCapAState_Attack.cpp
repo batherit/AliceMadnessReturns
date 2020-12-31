@@ -9,6 +9,7 @@
 #include "StateMgr.h"
 #include "MadCapA.h"
 #include "Map.h"
+#include "Attribute.h"
 
 
 CMadCapAState_Attack::CMadCapAState_Attack(CMadCapA & _rOwner)
@@ -26,6 +27,9 @@ void CMadCapAState_Attack::OnLoaded(void)
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::MadCap_Attack_Fork_Melee02_a);
 	m_rOwner.GetPhysics()->SetSpeed(0.f);
 	m_bIsAttacking = false;
+
+	m_pWeaponCollider = m_rOwner.GetWeapon()->GetColliderFromTag(L"EnemyAttack");
+	m_pWeaponCollider->SetActivated(false);
 }
 
 int CMadCapAState_Attack::Update(const _float& _fDeltaTime)
@@ -33,6 +37,11 @@ int CMadCapAState_Attack::Update(const _float& _fDeltaTime)
 	if (m_rOwner.IsDead()) {
 		m_rOwner.GetStateMgr()->SetNextState(new CMadCapAState_Death(m_rOwner));
 		return 0;
+	}
+
+	if (m_rOwner.GetAttribute()->IsDamaged()) {
+		// 공격 도중에는 데미지 모션으로 전환하지 않는다.
+		m_rOwner.GetAttribute()->SetDamaged(false);
 	}
 
 	if (m_bIsAttacking) {
@@ -55,6 +64,7 @@ int CMadCapAState_Attack::Update(const _float& _fDeltaTime)
 		D3DXVec3TransformNormal(&vLook, &vLook, &matRot);
 		m_rOwner.GetPhysics()->SetVelocity(vLook * MADCAPA_RUN_SPEED * 12.f);
 		m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.93f);
+		m_pWeaponCollider->SetActivated(true);
 	}
 
 	return 0;
@@ -62,6 +72,7 @@ int CMadCapAState_Attack::Update(const _float& _fDeltaTime)
 
 void CMadCapAState_Attack::OnExited(void)
 {
+	m_pWeaponCollider->SetActivated(false);
 }
 
 void CMadCapAState_Attack::Free(void)

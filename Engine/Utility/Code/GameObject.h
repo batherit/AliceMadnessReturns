@@ -28,6 +28,7 @@ public:
 	virtual _int Update_Object(const _float& _fDeltaTime);
 	virtual void Render_Object(void) {};
 	virtual void OnCollision(CollisionInfo _tCollisionInfo) {};
+	virtual void OnNotCollision(CollisionInfo _tCollisionInfo) {};
 
 public:
 	LPDIRECT3DDEVICE9 GetGraphicDev() const { return m_pGraphicDev; }

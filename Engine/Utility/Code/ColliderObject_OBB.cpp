@@ -40,7 +40,7 @@ HRESULT CColliderObject_OBB::Ready_Object(void)
 
 _int CColliderObject_OBB::Update_Object(const _float & _fDeltaTime)
 {
-	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
+	//m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Update(_fDeltaTime);
 	return 0;
 }

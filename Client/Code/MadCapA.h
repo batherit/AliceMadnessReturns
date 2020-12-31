@@ -8,6 +8,7 @@
 
 BEGIN(Client)
 class CMap;
+class CAttribute;
 template<typename T> class CStateMgr;
 class CMadCapA : public Engine::CGameObject
 {
@@ -22,6 +23,7 @@ private: // 持失切, 社瑚切
 	virtual void Render_Object(void) override;
 	_bool LoadColliders(const _tchar* _pFileName);
 	virtual void OnCollision(Engine::CollisionInfo _tCollisionInfo) override;
+	virtual void OnNotCollision(Engine::CollisionInfo _tCollisionInfo) override;
 
 public:
 	static CMadCapA*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -31,29 +33,32 @@ public:
 	CStateMgr<CMadCapA>* GetStateMgr() const { return m_pStateMgr; }
 	Engine::CDynamicMesh* GetDynamicMesh() const { return m_pMesh; }
 	Engine::CPhysics* GetPhysics() const { return m_pPhysics; }
+	CAttribute* GetAttribute() const { return m_pAttribute; }
 
 	Engine::CGameObject* GetTargetObject() const { return m_pTargetObject; }
 	void SetTargetObject(Engine::CGameObject* _pTargetObject) { m_pTargetObject = _pTargetObject; }
-	void SetDead(const _bool& _bIsDead) { m_bIsDead = _bIsDead; }
 	void SetLanded(const _bool& _bIsLanded) { m_bIsLanded = _bIsLanded; }
 
 	_bool IsFalling(const _float& _fDeltaTime);
-	_bool IsDead() const { return m_bIsDead; }
+	_bool IsDead() const;
 	_bool IsLanded() const { return m_bIsLanded; }
 	CMap* GetMap() const { return m_pMap; }
 	_int GetCellIndex() const { return m_iCellIndex; }
 
+	Engine::CGameObject* GetWeapon() const { return m_pWeapon; }
+
 private:
 	CMap* m_pMap = nullptr;
+	Engine::CGameObject* m_pWeapon = nullptr;
 	Engine::CGameObject* m_pTargetObject = nullptr;
 
 	CStateMgr<CMadCapA>* m_pStateMgr = nullptr;
 	Engine::CDynamicMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CPhysics* m_pPhysics = nullptr;
-	_int m_iCellIndex = -1;
+	CAttribute* m_pAttribute = nullptr;
 
-	_bool m_bIsDead = false;
+	_int m_iCellIndex = -1;
 	_bool m_bIsLanded = false;
 };
 

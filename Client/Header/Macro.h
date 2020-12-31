@@ -103,13 +103,15 @@ namespace Client
 #define TOGGLE_FLAG(_State, _Mask) (_State ^= _Mask)
 #define IS_ON_FLAG(_State, _Mask) ((bool)((_State & _Mask) != 0))
 
-#define ALICE_RUN_SPEED 4.5f
-#define ALICE_JUMP_SPEED 15.f
-#define PHYSICS_MIN_VEL_Y	-400.f
+#define ALICE_RUN_SPEED			4.5f
+#define ALICE_JUMP_SPEED		15.f
+#define ALICE_MAX_HP			64.f
+#define PHYSICS_MIN_VEL_Y		-400.f
 
 #define MADCAPA_COGNITIVE_RANGE 5.f
 #define MADCAPA_ATTACK_RANGE	4.0f
 #define	MADCAPA_RUN_SPEED		2.f
+#define MADCAPA_MAX_HP			10.f
 
 // 키입력 관련
 //#define	KM_LEFT		0x00000001

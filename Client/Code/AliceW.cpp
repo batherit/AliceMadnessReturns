@@ -4,6 +4,7 @@
 #include "StateMgr.h"
 #include "AliceWState_Idle.h"
 #include "StaticObject.h"
+#include "Attribute.h"
 
 CAliceW::CAliceW(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -23,39 +24,42 @@ CAliceW::~CAliceW(void)
 
 HRESULT CAliceW::Ready_Object(void)
 {
-	Engine::CComponent* pComponent = nullptr;
-
 	// Mesh
-	pComponent = m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"AliceW"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::CDynamicMesh::GetComponentID()].emplace(Engine::CDynamicMesh::GetComponentTag(), pComponent);
+	m_pMesh = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"AliceW"));
+	m_mapComponent[Engine::CDynamicMesh::GetComponentID()].emplace(Engine::CDynamicMesh::GetComponentTag(), m_pMesh);
 	//m_pMesh->Set_AnimationSet(48);
 
 	// Load Colliders
 	LoadColliders(L"AliceW.col");
 
 	// MeshRenderer
-	pComponent = m_pRenderer = AddComponent<Engine::CMeshRenderer>();
+	m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
-	//m_pTransform->SetScale(_vec3(0.01f, 0.01f, 0.01f));
-	
+	// Attribute
+	m_pAttribute = AddComponent<CAttribute>();
+	m_pAttribute->SetHP(ALICE_MAX_HP, ALICE_MAX_HP);
+
 	// Physics
-	pComponent = m_pPhysics = AddComponent<Engine::CPhysics>();
-	//m_pPhysics->SetDirection(_vec3(0.f, 0.f, -1.f));
-	m_pPhysics->SetSpeed(ALICE_RUN_SPEED, ALICE_RUN_SPEED);
-	//m_pPhysics->SetResistanceCoefficientXZ(0.95f);
+	m_pPhysics = AddComponent<Engine::CPhysics>();
+	m_pPhysics->SetSpeed(ALICE_RUN_SPEED);
 	m_pPhysics->SetGravity(9.8f * 3.f);
 
+	// StateMgr
 	m_pStateMgr = new CStateMgr<CAliceW>(*this);
 	m_pStateMgr->SetNextState(new CAliceWState_Idle(*this));
 
-
+	// Weapon
 	CStaticObject* pStaticObject = CStaticObject::Create(m_pGraphicDev);
 	pStaticObject->SetRenderInfo(L"VorpalBlade");
 	pStaticObject->GetTransform()->Rotate(D3DXToRadian(45.f), D3DXToRadian(90.f), D3DXToRadian(160.f));
 	pStaticObject->GetTransform()->Translate(0.07f, 0.f, 0.02f);
 	AddChild(pStaticObject, "Bip01-R-Hand");
+	m_pWeapons[TYPE_BLADE] = pStaticObject;
+
+
+	SetWeaponType(TYPE_BLADE);
+	GetWeapon()->GetColliderFromTag(L"PlayerAttack")->SetActivated(false);
 		
 	return S_OK;
 }
@@ -157,6 +161,9 @@ _bool CAliceW::LoadColliders(const _tchar* _pFileName)
 
 void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
+	if (IsDead())
+		return;
+
 	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
 		_int a = 10;
 	}
@@ -164,7 +171,36 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		_int a = 10;
 	}
 	else {
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack") == 0) {
+			if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
+				// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
+				m_pAttribute->Damaged(1.f);
+				_vec3 vToOwner = GetTransform()->GetPos() - _tCollisionInfo.pCollidedCollider->GetTransform()->GetPos();
+				vToOwner.y = 0.f;
+				D3DXVec3Normalize(&vToOwner, &vToOwner);
+				GetPhysics()->SetVelocityXZ(_vec2(vToOwner.x, vToOwner.z) * ALICE_RUN_SPEED * 2.f);
+				GetPhysics()->SetResistanceCoefficientXZ(0.8f);
+			}
+		}
+	}
+}
+
+void CAliceW::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)
+{
+	if (IsDead())
+		return;
+
+	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
 		_int a = 10;
+	}
+	else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
+		_int a = 10;
+	}
+	else {
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack") == 0) {
+			// 충돌하지 않았다면 어태커에서 제거한다.
+			m_pAttribute->ReleaseAttacker(_tCollisionInfo.pCollidedCollider);
+		}
 	}
 }
 
@@ -278,6 +314,11 @@ _bool CAliceW::IsRunOn(const _float& _fDeltaTime, _vec3 * _pDir)
 
 	return true;
 	
+}
+
+_bool CAliceW::IsDead() const
+{
+	return m_pAttribute->IsDead();
 }
 
 //_bool CAliceW::ProcessMoveXZ(const _float& _fDeltaTime)

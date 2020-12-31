@@ -4,6 +4,7 @@
 #include "StateMgr.h"
 #include "MadCapAState_Idle.h"
 #include "StaticObject.h"
+#include "Attribute.h"
 
 CMadCapA::CMadCapA(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -38,13 +39,13 @@ HRESULT CMadCapA::Ready_Object(void)
 	pComponent = m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
-	//m_pTransform->SetScale(_vec3(0.01f, 0.01f, 0.01f));
+	// Attribute
+	m_pAttribute = AddComponent<CAttribute>();
+	m_pAttribute->SetHP(MADCAPA_MAX_HP, MADCAPA_MAX_HP);
 
 	// Physics
 	pComponent = m_pPhysics = AddComponent<Engine::CPhysics>();
-	//m_pPhysics->SetDirection(_vec3(0.f, 0.f, -1.f));
-	m_pPhysics->SetSpeed(MADCAPA_RUN_SPEED, MADCAPA_RUN_SPEED);
-	//m_pPhysics->SetResistanceCoefficientXZ(0.95f);
+	m_pPhysics->SetSpeed(MADCAPA_RUN_SPEED);
 	m_pPhysics->SetGravity(9.8f * 2.f);
 
 	m_pStateMgr = new CStateMgr<CMadCapA>(*this);
@@ -56,6 +57,9 @@ HRESULT CMadCapA::Ready_Object(void)
 	//pStaticObject->GetTransform()->Rotate(D3DXToRadian(45.f), D3DXToRadian(90.f), D3DXToRadian(160.f));
 	pStaticObject->GetTransform()->Translate(0.f, -0.5f, 0.f);
 	AddChild(pStaticObject, "Bip01-Prop1");
+	m_pWeapon = pStaticObject;
+	
+	GetWeapon()->GetColliderFromTag(L"EnemyAttack")->SetActivated(false);
 
 	return S_OK;
 }
@@ -161,8 +165,31 @@ void CMadCapA::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		_int a = 10;
 	}
 	else {
-		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0)
-			SetDead(true);
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
+			if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
+				// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
+				m_pAttribute->Damaged(1.f);
+			}
+		}
+	}
+}
+
+void CMadCapA::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)
+{
+	if (IsDead())
+		return;
+
+	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
+		_int a = 10;
+	}
+	else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
+		_int a = 10;
+	}
+	else {
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
+			// 충돌하지 않았다면 어태커에서 제거한다.
+			m_pAttribute->ReleaseAttacker(_tCollisionInfo.pCollidedCollider);
+		}
 	}
 }
 
@@ -187,4 +214,9 @@ _bool CMadCapA::IsFalling(const _float & _fDeltaTime)
 	if (GetPhysics()->GetVelocity().y <= 0.f && !m_bIsLanded)
 		return true;
 	return false;
+}
+
+_bool CMadCapA::IsDead() const
+{
+	return m_pAttribute->IsDead();
 }

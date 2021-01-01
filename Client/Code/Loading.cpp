@@ -178,6 +178,16 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"CobbledStreet_DM", Engine::TEX_NORMAL, L"../../Resource/Terrain/Texture/CobbledStreet_DM.tga"), E_FAIL);
 	
+	// UI
+	//256*64`
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_HP_Branch", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_HP_Branch.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		L"UI_HP",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/UI/UI_HP%d.tga", 8),
+		E_FAIL);
+
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	// Stone 메쉬 원본 생성
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

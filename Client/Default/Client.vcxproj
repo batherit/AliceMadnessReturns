@@ -198,6 +198,10 @@
     </ClInclude>
     <ClInclude Include="..\Code\CameraController_Sliding.h" />
     <ClInclude Include="..\Code\CameraController_Target.h" />
+    <ClInclude Include="..\Code\UI_Image.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\DynamicObject.h" />
     <ClInclude Include="..\Code\MadCapA.h" />
     <ClInclude Include="..\Code\MadCapAState_Alert.h">
@@ -299,6 +303,10 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraController_Sliding.cpp" />
     <ClCompile Include="..\Code\CameraController_Target.cpp" />
+    <ClCompile Include="..\Code\UI_Image.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\DynamicObject.cpp" />
     <ClCompile Include="..\Code\MadCapA.cpp" />
     <ClCompile Include="..\Code\MadCapAState_Alert.cpp">

@@ -68,6 +68,20 @@ HRESULT Engine::CGraphicDev::Ready_GraphicDev(HWND hWnd,
 
 	*ppGraphicDev = this;
 
+	// ½ºÇÁ¶óÀÌÆ® ÄÄ°´Ã¼ »ý¼º
+	FAILED_CHECK_RETURN(D3DXCreateSprite(m_pGraphicDev, &m_pSprite), E_FAIL);
+
+	//D3DXFONT_DESCW fontInfo;
+	//ZeroMemory(&fontInfo, sizeof(D3DXFONT_DESCW));
+	//fontInfo.Height = 28;
+	//fontInfo.Width = 14;
+	//fontInfo.Weight = FW_HEAVY;
+	//fontInfo.CharSet = HANGUL_CHARSET;
+	//lstrcpy(fontInfo.FaceName, L"¸¼Àº °íµñ");
+
+	//// ÆùÆ® ÄÄ°´Ã¼ »ý¼º
+	//FAILED_CHECK_RETURN(D3DXCreateFontIndirectW(m_pGraphicDev, &fontInfo, &m_pFont), E_FAIL);
+
 	return S_OK;
 }
 
@@ -75,17 +89,43 @@ void Engine::CGraphicDev::Render_Begin(D3DXCOLOR Color)
 {
 	m_pGraphicDev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER, Color, 1.f, 0);
 	m_pGraphicDev->BeginScene();
+	//m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 }
 
 void Engine::CGraphicDev::Render_End(void)
 {
+	//m_pSprite->End();
 	m_pGraphicDev->EndScene();
 	m_pGraphicDev->Present(NULL, NULL, NULL, NULL);
+}
+
+//void CGraphicDev::RenderText(const wstring & _wstrText, const _vec3 & _vPos, const _vec3 & _vScale, const _vec3 & _vRot, D3DXCOLOR _clRenderColor)
+//{
+//	D3DXMATRIX matWorld, matScale, matRot, matTrans;
+//	D3DXMatrixScaling(&matScale, _vScale.x, _vScale.y, _vScale.z);
+//	D3DXMatrixRotationYawPitchRoll(&matRot, _vRot.y, _vRot.x, _vRot.z);
+//	D3DXMatrixTranslation(&matTrans, _vPos.x, _vPos.y, _vPos.z);
+//	matWorld = matScale * matRot * matTrans;
+//	m_pSprite->SetTransform(&matWorld);
+//
+//	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
+//	m_pFont->DrawTextW(m_pSprite, _wstrText.c_str(), _wstrText.length(), nullptr, 0, _clRenderColor);
+//	m_pSprite->End();
+//}
+
+void CGraphicDev::RenderSprite(LPDIRECT3DTEXTURE9 _texture, const _vec3 & _position, const _vec3 & _scale, const _vec3 & _angle, const D3DCOLOR & _color)
+{
 }
 
 void Engine::CGraphicDev::Free(void)
 {
 	_ulong	dwRefCnt = 0;
+
+	//if (dwRefCnt = Engine::Safe_Release(m_pFont))
+	//	MSG_BOX("m_pFont Release Failed");
+
+	if (dwRefCnt = Engine::Safe_Release(m_pSprite))
+		MSG_BOX("m_pSprite Release Failed");
 
 	if (dwRefCnt = Engine::Safe_Release(m_pGraphicDev))
 		MSG_BOX("m_pGraphicDev Release Failed");

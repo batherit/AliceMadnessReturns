@@ -14,6 +14,7 @@
 #include "CameraController_Crowd.h"
 #include "CameraController_Sliding.h"
 #include "CameraController_Target.h"
+#include "UI_Image.h"
 #include "Map.h"
 
 CPlayScene::CPlayScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -164,6 +165,13 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Map", pMap), E_FAIL);
 
+	CUI_Image* pImage = CUI_Image::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pImage, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pImage), E_FAIL);
+	pImage->SetTexture(L"UI_HP_Branch");
+	//pImage->GetTransform()->SetPos(800 >> 1, 600 >> 1, 0.f);
+	pImage->SetOutputArea(RECT{ 0, 0,2, 2 });
+	
 	// 카메라 매니져 생성
 	Engine::CCameraMgr* pCameraMgr = Engine::CCameraMgr::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pCameraMgr, E_FAIL);

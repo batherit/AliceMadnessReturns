@@ -49,11 +49,7 @@ HRESULT Client::CSkyBox::Ready_Object(void)
 }
 Client::_int Client::CSkyBox::Update_Object(const _float& fTimeDelta)
 {
-	_matrix	matCamWorld;
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
-	// 카메라 월드 행렬
-	D3DXMatrixInverse(&matCamWorld, NULL, &matCamWorld);
-	m_pTransform->SetPos(matCamWorld._41, matCamWorld._42, matCamWorld._43);
+	
 
 	//m_pRenderer->Add_RenderGroup(Engine::RENDER_PRIORITY, this);
 	m_pRenderer->Update(fTimeDelta);
@@ -70,6 +66,11 @@ void Client::CSkyBox::Render_Object(void)
 
 	//m_pTexture->Render_Texture(3);
 	//m_pCubeTex->Render_Buffer();
+	_matrix	matCamWorld;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
+	// 카메라 월드 행렬
+	D3DXMatrixInverse(&matCamWorld, NULL, &matCamWorld);
+	m_pTransform->SetPos(matCamWorld._41, matCamWorld._42, matCamWorld._43);
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Render();
 

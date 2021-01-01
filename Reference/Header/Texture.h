@@ -19,12 +19,13 @@ public:
 	
 	// 셰이더 컴객체를 통해 텍스처를 세팅하기 위한 함수
 	void		Set_Texture(LPD3DXEFFECT& pEffect, const char* pConstantName, const _uint& iIndex = 0);
+	TextureInfo GetTextureInfo(const _uint& _iIndex) { return m_vecTexture[_iIndex]; }
 	
 	static const _tchar* GetComponentTag() { return L"Texture"; }
 	static const Engine::COMPONENTID GetComponentID() { return Engine::ID_STATIC; }
 
 private:
-	vector<IDirect3DBaseTexture9*>			m_vecTexture;
+	vector<TextureInfo>			m_vecTexture;
 
 public:
 	static CTexture*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pPath, TEXTURETYPE eType, const _uint& iCnt);

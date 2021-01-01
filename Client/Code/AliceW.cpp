@@ -83,6 +83,18 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	m_pRenderer->Update(_fDeltaTime);	
 
 	CGameObject::Update_Object(_fDeltaTime);
+
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_CAPSLOCK)) {
+		ToggleLockOn();
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_TAB)) {
+		ChangeLockOnTarget();
+	}
+	if (m_pTargetObject && m_pTargetObject->GetComponent<CAttribute>()->IsDead()) {
+		if (!ChangeLockOnTarget())
+			ReleaseLockOn();
+	}
+
 	m_pStateMgr->Update(_fDeltaTime);
 
 	Engine::CNaviMesh* pNaviMesh = m_pMap->GetNaviMesh();
@@ -319,6 +331,83 @@ _bool CAliceW::IsRunOn(const _float& _fDeltaTime, _vec3 * _pDir)
 _bool CAliceW::IsDead() const
 {
 	return m_pAttribute->IsDead();
+}
+
+void CAliceW::ToggleLockOn()
+{
+	if (m_bIsLockOn) {
+		ReleaseLockOn();
+	}
+	else {
+		auto& rMonsterList = Engine::GetLayer(L"Environment")->GetLayerList(L"Monster");
+		
+		if (rMonsterList.empty()) 
+			return;					// 몬스터가 존재하지 않으므로 락온을 활성화하지 않는다.
+
+		m_pTargetObject = nullptr;
+		for (auto iter = rMonsterList.begin(); iter != rMonsterList.end(); ++iter) {
+			if ((*iter)->IsValid()) {
+				CAttribute* pAttribute = (*iter)->GetComponent<CAttribute>();
+				if (pAttribute && !pAttribute->IsDead()) {
+					m_pTargetObject = (*iter);
+					break;
+				}
+			}
+		}
+
+		if (m_pTargetObject) {
+			m_bIsLockOn = true;	// 타겟을 찾았다면 락온을 활성화한다.
+			Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
+			pCameraMgr->ChangeCameraController(2, 0.1f);
+		}
+			
+	}
+}
+
+void CAliceW::ReleaseLockOn()
+{
+	m_bIsLockOn = false;
+	m_pTargetObject = nullptr;
+	Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
+	pCameraMgr->ChangeCameraController(0, 0.5f);
+}
+
+_bool CAliceW::ChangeLockOnTarget()
+{
+	if (!m_bIsLockOn || !m_pTargetObject) {
+		ReleaseLockOn();
+		return false;
+	}
+
+	auto& rMonsterList = Engine::GetLayer(L"Environment")->GetLayerList(L"Monster");
+	auto iter = find(rMonsterList.begin(), rMonsterList.end(), m_pTargetObject);
+
+	if (iter == rMonsterList.end()) {
+		// 타겟 객체를 찾지 못했다면, 타겟 객체는 죽어서 해제되었던가 원래 없었던 경우.
+		ReleaseLockOn();
+		return false;
+	}
+
+	do {
+		++iter;
+		if (iter == rMonsterList.end()) {
+			iter = rMonsterList.begin();
+		}
+
+		if ((*iter)->IsValid()) {
+			CAttribute* pAttribute = (*iter)->GetComponent<CAttribute>();
+			if (pAttribute && !pAttribute->IsDead()) {
+				break;
+			}
+		}
+	} while ((*iter) != m_pTargetObject);
+
+	if ((*iter) != m_pTargetObject) {
+		m_pTargetObject = (*iter);
+		return true;
+	}
+		
+	return false;
 }
 
 //_bool CAliceW::ProcessMoveXZ(const _float& _fDeltaTime)

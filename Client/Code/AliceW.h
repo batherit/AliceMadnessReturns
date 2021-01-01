@@ -47,6 +47,7 @@ public:
 	_bool IsFloatingOn(const _float& _fDeltaTime);
 	_bool IsFalling(const _float& _fDeltaTime);
 	_bool IsRunOn(const _float&, _vec3* _pDir = nullptr);
+	_bool IsLockOn() const { return m_bIsLockOn; }
 	_bool IsDead() const;
 	_bool IsLanded() const { return m_bIsLanded; }
 	CMap* GetMap() const { return m_pMap; }
@@ -54,6 +55,11 @@ public:
 
 	Engine::CGameObject* GetWeapon() const { return m_pWeapons[m_eWeaponType]; }
 	E_WEAPON_TYPE GetWeaponType() const { return m_eWeaponType; }
+
+	void ToggleLockOn();		// CAPS_LOCK 버튼을 눌렀을때
+	void ReleaseLockOn();		// 락온 해제
+	_bool ChangeLockOnTarget();	// TAB버튼을 눌렀을때 (락온이 켜져있을때 유효) // 타겟 대상이 바뀌면 true반환
+	Engine::CGameObject* GetTargetObject() const { return m_pTargetObject; }
 
 private:
 	CMap* m_pMap = nullptr;
@@ -67,6 +73,9 @@ private:
 	CAttribute* m_pAttribute = nullptr;
 	_int m_iCellIndex = -1;
 	_bool m_bIsLanded = false;
+
+	_bool m_bIsLockOn = false;
+	Engine::CGameObject* m_pTargetObject = nullptr;
 };
 
 END

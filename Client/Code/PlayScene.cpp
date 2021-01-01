@@ -13,6 +13,7 @@
 #include "CameraController_Player.h"
 #include "CameraController_Crowd.h"
 #include "CameraController_Sliding.h"
+#include "CameraController_Target.h"
 #include "Map.h"
 
 CPlayScene::CPlayScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -93,7 +94,7 @@ int CPlayScene::Update(const _float& fTimeDelta)
 	//	}
 	//}	
 
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_0)) {
+	/*if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_0)) {
 		Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 		pCameraMgr->ChangeCameraController(0, 0.1f);
 	}
@@ -105,7 +106,7 @@ int CPlayScene::Update(const _float& fTimeDelta)
 		Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 		pCameraMgr->ChangeCameraController(3, 0.1f);
 	}
-
+*/
 	return CScene::Update(fTimeDelta);
 }
 
@@ -181,7 +182,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
 	m_pPlayer->GetTransform()->Translate(_vec3(0.f, 55.f, 0.f));
 
-	// 플레이어 카메라 컨트롤러 생성
+	// 플레이어 카메라 컨트롤러 생성(0)
 	Engine::CCameraController* pCameraController = CCameraController_Player::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pCameraController, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
@@ -189,13 +190,20 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pCameraMgr->AddCameraController(pCameraController);
 	pCameraMgr->ChangeCameraController(0, 0.5f);
 
-	// 슬라이딩 카메라 컨트롤러 생성
+	// 슬라이딩 카메라 컨트롤러 생성(1)
 	pCameraController = CCameraController_Sliding::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pCameraController, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
 	static_cast<CCameraController_Sliding*>(pCameraController)->SetPlayer(m_pPlayer);
 	pCameraMgr->AddCameraController(pCameraController);
 	//pCameraMgr->ChangeCameraController(0, 0.5f);
+
+	// 타겟팅 카메라 컨트롤러 생성(2)
+	pCameraController = CCameraController_Target::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pCameraController, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
+	static_cast<CCameraController_Target*>(pCameraController)->SetPlayer(m_pPlayer);
+	pCameraMgr->AddCameraController(pCameraController);
 
 	// 관중형 카메라 컨트롤러 생성
 	pCameraController = CCameraController_Crowd::Create(m_pGraphicDev);
@@ -215,12 +223,12 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	// 테스트 몬스터(MadCapA) 생성
 	Engine::CGameObject* pGameObject = CMadCapA::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
 	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, 0.f));
 
 	pGameObject = CMadCapA::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
 	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, -2.f));
 
 	// 스카이 박스 생성

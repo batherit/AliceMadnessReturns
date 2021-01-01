@@ -24,7 +24,7 @@ CAliceWState_Run::~CAliceWState_Run()
 
 void CAliceWState_Run::OnLoaded(void)
 {
-	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Run);
+	//m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Run);
 }
 
 int CAliceWState_Run::Update(const _float& _fDeltaTime)
@@ -62,9 +62,55 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 			break;
 		}
 	}
-	else if (m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
+	else if (m_rOwner.IsMoving(_fDeltaTime, &vDir)) {
 		_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
 		m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
+		if (m_rOwner.IsLockOn()) {
+			_vec3 vNewVelXZ = m_rOwner.GetPhysics()->GetVelocity();
+			E_DIR eDir = GetVelDirXZType(_vec2(vNewVelXZ.x, vNewVelXZ.z));
+
+			if (m_eDir != eDir) {
+				m_eDir = eDir;
+				switch (m_eDir)
+				{
+				case DIR_FORWARD:
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Fwd);
+					break;
+				case DIR_RIGHT:
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Rgt);
+					break;
+				case DIR_BACK:
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Bk);
+					break;
+				case DIR_LEFT:
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Lft);
+					break;
+				default:
+					break;
+				}
+			}
+			// 몬스터 방향으로 회전
+			_vec3 vToTargetDirXZ = m_rOwner.GetTargetObject()->GetTransform()->GetPos() - m_rOwner.GetTransform()->GetPos();
+			vToTargetDirXZ.y = 0.f;
+			_float fLength = D3DXVec3Length(&vToTargetDirXZ);
+			if (fLength > 0.f) {
+				// 타겟 위치를 향해 회전합니다.
+				_vec3 vLook = m_rOwner.GetTransform()->GetLook();
+				vToTargetDirXZ /= fLength;
+				_vec3 vRotAxis = Engine::GetRotationAxis(vLook, vToTargetDirXZ);
+				_float fRotAngle = Engine::GetRotationAngle(vLook, vToTargetDirXZ);
+				m_rOwner.GetTransform()->RotateByAxis(fRotAngle * 0.1f, vRotAxis);
+			}
+		}
+		else {
+			// 플레이어 방향 전환이 이루어졌다면 회전시키기
+			_vec3 vRotAxis = Engine::GetRotationAxis(m_rOwner.GetTransform()->GetLook(), vDir);
+			_float vRotAngle = Engine::GetRotationAngle(m_rOwner.GetTransform()->GetLook(), vDir) * 0.25f;
+			m_rOwner.GetTransform()->RotateByAxis(vRotAngle, vRotAxis);
+			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Run);
+		}
+
+		
 	}
 	else {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Idle(m_rOwner));
@@ -79,4 +125,38 @@ void CAliceWState_Run::OnExited(void)
 
 void CAliceWState_Run::Free(void)
 {
+}
+
+CAliceWState_Run::E_DIR CAliceWState_Run::GetVelDirXZType(const _vec2 & _vVelDirXZ)
+{
+	_vec3 vLook = m_rOwner.GetTransform()->GetLook();
+	_vec3 vVel = m_rOwner.GetPhysics()->GetVelocity();
+	_float fLength = 0.f;
+	vVel.y = 0.f;
+	fLength = D3DXVec3Length(&vVel);
+
+	if (fLength <= 0.f)
+		return DIR_END;
+
+	_vec3 vRotAxis = Engine::GetRotationAxis(vLook, vVel);
+	_float fRotDegree = D3DXToDegree(Engine::GetRotationAngle(vLook, vVel));
+
+	if (vRotAxis.y == 0.f) {
+		return DIR_END;
+	}
+	else if (vRotAxis.y < 0.f) {
+		fRotDegree = 360.f - fRotDegree;
+	}
+
+	if (45.f < fRotDegree && fRotDegree <= 135.f) {
+		return DIR_RIGHT;
+	}
+	else if (135.f < fRotDegree && fRotDegree <= 225.f) {
+		return DIR_BACK;
+	}
+	else if (225.f < fRotDegree && fRotDegree <= 315.f) {
+		return DIR_LEFT;
+	}
+
+	return DIR_FORWARD;
 }

@@ -12,6 +12,9 @@ class CAliceWState_Run :
 	public CState<CAliceW>
 {
 public:
+	enum E_DIR { DIR_FORWARD, DIR_RIGHT, DIR_BACK, DIR_LEFT, DIR_END };
+
+public:
 	CAliceWState_Run(CAliceW& _rOwner);
 	virtual ~CAliceWState_Run();
 
@@ -23,6 +26,12 @@ public:
 
 	// CState을(를) 통해 상속됨
 	virtual void Free(void) override;
+
+private:
+	E_DIR GetVelDirXZType(const _vec2& _vVelDirXZ);
+
+private:
+	E_DIR m_eDir = DIR_END;
 };
 
 END

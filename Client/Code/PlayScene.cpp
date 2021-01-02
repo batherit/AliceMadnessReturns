@@ -14,8 +14,10 @@
 #include "CameraController_Crowd.h"
 #include "CameraController_Sliding.h"
 #include "CameraController_Target.h"
-#include "UI_Image.h"
+#include "UI_HPGauge.h"
 #include "Map.h"
+
+#include "Attribute.h"
 
 CPlayScene::CPlayScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -108,6 +110,14 @@ int CPlayScene::Update(const _float& fTimeDelta)
 		pCameraMgr->ChangeCameraController(3, 0.1f);
 	}
 */
+
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
+		m_pPlayer->GetComponent<CAttribute>()->DecreaseHP(3.f);
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_P)) {
+		m_pPlayer->GetComponent<CAttribute>()->IncreaseHP(3.f);
+	}
+
 	return CScene::Update(fTimeDelta);
 }
 
@@ -115,7 +125,7 @@ void CPlayScene::Render(void)
 {
 	Engine::Get_Renderer()->Render_GameObject();
 
-	Engine::Render_Font(L"Font_Jinji", L"Text Test", &_vec2(10.f, 10.f), D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
+	//Engine::Render_Font(L"Font_Jinji", L"Text Test", &_vec2(10.f, 10.f), D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
 	//CScene::Render();
 }
 
@@ -165,12 +175,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Map", pMap), E_FAIL);
 
-	CUI_Image* pImage = CUI_Image::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pImage, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pImage), E_FAIL);
-	pImage->SetTexture(L"UI_HP_Branch");
-	//pImage->GetTransform()->SetPos(800 >> 1, 600 >> 1, 0.f);
-	pImage->SetOutputArea(RECT{ 0, 0,2, 2 });
+	
 	
 	// 카메라 매니져 생성
 	Engine::CCameraMgr* pCameraMgr = Engine::CCameraMgr::Create(m_pGraphicDev);
@@ -238,6 +243,11 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
 	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, -2.f));
+
+	CUI_HPGauge* pHPGauge = CUI_HPGauge::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pHPGauge, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pHPGauge), E_FAIL);
+	pHPGauge->SetPlayer(m_pPlayer);
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);

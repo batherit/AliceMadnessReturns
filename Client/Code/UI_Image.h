@@ -25,10 +25,10 @@ public:
 	void SetOutputArea(const RECT& _rcOutputArea) { 
 		m_rcOutputArea = _rcOutputArea;
 		GetTransform()->SetPos(static_cast<_float>(_rcOutputArea.left + _rcOutputArea.right) * 0.5f, static_cast<_float>(_rcOutputArea.top + _rcOutputArea.bottom) * 0.5f, 0.f);
-		m_fCorrectionRatioX = static_cast<float>(m_rcOutputArea.right - m_rcOutputArea.left) / (m_rcExtractionArea.right - m_rcExtractionArea.left);
-		m_fCorrectionRatioY = static_cast<float>(m_rcOutputArea.bottom - m_rcOutputArea.top) / (m_rcExtractionArea.bottom - m_rcExtractionArea.top);
-	//	m_fWidth = m_rcOutputArea.right - m_rcOutputArea.left; 
-		//m_fHeight = m_rcOutputArea.bottom - m_rcOutputArea.top;
+		m_fCorrectionRatioX = static_cast<_float>(m_rcOutputArea.right - m_rcOutputArea.left) / (m_rcExtractionArea.right - m_rcExtractionArea.left);
+		m_fCorrectionRatioY = static_cast<_float>(m_rcOutputArea.bottom - m_rcOutputArea.top) / (m_rcExtractionArea.bottom - m_rcExtractionArea.top);
+		m_iWidth = m_rcOutputArea.right - m_rcOutputArea.left; 
+		m_iHeight = m_rcOutputArea.bottom - m_rcOutputArea.top;
 	}
 	void SetOutputArea(LONG _lLeft, LONG _lTop, LONG _lRight, LONG _lBottom) {
 		SetOutputArea(RECT({ _lLeft, _lTop, _lRight, _lBottom }));
@@ -51,13 +51,13 @@ public:
 
 		m_rcOutputArea = _rcOutputArea;
 		GetTransform()->SetPos(static_cast<_float>(_rcOutputArea.left + _rcOutputArea.right) * 0.5f, static_cast<_float>(_rcOutputArea.top + _rcOutputArea.bottom) * 0.5f, 0.f);	
-		//m_fWidth = _rcOutputArea.right - _rcOutputArea.left;
-		//m_fHeight = _rcOutputArea.bottom - _rcOutputArea.top;
+		m_iWidth = _rcOutputArea.right - _rcOutputArea.left;
+		m_iHeight = _rcOutputArea.bottom - _rcOutputArea.top;
 	}
 	void SetExtractionArea(const RECT& _rcExractionArea) { 
 		m_rcExtractionArea = _rcExractionArea;
-		m_fCorrectionRatioX = static_cast<float>(m_rcOutputArea.right - m_rcOutputArea.left) / (m_rcExtractionArea.right - m_rcExtractionArea.left);
-		m_fCorrectionRatioY = static_cast<float>(m_rcOutputArea.bottom - m_rcOutputArea.top) / (m_rcExtractionArea.bottom - m_rcExtractionArea.top);
+		m_fCorrectionRatioX = static_cast<_float>(m_rcOutputArea.right - m_rcOutputArea.left) / (m_rcExtractionArea.right - m_rcExtractionArea.left);
+		m_fCorrectionRatioY = static_cast<_float>(m_rcOutputArea.bottom - m_rcOutputArea.top) / (m_rcExtractionArea.bottom - m_rcExtractionArea.top);
 		//SetSize((m_rcExtractionArea.right - m_rcExtractionArea.left), (m_rcExtractionArea.bottom - m_rcExtractionArea.top));
 	}
 	void SetExtractionArea(LONG _lLeft, LONG _lTop, LONG _lRight, LONG _lBottom) {
@@ -74,26 +74,31 @@ public:
 		};
 		m_rcOutputArea = rcNewOutputArea;
 		GetTransform()->SetPos(static_cast<_float>(rcNewOutputArea.left + rcNewOutputArea.right) * 0.5f, static_cast<_float>(rcNewOutputArea.top + rcNewOutputArea.bottom) * 0.5f, 0.f);
-	//	m_fWidth = rcNewOutputArea.right - rcNewOutputArea.left;
-	//	m_fHeight = rcNewOutputArea.bottom - rcNewOutputArea.top;
+		m_iWidth = rcNewOutputArea.right - rcNewOutputArea.left;
+		m_iHeight = rcNewOutputArea.bottom - rcNewOutputArea.top;
 
 		m_rcExtractionArea = _rcExtractionArea;
 	}
 	
 
 	void SetTexture(const _tchar* _pTextureTag);
+	void SetTextureIndex(const _int& _iTextureIndex);
 	void SetRenderColor(const D3DXCOLOR& _clRenderColor) { m_clRenderColor = _clRenderColor; }
 
 	RECT GetOutputArea(void) const { return m_rcOutputArea; }
 	RECT GetExtractionArea(void) const { return m_rcExtractionArea; }
+
+	LONG GetWidth() const { return m_iWidth; }
+	LONG GetHeight() const { return m_iHeight; }
 
 private:
 	//const TextureInfo* m_pTextureInfo = nullptr;
 
 	Engine::CRenderer* m_pRenderer = nullptr;
 	Engine::CTexture* m_pTexture = nullptr;
-	//_float m_fWidth = 1.f;
-	//_float m_fHeight = 1.f;
+	LONG m_iWidth = 1;
+	LONG m_iHeight = 1;
+	_uint m_iTextureIndex = 0;
 	RECT m_rcOutputArea;
 	RECT m_rcExtractionArea;
 	D3DXCOLOR m_clRenderColor = D3DCOLOR_ARGB(255, 255, 255, 255);

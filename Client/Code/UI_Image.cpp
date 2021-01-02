@@ -26,7 +26,11 @@ HRESULT CUI_Image::Ready_Object(void)
 
 _int CUI_Image::Update_Object(const _float & _fDeltaTime)
 {
+	if (!IsActivated())
+		return 1;
+
 	m_pRenderer->Add_RenderGroup(Engine::RENDER_UI, this);
+	CGameObject::Update_Object(_fDeltaTime);
 
 	return 0;
 }
@@ -53,7 +57,7 @@ void CUI_Image::Render_Object(void)
 	Engine::CGraphicDev::GetInstance()->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 	Engine::CGraphicDev::GetInstance()->GetSprite()->SetTransform(&matScreen);
 	Engine::CGraphicDev::GetInstance()->GetSprite()->Draw(
-		static_cast<LPDIRECT3DTEXTURE9>(m_pTexture->GetTextureInfo(0).pTexture),
+		static_cast<LPDIRECT3DTEXTURE9>(m_pTexture->GetTextureInfo(m_iTextureIndex).pTexture),
 		&m_rcExtractionArea,
 		&D3DXVECTOR3(
 			static_cast<FLOAT>((m_rcExtractionArea.right - m_rcExtractionArea.left) >> 1),
@@ -84,11 +88,13 @@ void CUI_Image::SetTexture(const _tchar * _pTextureTag)
 		return;
 
 	m_pTexture = static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, _pTextureTag));
-	Engine::TextureInfo tTextureInfo = m_pTexture->GetTextureInfo(0);
-
+	
 	if (m_pTexture) {
-		GetTransform()->SetScaleXYZ(tTextureInfo.tImageInfo.Width, tTextureInfo.tImageInfo.Height, 0.f);
-		SetExtractionArea(RECT({ 0, 0, static_cast<LONG>(tTextureInfo.tImageInfo.Width), static_cast<LONG>(tTextureInfo.tImageInfo.Height) }));
+		m_iTextureIndex = 0;
+		Engine::TextureInfo tTextureInfo = m_pTexture->GetTextureInfo(m_iTextureIndex);
+		m_iWidth = tTextureInfo.tImageInfo.Width;
+		m_iHeight = tTextureInfo.tImageInfo.Height;
+		SetExtractionArea(RECT({ 0, 0, static_cast<LONG>(m_iWidth), static_cast<LONG>(m_iHeight) }));
 		_vec3 vPos = GetTransform()->GetPos();
 		SetOutputArea(RECT(
 			{
@@ -98,4 +104,12 @@ void CUI_Image::SetTexture(const _tchar * _pTextureTag)
 				static_cast<LONG>(vPos.y + m_rcExtractionArea.bottom * 0.5f)
 			}));
 	}
+}
+
+void CUI_Image::SetTextureIndex(const _int & _iTextureIndex)
+{
+	if (!m_pTexture)
+		return;
+
+	m_iTextureIndex = _iTextureIndex;
 }

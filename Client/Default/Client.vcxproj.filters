@@ -109,8 +109,23 @@
     <Filter Include="04. Component\Attribute">
       <UniqueIdentifier>{0db9cfe8-1f30-47ca-9e3d-f717ccd55683}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\08. UI">
+    <Filter Include="02. Object\02. GameObject\UI">
       <UniqueIdentifier>{55d5c14c-8be1-4a2c-b0fe-c0960ec0ac28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\Image">
+      <UniqueIdentifier>{807bb520-0fca-43e2-836e-239988c38e62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\InGame">
+      <UniqueIdentifier>{7082fc3f-231d-42a0-83fd-edbb96d204d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\HPGauge">
+      <UniqueIdentifier>{9a80128a-7d22-4631-84a7-373c608fcd87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\HPPiece">
+      <UniqueIdentifier>{2046b746-2eb9-4f87-9a33-14f18cec14dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\Tooth">
+      <UniqueIdentifier>{1696ee56-4c46-4d6e-8f9d-de5974641d5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -271,7 +286,16 @@
       <Filter>02. Object\07. CameraController</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_Image.h">
-      <Filter>02. Object\08. UI</Filter>
+      <Filter>02. Object\02. GameObject\UI\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_Tooth.h">
+      <Filter>02. Object\02. GameObject\UI\Tooth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_HPPiece.h">
+      <Filter>02. Object\02. GameObject\UI\HPPiece</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_HPGauge.h">
+      <Filter>02. Object\02. GameObject\UI\HPGauge</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -402,7 +426,16 @@
       <Filter>02. Object\07. CameraController</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Image.cpp">
-      <Filter>02. Object\08. UI</Filter>
+      <Filter>02. Object\02. GameObject\UI\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Tooth.cpp">
+      <Filter>02. Object\02. GameObject\UI\Tooth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPPiece.cpp">
+      <Filter>02. Object\02. GameObject\UI\HPPiece</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPGauge.cpp">
+      <Filter>02. Object\02. GameObject\UI\HPGauge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -63,6 +63,18 @@ void CGameObject::SetValid(_bool _bIsValid) {
 	}
 }
 
+void CGameObject::SetActivated(_bool _bIsActivated) {
+	m_bIsActivated = _bIsActivated;
+
+	for (auto& rChild : m_vecChildList) {
+		rChild->SetActivated(_bIsActivated);
+	}
+
+	for (auto& rCollider : m_vecOptimizedColliders) {
+		rCollider->SetActivated(_bIsActivated);
+	}
+}
+
 //CComponent * Engine::CGameObject::Get_Component(const _tchar * pComponentTag, COMPONENTID eID)
 //{
 //	Engine::CComponent*	pComponent = Find_Component(pComponentTag, eID);

@@ -2,6 +2,7 @@
 #include "AliceWState_Idle.h"
 #include "AliceWState_Run.h"
 #include "AliceWState_Attack_Blade.h"
+#include "AliceWState_Attack_Horse.h"
 #include "AliceWState_Jump.h"
 #include "AliceWState_Death.h"
 #include "AliceWState_Damage.h"
@@ -39,12 +40,15 @@ int CAliceWState_Idle::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
+	m_rOwner.IsWeaponChanging();
+
 	if (m_rOwner.IsLockOn()) {
 		switch (m_rOwner.GetWeaponType()) {
 		case CAliceW::TYPE_BLADE:
 			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Idle_Mele);
 			break;
 		case CAliceW::TYPE_HORSE:
+			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Idle_Mele);
 			break;
 		case CAliceW::TYPE_GUN:
 			break;
@@ -63,7 +67,16 @@ int CAliceWState_Idle::Update(const _float& _fDeltaTime)
 		}
 	}
 	else
-		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_Idle);
+		switch (m_rOwner.GetWeaponType()) {
+		case CAliceW::TYPE_BLADE:
+			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Idle);
+			break;
+		case CAliceW::TYPE_HORSE:
+			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Idle);
+			break;
+		case CAliceW::TYPE_GUN:
+			break;
+		}
 
 	_vec3 vDir;
 	_vec3 vSettedPos = m_rOwner.GetTransform()->GetPos();
@@ -78,6 +91,9 @@ int CAliceWState_Idle::Update(const _float& _fDeltaTime)
 		switch (m_rOwner.GetWeaponType()) {
 		case CAliceW::TYPE_BLADE:
 			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack_Blade(m_rOwner));
+			break;
+		case CAliceW::TYPE_HORSE:
+			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack_Horse(m_rOwner));
 			break;
 		}
 	}

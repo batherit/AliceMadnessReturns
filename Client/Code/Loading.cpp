@@ -55,8 +55,6 @@ HRESULT CLoading::Ready_Loading(LOADINGID eLoading)
 
 _uint CLoading::Loading_ForStage(void)
 {
-
-
 	lstrcpy(m_szLoading, L"Buffer Loading.............................");
 	
 	int i = 0;
@@ -224,6 +222,15 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::TYPE_STATIC,
 		L"../../Resource/Mesh/StaticMesh/Chapter1/VorpalBlade/",
 		L"VorpalBlade.X"),
+		E_FAIL);
+
+	// 말막대기 생성
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HobbyHorse",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/HobbyHorse/",
+		L"HobbyHorse.X"),
 		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

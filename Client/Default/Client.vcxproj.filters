@@ -297,6 +297,9 @@
     <ClInclude Include="..\Code\UI_Targeting.h">
       <Filter>02. Object\02. GameObject\UI\Targeting</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_Attack_Horse.h">
+      <Filter>03. State\AliceW</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -436,6 +439,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_Targeting.cpp">
       <Filter>02. Object\02. GameObject\UI\Targeting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_Attack_Horse.cpp">
+      <Filter>03. State\AliceW</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -38,7 +38,16 @@ public:
 	CAttribute* GetAttribute() const { return m_pAttribute; }
 
 	void SetLanded(const _bool& _bIsLanded) { m_bIsLanded = _bIsLanded; }
-	void SetWeaponType(E_WEAPON_TYPE _eWeaponType) { m_eWeaponType = _eWeaponType; }
+	void SetWeaponType(E_WEAPON_TYPE _eWeaponType) { 
+		if (_eWeaponType >= TYPE_END)
+			return;
+
+		if (m_eWeaponType < TYPE_END)
+			m_pWeapons[m_eWeaponType]->SetActivated(false);
+		m_eWeaponType = _eWeaponType;
+		m_pWeapons[_eWeaponType]->SetActivated(true);
+		m_pWeapons[_eWeaponType]->GetColliderFromTag(L"PlayerAttack")->SetActivated(false);
+	}
 
 	_bool IsMoving(const _float& _fDeltaTime, _vec3* _pDir = nullptr);
 	_bool IsAttackOn(const _float& _fDeltaTime);
@@ -50,6 +59,7 @@ public:
 	_bool IsLockOn() const { return m_bIsLockOn; }
 	_bool IsDead() const;
 	_bool IsLanded() const { return m_bIsLanded; }
+	_bool IsWeaponChanging();
 	CMap* GetMap() const { return m_pMap; }
 	_int GetCellIndex() const { return m_iCellIndex; } 
 
@@ -65,7 +75,7 @@ private:
 	CMap* m_pMap = nullptr;
 
 	Engine::CGameObject* m_pWeapons[E_WEAPON_TYPE::TYPE_END] = { nullptr, };
-	E_WEAPON_TYPE m_eWeaponType = TYPE_BLADE;
+	E_WEAPON_TYPE m_eWeaponType = TYPE_END;
 	CStateMgr<CAliceW>* m_pStateMgr = nullptr;
 	Engine::CDynamicMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;

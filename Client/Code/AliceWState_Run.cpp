@@ -39,6 +39,8 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
+	m_rOwner.IsWeaponChanging();
+
 	_vec3 vDir;
 	_vec3 vSettedPos = m_rOwner.GetTransform()->GetPos();
 	// Run => Death, Jump, Idle, Attack
@@ -74,16 +76,44 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 				switch (m_eDir)
 				{
 				case DIR_FORWARD:
-					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Fwd);
+					switch (m_rOwner.GetWeaponType()) {
+					case CAliceW::TYPE_BLADE:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Fwd);
+						break;
+					case CAliceW::TYPE_HORSE:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Strafe_Fwd);
+						break;
+					}
 					break;
 				case DIR_RIGHT:
-					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Rgt);
+					switch (m_rOwner.GetWeaponType()) {
+					case CAliceW::TYPE_BLADE:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Rgt);
+						break;
+					case CAliceW::TYPE_HORSE:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Strafe_Rgt);
+						break;
+					}
 					break;
 				case DIR_BACK:
-					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Bk);
+					switch (m_rOwner.GetWeaponType()) {
+					case CAliceW::TYPE_BLADE:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Bk);
+						break;
+					case CAliceW::TYPE_HORSE:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Strafe_Bk);
+						break;
+					}
 					break;
 				case DIR_LEFT:
-					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Lft);
+					switch (m_rOwner.GetWeaponType()) {
+					case CAliceW::TYPE_BLADE:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Strafe_Lft);
+						break;
+					case CAliceW::TYPE_HORSE:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Strafe_Lft);
+						break;
+					}
 					break;
 				default:
 					break;
@@ -107,7 +137,14 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 			_vec3 vRotAxis = Engine::GetRotationAxis(m_rOwner.GetTransform()->GetLook(), vDir);
 			_float vRotAngle = Engine::GetRotationAngle(m_rOwner.GetTransform()->GetLook(), vDir) * 0.25f;
 			m_rOwner.GetTransform()->RotateByAxis(vRotAngle, vRotAxis);
-			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Run);
+			switch (m_rOwner.GetWeaponType()) {
+			case CAliceW::TYPE_BLADE:
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Run);
+				break;
+			case CAliceW::TYPE_HORSE:
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Run);
+				break;
+			}		
 		}
 
 		

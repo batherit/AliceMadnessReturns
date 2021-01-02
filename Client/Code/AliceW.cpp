@@ -50,16 +50,26 @@ HRESULT CAliceW::Ready_Object(void)
 	m_pStateMgr->SetNextState(new CAliceWState_Idle(*this));
 
 	// Weapon
+	// 1) Vorpal Blade
 	CStaticObject* pStaticObject = CStaticObject::Create(m_pGraphicDev);
 	pStaticObject->SetRenderInfo(L"VorpalBlade");
 	pStaticObject->GetTransform()->Rotate(D3DXToRadian(45.f), D3DXToRadian(90.f), D3DXToRadian(160.f));
 	pStaticObject->GetTransform()->Translate(0.07f, 0.f, 0.02f);
 	AddChild(pStaticObject, "Bip01-R-Hand");
+	pStaticObject->SetActivated(false);
 	m_pWeapons[TYPE_BLADE] = pStaticObject;
 
+	// 2) Hobby Horse
+	pStaticObject = CStaticObject::Create(m_pGraphicDev);
+	pStaticObject->SetRenderInfo(L"HobbyHorse");
+	//pStaticObject->GetTransform()->Rotate(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f));
+	pStaticObject->GetTransform()->Translate(0.05f, 0.f, 0.f);
+	AddChild(pStaticObject, "Bip01-R-Hand");
+	pStaticObject->SetActivated(false);
+	m_pWeapons[TYPE_HORSE] = pStaticObject;
 
-	SetWeaponType(TYPE_BLADE);
-	GetWeapon()->GetColliderFromTag(L"PlayerAttack")->SetActivated(false);
+	SetWeaponType(TYPE_HORSE);
+	
 		
 	return S_OK;
 }
@@ -76,9 +86,7 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	if (!IsActivated())
 		return 1;
 
-	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
-		return 0;
-	}
+
 	// 부모 먼저 렌더러에 들어가야 올바르게 자식도 transform 됨.
 	m_pRenderer->Update(_fDeltaTime);	
 
@@ -331,6 +339,20 @@ _bool CAliceW::IsRunOn(const _float& _fDeltaTime, _vec3 * _pDir)
 _bool CAliceW::IsDead() const
 {
 	return m_pAttribute->IsDead();
+}
+
+_bool CAliceW::IsWeaponChanging()
+{
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_1)) {
+		SetWeaponType(TYPE_BLADE);
+		return true;
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_2)) {
+		SetWeaponType(TYPE_HORSE);
+		return true;
+	}
+
+	return false;
 }
 
 void CAliceW::ToggleLockOn()

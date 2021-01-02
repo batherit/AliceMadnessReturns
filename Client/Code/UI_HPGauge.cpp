@@ -46,7 +46,7 @@ int CUI_HPGauge::Update_Object(const _float & _fDeltaTime)
 	// m_fCurHP °»½Å
 	
 	if (m_pPlayer) {
-		_int iOldIndex = m_fCurHP - 1.f;// Engine::Clamp(m_fCurHP - 1.f, 0.f, m_pPlayer->GetComponent<CAttribute>()->GetMaxHP() - 1.f);
+		_int iOldIndex = static_cast<_int>(m_fCurHP - 1.f);// Engine::Clamp(m_fCurHP - 1.f, 0.f, m_pPlayer->GetComponent<CAttribute>()->GetMaxHP() - 1.f);
 		
 		_float fDelta = m_pPlayer->GetComponent<CAttribute>()->GetHP() - m_fCurHP;
 
@@ -57,7 +57,7 @@ int CUI_HPGauge::Update_Object(const _float & _fDeltaTime)
 				fDelta = -0.5f;
 		}
 		Engine::Clamp(&(m_fCurHP += fDelta), 0.f, m_pPlayer->GetComponent<CAttribute>()->GetMaxHP());
-		_int iIndex = m_fCurHP - 1.f;
+		_int iIndex = static_cast<_int>(m_fCurHP - 1.f);
 		if (iIndex >= 0) {
 			if (iOldIndex / 8 < iIndex / 8) {
 				m_vecPiece[iIndex / 8]->SetActivated(true);

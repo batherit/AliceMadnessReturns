@@ -35,7 +35,7 @@ public:
 
 	void SetValid(_bool _bIsValid);
 	_bool IsValid() const { return m_bIsValid; }
-	void SetActivated(_bool _bIsActivated) { m_bIsActivated = _bIsActivated; }
+	void SetActivated(_bool _bIsActivated);
 	_bool IsActivated() const { return m_bIsActivated; }
 
 	CComponent* GetComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);

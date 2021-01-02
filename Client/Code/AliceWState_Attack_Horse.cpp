@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "AliceWState_Attack_Blade.h"
+#include "AliceWState_Attack_Horse.h"
 #include "AliceWState_Run.h"
 #include "AliceWState_Idle.h"
 #include "AliceWState_Death.h"
@@ -10,20 +10,20 @@
 #include "Attribute.h"
 
 
-CAliceWState_Attack_Blade::CAliceWState_Attack_Blade(CAliceW & _rOwner)
+CAliceWState_Attack_Horse::CAliceWState_Attack_Horse(CAliceW & _rOwner)
 	:
 	CState(_rOwner)
 {
 }
 
-CAliceWState_Attack_Blade::~CAliceWState_Attack_Blade()
+CAliceWState_Attack_Horse::~CAliceWState_Attack_Horse()
 {
 }
 
-void CAliceWState_Attack_Blade::OnLoaded(void)
+void CAliceWState_Attack_Horse::OnLoaded(void)
 {
 	m_bIsAttacking = true;
-	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_1_A);
+	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_1_A);
 	m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 2.f);
 	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.85f);
 	++m_iAttackNum;
@@ -32,9 +32,9 @@ void CAliceWState_Attack_Blade::OnLoaded(void)
 	m_pWeaponCollider->SetActivated(true);
 }
 
-int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
+int CAliceWState_Attack_Horse::Update(const _float& _fDeltaTime)
 {
-	// Attack_Blade => Death, Jump, Idle, Attack_Blade
+	// Attack_Horse => Death, Jump, Idle, Attack_Horse
 	if (m_rOwner.IsDead()) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Death(m_rOwner));
 		return 0;
@@ -54,16 +54,16 @@ int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
 			switch (m_iAttackNum)
 			{
 			case 1:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_1_B);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_1_B);
 				break;
 			case 2:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_2_B);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_2_B);
 				break;
 			case 3:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_3_B);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_3_B);
 				break;
 			case 4:
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_4_B);
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_4_B);
 				break;
 			}
 			m_bIsAttacking = false;
@@ -76,15 +76,15 @@ int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
 					switch (m_iAttackNum)
 					{
 					case 1:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_2_A);
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_2_A);
 						break;
 					case 2:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_3_A);
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_3_A);
 						m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 2.f);
 						m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
 						break;
 					case 3:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP1_Mele_Attack_4_A);
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_4_A);
 						m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 3.f);
 						m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
 						break;
@@ -100,10 +100,10 @@ int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
 			// else 어떤 입력도 받지 못했다면 아무것도 하지 않는다.
 		}
 	}
-	else if(m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()){
+	else if (m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()) {
 		// 공격 종료 모션이 끝나고 이후 움직임에 따라 상태를 변경한다.
 		/*if (m_rOwner.IsAttackOn(_fDeltaTime)) {
-			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack_Blade(m_rOwner));
+			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack_Horse(m_rOwner));
 		}
 		else */
 		if (m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
@@ -119,11 +119,11 @@ int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
 	return 0;
 }
 
-void CAliceWState_Attack_Blade::OnExited(void)
+void CAliceWState_Attack_Horse::OnExited(void)
 {
 	m_pWeaponCollider->SetActivated(false);
 }
 
-void CAliceWState_Attack_Blade::Free(void)
+void CAliceWState_Attack_Horse::Free(void)
 {
 }

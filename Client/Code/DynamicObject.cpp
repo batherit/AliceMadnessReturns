@@ -32,22 +32,24 @@ HRESULT CDynamicObject::Ready_Object(void)
 
 int CDynamicObject::Update_Object(const _float & _fDeltaTime)
 {
-	if(1 == CGameObject::Update_Object(_fDeltaTime))	// 1-> 비활성화
+	if (!IsActivated())
 		return 1;
 
 	m_pMesh->Play_Animation(_fDeltaTime);
 
-	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
-		return 0;
-	}
-
 	m_pRenderer->Update(_fDeltaTime);
+	
+	CGameObject::Update_Object(_fDeltaTime);
 	return 0;
 }
 
 void CDynamicObject::Render_Object(void)
 {
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
+
+	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
+		return;
+	}
 	m_pRenderer->Render();
 }
 

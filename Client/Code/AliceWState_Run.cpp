@@ -2,6 +2,7 @@
 #include "AliceWState_Run.h"
 #include "AliceWState_Idle.h"
 #include "AliceWState_Attack_Blade.h"
+#include "AliceWSTate_Attack_Horse.h"
 #include "AliceWState_Jump.h"
 #include "AliceWState_Death.h"
 #include "AliceWState_Slide.h"
@@ -62,6 +63,9 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 		case CAliceW::TYPE_BLADE:
 			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack_Blade(m_rOwner));
 			break;
+		case CAliceW::TYPE_HORSE:
+			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack_Horse(m_rOwner));
+			break;
 		}
 	}
 	else if (m_rOwner.IsMoving(_fDeltaTime, &vDir)) {
@@ -71,7 +75,7 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 			_vec3 vNewVelXZ = m_rOwner.GetPhysics()->GetVelocity();
 			E_DIR eDir = GetVelDirXZType(_vec2(vNewVelXZ.x, vNewVelXZ.z));
 
-			if (m_eDir != eDir) {
+	/*		if (m_eDir != eDir) {*/
 				m_eDir = eDir;
 				switch (m_eDir)
 				{
@@ -83,6 +87,9 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 					case CAliceW::TYPE_HORSE:
 						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Strafe_Fwd);
 						break;
+					case CAliceW::TYPE_GUN:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Strafe_Fwd);
+						break;
 					}
 					break;
 				case DIR_RIGHT:
@@ -92,6 +99,9 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 						break;
 					case CAliceW::TYPE_HORSE:
 						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Strafe_Rgt);
+						break;
+					case CAliceW::TYPE_GUN:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Strafe_Rgt);
 						break;
 					}
 					break;
@@ -103,6 +113,9 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 					case CAliceW::TYPE_HORSE:
 						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Strafe_Bk);
 						break;
+					case CAliceW::TYPE_GUN:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Strafe_Bk);
+						break;
 					}
 					break;
 				case DIR_LEFT:
@@ -113,12 +126,15 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 					case CAliceW::TYPE_HORSE:
 						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Strafe_Lft);
 						break;
+					case CAliceW::TYPE_GUN:
+						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Strafe_Lft);
+						break;
 					}
 					break;
 				default:
 					break;
 				}
-			}
+			/*}*/
 			// 몬스터 방향으로 회전
 			_vec3 vToTargetDirXZ = m_rOwner.GetTargetObject()->GetTransform()->GetPos() - m_rOwner.GetTransform()->GetPos();
 			vToTargetDirXZ.y = 0.f;
@@ -143,6 +159,9 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 				break;
 			case CAliceW::TYPE_HORSE:
 				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Run);
+				break;
+			case CAliceW::TYPE_GUN:
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Run);
 				break;
 			}		
 		}

@@ -51,6 +51,7 @@ int CAliceWState_Idle::Update(const _float& _fDeltaTime)
 			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Idle_Mele);
 			break;
 		case CAliceW::TYPE_GUN:
+			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Idle);
 			break;
 		}
 
@@ -75,6 +76,7 @@ int CAliceWState_Idle::Update(const _float& _fDeltaTime)
 			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Idle);
 			break;
 		case CAliceW::TYPE_GUN:
+			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Idle);
 			break;
 		}
 

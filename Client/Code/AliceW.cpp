@@ -4,6 +4,7 @@
 #include "StateMgr.h"
 #include "AliceWState_Idle.h"
 #include "StaticObject.h"
+#include "DynamicObject.h"
 #include "Attribute.h"
 
 CAliceW::CAliceW(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -67,6 +68,15 @@ HRESULT CAliceW::Ready_Object(void)
 	AddChild(pStaticObject, "Bip01-R-Hand");
 	pStaticObject->SetActivated(false);
 	m_pWeapons[TYPE_HORSE] = pStaticObject;
+
+	// 3) Gun
+	CDynamicObject* pDynamicObject = CDynamicObject::Create(m_pGraphicDev);
+	pDynamicObject->SetRenderInfo(L"Gun");
+	pDynamicObject->GetTransform()->Rotate(D3DXToRadian(0.f), D3DXToRadian(0.f), D3DXToRadian(90.f));
+	pDynamicObject->GetTransform()->Translate(0.06f, 0.25f, 0.05f);
+	AddChild(pDynamicObject, "Bip01-L-Hand");
+	pDynamicObject->SetActivated(false);
+	m_pWeapons[TYPE_GUN] = pDynamicObject;
 
 	SetWeaponType(TYPE_HORSE);
 	
@@ -349,6 +359,10 @@ _bool CAliceW::IsWeaponChanging()
 	}
 	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_2)) {
 		SetWeaponType(TYPE_HORSE);
+		return true;
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_3)) {
+		SetWeaponType(TYPE_GUN);
 		return true;
 	}
 

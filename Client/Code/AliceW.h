@@ -46,7 +46,8 @@ public:
 			m_pWeapons[m_eWeaponType]->SetActivated(false);
 		m_eWeaponType = _eWeaponType;
 		m_pWeapons[_eWeaponType]->SetActivated(true);
-		m_pWeapons[_eWeaponType]->GetColliderFromTag(L"PlayerAttack")->SetActivated(false);
+		if(_eWeaponType < TYPE_GUN)
+			m_pWeapons[_eWeaponType]->GetColliderFromTag(L"PlayerAttack")->SetActivated(false);
 	}
 
 	_bool IsMoving(const _float& _fDeltaTime, _vec3* _pDir = nullptr);

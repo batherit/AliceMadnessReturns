@@ -233,6 +233,16 @@ _uint CLoading::Loading_ForStage(void)
 		L"HobbyHorse.X"),
 		E_FAIL);
 
+	// 饶眠盒尖扁 积己
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Gun",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/Gun/",
+		L"Gun.X"),
+		E_FAIL);
+
+	// 举府胶 积己
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"AliceW",

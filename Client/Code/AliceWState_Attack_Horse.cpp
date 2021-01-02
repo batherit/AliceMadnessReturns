@@ -77,6 +77,8 @@ int CAliceWState_Attack_Horse::Update(const _float& _fDeltaTime)
 					{
 					case 1:
 						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_2_A);
+						m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 2.f);
+						m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
 						break;
 					case 2:
 						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_3_A);

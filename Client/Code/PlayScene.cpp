@@ -15,6 +15,7 @@
 #include "CameraController_Sliding.h"
 #include "CameraController_Target.h"
 #include "UI_HPGauge.h"
+#include "UI_Targeting.h"
 #include "Map.h"
 
 #include "Attribute.h"
@@ -51,6 +52,10 @@ HRESULT CPlayScene::Ready(void)
 	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
+
+	m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -111,12 +116,12 @@ int CPlayScene::Update(const _float& fTimeDelta)
 	}
 */
 
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
-		m_pPlayer->GetComponent<CAttribute>()->DecreaseHP(3.f);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_P)) {
-		m_pPlayer->GetComponent<CAttribute>()->IncreaseHP(3.f);
-	}
+	//if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
+	//	m_pPlayer->GetComponent<CAttribute>()->DecreaseHP(3.f);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_P)) {
+	//	m_pPlayer->GetComponent<CAttribute>()->IncreaseHP(3.f);
+	//}
 
 	return CScene::Update(fTimeDelta);
 }
@@ -244,10 +249,17 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
 	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, -2.f));
 
+	// UI
 	CUI_HPGauge* pHPGauge = CUI_HPGauge::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pHPGauge, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pHPGauge), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI_HPGauge", pHPGauge), E_FAIL);
 	pHPGauge->SetPlayer(m_pPlayer);
+
+	CUI_Targeting* pTargeting = CUI_Targeting::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pTargeting, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI_Targeting", pTargeting), E_FAIL);
+	pTargeting->GetTransform()->SetPos(0.f, 10.f, 0.f);
+	pTargeting->SetPlayer(m_pPlayer);
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);
@@ -264,10 +276,5 @@ HRESULT CPlayScene::Ready_Resource(Engine::RESOURCETYPE eType)
 
 void CPlayScene::Free(void)
 {
-	//Client::Safe_Release(m_pPlayer);
-	//Client::Safe_Release(m_pMonster);
-	//Client::Safe_Release(m_pSkyBox);
-	//Client::Safe_Release(m_pCamera);
-	//Client::Safe_Release(m_pTerrain);
 	CScene::Free();
 }

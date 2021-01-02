@@ -66,6 +66,7 @@ void Client::CSkyBox::Render_Object(void)
 
 	//m_pTexture->Render_Texture(3);
 	//m_pCubeTex->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	_matrix	matCamWorld;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
 	// 카메라 월드 행렬
@@ -73,7 +74,7 @@ void Client::CSkyBox::Render_Object(void)
 	m_pTransform->SetPos(matCamWorld._41, matCamWorld._42, matCamWorld._43);
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Render();
-
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);

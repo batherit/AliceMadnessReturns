@@ -12,6 +12,7 @@
 #include "Attribute.h"
 #include "UI_InGame.h"
 #include "UI_Image.h"
+#include "UI_GunGauge.h"
 
 
 CAliceWState_GunMode::CAliceWState_GunMode(CAliceW & _rOwner)
@@ -32,6 +33,9 @@ void CAliceWState_GunMode::OnLoaded(void)
 
 	CUI_InGame* pUIInGame = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
 	pUIInGame->GetAimImage()->SetActivated(true);
+	m_pGunGauge = pUIInGame->GetGunGauge();
+	m_pGunGauge->SetActivated(true);
+	m_pGunGauge->Init();
 
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Fire);
 	CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
@@ -55,6 +59,9 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
+	if(m_eStateType != TYPE_FIRE) 
+		m_pGunGauge->DecreaseGauge(0.6f * _fDeltaTime);
+
 	_vec3 vDir;
 	if (m_rOwner.IsMoving(_fDeltaTime, &vDir)) {
 		_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
@@ -68,6 +75,17 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 		if (m_rOwner.IsAttackOn(_fDeltaTime) || m_rOwner.IsAttacking(_fDeltaTime)) {
 			// TODO : 총을 발사하는 로직을 짭니다.
 			// 총의 Look축 방향으로 총을 발사합니다.
+			if (m_pGunGauge->IsOverloaded()) {
+				// Fire 실패 애니메이션을 돌립니다.
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_NoAmmo);
+				CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
+				if (pGun) {
+					pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_NoAmmo);
+				}
+				m_eStateType = TYPE_NOAMMO;
+			}
+			else
+				m_pGunGauge->IncreaseGauge(0.4f * _fDeltaTime);
 		}
 		else {
 			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Release);
@@ -78,15 +96,58 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 			m_eStateType = TYPE_RELEASE;
 		}
 		break;
+	case TYPE_NOAMMO: {
+		if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.95f) {
+			if (m_rOwner.IsAttackOn(_fDeltaTime) || m_rOwner.IsAttacking(_fDeltaTime)) {
+				if (!m_pGunGauge->IsOverloaded()) {
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Fire);
+					CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
+					if (pGun) {
+						pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_Fire);
+					}
+					m_eStateType = TYPE_FIRE;
+				}
+				else {
+					// Fire 실패 애니메이션을 돌립니다.
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_NoAmmo);
+					CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
+					if (pGun) {
+						pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_NoAmmo);
+					}
+					m_eStateType = TYPE_NOAMMO;
+				}
+			}
+			else {
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Attack_Idle);
+				CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
+				if (pGun) {
+					pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_Idle_Pose);
+				}
+				m_eStateType = TYPE_IDLE_OR_RUN;
+			}
+		}
+	}
+		break;
 	case TYPE_RELEASE:
 		if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.95f) {
 			if (m_rOwner.IsAttackOn(_fDeltaTime) || m_rOwner.IsAttacking(_fDeltaTime)) {
-				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Fire);
-				CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
-				if (pGun) {
-					pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_Fire);
+				if (!m_pGunGauge->IsOverloaded()) {
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Fire);
+					CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
+					if (pGun) {
+						pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_Fire);
+					}
+					m_eStateType = TYPE_FIRE;
 				}
-				m_eStateType = TYPE_FIRE;
+				else {
+					// Fire 실패 애니메이션을 돌립니다.
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_NoAmmo);
+					CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
+					if (pGun) {
+						pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_NoAmmo);
+					}
+					m_eStateType = TYPE_NOAMMO;
+				}
 			}
 			else {
 				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Attack_Idle);
@@ -103,14 +164,24 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Jump(m_rOwner, false));
 			return 0;
 		}
-
 		if (m_rOwner.IsAttackOn(_fDeltaTime) || m_rOwner.IsAttacking(_fDeltaTime)) {
-			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Fire);
-			CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
-			if (pGun) {
-				pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_Fire);
+			if (!m_pGunGauge->IsOverloaded()) {
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Fire);
+				CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
+				if (pGun) {
+					pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_Fire);
+				}
+				m_eStateType = TYPE_FIRE;
 			}
-			m_eStateType = TYPE_FIRE;
+			else {
+				// Fire 실패 애니메이션을 돌립니다.
+				m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_NoAmmo);
+				CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
+				if (pGun) {
+					pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_NoAmmo);
+				}
+				m_eStateType = TYPE_NOAMMO;
+			}
 		}
 		else if (m_rOwner.IsGunModeReleased()) {
 			if (m_rOwner.IsMoving(_fDeltaTime, &vDir)) {
@@ -142,6 +213,7 @@ void CAliceWState_GunMode::OnExited(void)
 
 	CUI_InGame* pUIInGame = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
 	pUIInGame->GetAimImage()->SetActivated(false);
+	pUIInGame->GetGunGauge()->SetActivated(false);
 }
 
 void CAliceWState_GunMode::Free(void)

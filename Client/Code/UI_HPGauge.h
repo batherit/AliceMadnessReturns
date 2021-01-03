@@ -10,8 +10,8 @@ BEGIN(Client)
 class CUI_Image;
 class CUI_HPGauge : public Engine::CGameObject
 {
-#define OFFSET_X 15
-#define OFFSET_Y 15
+#define OFFSET_X 30
+#define OFFSET_Y 30
 private: // 持失切, 社瑚切
 	explicit  CUI_HPGauge(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit  CUI_HPGauge(const  CUI_HPGauge& rhs);

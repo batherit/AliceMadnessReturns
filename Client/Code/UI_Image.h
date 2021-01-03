@@ -91,6 +91,15 @@ public:
 	LONG GetWidth() const { return m_iWidth; }
 	LONG GetHeight() const { return m_iHeight; }
 
+	void SetPos(LONG _iX, LONG _iY) {
+		_vec3 vPos = GetTransform()->GetPos();
+		m_rcOutputArea.left += (_iX - static_cast<LONG>(vPos.x));
+		m_rcOutputArea.right += (_iX - static_cast<LONG>(vPos.x));
+		m_rcOutputArea.top += (_iY - static_cast<LONG>(vPos.y));
+		m_rcOutputArea.bottom += (_iY - static_cast<LONG>(vPos.y));
+		GetTransform()->SetPos(static_cast<_float>(_iX), static_cast<_float>(_iY), 0.f);
+	}
+
 private:
 	//const TextureInfo* m_pTextureInfo = nullptr;
 

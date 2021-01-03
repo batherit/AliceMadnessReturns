@@ -8,11 +8,12 @@
 
 BEGIN(Client)
 class CAliceW;
+class CUI_GunGauge;
 class CAliceWState_GunMode :
 	public CState<CAliceW>
 {
 public:
-	enum E_STATE_TYPE { TYPE_FIRE, TYPE_RELEASE, TYPE_IDLE_OR_RUN, TYPE_END};
+	enum E_STATE_TYPE { TYPE_FIRE, TYPE_NOAMMO, TYPE_RELEASE, TYPE_IDLE_OR_RUN, TYPE_END};
 public:
 	CAliceWState_GunMode(CAliceW& _rOwner);
 	virtual ~CAliceWState_GunMode();
@@ -28,6 +29,7 @@ public:
 
 private:
 	E_STATE_TYPE m_eStateType = TYPE_FIRE;
+	CUI_GunGauge* m_pGunGauge = nullptr;
 };
 
 END

@@ -3,6 +3,7 @@
 #include "UI_HPGauge.h"
 #include "UI_Targeting.h"
 #include "UI_Image.h"
+#include "UI_GunGauge.h"
 #include "Attribute.h"
 #include "AliceW.h"
 
@@ -26,9 +27,13 @@ HRESULT CUI_InGame::Ready_Object(void)
 {
 	m_pAimImage = CUI_Image::Create(m_pGraphicDev);
 	m_pAimImage->SetTexture(L"UI_Aim");
-	m_pAimImage->GetTransform()->SetPos(static_cast<_float>(WINCX >> 1), static_cast<_float>(WINCY >> 1), 0.f);
+	m_pAimImage->SetPos(WINCX >> 1, WINCY >> 1);
 	m_pAimImage->SetActivated(false);
 	AddChild(m_pAimImage);
+
+	m_pGunGauge = CUI_GunGauge::Create(m_pGraphicDev);
+	m_pGunGauge->SetActivated(false);
+	AddChild(m_pGunGauge);
 
 	m_pHPGauge = CUI_HPGauge::Create(m_pGraphicDev);
 	m_pHPGauge->SetPlayer(m_pPlayer);

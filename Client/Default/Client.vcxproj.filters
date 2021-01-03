@@ -124,11 +124,11 @@
     <Filter Include="02. Object\02. GameObject\UI\Targeting">
       <UniqueIdentifier>{a1735192-4ea4-45b3-9756-869ee6d0de3b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\Aim">
-      <UniqueIdentifier>{001c1663-f07e-4c04-99f5-6871c10b0c9b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\02. GameObject\UI\InGameUI">
       <UniqueIdentifier>{372ae1c3-f153-44ac-8a2a-4226eaf23c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\GunGauge">
+      <UniqueIdentifier>{593e12d3-d7b6-4ec4-a4fd-a9830a6968dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -309,11 +309,11 @@
     <ClInclude Include="..\Code\AliceWState_GunMode.h">
       <Filter>03. State\AliceW</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\UI_Aim.h">
-      <Filter>02. Object\02. GameObject\UI\Aim</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\UI_InGame.h">
       <Filter>02. Object\02. GameObject\UI\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_GunGauge.h">
+      <Filter>02. Object\02. GameObject\UI\GunGauge</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -464,11 +464,11 @@
     <ClCompile Include="..\Code\AliceWState_GunMode.cpp">
       <Filter>03. State\AliceW</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UI_Aim.cpp">
-      <Filter>02. Object\02. GameObject\UI\Aim</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\UI_InGame.cpp">
       <Filter>02. Object\02. GameObject\UI\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_GunGauge.cpp">
+      <Filter>02. Object\02. GameObject\UI\GunGauge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

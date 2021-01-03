@@ -38,20 +38,12 @@ public:
 	CAttribute* GetAttribute() const { return m_pAttribute; }
 
 	void SetLanded(const _bool& _bIsLanded) { m_bIsLanded = _bIsLanded; }
-	void SetWeaponType(E_WEAPON_TYPE _eWeaponType) { 
-		if (_eWeaponType >= TYPE_END)
-			return;
-
-		if (m_eWeaponType < TYPE_END)
-			m_pWeapons[m_eWeaponType]->SetActivated(false);
-		m_eWeaponType = _eWeaponType;
-		m_pWeapons[_eWeaponType]->SetActivated(true);
-		if(_eWeaponType < TYPE_GUN)
-			m_pWeapons[_eWeaponType]->GetColliderFromTag(L"PlayerAttack")->SetActivated(false);
-	}
+	void SetWeaponType(E_WEAPON_TYPE _eWeaponType);
 
 	_bool IsMoving(const _float& _fDeltaTime, _vec3* _pDir = nullptr);
 	_bool IsAttackOn(const _float& _fDeltaTime);
+	_bool IsAttacking(const _float& _fDeltaTime);
+	_bool IsGunModeReleased();
 	_bool IsJumpOn(const _float& _fDeltaTime);
 	_bool IsSliding(const _float& _fDeltaTime);
 	_bool IsFloatingOn(const _float& _fDeltaTime);

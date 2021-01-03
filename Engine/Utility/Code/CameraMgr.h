@@ -23,6 +23,7 @@ public:
 	void ChangeCameraController(_int _iCameraControllerIndex, _float _fShiftFactor = 1.f);
 	CCameraController* GetCameraController(_int _iCameraControllerIndex) const;
 	void AddCameraController(CCameraController* _pCameraController) { m_vecCameraControllers.emplace_back(_pCameraController); }
+	void SetLock(_bool _bIsLocked) { m_bIsLocked = _bIsLocked; }
 
 public:
 	static CCameraMgr* Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -33,6 +34,7 @@ private:
 	vector<CCameraController*> m_vecCameraControllers;
 	_int m_iCameraControllerIndex = -1;
 	_float m_fShiftFactor = 1.f;
+	_bool m_bIsLocked = false;
 };
 
 END

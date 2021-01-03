@@ -34,6 +34,9 @@ _int CCameraMgr::Update_Object(const _float & _fDeltaTime)
 
 void CCameraMgr::ChangeCameraController(_int _iCameraControllerIndex, _float _fShiftFactor)
 {
+	if (m_bIsLocked)
+		return;
+
 	if (_iCameraControllerIndex < 0 || _iCameraControllerIndex >= static_cast<_int>(m_vecCameraControllers.size()))
 		return;
 

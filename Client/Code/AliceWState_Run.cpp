@@ -2,7 +2,8 @@
 #include "AliceWState_Run.h"
 #include "AliceWState_Idle.h"
 #include "AliceWState_Attack_Blade.h"
-#include "AliceWSTate_Attack_Horse.h"
+#include "AliceWState_Attack_Horse.h"
+#include "AliceWState_GunMode.h"
 #include "AliceWState_Jump.h"
 #include "AliceWState_Death.h"
 #include "AliceWState_Slide.h"
@@ -65,6 +66,9 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 			break;
 		case CAliceW::TYPE_HORSE:
 			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Attack_Horse(m_rOwner));
+			break;
+		case CAliceW::TYPE_GUN:
+			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_GunMode(m_rOwner));
 			break;
 		}
 	}

@@ -14,6 +14,7 @@
 #include "CameraController_Crowd.h"
 #include "CameraController_Sliding.h"
 #include "CameraController_Target.h"
+#include "CameraController_Gun.h"
 #include "UI_HPGauge.h"
 #include "UI_Targeting.h"
 #include "Map.h"
@@ -222,6 +223,14 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
 	static_cast<CCameraController_Target*>(pCameraController)->SetPlayer(m_pPlayer);
 	pCameraMgr->AddCameraController(pCameraController);
+
+	// 건모드 카메라 컨트롤러 생성(3)
+	pCameraController = CCameraController_Gun::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pCameraController, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
+	static_cast<CCameraController_Gun*>(pCameraController)->SetPlayer(m_pPlayer);
+	pCameraMgr->AddCameraController(pCameraController);
+
 
 	// 관중형 카메라 컨트롤러 생성
 	pCameraController = CCameraController_Crowd::Create(m_pGraphicDev);

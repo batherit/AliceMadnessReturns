@@ -448,14 +448,14 @@ namespace ANIM {
 
 	// ÈÄÃßºÐ¼â±â
 	enum E_WP3_ANIM {
-		WP3_Release,                              //7	frame:[37]
-		WP3_NoAmmo,                               //6	frame:[14]
-		WP3_Idle_Pose,                            //5	frame:[21]
-		WP3_FireFail,                             //4	frame:[19]
-		WP3_Fire,                                 //3	frame:[37]
-		WP3_Charge,                               //2	frame:[25]
-		WP3_Attack_Alt_B,                         //1	frame:[36]
 		WP3_Attack_Alt_A,                         //0	frame:[26]
+		WP3_Attack_Alt_B,                         //1	frame:[36]
+		WP3_Charge,                               //2	frame:[25]
+		WP3_Fire,                                 //3	frame:[37]
+		WP3_FireFail,                             //4	frame:[19]
+		WP3_Idle_Pose,                            //5	frame:[21]
+		WP3_NoAmmo,                               //6	frame:[14]
+		WP3_Release,                              //7	frame:[37]
 
 		WP3_END
 	};

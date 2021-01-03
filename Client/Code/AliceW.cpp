@@ -72,7 +72,7 @@ HRESULT CAliceW::Ready_Object(void)
 	// 3) Gun
 	CDynamicObject* pDynamicObject = CDynamicObject::Create(m_pGraphicDev);
 	pDynamicObject->SetRenderInfo(L"Gun");
-	pDynamicObject->GetTransform()->Rotate(D3DXToRadian(0.f), D3DXToRadian(0.f), D3DXToRadian(90.f));
+	pDynamicObject->GetTransform()->Rotate(D3DXToRadian(0.f), D3DXToRadian(170.f), D3DXToRadian(90.f));
 	pDynamicObject->GetTransform()->Translate(0.06f, 0.25f, 0.05f);
 	AddChild(pDynamicObject, "Bip01-L-Hand");
 	pDynamicObject->SetActivated(false);
@@ -258,6 +258,21 @@ void CAliceW::Free(void)
 	CGameObject::Free();
 }
 
+void CAliceW::SetWeaponType(E_WEAPON_TYPE _eWeaponType)
+{
+	if (_eWeaponType >= TYPE_END)
+		return;
+
+	if (m_eWeaponType < TYPE_END)
+		m_pWeapons[m_eWeaponType]->SetActivated(false);
+	m_eWeaponType = _eWeaponType;
+	m_pWeapons[_eWeaponType]->SetActivated(true);
+	if (_eWeaponType < TYPE_GUN)
+		m_pWeapons[_eWeaponType]->GetColliderFromTag(L"PlayerAttack")->SetActivated(false);
+	/*else if (_eWeaponType == TYPE_GUN)
+		dynamic_cast<CDynamicObject*>(m_pWeapons[TYPE_GUN])->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_Idle_Pose);*/
+}
+
 _bool CAliceW::IsMoving(const _float & _fDeltaTime, _vec3 * _pDir)
 {
 	_matrix matView;
@@ -298,6 +313,20 @@ _bool CAliceW::IsMoving(const _float & _fDeltaTime, _vec3 * _pDir)
 _bool CAliceW::IsAttackOn(const _float & _fDeltaTime)
 {
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB))
+		return true;
+	return false;
+}
+
+_bool CAliceW::IsAttacking(const _float & _fDeltaTime)
+{
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB))
+		return true;
+	return false;
+}
+
+_bool CAliceW::IsGunModeReleased()
+{
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_RB))
 		return true;
 	return false;
 }

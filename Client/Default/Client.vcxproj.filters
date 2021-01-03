@@ -300,6 +300,12 @@
     <ClInclude Include="..\Code\AliceWState_Attack_Horse.h">
       <Filter>03. State\AliceW</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\CameraController_Gun.h">
+      <Filter>02. Object\07. CameraController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_GunMode.h">
+      <Filter>03. State\AliceW</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -441,6 +447,12 @@
       <Filter>02. Object\02. GameObject\UI\Targeting</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_Attack_Horse.cpp">
+      <Filter>03. State\AliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraController_Gun.cpp">
+      <Filter>02. Object\07. CameraController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_GunMode.cpp">
       <Filter>03. State\AliceW</Filter>
     </ClCompile>
   </ItemGroup>

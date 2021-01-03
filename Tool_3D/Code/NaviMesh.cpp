@@ -42,10 +42,11 @@ void CNaviMesh::Render_Object(void)
 	DWORD dwCullMode;
 	m_pGraphicDev->GetRenderState(D3DRS_CULLMODE, &dwCullMode);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Render();
-
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, dwCullMode);
 
 	

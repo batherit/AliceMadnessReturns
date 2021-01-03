@@ -232,6 +232,16 @@ _uint CLoading::Loading_ForStage(void)
 	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HobbyHorse");
 
+	// 醚舅 积己
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Bullet",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Bullet/",
+		L"Bullet.X"),
+		E_FAIL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Bullet");
+
 	// 器农 积己
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

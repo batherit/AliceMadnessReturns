@@ -10,7 +10,7 @@ BEGIN(Client)
 
 class CStaticObject : public Engine::CGameObject
 {
-private: // 持失切, 社瑚切
+protected: // 持失切, 社瑚切
 	explicit  CStaticObject(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit  CStaticObject(const  CStaticObject& rhs);
 	virtual ~CStaticObject(void);

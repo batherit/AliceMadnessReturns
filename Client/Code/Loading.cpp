@@ -249,6 +249,15 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/DynamicMesh/Gun/",
 		L"Gun.X"),
 		E_FAIL);
+	// 醚舅 积己
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Bullet",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Bullet/",
+		L"Bullet.X"),
+		E_FAIL);
+
 
 	// 举府胶 积己
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

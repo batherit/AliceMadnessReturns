@@ -193,6 +193,7 @@
     </ClInclude>
     <ClInclude Include="..\Code\AliceWState_Slide.h" />
     <ClInclude Include="..\Code\Attribute.h" />
+    <ClInclude Include="..\Code\Bullet.h" />
     <ClInclude Include="..\Code\CameraController_Crowd.h" />
     <ClInclude Include="..\Code\CameraController_Gun.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -321,6 +322,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_Slide.cpp" />
     <ClCompile Include="..\Code\Attribute.cpp" />
+    <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\CameraController_Crowd.cpp" />
     <ClCompile Include="..\Code\CameraController_Gun.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

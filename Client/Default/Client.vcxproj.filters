@@ -130,6 +130,9 @@
     <Filter Include="02. Object\02. GameObject\UI\GunGauge">
       <UniqueIdentifier>{593e12d3-d7b6-4ec4-a4fd-a9830a6968dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Bullet">
+      <UniqueIdentifier>{8a96ebda-c28e-4d62-ab7c-104771531e9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -315,6 +318,9 @@
     <ClInclude Include="..\Code\UI_GunGauge.h">
       <Filter>02. Object\02. GameObject\UI\GunGauge</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Bullet.h">
+      <Filter>02. Object\02. GameObject\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -469,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_GunGauge.cpp">
       <Filter>02. Object\02. GameObject\UI\GunGauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bullet.cpp">
+      <Filter>02. Object\02. GameObject\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

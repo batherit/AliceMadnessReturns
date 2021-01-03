@@ -15,8 +15,7 @@
 #include "CameraController_Sliding.h"
 #include "CameraController_Target.h"
 #include "CameraController_Gun.h"
-#include "UI_HPGauge.h"
-#include "UI_Targeting.h"
+#include "UI_InGame.h"
 #include "Map.h"
 
 #include "Attribute.h"
@@ -259,7 +258,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, -2.f));
 
 	// UI
-	CUI_HPGauge* pHPGauge = CUI_HPGauge::Create(m_pGraphicDev);
+	/*CUI_HPGauge* pHPGauge = CUI_HPGauge::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pHPGauge, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI_HPGauge", pHPGauge), E_FAIL);
 	pHPGauge->SetPlayer(m_pPlayer);
@@ -268,7 +267,12 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pTargeting, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI_Targeting", pTargeting), E_FAIL);
 	pTargeting->GetTransform()->SetPos(0.f, 10.f, 0.f);
-	pTargeting->SetPlayer(m_pPlayer);
+	pTargeting->SetPlayer(m_pPlayer);*/
+
+	CUI_InGame* pUIInGame = CUI_InGame::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pUIInGame, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI_InGame", pUIInGame), E_FAIL);
+	pUIInGame->SetPlayer(m_pPlayer);
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);

@@ -10,6 +10,8 @@
 #include "DynamicObject.h"
 #include "Map.h"
 #include "Attribute.h"
+#include "UI_InGame.h"
+#include "UI_Image.h"
 
 
 CAliceWState_GunMode::CAliceWState_GunMode(CAliceW & _rOwner)
@@ -27,6 +29,9 @@ void CAliceWState_GunMode::OnLoaded(void)
 	Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 	pCameraMgr->ChangeCameraController(3, 0.5f);
 	pCameraMgr->SetLock(true);
+
+	CUI_InGame* pUIInGame = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
+	pUIInGame->GetAimImage()->SetActivated(true);
 
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Fire);
 	CDynamicObject* pGun = dynamic_cast<CDynamicObject*>(m_rOwner.GetWeapon());
@@ -134,6 +139,9 @@ void CAliceWState_GunMode::OnExited(void)
 		pCameraMgr->ChangeCameraController(2, 0.5f);
 	else
 		pCameraMgr->ChangeCameraController(0, 0.5f);
+
+	CUI_InGame* pUIInGame = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
+	pUIInGame->GetAimImage()->SetActivated(false);
 }
 
 void CAliceWState_GunMode::Free(void)

@@ -288,7 +288,15 @@ _uint CLoading::Loading_ForStage(void)
 	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Snail");
 
-
+	// Tooth 持失(Static)
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Tooth",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Tooth/",
+		L"Tooth.X"),
+		E_FAIL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Tooth");
 
 	// CobbledStreet 持失
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

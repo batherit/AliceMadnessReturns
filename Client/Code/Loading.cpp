@@ -305,6 +305,15 @@ _uint CLoading::Loading_ForStage(void)
 		L"Snail.X"),
 		E_FAIL);
 
+	// Tooth »ý¼º(Static)
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Tooth",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Tooth/",
+		L"Tooth.X"),
+		E_FAIL);
+
 	// ¸ÅµåÄ¸A
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

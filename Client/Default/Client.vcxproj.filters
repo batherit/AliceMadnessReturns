@@ -139,6 +139,12 @@
     <Filter Include="02. Object\02. GameObject\JumpPad">
       <UniqueIdentifier>{b44845d4-c847-4751-bceb-d194da236949}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Snail">
+      <UniqueIdentifier>{462d28a0-428a-40f7-acec-3b8ed498e347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Tooth">
+      <UniqueIdentifier>{86b94aaf-9ea1-42c8-b031-3a4e4f9a6527}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -336,6 +342,12 @@
     <ClInclude Include="..\Code\AliceWState_SuperJump.h">
       <Filter>03. State\AliceW</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Snail.h">
+      <Filter>02. Object\02. GameObject\Snail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Tooth.h">
+      <Filter>02. Object\02. GameObject\Tooth</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -502,6 +514,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_SuperJump.cpp">
       <Filter>03. State\AliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Snail.cpp">
+      <Filter>02. Object\02. GameObject\Snail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Tooth.cpp">
+      <Filter>02. Object\02. GameObject\Tooth</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,8 @@
 #include "Map.h"
 #include "HPFlower.h"
 #include "JumpPad.h"
+#include "Tooth.h"
+#include "Snail.h"
 
 #include "Attribute.h"
 
@@ -269,6 +271,18 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
 	pGameObject->GetTransform()->Translate(_vec3(3.f, 1.f, 0.f));
+
+	// 테스트 스네일 생성
+	pGameObject = CSnail::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(0.f, 1.f, -3.f));
+
+	// 테스트 이빨 생성
+	pGameObject = CTooth::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(3.f, 1.f, -3.f));
 
 	// UI
 	/*CUI_HPGauge* pHPGauge = CUI_HPGauge::Create(m_pGraphicDev);

@@ -277,7 +277,7 @@ _uint CLoading::Loading_ForStage(void)
 	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"HPFlower");
 
-	// // HP Flower 持失(Dynamic)
+	// // Snail 持失(Static)
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Snail",

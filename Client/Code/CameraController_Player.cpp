@@ -28,7 +28,7 @@ void CCameraController_Player::ControlCamera(const _float& _fDeltaTime, Engine::
 
 	// 카메라 컨트롤러를 플레이어 위치에 맞춘다.
 	_vec3 vPlayerPos = m_pPlayer->GetTransform()->GetPos();
-	_float fRatio = m_pPlayer->GetTransform()->GetScale().x;
+	_float fRatio = 1.f;// m_pPlayer->GetTransform()->GetScale().x;
 	GetTransform()->SetPos(vPlayerPos + _vec3(0.f, 1.f * fRatio, 0.f));
 	SetStickLen(4.5f * fRatio);
 
@@ -43,9 +43,9 @@ void CCameraController_Player::ControlCamera(const _float& _fDeltaTime, Engine::
 	D3DXMatrixRotationAxis(&matRot, &GetRightAxis(), fRotAngleByRight);
 	D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
 
-	POINT	ptMouse{ WINCX >> 1, WINCY >> 1 };
-	ClientToScreen(g_hWnd, &ptMouse);
-	SetCursorPos(ptMouse.x, ptMouse.y);
+	//POINT	ptMouse{ WINCX >> 1, WINCY >> 1 };
+	//ClientToScreen(g_hWnd, &ptMouse);
+	//SetCursorPos(ptMouse.x, ptMouse.y);
 
 	// 카메라 위치를 조정한다.
 	TranslateCameraToStickEnd(_pCamera, _fShiftFactor);

@@ -17,6 +17,8 @@
 #include "CameraController_Gun.h"
 #include "UI_InGame.h"
 #include "Map.h"
+#include "HPFlower.h"
+#include "JumpPad.h"
 
 #include "Attribute.h"
 
@@ -116,12 +118,12 @@ int CPlayScene::Update(const _float& fTimeDelta)
 	}
 */
 
-	//if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
-	//	m_pPlayer->GetComponent<CAttribute>()->DecreaseHP(3.f);
-	//}
-	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_P)) {
-	//	m_pPlayer->GetComponent<CAttribute>()->IncreaseHP(3.f);
-	//}
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
+		m_pPlayer->GetComponent<CAttribute>()->DecreaseHP(10.f);
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_P)) {
+		m_pPlayer->GetComponent<CAttribute>()->IncreaseHP(10.f);
+	}
 
 	return CScene::Update(fTimeDelta);
 }
@@ -230,7 +232,6 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	static_cast<CCameraController_Gun*>(pCameraController)->SetPlayer(m_pPlayer);
 	pCameraMgr->AddCameraController(pCameraController);
 
-
 	// 관중형 카메라 컨트롤러 생성
 	pCameraController = CCameraController_Crowd::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pCameraController, E_FAIL);
@@ -256,6 +257,18 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
 	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, -2.f));
+
+	// 테스트 플라워 생성
+	pGameObject = CHPFlower::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(0.f, 1.f, 0.f));
+
+	// 테스트 점프패드 생성
+	pGameObject = CJumpPad::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(3.f, 1.f, 0.f));
 
 	// UI
 	/*CUI_HPGauge* pHPGauge = CUI_HPGauge::Create(m_pGraphicDev);

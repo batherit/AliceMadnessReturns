@@ -577,8 +577,3 @@ void CMapTab::OnBnClickedButtonLoad()
 	g_pTool3D_Kernel->GetEditScene()->LoadMap();
 	UpdateAddedTree(g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList());
 }
-
-void CMapTab::OnBnClickedCustom()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-}

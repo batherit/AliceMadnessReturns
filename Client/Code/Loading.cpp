@@ -276,8 +276,34 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Fork/",
 		L"Fork.X"),
 		E_FAIL);
-	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 
+	// 점프 패드 생성(Dynamic)
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"JumpPad",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/JumpPad/",
+		L"JumpPad.X"),
+		E_FAIL);
+
+
+	// HP Flower 생성(Dynamic)
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HPFlower",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/HPFlower/",
+		L"HPFlower.X"),
+		E_FAIL);
+
+	// // Snail 생성(Static)
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Snail",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Snail/",
+		L"Snail.X"),
+		E_FAIL);
 
 	// 매드캡A
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

@@ -20,6 +20,7 @@ void CAliceWState_Death::OnLoaded(void)
 {
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::Alice_Death);
 	m_rOwner.GetPhysics()->SetSpeed(0.f);
+	m_rOwner.SetSuperJumped(false);
 }
 
 int CAliceWState_Death::Update(const _float& _fDeltaTime)

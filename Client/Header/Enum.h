@@ -352,22 +352,21 @@ namespace ANIM {
 	};
 
 	enum E_JUMPPAD_ANIM {
-		GrowingJumpPad_UnderGround,               //3	frame:[2]
-		GrowingJumpPad_Launch,                    //2	frame:[15]
-		GrowingJumpPad_Ground,                    //1	frame:[27]
 		GlowingJumpPad_ready,                     //0	frame:[7]
-
+		GrowingJumpPad_Ground,                    //1	frame:[27]
+		GrowingJumpPad_Launch,                    //2	frame:[15]
+		GrowingJumpPad_UnderGround,               //3	frame:[2]
 
 		JUMPPAD_END
 	};
 
 	enum E_SHRINKFLOWER_ANIM {
-		ShrinkFlower_Open,						//5	frame:[18]
-		ShrinkFlower_Munch,                       //4	frame:[9]
-		ShrinkFlower_Kiss,                        //3	frame:[61]
-		ShrinkFlower_Idle,                        //2	frame:[141]
-		ShrinkFlower_Eat,                         //1	frame:[21]
 		ShrinkFlower_Attract,                     //0	frame:[36]
+		ShrinkFlower_Eat,                         //1	frame:[21]
+		ShrinkFlower_Idle,                        //2	frame:[141]
+		ShrinkFlower_Kiss,                        //3	frame:[61]
+		ShrinkFlower_Munch,                       //4	frame:[9]
+		ShrinkFlower_Open,						//5	frame:[18]
 
 		SHRINKFLOWER_END
 	};

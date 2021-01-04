@@ -136,6 +136,9 @@
     <Filter Include="02. Object\02. GameObject\HPFlower">
       <UniqueIdentifier>{fb810dca-475b-40af-994e-828d808734be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\JumpPad">
+      <UniqueIdentifier>{b44845d4-c847-4751-bceb-d194da236949}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -324,6 +327,15 @@
     <ClInclude Include="..\Code\Bullet.h">
       <Filter>02. Object\02. GameObject\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\HPFlower.h">
+      <Filter>02. Object\02. GameObject\HPFlower</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\JumpPad.h">
+      <Filter>02. Object\02. GameObject\JumpPad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_SuperJump.h">
+      <Filter>03. State\AliceW</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -481,6 +493,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\Bullet.cpp">
       <Filter>02. Object\02. GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HPFlower.cpp">
+      <Filter>02. Object\02. GameObject\HPFlower</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\JumpPad.cpp">
+      <Filter>02. Object\02. GameObject\JumpPad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_SuperJump.cpp">
+      <Filter>03. State\AliceW</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

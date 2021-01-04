@@ -133,6 +133,9 @@
     <Filter Include="02. Object\02. GameObject\Bullet">
       <UniqueIdentifier>{8a96ebda-c28e-4d62-ab7c-104771531e9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\HPFlower">
+      <UniqueIdentifier>{fb810dca-475b-40af-994e-828d808734be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">

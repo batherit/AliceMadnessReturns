@@ -44,12 +44,13 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 	m_rOwner.IsWeaponChanging();
 
 	_vec3 vDir;
+	_float fRatio = m_rOwner.GetTransform()->GetScale().x;
 	_vec3 vSettedPos = m_rOwner.GetTransform()->GetPos();
 	// Run => Death, Jump, Idle, Attack
 	if (m_rOwner.IsSliding(_fDeltaTime)) {
 		if (m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
 			_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
-			m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
+			m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED * fRatio);
 		}
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Slide(m_rOwner));
 	}
@@ -74,7 +75,7 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 	}
 	else if (m_rOwner.IsMoving(_fDeltaTime, &vDir)) {
 		_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
-		m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
+		m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED * fRatio);
 		if (m_rOwner.IsLockOn()) {
 			_vec3 vNewVelXZ = m_rOwner.GetPhysics()->GetVelocity();
 			E_DIR eDir = GetVelDirXZType(_vec2(vNewVelXZ.x, vNewVelXZ.z));

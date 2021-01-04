@@ -19,7 +19,7 @@ CCameraController_Crowd::~CCameraController_Crowd(void)
 
 }
 
-void CCameraController_Crowd::ControlCamera(Engine::CCamera * _pCamera, const _float& _fShiftFactor)
+void CCameraController_Crowd::ControlCamera(const _float& _fDeltaTime, Engine::CCamera * _pCamera, const _float& _fShiftFactor)
 {
 	if (!m_pTarget)
 		return;

@@ -25,7 +25,7 @@ public:
 	_vec3 GetRightAxis() const;
 
 	// 매니져에서 업데이트마다 호출됩니다.
-	virtual void ControlCamera(CCamera* _pCamera, const _float& _fShiftFactor) = 0; 
+	virtual void ControlCamera(const _float& _fDeltaTime, CCamera* _pCamera, const _float& _fShiftFactor) = 0; 
 
 protected:
 	void TranslateCameraToStickEnd(CCamera * _pCamera, const _float& _fShiftFactor);

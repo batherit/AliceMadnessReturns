@@ -37,7 +37,8 @@ _int CUI_Targeting::Update_Object(const _float & _fDeltaTime)
 	if (pAlice && pAlice->GetTargetObject()) {
 		_vec3 vTargetPos = pAlice->GetTargetObject()->GetTransform()->GetPos();
 		m_fRadian += D3DXToRadian(100.f) * _fDeltaTime;
-		if (m_fRadian > 2.f * D3DX_PI) m_fRadian = 0.f;
+		if (m_fRadian > 2.f * D3DX_PI) 
+			m_fRadian -= 2.f * D3DX_PI;
 		vTargetPos.y += (m_fOffsetY + Engine::GetValueByWeight(Engine::GetWeightByCos(m_fRadian), -0.2f, 0.2f));
 		GetTransform()->SetPos(vTargetPos);
 

@@ -21,14 +21,16 @@ CCameraController_Player::~CCameraController_Player(void)
 
 }
 
-void CCameraController_Player::ControlCamera(Engine::CCamera * _pCamera, const _float& _fShiftFactor)
+void CCameraController_Player::ControlCamera(const _float& _fDeltaTime, Engine::CCamera * _pCamera, const _float& _fShiftFactor)
 {
 	if (!m_pPlayer)
 		return;
 
 	// 카메라 컨트롤러를 플레이어 위치에 맞춘다.
 	_vec3 vPlayerPos = m_pPlayer->GetTransform()->GetPos();
-	GetTransform()->SetPos(vPlayerPos + _vec3(0.f, 1.f, 0.f));
+	_float fRatio = m_pPlayer->GetTransform()->GetScale().x;
+	GetTransform()->SetPos(vPlayerPos + _vec3(0.f, 1.f * fRatio, 0.f));
+	SetStickLen(4.5f * fRatio);
 
 	// 카메라 스틱의 방향을 조정한다.
 	_vec3 vDeltaMouseDegree = Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree();
@@ -48,7 +50,7 @@ void CCameraController_Player::ControlCamera(Engine::CCamera * _pCamera, const _
 	// 카메라 위치를 조정한다.
 	TranslateCameraToStickEnd(_pCamera, _fShiftFactor);
 
-	RotateCameraToTargetPoint(_pCamera, vPlayerPos + _vec3(0.f, 1.f, 0.f), _fShiftFactor);
+	RotateCameraToTargetPoint(_pCamera, vPlayerPos + _vec3(0.f, 1.f * fRatio, 0.f), _fShiftFactor);
 }
 
 CCameraController_Player * CCameraController_Player::Create(LPDIRECT3DDEVICE9 pGraphicDev)

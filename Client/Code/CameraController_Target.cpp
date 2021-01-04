@@ -22,7 +22,7 @@ CCameraController_Target::~CCameraController_Target(void)
 
 }
 
-void CCameraController_Target::ControlCamera(Engine::CCamera * _pCamera, const _float& _fShiftFactor)
+void CCameraController_Target::ControlCamera(const _float& _fDeltaTime, Engine::CCamera * _pCamera, const _float& _fShiftFactor)
 {
 	if (!m_pPlayer)
 		return;

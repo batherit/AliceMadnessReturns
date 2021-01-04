@@ -27,7 +27,7 @@ _int CCameraMgr::Update_Object(const _float & _fDeltaTime)
 	if (m_iCameraControllerIndex < 0 || m_iCameraControllerIndex >= static_cast<_int>(m_vecCameraControllers.size()))
 		return 0;
 
-	m_vecCameraControllers[m_iCameraControllerIndex]->ControlCamera(m_pCamera, m_fShiftFactor);
+	m_vecCameraControllers[m_iCameraControllerIndex]->ControlCamera(_fDeltaTime, m_pCamera, m_fShiftFactor);
 
 	return 0;
 }

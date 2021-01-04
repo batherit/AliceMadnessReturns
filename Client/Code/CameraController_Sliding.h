@@ -18,7 +18,7 @@ public:
 	virtual _int			Update_Object(const _float& fTimeDelta) { return 0; }
 
 	// 매니져에서 업데이트마다 호출됩니다.
-	virtual void ControlCamera(Engine::CCamera* _pCamera, const _float& _fShiftFactor) override;
+	virtual void ControlCamera(const _float& _fDeltaTime, Engine::CCamera* _pCamera, const _float& _fShiftFactor) override;
 
 	void SetPlayer(const Engine::CGameObject* _pPlayer) { m_pPlayer = _pPlayer; }
 

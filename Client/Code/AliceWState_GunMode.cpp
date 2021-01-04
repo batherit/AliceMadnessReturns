@@ -64,9 +64,10 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 		m_pGunGauge->DecreaseGauge(0.6f * _fDeltaTime);
 
 	_vec3 vDir;
-	if (m_rOwner.IsMoving(_fDeltaTime, &vDir)) {
+	_float fRatio = m_rOwner.GetTransform()->GetScale().x;
+		if (m_rOwner.IsMoving(_fDeltaTime, &vDir)) {
 		_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
-		m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
+		m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED * 0.8f * fRatio);
 	}
 	else
 		m_rOwner.GetPhysics()->SetVelocityXZ(_vec2(0.f, 0.f));

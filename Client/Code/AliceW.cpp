@@ -108,9 +108,33 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_TAB)) {
 		ChangeLockOnTarget();
 	}
+
 	if (m_pTargetObject && m_pTargetObject->GetComponent<CAttribute>()->IsDead()) {
 		if (!ChangeLockOnTarget())
 			ReleaseLockOn();
+	}
+
+	if (!m_bIsSmalled && IsSmalling()) {
+		_vec3 vScale = GetTransform()->GetScale();
+		
+		if (vScale.x <= 0.3f) {
+			vScale = _vec3(0.3f, 0.3f, 0.3f);
+			m_bIsSmalled = true;
+		}
+		else
+			vScale *= 0.7f;
+		GetTransform()->SetScale(vScale);
+	}
+	else if (m_bIsSmalled && !IsSmalling()) {
+		_vec3 vScale = GetTransform()->GetScale();
+
+		if (vScale.x >= 1.f) {
+			vScale = _vec3(1.f, 1.f, 1.f);
+			m_bIsSmalled = false;
+		}
+		else 
+			vScale *= 1.3f;
+		GetTransform()->SetScale(vScale);
 	}
 
 	m_pStateMgr->Update(_fDeltaTime);
@@ -204,7 +228,7 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack") == 0) {
 			if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
 				// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
-				m_pAttribute->Damaged(1.f);
+				m_pAttribute->Damaged(5.f);
 				_vec3 vToOwner = GetTransform()->GetPos() - _tCollisionInfo.pCollidedCollider->GetTransform()->GetPos();
 				vToOwner.y = 0.f;
 				D3DXVec3Normalize(&vToOwner, &vToOwner);
@@ -310,32 +334,29 @@ _bool CAliceW::IsMoving(const _float & _fDeltaTime, _vec3 * _pDir)
 	return false;
 }
 
+_bool CAliceW::IsSmalling()
+{
+	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_LCONTROL) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_LCONTROL);
+}
+
 _bool CAliceW::IsAttackOn(const _float & _fDeltaTime)
 {
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB))
-		return true;
-	return false;
+	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB);
 }
 
 _bool CAliceW::IsAttacking(const _float & _fDeltaTime)
 {
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB))
-		return true;
-	return false;
+	return Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB);
 }
 
 _bool CAliceW::IsGunModeReleased()
 {
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_RB))
-		return true;
-	return false;
+	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_RB);
 }
 
 _bool CAliceW::IsJumpOn(const _float & _fDeltaTime)
 {
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_SPACE))
-		return true;
-	return false;
+	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_SPACE);
 }
 
 _bool CAliceW::IsSliding(const _float & _fDeltaTime)
@@ -345,9 +366,7 @@ _bool CAliceW::IsSliding(const _float & _fDeltaTime)
 
 _bool CAliceW::IsFloatingOn(const _float & _fDeltaTime)
 {
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_SPACE))
-		return true;
-	return false;
+	return Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_SPACE);
 }
 
 _bool CAliceW::IsFalling(const _float & _fDeltaTime)

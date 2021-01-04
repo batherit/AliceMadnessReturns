@@ -253,7 +253,9 @@ _uint CLoading::Loading_ForStage(void)
 	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Fork");
 
-	// 痢橇 菩靛 积己
+	// Custom
+
+	// 痢橇 菩靛 积己(Dynamic)
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"JumpPad",
@@ -263,6 +265,30 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"JumpPad");
+
+	// HP Flower 积己(Dynamic)
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HPFlower",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/HPFlower/",
+		L"HPFlower.X"),
+		E_FAIL);
+	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"HPFlower");
+
+	// // HP Flower 积己(Dynamic)
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Snail",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Snail/",
+		L"Snail.X"),
+		E_FAIL);
+	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Snail");
+
+
 
 	// CobbledStreet 积己
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

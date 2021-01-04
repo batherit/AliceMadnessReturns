@@ -41,6 +41,7 @@ public:
 	void SetWeaponType(E_WEAPON_TYPE _eWeaponType);
 
 	_bool IsMoving(const _float& _fDeltaTime, _vec3* _pDir = nullptr);
+	_bool IsSmalling();
 	_bool IsAttackOn(const _float& _fDeltaTime);
 	_bool IsAttacking(const _float& _fDeltaTime);
 	_bool IsGunModeReleased();
@@ -79,6 +80,7 @@ private:
 
 	_bool m_bIsLockOn = false;
 	Engine::CGameObject* m_pTargetObject = nullptr;
+	_bool m_bIsSmalled = false;
 };
 
 END

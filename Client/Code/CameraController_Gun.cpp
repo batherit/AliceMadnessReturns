@@ -12,7 +12,7 @@ CCameraController_Gun::CCameraController_Gun(LPDIRECT3DDEVICE9 pGraphicDev)
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	SetStickDir(vDir);
-	SetStickLen(1.3f);
+	SetStickLen(1.4f);
 
 
 }
@@ -22,14 +22,30 @@ CCameraController_Gun::~CCameraController_Gun(void)
 
 }
 
-void CCameraController_Gun::ControlCamera(Engine::CCamera * _pCamera, const _float& _fShiftFactor)
+void CCameraController_Gun::ControlCamera(const _float& _fDeltaTime, Engine::CCamera * _pCamera, const _float& _fShiftFactor)
 {
 	if (!m_pPlayer)
 		return;
 
 	// 카메라 컨트롤러를 플레이어 위치에 맞춘다.
 	_vec3 vPlayerPos = m_pPlayer->GetTransform()->GetPos();
-	_vec3 vCameraPos = vPlayerPos + m_pPlayer->GetTransform()->GetRight() * 0.3f + m_pPlayer->GetTransform()->GetUp() * 1.4f;
+	_float fRatio = m_pPlayer->GetTransform()->GetScale().x;
+
+	SetStickLen(1.4f * fRatio);
+
+	CAliceW* pAlice = dynamic_cast<CAliceW*>(m_pPlayer);
+	_float fOffsetY = 0.f;
+	if (pAlice) {
+		m_fRadian += D3DXToRadian(360.f * 3.f) * _fDeltaTime;
+		if (m_fRadian >= 2.f * D3DX_PI)
+			m_fRadian -= 2.f * D3DX_PI;
+
+		if (pAlice->IsMoving(_fDeltaTime)) {
+			fOffsetY = Engine::GetValueByWeight(Engine::GetWeightByCos(m_fRadian), -0.02f, 0.02f);
+		}
+	}
+
+	_vec3 vCameraPos = vPlayerPos + m_pPlayer->GetTransform()->GetRight() * 0.4f * fRatio + m_pPlayer->GetTransform()->GetUp() * (1.5f + fOffsetY) * fRatio;
 	GetTransform()->SetPos(vCameraPos);
 
 	// 카메라 스틱의 방향을 조정한다.

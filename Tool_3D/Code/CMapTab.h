@@ -34,6 +34,7 @@ public:
 	void UpdateScale(const _vec3& vScale);
 	void SetSelectedObject(CStaticObject* _pStaticObject);
 	_bool AddStaticObject(const _tchar* _pMeshTag);
+	void RegisterMeshTag(Engine::MESHTYPE _eMeshType, const _tchar * _pMeshTag);
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
@@ -57,6 +58,11 @@ public:
 	afx_msg void OnBnClickedRadioPosition();
 	afx_msg void OnBnClickedRadioRotation();
 	afx_msg void OnBnClickedRadioScale();
+
+	HTREEITEM m_itemStaticL = NULL;
+	HTREEITEM m_itemCustomL = NULL;
+	HTREEITEM m_itemStaticR = NULL;
+	HTREEITEM m_itemCustomR = NULL;
 
 	CStaticObject* m_pSelectedStaticObject = nullptr;
 	_int m_iSelectedStaticObjectIndex = -1;
@@ -90,4 +96,16 @@ public:
 	CString m_cstrScaleX;
 	CString m_cstrScaleY;
 	CString m_cstrScaleZ;
+	CString m_cstrFactor0;
+	CString m_cstrFactor1;
+	CString m_cstrFactor2;
+	CString m_cstrFactor3;
+	CString m_cstrFactor4;
+	CString m_cstrFactor5;
+	afx_msg void OnEnChangeEditFactor0();
+	afx_msg void OnEnChangeEditFactor1();
+	afx_msg void OnEnChangeEditFactor2();
+	afx_msg void OnEnChangeEditFactor3();
+	afx_msg void OnEnChangeEditFactor4();
+	afx_msg void OnEnChangeEditFactor5();
 };

@@ -154,6 +154,15 @@
     <Filter Include="02. Object\02. GameObject\RabbitBomb">
       <UniqueIdentifier>{c58c834b-c185-4a77-a291-64b4bcb469ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\DeathBox">
+      <UniqueIdentifier>{5681c3d4-7dd2-4998-89e6-2fa2b55778ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\EventBox">
+      <UniqueIdentifier>{15cf60ef-a5ec-40ec-8c5b-fc53e1cfd6e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\CheckPointBox">
+      <UniqueIdentifier>{b34b6898-64db-442d-941b-bb216c064c2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -363,6 +372,15 @@
     <ClInclude Include="..\Code\PopDomino.h">
       <Filter>02. Object\02. GameObject\PopDomino</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\DeathBox.h">
+      <Filter>02. Object\02. GameObject\DeathBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CheckPointBox.h">
+      <Filter>02. Object\02. GameObject\CheckPointBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\EventBox.h">
+      <Filter>02. Object\02. GameObject\EventBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -541,6 +559,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\PopDomino.cpp">
       <Filter>02. Object\02. GameObject\PopDomino</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DeathBox.cpp">
+      <Filter>02. Object\02. GameObject\DeathBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CheckPointBox.cpp">
+      <Filter>02. Object\02. GameObject\CheckPointBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EventBox.cpp">
+      <Filter>02. Object\02. GameObject\EventBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

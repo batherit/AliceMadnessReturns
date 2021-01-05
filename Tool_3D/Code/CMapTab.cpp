@@ -25,6 +25,12 @@ CMapTab::CMapTab(CWnd* pParent /*=nullptr*/)
 	, m_cstrScaleX(_T(""))
 	, m_cstrScaleY(_T(""))
 	, m_cstrScaleZ(_T(""))
+	, m_cstrFactor0(_T("NULL"))
+	, m_cstrFactor1(_T("NULL"))
+	, m_cstrFactor2(_T("NULL"))
+	, m_cstrFactor3(_T("NULL"))
+	, m_cstrFactor4(_T("NULL"))
+	, m_cstrFactor5(_T("NULL"))
 {
 
 }
@@ -61,6 +67,12 @@ void CMapTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT7, m_cstrScaleX);
 	DDX_Text(pDX, IDC_EDIT9, m_cstrScaleY);
 	DDX_Text(pDX, IDC_EDIT13, m_cstrScaleZ);
+	DDX_Text(pDX, IDC_EDIT18, m_cstrFactor0);
+	DDX_Text(pDX, IDC_EDIT19, m_cstrFactor1);
+	DDX_Text(pDX, IDC_EDIT20, m_cstrFactor2);
+	DDX_Text(pDX, IDC_EDIT21, m_cstrFactor3);
+	DDX_Text(pDX, IDC_EDIT22, m_cstrFactor4);
+	DDX_Text(pDX, IDC_EDIT23, m_cstrFactor5);
 }
 
 
@@ -83,6 +95,12 @@ BEGIN_MESSAGE_MAP(CMapTab, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO7, &CMapTab::OnBnClickedRadioScale)
 	ON_BN_CLICKED(IDC_BUTTON7, &CMapTab::OnBnClickedButtonSave)
 	ON_BN_CLICKED(IDC_BUTTON8, &CMapTab::OnBnClickedButtonLoad)
+	ON_EN_CHANGE(IDC_EDIT18, &CMapTab::OnEnChangeEditFactor0)
+	ON_EN_CHANGE(IDC_EDIT19, &CMapTab::OnEnChangeEditFactor1)
+	ON_EN_CHANGE(IDC_EDIT20, &CMapTab::OnEnChangeEditFactor2)
+	ON_EN_CHANGE(IDC_EDIT21, &CMapTab::OnEnChangeEditFactor3)
+	ON_EN_CHANGE(IDC_EDIT22, &CMapTab::OnEnChangeEditFactor4)
+	ON_EN_CHANGE(IDC_EDIT23, &CMapTab::OnEnChangeEditFactor5)
 END_MESSAGE_MAP()
 
 
@@ -93,6 +111,12 @@ BOOL CMapTab::OnInitDialog()
 
 	m_rbtnPosition.SetCheck(TRUE);
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+
+	// 오브젝트 리스트 트리에 Static과 Custom 항목을 추가합니다.
+	m_itemStaticL = m_treeObjectList.InsertItem(L"Static", NULL, NULL);
+	m_itemCustomL = m_treeObjectList.InsertItem(L"Custom", NULL, NULL);
+	m_itemStaticR = m_treeAddedObject.InsertItem(L"Static", NULL, NULL);
+	m_itemCustomR = m_treeAddedObject.InsertItem(L"Custom", NULL, NULL);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
@@ -364,6 +388,20 @@ _bool CMapTab::AddStaticObject(const _tchar * _pMeshTag)
 	return false;
 }
 
+void CMapTab::RegisterMeshTag(Engine::MESHTYPE _eMeshType, const _tchar * _pMeshTag)
+{
+	switch (_eMeshType) {
+	case Engine::TYPE_STATIC:
+		m_treeObjectList.InsertItem(_pMeshTag, m_itemStaticL, NULL);
+		break;
+	case Engine::TYPE_CUSTOM:
+		m_treeObjectList.InsertItem(_pMeshTag, m_itemCustomL, NULL);
+		break;
+	default:
+		break;
+	}
+}
+
 void CMapTab::OnEnChangeEditPosX()
 {
 	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
@@ -576,4 +614,70 @@ void CMapTab::OnBnClickedButtonLoad()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	g_pTool3D_Kernel->GetEditScene()->LoadMap();
 	UpdateAddedTree(g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList());
+}
+
+void CMapTab::OnEnChangeEditFactor0()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CMapTab::OnEnChangeEditFactor1()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CMapTab::OnEnChangeEditFactor2()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CMapTab::OnEnChangeEditFactor3()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CMapTab::OnEnChangeEditFactor4()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+
+void CMapTab::OnEnChangeEditFactor5()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

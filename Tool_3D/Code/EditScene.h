@@ -50,9 +50,11 @@ public:
 	
 	_bool AddStaticObject(const _tchar* _pMeshTag);
 	_bool AddDynamicObject(const _tchar* _pMeshTag, const _vec3& _vPos = _vec3(0.f, 0.f, 0.f));
+	_bool AddCustomObject(const _tchar* _pMeshTag);
 	CStaticObject* GetStaticObject(_int _iObjectIndex);
 	CStaticObject* GetStaticObject(const _tchar* _pMeshTag);
 	CDynamicObject* GetDynamicObject(const _tchar* _pMeshTag);
+	Engine::CGameObject* GetCustomObject(_int _iObjectIndex);
 	Engine::CGameObject* GetObjectFromTag(const _tchar* _pMeshTag);
 
 	vector<CStaticObject*>& GetStaticObjectList() { return m_vecStaticObjects; }
@@ -73,12 +75,16 @@ public:
 	void LoadColliders(Engine::CGameObject* _pObject);
 
 private:
-	_bool IsValidObjectIndex(_int _iObjectIndex);
+	_bool IsValidStaticObjectIndex(_int _iObjectIndex);
+	_bool IsValidCustomObjectIndex(_int _iObjectIndex);
+	Engine::MESHTYPE GetCustomObjectMeshType(const _tchar* _pMeshTag);
 
 private:
 	//Engine::CInputProcessorMgr* m_pInputProcessorMgr = nullptr;
 	vector<CStaticObject*> m_vecStaticObjects;
 	vector<CDynamicObject*> m_vecDynamicObjects;
+	vector<Engine::CGameObject*> m_vecCustomObjects;
+	map<_tchar*, Engine::MESHTYPE> m_mapCustomObjectType;
 };
 
 END

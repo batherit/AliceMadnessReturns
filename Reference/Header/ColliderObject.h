@@ -35,7 +35,7 @@ public:
 
 protected:
 	_tchar m_tcColliderTag[MAX_PATH] = L"NULL";
-	E_COLLIDER_TYPE m_eColliderType = TYPE_END;
+	E_COLLIDER_TYPE m_eColliderType = COL_TYPE_END;
 };
 
 END

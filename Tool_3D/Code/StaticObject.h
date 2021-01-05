@@ -31,12 +31,14 @@ public:
 	virtual _bool SaveInfo(HANDLE& _hfOut) override;
 	virtual _bool LoadInfo(HANDLE& _hfIn) override;
 	_bool LoadCollidersInfo();
+	CString& GetFactorRef(_int _iIndex) { return m_strFactor[_iIndex]; }
 
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	//const _tchar* m_pMeshTag = nullptr;
 	_tchar m_tcMeshTag[MAX_PATH] = L"";
+	CString m_strFactor[6] = { L"NULL", L"NULL", L"NULL", L"NULL" , L"NULL", L"NULL" };
 };
 
 END

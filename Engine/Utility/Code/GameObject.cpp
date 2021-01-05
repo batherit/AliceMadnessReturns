@@ -391,7 +391,7 @@ _bool CGameObject::SaveCollidersInfo(HANDLE& _hfOut) {
 
 	char cBoneName[MAX_PATH] = "";
 	_tchar tcColliderTag[MAX_PATH] = L"";
-	Engine::E_COLLIDER_TYPE eColliderType = Engine::TYPE_END;
+	Engine::E_COLLIDER_TYPE eColliderType = Engine::COL_TYPE_END;
 
 	_int iBoneNameSize = m_vecColliders.size();
 	_int iCollidersSize = 0;
@@ -435,7 +435,7 @@ _bool CGameObject::LoadCollidersInfo(HANDLE& _hfIn) {
 
 	char cBoneName[MAX_PATH] = "";
 	_tchar tcColliderTag[MAX_PATH] = L"";
-	Engine::E_COLLIDER_TYPE eColliderType = Engine::TYPE_END;
+	Engine::E_COLLIDER_TYPE eColliderType = Engine::COL_TYPE_END;
 
 	_int iBoneNameSize = 0;
 	_int iCollidersSize = 0;

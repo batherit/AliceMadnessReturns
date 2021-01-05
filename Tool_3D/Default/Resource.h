@@ -22,6 +22,7 @@
 #define IDD_OBB_COLTAB                  328
 #define IDC_EDIT1                       1000
 #define IDC_EDIT18                      1001
+#define IDC_EDIT19                      1002
 #define IDC_EDIT2                       1003
 #define IDC_TREE1                       1003
 #define IDC_TAB1                        1004
@@ -62,9 +63,12 @@
 #define IDC_RADIO7                      1019
 #define IDC_BUTTON9                     1019
 #define IDC_LIST1                       1020
+#define IDC_EDIT20                      1020
 #define IDC_LIST2                       1021
+#define IDC_EDIT21                      1021
 #define IDC_TAB2                        1022
-#define IDC_CHECK3                      1024
+#define IDC_EDIT22                      1022
+#define IDC_EDIT23                      1023
 
 // Next default values for new objects
 // 

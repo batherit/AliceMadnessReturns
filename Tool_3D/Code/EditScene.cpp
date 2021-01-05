@@ -106,6 +106,14 @@ HRESULT CEditScene::Ready(void)
 		//Engine::Safe_AddRef(rObj);
 	}
 
+	// 커스텀 오브젝트 생성을 위한 맵을 만든다.
+	m_mapCustomObjectType[L"HPFlower"] = Engine::TYPE_DYNAMIC;
+	m_mapCustomObjectType[L"JumpPad"] = Engine::TYPE_DYNAMIC;
+	m_mapCustomObjectType[L"Snail"] = Engine::TYPE_STATIC;
+	m_mapCustomObjectType[L"Tooth"] = Engine::TYPE_STATIC;
+	m_mapCustomObjectType[L"PopDomino"] = Engine::TYPE_STATIC;
+	m_mapCustomObjectType[L"Valve"] = Engine::TYPE_STATIC;
+
 	// 편집 레이어 등록
 	m_mapLayer.emplace(L"EditLayer", pLayer);
 
@@ -302,9 +310,50 @@ _bool CEditScene::AddDynamicObject(const _tchar * _pMeshTag, const _vec3& _vPos)
 	return false;
 }
 
+_bool CEditScene::AddCustomObject(const _tchar * _pMeshTag)
+{
+	auto find_iter = find_if(m_mapCustomObjectType.begin(), m_mapCustomObjectType.end(), Engine::CTag_Finder(_pMeshTag));
+
+	if (find_iter == m_mapCustomObjectType.end())
+		return false;
+
+	Engine::CGameObject* pCustomObject = nullptr;
+	switch (find_iter->second) {
+	case Engine::TYPE_DYNAMIC: {
+		CDynamicObject* pDynamicObject = CDynamicObject::Create(m_pGraphicDev);
+		pDynamicObject->SetRenderInfo(_pMeshTag);
+
+		if (pDynamicObject->GetComponent<Engine::CDynamicMesh>()) {
+			GetLayer(L"EditLayer")->Add_GameObject(pDynamicObject);
+			m_vecCustomObjects.emplace_back(pDynamicObject);
+			return true;
+		}
+
+		Engine::Safe_Release(pDynamicObject);
+		break;
+	}
+	case Engine::TYPE_STATIC: {
+		CStaticObject* pStaticObject = CStaticObject::Create(m_pGraphicDev);
+		pStaticObject->SetRenderInfo(_pMeshTag);
+
+		if (pStaticObject->GetComponent<Engine::CStaticMesh>()) {
+			GetLayer(L"EditLayer")->Add_GameObject(pStaticObject);
+			m_vecCustomObjects.emplace_back(pStaticObject);
+			return true;
+		}
+
+		Engine::Safe_Release(pStaticObject);
+		break;
+	}
+		
+	}
+
+	return false;
+}
+
 CStaticObject * CEditScene::GetStaticObject(_int _iObjectIndex)
 {
-	if(!IsValidObjectIndex(_iObjectIndex))
+	if(!IsValidStaticObjectIndex(_iObjectIndex))
 		return nullptr;
 
 	return m_vecStaticObjects[_iObjectIndex];
@@ -332,6 +381,15 @@ CDynamicObject * CEditScene::GetDynamicObject(const _tchar * _pMeshTag)
 	return nullptr;
 }
 
+Engine::CGameObject * CEditScene::GetCustomObject(_int _iObjectIndex)
+{
+	if (!IsValidCustomObjectIndex(_iObjectIndex))
+		return nullptr;
+
+	return m_vecStaticObjects[_iObjectIndex];
+}
+
+
 Engine::CGameObject * CEditScene::GetObjectFromTag(const _tchar * _pMeshTag)
 {
 	Engine::CGameObject* pObject = nullptr;
@@ -345,7 +403,7 @@ Engine::CGameObject * CEditScene::GetObjectFromTag(const _tchar * _pMeshTag)
 
 _bool CEditScene::DeleteStaticObject(_int _iObjectIndex)
 {
-	if (!IsValidObjectIndex(_iObjectIndex))
+	if (!IsValidStaticObjectIndex(_iObjectIndex))
 		return false;
 
 	m_vecStaticObjects[_iObjectIndex]->SetValid(false);
@@ -605,7 +663,24 @@ void CEditScene::LoadColliders(Engine::CGameObject* _pObject)
 	}
 }
 
-_bool CEditScene::IsValidObjectIndex(_int _iObjectIndex)
+_bool CEditScene::IsValidCustomObjectIndex(_int _iObjectIndex)
+{
+	if (_iObjectIndex < 0 || _iObjectIndex >= static_cast<_int>(m_vecCustomObjects.size()))
+		return false;
+	return true;
+}
+
+Engine::MESHTYPE CEditScene::GetCustomObjectMeshType(const _tchar * _pMeshTag)
+{
+	auto find_iter = find_if(m_mapCustomObjectType.begin(), m_mapCustomObjectType.end(), Engine::CTag_Finder(_pMeshTag));
+
+	if (find_iter == m_mapCustomObjectType.end())
+		return Engine::MESHTYPE_END;
+
+	return find_iter->second;
+}
+
+_bool CEditScene::IsValidStaticObjectIndex(_int _iObjectIndex)
 {
 	if (_iObjectIndex < 0 || _iObjectIndex >= static_cast<_int>(m_vecStaticObjects.size()))
 		return false;

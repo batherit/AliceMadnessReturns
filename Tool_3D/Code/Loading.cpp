@@ -188,7 +188,7 @@ _uint CLoading::Loading_ForStage(void)
 	//	L"../../Resource/Mesh/StaticMesh/TombStone/",
 	//	L"TombStone.X"),
 	//	E_FAIL);
-	//m_pMapTab->m_treeObjectList.InsertItem(L"Mesh_Stone", NULL, NULL);
+	//m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Mesh_Stone");
 
 	//// 스톤에 맞는 메쉬 콜라이더 원본 생성.
 	//Engine::CStaticMesh* pStaticMesh = nullptr;
@@ -207,7 +207,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Domino/",
 		L"Domino.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"Domino", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Domino");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Domino");
 
 	// 보팔검 생성
@@ -218,7 +218,6 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/VorpalBlade/",
 		L"VorpalBlade.X"),
 		E_FAIL);
-	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"VorpalBlade");
 
 	// 말막대기 생성
@@ -229,7 +228,6 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/HobbyHorse/",
 		L"HobbyHorse.X"),
 		E_FAIL);
-	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HobbyHorse");
 
 	// 총알 생성
@@ -250,7 +248,6 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Fork/",
 		L"Fork.X"),
 		E_FAIL);
-	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Fork");
 
 	// Custom
@@ -263,7 +260,6 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/DynamicMesh/JumpPad/",
 		L"JumpPad.X"),
 		E_FAIL);
-	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"JumpPad");
 
 	// HP Flower 생성(Dynamic)
@@ -274,7 +270,6 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/DynamicMesh/HPFlower/",
 		L"HPFlower.X"),
 		E_FAIL);
-	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"HPFlower");
 
 	// // Snail 생성(Static)
@@ -285,7 +280,6 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Snail/",
 		L"Snail.X"),
 		E_FAIL);
-	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Snail");
 
 	// Tooth 생성(Static)
@@ -306,7 +300,6 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Valve/",
 		L"Valve.X"),
 		E_FAIL);
-	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Valve");
 
 	// CobbledStreet 생성
@@ -317,7 +310,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"CobbledStreet.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"CobbledStreet", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet");
 
 	// CobbledStreet_Even
@@ -328,7 +321,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"CobbledStreet_Even.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"CobbledStreet_Even", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet_Even");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet_Even");
 
 	// PoorBuildingE01
@@ -339,7 +332,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"PoorBuildingE01.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"PoorBuildingE01", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorBuildingE01");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorBuildingE01");
 
 	// Curb_90
@@ -350,7 +343,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"Curb_90.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_90", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_90");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_90");
 
 	// Curb_Uneven
@@ -361,7 +354,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"Curb_Uneven.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_Uneven", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Uneven");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Uneven");
 
 	// Curb_Section
@@ -372,7 +365,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/",
 		L"Curb_Section.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"Curb_Section", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Section");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Section");
 
 	// 돌과 나무들
@@ -383,7 +376,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"DecoMushroom_AlienGroup.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"DecoMushroom_AlienGroup", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DecoMushroom_AlienGroup");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DecoMushroom_AlienGroup");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -393,7 +386,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"RockPillarARockPillarA.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"RockPillarARockPillarA", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarARockPillarA");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarARockPillarA");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -403,7 +396,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"GiantMossRockA.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"GiantMossRockA", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"GiantMossRockA");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"GiantMossRockA");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -413,7 +406,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"MossRockA.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"MossRockA", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MossRockA");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MossRockA");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -423,7 +416,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"MossRockB.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"MossRockB", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MossRockB");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MossRockB");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -433,7 +426,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"GiantOrientalRock_Wall.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"GiantOrientalRock_Wall", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"GiantOrientalRock_Wall");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"GiantOrientalRock_Wall");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -443,7 +436,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"RockPillarA.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"RockPillarA", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarA");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarA");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -453,7 +446,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"RockPillarB.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"RockPillarB", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarB");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarB");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -463,7 +456,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"RockPillarB2.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"RockPillarB2", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarB2");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarB2");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -473,7 +466,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"RockPillarC.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"RockPillarC", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarC");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"RockPillarC");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -483,7 +476,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"TearsRock.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"TearsRock", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"TearsRock");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"TearsRock");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -493,7 +486,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"GloryTree_Base.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"GloryTree_Base", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"GloryTree_Base");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"GloryTree_Base");
 
 
@@ -504,7 +497,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"MossRock_Walkable.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"MossRock_Walkable", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MossRock_Walkable");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MossRock_Walkable");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -514,7 +507,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Deco/",
 		L"Keyhole_Glory.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"Keyhole_Glory", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Keyhole_Glory");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Keyhole_Glory");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -524,7 +517,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Slide/",
 		L"DollSlide_CurveA.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"DollSlide_CurveA", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_CurveA");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_CurveA");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -534,7 +527,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Slide/",
 		L"DollSlide_CurveD.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"DollSlide_CurveD", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_CurveD");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_CurveD");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -544,8 +537,15 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Slide/",
 		L"DollSlide_StraightA.X"),
 		E_FAIL);
-	m_pMapTab->m_treeObjectList.InsertItem(L"DollSlide_StraightA", NULL, NULL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_StraightA");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_StraightA");
+
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"HPFlower");
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"JumpPad");
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"Snail");
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"Tooth");
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"PopDomino");
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"Valve");
 
 	// 앨리스W
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -645,7 +645,7 @@ void CLoading::Free(void)
 //				tcPath,
 //				tcFileNameWithExt),
 //				E_FAIL);
-//			m_pMapTab->m_treeObjectList.InsertItem(tcFileName, NULL, NULL);
+//			m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, tcFileName);
 //		}
 //	}
 //

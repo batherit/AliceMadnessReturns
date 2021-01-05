@@ -69,8 +69,12 @@ public:
 		SetVelocity(_vec3(vVelocity.x + _vDeltaVelocityXZ.x, vVelocity.y, vVelocity.z + _vDeltaVelocityXZ.y));
 	}
 	void SetVelocityY(const _float& _fVelocityY) {
-		_vec3 fVelocity = GetVelocity();
-		SetVelocity(_vec3(fVelocity.x, _fVelocityY, fVelocity.z));
+		_vec3 vVelocity = GetVelocity();
+		SetVelocity(_vec3(vVelocity.x, _fVelocityY, vVelocity.z));
+	}
+	void AddVelocityY(const _float& _fDeltaVelocityY) {
+		_vec3 vVelocity = GetVelocity();
+		SetVelocity(_vec3(vVelocity.x, vVelocity.y + _fDeltaVelocityY, vVelocity.z));
 	}
 
 	// Update

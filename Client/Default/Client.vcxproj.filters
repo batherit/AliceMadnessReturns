@@ -145,6 +145,15 @@
     <Filter Include="02. Object\02. GameObject\Tooth">
       <UniqueIdentifier>{86b94aaf-9ea1-42c8-b031-3a4e4f9a6527}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Valve">
+      <UniqueIdentifier>{b7d7faca-25a1-46fc-822e-9748b0f8dc2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\PopDomino">
+      <UniqueIdentifier>{e1503971-2bc7-4ddb-a07c-c1805a7d86a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\RabbitBomb">
+      <UniqueIdentifier>{c58c834b-c185-4a77-a291-64b4bcb469ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -348,6 +357,12 @@
     <ClInclude Include="..\Code\Tooth.h">
       <Filter>02. Object\02. GameObject\Tooth</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Valve.h">
+      <Filter>02. Object\02. GameObject\Valve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\PopDomino.h">
+      <Filter>02. Object\02. GameObject\PopDomino</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -520,6 +535,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Tooth.cpp">
       <Filter>02. Object\02. GameObject\Tooth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Valve.cpp">
+      <Filter>02. Object\02. GameObject\Valve</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PopDomino.cpp">
+      <Filter>02. Object\02. GameObject\PopDomino</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

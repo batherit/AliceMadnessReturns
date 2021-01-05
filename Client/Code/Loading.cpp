@@ -314,6 +314,15 @@ _uint CLoading::Loading_ForStage(void)
 		L"Tooth.X"),
 		E_FAIL);
 
+	// Valve »ý¼º(Static)
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Valve",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Valve/",
+		L"Valve.X"),
+		E_FAIL);
+
 	// ¸ÅµåÄ¸A
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

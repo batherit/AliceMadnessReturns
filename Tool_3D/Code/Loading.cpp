@@ -298,6 +298,17 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Tooth");
 
+	// Valve 持失(Static)
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Valve",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Valve/",
+		L"Valve.X"),
+		E_FAIL);
+	//m_pMapTab->m_treeObjectList.InsertItem(L"VorpalBlade", NULL, NULL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Valve");
+
 	// CobbledStreet 持失
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

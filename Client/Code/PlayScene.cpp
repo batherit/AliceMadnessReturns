@@ -21,6 +21,8 @@
 #include "JumpPad.h"
 #include "Tooth.h"
 #include "Snail.h"
+#include "Valve.h"
+#include "PopDomino.h"
 
 #include "Attribute.h"
 
@@ -283,6 +285,20 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
 	pGameObject->GetTransform()->Translate(_vec3(3.f, 1.f, -3.f));
+
+	// 테스트 밸브 생성
+	pGameObject = CValve::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(3.f, 1.f, -5.f));
+
+	// 테스트 팝 도미노 생성
+	pGameObject = CPopDomino::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(0.f, 1.f, -5.f));
+	dynamic_cast<CPopDomino*>(pGameObject)->SetPlayer(m_pPlayer);
+
 
 	// UI
 	/*CUI_HPGauge* pHPGauge = CUI_HPGauge::Create(m_pGraphicDev);

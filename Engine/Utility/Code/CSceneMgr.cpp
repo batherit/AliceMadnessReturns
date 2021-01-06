@@ -76,6 +76,7 @@ void Engine::CSceneMgr::Update(const _float& _fDeltaTime)
 void Engine::CSceneMgr::Render(void)
 {
 	m_pCurScene->Render();
+	m_pCurScene->CollectInvalidObjects();
 }
 
 //void Engine::CSceneMgr::Release(void)

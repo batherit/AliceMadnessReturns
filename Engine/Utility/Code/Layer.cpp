@@ -62,7 +62,7 @@ HRESULT Engine::CLayer::Ready_Layer(void)
 Engine::_int Engine::CLayer::Update_Layer(const _float& fTimeDelta)
 {
 	// 무효화 객체 수거(렌더 이후에 최종적으로 nullptr이 될 수 있기 때문에, 앞쪽에 배치함.)
-	CollectInvalidObjects();
+	//CollectInvalidObjects();
 
 	_int iExit = 0;
 

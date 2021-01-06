@@ -49,6 +49,9 @@ int CPopDomino::Update_Object(const _float & _fDeltaTime)
 			m_bIsVisible = false;
 		}
 	}
+	else {
+		m_pAlice = dynamic_cast<CAliceW*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Player").begin());
+	}
 
 	m_pRenderer->Update(_fDeltaTime);
 	CGameObject::Update_Object(_fDeltaTime);
@@ -107,12 +110,4 @@ CPopDomino * CPopDomino::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CPopDomino::Free(void)
 {
 	CGameObject::Free();
-}
-
-void CPopDomino::SetPlayer(CAliceW * _pPlayer)
-{
-	if (!_pPlayer)
-		return;
-
-	m_pAlice = _pPlayer;
 }

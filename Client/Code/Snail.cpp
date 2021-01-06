@@ -106,16 +106,17 @@ void CSnail::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 	}
 }
 
-void CSnail::PopTooth(_int _iToothNum)
+void CSnail::PopTooth(_int _iToothNum, _bool _bIsArrived)
 {
 	_vec3 vPos = GetTransform()->GetPos();
 	CTooth* pTooth = nullptr;
 	for (_int i = 0; i < _iToothNum; ++i) {
 		pTooth = CTooth::Create(m_pGraphicDev);
+		pTooth->GetTransform()->SetPos(vPos);
 		pTooth->SetPopInfo(_vec3(
-			vPos.x + Engine::GetNumberBetweenMinMax(-2.5f, 2.5f), 
+			vPos.x + Engine::GetNumberBetweenMinMax(-2.f, 2.f), 
 			vPos.y + 1.f, 
-			vPos.z + Engine::GetNumberBetweenMinMax(-2.5f, 2.5f)));
+			vPos.z + Engine::GetNumberBetweenMinMax(-2.f, 2.f)), _bIsArrived);
 		Engine::GetLayer(L"Environment")->Add_GameObject(pTooth);
 	}
 }

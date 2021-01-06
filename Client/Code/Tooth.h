@@ -30,7 +30,7 @@ public:
 	Engine::CStaticMesh* GetDynamicMesh() const { return m_pMesh; }
 
 public:
-	void SetPopInfo(_vec3 _vArrivalPos);
+	void SetPopInfo(_vec3 _vArrivalPos, _bool _bIsArrived =  false);
 
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
@@ -40,6 +40,7 @@ private:
 	_vec3 m_vArrivalPos;
 	_bool m_bIsArrived = true;
 	_float m_fRadian = 0.f;
+	_float m_fElapsedTime = 0.f;
 };
 
 END

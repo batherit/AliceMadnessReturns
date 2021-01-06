@@ -27,7 +27,6 @@ public:
 
 public:
 	Engine::CStaticMesh* GetDynamicMesh() const { return m_pMesh; }
-	void SetPlayer(CAliceW* _pPlayer);
 
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;

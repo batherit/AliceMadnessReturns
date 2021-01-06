@@ -2,6 +2,16 @@
 #include "Map.h"
 #include "Terrain.h"
 #include "StaticObject.h"
+#include "DynamicObject.h"
+
+// CustomObject
+// HPFlower, JumpPad, Snail, Tooth, PopDomino, Valve + DeathBox, CheckPointBox, EventBox
+#include "HPFlower.h"
+#include "JumpPad.h"
+#include "Snail.h"
+#include "Tooth.h"
+#include "PopDomino.h"
+#include "Valve.h"
 
 
 CMap::CMap(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -61,7 +71,7 @@ void CMap::LoadMap(Engine::CLayer* pLayer, const _tchar * _pTerrainFilePath, con
 {
 	LoadTerrain(_pTerrainFilePath);
 	LoadNaviMesh(_pNaviFilePath);
-	LoadStaticObjects(pLayer, _pObjectsFilePath);
+	LoadObjects(pLayer, _pObjectsFilePath);
 }
 
 void CMap::LoadTerrain( const _tchar * _pFilePath)
@@ -123,7 +133,7 @@ void CMap::LoadNaviMesh(const _tchar * _pFilePath)
 	CloseHandle(hFile);
 }
 
-void CMap::LoadStaticObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
+void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 {
 	if (!_pFilePath)
 		return;
@@ -133,25 +143,115 @@ void CMap::LoadStaticObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
 
-	if (m_vecChildList.size() > 1) {
+	/*if (m_vecChildList.size() > 1) {
 		for_each(m_vecChildList.begin() + 1, m_vecChildList.end(), Engine::CDeleteObj());
 		m_vecChildList.erase(remove_if(
 			m_vecChildList.begin() + 1, m_vecChildList.end(),
 			[](auto& rObj) { return rObj == nullptr; }),
 			m_vecChildList.end());
+	}*/
+
+	for (auto& rObj : pLayer->GetLayerList(L"MapObjects")) {
+		rObj->SetValid(false);
 	}
 
-	_int iVecSize = 0;
 	DWORD dwByte = 0;
-	ReadFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
+	// Static
+	_int iVecSize = 0;
+	ReadFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);			// vector 사이즈 로드
+
+	_bool bIsCustomed = false;
+	_int iStrLength = 0;
+	_tchar tcFactor[50] = L"";
+	Engine::CGameObject* pCustomObject = nullptr;
 	CStaticObject* pStaticObject = nullptr;
 	for (_int i = 0; i < iVecSize; ++i) {
 		pStaticObject = CStaticObject::Create(m_pGraphicDev);
 		if (!pStaticObject->LoadInfo(hFile))
-			Engine::Safe_Release(pStaticObject);
+			abort();
+			//Engine::Safe_Release(pStaticObject);
 		else {
-			pLayer->Add_GameObject(L"StaticObjects", pStaticObject);
+			pLayer->Add_GameObject(L"MapObjects", pStaticObject);
 		}
+
+		ReadFile(hFile, &bIsCustomed, sizeof(bIsCustomed), &dwByte, nullptr);		// 커스텀 여부 저장
+		//pStaticObject->SetCustomed(bIsCustomed);
+		if (bIsCustomed) {
+			for (_int i = 0; i < 6; ++i) {
+				ReadFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
+				ReadFile(hFile, tcFactor, sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+				// TODO : 팩터 해석을 작성합니다.
+				//pStaticObject->GetFactorRef(i) = tcFactor;
+			}
+
+			if (lstrcmp(L"Snail", pStaticObject->GetMeshTag()) == 0) {
+				pCustomObject = CSnail::Create(m_pGraphicDev);
+				// TODO : 팩터 해석을 작성합니다.
+			}
+			else if (lstrcmp(L"Tooth", pStaticObject->GetMeshTag()) == 0) {
+				pCustomObject = CTooth::Create(m_pGraphicDev);
+			}
+			else if (lstrcmp(L"Valve", pStaticObject->GetMeshTag()) == 0) {
+				pCustomObject = CValve::Create(m_pGraphicDev);
+			}
+			else if (lstrcmp(L"Domino", pStaticObject->GetMeshTag()) == 0) {
+				pCustomObject = CPopDomino::Create(m_pGraphicDev);
+			}
+
+			pCustomObject->GetTransform()->SetPos(pStaticObject->GetTransform()->GetPos());
+			pCustomObject->GetTransform()->SetScale(pStaticObject->GetTransform()->GetScale());
+			pCustomObject->GetTransform()->SetAngle(pStaticObject->GetTransform()->GetAngle());
+			pLayer->Add_GameObject(L"MapObjects", pCustomObject);
+			pStaticObject->SetValid(false);
+			pStaticObject->SetActivated(false);
+			//Engine::Safe_Release(pStaticObject);
+		}
+		else 
+			pLayer->Add_GameObject(L"MapObjects", pStaticObject);
+	}
+
+	// Dynamic
+	iVecSize = 0;
+	ReadFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
+	CDynamicObject* pDynamicObject = nullptr;
+	for (_int i = 0; i < iVecSize; ++i) {
+		pDynamicObject = CDynamicObject::Create(m_pGraphicDev);
+		if (!pDynamicObject->LoadInfo(hFile))
+			abort();
+			//Engine::Safe_Release(pDynamicObject);
+		else {
+			pLayer->Add_GameObject(L"MapObjects", pDynamicObject);
+			//m_vecDynamicObjects.emplace_back(pDynamicObject);
+		}
+
+		ReadFile(hFile, &bIsCustomed, sizeof(bIsCustomed), &dwByte, nullptr);		// 커스텀 여부 저장
+		//pDynamicObject->SetCustomed(bIsCustomed);
+		if (bIsCustomed) {
+			for (_int i = 0; i < 6; ++i) {
+				ReadFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
+				ReadFile(hFile, tcFactor, sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+				// TODO : 팩터 해석을 작성합니다.
+				//pDynamicObject->GetFactorRef(i) = tcFactor;
+			}
+		
+			if (lstrcmp(L"HPFlower", pDynamicObject->GetMeshTag()) == 0) {
+				pCustomObject = CHPFlower::Create(m_pGraphicDev);
+				// TODO : 팩터 해석을 작성합니다.
+			}
+			else if (lstrcmp(L"JumpPad", pDynamicObject->GetMeshTag()) == 0) {
+				pCustomObject = CJumpPad::Create(m_pGraphicDev);
+			}
+
+			pCustomObject->GetTransform()->SetPos(pDynamicObject->GetTransform()->GetPos());
+			pCustomObject->GetTransform()->SetScale(pDynamicObject->GetTransform()->GetScale());
+			pCustomObject->GetTransform()->SetAngle(pDynamicObject->GetTransform()->GetAngle());
+			pLayer->Add_GameObject(L"MapObjects", pCustomObject);
+			pDynamicObject->SetValid(false);
+			pDynamicObject->SetActivated(false);
+			//Engine::Safe_Release(pDynamicObject);
+		}
+		else
+			pLayer->Add_GameObject(L"MapObjects", pDynamicObject);
 	}
 
 	CloseHandle(hFile);

@@ -37,8 +37,11 @@ public:
 	void SetColliderVisible(const _bool& _bIsColliderVisible);
 	_bool IsColliderVisible() const { return m_bIsColliderVisible; }
 
+	//void SetActivated(const _bool& _bIsActivated) { m_bIsActivated; }
+
 private:
 	_bool m_bIsColliderVisible = true;
+	//_bool m_bIsActivated = true;
 	list<CGameObject*>				m_ObjectList;
 
 private:

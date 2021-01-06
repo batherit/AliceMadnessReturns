@@ -29,7 +29,7 @@ public:
 	Engine::CStaticMesh* GetDynamicMesh() const { return m_pMesh; }
 
 private:
-	void PopTooth(_int _iToothNum);
+	void PopTooth(_int _iToothNum, _bool _bIsArrived = false);
 
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;

@@ -48,23 +48,25 @@ int CTooth::Update_Object(const _float & _fDeltaTime)
 	if (!m_bIsArrived) {
 		_vec3 vToArrivalPos = m_vArrivalPos - GetTransform()->GetPos();
 
-		if (D3DXVec3Length(&vToArrivalPos) <= 0.5f) {
-			m_pCollider->SetActivated(true);
+		if (D3DXVec3Length(&vToArrivalPos) <= 0.1f) {
+			//m_pCollider->SetActivated(true);
 			m_bIsArrived = true;
 		}
 		else
 			GetTransform()->Translate(vToArrivalPos * 0.25f);
 	}
-	else if (m_pAlice) {
+	else if (m_pAlice && m_bIsArrived) {
 		_vec3 vPlayerPos = m_pAlice->GetTransform()->GetPos();
 		vPlayerPos.y += 1.f;
 		_vec3 vToPlayer = vPlayerPos - GetTransform()->GetPos();
 
-		if (D3DXVec3Length(&vToPlayer) <= 0.5f) {
+		if ((m_fElapsedTime += _fDeltaTime) <= 0.3f) {
+			_float fT = Engine::GetWeightByValue(m_fElapsedTime, 0.f, 0.25f);
+			GetTransform()->Translate(vToPlayer * fT);
+		}
+		else {
 			SetValid(false);
 		}
-		else
-			GetTransform()->Translate(vToPlayer * 0.25f);
 	}
 
 	GetTransform()->RotateByUp(D3DXToRadian(720.f) * _fDeltaTime);
@@ -141,10 +143,10 @@ void CTooth::Free(void)
 	CGameObject::Free();
 }
 
-void CTooth::SetPopInfo(_vec3 _vArrivalPos)
+void CTooth::SetPopInfo(_vec3 _vArrivalPos, _bool _bIsArrived)
 {
 	m_vArrivalPos = _vArrivalPos;
-	m_bIsArrived = false;
-	m_pCollider->SetActivated(false);
+	m_bIsArrived = _bIsArrived;
+	//m_pCollider->SetActivated(false);
 }
 

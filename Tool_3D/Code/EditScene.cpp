@@ -577,16 +577,47 @@ void CEditScene::SaveMap()
 		DWORD dwByte = 0;
 		
 		// Static 저장
-		_int iVecSize = m_vecStaticObjects.size();
-		WriteFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
-		for (auto& rStaticObj : m_vecStaticObjects)
-			rStaticObj->SaveInfo(hFile);
+		_int iVecSize = m_vecStaticObjects.size();								
+		WriteFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);						// vector 사이즈 저장
+
+		_bool bIsCustomed = false;
+		_int iStrLength = 0;
+		for (auto& rStaticObj : m_vecStaticObjects) {
+			rStaticObj->SaveInfo(hFile);														// 오브젝트 정보 저장
+
+			// 커스텀 여부 저장
+			bIsCustomed = rStaticObj->IsCustomed();
+			WriteFile(hFile, &bIsCustomed, sizeof(bIsCustomed), &dwByte, nullptr);				// 커스텀 여부 저장
+
+			if (bIsCustomed) {
+				for (_int i = 0; i < 6; ++i) {
+					iStrLength = lstrlen(rStaticObj->GetFactorRef(i));							// 커스텀 팩터 저장
+					WriteFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
+					WriteFile(hFile, rStaticObj->GetFactorRef(i), sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+				}
+			}
+		}
+			
 		
 		// Dynamic 저장
 		iVecSize = m_vecDynamicObjects.size();
 		WriteFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
-		for (auto& rDynamicObj : m_vecDynamicObjects)
+		for (auto& rDynamicObj : m_vecDynamicObjects) {
 			rDynamicObj->SaveInfo(hFile);
+
+			// 커스텀 여부 저장
+			bIsCustomed = rDynamicObj->IsCustomed();
+			WriteFile(hFile, &bIsCustomed, sizeof(bIsCustomed), &dwByte, nullptr);
+
+			if (bIsCustomed) {
+				for (_int i = 0; i < 6; ++i) {
+					iStrLength = lstrlen(rDynamicObj->GetFactorRef(i));
+					WriteFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
+					WriteFile(hFile, rDynamicObj->GetFactorRef(i), sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+				}
+			}
+		}
+			
 
 		CloseHandle(hFile);
 	}
@@ -630,15 +661,30 @@ void CEditScene::LoadMap()
 
 		// Static
 		_int iVecSize = 0;
-		ReadFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
+		ReadFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);			// vector 사이즈 로드
+
+		_bool bIsCustomed = false;
+		_int iStrLength = 0;
+		_tchar tcFactor[50] = L"";
 		CStaticObject* pStaticObject = nullptr;
 		for (_int i = 0; i < iVecSize; ++i) {
 			pStaticObject = CStaticObject::Create(m_pGraphicDev);
+
 			if (!pStaticObject->LoadInfo(hFile))
 				Engine::Safe_Release(pStaticObject);
 			else {
 				GetLayer(L"EditLayer")->Add_GameObject(pStaticObject);
 				m_vecStaticObjects.emplace_back(pStaticObject);
+			}
+
+			ReadFile(hFile, &bIsCustomed, sizeof(bIsCustomed), &dwByte, nullptr);		// 커스텀 여부 저장
+			pStaticObject->SetCustomed(bIsCustomed);
+			if (bIsCustomed) {
+				for (_int i = 0; i < 6; ++i) {
+					ReadFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
+					ReadFile(hFile, tcFactor, sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+					pStaticObject->GetFactorRef(i) = tcFactor;
+				}
 			}
 		}
 
@@ -654,6 +700,18 @@ void CEditScene::LoadMap()
 				GetLayer(L"EditLayer")->Add_GameObject(pDynamicObject);
 				m_vecDynamicObjects.emplace_back(pDynamicObject);
 			}
+
+			ReadFile(hFile, &bIsCustomed, sizeof(bIsCustomed), &dwByte, nullptr);		// 커스텀 여부 저장
+			pDynamicObject->SetCustomed(bIsCustomed);
+			if (bIsCustomed) {
+				for (_int i = 0; i < 6; ++i) {
+					ReadFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
+					ReadFile(hFile, tcFactor, sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+					pDynamicObject->GetFactorRef(i) = tcFactor;
+				}
+			}
+
+			
 		}
 
 		CloseHandle(hFile);

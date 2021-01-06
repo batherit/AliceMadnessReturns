@@ -24,7 +24,6 @@ public:
 	HRESULT		Ready_Layer(void);
 	_int		Update_Layer(const _float& fTimeDelta);
 
-private:
 	void CollectInvalidObjects();
 
 private:

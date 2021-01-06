@@ -9,6 +9,7 @@
 BEGIN(Client)
 class CTerrain;
 class CStaticObject;
+class CDynamicObject;
 class CMap : public Engine::CGameObject
 {
 private: // 持失切, 社瑚切
@@ -29,7 +30,7 @@ public:
 	void LoadMap(Engine::CLayer* pLayer, const _tchar* _pTerrainFilePath, const _tchar* _pNaviFilePath, const _tchar* _pObjectsFilePath);
 	void LoadTerrain(const _tchar* _pFilePath);
 	void LoadNaviMesh(const _tchar* _pFilePath);
-	void LoadStaticObjects(Engine::CLayer* pLayer, const _tchar* pFilePath);
+	void LoadObjects(Engine::CLayer* pLayer, const _tchar* pFilePath);
 
 	Engine::CNaviMesh* GetNaviMesh() const { return m_pNaviMesh; }
 
@@ -38,6 +39,7 @@ private:
 	Engine::CNaviMesh* m_pNaviMesh = nullptr;
 	CTerrain* m_pTerrain = nullptr;
 	vector<CStaticObject*> m_vecStaticObjects;
+	vector<CDynamicObject*> m_vecDynamicObjects;
 };
 
 END

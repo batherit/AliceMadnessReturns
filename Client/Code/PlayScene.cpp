@@ -55,6 +55,8 @@ void CPlayScene::ResetScene(void)
 
 HRESULT CPlayScene::Ready(void)
 {
+	Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
+
 	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
@@ -127,6 +129,14 @@ int CPlayScene::Update(const _float& fTimeDelta)
 	}
 	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_P)) {
 		m_pPlayer->GetComponent<CAttribute>()->IncreaseHP(10.f);
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
+		if (Engine::CCollisionMgr::GetInstance()->IsColliderVisible()) {
+			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
+		}
+		else {
+			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
+		}
 	}
 
 	return CScene::Update(fTimeDelta);

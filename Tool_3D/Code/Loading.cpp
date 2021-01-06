@@ -260,6 +260,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/DynamicMesh/JumpPad/",
 		L"JumpPad.X"),
 		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"JumpPad");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"JumpPad");
 
 	// HP Flower 持失(Dynamic)
@@ -270,6 +271,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/DynamicMesh/HPFlower/",
 		L"HPFlower.X"),
 		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"HPFlower");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"HPFlower");
 
 	// // Snail 持失(Static)
@@ -280,6 +282,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Snail/",
 		L"Snail.X"),
 		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Snail");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Snail");
 
 	// Tooth 持失(Static)
@@ -290,6 +293,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Tooth/",
 		L"Tooth.X"),
 		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Tooth");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Tooth");
 
 	// Valve 持失(Static)
@@ -300,6 +304,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Valve/",
 		L"Valve.X"),
 		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Valve");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Valve");
 
 	// CobbledStreet 持失
@@ -539,13 +544,6 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_StraightA");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_StraightA");
-
-	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"HPFlower");
-	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"JumpPad");
-	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"Snail");
-	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"Tooth");
-	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"PopDomino");
-	m_pMapTab->RegisterMeshTag(Engine::TYPE_CUSTOM, L"Valve");
 
 	// 訟軒什W
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

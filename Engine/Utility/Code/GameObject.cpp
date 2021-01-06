@@ -63,6 +63,19 @@ void CGameObject::SetValid(_bool _bIsValid) {
 	}
 }
 
+void CGameObject::SetVisible(_bool _bIsVisible)
+{
+	m_bIsVisible = _bIsVisible;
+
+	for (auto& rChild : m_vecChildList) {
+		rChild->SetVisible(_bIsVisible);
+	}
+
+	for (auto& rCollider : m_vecOptimizedColliders) {
+		rCollider->SetVisible(_bIsVisible);
+	}
+}
+
 void CGameObject::SetActivated(_bool _bIsActivated) {
 	m_bIsActivated = _bIsActivated;
 

@@ -48,6 +48,8 @@ _int CColliderObject_OBB::Update_Object(const _float & _fDeltaTime)
 void CColliderObject_OBB::Render_Object(void)
 {
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
+	if (!m_bIsVisible)
+		return;
 	m_pRenderer->Render();
 }
 

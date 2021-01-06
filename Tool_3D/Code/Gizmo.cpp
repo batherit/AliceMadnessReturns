@@ -7,6 +7,7 @@
 #include "CMapTab.h"
 #include "Gizmo.h"
 #include "StaticObject.h"
+#include "DynamicObject.h"
 #include "EditScene.h"
 
 CGizmo::CGizmo(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -44,20 +45,36 @@ int CGizmo::Update_Object(const _float & _fDeltaTime)
 
 	// C버튼을 누르면 복제가 된다.
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_C)) {
-		CString pMeshTag = dynamic_cast<CStaticObject*>(m_pGameObject)->GetMeshTag();
-		if (m_pMapTab->AddStaticObject(pMeshTag)) {
-			auto& rStaticObjectList = g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList();
-			CStaticObject* pNewStaticObject = rStaticObjectList[rStaticObjectList.size() - 1];
+		Engine::CGameObject* pNewGameObject = nullptr;
+		
+		if (dynamic_cast<CStaticObject*>(m_pGameObject)) {
+			CString pMeshTag = dynamic_cast<CStaticObject*>(m_pGameObject)->GetMeshTag();
+
+			if (m_pMapTab->AddStaticObject(pMeshTag)) {
+				auto& rStaticObjectList = g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList();
+				pNewGameObject = rStaticObjectList[rStaticObjectList.size() - 1];
+			}
+		}
+		else if (dynamic_cast<CDynamicObject*>(m_pGameObject)) {
+			CString pMeshTag = dynamic_cast<CDynamicObject*>(m_pGameObject)->GetMeshTag();
+
+			if (m_pMapTab->AddDynamicObject(pMeshTag)) {
+				auto& rDynamicObjectList = g_pTool3D_Kernel->GetEditScene()->GetDynamicObjectList();
+				pNewGameObject = rDynamicObjectList[rDynamicObjectList.size() - 1];
+			}
+		}
+		
+		if (pNewGameObject) {
 			_vec3 vPos = m_pGameObject->GetTransform()->GetPos();
 			vPos.x += 4;
 			_vec3 vAngle = m_pGameObject->GetTransform()->GetAngle();
 			_vec3 vScale = m_pGameObject->GetTransform()->GetScale();
-			pNewStaticObject->GetTransform()->SetPos(vPos);
-			pNewStaticObject->GetTransform()->SetAngle(vAngle);
-			pNewStaticObject->GetTransform()->SetScale(vScale);
-			SetObject(pNewStaticObject);
+			pNewGameObject->GetTransform()->SetPos(vPos);
+			pNewGameObject->GetTransform()->SetAngle(vAngle);
+			pNewGameObject->GetTransform()->SetScale(vScale);
+			SetObject(pNewGameObject);
 
-			m_pMapTab->SetSelectedObject(pNewStaticObject);
+			m_pMapTab->SetSelectedObject(pNewGameObject);
 			m_pMapTab->UpdatePos(vPos);
 			m_pMapTab->UpdateAngle(vAngle);
 			m_pMapTab->UpdateScale(vScale);

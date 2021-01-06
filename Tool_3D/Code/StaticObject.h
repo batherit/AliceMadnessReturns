@@ -33,11 +33,17 @@ public:
 	_bool LoadCollidersInfo();
 	CString& GetFactorRef(_int _iIndex) { return m_strFactor[_iIndex]; }
 
+	void SetCustomed(_bool _bIsCustomed) { m_bIsCustomed = _bIsCustomed; }
+	_bool IsCustomed() const { return m_bIsActivated; }
+
+
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	//const _tchar* m_pMeshTag = nullptr;
 	_tchar m_tcMeshTag[MAX_PATH] = L"";
+
+	_bool m_bIsCustomed = false;
 	CString m_strFactor[6] = { L"NULL", L"NULL", L"NULL", L"NULL" , L"NULL", L"NULL" };
 };
 

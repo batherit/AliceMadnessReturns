@@ -34,7 +34,11 @@ public:
 	_bool IsCollided(CColliderObject_OBB* _pOBB, CColliderObject_Sphere* _pSphere);
 	_bool IsCollided(CColliderObject_OBB* _pOBB, CColliderObject_AABB* _pAABB);
 
+	void SetColliderVisible(const _bool& _bIsColliderVisible);
+	_bool IsColliderVisible() const { return m_bIsColliderVisible; }
+
 private:
+	_bool m_bIsColliderVisible = true;
 	list<CGameObject*>				m_ObjectList;
 
 private:

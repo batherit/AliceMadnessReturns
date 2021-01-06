@@ -28,12 +28,13 @@ public:
 	afx_msg void OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult);
 
 public:
-	void UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects);
+	void UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects, const vector<CDynamicObject*>& rDynamicObjects);
 	void UpdatePos(const _vec3& vPos);
 	void UpdateAngle(const _vec3& vAngle);
 	void UpdateScale(const _vec3& vScale);
-	void SetSelectedObject(CStaticObject* _pStaticObject);
+	void SetSelectedObject(Engine::CGameObject* _pObject);
 	_bool AddStaticObject(const _tchar* _pMeshTag);
+	_bool AddDynamicObject(const _tchar* _pMeshTag);
 	void RegisterMeshTag(Engine::MESHTYPE _eMeshType, const _tchar * _pMeshTag);
 
 protected:
@@ -60,12 +61,12 @@ public:
 	afx_msg void OnBnClickedRadioScale();
 
 	HTREEITEM m_itemStaticL = NULL;
-	HTREEITEM m_itemCustomL = NULL;
+	HTREEITEM m_itemDynamicL = NULL;
 	HTREEITEM m_itemStaticR = NULL;
-	HTREEITEM m_itemCustomR = NULL;
+	HTREEITEM m_itemDynamicR = NULL;
 
-	CStaticObject* m_pSelectedStaticObject = nullptr;
-	_int m_iSelectedStaticObjectIndex = -1;
+	Engine::CGameObject* m_pSelectedObject = nullptr;
+	_int m_iSelectedObjectIndex = -1;
 
 	CEdit m_editPosX;
 	CEdit m_editPosY;
@@ -108,4 +109,6 @@ public:
 	afx_msg void OnEnChangeEditFactor3();
 	afx_msg void OnEnChangeEditFactor4();
 	afx_msg void OnEnChangeEditFactor5();
+	CButton m_btnCustomed;
+	afx_msg void OnBnClickedCheckCustomed();
 };

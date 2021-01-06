@@ -32,7 +32,6 @@
 #include "Shader.h"
 
 BEGIN(Engine)
-
 // management
 // Get
 //inline CComponent*	   Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);

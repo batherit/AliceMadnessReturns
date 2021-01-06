@@ -4,7 +4,6 @@
 #include "ResourcesMgr.h"
 
 BEGIN(Engine)
-
 // ResourcesMgr
 // Get
 inline CComponent*	Clone(const _ushort& wContainerIdx, const _tchar* pResourcesTag);

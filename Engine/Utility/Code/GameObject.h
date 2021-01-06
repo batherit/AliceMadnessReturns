@@ -35,6 +35,8 @@ public:
 
 	void SetValid(_bool _bIsValid);
 	_bool IsValid() const { return m_bIsValid; }
+	void SetVisible(_bool _bIsVisible);
+	_bool IsVisible() const { return m_bIsVisible; }
 	void SetActivated(_bool _bIsActivated);
 	_bool IsActivated() const { return m_bIsActivated; }
 
@@ -89,6 +91,7 @@ protected:
 
 protected:
 	_bool m_bIsValid = true;
+	_bool m_bIsVisible = true;
 	_bool m_bIsActivated = true;
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 	CGameObject* m_pParent = nullptr;

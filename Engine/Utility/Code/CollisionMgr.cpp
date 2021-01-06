@@ -35,6 +35,11 @@ _bool CCollisionMgr::AddGameObject(CGameObject * _pGameObject)
 		return false;		// 갖고있는 콜라이더가 없다면 넣지 않아요.
 
 	m_ObjectList.emplace_back(_pGameObject);
+
+	for (auto& rCollider : _pGameObject->GetOptimizedColliderList()) {
+		rCollider->SetVisible(m_bIsColliderVisible);
+	}
+
 	return true;
 }
 
@@ -206,4 +211,14 @@ _bool CCollisionMgr::IsCollided(CColliderObject_OBB * _pOBB, CColliderObject_Sph
 _bool CCollisionMgr::IsCollided(CColliderObject_OBB * _pOBB, CColliderObject_AABB * _pAABB)
 {
 	return IsCollided(_pAABB, _pOBB);
+}
+
+void CCollisionMgr::SetColliderVisible(const _bool & _bIsColliderVisible)
+{
+	m_bIsColliderVisible = _bIsColliderVisible;
+	for (auto& rObj : m_ObjectList) {
+		for (auto& rCol : rObj->GetOptimizedColliderList()) {
+			rCol->SetVisible(_bIsColliderVisible);
+		}
+	}
 }

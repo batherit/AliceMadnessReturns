@@ -59,6 +59,9 @@ void CColliderObject_Sphere::Render_Object(void)
 	matWorld = matScale * matTrans;
 
 	m_pRenderer->SetWorldMatrix(matWorld);
+
+	if (!m_bIsVisible)
+		return;
 	m_pRenderer->Render();
 }
 

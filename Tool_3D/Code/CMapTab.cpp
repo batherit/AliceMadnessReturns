@@ -6,6 +6,7 @@
 #include "CMapTab.h"
 #include "EditScene.h"
 #include "StaticObject.h"
+#include "DynamicObject.h"
 #include "Gizmo.h"
 #include "afxdialogex.h"
 
@@ -73,6 +74,7 @@ void CMapTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT21, m_cstrFactor3);
 	DDX_Text(pDX, IDC_EDIT22, m_cstrFactor4);
 	DDX_Text(pDX, IDC_EDIT23, m_cstrFactor5);
+	DDX_Control(pDX, IDC_CHECK4, m_btnCustomed);
 }
 
 
@@ -101,6 +103,7 @@ BEGIN_MESSAGE_MAP(CMapTab, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT21, &CMapTab::OnEnChangeEditFactor3)
 	ON_EN_CHANGE(IDC_EDIT22, &CMapTab::OnEnChangeEditFactor4)
 	ON_EN_CHANGE(IDC_EDIT23, &CMapTab::OnEnChangeEditFactor5)
+	ON_BN_CLICKED(IDC_CHECK4, &CMapTab::OnBnClickedCheckCustomed)
 END_MESSAGE_MAP()
 
 
@@ -114,9 +117,9 @@ BOOL CMapTab::OnInitDialog()
 
 	// 오브젝트 리스트 트리에 Static과 Custom 항목을 추가합니다.
 	m_itemStaticL = m_treeObjectList.InsertItem(L"Static", NULL, NULL);
-	m_itemCustomL = m_treeObjectList.InsertItem(L"Custom", NULL, NULL);
+	m_itemDynamicL = m_treeObjectList.InsertItem(L"Dynamic", NULL, NULL);
 	m_itemStaticR = m_treeAddedObject.InsertItem(L"Static", NULL, NULL);
-	m_itemCustomR = m_treeAddedObject.InsertItem(L"Custom", NULL, NULL);
+	m_itemDynamicR = m_treeAddedObject.InsertItem(L"Dynamic", NULL, NULL);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
@@ -129,8 +132,19 @@ void CMapTab::OnBnClickedButtonAdd()
 		return;
 
 	//const _tchar* pMeshTag =  m_treeObjectList.GetItemText(m_hSelectedTreeItem);
-	CString pMeshTag = m_treeObjectList.GetItemText(m_hSelectedTreeItem);
-	AddStaticObject(pMeshTag);
+	
+	auto hParent = m_treeObjectList.GetParentItem(m_hSelectedTreeItem);
+	
+	if (hParent) {
+		CString pMeshTag = m_treeObjectList.GetItemText(m_hSelectedTreeItem);
+		// 부모가 있다면, 
+		if (m_treeObjectList.GetItemText(hParent) == L"Static") {
+			AddStaticObject(pMeshTag);
+		}
+		else if (m_treeObjectList.GetItemText(hParent) == L"Dynamic") {
+			AddDynamicObject(pMeshTag);
+		}
+	}
 }
 
 
@@ -139,19 +153,37 @@ void CMapTab::OnBnClickedButtonDelete()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	
 	// Delete버튼이 눌렸다는 것은 제거할 오브젝트가 선택되었다는 뜻.
-	if (!m_pSelectedStaticObject)
+	if (!m_pSelectedObject)
 		return;
 
-	m_pSelectedStaticObject->SetValid(false);
-	g_pTool3D_Kernel->GetEditScene()->DeleteStaticObject(m_iSelectedStaticObjectIndex);
+	m_pSelectedObject->SetValid(false);
+	HTREEITEM hItem = NULL;
 
-	HTREEITEM hChild = m_treeAddedObject.GetChildItem(NULL);
+	if (dynamic_cast<CStaticObject*>(m_pSelectedObject)) {
+		g_pTool3D_Kernel->GetEditScene()->DeleteStaticObject(m_iSelectedObjectIndex);
+		if (m_treeAddedObject.ItemHasChildren(m_itemStaticR)) {
+			hItem = m_treeAddedObject.GetChildItem(m_itemStaticR);
 
-	for (int i = 0; i < m_iSelectedStaticObjectIndex; ++i) {
-		hChild = m_treeAddedObject.GetNextItem(hChild, TVGN_NEXT);
+			for (int i = 0; i < m_iSelectedObjectIndex; ++i) {
+				hItem = m_treeAddedObject.GetNextSiblingItem(hItem);
+			}
+		}
 	}
+	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
+		g_pTool3D_Kernel->GetEditScene()->DeleteDynamicObject(m_iSelectedObjectIndex);
+		if (m_treeAddedObject.ItemHasChildren(m_itemDynamicR)) {
+			hItem = m_treeAddedObject.GetChildItem(m_itemDynamicR);
 
-	m_treeAddedObject.DeleteItem(hChild);
+			for (int i = 0; i < m_iSelectedObjectIndex; ++i) {
+				hItem = m_treeAddedObject.GetNextSiblingItem(hItem);
+			}
+		}
+	}
+	else
+		return;
+
+	if(hItem)
+		m_treeAddedObject.DeleteItem(hItem);
 
 	m_editPosX.EnableWindow(FALSE);
 	m_editPosY.EnableWindow(FALSE);
@@ -165,8 +197,8 @@ void CMapTab::OnBnClickedButtonDelete()
 	m_btnAdd.EnableWindow(FALSE);
 	m_btnDelete.EnableWindow(FALSE);
 
-	m_pSelectedStaticObject = nullptr;
-	m_iSelectedStaticObjectIndex = -1;
+	m_pSelectedObject = nullptr;
+	m_iSelectedObjectIndex = -1;
 
 	CGizmo* pGizmo = g_pTool3D_Kernel->GetEditScene()->GetGizmo();
 	pGizmo->SetObject(nullptr);
@@ -187,7 +219,13 @@ void CMapTab::OnNMClickTreeObjectToAdd(NMHDR *pNMHDR, LRESULT *pResult)
 	if (!hItem)
 		return;
 
-	m_hSelectedTreeItem = hItem;
+	auto hParent = m_treeObjectList.GetParentItem(hItem);
+
+	if (hParent) {
+		m_hSelectedTreeItem = hItem;
+	}
+	else
+		return;
 
 	m_editPosX.EnableWindow(FALSE);
 	m_editPosY.EnableWindow(FALSE);
@@ -204,9 +242,9 @@ void CMapTab::OnNMClickTreeObjectToAdd(NMHDR *pNMHDR, LRESULT *pResult)
 	CGizmo* pGizmo = g_pTool3D_Kernel->GetEditScene()->GetGizmo();
 	pGizmo->SetObject(nullptr);
 	pGizmo->ActivateGizmo(false);
-	m_pSelectedStaticObject = nullptr;
 
-	m_iSelectedStaticObjectIndex = -1;
+	m_pSelectedObject = nullptr;
+	m_iSelectedObjectIndex = -1;
 
 	*pResult = 0;
 }
@@ -223,26 +261,55 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 	if (!hItem)
 		return;
 
-	m_iSelectedStaticObjectIndex = 0;
+	auto hParent = m_treeAddedObject.GetParentItem(hItem);
 
-	HTREEITEM hChild = m_treeAddedObject.GetChildItem(NULL);
-	while (hChild)
-	{
-		if (hChild == hItem) break;
-		hChild = m_treeAddedObject.GetNextItem(hChild, TVGN_NEXT);
-		++m_iSelectedStaticObjectIndex;
+	if (!hParent)
+		return;
+
+	
+	HTREEITEM hSibling = NULL;
+	m_iSelectedObjectIndex = 0;
+	if (m_treeObjectList.GetItemText(hParent) == L"Static") {
+		if (m_treeAddedObject.ItemHasChildren(m_itemStaticR)) {
+			hSibling = m_treeAddedObject.GetChildItem(m_itemStaticR);
+
+			while (hSibling)
+			{
+				if (hSibling == hItem) break;
+				hSibling = m_treeAddedObject.GetNextSiblingItem(hSibling);
+				++m_iSelectedObjectIndex;
+			}
+
+			m_pSelectedObject = g_pTool3D_Kernel->GetEditScene()->GetStaticObject(m_iSelectedObjectIndex);
+		}
 	}
+	else if (m_treeObjectList.GetItemText(hParent) == L"Dynamic") {
+		if (m_treeAddedObject.ItemHasChildren(m_itemDynamicR)) {
+			hSibling = m_treeAddedObject.GetChildItem(m_itemDynamicR);
 
-	m_pSelectedStaticObject = g_pTool3D_Kernel->GetEditScene()->GetStaticObject(m_iSelectedStaticObjectIndex);
+			while (hSibling)
+			{
+				if (hSibling == hItem) break;
+				hSibling = m_treeAddedObject.GetNextSiblingItem(hSibling);
+				++m_iSelectedObjectIndex;
+			}
+
+			m_pSelectedObject = g_pTool3D_Kernel->GetEditScene()->GetDynamicObject(m_iSelectedObjectIndex);
+		}
+	}
+	m_hSelectedTreeItem = hItem;
+
+	
+	
 	CGizmo* pGizmo = g_pTool3D_Kernel->GetEditScene()->GetGizmo();
 
-	if (m_pSelectedStaticObject) {
-		pGizmo->SetObject(m_pSelectedStaticObject);
+	if (m_pSelectedObject) {
+		pGizmo->SetObject(m_pSelectedObject);
 		pGizmo->ActivateGizmo(true);
 
-		_vec3 vPos = m_pSelectedStaticObject->GetTransform()->GetPos();
-		_vec3 vAngle = m_pSelectedStaticObject->GetTransform()->GetAngle();
-		_vec3 vScale = m_pSelectedStaticObject->GetTransform()->GetScale();
+		_vec3 vPos = m_pSelectedObject->GetTransform()->GetPos();
+		_vec3 vAngle = m_pSelectedObject->GetTransform()->GetAngle();
+		_vec3 vScale = m_pSelectedObject->GetTransform()->GetScale();
 
 		CString strValue = L"";
 		// 위치 
@@ -284,23 +351,32 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 	else {
 		pGizmo->SetObject(nullptr);
 		pGizmo->ActivateGizmo(false);
-		m_pSelectedStaticObject = nullptr;
-		m_iSelectedStaticObjectIndex = -1;
+		m_pSelectedObject = nullptr;
+		m_iSelectedObjectIndex = -1;
 	}
 	
 	*pResult = 0;
 }
 
-void CMapTab::UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects)
+void CMapTab::UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects, const vector<CDynamicObject*>& rDynamicObjects)
 {
 	UpdateData(TRUE);
+
 	m_treeAddedObject.DeleteAllItems();
+	m_itemStaticR = m_treeAddedObject.InsertItem(L"Static", NULL, NULL);
+	m_itemDynamicR = m_treeAddedObject.InsertItem(L"Dynamic", NULL, NULL);
 
 	for (auto& rStaticObj : rStaticObjects) {
 		if (rStaticObj->IsValid()) {
-			m_treeAddedObject.InsertItem(rStaticObj->GetMeshTag() , NULL, NULL);
+			m_treeAddedObject.InsertItem(rStaticObj->GetMeshTag() , m_itemStaticR, NULL);
 		}
 	}
+	for (auto& rDynamicObj : rDynamicObjects) {
+		if (rDynamicObj->IsValid()) {
+			m_treeAddedObject.InsertItem(rDynamicObj->GetMeshTag(), m_itemDynamicR, NULL);
+		}
+	}
+
 	UpdateData(FALSE);
 }
 
@@ -343,28 +419,49 @@ void CMapTab::UpdateScale(const _vec3 & vScale)
 	UpdateData(FALSE);
 }
 
-void CMapTab::SetSelectedObject(CStaticObject * _pStaticObject)
+void CMapTab::SetSelectedObject(Engine::CGameObject* _pObject)
 {
-	if (!_pStaticObject)
+	if (!_pObject)
 		return;
 
-	m_pSelectedStaticObject = _pStaticObject;
+	m_pSelectedObject = _pObject;
 
-	auto& rStaticObjectList = g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList();
+	if (dynamic_cast<CStaticObject*>(_pObject)) {
+		auto& rStaticObjectList = g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList();
 
-	m_iSelectedStaticObjectIndex = 0;
-	for (auto& rObj : rStaticObjectList) {
-		if (rObj == _pStaticObject) {
-			break;
+		m_iSelectedObjectIndex = 0;
+		for (auto& rObj : rStaticObjectList) {
+			if (rObj == _pObject) {
+				break;
+			}
+			++m_iSelectedObjectIndex;
 		}
-		++m_iSelectedStaticObjectIndex;
-	}
 
-	if (m_iSelectedStaticObjectIndex == rStaticObjectList.size()) {
-		m_iSelectedStaticObjectIndex = -1;
-		abort();
-		return;
+		if (m_iSelectedObjectIndex == rStaticObjectList.size()) {
+			m_iSelectedObjectIndex = -1;
+			abort();
+			return;
+		}
 	}
+	else if (dynamic_cast<CDynamicObject*>(_pObject)) {
+		auto& rCustomObjectList = g_pTool3D_Kernel->GetEditScene()->GetDynamicObjectList();
+
+		m_iSelectedObjectIndex = 0;
+		for (auto& rObj : rCustomObjectList) {
+			if (rObj == _pObject) {
+				break;
+			}
+			++m_iSelectedObjectIndex;
+		}
+
+		if (m_iSelectedObjectIndex == rCustomObjectList.size()) {
+			m_iSelectedObjectIndex = -1;
+			abort();
+			return;
+		}
+	}
+	else
+		return;
 
 	m_editPosX.EnableWindow(TRUE);
 	m_editPosY.EnableWindow(TRUE);
@@ -382,7 +479,16 @@ void CMapTab::SetSelectedObject(CStaticObject * _pStaticObject)
 _bool CMapTab::AddStaticObject(const _tchar * _pMeshTag)
 {
 	if (g_pTool3D_Kernel->GetEditScene()->AddStaticObject(_pMeshTag)) {
-		m_treeAddedObject.InsertItem(_pMeshTag, NULL, NULL);
+		m_treeAddedObject.InsertItem(_pMeshTag, m_itemStaticR, NULL);
+		return true;
+	}
+	return false;
+}
+
+_bool CMapTab::AddDynamicObject(const _tchar * _pMeshTag)
+{
+	if (g_pTool3D_Kernel->GetEditScene()->AddDynamicObject(_pMeshTag)) {
+		m_treeAddedObject.InsertItem(_pMeshTag, m_itemDynamicR, NULL);
 		return true;
 	}
 	return false;
@@ -394,8 +500,8 @@ void CMapTab::RegisterMeshTag(Engine::MESHTYPE _eMeshType, const _tchar * _pMesh
 	case Engine::TYPE_STATIC:
 		m_treeObjectList.InsertItem(_pMeshTag, m_itemStaticL, NULL);
 		break;
-	case Engine::TYPE_CUSTOM:
-		m_treeObjectList.InsertItem(_pMeshTag, m_itemCustomL, NULL);
+	case Engine::TYPE_DYNAMIC:
+		m_treeObjectList.InsertItem(_pMeshTag, m_itemDynamicL, NULL);
 		break;
 	default:
 		break;
@@ -415,9 +521,9 @@ void CMapTab::OnEnChangeEditPosX()
 	CString strPosX;
 	m_editPosX.GetWindowTextW(strPosX);
 	_float fPosX = static_cast<_float>(_tstof(strPosX));
-	m_pSelectedStaticObject->GetTransform()->SetPosX(fPosX);
+	m_pSelectedObject->GetTransform()->SetPosX(fPosX);
 
-	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->GetTransform()->SetPos(m_pSelectedStaticObject->GetTransform()->GetPos());
+	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->GetTransform()->SetPos(m_pSelectedObject->GetTransform()->GetPos());
 	
 	UpdateData(FALSE);
 }
@@ -436,9 +542,9 @@ void CMapTab::OnEnChangeEditPosY()
 	CString strPosY;
 	m_editPosY.GetWindowTextW(strPosY);
 	_float fPosY = static_cast<_float>(_tstof(strPosY));
-	m_pSelectedStaticObject->GetTransform()->SetPosY(fPosY);
+	m_pSelectedObject->GetTransform()->SetPosY(fPosY);
 
-	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->GetTransform()->SetPos(m_pSelectedStaticObject->GetTransform()->GetPos());
+	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->GetTransform()->SetPos(m_pSelectedObject->GetTransform()->GetPos());
 	
 	UpdateData(FALSE);
 }
@@ -457,9 +563,9 @@ void CMapTab::OnEnChangeEditPosZ()
 	CString strPosZ;
 	m_editPosZ.GetWindowTextW(strPosZ);
 	_float fPosZ = static_cast<_float>(_tstof(strPosZ));
-	m_pSelectedStaticObject->GetTransform()->SetPosZ(fPosZ);
+	m_pSelectedObject->GetTransform()->SetPosZ(fPosZ);
 
-	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->GetTransform()->SetPos(m_pSelectedStaticObject->GetTransform()->GetPos());
+	g_pTool3D_Kernel->GetEditScene()->GetGizmo()->GetTransform()->SetPos(m_pSelectedObject->GetTransform()->GetPos());
 
 	UpdateData(FALSE);
 }
@@ -478,7 +584,7 @@ void CMapTab::OnEnChangeEditRotX()
 	CString strRotX;
 	m_editRotX.GetWindowTextW(strRotX);
 	_float fRotX = static_cast<_float>(_tstof(strRotX));
-	m_pSelectedStaticObject->GetTransform()->SetAngleX(D3DXToRadian(fRotX));
+	m_pSelectedObject->GetTransform()->SetAngleX(D3DXToRadian(fRotX));
 
 	UpdateData(FALSE);
 }
@@ -497,7 +603,7 @@ void CMapTab::OnEnChangeEditRotY()
 	CString strRotY;
 	m_editRotY.GetWindowTextW(strRotY);
 	_float fRotY = static_cast<_float>(_tstof(strRotY));
-	m_pSelectedStaticObject->GetTransform()->SetAngleY(D3DXToRadian(fRotY));
+	m_pSelectedObject->GetTransform()->SetAngleY(D3DXToRadian(fRotY));
 
 	UpdateData(FALSE);
 }
@@ -516,7 +622,7 @@ void CMapTab::OnEnChangeEditRotZ()
 	CString strRotZ;
 	m_editRotZ.GetWindowTextW(strRotZ);
 	_float fRotZ = static_cast<_float>(_tstof(strRotZ));
-	m_pSelectedStaticObject->GetTransform()->SetAngleZ(D3DXToRadian(fRotZ));
+	m_pSelectedObject->GetTransform()->SetAngleZ(D3DXToRadian(fRotZ));
 
 	UpdateData(FALSE);
 }
@@ -535,7 +641,7 @@ void CMapTab::OnEnChangeEditScaleX()
 	CString strScaleX;
 	m_editScaleX.GetWindowTextW(strScaleX);
 	_float fScaleX = static_cast<_float>(_tstof(strScaleX));
-	m_pSelectedStaticObject->GetTransform()->SetScaleX(fScaleX);
+	m_pSelectedObject->GetTransform()->SetScaleX(fScaleX);
 
 	UpdateData(FALSE);
 }
@@ -554,7 +660,7 @@ void CMapTab::OnEnChangeEditScaleY()
 	CString strScaleY;
 	m_editScaleY.GetWindowTextW(strScaleY);
 	_float fScaleY = static_cast<_float>(_tstof(strScaleY));
-	m_pSelectedStaticObject->GetTransform()->SetScaleY(fScaleY);
+	m_pSelectedObject->GetTransform()->SetScaleY(fScaleY);
 
 	UpdateData(FALSE);
 }
@@ -573,7 +679,7 @@ void CMapTab::OnEnChangeEditScaleZ()
 	CString strScaleZ;
 	m_editScaleZ.GetWindowTextW(strScaleZ);
 	_float fScaleZ = static_cast<_float>(_tstof(strScaleZ));
-	m_pSelectedStaticObject->GetTransform()->SetScaleZ(fScaleZ);
+	m_pSelectedObject->GetTransform()->SetScaleZ(fScaleZ);
 
 	UpdateData(FALSE);
 }
@@ -613,7 +719,7 @@ void CMapTab::OnBnClickedButtonLoad()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	g_pTool3D_Kernel->GetEditScene()->LoadMap();
-	UpdateAddedTree(g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList());
+	UpdateAddedTree(g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList(), g_pTool3D_Kernel->GetEditScene()->GetDynamicObjectList());
 }
 
 void CMapTab::OnEnChangeEditFactor0()
@@ -680,4 +786,10 @@ void CMapTab::OnEnChangeEditFactor5()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CMapTab::OnBnClickedCheckCustomed()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

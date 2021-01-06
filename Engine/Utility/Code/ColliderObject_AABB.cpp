@@ -60,6 +60,8 @@ void CColliderObject_AABB::Render_Object(void)
 		m_pRenderer->SetWorldMatrix(matNRotWorld);
 	}
 	
+	if (!m_bIsVisible)
+		return;
 	m_pRenderer->Render();
 }
 

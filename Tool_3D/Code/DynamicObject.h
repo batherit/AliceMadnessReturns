@@ -36,7 +36,7 @@ public:
 	CString& GetFactorRef(_int _iIndex) { return m_strFactor[_iIndex]; }
 
 	void SetCustomed(_bool _bIsCustomed) { m_bIsCustomed = _bIsCustomed; }
-	_bool IsCustomed() const { return m_bIsActivated; }
+	_bool IsCustomed() const { return m_bIsCustomed; }
 
 private:
 	Engine::CDynamicMesh* m_pMesh = nullptr;

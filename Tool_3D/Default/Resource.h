@@ -69,7 +69,6 @@
 #define IDC_TAB2                        1022
 #define IDC_EDIT22                      1022
 #define IDC_EDIT23                      1023
-#define IDC_CHECK3                      1025
 #define IDC_CHECK4                      1026
 
 // Next default values for new objects

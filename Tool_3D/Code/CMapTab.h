@@ -111,4 +111,11 @@ public:
 	afx_msg void OnEnChangeEditFactor5();
 	CButton m_btnCustomed;
 	afx_msg void OnBnClickedCheckCustomed();
+	CEdit m_editFactor0;
+	CEdit m_editFactor1;
+	CEdit m_editFactor2;
+	CEdit m_editFactor3;
+	CEdit m_editFactor4;
+	CEdit m_editFactor5;
+	BOOL m_bIsCustomed;
 };

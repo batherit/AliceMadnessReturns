@@ -32,6 +32,7 @@ CMapTab::CMapTab(CWnd* pParent /*=nullptr*/)
 	, m_cstrFactor3(_T("NULL"))
 	, m_cstrFactor4(_T("NULL"))
 	, m_cstrFactor5(_T("NULL"))
+	, m_bIsCustomed(FALSE)
 {
 
 }
@@ -75,6 +76,13 @@ void CMapTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT22, m_cstrFactor4);
 	DDX_Text(pDX, IDC_EDIT23, m_cstrFactor5);
 	DDX_Control(pDX, IDC_CHECK4, m_btnCustomed);
+	DDX_Control(pDX, IDC_EDIT18, m_editFactor0);
+	DDX_Control(pDX, IDC_EDIT19, m_editFactor1);
+	DDX_Control(pDX, IDC_EDIT20, m_editFactor2);
+	DDX_Control(pDX, IDC_EDIT21, m_editFactor3);
+	DDX_Control(pDX, IDC_EDIT22, m_editFactor4);
+	DDX_Control(pDX, IDC_EDIT23, m_editFactor5);
+	DDX_Check(pDX, IDC_CHECK4, m_bIsCustomed);
 }
 
 
@@ -156,6 +164,7 @@ void CMapTab::OnBnClickedButtonDelete()
 	if (!m_pSelectedObject)
 		return;
 
+	UpdateData(TRUE);
 	m_pSelectedObject->SetValid(false);
 	HTREEITEM hItem = NULL;
 
@@ -197,12 +206,22 @@ void CMapTab::OnBnClickedButtonDelete()
 	m_btnAdd.EnableWindow(FALSE);
 	m_btnDelete.EnableWindow(FALSE);
 
+	m_btnCustomed.EnableWindow(FALSE);
+	m_editFactor0.EnableWindow(FALSE);
+	m_editFactor1.EnableWindow(FALSE);
+	m_editFactor2.EnableWindow(FALSE);
+	m_editFactor3.EnableWindow(FALSE);
+	m_editFactor4.EnableWindow(FALSE);
+	m_editFactor5.EnableWindow(FALSE);
+
 	m_pSelectedObject = nullptr;
 	m_iSelectedObjectIndex = -1;
 
 	CGizmo* pGizmo = g_pTool3D_Kernel->GetEditScene()->GetGizmo();
 	pGizmo->SetObject(nullptr);
 	pGizmo->ActivateGizmo(false);
+
+	UpdateData(FALSE);
 }
 
 
@@ -227,6 +246,7 @@ void CMapTab::OnNMClickTreeObjectToAdd(NMHDR *pNMHDR, LRESULT *pResult)
 	else
 		return;
 
+	UpdateData(TRUE);
 	m_editPosX.EnableWindow(FALSE);
 	m_editPosY.EnableWindow(FALSE);
 	m_editPosZ.EnableWindow(FALSE);
@@ -239,12 +259,21 @@ void CMapTab::OnNMClickTreeObjectToAdd(NMHDR *pNMHDR, LRESULT *pResult)
 	m_btnAdd.EnableWindow(TRUE);
 	m_btnDelete.EnableWindow(FALSE);
 
+	m_btnCustomed.EnableWindow(FALSE);
+	m_editFactor0.EnableWindow(FALSE);
+	m_editFactor1.EnableWindow(FALSE);
+	m_editFactor2.EnableWindow(FALSE);
+	m_editFactor3.EnableWindow(FALSE);
+	m_editFactor4.EnableWindow(FALSE);
+	m_editFactor5.EnableWindow(FALSE);
+
 	CGizmo* pGizmo = g_pTool3D_Kernel->GetEditScene()->GetGizmo();
 	pGizmo->SetObject(nullptr);
 	pGizmo->ActivateGizmo(false);
 
 	m_pSelectedObject = nullptr;
 	m_iSelectedObjectIndex = -1;
+	UpdateData(FALSE);
 
 	*pResult = 0;
 }
@@ -266,7 +295,7 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 	if (!hParent)
 		return;
 
-	
+	UpdateData(TRUE);
 	HTREEITEM hSibling = NULL;
 	m_iSelectedObjectIndex = 0;
 	if (m_treeObjectList.GetItemText(hParent) == L"Static") {
@@ -335,7 +364,7 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 		m_editScaleY.SetWindowTextW(strValue);
 		strValue.Format(_T("%f"), vScale.z);
 		m_editScaleZ.SetWindowTextW(strValue);
-		
+
 		m_editPosX.EnableWindow(TRUE);
 		m_editPosY.EnableWindow(TRUE);
 		m_editPosZ.EnableWindow(TRUE);
@@ -347,6 +376,68 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 		m_editScaleZ.EnableWindow(TRUE);
 		m_btnAdd.EnableWindow(FALSE);
 		m_btnDelete.EnableWindow(TRUE);
+		m_btnCustomed.EnableWindow(TRUE);
+
+
+		// 커스텀 상태
+		if (dynamic_cast<CStaticObject*>(m_pSelectedObject)) {
+			CStaticObject* pStaticObject = dynamic_cast<CStaticObject*>(m_pSelectedObject);
+			m_bIsCustomed = pStaticObject->IsCustomed();
+
+			if (m_bIsCustomed) {
+				m_editFactor0.EnableWindow(TRUE);
+				m_editFactor1.EnableWindow(TRUE);
+				m_editFactor2.EnableWindow(TRUE);
+				m_editFactor3.EnableWindow(TRUE);
+				m_editFactor4.EnableWindow(TRUE);
+				m_editFactor5.EnableWindow(TRUE);
+
+				m_cstrFactor0 = pStaticObject->GetFactorRef(0);
+				m_cstrFactor1 = pStaticObject->GetFactorRef(1);
+				m_cstrFactor2 = pStaticObject->GetFactorRef(2);
+				m_cstrFactor3 = pStaticObject->GetFactorRef(3);
+				m_cstrFactor4 = pStaticObject->GetFactorRef(4);
+				m_cstrFactor5 = pStaticObject->GetFactorRef(5);
+			}
+		}
+		else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
+			CDynamicObject* pDynamicObject = dynamic_cast<CDynamicObject*>(m_pSelectedObject);
+			m_bIsCustomed = pDynamicObject->IsCustomed();
+			//m_btnCustomed.SetCheck(pDynamicObject->IsCustomed());
+
+			if (m_bIsCustomed) {
+				m_editFactor0.EnableWindow(TRUE);
+				m_editFactor1.EnableWindow(TRUE);
+				m_editFactor2.EnableWindow(TRUE);
+				m_editFactor3.EnableWindow(TRUE);
+				m_editFactor4.EnableWindow(TRUE);
+				m_editFactor5.EnableWindow(TRUE);
+
+				m_cstrFactor0 = pDynamicObject->GetFactorRef(0);
+				m_cstrFactor1 = pDynamicObject->GetFactorRef(1);
+				m_cstrFactor2 = pDynamicObject->GetFactorRef(2);
+				m_cstrFactor3 = pDynamicObject->GetFactorRef(3);
+				m_cstrFactor4 = pDynamicObject->GetFactorRef(4);
+				m_cstrFactor5 = pDynamicObject->GetFactorRef(5);
+			}
+		}
+
+		// 커스텀 상태가 체크된 상태라면,
+		if(!m_bIsCustomed) {
+			m_editFactor0.EnableWindow(FALSE);
+			m_editFactor1.EnableWindow(FALSE);
+			m_editFactor2.EnableWindow(FALSE);
+			m_editFactor3.EnableWindow(FALSE);
+			m_editFactor4.EnableWindow(FALSE);
+			m_editFactor5.EnableWindow(FALSE);
+
+			m_cstrFactor0 = L"NULL";
+			m_cstrFactor1 = L"NULL";
+			m_cstrFactor2 = L"NULL";
+			m_cstrFactor3 = L"NULL";
+			m_cstrFactor4 = L"NULL";
+			m_cstrFactor5 = L"NULL";
+		}
 	}
 	else {
 		pGizmo->SetObject(nullptr);
@@ -354,7 +445,8 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 		m_pSelectedObject = nullptr;
 		m_iSelectedObjectIndex = -1;
 	}
-	
+	UpdateData(FALSE);
+
 	*pResult = 0;
 }
 
@@ -474,6 +566,7 @@ void CMapTab::SetSelectedObject(Engine::CGameObject* _pObject)
 	m_editScaleZ.EnableWindow(TRUE);
 	m_btnAdd.EnableWindow(FALSE);
 	m_btnDelete.EnableWindow(TRUE);
+	m_btnCustomed.EnableWindow(TRUE);
 }
 
 _bool CMapTab::AddStaticObject(const _tchar * _pMeshTag)
@@ -730,6 +823,16 @@ void CMapTab::OnEnChangeEditFactor0()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	if (dynamic_cast<CStaticObject*>(m_pSelectedObject)) {
+		dynamic_cast<CStaticObject*>(m_pSelectedObject)->GetFactorRef(0) = m_cstrFactor0;
+	}
+	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
+		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(0) = m_cstrFactor0;
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -741,6 +844,16 @@ void CMapTab::OnEnChangeEditFactor1()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	if (dynamic_cast<CStaticObject*>(m_pSelectedObject)) {
+		dynamic_cast<CStaticObject*>(m_pSelectedObject)->GetFactorRef(1) = m_cstrFactor1;
+	}
+	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
+		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(1) = m_cstrFactor1;
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -752,6 +865,16 @@ void CMapTab::OnEnChangeEditFactor2()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	if (dynamic_cast<CStaticObject*>(m_pSelectedObject)) {
+		dynamic_cast<CStaticObject*>(m_pSelectedObject)->GetFactorRef(2) = m_cstrFactor2;
+	}
+	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
+		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(2) = m_cstrFactor2;
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -763,6 +886,16 @@ void CMapTab::OnEnChangeEditFactor3()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	if (dynamic_cast<CStaticObject*>(m_pSelectedObject)) {
+		dynamic_cast<CStaticObject*>(m_pSelectedObject)->GetFactorRef(3) = m_cstrFactor3;
+	}
+	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
+		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(3) = m_cstrFactor3;
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -774,6 +907,16 @@ void CMapTab::OnEnChangeEditFactor4()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	if (dynamic_cast<CStaticObject*>(m_pSelectedObject)) {
+		dynamic_cast<CStaticObject*>(m_pSelectedObject)->GetFactorRef(4) = m_cstrFactor4;
+	}
+	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
+		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(4) = m_cstrFactor4;
+	}
+
+	UpdateData(FALSE);
 }
 
 
@@ -786,10 +929,79 @@ void CMapTab::OnEnChangeEditFactor5()
 	// 이 알림 메시지를 보내지 않습니다.
 
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	if (dynamic_cast<CStaticObject*>(m_pSelectedObject)) {
+		dynamic_cast<CStaticObject*>(m_pSelectedObject)->GetFactorRef(5) = m_cstrFactor5;
+	}
+	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
+		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(5) = m_cstrFactor5;
+	}
+
+	UpdateData(FALSE);
 }
 
 
 void CMapTab::OnBnClickedCheckCustomed()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	if (dynamic_cast<CStaticObject*>(m_pSelectedObject)) {
+		CStaticObject* pStaticObject = dynamic_cast<CStaticObject*>(m_pSelectedObject);
+		pStaticObject->SetCustomed(m_bIsCustomed);
+		if (m_bIsCustomed) {
+			m_editFactor0.EnableWindow(TRUE);
+			m_editFactor1.EnableWindow(TRUE);
+			m_editFactor2.EnableWindow(TRUE);
+			m_editFactor3.EnableWindow(TRUE);
+			m_editFactor4.EnableWindow(TRUE);
+			m_editFactor5.EnableWindow(TRUE);
+
+			m_cstrFactor0 = pStaticObject->GetFactorRef(0);
+			m_cstrFactor1 = pStaticObject->GetFactorRef(1);
+			m_cstrFactor2 = pStaticObject->GetFactorRef(2);
+			m_cstrFactor3 = pStaticObject->GetFactorRef(3);
+			m_cstrFactor4 = pStaticObject->GetFactorRef(4);
+			m_cstrFactor5 = pStaticObject->GetFactorRef(5);
+		}
+	}
+	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
+		CDynamicObject* pDynamicObject = dynamic_cast<CDynamicObject*>(m_pSelectedObject);
+		pDynamicObject->SetCustomed(m_bIsCustomed);
+		if (m_bIsCustomed) {
+			m_editFactor0.EnableWindow(TRUE);
+			m_editFactor1.EnableWindow(TRUE);
+			m_editFactor2.EnableWindow(TRUE);
+			m_editFactor3.EnableWindow(TRUE);
+			m_editFactor4.EnableWindow(TRUE);
+			m_editFactor5.EnableWindow(TRUE);
+
+			m_cstrFactor0 = pDynamicObject->GetFactorRef(0);
+			m_cstrFactor1 = pDynamicObject->GetFactorRef(1);
+			m_cstrFactor2 = pDynamicObject->GetFactorRef(2);
+			m_cstrFactor3 = pDynamicObject->GetFactorRef(3);
+			m_cstrFactor4 = pDynamicObject->GetFactorRef(4);
+			m_cstrFactor5 = pDynamicObject->GetFactorRef(5);
+		}
+	}
+
+	// 커스텀 상태가 체크된 상태라면,
+	if(!m_bIsCustomed) {
+		m_editFactor0.EnableWindow(FALSE);
+		m_editFactor1.EnableWindow(FALSE);
+		m_editFactor2.EnableWindow(FALSE);
+		m_editFactor3.EnableWindow(FALSE);
+		m_editFactor4.EnableWindow(FALSE);
+		m_editFactor5.EnableWindow(FALSE);
+
+		m_cstrFactor0 = L"NULL";
+		m_cstrFactor1 = L"NULL";
+		m_cstrFactor2 = L"NULL";
+		m_cstrFactor3 = L"NULL";
+		m_cstrFactor4 = L"NULL";
+		m_cstrFactor5 = L"NULL";
+	}
+
+	UpdateData(FALSE);
 }

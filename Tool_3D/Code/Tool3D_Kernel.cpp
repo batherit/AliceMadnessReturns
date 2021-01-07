@@ -123,7 +123,6 @@ void CTool3D_Kernel::Free(void)
 	for_each(m_vecStoredStaticObjects.begin(), m_vecStoredStaticObjects.end(), Engine::CDeleteObj());
 	m_vecStoredStaticObjects.clear();
 	m_vecStoredStaticObjects.shrink_to_fit();
-
 	for_each(m_vecStoredTriggerObjects.begin(), m_vecStoredTriggerObjects.end(), Engine::CDeleteObj());
 	m_vecStoredTriggerObjects.clear();
 	m_vecStoredTriggerObjects.shrink_to_fit();

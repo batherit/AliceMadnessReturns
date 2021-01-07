@@ -139,6 +139,7 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	}
 
 	m_pStateMgr->Update(_fDeltaTime);
+	m_pMesh->Play_Animation(_fDeltaTime);
 
 	Engine::CNaviMesh* pNaviMesh = m_pMap->GetNaviMesh();
 	_vec3 vCurrentPos = GetTransform()->GetPos();
@@ -170,11 +171,6 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	}
 	// 이동 확정
 	GetTransform()->SetPos(vSettedPos);
-
-	m_pMesh->Play_Animation(_fDeltaTime);
-	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
-		return 0;
-	}
 
 	return 0;
 }

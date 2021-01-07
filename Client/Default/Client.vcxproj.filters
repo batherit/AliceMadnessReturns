@@ -151,9 +151,6 @@
     <Filter Include="02. Object\02. GameObject\PopDomino">
       <UniqueIdentifier>{e1503971-2bc7-4ddb-a07c-c1805a7d86a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\02. GameObject\RabbitBomb">
-      <UniqueIdentifier>{c58c834b-c185-4a77-a291-64b4bcb469ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\02. GameObject\DeathBox">
       <UniqueIdentifier>{5681c3d4-7dd2-4998-89e6-2fa2b55778ef}</UniqueIdentifier>
     </Filter>
@@ -168,6 +165,9 @@
     </Filter>
     <Filter Include="02. Object\02. GameObject\UI\FadeInOut">
       <UniqueIdentifier>{a9f143ba-3309-4193-933c-beaf5917f050}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\BunnyBomb">
+      <UniqueIdentifier>{c58c834b-c185-4a77-a291-64b4bcb469ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

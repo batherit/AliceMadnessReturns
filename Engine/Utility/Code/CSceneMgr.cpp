@@ -25,8 +25,10 @@ Engine::CSceneMgr::~CSceneMgr()
 bool Engine::CSceneMgr::ConfirmValidScene(void)
 {
 	if (!m_bIsConfirmed) {				// 상태 변경 요청이 접수된 경우
+		if (m_pCurScene) m_pCurScene->OnExited();		// 없애기 전 상태 정리		(추가)
 		Safe_Release(m_pCurScene);		// 기존 상태를 지운다. 
 		m_pCurScene = m_pNextScene;		// 기존 상태를 새로운 상태로 교체한다.
+		if (m_pCurScene) m_pCurScene->OnLoaded();		// 상태 준비 (이제 Ready대신 이것을 쓸 것이다.) (추가)
 		m_pNextScene = nullptr;			// 새로운 상태 변수 무효화
 		m_bIsConfirmed = true;			// 상태 변경 완료!
 	}

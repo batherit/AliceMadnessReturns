@@ -21,6 +21,9 @@ public:
 	virtual _int Update(const _float& fTimeDelta);
 	virtual void Render(void);
 
+	virtual void OnLoaded() override;
+	virtual void OnExited() override;
+
 public:
 	static CLoadScene*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

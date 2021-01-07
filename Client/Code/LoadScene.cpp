@@ -52,6 +52,14 @@ void CLoadScene::Render(void)
 	Engine::Render_Font(L"Font_Jinji", m_pLoading->Get_LoadString(), &_vec2(10.f, 10.f), D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
 }
 
+void CLoadScene::OnLoaded()
+{
+}
+
+void CLoadScene::OnExited()
+{
+}
+
 
 CLoadScene* CLoadScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

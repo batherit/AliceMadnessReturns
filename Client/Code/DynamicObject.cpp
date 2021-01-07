@@ -50,6 +50,8 @@ void CDynamicObject::Render_Object(void)
 	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
 		return;
 	}
+	if (!IsVisible())
+		return;
 	m_pRenderer->Render();
 }
 

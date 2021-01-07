@@ -71,9 +71,9 @@ void CGameObject::SetVisible(_bool _bIsVisible)
 		rChild->SetVisible(_bIsVisible);
 	}
 
-	for (auto& rCollider : m_vecOptimizedColliders) {
+	/*for (auto& rCollider : m_vecOptimizedColliders) {
 		rCollider->SetVisible(_bIsVisible);
-	}
+	}*/
 }
 
 void CGameObject::SetActivated(_bool _bIsActivated) {

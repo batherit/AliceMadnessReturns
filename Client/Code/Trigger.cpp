@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Trigger.h"
+#include "PlayScene.h"
 
 CTrigger::CTrigger(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -54,6 +55,8 @@ void CTrigger::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
 			if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
 				SetActivated(false);
+				if (m_iSortingOrderIndex == 2)
+					Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
 			}
 		}
 		break;

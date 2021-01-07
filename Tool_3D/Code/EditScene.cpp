@@ -21,20 +21,20 @@ CEditScene::CEditScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	CScene(pGraphicDev)
 {
 	// 저장되어 있던 정보를 읽어온다.
-	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredDynamicObjects) {
-		m_vecDynamicObjects.emplace_back(rObj);
-	}
-	g_pTool3D_Kernel->m_vecStoredDynamicObjects.clear();
+	//for (auto& rObj : g_pTool3D_Kernel->m_vecStoredDynamicObjects) {
+	//	m_vecDynamicObjects.emplace_back(rObj);
+	//}
+	//g_pTool3D_Kernel->m_vecStoredDynamicObjects.clear();
 
-	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredStaticObjects) {
-		m_vecStaticObjects.emplace_back(rObj);
-	}
-	g_pTool3D_Kernel->m_vecStoredStaticObjects.clear();
+	//for (auto& rObj : g_pTool3D_Kernel->m_vecStoredStaticObjects) {
+	//	m_vecStaticObjects.emplace_back(rObj);
+	//}
+	//g_pTool3D_Kernel->m_vecStoredStaticObjects.clear();
 
-	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredTriggerObjects) {
-		m_vecTriggerObjects.emplace_back(rObj);
-	}
-	g_pTool3D_Kernel->m_vecStoredTriggerObjects.clear();
+	//for (auto& rObj : g_pTool3D_Kernel->m_vecStoredTriggerObjects) {
+	//	m_vecTriggerObjects.emplace_back(rObj);
+	//}
+	//g_pTool3D_Kernel->m_vecStoredTriggerObjects.clear();
 }
 
 CEditScene::CEditScene(const CEditScene & rhs)
@@ -55,90 +55,7 @@ void CEditScene::ResetScene(void)
 
 HRESULT CEditScene::Ready(void)
 {
-	Engine::CLayer* pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	// 카메라 생성
-	Engine::CGameObject* pGameObject = nullptr;
-	pGameObject = CDynamicCamera::Create(m_pGraphicDev);		// 동적 카메라
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//m_pCamera->SetParent(m_pPlayer);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", pGameObject), E_FAIL);
-
-	// 지형 생성
-	if (g_pTool3D_Kernel->m_pStoredTerrain)
-		pGameObject = g_pTool3D_Kernel->m_pStoredTerrain;
-	else
-		pGameObject = CTerrain::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
-	//dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(2, 2, 129.f, 129.f, 1.f, 1.f, nullptr);
-	//dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
-
-	// 네비메쉬 오브젝트 생성
-	CNaviMesh* pNaviMesh = nullptr;
-	if (g_pTool3D_Kernel->m_pStoredNaviMesh)
-		pNaviMesh = g_pTool3D_Kernel->m_pStoredNaviMesh;
-	else
-		pNaviMesh = CNaviMesh::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pNaviMesh, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMesh", pNaviMesh), E_FAIL);
-
-	// 네비메쉬버텍스컨트롤러 생성
-	//CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = CNaviMeshVtxCtrl::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pNaviMeshVtxCtrl, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxCtrl", pNaviMeshVtxCtrl), E_FAIL);
-	//pNaviMeshVtxCtrl->SetNaviMesh(pNaviMesh);
-	//pNaviMeshVtxCtrl->SetActive(false);
-
-	// 네비메쉬정점이동자 생성
-	CNaviMeshVtxMover* pNaviMeshVtxMover = CNaviMeshVtxMover::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pNaviMeshVtxMover, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxMover", pNaviMeshVtxMover), E_FAIL);
-
-	// 오브젝트 기즈모 생성
-	CGizmo* pGizmo = CGizmo::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGizmo, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Gizmo", pGizmo), E_FAIL);
-	pGizmo->ActivateGizmo(false);
-
-	// 저장된 정보를 레이어에 집어넣는다.
-	for (auto& rObj : m_vecDynamicObjects) {
-		pLayer->Add_GameObject(rObj);
-		//Engine::Safe_AddRef(rObj);
-	}
-	for (auto& rObj : m_vecStaticObjects) {
-		pLayer->Add_GameObject(rObj);
-		//Engine::Safe_AddRef(rObj);
-	}
-
-	// 커스텀 오브젝트 생성을 위한 맵을 만든다.
-	/*m_mapCustomObjectType[L"HPFlower"] = Engine::TYPE_DYNAMIC;
-	m_mapCustomObjectType[L"JumpPad"] = Engine::TYPE_DYNAMIC;
-	m_mapCustomObjectType[L"Snail"] = Engine::TYPE_STATIC;
-	m_mapCustomObjectType[L"Tooth"] = Engine::TYPE_STATIC;
-	m_mapCustomObjectType[L"PopDomino"] = Engine::TYPE_STATIC;
-	m_mapCustomObjectType[L"Valve"] = Engine::TYPE_STATIC;*/
-
-	// 편집 레이어 등록
-	m_mapLayer.emplace(L"EditLayer", pLayer);
-
-	// 입력 모드 매니저 생성
-	/*m_pInputProcessorMgr = Engine::CInputProcessorMgr::Create();
-	NULL_CHECK_RETURN(m_pInputProcessorMgr, E_FAIL);
-	m_pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Terrain(m_pInputProcessorMgr));*/
-
-	// 컬모드 설정
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	
-	// 조명 설정
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-	// 알파블렌딩 설정(일단 해제)
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	return S_OK;
 }
@@ -161,20 +78,116 @@ void CEditScene::Render(void)
 	Engine::Get_Renderer()->Render_GameObject();
 }
 
-CEditScene * CEditScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+void CEditScene::OnLoaded()
 {
-	CEditScene*	pInstance = new CEditScene(pGraphicDev);
+	Engine::CCollisionMgr::GetInstance()->ClearGameObjectList();
+	// 저장되어 있던 정보를 읽어온다.
+	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredDynamicObjects) {
+		m_vecDynamicObjects.emplace_back(rObj);
+	}
+	g_pTool3D_Kernel->m_vecStoredDynamicObjects.clear();
 
-	if (FAILED(pInstance->Ready()))
-		Client::Safe_Release(pInstance);
+	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredStaticObjects) {
+		m_vecStaticObjects.emplace_back(rObj);
+	}
+	g_pTool3D_Kernel->m_vecStoredStaticObjects.clear();
 
-	return pInstance;
+	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredTriggerObjects) {
+		m_vecTriggerObjects.emplace_back(rObj);
+	}
+	g_pTool3D_Kernel->m_vecStoredTriggerObjects.clear();
+
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer,);
+
+	// 카메라 생성
+	Engine::CGameObject* pGameObject = nullptr;
+	pGameObject = CDynamicCamera::Create(m_pGraphicDev);		// 동적 카메라
+	NULL_CHECK_RETURN(pGameObject,);
+	//m_pCamera->SetParent(m_pPlayer);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", pGameObject),);
+
+	// 지형 생성
+	if (g_pTool3D_Kernel->m_pStoredTerrain)
+		pGameObject = g_pTool3D_Kernel->m_pStoredTerrain;
+	else
+		pGameObject = CTerrain::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject,);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject),);
+	//dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(2, 2, 129.f, 129.f, 1.f, 1.f, nullptr);
+	//dynamic_cast<CTerrain*>(pGameObject)->CreateTerrain(129, 129, 129.f, 129.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
+
+	// 네비메쉬 오브젝트 생성
+	CNaviMesh* pNaviMesh = nullptr;
+	if (g_pTool3D_Kernel->m_pStoredNaviMesh)
+		pNaviMesh = g_pTool3D_Kernel->m_pStoredNaviMesh;
+	else
+		pNaviMesh = CNaviMesh::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pNaviMesh,);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMesh", pNaviMesh),);
+
+	// 네비메쉬버텍스컨트롤러 생성
+	//CNaviMeshVtxCtrl* pNaviMeshVtxCtrl = CNaviMeshVtxCtrl::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pNaviMeshVtxCtrl, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxCtrl", pNaviMeshVtxCtrl), E_FAIL);
+	//pNaviMeshVtxCtrl->SetNaviMesh(pNaviMesh);
+	//pNaviMeshVtxCtrl->SetActive(false);
+
+	// 네비메쉬정점이동자 생성
+	CNaviMeshVtxMover* pNaviMeshVtxMover = CNaviMeshVtxMover::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pNaviMeshVtxMover,);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NaviMeshVtxMover", pNaviMeshVtxMover),);
+
+	// 오브젝트 기즈모 생성
+	CGizmo* pGizmo = CGizmo::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGizmo,);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Gizmo", pGizmo),);
+	pGizmo->ActivateGizmo(false);
+
+	// 저장된 정보를 레이어에 집어넣는다.
+	for (auto& rObj : m_vecDynamicObjects) {
+		pLayer->Add_GameObject(rObj);
+		//Engine::Safe_AddRef(rObj);
+	}
+	for (auto& rObj : m_vecStaticObjects) {
+		pLayer->Add_GameObject(rObj);
+		//Engine::Safe_AddRef(rObj);
+	}
+	for (auto& rObj : m_vecTriggerObjects) {
+		pLayer->Add_GameObject(rObj);
+	}
+
+	// 커스텀 오브젝트 생성을 위한 맵을 만든다.
+	/*m_mapCustomObjectType[L"HPFlower"] = Engine::TYPE_DYNAMIC;
+	m_mapCustomObjectType[L"JumpPad"] = Engine::TYPE_DYNAMIC;
+	m_mapCustomObjectType[L"Snail"] = Engine::TYPE_STATIC;
+	m_mapCustomObjectType[L"Tooth"] = Engine::TYPE_STATIC;
+	m_mapCustomObjectType[L"PopDomino"] = Engine::TYPE_STATIC;
+	m_mapCustomObjectType[L"Valve"] = Engine::TYPE_STATIC;*/
+
+	// 편집 레이어 등록
+	m_mapLayer.emplace(L"EditLayer", pLayer);
+
+	// 입력 모드 매니저 생성
+	/*m_pInputProcessorMgr = Engine::CInputProcessorMgr::Create();
+	NULL_CHECK_RETURN(m_pInputProcessorMgr, E_FAIL);
+	m_pInputProcessorMgr->SetNextInputProcessor(new CInputProcessor_Terrain(m_pInputProcessorMgr));*/
+
+	// 컬모드 설정
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	// 조명 설정
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	// 알파블렌딩 설정(일단 해제)
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 }
 
-void CEditScene::Free(void)
+void CEditScene::OnExited()
 {
-	//Engine::Safe_Release(m_pInputProcessorMgr);
-
 	// 씬을 지우기 전에 오브젝트를 저장해둔다.
 	// 터레인 저장하기
 	g_pTool3D_Kernel->m_pStoredTerrain = GetTerrain();
@@ -203,6 +216,23 @@ void CEditScene::Free(void)
 	}
 	m_vecTriggerObjects.clear();
 	m_vecTriggerObjects.shrink_to_fit();
+}
+
+CEditScene * CEditScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CEditScene*	pInstance = new CEditScene(pGraphicDev);
+
+	if (FAILED(pInstance->Ready()))
+		Client::Safe_Release(pInstance);
+
+	return pInstance;
+}
+
+void CEditScene::Free(void)
+{
+	//Engine::Safe_Release(m_pInputProcessorMgr);
+
+	
 
 	CScene::Free();
 }

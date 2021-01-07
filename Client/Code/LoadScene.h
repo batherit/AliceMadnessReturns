@@ -21,6 +21,9 @@ public:
 	virtual _int Update(const _float& fTimeDelta);
 	virtual void Render(void);
 
+	virtual void OnLoaded() override;
+	virtual void OnExited() override;
+
 private:
 	CLoading*	m_pLoading = nullptr;
 

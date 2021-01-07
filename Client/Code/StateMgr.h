@@ -15,7 +15,7 @@ public:
 	~CStateMgr();
 
 public:
-	bool ConfirmValidState(void);				// 다음 상태가 존재한다면, 그 상태으로 변경한다.
+	_bool ConfirmValidState(void);				// 다음 상태가 존재한다면, 그 상태으로 변경한다.
 	void SetNextState(CState<T>* _pNextScene, bool _bIsForced = false);
 	void Update(float _fDeltaTime);
 	//void LateUpdate(void);
@@ -47,7 +47,7 @@ inline CStateMgr<T>::~CStateMgr()
 }
 
 template<typename T>
-bool CStateMgr<T>::ConfirmValidState(void)
+_bool CStateMgr<T>::ConfirmValidState(void)
 {
 	if (!m_bIsConfirmed) {				// 상태 변경 요청이 접수된 경우
 		if (m_pCurState) m_pCurState->OnExited();		// 없애기 전 상태를 정리한다.

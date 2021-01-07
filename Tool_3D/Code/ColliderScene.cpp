@@ -19,18 +19,6 @@ CColliderScene::CColliderScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
 	CScene(pGraphicDev)
 {
-	// 저장되어 있던 정보를 읽어온다.
-	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredDynamicObjects_Collider) {
-		m_vecDynamicObjects.emplace_back(rObj);
-	}
-	g_pTool3D_Kernel->m_vecStoredDynamicObjects_Collider.clear();
-
-	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredStaticObjects_Collider) {
-		m_vecStaticObjects.emplace_back(rObj);
-	}
-	g_pTool3D_Kernel->m_vecStoredStaticObjects_Collider.clear();
-
-	m_pSelectedObject = g_pTool3D_Kernel->m_pStoredSelectedObject_Collider;
 }
 
 CColliderScene::CColliderScene(const CColliderScene & rhs)
@@ -51,15 +39,46 @@ void CColliderScene::ResetScene(void)
 
 HRESULT CColliderScene::Ready(void)
 {
+	
+
+	return S_OK;
+}
+
+int CColliderScene::Update(const _float& fTimeDelta)
+{
+	return CScene::Update(fTimeDelta);
+}
+
+void CColliderScene::Render(void)
+{
+	Engine::Get_Renderer()->Render_GameObject();
+}
+
+void CColliderScene::OnLoaded()
+{
+	Engine::CCollisionMgr::GetInstance()->ClearGameObjectList();
+	// 저장되어 있던 정보를 읽어온다.
+	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredDynamicObjects_Collider) {
+		m_vecDynamicObjects.emplace_back(rObj);
+	}
+	g_pTool3D_Kernel->m_vecStoredDynamicObjects_Collider.clear();
+
+	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredStaticObjects_Collider) {
+		m_vecStaticObjects.emplace_back(rObj);
+	}
+	g_pTool3D_Kernel->m_vecStoredStaticObjects_Collider.clear();
+
+	m_pSelectedObject = g_pTool3D_Kernel->m_pStoredSelectedObject_Collider;
+
 	Engine::CLayer* pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
+	NULL_CHECK_RETURN(pLayer,);
 
 	// 카메라 생성
 	Engine::CGameObject* pGameObject = nullptr;
 	pGameObject = CDynamicCamera::Create(m_pGraphicDev);		// 동적 카메라
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	NULL_CHECK_RETURN(pGameObject,);
 	//m_pCamera->SetParent(m_pPlayer);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Camera", pGameObject),);
 
 	// 저장된 정보를 레이어에 집어넣는다.
 	for (auto& rObj : m_vecDynamicObjects) {
@@ -85,34 +104,12 @@ HRESULT CColliderScene::Ready(void)
 	m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
-	return S_OK;
 }
 
-int CColliderScene::Update(const _float& fTimeDelta)
-{
-	return CScene::Update(fTimeDelta);
-}
-
-void CColliderScene::Render(void)
-{
-	Engine::Get_Renderer()->Render_GameObject();
-}
-
-CColliderScene * CColliderScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	CColliderScene*	pInstance = new CColliderScene(pGraphicDev);
-
-	if (FAILED(pInstance->Ready()))
-		Client::Safe_Release(pInstance);
-
-	return pInstance;
-}
-
-void CColliderScene::Free(void)
+void CColliderScene::OnExited()
 {
 	// 씬을 지우기 전에 오브젝트를 저장해둔다.
-	// 저장되어 있던 정보를 읽어온다.
+// 저장되어 있던 정보를 읽어온다.
 	for (auto& rObj : m_vecDynamicObjects) {
 		g_pTool3D_Kernel->m_vecStoredDynamicObjects_Collider.emplace_back(rObj);
 		Engine::Safe_AddRef(rObj);
@@ -128,6 +125,20 @@ void CColliderScene::Free(void)
 	m_vecStaticObjects.shrink_to_fit();
 
 	g_pTool3D_Kernel->m_pStoredSelectedObject_Collider = m_pSelectedObject;
+}
+
+CColliderScene * CColliderScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CColliderScene*	pInstance = new CColliderScene(pGraphicDev);
+
+	if (FAILED(pInstance->Ready()))
+		Client::Safe_Release(pInstance);
+
+	return pInstance;
+}
+
+void CColliderScene::Free(void)
+{
 
 	CScene::Free();
 }

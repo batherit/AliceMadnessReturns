@@ -44,6 +44,7 @@ int CAliceWState_Death::Update(const _float& _fDeltaTime)
 				m_pInGameUI->GetFadeInOut()->StartFadeInOut(2.f, true);
 				m_rOwner.GetAttribute()->SetHP(m_rOwner.GetAttribute()->GetMaxHP());
 				m_rOwner.GetTransform()->SetPos(dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin())->GetCurSpawnPoint());
+				m_rOwner.SetLanded(false);
 				//m_rOwner.SetActivated(true);
 				m_rOwner.SetVisible(true);
 				m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Idle(m_rOwner));

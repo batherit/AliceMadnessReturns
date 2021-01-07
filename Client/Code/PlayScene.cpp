@@ -56,18 +56,7 @@ void CPlayScene::ResetScene(void)
 
 HRESULT CPlayScene::Ready(void)
 {
-	Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
-
-	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
-
-	m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	
 
 	return S_OK;
 }
@@ -153,6 +142,27 @@ void CPlayScene::Render(void)
 
 	//Engine::Render_Font(L"Font_Jinji", L"Text Test", &_vec2(10.f, 10.f), D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
 	//CScene::Render();
+}
+
+void CPlayScene::OnLoaded()
+{
+	Engine::CCollisionMgr::GetInstance()->ClearGameObjectList();
+	Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
+
+	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), );
+	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), );
+	FAILED_CHECK_RETURN(Ready_LightInfo(), );
+
+	m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+}
+
+void CPlayScene::OnExited()
+{
 }
 
 CPlayScene * CPlayScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -346,5 +356,6 @@ HRESULT CPlayScene::Ready_Resource(Engine::RESOURCETYPE eType)
 
 void CPlayScene::Free(void)
 {
+	//Engine::CCollisionMgr::GetInstance()->ClearGameObjectList();
 	CScene::Free();
 }

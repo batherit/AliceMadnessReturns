@@ -28,7 +28,6 @@ HRESULT CLoadScene::Ready(void)
 	m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE);
 	FAILED_CHECK_RETURN(m_pLoading, E_FAIL);
 
-
 	return S_OK;
 }
 
@@ -73,3 +72,5 @@ void CLoadScene::Free(void)
 	Engine::CScene::Free();
 }
 
+void CLoadScene::OnLoaded() {};
+void CLoadScene::OnExited() {};

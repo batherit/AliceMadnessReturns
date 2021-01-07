@@ -30,6 +30,9 @@ public:
 	virtual HRESULT Ready(void);
 	virtual _int Update(const _float& fTimeDelta);
 	virtual void Render(void);
+
+	virtual void OnLoaded() override;
+	virtual void OnExited() override;
 	
 public:
 	static CPlayScene*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

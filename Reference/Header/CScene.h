@@ -27,6 +27,9 @@ public:
 	virtual _int Update(const _float& _fDeltaTime);
 	virtual void Render(void) = 0;
 
+	virtual void OnLoaded(void) = 0;
+	virtual void OnExited(void) = 0;
+
 public:
 	virtual void Free(void);
 

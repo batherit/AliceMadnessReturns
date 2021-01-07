@@ -63,14 +63,14 @@ void Engine::CAniCtrl::Set_AnimationSet(const _uint& iIndex)
 	m_pAniCtrl->KeyTrackEnable(m_iCurrentTrack, FALSE, m_fAccTime + 0.31f* 0.5f);
 
 	// 인자값으로 들어오는 트랙에 세팅된 애니메이션 셋을 어떤 속도로 움직일 것인지 설정하는 함수(속도의 상수 값은 1)
-	m_pAniCtrl->KeyTrackSpeed(m_iCurrentTrack, 1.f, m_fAccTime, 0.3f* 0.5f, D3DXTRANSITION_LINEAR);
+	m_pAniCtrl->KeyTrackSpeed(m_iCurrentTrack, 1.1f, m_fAccTime, 0.3f* 0.5f, D3DXTRANSITION_LINEAR);
 	// 인자값으로 들어오는 트랙의 가중치를 설정하는 함수
 	m_pAniCtrl->KeyTrackWeight(m_iCurrentTrack, 0.0000001f, m_fAccTime, 0.3f* 0.5f, D3DXTRANSITION_LINEAR);
 
 
 	// New 트랙의 활성화를 지시하는 함수
 	m_pAniCtrl->SetTrackEnable(m_iNewTrack, TRUE);
-	m_pAniCtrl->KeyTrackSpeed(m_iNewTrack, 1.f, m_fAccTime, 0.36f* 0.5, D3DXTRANSITION_LINEAR);
+	m_pAniCtrl->KeyTrackSpeed(m_iNewTrack, 1.1f, m_fAccTime, 0.36f* 0.5, D3DXTRANSITION_LINEAR);
 	m_pAniCtrl->KeyTrackWeight(m_iNewTrack, 0.999999f, m_fAccTime, 0.36f* 0.5, D3DXTRANSITION_LINEAR);
 
 	m_pAniCtrl->ResetTime(); // AdvanceTime 호출 시 내부적으로 누적되던 시간을 초기화하는 함수

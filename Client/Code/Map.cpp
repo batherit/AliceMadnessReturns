@@ -276,6 +276,13 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 			for (_int i = 0; i < 6; ++i) {
 				ReadFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
 				ReadFile(hFile, tcFactor, sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+
+				switch (pTriggerObject->GetTriggerType()) {
+				case TRIGGER::TYPE_CHECKPOINT:
+					if (0 == i)
+						pTriggerObject->SetSortingOrderIndex(_ttoi(tcFactor));
+					break;
+				}
 				// TODO : 팩터 해석을 작성합니다.
 				//pDynamicObject->GetFactorRef(i) = tcFactor;
 			}
@@ -310,5 +317,29 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 		}
 	}
 
+	sort(m_vecTrigger_CheckPoint.begin(), m_vecTrigger_CheckPoint.end(), [](const CTrigger* pObj1, const CTrigger* pObj2) {
+		return pObj1->GetSortingOrderIndex() < pObj2->GetSortingOrderIndex();
+	});
+
 	CloseHandle(hFile);
+}
+
+_vec3 CMap::GetCurSpawnPoint()
+{
+	_int iSize = static_cast<_int>(m_vecTrigger_CheckPoint.size());
+	if (iSize == 0)
+		return _vec3(0.f, 0.f, 0.f);
+
+	for (_int i = 0; i < iSize; ++i) {
+		if (m_vecTrigger_CheckPoint[i]->IsActivated()) {
+			if (i - 1 >= 0) {
+				return m_vecTrigger_CheckPoint[i - 1]->GetTransform()->GetPos();
+			}
+			else {
+				return m_vecTrigger_CheckPoint[0]->GetTransform()->GetPos();
+			}
+		}
+	}
+
+	return m_vecTrigger_CheckPoint[iSize - 1]->GetTransform()->GetPos();
 }

@@ -20,6 +20,8 @@ private: // 持失切, 社瑚切
 	virtual int Update_Object(const _float & _fDeltaTime) override;
 	virtual void Render_Object(void) override;
 
+	virtual void OnCollision(Engine::CollisionInfo _tCollisionInfo) override;
+
 public:
 	static CTrigger*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
@@ -29,9 +31,11 @@ public:
 
 	void SetTriggerType(TRIGGER::E_TYPE _eTriggerType) { m_eTriggerType = _eTriggerType; }
 	TRIGGER::E_TYPE GetTriggerType() const { return m_eTriggerType; }
+	void SetSortingOrderIndex(_int _iSortingOrderIndex) { m_iSortingOrderIndex = _iSortingOrderIndex; }
+	_int GetSortingOrderIndex() const { return m_iSortingOrderIndex; }
 
 private:
-	_int m_iTag[6] = { 0, };
+	_int m_iSortingOrderIndex = 0;
 	TRIGGER::E_TYPE m_eTriggerType = TRIGGER::TYPE_END;
 };
 

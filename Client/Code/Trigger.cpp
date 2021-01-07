@@ -22,6 +22,11 @@ HRESULT CTrigger::Ready_Object(void)
 	Engine::CColliderObject* pCollider = Engine::CColliderObject_AABB::Create(m_pGraphicDev);
 	pCollider->SetColliderTag(L"Trigger");
 	AddCollider(pCollider);
+
+	m_pCullingSphere = Engine::CColliderObject_Sphere::Create(m_pGraphicDev);
+	m_pCullingSphere->SetColliderTag(L"CULL");
+	AddCollider(m_pCullingSphere);
+
 	Engine::CCollisionMgr::GetInstance()->AddGameObject(this);
 
 	return S_OK;
@@ -39,6 +44,20 @@ int CTrigger::Update_Object(const _float & _fDeltaTime)
 
 void CTrigger::Render_Object(void)
 {
+}
+
+void CTrigger::OnCollision(Engine::CollisionInfo _tCollisionInfo)
+{
+	switch (m_eTriggerType)
+	{
+	case TRIGGER::TYPE_CHECKPOINT:
+		if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
+			if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+				SetActivated(false);
+			}
+		}
+		break;
+	}
 }
 
 CTrigger * CTrigger::Create(LPDIRECT3DDEVICE9 pGraphicDev)

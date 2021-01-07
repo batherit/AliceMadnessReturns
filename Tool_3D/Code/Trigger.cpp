@@ -22,6 +22,11 @@ HRESULT CTrigger::Ready_Object(void)
 	Engine::CColliderObject* pCollider = Engine::CColliderObject_AABB::Create(m_pGraphicDev);
 	pCollider->SetColliderTag(L"Trigger");
 	AddCollider(pCollider);
+
+	m_pCullingSphere = Engine::CColliderObject_Sphere::Create(m_pGraphicDev);
+	m_pCullingSphere->SetColliderTag(L"CULL");
+	AddCollider(m_pCullingSphere);
+
 	Engine::CCollisionMgr::GetInstance()->AddGameObject(this);
 
 	return S_OK;

@@ -6,6 +6,7 @@
 #include "Attribute.h"
 #include "UI_InGame.h"
 #include "UI_FadeInOut.h"
+#include "Map.h"
 
 CAliceWState_Death::CAliceWState_Death(CAliceW & _rOwner)
 	:
@@ -42,7 +43,7 @@ int CAliceWState_Death::Update(const _float& _fDeltaTime)
 				// 2초후 리스폰
 				m_pInGameUI->GetFadeInOut()->StartFadeInOut(2.f, true);
 				m_rOwner.GetAttribute()->SetHP(m_rOwner.GetAttribute()->GetMaxHP());
-				m_rOwner.GetTransform()->SetPos(_vec3(0.f, 20.f, 0.f));
+				m_rOwner.GetTransform()->SetPos(dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin())->GetCurSpawnPoint());
 				//m_rOwner.SetActivated(true);
 				m_rOwner.SetVisible(true);
 				m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Idle(m_rOwner));

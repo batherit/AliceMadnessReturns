@@ -35,6 +35,7 @@ public:
 
 	Engine::CNaviMesh* GetNaviMesh() const { return m_pNaviMesh; }
 	vector<CTrigger*>& GetCheckPoint() { return m_vecTrigger_CheckPoint; }
+	_vec3 GetCurSpawnPoint();
 
 private:
 	Engine::CRenderer* m_pRenderer = nullptr;

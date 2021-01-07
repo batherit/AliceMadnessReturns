@@ -377,9 +377,7 @@ _bool CAliceW::IsFloatingOn(const _float & _fDeltaTime)
 
 _bool CAliceW::IsFalling(const _float & _fDeltaTime)
 {
-	if (GetPhysics()->GetVelocity().y <= 0.f && !m_bIsLanded)
-		return true;
-	return false;
+	return GetPhysics()->GetVelocity().y <= 0.f && !m_bIsLanded;
 }
 
 _bool CAliceW::IsRunOn(const _float& _fDeltaTime, _vec3 * _pDir)
@@ -421,6 +419,11 @@ _bool CAliceW::IsWeaponChanging()
 	}
 
 	return false;
+}
+
+_bool CAliceW::IsBombOn()
+{
+	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_Q);
 }
 
 void CAliceW::ToggleLockOn()

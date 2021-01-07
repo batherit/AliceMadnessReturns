@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "AliceWState_Idle.h"
 #include "AliceWState_Run.h"
+#include "AliceWState_Bomb.h"
 #include "AliceWState_Attack_Blade.h"
 #include "AliceWState_Attack_Horse.h"
 #include "AliceWState_GunMode.h"
@@ -46,6 +47,11 @@ int CAliceWState_Idle::Update(const _float& _fDeltaTime)
 
 	if (m_rOwner.GetAttribute()->IsDamaged()) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Damage(m_rOwner));
+		return 0;
+	}
+
+	if (m_rOwner.IsBombOn()) {
+		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Bomb(m_rOwner));
 		return 0;
 	}
 

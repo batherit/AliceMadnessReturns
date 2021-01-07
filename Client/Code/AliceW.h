@@ -56,6 +56,7 @@ public:
 	_bool IsDead() const;
 	_bool IsLanded() const { return m_bIsLanded; }
 	_bool IsWeaponChanging();
+	_bool IsBombOn();
 	CMap* GetMap() const { return m_pMap; }
 	_int GetCellIndex() const { return m_iCellIndex; } 
 

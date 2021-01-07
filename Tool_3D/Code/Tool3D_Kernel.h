@@ -16,6 +16,7 @@ class CEditScene;
 class CColliderScene;
 class CStaticObject;
 class CDynamicObject;
+class CTrigger;
 class CTerrain;
 class CNaviMesh;
 class CTool3D_Kernel : public CBase
@@ -59,6 +60,7 @@ public:
 
 	vector<CStaticObject*> m_vecStoredStaticObjects;
 	vector<CDynamicObject*> m_vecStoredDynamicObjects;
+	vector<CTrigger*> m_vecStoredTriggerObjects;
 
 	// ColliderScene 임시 저장
 	vector<CStaticObject*> m_vecStoredStaticObjects_Collider;

@@ -258,6 +258,14 @@ _uint CLoading::Loading_ForStage(void)
 		L"Bullet.X"),
 		E_FAIL);
 
+	// 配尝气藕 积己
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"BunnyBomb",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/BunnyBomb/",
+		L"BunnyBomb.X"),
+		E_FAIL);
 
 	// 举府胶 积己
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

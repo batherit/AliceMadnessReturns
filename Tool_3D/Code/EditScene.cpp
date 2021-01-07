@@ -13,6 +13,7 @@
 #include "CMapTab.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
+#include "Trigger.h"
 //#include "InputProcessor_Navi.h"
 
 CEditScene::CEditScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -29,6 +30,11 @@ CEditScene::CEditScene(LPDIRECT3DDEVICE9 pGraphicDev)
 		m_vecStaticObjects.emplace_back(rObj);
 	}
 	g_pTool3D_Kernel->m_vecStoredStaticObjects.clear();
+
+	for (auto& rObj : g_pTool3D_Kernel->m_vecStoredTriggerObjects) {
+		m_vecTriggerObjects.emplace_back(rObj);
+	}
+	g_pTool3D_Kernel->m_vecStoredTriggerObjects.clear();
 }
 
 CEditScene::CEditScene(const CEditScene & rhs)
@@ -190,6 +196,13 @@ void CEditScene::Free(void)
 	}
 	m_vecStaticObjects.clear();
 	m_vecStaticObjects.shrink_to_fit();
+	// 트리거 저장하기
+	for (auto& rObj : m_vecTriggerObjects) {
+		g_pTool3D_Kernel->m_vecStoredTriggerObjects.emplace_back(rObj);
+		Engine::Safe_AddRef(rObj);
+	}
+	m_vecTriggerObjects.clear();
+	m_vecTriggerObjects.shrink_to_fit();
 
 	CScene::Free();
 }
@@ -310,6 +323,16 @@ _bool CEditScene::AddDynamicObject(const _tchar * _pMeshTag, const _vec3& _vPos)
 	return false;
 }
 
+_bool CEditScene::AddTriggerObject(TRIGGER::E_TYPE _eTriggerType)
+{
+	CTrigger* pTriggerObject = CTrigger::Create(m_pGraphicDev);
+	pTriggerObject->SetTriggerType(_eTriggerType);
+	GetLayer(L"EditLayer")->Add_GameObject(pTriggerObject);
+	m_vecTriggerObjects.emplace_back(pTriggerObject);
+
+	return true;
+}
+
 //_bool CEditScene::AddCustomObject(const _tchar * _pMeshTag)
 //{
 //	auto find_iter = find_if(m_mapCustomObjectType.begin(), m_mapCustomObjectType.end(), Engine::CTag_Finder(_pMeshTag));
@@ -389,6 +412,14 @@ CDynamicObject * CEditScene::GetDynamicObject(const _tchar * _pMeshTag)
 	return nullptr;
 }
 
+CTrigger * CEditScene::GetTriggerObject(_int _iObjectIndex)
+{
+	if (!IsValidTriggerObjectIndex(_iObjectIndex))
+		return nullptr;
+
+	return m_vecTriggerObjects[_iObjectIndex];
+}
+
 //Engine::CGameObject * CEditScene::GetCustomObject(_int _iObjectIndex)
 //{
 //	if (!IsValidCustomObjectIndex(_iObjectIndex))
@@ -427,6 +458,17 @@ _bool CEditScene::DeleteDynamicObject(_int _iObjectIndex)
 
 	m_vecDynamicObjects[_iObjectIndex]->SetValid(false);
 	m_vecDynamicObjects.erase(m_vecDynamicObjects.begin() + _iObjectIndex);
+
+	return true;
+}
+
+_bool CEditScene::DeleteTriggerObject(_int _iObjectIndex)
+{
+	if (!IsValidTriggerObjectIndex(_iObjectIndex))
+		return false;
+
+	m_vecTriggerObjects[_iObjectIndex]->SetValid(false);
+	m_vecTriggerObjects.erase(m_vecTriggerObjects.begin() + _iObjectIndex);
 
 	return true;
 }
@@ -780,23 +822,6 @@ void CEditScene::LoadColliders(Engine::CGameObject* _pObject)
 	}
 }
 
-//_bool CEditScene::IsValidCustomObjectIndex(_int _iObjectIndex)
-//{
-//	if (_iObjectIndex < 0 || _iObjectIndex >= static_cast<_int>(m_vecCustomObjects.size()))
-//		return false;
-//	return true;
-//}
-//
-//Engine::MESHTYPE CEditScene::GetCustomObjectMeshType(const _tchar * _pMeshTag)
-//{
-//	auto find_iter = find_if(m_mapCustomObjectType.begin(), m_mapCustomObjectType.end(), Engine::CTag_Finder(_pMeshTag));
-//
-//	if (find_iter == m_mapCustomObjectType.end())
-//		return Engine::MESHTYPE_END;
-//
-//	return find_iter->second;
-//}
-
 _bool CEditScene::IsValidStaticObjectIndex(_int _iObjectIndex)
 {
 	if (_iObjectIndex < 0 || _iObjectIndex >= static_cast<_int>(m_vecStaticObjects.size()))
@@ -807,6 +832,13 @@ _bool CEditScene::IsValidStaticObjectIndex(_int _iObjectIndex)
 _bool CEditScene::IsValidDynamicObjectIndex(_int _iObjectIndex)
 {
 	if (_iObjectIndex < 0 || _iObjectIndex >= static_cast<_int>(m_vecDynamicObjects.size()))
+		return false;
+	return true;
+}
+
+_bool CEditScene::IsValidTriggerObjectIndex(_int _iObjectIndex)
+{
+	if (_iObjectIndex < 0 || _iObjectIndex >= static_cast<_int>(m_vecTriggerObjects.size()))
 		return false;
 	return true;
 }

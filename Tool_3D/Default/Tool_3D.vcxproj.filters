@@ -92,6 +92,9 @@
     <Filter Include="02. Scene\02. ColliderScene">
       <UniqueIdentifier>{c8ed9b50-9fd8-4a87-b753-619e7a3a3c99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Object\Trigger">
+      <UniqueIdentifier>{3b06eb96-967d-4362-9555-3e24bd28939a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -238,6 +241,9 @@
     <ClInclude Include="..\Code\ColliderScene.h">
       <Filter>02. Scene\02. ColliderScene</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Trigger.h">
+      <Filter>04. Object\Trigger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -353,6 +359,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ColliderScene.cpp">
       <Filter>02. Scene\02. ColliderScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Trigger.cpp">
+      <Filter>04. Object\Trigger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

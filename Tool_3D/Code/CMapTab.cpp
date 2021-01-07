@@ -7,6 +7,7 @@
 #include "EditScene.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
+#include "Trigger.h"
 #include "Gizmo.h"
 #include "afxdialogex.h"
 
@@ -126,8 +127,14 @@ BOOL CMapTab::OnInitDialog()
 	// 오브젝트 리스트 트리에 Static과 Custom 항목을 추가합니다.
 	m_itemStaticL = m_treeObjectList.InsertItem(L"Static", NULL, NULL);
 	m_itemDynamicL = m_treeObjectList.InsertItem(L"Dynamic", NULL, NULL);
+	m_itemTriggerL = m_treeObjectList.InsertItem(L"Trigger", NULL, NULL);
 	m_itemStaticR = m_treeAddedObject.InsertItem(L"Static", NULL, NULL);
 	m_itemDynamicR = m_treeAddedObject.InsertItem(L"Dynamic", NULL, NULL);
+	m_itemTriggerR = m_treeAddedObject.InsertItem(L"Trigger", NULL, NULL);
+	
+	m_treeObjectList.InsertItem(L"Trigger_Death", m_itemTriggerL, NULL);
+	m_treeObjectList.InsertItem(L"Trigger_CheckPoint", m_itemTriggerL, NULL);
+	m_treeObjectList.InsertItem(L"Trigger_Spawn", m_itemTriggerL, NULL);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
@@ -151,6 +158,17 @@ void CMapTab::OnBnClickedButtonAdd()
 		}
 		else if (m_treeObjectList.GetItemText(hParent) == L"Dynamic") {
 			AddDynamicObject(pMeshTag);
+		}
+		else if (m_treeObjectList.GetItemText(hParent) == L"Trigger") {
+			if (lstrcmp(L"Trigger_Death", pMeshTag) == 0) {
+				AddTriggerObject(TRIGGER::TYPE_DEATH);
+			}
+			else if (lstrcmp(L"Trigger_CheckPoint", pMeshTag) == 0) {
+				AddTriggerObject(TRIGGER::TYPE_CHECKPOINT);
+			}
+			else if (lstrcmp(L"Trigger_Spawn", pMeshTag) == 0) {
+				AddTriggerObject(TRIGGER::TYPE_SPAWN);
+			}
 		}
 	}
 }
@@ -182,6 +200,16 @@ void CMapTab::OnBnClickedButtonDelete()
 		g_pTool3D_Kernel->GetEditScene()->DeleteDynamicObject(m_iSelectedObjectIndex);
 		if (m_treeAddedObject.ItemHasChildren(m_itemDynamicR)) {
 			hItem = m_treeAddedObject.GetChildItem(m_itemDynamicR);
+
+			for (int i = 0; i < m_iSelectedObjectIndex; ++i) {
+				hItem = m_treeAddedObject.GetNextSiblingItem(hItem);
+			}
+		}
+	}
+	else if (dynamic_cast<CTrigger*>(m_pSelectedObject)) {
+		g_pTool3D_Kernel->GetEditScene()->DeleteTriggerObject(m_iSelectedObjectIndex);
+		if (m_treeAddedObject.ItemHasChildren(m_itemTriggerR)) {
+			hItem = m_treeAddedObject.GetChildItem(m_itemTriggerR);
 
 			for (int i = 0; i < m_iSelectedObjectIndex; ++i) {
 				hItem = m_treeAddedObject.GetNextSiblingItem(hItem);
@@ -326,6 +354,20 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 			m_pSelectedObject = g_pTool3D_Kernel->GetEditScene()->GetDynamicObject(m_iSelectedObjectIndex);
 		}
 	}
+	else if (m_treeObjectList.GetItemText(hParent) == L"Trigger") {
+		if (m_treeAddedObject.ItemHasChildren(m_itemTriggerR)) {
+			hSibling = m_treeAddedObject.GetChildItem(m_itemTriggerR);
+
+			while (hSibling)
+			{
+				if (hSibling == hItem) break;
+				hSibling = m_treeAddedObject.GetNextSiblingItem(hSibling);
+				++m_iSelectedObjectIndex;
+			}
+
+			m_pSelectedObject = g_pTool3D_Kernel->GetEditScene()->GetTriggerObject(m_iSelectedObjectIndex);
+		}
+	}
 	m_hSelectedTreeItem = hItem;
 
 	
@@ -421,6 +463,27 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 				m_cstrFactor5 = pDynamicObject->GetFactorRef(5);
 			}
 		}
+		else if (dynamic_cast<CTrigger*>(m_pSelectedObject)) {
+			CTrigger* pTriggerObject = dynamic_cast<CTrigger*>(m_pSelectedObject);
+			m_bIsCustomed = pTriggerObject->IsCustomed();
+			//m_btnCustomed.SetCheck(pDynamicObject->IsCustomed());
+
+			if (m_bIsCustomed) {
+				m_editFactor0.EnableWindow(TRUE);
+				m_editFactor1.EnableWindow(TRUE);
+				m_editFactor2.EnableWindow(TRUE);
+				m_editFactor3.EnableWindow(TRUE);
+				m_editFactor4.EnableWindow(TRUE);
+				m_editFactor5.EnableWindow(TRUE);
+
+				m_cstrFactor0 = pTriggerObject->GetFactorRef(0);
+				m_cstrFactor1 = pTriggerObject->GetFactorRef(1);
+				m_cstrFactor2 = pTriggerObject->GetFactorRef(2);
+				m_cstrFactor3 = pTriggerObject->GetFactorRef(3);
+				m_cstrFactor4 = pTriggerObject->GetFactorRef(4);
+				m_cstrFactor5 = pTriggerObject->GetFactorRef(5);
+			}
+		}
 
 		// 커스텀 상태가 체크된 상태라면,
 		if(!m_bIsCustomed) {
@@ -450,13 +513,14 @@ void CMapTab::OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CMapTab::UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects, const vector<CDynamicObject*>& rDynamicObjects)
+void CMapTab::UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects, const vector<CDynamicObject*>& rDynamicObjects, const vector<CTrigger*>& rTriggerObjects)
 {
 	UpdateData(TRUE);
 
 	m_treeAddedObject.DeleteAllItems();
 	m_itemStaticR = m_treeAddedObject.InsertItem(L"Static", NULL, NULL);
 	m_itemDynamicR = m_treeAddedObject.InsertItem(L"Dynamic", NULL, NULL);
+	m_itemTriggerR = m_treeAddedObject.InsertItem(L"Trigger", NULL, NULL);
 
 	for (auto& rStaticObj : rStaticObjects) {
 		if (rStaticObj->IsValid()) {
@@ -466,6 +530,21 @@ void CMapTab::UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects, cons
 	for (auto& rDynamicObj : rDynamicObjects) {
 		if (rDynamicObj->IsValid()) {
 			m_treeAddedObject.InsertItem(rDynamicObj->GetMeshTag(), m_itemDynamicR, NULL);
+		}
+	}
+	for (auto& rTriggerObj : rTriggerObjects) {
+		if (rTriggerObj->IsValid()) {
+			switch (rTriggerObj->GetTriggerType()) {
+			case TRIGGER::TYPE_DEATH:
+				m_treeAddedObject.InsertItem(L"Trigger_Death", m_itemTriggerR, NULL);
+				break;
+			case TRIGGER::TYPE_CHECKPOINT:
+				m_treeAddedObject.InsertItem(L"Trigger_CheckPoint", m_itemTriggerR, NULL);
+				break;
+			case TRIGGER::TYPE_SPAWN:
+				m_treeAddedObject.InsertItem(L"Trigger_Spawn", m_itemTriggerR, NULL);
+				break;
+			}
 		}
 	}
 
@@ -552,6 +631,23 @@ void CMapTab::SetSelectedObject(Engine::CGameObject* _pObject)
 			return;
 		}
 	}
+	else if (dynamic_cast<CTrigger*>(_pObject)) {
+		auto& rCustomObjectList = g_pTool3D_Kernel->GetEditScene()->GetTriggerObjectList();
+
+		m_iSelectedObjectIndex = 0;
+		for (auto& rObj : rCustomObjectList) {
+			if (rObj == _pObject) {
+				break;
+			}
+			++m_iSelectedObjectIndex;
+		}
+
+		if (m_iSelectedObjectIndex == rCustomObjectList.size()) {
+			m_iSelectedObjectIndex = -1;
+			abort();
+			return;
+		}
+	}
 	else
 		return;
 
@@ -582,6 +678,25 @@ _bool CMapTab::AddDynamicObject(const _tchar * _pMeshTag)
 {
 	if (g_pTool3D_Kernel->GetEditScene()->AddDynamicObject(_pMeshTag)) {
 		m_treeAddedObject.InsertItem(_pMeshTag, m_itemDynamicR, NULL);
+		return true;
+	}
+	return false;
+}
+
+_bool CMapTab::AddTriggerObject(TRIGGER::E_TYPE _eTriggerType)
+{
+	if (g_pTool3D_Kernel->GetEditScene()->AddTriggerObject(_eTriggerType)) {
+		switch (_eTriggerType) {
+		case TRIGGER::TYPE_DEATH:
+			m_treeAddedObject.InsertItem(L"Trigger_Death", m_itemTriggerR, NULL);
+			break;
+		case TRIGGER::TYPE_CHECKPOINT:
+			m_treeAddedObject.InsertItem(L"Trigger_CheckPoint", m_itemTriggerR, NULL);
+			break;
+		case TRIGGER::TYPE_SPAWN:
+			m_treeAddedObject.InsertItem(L"Trigger_Spawn", m_itemTriggerR, NULL);
+			break;
+		}
 		return true;
 	}
 	return false;
@@ -812,7 +927,10 @@ void CMapTab::OnBnClickedButtonLoad()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	g_pTool3D_Kernel->GetEditScene()->LoadMap();
-	UpdateAddedTree(g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList(), g_pTool3D_Kernel->GetEditScene()->GetDynamicObjectList());
+	UpdateAddedTree(
+		g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList(), 
+		g_pTool3D_Kernel->GetEditScene()->GetDynamicObjectList(),
+		g_pTool3D_Kernel->GetEditScene()->GetTriggerObjectList());
 }
 
 void CMapTab::OnEnChangeEditFactor0()
@@ -830,6 +948,9 @@ void CMapTab::OnEnChangeEditFactor0()
 	}
 	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
 		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(0) = m_cstrFactor0;
+	}
+	else if (dynamic_cast<CTrigger*>(m_pSelectedObject)) {
+		dynamic_cast<CTrigger*>(m_pSelectedObject)->GetFactorRef(0) = m_cstrFactor0;
 	}
 
 	UpdateData(FALSE);
@@ -852,6 +973,9 @@ void CMapTab::OnEnChangeEditFactor1()
 	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
 		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(1) = m_cstrFactor1;
 	}
+	else if (dynamic_cast<CTrigger*>(m_pSelectedObject)) {
+		dynamic_cast<CTrigger*>(m_pSelectedObject)->GetFactorRef(1) = m_cstrFactor1;
+	}
 
 	UpdateData(FALSE);
 }
@@ -872,6 +996,9 @@ void CMapTab::OnEnChangeEditFactor2()
 	}
 	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
 		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(2) = m_cstrFactor2;
+	}
+	else if (dynamic_cast<CTrigger*>(m_pSelectedObject)) {
+		dynamic_cast<CTrigger*>(m_pSelectedObject)->GetFactorRef(2) = m_cstrFactor2;
 	}
 
 	UpdateData(FALSE);
@@ -894,6 +1021,9 @@ void CMapTab::OnEnChangeEditFactor3()
 	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
 		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(3) = m_cstrFactor3;
 	}
+	else if (dynamic_cast<CTrigger*>(m_pSelectedObject)) {
+		dynamic_cast<CTrigger*>(m_pSelectedObject)->GetFactorRef(3) = m_cstrFactor3;
+	}
 
 	UpdateData(FALSE);
 }
@@ -914,6 +1044,9 @@ void CMapTab::OnEnChangeEditFactor4()
 	}
 	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
 		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(4) = m_cstrFactor4;
+	}
+	else if (dynamic_cast<CTrigger*>(m_pSelectedObject)) {
+		dynamic_cast<CTrigger*>(m_pSelectedObject)->GetFactorRef(4) = m_cstrFactor4;
 	}
 
 	UpdateData(FALSE);
@@ -936,6 +1069,9 @@ void CMapTab::OnEnChangeEditFactor5()
 	}
 	else if (dynamic_cast<CDynamicObject*>(m_pSelectedObject)) {
 		dynamic_cast<CDynamicObject*>(m_pSelectedObject)->GetFactorRef(5) = m_cstrFactor5;
+	}
+	else if (dynamic_cast<CTrigger*>(m_pSelectedObject)) {
+		dynamic_cast<CTrigger*>(m_pSelectedObject)->GetFactorRef(5) = m_cstrFactor5;
 	}
 
 	UpdateData(FALSE);
@@ -983,6 +1119,25 @@ void CMapTab::OnBnClickedCheckCustomed()
 			m_cstrFactor3 = pDynamicObject->GetFactorRef(3);
 			m_cstrFactor4 = pDynamicObject->GetFactorRef(4);
 			m_cstrFactor5 = pDynamicObject->GetFactorRef(5);
+		}
+	}
+	else if (dynamic_cast<CTrigger*>(m_pSelectedObject)) {
+		CTrigger* pTriggerObject = dynamic_cast<CTrigger*>(m_pSelectedObject);
+		pTriggerObject->SetCustomed(m_bIsCustomed);
+		if (m_bIsCustomed) {
+			m_editFactor0.EnableWindow(TRUE);
+			m_editFactor1.EnableWindow(TRUE);
+			m_editFactor2.EnableWindow(TRUE);
+			m_editFactor3.EnableWindow(TRUE);
+			m_editFactor4.EnableWindow(TRUE);
+			m_editFactor5.EnableWindow(TRUE);
+
+			m_cstrFactor0 = pTriggerObject->GetFactorRef(0);
+			m_cstrFactor1 = pTriggerObject->GetFactorRef(1);
+			m_cstrFactor2 = pTriggerObject->GetFactorRef(2);
+			m_cstrFactor3 = pTriggerObject->GetFactorRef(3);
+			m_cstrFactor4 = pTriggerObject->GetFactorRef(4);
+			m_cstrFactor5 = pTriggerObject->GetFactorRef(5);
 		}
 	}
 

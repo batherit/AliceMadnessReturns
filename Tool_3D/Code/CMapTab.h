@@ -2,9 +2,9 @@
 
 
 // CMapTab 대화 상자
-BEGIN(Client)
-class CStaticObject;
-END
+//BEGIN(Client)
+//class CStaticObject;
+//END
 
 class CMapTab : public CDialogEx
 {
@@ -28,13 +28,14 @@ public:
 	afx_msg void OnNMClickTreeAddedObject(NMHDR *pNMHDR, LRESULT *pResult);
 
 public:
-	void UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects, const vector<CDynamicObject*>& rDynamicObjects);
+	void UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects, const vector<CDynamicObject*>& rDynamicObjects, const vector<CTrigger*>& rTriggerObjects);
 	void UpdatePos(const _vec3& vPos);
 	void UpdateAngle(const _vec3& vAngle);
 	void UpdateScale(const _vec3& vScale);
 	void SetSelectedObject(Engine::CGameObject* _pObject);
 	_bool AddStaticObject(const _tchar* _pMeshTag);
 	_bool AddDynamicObject(const _tchar* _pMeshTag);
+	_bool AddTriggerObject(TRIGGER::E_TYPE _eTriggerType);
 	void RegisterMeshTag(Engine::MESHTYPE _eMeshType, const _tchar * _pMeshTag);
 
 protected:
@@ -62,8 +63,10 @@ public:
 
 	HTREEITEM m_itemStaticL = NULL;
 	HTREEITEM m_itemDynamicL = NULL;
+	HTREEITEM m_itemTriggerL = NULL;
 	HTREEITEM m_itemStaticR = NULL;
 	HTREEITEM m_itemDynamicR = NULL;
+	HTREEITEM m_itemTriggerR = NULL;
 
 	Engine::CGameObject* m_pSelectedObject = nullptr;
 	_int m_iSelectedObjectIndex = -1;

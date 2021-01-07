@@ -240,6 +240,16 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Bullet");
 
+	// 配尝气藕 积己
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"BunnyBomb",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/BunnyBomb/",
+		L"BunnyBomb.X"),
+		E_FAIL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"BunnyBomb");
+
 	// 器农 积己
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

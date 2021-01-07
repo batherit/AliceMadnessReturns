@@ -70,6 +70,7 @@
     <ClInclude Include="..\Code\StaticObject.h" />
     <ClInclude Include="..\Code\Terrain.h" />
     <ClInclude Include="..\Code\Tool3D_Kernel.h" />
+    <ClInclude Include="..\Code\Trigger.h" />
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Enum.h" />
     <ClInclude Include="..\Header\Function.h" />
@@ -147,6 +148,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\Tool3D_Kernel.cpp" />
+    <ClCompile Include="..\Code\Trigger.cpp" />
     <ClCompile Include="CAABBColTab.cpp" />
     <ClCompile Include="COBBColTab.cpp" />
     <ClCompile Include="CSphereColTab.cpp" />

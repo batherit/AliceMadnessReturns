@@ -8,6 +8,7 @@
 #include "Gizmo.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
+#include "Trigger.h"
 #include "EditScene.h"
 
 CGizmo::CGizmo(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -61,6 +62,12 @@ int CGizmo::Update_Object(const _float & _fDeltaTime)
 			if (m_pMapTab->AddDynamicObject(pMeshTag)) {
 				auto& rDynamicObjectList = g_pTool3D_Kernel->GetEditScene()->GetDynamicObjectList();
 				pNewGameObject = rDynamicObjectList[rDynamicObjectList.size() - 1];
+			}
+		}
+		else if (dynamic_cast<CTrigger*>(m_pGameObject)) {
+			if (m_pMapTab->AddTriggerObject(dynamic_cast<CTrigger*>(m_pGameObject)->GetTriggerType())) {
+				auto& rTriggerObjectList = g_pTool3D_Kernel->GetEditScene()->GetTriggerObjectList();
+				pNewGameObject = rTriggerObjectList[rTriggerObjectList.size() - 1];
 			}
 		}
 		

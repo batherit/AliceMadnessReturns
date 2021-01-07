@@ -35,8 +35,7 @@ int CDynamicObject::Update_Object(const _float & _fDeltaTime)
 	if (!IsActivated())
 		return 1;
 
-	if (1 == CGameObject::Update_Object(_fDeltaTime))	// 1-> 비활성화
-		return 1;
+	CGameObject::Update_Object(_fDeltaTime);	// 1-> 비활성화
 
 	m_pMesh->Play_Animation(_fDeltaTime);
 

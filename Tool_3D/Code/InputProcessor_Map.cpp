@@ -7,6 +7,7 @@
 #include "EditScene.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
+#include "Trigger.h"
 #include "Gizmo.h"
 
 CInputProcessor_Map::CInputProcessor_Map(Engine::CInputProcessorMgr * _pInputProcessorMgr)
@@ -43,6 +44,7 @@ _int CInputProcessor_Map::ProcessInput(const _float & _fDeltaTime)
 		Engine::CGameObject* pSelectedObject = nullptr;
 		auto& rStaticObjectList = g_pTool3D_Kernel->GetEditScene()->GetStaticObjectList();
 		auto& rDynamicObjectList = g_pTool3D_Kernel->GetEditScene()->GetDynamicObjectList();
+		auto& rTriggerObjectList = g_pTool3D_Kernel->GetEditScene()->GetTriggerObjectList();
 		_int iVecSize = rStaticObjectList.size();
 		auto stPickingRayInfo = Engine::GetPickingRayInfo(g_pTool3D_Kernel->GetGraphicDev(), Engine::GetClientCursorPoint(g_hWnd));
 
@@ -77,6 +79,25 @@ _int CInputProcessor_Map::ProcessInput(const _float & _fDeltaTime)
 						//vecNaviVertices[0] = vecNaviVertices[i];
 						bIsStaticObject = false;
 						pSelectedObject = rDynamicObjectList[i];
+						//vecCollidedSphereIndex[0] = i;
+					}
+				}
+			}
+		}
+
+		iVecSize = rTriggerObjectList.size();
+		for (_int i = 0; i < iVecSize; ++i) {
+			if (Engine::IsRayAndSphereCollided(stPickingRayInfo, 2.f, rTriggerObjectList[i]->GetTransform()->GetPos())) {
+				if (!pSelectedObject) {
+					//vecCollidedSphereIndex.emplace_back(i);
+					pSelectedObject = rTriggerObjectList[i];
+				}
+				else {
+					if (D3DXVec3LengthSq(&(pSelectedObject->GetTransform()->GetPos() - stPickingRayInfo.vRayPos))
+		> D3DXVec3LengthSq(&(rTriggerObjectList[i]->GetTransform()->GetPos() - stPickingRayInfo.vRayPos))) {
+						//vecNaviVertices[0] = vecNaviVertices[i];
+						bIsStaticObject = false;
+						pSelectedObject = rTriggerObjectList[i];
 						//vecCollidedSphereIndex[0] = i;
 					}
 				}

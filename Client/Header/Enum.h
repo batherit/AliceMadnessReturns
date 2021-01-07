@@ -458,5 +458,16 @@ namespace ANIM {
 
 		WP3_END
 	};
+
+	// Åä³¢ÆøÅº
+	enum  E_BUNNYBOMB_ANIM {
+		ClockworkBomb_ClockWork,                  //0	frame:[25]
+		ClockworkBomb_ClockWork_Critical,         //1	frame:[9]
+		ClockworkBomb_Fall,                       //2	frame:[9]
+		ClockworkBomb_Land,                       //3	frame:[56]
+		ClockworkBomb_Spawn,                      //4	frame:[34]
+		ClockworkBomb_Spawn_Put,                  //5	frame:[52]
+		BUNNYBOMB_END
+	};
 };
 

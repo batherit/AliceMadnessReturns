@@ -10,6 +10,7 @@ BEGIN(Client)
 class CTerrain;
 class CStaticObject;
 class CDynamicObject;
+class CTrigger;
 class CMap : public Engine::CGameObject
 {
 private: // 持失切, 社瑚切
@@ -33,13 +34,17 @@ public:
 	void LoadObjects(Engine::CLayer* pLayer, const _tchar* pFilePath);
 
 	Engine::CNaviMesh* GetNaviMesh() const { return m_pNaviMesh; }
+	vector<CTrigger*>& GetCheckPoint() { return m_vecTrigger_CheckPoint; }
 
 private:
 	Engine::CRenderer* m_pRenderer = nullptr;
 	Engine::CNaviMesh* m_pNaviMesh = nullptr;
 	CTerrain* m_pTerrain = nullptr;
-	vector<CStaticObject*> m_vecStaticObjects;
-	vector<CDynamicObject*> m_vecDynamicObjects;
+	/*vector<CStaticObject*> m_vecStaticObjects;
+	vector<CDynamicObject*> m_vecDynamicObjects;*/
+	//vector<CTrigger*> m_vecTrigger_Death;
+	vector<CTrigger*> m_vecTrigger_CheckPoint;
+	vector<CTrigger*> m_vecTrigger_Spawn;
 };
 
 END

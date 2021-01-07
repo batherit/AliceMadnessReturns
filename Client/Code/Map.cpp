@@ -3,6 +3,7 @@
 #include "Terrain.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
+#include "Trigger.h"
 
 // CustomObject
 // HPFlower, JumpPad, Snail, Tooth, PopDomino, Valve + DeathBox, CheckPointBox, EventBox
@@ -154,6 +155,7 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 	for (auto& rObj : pLayer->GetLayerList(L"MapObjects")) {
 		rObj->SetValid(false);
 	}
+	m_vecTrigger_CheckPoint.clear();
 
 	DWORD dwByte = 0;
 	// Static
@@ -252,6 +254,60 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 		}
 		else
 			pLayer->Add_GameObject(L"MapObjects", pDynamicObject);
+	}
+
+	// Trigger
+	iVecSize = 0;
+	ReadFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
+	CTrigger* pTriggerObject = nullptr;
+	for (_int i = 0; i < iVecSize; ++i) {
+		pTriggerObject = CTrigger::Create(m_pGraphicDev);
+		if (!pTriggerObject->LoadInfo(hFile))
+			abort();
+			//Engine::Safe_Release(pDynamicObject);
+		else {
+			pLayer->Add_GameObject(L"MapObjects", pTriggerObject);
+			//m_vecDynamicObjects.emplace_back(pDynamicObject);
+		}
+
+		ReadFile(hFile, &bIsCustomed, sizeof(bIsCustomed), &dwByte, nullptr);		// 커스텀 여부 저장
+		//pDynamicObject->SetCustomed(bIsCustomed);
+		if (bIsCustomed) {
+			for (_int i = 0; i < 6; ++i) {
+				ReadFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
+				ReadFile(hFile, tcFactor, sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+				// TODO : 팩터 해석을 작성합니다.
+				//pDynamicObject->GetFactorRef(i) = tcFactor;
+			}
+		
+			//if (lstrcmp(L"HPFlower", pDynamicObject->GetMeshTag()) == 0) {
+			//	pCustomObject = CHPFlower::Create(m_pGraphicDev);
+			//	// TODO : 팩터 해석을 작성합니다.
+			//}
+			//else if (lstrcmp(L"JumpPad", pDynamicObject->GetMeshTag()) == 0) {
+			//	pCustomObject = CJumpPad::Create(m_pGraphicDev);
+			//}
+
+			//pCustomObject->GetTransform()->SetPos(pDynamicObject->GetTransform()->GetPos());
+			//pCustomObject->GetTransform()->SetScale(pDynamicObject->GetTransform()->GetScale());
+			//pCustomObject->GetTransform()->SetAngle(pDynamicObject->GetTransform()->GetAngle());
+			//pLayer->Add_GameObject(L"MapObjects", pCustomObject);
+			//pDynamicObject->SetValid(false);
+			//pDynamicObject->SetActivated(false);
+			//Engine::Safe_Release(pDynamicObject);
+		}
+		else
+			pLayer->Add_GameObject(L"MapObjects", pTriggerObject);
+
+		switch (pTriggerObject->GetTriggerType()) {
+		case TRIGGER::TYPE_DEATH:
+			break;
+		case TRIGGER::TYPE_CHECKPOINT:
+			m_vecTrigger_CheckPoint.emplace_back(pTriggerObject);
+			break;
+		case TRIGGER::TYPE_SPAWN:
+			break;
+		}
 	}
 
 	CloseHandle(hFile);

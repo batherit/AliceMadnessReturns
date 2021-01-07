@@ -5,6 +5,7 @@
 #include "AliceWState_Idle.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
+#include "Trigger.h"
 #include "Attribute.h"
 
 CAliceW::CAliceW(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -185,6 +186,9 @@ void CAliceW::Render_Object(void)
 
 	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
 		return;
+	if (!m_bIsVisible)
+		return;
+
 	m_pRenderer->Render();
 	//Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
@@ -219,7 +223,13 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		return;
 
 	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
-		_int a = 10;
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Trigger") == 0) {
+			switch (dynamic_cast<CTrigger*>(_tCollisionInfo.pCollidedObject)->GetTriggerType()) {
+			case TRIGGER::TYPE_DEATH:
+				GetAttribute()->SetHP(0.f);
+				return;
+			}
+		}
 	}
 	else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
 		_int a = 10;

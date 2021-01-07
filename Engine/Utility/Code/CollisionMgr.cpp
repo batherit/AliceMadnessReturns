@@ -54,12 +54,38 @@ void CCollisionMgr::ProcessCollision()
 				if (rObj1 == rObj2 || !rObj1->IsValid() || !rObj2->IsValid())
 					continue;		// 같은 오브젝트끼리는 충돌 검출을 하지 않아요.
 
-				if (IsCollided(rObj1->GetCullingSphere(), rObj2->GetCullingSphere())) {
+				if (rObj1->GetCullingSphere() && rObj2->GetCullingSphere()) {
+					if (IsCollided(rObj1->GetCullingSphere(), rObj2->GetCullingSphere())) {
+						for (auto& rCollider1 : rObj1->GetOptimizedColliderList()) {
+							for (auto& rCollider2 : rObj2->GetOptimizedColliderList()) {
+								if (rCollider1 == rObj1->GetCullingSphere() || rCollider2 == rObj2->GetCullingSphere())
+									continue;
+
+								tCollisionInfo1.pCollidedObject = rObj2;
+								tCollisionInfo1.pCollidedCollider = rCollider2;
+								tCollisionInfo2.pCollidedObject = rObj1;
+								tCollisionInfo2.pCollidedCollider = rCollider1;
+
+								if (rCollider1->IsActivated() && rCollider2->IsActivated() && IsCollided(rCollider1, rCollider2)) {
+									rObj1->OnCollision(tCollisionInfo1);
+									rObj2->OnCollision(tCollisionInfo2);
+								}
+								else {
+									rObj1->OnNotCollision(tCollisionInfo1);
+									rObj2->OnNotCollision(tCollisionInfo2);
+								}
+								if (!rObj1->IsValid() || !rObj2->IsValid())
+									throw false;
+							}
+						}
+					}
+				}
+				else {
 					for (auto& rCollider1 : rObj1->GetOptimizedColliderList()) {
 						for (auto& rCollider2 : rObj2->GetOptimizedColliderList()) {
 							if (rCollider1 == rObj1->GetCullingSphere() || rCollider2 == rObj2->GetCullingSphere())
 								continue;
-							
+
 							tCollisionInfo1.pCollidedObject = rObj2;
 							tCollisionInfo1.pCollidedCollider = rCollider2;
 							tCollisionInfo2.pCollidedObject = rObj1;

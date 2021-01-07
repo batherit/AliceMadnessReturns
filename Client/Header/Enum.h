@@ -66,7 +66,9 @@ namespace BULLET {
 	enum E_TYPE { TYPE_MONSTER, TYPE_PLAYER, TYPE_END };
 }
 
-
+namespace TRIGGER {
+	enum E_TYPE { TYPE_DEATH, TYPE_CHECKPOINT, TYPE_SPAWN, TYPE_END };
+}
 
 namespace ANIM {
 	enum E_ALICEW_ANIM{
@@ -469,5 +471,9 @@ namespace ANIM {
 		ClockworkBomb_Spawn_Put,                  //5	frame:[52]
 		BUNNYBOMB_END
 	};
+
+
 };
 
+
+	

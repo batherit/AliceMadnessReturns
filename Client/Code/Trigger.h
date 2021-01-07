@@ -26,18 +26,13 @@ public:
 
 	virtual _bool SaveInfo(HANDLE& _hfOut) override;
 	virtual _bool LoadInfo(HANDLE& _hfIn) override;
-	CString& GetFactorRef(_int _iIndex) { return m_strFactor[_iIndex]; }
 
 	void SetTriggerType(TRIGGER::E_TYPE _eTriggerType) { m_eTriggerType = _eTriggerType; }
 	TRIGGER::E_TYPE GetTriggerType() const { return m_eTriggerType; }
 
-	void SetCustomed(_bool _bIsCustomed) { m_bIsCustomed = _bIsCustomed; }
-	_bool IsCustomed() const { return m_bIsCustomed; }
-
 private:
+	_int m_iTag[6] = { 0, };
 	TRIGGER::E_TYPE m_eTriggerType = TRIGGER::TYPE_END;
-	_bool m_bIsCustomed = false;
-	CString m_strFactor[6] = { L"NULL", L"NULL", L"NULL", L"NULL" , L"NULL", L"NULL" };
 };
 
 END

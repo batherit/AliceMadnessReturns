@@ -659,7 +659,25 @@ void CEditScene::SaveMap()
 				}
 			}
 		}
-			
+
+		// Trigger 저장
+		iVecSize = m_vecTriggerObjects.size();
+		WriteFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
+		for (auto& rTriggerObj : m_vecTriggerObjects) {
+			rTriggerObj->SaveInfo(hFile);
+
+			// 커스텀 여부 저장
+			bIsCustomed = rTriggerObj->IsCustomed();
+			WriteFile(hFile, &bIsCustomed, sizeof(bIsCustomed), &dwByte, nullptr);
+
+			if (bIsCustomed) {
+				for (_int i = 0; i < 6; ++i) {
+					iStrLength = lstrlen(rTriggerObj->GetFactorRef(i));
+					WriteFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
+					WriteFile(hFile, rTriggerObj->GetFactorRef(i), sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+				}
+			}
+		}
 
 		CloseHandle(hFile);
 	}
@@ -696,7 +714,10 @@ void CEditScene::LoadMap()
 			rObj->SetValid(false);
 		}
 		m_vecDynamicObjects.clear();
-
+		for (auto& rObj : m_vecTriggerObjects) {
+			rObj->SetValid(false);
+		}
+		m_vecTriggerObjects.clear();
 
 		// 객체 정보를 로드한다.
 		DWORD dwByte = 0;
@@ -752,8 +773,30 @@ void CEditScene::LoadMap()
 					pDynamicObject->GetFactorRef(i) = tcFactor;
 				}
 			}
+		}
 
-			
+		// Trigger
+		iVecSize = 0;
+		ReadFile(hFile, &iVecSize, sizeof(iVecSize), &dwByte, nullptr);
+		CTrigger* pTriggerObject = nullptr;
+		for (_int i = 0; i < iVecSize; ++i) {
+			pTriggerObject = CTrigger::Create(m_pGraphicDev);
+			if (!pTriggerObject->LoadInfo(hFile))
+				Engine::Safe_Release(pTriggerObject);
+			else {
+				GetLayer(L"EditLayer")->Add_GameObject(pTriggerObject);
+				m_vecTriggerObjects.emplace_back(pTriggerObject);
+			}
+
+			ReadFile(hFile, &bIsCustomed, sizeof(bIsCustomed), &dwByte, nullptr);		// 커스텀 여부 저장
+			pTriggerObject->SetCustomed(bIsCustomed);
+			if (bIsCustomed) {
+				for (_int i = 0; i < 6; ++i) {
+					ReadFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
+					ReadFile(hFile, tcFactor, sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+					pTriggerObject->GetFactorRef(i) = tcFactor;
+				}
+			}
 		}
 
 		CloseHandle(hFile);

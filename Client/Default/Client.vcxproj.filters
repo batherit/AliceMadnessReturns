@@ -163,6 +163,12 @@
     <Filter Include="02. Object\02. GameObject\CheckPointBox">
       <UniqueIdentifier>{b34b6898-64db-442d-941b-bb216c064c2a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Trigger">
+      <UniqueIdentifier>{3740dc39-dd60-4615-a6fb-dafb59af20f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\FadeInOut">
+      <UniqueIdentifier>{a9f143ba-3309-4193-933c-beaf5917f050}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -381,6 +387,12 @@
     <ClInclude Include="..\Code\EventBox.h">
       <Filter>02. Object\02. GameObject\EventBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Trigger.h">
+      <Filter>02. Object\02. GameObject\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_FadeInOut.h">
+      <Filter>02. Object\02. GameObject\UI\FadeInOut</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -568,6 +580,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\EventBox.cpp">
       <Filter>02. Object\02. GameObject\EventBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Trigger.cpp">
+      <Filter>02. Object\02. GameObject\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_FadeInOut.cpp">
+      <Filter>02. Object\02. GameObject\UI\FadeInOut</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

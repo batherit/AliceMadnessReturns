@@ -4,6 +4,7 @@
 #include "UI_Targeting.h"
 #include "UI_Image.h"
 #include "UI_GunGauge.h"
+#include "UI_FadeInOut.h"
 #include "Attribute.h"
 #include "AliceW.h"
 
@@ -43,6 +44,9 @@ HRESULT CUI_InGame::Ready_Object(void)
 	m_pTargeting->GetTransform()->SetPos(0.f, 10.f, 0.f);
 	m_pTargeting->SetPlayer(m_pPlayer);
 	AddChild(m_pTargeting);
+
+	m_pFadeInOut = CUI_FadeInOut::Create(m_pGraphicDev);
+	AddChild(m_pFadeInOut);
 
 	return S_OK;
 }

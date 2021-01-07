@@ -8,6 +8,7 @@
 
 BEGIN(Client)
 class CAliceW;
+class CUI_InGame;
 class CAliceWState_Death :
 	public CState<CAliceW>
 {
@@ -23,6 +24,10 @@ public:
 
 	// CState을(를) 통해 상속됨
 	virtual void Free(void) override;
+
+private:
+	CUI_InGame* m_pInGameUI = nullptr;
+	_float m_fElapsedTime = 0.f;
 };
 
 END

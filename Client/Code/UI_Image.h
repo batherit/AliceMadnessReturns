@@ -7,7 +7,7 @@
 BEGIN(Client)
 class CUI_Image : public Engine::CGameObject
 {
-private:
+protected:
 	explicit CUI_Image(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CUI_Image(const CUI_Image & rhs);
 	virtual ~CUI_Image(void);

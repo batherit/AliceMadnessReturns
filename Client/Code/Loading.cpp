@@ -197,6 +197,9 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_GunGauge", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_GunGauge.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_GunOverload", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_GunOverload.tga"), E_FAIL);
 
+	// FadeIn/Out
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Layer", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Layer.png"), E_FAIL);
+
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	// Stone 메쉬 원본 생성
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

@@ -112,6 +112,9 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"CobbledStreet_DM", Engine::TEX_NORMAL, L"../../Resource/Terrain/Texture/CobbledStreet_DM.tga"), E_FAIL);
 	
 	// UI
+	// Cursor
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Cursor", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Cursor.tga"), E_FAIL);
+
 	// HP
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_HP_Branch", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_HP_Branch.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
@@ -149,6 +152,13 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_GameExitOn", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_GameExitOn.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_GameExitOff", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_GameExitOff.png"), E_FAIL);
 	
+	// WeaponLock
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_WeaponLock_Board", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_WeaponLock_Board.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_WeaponLock_Tooth", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_WeaponLock_Tooth.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_WeaponLock_Lock", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_WeaponLock_Lock.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_WeaponLock_VorpalBlade", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_WeaponLock_VorpalBlade.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_WeaponLock_HobbyHorse", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_WeaponLock_HobbyHorse.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_WeaponLock_Gun", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_WeaponLock_Gun.tga"), E_FAIL);
 
 	lstrcpy(m_szLoading, L"메쉬 로딩중...");
 	// UI

@@ -53,7 +53,7 @@ int CAliceWState_Bomb::Update(const _float& _fDeltaTime)
 		D3DXMatrixRotationAxis(&matRot, &m_rOwner.GetTransform()->GetRight(), -D3DXToRadian(45.f));
 		D3DXVec3TransformNormal(&vLook, &vLook, &matRot);
 		pBomb->GetPhysics()->SetVelocity(vLook * 7.f);
-		Engine::GetLayer(L"Environment")->Add_GameObject(pBomb);
+		Engine::GetLayer(L"Environment")->Add_GameObject(L"BunnyBomb", pBomb);
 		m_bIsGenerated = true;
 	}
 	else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.95f) {

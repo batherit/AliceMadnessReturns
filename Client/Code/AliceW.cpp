@@ -7,6 +7,7 @@
 #include "DynamicObject.h"
 #include "Trigger.h"
 #include "Attribute.h"
+#include "BunnyBomb.h"
 
 CAliceW::CAliceW(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -423,7 +424,18 @@ _bool CAliceW::IsWeaponChanging()
 
 _bool CAliceW::IsBombOn()
 {
-	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_Q);
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_Q)) {
+		if (Engine::GetLayer(L"Environment")->GetLayerList(L"BunnyBomb").empty())
+			return true;
+		CBunnyBomb* pBunnyBomb = dynamic_cast<CBunnyBomb*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"BunnyBomb").begin());
+		if (pBunnyBomb) {
+			pBunnyBomb->Bomb();
+			return false;
+		}
+		else 
+			return true;
+	}
+	return false;
 }
 
 void CAliceW::ToggleLockOn()

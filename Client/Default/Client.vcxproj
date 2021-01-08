@@ -236,6 +236,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\Trigger.h" />
+    <ClInclude Include="..\Code\UI_BunnyBomb.h" />
     <ClInclude Include="..\Code\UI_FadeInOut.h" />
     <ClInclude Include="..\Code\UI_GunGauge.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -398,6 +399,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\Trigger.cpp" />
+    <ClCompile Include="..\Code\UI_BunnyBomb.cpp" />
     <ClCompile Include="..\Code\UI_FadeInOut.cpp" />
     <ClCompile Include="..\Code\UI_GunGauge.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

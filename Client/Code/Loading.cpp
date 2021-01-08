@@ -199,6 +199,10 @@ _uint CLoading::Loading_ForStage(void)
 
 	// FadeIn/Out
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Layer", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Layer.png"), E_FAIL);
+	
+	// BunnyBomb
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_BunnyBomb", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_BunnyBomb.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Arrow", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Arrow.tga"), E_FAIL);
 
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	// Stone 메쉬 원본 생성

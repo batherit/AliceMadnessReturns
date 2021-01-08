@@ -8,8 +8,11 @@
 
 BEGIN(Client)
 class CMap;
+class CUI_BunnyBomb;
 class CBunnyBomb : public Engine::CGameObject
 {
+#define BOOM_TIME 8.f
+
 private: // 持失切, 社瑚切
 	explicit  CBunnyBomb(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit  CBunnyBomb(const  CBunnyBomb& rhs);
@@ -30,16 +33,20 @@ public:
 	Engine::CPhysics* GetPhysics() const { return m_pPhysics; }
 	_bool IsFalling(const _float& _fDeltaTime);
 	_bool IsLanded() const { return m_bIsLanded; }
+	void Bomb();
 
 private:
 	CMap* m_pMap = nullptr;
 	Engine::CDynamicMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CPhysics* m_pPhysics = nullptr;
+	Engine::CColliderObject* m_pCollider = nullptr;
 
-	_bool m_bIsVisible = true;
 	_int m_iCellIndex = -1;
 	_bool m_bIsLanded = false;
+	_float m_fElapsedTime = 0.f;
+
+	CUI_BunnyBomb* m_pBunnyBombUI = nullptr;
 };
 
 END

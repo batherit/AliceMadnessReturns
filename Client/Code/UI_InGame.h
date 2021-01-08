@@ -12,6 +12,7 @@ class CUI_GunGauge;
 class CUI_HPGauge;
 class CUI_Targeting;
 class CUI_FadeInOut;
+class CUI_BunnyBomb;
 class CUI_InGame : public Engine::CGameObject
 {
 private: // 持失切, 社瑚切
@@ -36,6 +37,7 @@ public:
 	CUI_HPGauge* GetHPGauge() const { return m_pHPGauge; }
 	CUI_Targeting* GetTargeting() const { return m_pTargeting; }
 	CUI_FadeInOut* GetFadeInOut() const { return m_pFadeInOut; }
+	CUI_BunnyBomb* GetBunnyBomb() const { return m_pBunnyBomb; }
 
 private:
 	Engine::CGameObject* m_pPlayer = nullptr;
@@ -44,6 +46,7 @@ private:
 	CUI_HPGauge* m_pHPGauge = nullptr;
 	CUI_Targeting* m_pTargeting = nullptr;
 	CUI_FadeInOut* m_pFadeInOut = nullptr;
+	CUI_BunnyBomb* m_pBunnyBomb = nullptr;
 };
 
 END

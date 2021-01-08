@@ -2,6 +2,8 @@
 #include "BunnyBomb.h"
 #include "AliceW.h"
 #include "Map.h"
+#include "UI_InGame.h"
+#include "UI_BunnyBomb.h"
 
 CBunnyBomb::CBunnyBomb(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -29,6 +31,8 @@ HRESULT CBunnyBomb::Ready_Object(void)
 
 	// Load Colliders
 	LoadColliders(L"BunnyBomb.col");
+	m_pCollider = GetColliderFromTag(L"PlayerAttack");
+	m_pCollider->SetActivated(false);
 	// m_pCollider->SetActivated(false);
 
 	// MeshRenderer
@@ -45,13 +49,29 @@ HRESULT CBunnyBomb::Ready_Object(void)
 }
 
 int CBunnyBomb::Update_Object(const _float & _fDeltaTime)
-{
+{	
+	if (!IsActivated())
+		return 1;
+
 	if (!m_pMap) {
 		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
 	}
-
-	if (!IsActivated())
-		return 1;
+	if (!m_pBunnyBombUI) {
+		m_pBunnyBombUI = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin())->GetBunnyBomb();
+		m_pBunnyBombUI->SetActivated(true);
+	}
+	else if(m_bIsVisible){
+		if ((m_fElapsedTime += _fDeltaTime) >= BOOM_TIME) {
+			Bomb();
+		}
+		else
+			m_pBunnyBombUI->SetProgress((m_fElapsedTime += _fDeltaTime) / BOOM_TIME);
+	}
+	else {
+		if ((m_fElapsedTime += _fDeltaTime) >= 0.5f) {
+			SetValid(false);
+		}
+	}
 
 	// 부모 먼저 렌더러에 들어가야 올바르게 자식도 transform 됨.
 	m_pRenderer->Update(_fDeltaTime);
@@ -100,9 +120,11 @@ void CBunnyBomb::Render_Object(void)
 		return;
 
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	if (m_bIsVisible) {
-		m_pRenderer->Render();
-	}
+	if (!m_bIsVisible)
+		return;
+		
+	m_pRenderer->Render();
+
 
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
@@ -148,4 +170,13 @@ void CBunnyBomb::Free(void)
 _bool CBunnyBomb::IsFalling(const _float & _fDeltaTime)
 {
 	return GetPhysics()->GetVelocity().y <= 0.f && !m_bIsLanded;
+}
+
+void CBunnyBomb::Bomb()
+{
+	m_pBunnyBombUI->SetProgress(1.f);
+	m_pBunnyBombUI->SetActivated(false);
+	SetVisible(false);
+	m_pCollider->SetActivated(true);
+	m_fElapsedTime = 0.f;
 }

@@ -172,6 +172,9 @@
     <Filter Include="01. Scene\03. Boss">
       <UniqueIdentifier>{934eeef6-275b-492f-8e4b-b69a22803f5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\BunnyBomb">
+      <UniqueIdentifier>{1d6a63c3-d066-4184-8f94-d71ed0d8858e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -405,6 +408,9 @@
     <ClInclude Include="..\Code\AliceWState_Bomb.h">
       <Filter>03. State\AliceW</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\UI_BunnyBomb.h">
+      <Filter>02. Object\02. GameObject\UI\BunnyBomb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -607,6 +613,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_Bomb.cpp">
       <Filter>03. State\AliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_BunnyBomb.cpp">
+      <Filter>02. Object\02. GameObject\UI\BunnyBomb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

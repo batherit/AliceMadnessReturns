@@ -1,6 +1,7 @@
 #include "CScene.h"
 #include "Renderer.h"
 #include "CollisionMgr.h"
+#include "Export_Utility.h"
 
 USING(Engine)
 
@@ -69,6 +70,11 @@ _int CScene::Update(const _float & _fDeltaTime)
 	CCollisionMgr::GetInstance()->ProcessCollision();
 
 	return iExit;
+}
+
+void CScene::Render(void)
+{
+	Engine::Get_Renderer()->Render_GameObject();
 }
 
 //void CScene::Render(void)

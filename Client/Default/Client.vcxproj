@@ -231,12 +231,14 @@
     <ClInclude Include="..\Code\JumpPad.h" />
     <ClInclude Include="..\Code\PopDomino.h" />
     <ClInclude Include="..\Code\Snail.h" />
+    <ClInclude Include="..\Code\TitleScene.h" />
     <ClInclude Include="..\Code\Tooth.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\Trigger.h" />
     <ClInclude Include="..\Code\UI_BunnyBomb.h" />
+    <ClInclude Include="..\Code\UI_Button.h" />
     <ClInclude Include="..\Code\UI_FadeInOut.h" />
     <ClInclude Include="..\Code\UI_GunGauge.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -305,6 +307,7 @@
     <ClInclude Include="..\Code\Sword.h" />
     <ClInclude Include="..\Code\Terrain.h" />
     <ClInclude Include="..\Code\UI_InGame.h" />
+    <ClInclude Include="..\Code\UI_OrthoPlane.h" />
     <ClInclude Include="..\Code\UI_Targeting.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
@@ -394,12 +397,14 @@
     <ClCompile Include="..\Code\JumpPad.cpp" />
     <ClCompile Include="..\Code\PopDomino.cpp" />
     <ClCompile Include="..\Code\Snail.cpp" />
+    <ClCompile Include="..\Code\TitleScene.cpp" />
     <ClCompile Include="..\Code\Tooth.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\Trigger.cpp" />
     <ClCompile Include="..\Code\UI_BunnyBomb.cpp" />
+    <ClCompile Include="..\Code\UI_Button.cpp" />
     <ClCompile Include="..\Code\UI_FadeInOut.cpp" />
     <ClCompile Include="..\Code\UI_GunGauge.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -468,6 +473,7 @@
     <ClCompile Include="..\Code\Sword.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\UI_InGame.cpp" />
+    <ClCompile Include="..\Code\UI_OrthoPlane.cpp" />
     <ClCompile Include="..\Code\UI_Targeting.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>

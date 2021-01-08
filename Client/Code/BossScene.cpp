@@ -136,13 +136,13 @@ int CBossScene::Update(const _float& fTimeDelta)
 	return CScene::Update(fTimeDelta);
 }
 
-void CBossScene::Render(void)
-{
-	Engine::Get_Renderer()->Render_GameObject();
-
-	//Engine::Render_Font(L"Font_Jinji", L"Text Test", &_vec2(10.f, 10.f), D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
-	//CScene::Render();
-}
+//void CBossScene::Render(void)
+//{
+//	Engine::Get_Renderer()->Render_GameObject();
+//
+//	//Engine::Render_Font(L"Font_Jinji", L"Text Test", &_vec2(10.f, 10.f), D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
+//	//CScene::Render();
+//}
 
 void CBossScene::OnLoaded()
 {

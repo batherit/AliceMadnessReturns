@@ -29,7 +29,7 @@ public:
 	virtual void ResetScene(void) override;
 	virtual HRESULT Ready(void);
 	virtual _int Update(const _float& fTimeDelta);
-	virtual void Render(void);
+	//virtual void Render(void);
 
 	virtual void OnLoaded() override;
 	virtual void OnExited() override;

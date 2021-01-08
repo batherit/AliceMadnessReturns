@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "LoadScene.h"
 #include "Export_Function.h"
-#include "PlayScene.h"
+#include "TitleScene.h"
 #include "UI_Image.h"
 #include "Attribute.h"
 
@@ -37,7 +37,7 @@ Engine::_int CLoadScene::Update(const _float& fTimeDelta)
 	{
 		if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 		{
-			Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+			Engine::CManagement::GetInstance()->SetNextScene(CTitleScene::Create(m_pGraphicDev));
 
 			return iExit;
 		}	
@@ -48,7 +48,8 @@ Engine::_int CLoadScene::Update(const _float& fTimeDelta)
 
 void CLoadScene::Render(void)
 {
-	Engine::Get_Renderer()->Render_GameObject();
+	//Engine::Get_Renderer()->Render_GameObject();
+	Engine::CScene::Render();
 	// DEBUG ¿ë
 	Engine::Render_Font(L"Font_Jinji", m_pLoading->Get_LoadString(), &_vec2(WINCX / 6.f, WINCY - WINCY / 6.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }

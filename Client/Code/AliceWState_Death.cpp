@@ -38,7 +38,7 @@ int CAliceWState_Death::Update(const _float& _fDeltaTime)
 	}
 	else {
 		// 페이드인아웃 실행
-		if (!m_pInGameUI->GetFadeInOut()->IsFadeIn() && m_pInGameUI->GetFadeInOut()->GetProgress() >= 0.95f) {
+		if (!m_pInGameUI->GetFadeInOut()->IsFadeIn() && !m_pInGameUI->GetFadeInOut()->IsProcessing()) {
 			if ((m_fElapsedTime += _fDeltaTime) >= 2.f) {
 				// 2초후 리스폰
 				m_pInGameUI->GetFadeInOut()->StartFadeInOut(2.f, true);

@@ -25,13 +25,15 @@ public:
 public:
 	void StartFadeInOut(_float _fKeepTime, _bool _bIsFadeIn);
 	_bool IsFadeIn() const { return m_bIsFadeIn; }
+	_bool IsProcessing() const{ return m_bIsProcessing; }
 	_float GetProgress() const { return (m_fMaxKeepTime - m_fKeepTime) / m_fMaxKeepTime; }
 
 public:
 	//_bool m_bIsEffectStarting = false;
 	_bool m_bIsFadeIn = true;
 	_float m_fKeepTime = 0.f;
-	_float m_fMaxKeepTime = 0.f;
+	_float m_fMaxKeepTime = 1.f;
+	_bool m_bIsProcessing = false;
 };
 
 END

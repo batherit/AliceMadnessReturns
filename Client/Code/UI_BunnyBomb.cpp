@@ -28,7 +28,7 @@ HRESULT CUI_BunnyBomb::Ready_Object(void)
 
 	m_pArrow = CUI_Image::Create(m_pGraphicDev);
 	m_pArrow->SetTexture(L"UI_Arrow");
-	m_pArrow->SetPos(0.f, 30.f);
+	m_pArrow->SetPos(0, 30);
 	m_pBunnyBomb->AddChild(m_pArrow);
 
 	return S_OK;

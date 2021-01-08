@@ -160,14 +160,8 @@
     <Filter Include="02. Object\02. GameObject\BunnyBomb">
       <UniqueIdentifier>{c58c834b-c185-4a77-a291-64b4bcb469ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\00. Public">
-      <UniqueIdentifier>{af091aa3-bbbf-4962-ad07-2b35aa38f3b7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\02. GameObject\UI\BunnyBomb">
       <UniqueIdentifier>{1d6a63c3-d066-4184-8f94-d71ed0d8858e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\TitlePlane">
-      <UniqueIdentifier>{deb4e961-6c51-4b47-9c43-fc7da17c123e}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Scene\03. Play">
       <UniqueIdentifier>{ece43087-460b-4854-b6ec-fae4eb8aa6c2}</UniqueIdentifier>
@@ -180,6 +174,15 @@
     </Filter>
     <Filter Include="01. Scene\01. Load">
       <UniqueIdentifier>{ba4b59d1-dd55-4e49-8542-b30ca2c8defe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Loading">
+      <UniqueIdentifier>{af091aa3-bbbf-4962-ad07-2b35aa38f3b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\OrthoPlane">
+      <UniqueIdentifier>{5fa100fb-6819-4a04-b008-f41e6c67307f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\Button">
+      <UniqueIdentifier>{07582a2e-2228-4b47-a1e9-bd962cb589a5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -232,7 +235,7 @@
       <Filter>98. Header</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Loading.h">
-      <Filter>01. Scene\00. Public</Filter>
+      <Filter>01. Scene\00. Loading</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\LoadScene.h">
       <Filter>01. Scene\01. Load</Filter>
@@ -417,6 +420,15 @@
     <ClInclude Include="..\Code\UI_BunnyBomb.h">
       <Filter>02. Object\02. GameObject\UI\BunnyBomb</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\TitleScene.h">
+      <Filter>01. Scene\02. Title</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_OrthoPlane.h">
+      <Filter>02. Object\02. GameObject\UI\OrthoPlane</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_Button.h">
+      <Filter>02. Object\02. GameObject\UI\Button</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -438,7 +450,7 @@
       <Filter>02. Object\01. SpriteObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Loading.cpp">
-      <Filter>01. Scene\00. Public</Filter>
+      <Filter>01. Scene\00. Loading</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayScene.cpp">
       <Filter>01. Scene\03. Play</Filter>
@@ -622,6 +634,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_BunnyBomb.cpp">
       <Filter>02. Object\02. GameObject\UI\BunnyBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TitleScene.cpp">
+      <Filter>01. Scene\02. Title</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_OrthoPlane.cpp">
+      <Filter>02. Object\02. GameObject\UI\OrthoPlane</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Button.cpp">
+      <Filter>02. Object\02. GameObject\UI\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

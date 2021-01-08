@@ -58,6 +58,7 @@ _int CUI_FadeInOut::Update_Object(const _float & _fDeltaTime)
 			SetRenderColor(D3DCOLOR_ARGB(255, 0, 0, 0));
 		}
 		m_fKeepTime = 0.f;
+		m_bIsProcessing = false;
 		//m_bIsEffectStarting = false;
 
 		// 효과가 종료되었을때 1을 반환한다.
@@ -103,5 +104,6 @@ void CUI_FadeInOut::StartFadeInOut(_float _fKeepTime, _bool _bIsFadeIn)
 		SetRenderColor(D3DCOLOR_ARGB(0, 0, 0, 0));
 
 	SetActivated(true);
+	m_bIsProcessing = true;
 	//m_bIsEffectStarting = true;
 }

@@ -80,7 +80,7 @@ _uint CLoading::Loading_ForStage(void)
 
 
 
-												// 임시 리소스 로드.
+	// 임시 리소스 로드.
 
 	
 	
@@ -139,7 +139,25 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_BunnyBomb", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_BunnyBomb.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Arrow", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Arrow.tga"), E_FAIL);
 
+	// Title
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_AliceTitleBackPlane", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_AliceTitleBackPlane.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_RedCurve", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_RedCurve.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_NewGameOn", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_NewGameOn.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_NewGameOff", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_NewGameOff.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_GameExitOn", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_GameExitOn.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_GameExitOff", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_GameExitOff.png"), E_FAIL);
+	
+
 	lstrcpy(m_szLoading, L"메쉬 로딩중...");
+	// UI
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"AliceTitleBackPlane",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/UI/",
+		L"AliceTitleBackPlane.X"),
+		E_FAIL);
+
 	// Stone 메쉬 원본 생성
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

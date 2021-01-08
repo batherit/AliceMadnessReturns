@@ -2,6 +2,7 @@
 #include "UI_InGame.h"
 #include "UI_HPGauge.h"
 #include "UI_Targeting.h"
+#include "UI_TargetingMode.h"
 #include "UI_Image.h"
 #include "UI_GunGauge.h"
 #include "UI_FadeInOut.h"
@@ -38,17 +39,21 @@ HRESULT CUI_InGame::Ready_Object(void)
 	AddChild(m_pGunGauge);
 
 	m_pHPGauge = CUI_HPGauge::Create(m_pGraphicDev);
-	m_pHPGauge->SetPlayer(m_pPlayer);
+	//m_pHPGauge->SetPlayer(m_pPlayer);
 	AddChild(m_pHPGauge);
 
 	m_pTargeting = CUI_Targeting::Create(m_pGraphicDev);
 	m_pTargeting->GetTransform()->SetPos(0.f, 10.f, 0.f);
-	m_pTargeting->SetPlayer(m_pPlayer);
+	//m_pTargeting->SetPlayer(m_pPlayer);
 	AddChild(m_pTargeting);
 
 	m_pBunnyBomb = CUI_BunnyBomb::Create(m_pGraphicDev);
 	m_pBunnyBomb->SetActivated(false);
 	AddChild(m_pBunnyBomb);
+
+	m_pTargetingMode = CUI_TargetingMode::Create(m_pGraphicDev);
+	//m_pTargetingMode->SetPlayer(m_pPlayer);
+	AddChild(m_pTargetingMode);
 
 	// FadeInOut은 화면 전체를 덮어야하기 때문에 자식 중 가장 맨 뒤에 있어야 한다.
 	m_pFadeInOut = CUI_FadeInOut::Create(m_pGraphicDev);
@@ -94,4 +99,5 @@ void CUI_InGame::SetPlayer(Engine::CGameObject * _pPlayer)
 	m_pPlayer = _pPlayer;
 	m_pHPGauge->SetPlayer(m_pPlayer);
 	m_pTargeting->SetPlayer(m_pPlayer);
+	m_pTargetingMode->SetPlayer(m_pPlayer);
 }

@@ -11,6 +11,7 @@ class CUI_Image;
 class CUI_GunGauge;
 class CUI_HPGauge;
 class CUI_Targeting;
+class CUI_TargetingMode;
 class CUI_FadeInOut;
 class CUI_BunnyBomb;
 class CUI_InGame : public Engine::CGameObject
@@ -36,6 +37,7 @@ public:
 	CUI_GunGauge* GetGunGauge() const { return m_pGunGauge; }
 	CUI_HPGauge* GetHPGauge() const { return m_pHPGauge; }
 	CUI_Targeting* GetTargeting() const { return m_pTargeting; }
+	CUI_TargetingMode* GetTargetingMode() const { return m_pTargetingMode; }
 	CUI_FadeInOut* GetFadeInOut() const { return m_pFadeInOut; }
 	CUI_BunnyBomb* GetBunnyBomb() const { return m_pBunnyBomb; }
 
@@ -45,6 +47,7 @@ private:
 	CUI_GunGauge* m_pGunGauge = nullptr;
 	CUI_HPGauge* m_pHPGauge = nullptr;
 	CUI_Targeting* m_pTargeting = nullptr;
+	CUI_TargetingMode* m_pTargetingMode = nullptr;
 	CUI_FadeInOut* m_pFadeInOut = nullptr;
 	CUI_BunnyBomb* m_pBunnyBomb = nullptr;
 };

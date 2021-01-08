@@ -184,6 +184,9 @@
     <Filter Include="02. Object\02. GameObject\UI\Button">
       <UniqueIdentifier>{07582a2e-2228-4b47-a1e9-bd962cb589a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\TargetingMode">
+      <UniqueIdentifier>{be75e666-653c-453a-83ed-46c1f917708e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -429,6 +432,9 @@
     <ClInclude Include="..\Code\UI_Button.h">
       <Filter>02. Object\02. GameObject\UI\Button</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\UI_TargetingMode.h">
+      <Filter>02. Object\02. GameObject\UI\TargetingMode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -643,6 +649,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_Button.cpp">
       <Filter>02. Object\02. GameObject\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_TargetingMode.cpp">
+      <Filter>02. Object\02. GameObject\UI\TargetingMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -123,6 +123,8 @@ _uint CLoading::Loading_ForStage(void)
 
 	// Targeting
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Targeting", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Targeting.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_TargetingSide", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_TargetingSide.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_TargetingMid", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_TargetingMid.tga"), E_FAIL);
 
 	// Aim
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Aim", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Aim.tga"), E_FAIL);

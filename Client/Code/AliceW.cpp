@@ -88,16 +88,14 @@ HRESULT CAliceW::Ready_Object(void)
 
 int CAliceW::Update_Object(const _float & _fDeltaTime)
 {
-	if (!m_pMap) {
-		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
-	}
-
-	if (!m_pStateMgr->ConfirmValidState())
-		return 1;
-
 	if (!IsActivated())
 		return 1;
 
+	if (!m_pMap) {
+		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
+	}
+	if (!m_pStateMgr->ConfirmValidState())
+		return 1;
 
 	// 부모 먼저 렌더러에 들어가야 올바르게 자식도 transform 됨.
 	m_pRenderer->Update(_fDeltaTime);	

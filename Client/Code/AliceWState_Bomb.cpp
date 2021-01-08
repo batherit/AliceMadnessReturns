@@ -25,6 +25,7 @@ CAliceWState_Bomb::~CAliceWState_Bomb()
 void CAliceWState_Bomb::OnLoaded(void)
 {
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_ClockBomb_Spawn_Still);
+	m_rOwner.GetPhysics()->SetSpeed(0.f);
 }
 
 int CAliceWState_Bomb::Update(const _float& _fDeltaTime)

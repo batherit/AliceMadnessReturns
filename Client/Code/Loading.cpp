@@ -55,7 +55,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eLoading)
 
 _uint CLoading::Loading_ForStage(void)
 {
-	lstrcpy(m_szLoading, L"Buffer Loading.............................");
+	lstrcpy(m_szLoading, L"버퍼 로딩중...");
 	
 	int i = 0;
 	
@@ -83,78 +83,13 @@ _uint CLoading::Loading_ForStage(void)
 												// 임시 리소스 로드.
 
 	
-	// 컴포넌트
-	lstrcpy(m_szLoading, L"Registering Component.............................");
-	// 클론할 컴포넌트를 프로토타입 매니저에 등록/
-	Engine::CComponent* pComponent = nullptr;
-
-	// Transform
-	pComponent = Engine::CTransform::Create();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CTransform::GetComponentTag(), pComponent);
-
-	// Renderer (지금은 터레인 같은 애들이 쓰고 있기 때문에 일단 놔둠.)
-	pComponent = Engine::CRenderer::GetInstance();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CRenderer::GetComponentTag(), pComponent);
-
-	// PolygonRenderer
-	pComponent = Engine::CPolygonRenderer::Create();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CPolygonRenderer::GetComponentTag(), pComponent);
-
-	// MeshRenderer
-	pComponent = Engine::CMeshRenderer::Create();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CMeshRenderer::GetComponentTag(), pComponent);
-
-	// TerrainTex
-	pComponent = Engine::CTerrainTex::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CTerrainTex::GetComponentTag(), pComponent);
-
-	// SphereCollider
-	pComponent = Engine::CSphereCollider::Create();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CSphereCollider::GetComponentTag(), pComponent);
 	
-	// Physics
-	pComponent = Engine::CPhysics::Create();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::CPhysics::GetComponentTag(), pComponent);
-
-	// Optimization
-	pComponent = Engine::COptimization::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(Engine::COptimization::GetComponentTag(), pComponent);
-
-	pComponent = CAttribute::Create();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(CAttribute::GetComponentTag(), pComponent);
-
-	Engine::CShader* pShader = nullptr;
-
-	// Sample
-	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Sample.hpp");
-	NULL_CHECK_RETURN(pShader, E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Sample", pShader), E_FAIL);
-
-	// Terrain
-	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Terrain.hpp");
-	NULL_CHECK_RETURN(pShader, E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain", pShader), E_FAIL);
-
-	// Object
-	//pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Reference/Header/Shader_Object.hpp");
-	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Object.hpp");
-	NULL_CHECK_RETURN(pShader, E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Object", pShader), E_FAIL);
 
 
 
 
 	// 텍스쳐
-	lstrcpy(m_szLoading, L"Texture Loading.............................");
+	lstrcpy(m_szLoading, L"텍스처 로딩중...");
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Logo", Engine::TEX_NORMAL, L"../../Resource/Texture/Logo/Logo.jpg"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Player", Engine::TEX_NORMAL, L"../../Resource/Texture/Player/Ma.jpg"), E_FAIL);
 
@@ -204,7 +139,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_BunnyBomb", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_BunnyBomb.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Arrow", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Arrow.tga"), E_FAIL);
 
-	lstrcpy(m_szLoading, L"Mesh Loading.............................");
+	lstrcpy(m_szLoading, L"메쉬 로딩중...");
 	// Stone 메쉬 원본 생성
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -217,7 +152,7 @@ _uint CLoading::Loading_ForStage(void)
 	// 스톤에 맞는 메쉬 콜라이더 원본 생성.
 	Engine::CStaticMesh* pStaticMesh = nullptr;
 	pStaticMesh = static_cast<Engine::CStaticMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Stone"));
-	pComponent = Engine::CMeshCollider::Create(m_pGraphicDev, pStaticMesh->Get_VtxPos(), pStaticMesh->Get_NumVtx(), pStaticMesh->Get_Stride());
+	Engine::CComponent* pComponent = Engine::CMeshCollider::Create(m_pGraphicDev, pStaticMesh->Get_VtxPos(), pStaticMesh->Get_NumVtx(), pStaticMesh->Get_Stride());
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Collider_Stone", pComponent);
 
@@ -588,7 +523,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"DollSlide_StraightA.X"),
 		E_FAIL);
 	
-	lstrcpy(m_szLoading, L"Loading Complete!!!");
+	lstrcpy(m_szLoading, L"엔터키를 누르십시오.");
 
 	m_bFinish = true;
 

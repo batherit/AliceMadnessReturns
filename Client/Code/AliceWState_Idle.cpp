@@ -28,7 +28,6 @@ CAliceWState_Idle::~CAliceWState_Idle()
 
 void CAliceWState_Idle::OnLoaded(void)
 {
-	
 	m_rOwner.GetPhysics()->SetSpeed(0.f);
 }
 

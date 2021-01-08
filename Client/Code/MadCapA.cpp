@@ -66,15 +66,16 @@ HRESULT CMadCapA::Ready_Object(void)
 
 int CMadCapA::Update_Object(const _float & _fDeltaTime)
 {
+	if (!IsActivated())
+		return 1;
+
 	if (!m_pMap) {
 		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
 	}
-
 	if (!m_pStateMgr->ConfirmValidState())
 		return 1;
 
-	if (!IsActivated())
-		return 1;
+	
 
 	m_pRenderer->Update(_fDeltaTime);
 

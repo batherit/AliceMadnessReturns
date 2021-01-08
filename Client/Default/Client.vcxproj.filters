@@ -163,17 +163,23 @@
     <Filter Include="01. Scene\00. Public">
       <UniqueIdentifier>{af091aa3-bbbf-4962-ad07-2b35aa38f3b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\01. LoadScene">
-      <UniqueIdentifier>{ba4b59d1-dd55-4e49-8542-b30ca2c8defe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\02. Play">
-      <UniqueIdentifier>{ece43087-460b-4854-b6ec-fae4eb8aa6c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\03. Boss">
-      <UniqueIdentifier>{934eeef6-275b-492f-8e4b-b69a22803f5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\02. GameObject\UI\BunnyBomb">
       <UniqueIdentifier>{1d6a63c3-d066-4184-8f94-d71ed0d8858e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\TitlePlane">
+      <UniqueIdentifier>{deb4e961-6c51-4b47-9c43-fc7da17c123e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Play">
+      <UniqueIdentifier>{ece43087-460b-4854-b6ec-fae4eb8aa6c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\04. Boss">
+      <UniqueIdentifier>{934eeef6-275b-492f-8e4b-b69a22803f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\02. Title">
+      <UniqueIdentifier>{75aea9b0-8c2e-471f-a8bc-a553ac379261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\01. Load">
+      <UniqueIdentifier>{ba4b59d1-dd55-4e49-8542-b30ca2c8defe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -229,7 +235,7 @@
       <Filter>01. Scene\00. Public</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\LoadScene.h">
-      <Filter>01. Scene\01. LoadScene</Filter>
+      <Filter>01. Scene\01. Load</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Monster.h">
       <Filter>02. Object\02. GameObject\Monster</Filter>
@@ -397,10 +403,10 @@
       <Filter>02. Object\02. GameObject\UI\FadeInOut</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\PlayScene.h">
-      <Filter>01. Scene\02. Play</Filter>
+      <Filter>01. Scene\03. Play</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BossScene.h">
-      <Filter>01. Scene\03. Boss</Filter>
+      <Filter>01. Scene\04. Boss</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BunnyBomb.h">
       <Filter>02. Object\02. GameObject\BunnyBomb</Filter>
@@ -435,10 +441,10 @@
       <Filter>01. Scene\00. Public</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayScene.cpp">
-      <Filter>01. Scene\02. Play</Filter>
+      <Filter>01. Scene\03. Play</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LoadScene.cpp">
-      <Filter>01. Scene\01. LoadScene</Filter>
+      <Filter>01. Scene\01. Load</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. Object\02. GameObject\Monster</Filter>
@@ -606,7 +612,7 @@
       <Filter>02. Object\02. GameObject\UI\FadeInOut</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BossScene.cpp">
-      <Filter>01. Scene\03. Boss</Filter>
+      <Filter>01. Scene\04. Boss</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BunnyBomb.cpp">
       <Filter>02. Object\02. GameObject\BunnyBomb</Filter>

@@ -25,6 +25,9 @@ public:
 	virtual void OnExited() override;
 
 private:
+	void LoadComponents();
+
+private:
 	CLoading*	m_pLoading = nullptr;
 
 public:

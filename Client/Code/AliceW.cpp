@@ -8,6 +8,9 @@
 #include "Trigger.h"
 #include "Attribute.h"
 #include "BunnyBomb.h"
+#include "UI_InGame.h"
+#include "UI_WeaponLock.h"
+#include "UI_LockedWeapon.h"
 
 CAliceW::CAliceW(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -80,7 +83,7 @@ HRESULT CAliceW::Ready_Object(void)
 	pDynamicObject->SetActivated(false);
 	m_pWeapons[TYPE_GUN] = pDynamicObject;
 
-	SetWeaponType(TYPE_HORSE);
+	SetWeaponType(TYPE_BLADE);
 	
 		
 	return S_OK;
@@ -304,6 +307,9 @@ void CAliceW::SetWeaponType(E_WEAPON_TYPE _eWeaponType)
 
 _bool CAliceW::IsMoving(const _float & _fDeltaTime, _vec3 * _pDir)
 {
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return false;
+
 	_matrix matView;
 	GetGraphicDev()->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, nullptr, &matView);
@@ -341,26 +347,41 @@ _bool CAliceW::IsMoving(const _float & _fDeltaTime, _vec3 * _pDir)
 
 _bool CAliceW::IsSmalling()
 {
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return false;
+
 	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_LCONTROL) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_LCONTROL);
 }
 
 _bool CAliceW::IsAttackOn(const _float & _fDeltaTime)
 {
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return false;
+
 	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB);
 }
 
 _bool CAliceW::IsAttacking(const _float & _fDeltaTime)
 {
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return false;
+
 	return Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB);
 }
 
 _bool CAliceW::IsGunModeReleased()
 {
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return false;
+
 	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_RB);
 }
 
 _bool CAliceW::IsJumpOn(const _float & _fDeltaTime)
 {
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return false;
+
 	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_SPACE);
 }
 
@@ -371,6 +392,9 @@ _bool CAliceW::IsSliding(const _float & _fDeltaTime)
 
 _bool CAliceW::IsFloatingOn(const _float & _fDeltaTime)
 {
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return false;
+
 	return Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_SPACE);
 }
 
@@ -381,6 +405,9 @@ _bool CAliceW::IsFalling(const _float & _fDeltaTime)
 
 _bool CAliceW::IsRunOn(const _float& _fDeltaTime, _vec3 * _pDir)
 {
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return false;
+
 	_vec3 vDir;
 	if (!IsMoving(_fDeltaTime, &vDir))
 		return false;
@@ -409,11 +436,13 @@ _bool CAliceW::IsWeaponChanging()
 		return true;
 	}
 	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_2)) {
-		SetWeaponType(TYPE_HORSE);
+		if (m_pInGameUI && !m_pInGameUI->GetWeaponLock()->GetHobbyHorseUI()->IsLocked())
+			SetWeaponType(TYPE_HORSE);
 		return true;
 	}
 	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_3)) {
-		SetWeaponType(TYPE_GUN);
+		if (m_pInGameUI && !m_pInGameUI->GetWeaponLock()->GetGunUI()->IsLocked())
+			SetWeaponType(TYPE_GUN);
 		return true;
 	}
 
@@ -422,6 +451,12 @@ _bool CAliceW::IsWeaponChanging()
 
 _bool CAliceW::IsBombOn()
 {
+	if (!m_pInGameUI || m_pInGameUI->GetWeaponLock()->GetBunnyBombUI()->IsLocked())
+		return false;
+
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return false;
+
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_Q)) {
 		if (Engine::GetLayer(L"Environment")->GetLayerList(L"BunnyBomb").empty())
 			return true;
@@ -438,6 +473,9 @@ _bool CAliceW::IsBombOn()
 
 void CAliceW::ToggleLockOn()
 {
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return;
+
 	if (m_bIsLockOn) {
 		ReleaseLockOn();
 	}
@@ -477,6 +515,9 @@ void CAliceW::ReleaseLockOn()
 
 _bool CAliceW::ChangeLockOnTarget()
 {
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return false;
+
 	if (!m_bIsLockOn || !m_pTargetObject) {
 		ReleaseLockOn();
 		return false;

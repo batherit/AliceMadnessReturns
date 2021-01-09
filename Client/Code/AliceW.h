@@ -9,6 +9,7 @@
 BEGIN(Client)
 class CMap;
 class CAttribute;
+class CUI_InGame;
 template<typename T> class CStateMgr;
 class CAliceW : public Engine::CGameObject
 {
@@ -72,6 +73,8 @@ public:
 	void DecreaseTooth(_int _iAmount) { m_iToothNum -= _iAmount; if (_iAmount < 0) _iAmount = 0; }
 	_int GetToothNum() const { return m_iToothNum; }
 
+	void SetInGameUI(CUI_InGame* _pInGameUI) { m_pInGameUI = _pInGameUI; }
+
 private:
 	CMap* m_pMap = nullptr;
 
@@ -90,7 +93,9 @@ private:
 	_bool m_bIsSmalled = false;
 	_bool m_bIsSuperJumped = false;
 
-	_int m_iToothNum = 0;
+	_int m_iToothNum = 100;
+
+	CUI_InGame* m_pInGameUI = nullptr;
 };
 
 END

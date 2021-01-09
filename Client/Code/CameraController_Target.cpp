@@ -51,15 +51,16 @@ void CCameraController_Target::ControlCamera(const _float& _fDeltaTime, Engine::
 		D3DXMatrixRotationAxis(&matRot, &vRotAxis, fRotAngle * 0.2f);
 		D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
 
+		if (Engine::CDirectInputMgr::GetInstance()->IsMouseFixed()) {
+			_vec3 vDeltaMouseDegree = Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree();
+			_float fRotAngleByRight = vDeltaMouseDegree.y * 0.005f;
+			D3DXMatrixRotationAxis(&matRot, &GetRightAxis(), fRotAngleByRight);
+			D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
+		}
 
-		_vec3 vDeltaMouseDegree = Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree();
-		_float fRotAngleByRight = vDeltaMouseDegree.y * 0.005f;
-		D3DXMatrixRotationAxis(&matRot, &GetRightAxis(), fRotAngleByRight);
-		D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
-
-		POINT	ptMouse{ WINCX >> 1, WINCY >> 1 };
+		/*POINT	ptMouse{ WINCX >> 1, WINCY >> 1 };
 		ClientToScreen(g_hWnd, &ptMouse);
-		SetCursorPos(ptMouse.x, ptMouse.y);
+		SetCursorPos(ptMouse.x, ptMouse.y);*/
 
 		// 카메라 위치를 조정한다.
 		TranslateCameraToStickEnd(_pCamera, _fShiftFactor);

@@ -49,6 +49,17 @@ public:
 
 	_vec3 GetDeltaMouseDegree() const;
 
+	void SetMouseFixed(_bool _bIsMouseFixed, LONG _iFixedPosX = 0, LONG _iFixedPosY = 0) { 
+		m_bIsMouseFixed = _bIsMouseFixed;
+		m_iFixedPosX = _iFixedPosX;
+		m_iFixedPosY = _iFixedPosY;
+
+		POINT	ptMouse{ m_iFixedPosX, m_iFixedPosY };
+		ClientToScreen(m_hWnd, &ptMouse);
+		SetCursorPos(ptMouse.x, ptMouse.y);
+	}
+	_bool IsMouseFixed() const { return m_bIsMouseFixed; }
+
 private:
 	virtual void Free(void) override;
 
@@ -73,5 +84,10 @@ private:
 	DIMOUSESTATE m_tCurrentMouseState;
 	POINT m_ptOldClientMousePos;
 	POINT m_ptCurrentClientMousePos;
+
+	// 마우스 픽스
+	_bool m_bIsMouseFixed = false;
+	LONG m_iFixedPosX = 0;
+	LONG m_iFixedPosY = 0;
 };
 END

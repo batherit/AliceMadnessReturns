@@ -30,7 +30,6 @@ public:
 public:
 	void SetPlayer(CAliceW* _pPlayer);
 	void SetWeaponTexture(const _tchar* _pTextureTag);
-	void SetPos(LONG _iPosX, LONG _iPosY);
 	void SetLocked(_bool _bIsLocked);
 	_bool IsLocked() const { return m_bIsLocked; }
 	void SetToothNum(_int _iToothNum) { m_iToothNum = _iToothNum; }

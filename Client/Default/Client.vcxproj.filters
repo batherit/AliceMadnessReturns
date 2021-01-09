@@ -193,6 +193,12 @@
     <Filter Include="02. Object\02. GameObject\UI\LockedWeapon">
       <UniqueIdentifier>{29373b73-4f6d-4fa8-bf5c-c4f238e0db14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. Manager\MouseMgr">
+      <UniqueIdentifier>{ffc34556-10e8-46e4-9cd2-7a34668b4030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\Cursor">
+      <UniqueIdentifier>{c7cbbdea-e057-48ab-b98c-71bcfa23a49e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -447,6 +453,12 @@
     <ClInclude Include="..\Code\UI_LockedWeapon.h">
       <Filter>02. Object\02. GameObject\UI\LockedWeapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\MouseMgr.h">
+      <Filter>05. Manager\MouseMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_Cursor.h">
+      <Filter>02. Object\02. GameObject\UI\Cursor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -670,6 +682,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_LockedWeapon.cpp">
       <Filter>02. Object\02. GameObject\UI\LockedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MouseMgr.cpp">
+      <Filter>05. Manager\MouseMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Cursor.cpp">
+      <Filter>02. Object\02. GameObject\UI\Cursor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

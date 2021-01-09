@@ -7,6 +7,7 @@
 #include "UI_Button.h"
 #include "UI_FadeInOut.h"
 #include "UI_OrthoPlane.h"
+#include "UI_Cursor.h"
 #include "Attribute.h"
 #include "PlayScene.h"
 
@@ -175,6 +176,11 @@ HRESULT CTitleScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pExitButtonOff->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) + WINCY / 7.f));
 	pLayer->Add_GameObject(m_pExitButtonOn);
 	pLayer->Add_GameObject(m_pExitButtonOff);
+
+	// 커서 생성
+	ShowCursor(false);
+	m_pCursorUI = CUI_Cursor::Create(m_pGraphicDev);
+	pLayer->Add_GameObject(m_pCursorUI);
 
 	m_pFadeInOutUI = CUI_FadeInOut::Create(m_pGraphicDev);
 	pLayer->Add_GameObject(m_pFadeInOutUI);

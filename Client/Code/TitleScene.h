@@ -15,6 +15,7 @@ BEGIN(Client)
 template<typename T> class CUI_Button;
 class CUI_FadeInOut;
 class CUI_Image;
+class CUI_Cursor;
 class CTitleScene : public Engine::CScene
 {
 private: // 持失切, 社瑚切
@@ -63,6 +64,8 @@ private:
 	CUI_Image* m_pExitButtonOn = nullptr;
 	CUI_Image* m_pExitButtonOff = nullptr;
 	CUI_Button<CTitleScene>* m_pExitButton = nullptr;
+
+	CUI_Cursor* m_pCursorUI = nullptr;
 
 	CUI_FadeInOut* m_pFadeInOutUI = nullptr;
 };

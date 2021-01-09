@@ -64,6 +64,12 @@ void CDirectInputMgr::Update(void)
 	m_pKeyBoard->GetDeviceState(sizeof(m_byCurrentKeyState), m_byCurrentKeyState);
 	m_pMouse->GetDeviceState(sizeof(m_tCurrentMouseState), &m_tCurrentMouseState);
 	m_ptCurrentClientMousePos = GetClientCursorPoint(m_hWnd);
+
+	if (m_bIsMouseFixed) {
+		POINT	ptMouse{ m_iFixedPosX, m_iFixedPosY };
+		ClientToScreen(m_hWnd, &ptMouse);
+		SetCursorPos(ptMouse.x, ptMouse.y);
+	}
 }
 
 void CDirectInputMgr::BindKeyStringToKey(KEY_STRING _szKeyString, KEY _iKey)

@@ -335,11 +335,15 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pTargeting->GetTransform()->SetPos(0.f, 10.f, 0.f);
 	pTargeting->SetPlayer(m_pPlayer);*/
 
+	// 커서 없애기
+	ShowCursor(false);
+
 	CUI_InGame* pUIInGame = CUI_InGame::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pUIInGame, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI_InGame", pUIInGame), E_FAIL);
 	pUIInGame->SetPlayer(m_pPlayer);
 	pUIInGame->GetFadeInOut()->StartFadeInOut(2.f, true);
+	m_pPlayer->SetInGameUI(pUIInGame);
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);

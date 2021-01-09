@@ -33,16 +33,20 @@ void CCameraController_Player::ControlCamera(const _float& _fDeltaTime, Engine::
 	SetStickLen(4.5f * fRatio);
 
 	// 카메라 스틱의 방향을 조정한다.
-	_vec3 vDeltaMouseDegree = Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree();
-	_float fRotAngleByY = vDeltaMouseDegree.x * 0.005f;
-	_float fRotAngleByRight = vDeltaMouseDegree.y * 0.005f;
+	if (Engine::CDirectInputMgr::GetInstance()->IsMouseFixed()) {
+		_vec3 vDeltaMouseDegree = Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree();
+		_float fRotAngleByY = vDeltaMouseDegree.x * 0.005f;
+		_float fRotAngleByRight = vDeltaMouseDegree.y * 0.005f;
 
-	_matrix matRot;
-	D3DXMatrixRotationAxis(&matRot, &WORLD_Y_AXIS, fRotAngleByY);
-	D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
-	D3DXMatrixRotationAxis(&matRot, &GetRightAxis(), fRotAngleByRight);
-	D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
+		_matrix matRot;
+		D3DXMatrixRotationAxis(&matRot, &WORLD_Y_AXIS, fRotAngleByY);
+		D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
+		D3DXMatrixRotationAxis(&matRot, &GetRightAxis(), fRotAngleByRight);
+		D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
+	}
+	
 
+	// 마우스 픽스
 	//POINT	ptMouse{ WINCX >> 1, WINCY >> 1 };
 	//ClientToScreen(g_hWnd, &ptMouse);
 	//SetCursorPos(ptMouse.x, ptMouse.y);

@@ -91,5 +91,9 @@ void CUI_WeaponLock::SetPlayer(CAliceW * _pAlice)
 
 	m_pAliceW = _pAlice;
 	m_pToothUI->SetPlayer(_pAlice);
+	m_pVorpalBladeUI->SetPlayer(_pAlice);
+	m_pHobbyHorseUI->SetPlayer(_pAlice);
+	m_pGunUI->SetPlayer(_pAlice);
+	m_pBunnyBombUI->SetPlayer(_pAlice);
 }
 

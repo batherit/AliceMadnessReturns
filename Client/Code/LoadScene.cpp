@@ -56,6 +56,9 @@ void CLoadScene::Render(void)
 
 void CLoadScene::OnLoaded()
 {
+	// 커서 없애기
+	ShowCursor(false);
+
 	LoadComponents();
 
 	Engine::CLayer* pLayer = Engine::CLayer::Create();

@@ -39,7 +39,7 @@ HRESULT CUI_LockedWeapon::Ready_Object(void)
 	m_pToothImage->SetPos(-10, 100);
 	AddChild(m_pToothImage);
 
-	CUI_Button<CUI_LockedWeapon>* m_pUnlockButton = CUI_Button<CUI_LockedWeapon>::Create(m_pGraphicDev, this, 0, 100, m_pToothImage->GetWidth(), m_pToothImage->GetHeight());
+	m_pUnlockButton = CUI_Button<CUI_LockedWeapon>::Create(m_pGraphicDev, this, 0, 100, m_pToothImage->GetWidth(), m_pToothImage->GetHeight());
 	m_pUnlockButton->SetEvent(CUI_Button<CUI_LockedWeapon>::BUTTON_STATE_CLICKED, &CUI_LockedWeapon::ClickUnlockButton, nullptr);
 	AddChild(m_pUnlockButton);
 	
@@ -48,15 +48,19 @@ HRESULT CUI_LockedWeapon::Ready_Object(void)
 
 int CUI_LockedWeapon::Update_Object(const _float & _fDeltaTime)
 {
-	m_pRenderer->Add_RenderGroup(Engine::RENDER_UI, this);
-	CGameObject::Update_Object(_fDeltaTime);
+	m_pWeaponImage->Update_Object(_fDeltaTime);
+
+	if (m_bIsLocked) {
+		m_pRenderer->Add_RenderGroup(Engine::RENDER_UI, this);
+		m_pLockImage->Update_Object(_fDeltaTime);
+		m_pToothImage->Update_Object(_fDeltaTime);
+		m_pUnlockButton->Update_Object(_fDeltaTime);
+	}
 	return 0;
 }
 
 void CUI_LockedWeapon::Render_Object(void)
 {
-	if (!m_pToothImage->IsActivated())
-		return;
 	_vec3 vPos = m_pToothImage->GetTransform()->GetPos();
 	_tchar tcBuffer[20];
 	wsprintf(tcBuffer, L"%d", m_iToothNum);
@@ -91,20 +95,17 @@ void CUI_LockedWeapon::SetWeaponTexture(const _tchar * _pTextureTag)
 	m_pWeaponImage->SetTexture(_pTextureTag);
 }
 
-void CUI_LockedWeapon::SetPos(LONG _iPosX, LONG _iPosY)
-{
-}
-
 void CUI_LockedWeapon::SetLocked(_bool _bIsLocked)
 {
 	m_bIsLocked = _bIsLocked; 
-	m_pLockImage->SetActivated(_bIsLocked);
-	m_pToothImage->SetActivated(_bIsLocked);
 }
 
 void CUI_LockedWeapon::ClickUnlockButton(void *)
 {
-	abort();
+	if (m_iToothNum <= m_pAliceW->GetToothNum()) {
+		SetLocked(false);
+		m_pAliceW->DecreaseTooth(m_iToothNum);
+	}
 }
 
 //_bool CUI_LockedWeapon::PressUnlockButton()

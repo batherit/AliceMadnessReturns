@@ -9,6 +9,7 @@
 #include "UI_FadeInOut.h"
 #include "UI_BunnyBomb.h"
 #include "UI_WeaponLock.h"
+#include "UI_Cursor.h"
 #include "Attribute.h"
 #include "AliceW.h"
 
@@ -64,6 +65,11 @@ HRESULT CUI_InGame::Ready_Object(void)
 	m_pWeaponLock->SetActivated(false);
 	AddChild(m_pWeaponLock);
 
+	m_pCursor = CUI_Cursor::Create(m_pGraphicDev);
+	m_pCursor->SetActivated(false);
+	Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
+	AddChild(m_pCursor);
+
 	// FadeInOut은 화면 전체를 덮어야하기 때문에 자식 중 가장 맨 뒤에 있어야 한다.
 	m_pFadeInOut = CUI_FadeInOut::Create(m_pGraphicDev);
 	AddChild(m_pFadeInOut);
@@ -77,10 +83,16 @@ _int CUI_InGame::Update_Object(const _float & _fDeltaTime)
 		return 1;
 
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_C)) {
-		if (m_pWeaponLock->IsActivated())
+		if (m_pWeaponLock->IsActivated()) {
+			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
+			m_pCursor->SetActivated(false);
 			m_pWeaponLock->SetActivated(false);
-		else
+		}
+		else {
+			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false, WINCX >> 1, WINCY >> 1);
+			m_pCursor->SetActivated(true);
 			m_pWeaponLock->SetActivated(true);
+		}
 	}
 
 	CGameObject::Update_Object(_fDeltaTime);

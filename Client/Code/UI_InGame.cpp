@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "UI_InGame.h"
 #include "UI_HPGauge.h"
+#include "UI_Tooth.h"
 #include "UI_Targeting.h"
 #include "UI_TargetingMode.h"
 #include "UI_Image.h"
@@ -41,6 +42,9 @@ HRESULT CUI_InGame::Ready_Object(void)
 	m_pHPGauge = CUI_HPGauge::Create(m_pGraphicDev);
 	//m_pHPGauge->SetPlayer(m_pPlayer);
 	AddChild(m_pHPGauge);
+
+	m_pTooth = CUI_Tooth::Create(m_pGraphicDev);
+	AddChild(m_pTooth);
 
 	m_pTargeting = CUI_Targeting::Create(m_pGraphicDev);
 	m_pTargeting->GetTransform()->SetPos(0.f, 10.f, 0.f);
@@ -100,4 +104,5 @@ void CUI_InGame::SetPlayer(Engine::CGameObject * _pPlayer)
 	m_pHPGauge->SetPlayer(m_pPlayer);
 	m_pTargeting->SetPlayer(m_pPlayer);
 	m_pTargetingMode->SetPlayer(m_pPlayer);
+	m_pTooth->SetPlayer(dynamic_cast<CAliceW*>(m_pPlayer));
 }

@@ -187,6 +187,9 @@
     <Filter Include="02. Object\02. GameObject\UI\TargetingMode">
       <UniqueIdentifier>{be75e666-653c-453a-83ed-46c1f917708e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\WeaponLock">
+      <UniqueIdentifier>{8cf85b1e-dbd7-42b1-8f02-8883e09ee58b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">

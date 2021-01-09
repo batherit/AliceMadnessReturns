@@ -44,14 +44,19 @@ HRESULT Engine::CFont::Ready_Font(const _tchar* pFontType,
 	return S_OK;
 }
 
-void Engine::CFont::Render_Font(const _tchar* pString, const _vec2* pPos, D3DXCOLOR Color)
+void Engine::CFont::Render_Font(const _tchar* pString, const _vec2* pPos, D3DXCOLOR Color, const _vec2* pScale)
 {
 	RECT	rc{ _long(pPos->x), _long(pPos->y) };
 
 	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-	m_pFont->DrawTextW(m_pSprite, pString, lstrlen(pString), &rc, DT_NOCLIP, Color);
+	_matrix matTrans, matScale;
+	D3DXMatrixScaling(&matScale, pScale->x, pScale->y, 1.f);
+	D3DXMatrixTranslation(&matTrans, pPos->x, pPos->y, 0.f);
 
+	m_pSprite->SetTransform(&(matScale * matTrans));
+	//m_pFont->DrawTextW(m_pSprite, pString, lstrlen(pString), &rc, DT_NOCLIP, Color);
+	m_pFont->DrawTextW(m_pSprite, pString, lstrlen(pString), nullptr, DT_NOCLIP, Color);
 	m_pSprite->End();
 }
 

@@ -52,9 +52,9 @@ HRESULT	Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFontTag,
 {
 	return CFontMgr::GetInstance()->Ready_Font(pGraphicDev, pFontTag, pFontType, iWidth, iHeight, iWeight);
 }
-void	Render_Font(const _tchar* pFontTag, const _tchar* pString, const _vec2* pPos, D3DXCOLOR Color)
+void	Render_Font(const _tchar* pFontTag, const _tchar* pString, const _vec2* pPos, D3DXCOLOR Color, const _vec2* pScale)
 {
-	CFontMgr::GetInstance()->Render_Font(pFontTag, pString, pPos, Color);
+	CFontMgr::GetInstance()->Render_Font(pFontTag, pString, pPos, Color, pScale);
 }
 // InputDev
 //_byte	Get_DIKeyState(_ubyte byKeyID)

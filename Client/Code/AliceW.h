@@ -68,6 +68,10 @@ public:
 	_bool ChangeLockOnTarget();	// TAB버튼을 눌렀을때 (락온이 켜져있을때 유효) // 타겟 대상이 바뀌면 true반환
 	Engine::CGameObject* GetTargetObject() const { return m_pTargetObject; }
 
+	void IncreaseTooth(_int _iAmount) { m_iToothNum += _iAmount; }
+	void DecreaseTooth(_int _iAmount) { m_iToothNum -= _iAmount; if (_iAmount < 0) _iAmount = 0; }
+	_int GetToothNum() const { return m_iToothNum; }
+
 private:
 	CMap* m_pMap = nullptr;
 
@@ -85,6 +89,8 @@ private:
 	Engine::CGameObject* m_pTargetObject = nullptr;
 	_bool m_bIsSmalled = false;
 	_bool m_bIsSuperJumped = false;
+
+	_int m_iToothNum = 0;
 };
 
 END

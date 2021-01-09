@@ -65,6 +65,7 @@ int CTooth::Update_Object(const _float & _fDeltaTime)
 			GetTransform()->Translate(vToPlayer * fT);
 		}
 		else {
+			m_pAlice->IncreaseTooth(1);
 			SetValid(false);
 		}
 	}

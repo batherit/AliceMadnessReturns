@@ -24,7 +24,7 @@ HRESULT CUI_HPGauge::Ready_Object(void)
 	m_pBackImage = CUI_Image::Create(m_pGraphicDev);
 	m_pBackImage->SetTexture(L"UI_HP_Branch");
 	//m_pBackImage->SetExtractionArea(RECT{ 0, 0, WINCX >> 1, WINCY >> 1 });
-	m_pBackImage->SetPos(OFFSET_X + (m_pBackImage->GetWidth() >> 1), OFFSET_Y + (m_pBackImage->GetHeight() >> 1));
+	m_pBackImage->SetPos(HPGAUGE_OFFSET_X + (m_pBackImage->GetWidth() >> 1), HPGAUGE_OFFSET_Y + (m_pBackImage->GetHeight() >> 1));
 	//m_pBackImage->SetOutputArea(RECT{ OFFSET_X, OFFSET_Y, m_pBackImage->GetWidth() + OFFSET_X, m_pBackImage->GetHeight() + OFFSET_Y });
 	AddChild(m_pBackImage);
 

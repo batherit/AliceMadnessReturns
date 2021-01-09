@@ -29,12 +29,12 @@ HRESULT Engine::CFontMgr::Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar
 	return S_OK;
 }
 
-void Engine::CFontMgr::Render_Font(const _tchar* pFontTag, const _tchar* pString, const _vec2* pPos, D3DXCOLOR Color)
+void Engine::CFontMgr::Render_Font(const _tchar* pFontTag, const _tchar* pString, const _vec2* pPos, D3DXCOLOR Color, const _vec2* pScale)
 {
 	CFont*	pFont = Find_Font(pFontTag);
 	NULL_CHECK(pFont);
 
-	pFont->Render_Font(pString, pPos, Color);
+	pFont->Render_Font(pString, pPos, Color, pScale);
 
 }
 

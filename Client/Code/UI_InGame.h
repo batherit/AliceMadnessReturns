@@ -10,6 +10,7 @@ BEGIN(Client)
 class CUI_Image;
 class CUI_GunGauge;
 class CUI_HPGauge;
+class CUI_Tooth;
 class CUI_Targeting;
 class CUI_TargetingMode;
 class CUI_FadeInOut;
@@ -36,6 +37,7 @@ public:
 	CUI_Image* GetAimImage() const { return m_pAimImage; }
 	CUI_GunGauge* GetGunGauge() const { return m_pGunGauge; }
 	CUI_HPGauge* GetHPGauge() const { return m_pHPGauge; }
+	CUI_Tooth* GetTooth() const { return m_pTooth; }
 	CUI_Targeting* GetTargeting() const { return m_pTargeting; }
 	CUI_TargetingMode* GetTargetingMode() const { return m_pTargetingMode; }
 	CUI_FadeInOut* GetFadeInOut() const { return m_pFadeInOut; }
@@ -46,6 +48,7 @@ private:
 	CUI_Image* m_pAimImage = nullptr;
 	CUI_GunGauge* m_pGunGauge = nullptr;
 	CUI_HPGauge* m_pHPGauge = nullptr;
+	CUI_Tooth* m_pTooth = nullptr;
 	CUI_Targeting* m_pTargeting = nullptr;
 	CUI_TargetingMode* m_pTargetingMode = nullptr;
 	CUI_FadeInOut* m_pFadeInOut = nullptr;

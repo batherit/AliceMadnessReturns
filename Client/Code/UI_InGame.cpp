@@ -8,6 +8,7 @@
 #include "UI_GunGauge.h"
 #include "UI_FadeInOut.h"
 #include "UI_BunnyBomb.h"
+#include "UI_WeaponLock.h"
 #include "Attribute.h"
 #include "AliceW.h"
 
@@ -59,6 +60,10 @@ HRESULT CUI_InGame::Ready_Object(void)
 	//m_pTargetingMode->SetPlayer(m_pPlayer);
 	AddChild(m_pTargetingMode);
 
+	m_pWeaponLock = CUI_WeaponLock::Create(m_pGraphicDev);
+	m_pWeaponLock->SetActivated(false);
+	AddChild(m_pWeaponLock);
+
 	// FadeInOut은 화면 전체를 덮어야하기 때문에 자식 중 가장 맨 뒤에 있어야 한다.
 	m_pFadeInOut = CUI_FadeInOut::Create(m_pGraphicDev);
 	AddChild(m_pFadeInOut);
@@ -70,6 +75,13 @@ _int CUI_InGame::Update_Object(const _float & _fDeltaTime)
 {
 	if (!IsActivated())
 		return 1;
+
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_C)) {
+		if (m_pWeaponLock->IsActivated())
+			m_pWeaponLock->SetActivated(false);
+		else
+			m_pWeaponLock->SetActivated(true);
+	}
 
 	CGameObject::Update_Object(_fDeltaTime);
 
@@ -105,4 +117,5 @@ void CUI_InGame::SetPlayer(Engine::CGameObject * _pPlayer)
 	m_pTargeting->SetPlayer(m_pPlayer);
 	m_pTargetingMode->SetPlayer(m_pPlayer);
 	m_pTooth->SetPlayer(dynamic_cast<CAliceW*>(m_pPlayer));
+	m_pWeaponLock->SetPlayer(dynamic_cast<CAliceW*>(m_pPlayer));
 }

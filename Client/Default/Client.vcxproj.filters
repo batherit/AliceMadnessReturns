@@ -190,6 +190,9 @@
     <Filter Include="02. Object\02. GameObject\UI\WeaponLock">
       <UniqueIdentifier>{8cf85b1e-dbd7-42b1-8f02-8883e09ee58b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\LockedWeapon">
+      <UniqueIdentifier>{29373b73-4f6d-4fa8-bf5c-c4f238e0db14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -438,6 +441,12 @@
     <ClInclude Include="..\Code\UI_TargetingMode.h">
       <Filter>02. Object\02. GameObject\UI\TargetingMode</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\UI_WeaponLock.h">
+      <Filter>02. Object\02. GameObject\UI\WeaponLock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_LockedWeapon.h">
+      <Filter>02. Object\02. GameObject\UI\LockedWeapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -655,6 +664,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_TargetingMode.cpp">
       <Filter>02. Object\02. GameObject\UI\TargetingMode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_WeaponLock.cpp">
+      <Filter>02. Object\02. GameObject\UI\WeaponLock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_LockedWeapon.cpp">
+      <Filter>02. Object\02. GameObject\UI\LockedWeapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -159,6 +159,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_WeaponLock_VorpalBlade", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_WeaponLock_VorpalBlade.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_WeaponLock_HobbyHorse", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_WeaponLock_HobbyHorse.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_WeaponLock_Gun", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_WeaponLock_Gun.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_WeaponLock_BunnyBomb", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_WeaponLock_BunnyBomb.tga"), E_FAIL);
+
 
 	lstrcpy(m_szLoading, L"메쉬 로딩중...");
 	// UI

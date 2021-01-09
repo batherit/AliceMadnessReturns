@@ -43,22 +43,27 @@ private:
 	void(T::*m_pEvent[BUTTON_STATE_END]) (void*);
 	void* m_pArgu[BUTTON_STATE_END];
 	_bool m_bIsClicked = false;
-	RECT m_rtButtonRange;
+	LONG m_iWidth = 1;
+	LONG m_iHeight = 1;
+	//RECT m_rtButtonRange;
 };
 
 template<typename T>
 inline CUI_Button<T>::CUI_Button(LPDIRECT3DDEVICE9 pGraphicDev, T* _pOwner, LONG _iPosX, LONG _iPosY, LONG _iWidth, LONG _iHeight)
 	:
 	CGameObject(pGraphicDev),
-	m_pOwner(_pOwner)
+	m_pOwner(_pOwner),
+	m_iWidth(_iWidth),
+	m_iHeight(_iHeight)
 {
 	ZeroMemory(m_pEvent, sizeof(m_pEvent));
 	ZeroMemory(m_pArgu, sizeof(m_pArgu));
 
-	m_rtButtonRange.right = _iPosX + (_iWidth >> 1);
+	GetTransform()->SetPos(static_cast<_float>(_iPosX), static_cast<_float>(_iPosY), 0.f);
+	/*m_rtButtonRange.right = _iPosX + (_iWidth >> 1);
 	m_rtButtonRange.top = _iPosY - (_iHeight >> 1);
 	m_rtButtonRange.left = _iPosX - (_iWidth >> 1);
-	m_rtButtonRange.bottom = _iPosY + (_iHeight >> 1);
+	m_rtButtonRange.bottom = _iPosY + (_iHeight >> 1);*/
 }
 
 template<typename T>
@@ -81,8 +86,12 @@ template<typename T>
 inline _int CUI_Button<T>::Update_Object(const _float & _fDeltaTime)
 {
 	POINT pt = Engine::GetClientCursorPoint(g_hWnd);
-
-	if (Engine::IsPointInRect(m_rtButtonRange, pt))
+	_vec3 vPos = GetTransform()->GetPos();
+	if (Engine::IsPointInRect(RECT{ 
+		static_cast<LONG>(vPos.x - (m_iWidth >> 1)), 
+		static_cast<LONG>(vPos.y - (m_iHeight >> 1)), 
+		static_cast<LONG>(vPos.x + (m_iWidth >> 1)), 
+		static_cast<LONG>(vPos.y + (m_iHeight >> 1))}, pt))
 	{
 		if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
 			// Clicked

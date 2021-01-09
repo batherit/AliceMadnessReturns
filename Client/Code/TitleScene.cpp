@@ -137,12 +137,12 @@ HRESULT CTitleScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	// 빨간 곡선 생성
 	CUI_Image* pRedCurve = CUI_Image::Create(m_pGraphicDev);
 	pRedCurve->SetTexture(L"UI_RedCurve");
-	pRedCurve->SetPos((WINCX >> 1) + WINCX / 6.f, WINCY >> 1);
+	pRedCurve->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), WINCY >> 1);
 	pLayer->Add_GameObject(pRedCurve);
 
 	// 버튼 생성
-	m_pStartButton = CUI_Button<CTitleScene>::Create(m_pGraphicDev, this, (WINCX >> 1) + WINCX / 6.f, (WINCY >> 1) - WINCY /7.f, 222, 72);
-	m_pExitButton = CUI_Button<CTitleScene>::Create(m_pGraphicDev, this,(WINCX >> 1) + WINCX / 6.f,( WINCY >> 1) + WINCY / 7.f, 180, 60);
+	m_pStartButton = CUI_Button<CTitleScene>::Create(m_pGraphicDev, this, static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) - WINCY /7.f), 222, 72);
+	m_pExitButton = CUI_Button<CTitleScene>::Create(m_pGraphicDev, this, static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) + WINCY / 7.f), 180, 60);
 	pLayer->Add_GameObject(m_pStartButton);
 	pLayer->Add_GameObject(m_pExitButton);
 
@@ -157,22 +157,22 @@ HRESULT CTitleScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	// 시작 버튼 관련 이미지 생성
 	m_pStartButtonOn = CUI_Image::Create(m_pGraphicDev);
 	m_pStartButtonOn->SetTexture(L"UI_NewGameOn");
-	m_pStartButtonOn->SetPos((WINCX >> 1) + WINCX / 6.f, (WINCY >> 1) - WINCY / 7.f);
+	m_pStartButtonOn->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) - WINCY / 7.f));
 	m_pStartButtonOn->SetActivated(false);
 	m_pStartButtonOff = CUI_Image::Create(m_pGraphicDev);
 	m_pStartButtonOff->SetTexture(L"UI_NewGameOff");
-	m_pStartButtonOff->SetPos((WINCX >> 1) + WINCX / 6.f, (WINCY >> 1) - WINCY / 7.f);
+	m_pStartButtonOff->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) - WINCY / 7.f));
 	pLayer->Add_GameObject(m_pStartButtonOn);
 	pLayer->Add_GameObject(m_pStartButtonOff);
 	
 	// 종료 버튼 관련 이미지 생성
 	m_pExitButtonOn = CUI_Image::Create(m_pGraphicDev);
 	m_pExitButtonOn->SetTexture(L"UI_GameExitOn");
-	m_pExitButtonOn->SetPos((WINCX >> 1) + WINCX / 6.f, (WINCY >> 1) + WINCY / 7.f);
+	m_pExitButtonOn->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) + WINCY / 7.f));
 	m_pExitButtonOn->SetActivated(false);
 	m_pExitButtonOff = CUI_Image::Create(m_pGraphicDev);
 	m_pExitButtonOff->SetTexture(L"UI_GameExitOff");
-	m_pExitButtonOff->SetPos((WINCX >> 1) + WINCX / 6.f, (WINCY >> 1) + WINCY / 7.f);
+	m_pExitButtonOff->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) + WINCY / 7.f));
 	pLayer->Add_GameObject(m_pExitButtonOn);
 	pLayer->Add_GameObject(m_pExitButtonOff);
 

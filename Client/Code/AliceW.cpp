@@ -8,6 +8,7 @@
 #include "Trigger.h"
 #include "Attribute.h"
 #include "BunnyBomb.h"
+#include "Platform.h"
 #include "UI_InGame.h"
 #include "UI_WeaponLock.h"
 #include "UI_LockedWeapon.h"
@@ -220,31 +221,46 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 	if (IsDead())
 		return;
 
-	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
-		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Trigger") == 0) {
-			switch (dynamic_cast<CTrigger*>(_tCollisionInfo.pCollidedObject)->GetTriggerType()) {
-			case TRIGGER::TYPE_DEATH:
-				GetAttribute()->SetHP(0.f);
-				return;
-			}
+	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Trigger") == 0) {
+		switch (dynamic_cast<CTrigger*>(_tCollisionInfo.pCollidedObject)->GetTriggerType()) {
+		case TRIGGER::TYPE_DEATH:
+			GetAttribute()->SetHP(0.f);
+			return;
 		}
 	}
-	else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
-		_int a = 10;
-	}
-	else {
-		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack") == 0) {
-			if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
-				// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
-				m_pAttribute->Damaged(5.f);
-				_vec3 vToOwner = GetTransform()->GetPos() - _tCollisionInfo.pCollidedCollider->GetTransform()->GetPos();
-				vToOwner.y = 0.f;
-				D3DXVec3Normalize(&vToOwner, &vToOwner);
-				GetPhysics()->SetVelocityXZ(_vec2(vToOwner.x, vToOwner.z) * ALICE_RUN_SPEED * 2.f);
-				GetPhysics()->SetResistanceCoefficientXZ(0.8f);
-			}
+	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack") == 0) {
+		if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
+			// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
+			m_pAttribute->Damaged(5.f);
+			_vec3 vToOwner = GetTransform()->GetPos() - _tCollisionInfo.pCollidedCollider->GetTransform()->GetPos();
+			vToOwner.y = 0.f;
+			D3DXVec3Normalize(&vToOwner, &vToOwner);
+			GetPhysics()->SetVelocityXZ(_vec2(vToOwner.x, vToOwner.z) * ALICE_RUN_SPEED * 2.f);
+			GetPhysics()->SetResistanceCoefficientXZ(0.8f);
 		}
 	}
+	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Platform") == 0) {
+	/*	if (GetPhysics()->GetVelocity().y > 0.f)
+			return;
+*/
+		if (IsFalling(0.f)) {
+			m_bIsLanded = true;
+		}
+
+		CPlatform* pPlatform = dynamic_cast<CPlatform*>(_tCollisionInfo.pCollidedObject);
+		GetPhysics()->SetVelocityY(0.f);
+		GetTransform()->SetPosY(pPlatform->GetHeight());
+	}
+
+	//if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
+	//	
+	//}
+	//else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
+	//	_int a = 10;
+	//}
+	//else {
+	//	
+	//}
 }
 
 void CAliceW::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)

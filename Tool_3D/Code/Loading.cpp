@@ -555,6 +555,36 @@ _uint CLoading::Loading_ForStage(void)
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_StraightA");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_StraightA");
 
+	// 상호작용 발판류
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MirrorPad",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Platform/",
+		L"MirrorPad.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MirrorPad");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MirrorPad");
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MirrorPadFrame",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Platform/",
+		L"MirrorPadFrame.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MirrorPadFrame");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MirrorPadFrame");
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Platform",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Platform/",
+		L"Platform.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Platform");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Platform");
+
+
 	// 앨리스W
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

@@ -199,6 +199,12 @@
     <Filter Include="02. Object\02. GameObject\UI\Cursor">
       <UniqueIdentifier>{c7cbbdea-e057-48ab-b98c-71bcfa23a49e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\MirrorPad">
+      <UniqueIdentifier>{89f25482-ceb4-4ae0-84b2-b74ed4b87730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Platform">
+      <UniqueIdentifier>{562557b0-76dc-4fa4-ad36-14f9373b1a78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -459,6 +465,12 @@
     <ClInclude Include="..\Code\UI_Cursor.h">
       <Filter>02. Object\02. GameObject\UI\Cursor</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\MirrorPad.h">
+      <Filter>02. Object\02. GameObject\MirrorPad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Platform.h">
+      <Filter>02. Object\02. GameObject\Platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -688,6 +700,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_Cursor.cpp">
       <Filter>02. Object\02. GameObject\UI\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MirrorPad.cpp">
+      <Filter>02. Object\02. GameObject\MirrorPad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Platform.cpp">
+      <Filter>02. Object\02. GameObject\Platform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

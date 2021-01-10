@@ -73,11 +73,11 @@ int CBunnyBomb::Update_Object(const _float & _fDeltaTime)
 		}
 	}
 
+	m_pMesh->Play_Animation(_fDeltaTime);
+
 	// 부모 먼저 렌더러에 들어가야 올바르게 자식도 transform 됨.
 	m_pRenderer->Update(_fDeltaTime);
 	CGameObject::Update_Object(_fDeltaTime);
-
-	m_pMesh->Play_Animation(_fDeltaTime);
 
 	Engine::CNaviMesh* pNaviMesh = m_pMap->GetNaviMesh();
 	_vec3 vCurrentPos = GetTransform()->GetPos();

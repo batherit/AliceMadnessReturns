@@ -305,6 +305,29 @@ _uint CLoading::Loading_ForStage(void)
 		L"Valve.X"),
 		E_FAIL);
 
+	// 상호작용 발판류
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MirrorPad",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Platform/",
+		L"MirrorPad.X"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MirrorPadFrame",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Platform/",
+		L"MirrorPadFrame.X"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Platform",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Platform/",
+		L"Platform.X"),
+		E_FAIL);
+
 	// 매드캡A
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -313,6 +336,8 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/DynamicMesh/MadCap/",
 		L"MadCapA.X"),
 		E_FAIL);
+
+
 
 	// Alice 메쉬 원본 생성
 	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

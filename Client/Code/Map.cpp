@@ -13,6 +13,8 @@
 #include "Tooth.h"
 #include "PopDomino.h"
 #include "Valve.h"
+#include "MirrorPad.h"
+#include "Platform.h"
 
 
 CMap::CMap(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -164,7 +166,8 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 
 	_bool bIsCustomed = false;
 	_int iStrLength = 0;
-	_tchar tcFactor[50] = L"";
+	//_tchar tcFactor[50] = L"";
+	_tchar tcFactors[6][50] = { L"", };
 	Engine::CGameObject* pCustomObject = nullptr;
 	CStaticObject* pStaticObject = nullptr;
 	for (_int i = 0; i < iVecSize; ++i) {
@@ -181,7 +184,7 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 		if (bIsCustomed) {
 			for (_int i = 0; i < 6; ++i) {
 				ReadFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
-				ReadFile(hFile, tcFactor, sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+				ReadFile(hFile, tcFactors[i], sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
 				// TODO : 팩터 해석을 작성합니다.
 				//pStaticObject->GetFactorRef(i) = tcFactor;
 			}
@@ -198,6 +201,18 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 			}
 			else if (lstrcmp(L"Domino", pStaticObject->GetMeshTag()) == 0) {
 				pCustomObject = CPopDomino::Create(m_pGraphicDev);
+			}
+			else if (lstrcmp(L"MirrorPad", pStaticObject->GetMeshTag()) == 0) {
+				pCustomObject = CMirrorPad::Create(m_pGraphicDev);
+				CMirrorPad* pMirrorPad = dynamic_cast<CMirrorPad*>(pCustomObject);
+				pMirrorPad->SetLinkIndex(_ttoi(tcFactors[0]));
+				pMirrorPad->SetPos(pStaticObject->GetTransform()->GetPos());
+			}
+			else if (lstrcmp(L"Platform", pStaticObject->GetMeshTag()) == 0) {
+				pCustomObject = CPlatform::Create(m_pGraphicDev);
+				CPlatform* pPlatform = dynamic_cast<CPlatform*>(pCustomObject);
+				pPlatform->SetLinkIndex(_ttoi(tcFactors[0]));
+				pPlatform->SetPos(pStaticObject->GetTransform()->GetPos(), _ttof(tcFactors[1]), _ttof(tcFactors[2]));
 			}
 
 			pCustomObject->GetTransform()->SetPos(pStaticObject->GetTransform()->GetPos());
@@ -231,7 +246,7 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 		if (bIsCustomed) {
 			for (_int i = 0; i < 6; ++i) {
 				ReadFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
-				ReadFile(hFile, tcFactor, sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
+				ReadFile(hFile, tcFactors[i], sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
 				// TODO : 팩터 해석을 작성합니다.
 				//pDynamicObject->GetFactorRef(i) = tcFactor;
 			}
@@ -275,45 +290,22 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 		if (bIsCustomed) {
 			for (_int i = 0; i < 6; ++i) {
 				ReadFile(hFile, &iStrLength, sizeof(iStrLength), &dwByte, nullptr);
-				ReadFile(hFile, tcFactor, sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
-
-				switch (pTriggerObject->GetTriggerType()) {
-				case TRIGGER::TYPE_CHECKPOINT:
-					if (0 == i)
-						pTriggerObject->SetSortingOrderIndex(_ttoi(tcFactor));
-					else if (1 == i)
-						pTriggerObject->SetStageIndex(_ttoi(tcFactor));
-					break;
-				case TRIGGER::TYPE_SPAWN:
-					if (0 == i)
-						pTriggerObject->SetSpawnIndex(_ttoi(tcFactor));
-					break;
-				case TRIGGER::TYPE_SPAWNER:
-					if (0 == i)
-						pTriggerObject->SetSpawnIndex(_ttoi(tcFactor));
-					else if (1 == i)
-						pTriggerObject->SetMonsterTag(tcFactor);
-					break;
-				}
-				// TODO : 팩터 해석을 작성합니다.
-				//pDynamicObject->GetFactorRef(i) = tcFactor;
+				ReadFile(hFile, tcFactors[i], sizeof(_tchar) * (iStrLength + 1), &dwByte, nullptr);
 			}
-		
-			//if (lstrcmp(L"HPFlower", pDynamicObject->GetMeshTag()) == 0) {
-			//	pCustomObject = CHPFlower::Create(m_pGraphicDev);
-			//	// TODO : 팩터 해석을 작성합니다.
-			//}
-			//else if (lstrcmp(L"JumpPad", pDynamicObject->GetMeshTag()) == 0) {
-			//	pCustomObject = CJumpPad::Create(m_pGraphicDev);
-			//}
 
-			//pCustomObject->GetTransform()->SetPos(pDynamicObject->GetTransform()->GetPos());
-			//pCustomObject->GetTransform()->SetScale(pDynamicObject->GetTransform()->GetScale());
-			//pCustomObject->GetTransform()->SetAngle(pDynamicObject->GetTransform()->GetAngle());
-			//pLayer->Add_GameObject(L"MapObjects", pCustomObject);
-			//pDynamicObject->SetValid(false);
-			//pDynamicObject->SetActivated(false);
-			//Engine::Safe_Release(pDynamicObject);
+			switch (pTriggerObject->GetTriggerType()) {
+			case TRIGGER::TYPE_CHECKPOINT:
+				pTriggerObject->SetSortingOrderIndex(_ttoi(tcFactors[0]));
+				pTriggerObject->SetStageIndex(_ttoi(tcFactors[1]));
+				break;
+			case TRIGGER::TYPE_SPAWN:
+				pTriggerObject->SetSpawnIndex(_ttoi(tcFactors[0]));
+				break;
+			case TRIGGER::TYPE_SPAWNER:
+				pTriggerObject->SetSpawnIndex(_ttoi(tcFactors[0]));
+				pTriggerObject->SetMonsterTag(tcFactors[1]);
+				break;
+			}
 		}
 		/*else
 			pLayer->Add_GameObject(L"MapObjects", pTriggerObject);*/
@@ -374,18 +366,36 @@ void CMap::Link(Engine::CLayer* pLayer)
 					case TRIGGER::TYPE_SPAWN:
 						switch (pTrigger2->GetTriggerType()) {
 						case TRIGGER::TYPE_SPAWNER:
-							pTrigger1->AddSpawner(pTrigger2);
+							if(pTrigger1->GetSpawnIndex() == pTrigger2->GetSpawnIndex())
+								pTrigger1->AddSpawner(pTrigger2);
 							break;
 						}
 						break;
 					case TRIGGER::TYPE_SPAWNER:
 						switch (pTrigger2->GetTriggerType()) {
 						case TRIGGER::TYPE_SPAWN:
-							pTrigger2->AddSpawner(pTrigger1);
+							if (pTrigger1->GetSpawnIndex() == pTrigger2->GetSpawnIndex())
+								pTrigger2->AddSpawner(pTrigger1);
 							break;
 						}
 						break;
 					}
+				}
+			}
+			else if (dynamic_cast<CMirrorPad*>(*iter1)) {
+				if (dynamic_cast<CPlatform*>(*iter2)) {
+					CMirrorPad* pMirrorPad = dynamic_cast<CMirrorPad*>(*iter1);
+					CPlatform* pPlatform = dynamic_cast<CPlatform*>(*iter2);
+					if (pMirrorPad->GetLinkIndex() == pPlatform->GetLinkIndex())
+						pMirrorPad->AddPlatform(pPlatform);
+				}
+			}
+			else if (dynamic_cast<CPlatform*>(*iter1)) {
+				if (dynamic_cast<CMirrorPad*>(*iter2)) {
+					CPlatform* pPlatform = dynamic_cast<CPlatform*>(*iter1);
+					CMirrorPad* pMirrorPad = dynamic_cast<CMirrorPad*>(*iter2);
+					if (pPlatform->GetLinkIndex() == pMirrorPad->GetLinkIndex())
+						pMirrorPad->AddPlatform(pPlatform);
 				}
 			}
 		}

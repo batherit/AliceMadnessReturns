@@ -131,30 +131,25 @@ void CPlatform::Free(void)
 void CPlatform::On(const _float& _fDeltaTime)
 {
 	_vec3 vPos = GetTransform()->GetPos();
-	vPos.y += m_fDeltaHeight / m_fPressTime * _fDeltaTime;
-	if (m_fDeltaHeight < 0.f) {
-		if (vPos.y < m_vEndPos.y)
-			vPos.y = m_vEndPos.y;
+	_vec3 vPostPos = vPos + m_vVelocity * _fDeltaTime;
+
+	if (D3DXVec3Dot(&m_vDir, &(m_vEndPos - vPostPos)) < 0.f) {
+		vPostPos = m_vEndPos;
 	}
-	else {
-		if (vPos.y > m_vEndPos.y)
-			vPos.y = m_vEndPos.y;
-	}
-	
-	GetTransform()->SetPos(vPos);
+
+	m_vDeltaPos = vPostPos - vPos;
+	GetTransform()->SetPos(vPostPos);
 }
 
 void CPlatform::Off(const _float& _fDeltaTime)
 {
 	_vec3 vPos = GetTransform()->GetPos();
-	vPos.y -= m_fDeltaHeight / m_fPressTime * _fDeltaTime;
-	if (m_fDeltaHeight < 0.f) {
-		if (vPos.y > m_vInitPos.y)
-			vPos.y = m_vInitPos.y;
+	_vec3 vPostPos = vPos - m_vVelocity * _fDeltaTime;
+
+	if (D3DXVec3Dot(&(-m_vDir), &(m_vInitPos - vPostPos)) < 0.f) {
+		vPostPos = m_vInitPos;
 	}
-	else {
-		if (vPos.y < m_vInitPos.y)
-			vPos.y = m_vInitPos.y;
-	}
-	GetTransform()->SetPos(vPos);
+
+	m_vDeltaPos = vPostPos - vPos;
+	GetTransform()->SetPos(vPostPos);
 }

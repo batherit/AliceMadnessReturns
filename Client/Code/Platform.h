@@ -31,12 +31,16 @@ public:
 
 public:
 	Engine::CStaticMesh* GetStaticMesh() const { return m_pMesh; }
-	void SetPos(_vec3 _vInitPos, _float _fDeltaHeight, _float _fPressTime) {
+	void SetPos(_vec3 _vInitPos, _vec3 _vEndPos, _float _fPressTime) {
 		m_vInitPos = _vInitPos;
-		m_vEndPos = _vInitPos;
-		m_vEndPos.y += _fDeltaHeight;
-		m_fDeltaHeight = _fDeltaHeight;
+		m_vEndPos = _vEndPos;
 		m_fPressTime = _fPressTime;
+		if (_fPressTime == 0.f) {
+			abort();
+		}
+		m_vVelocity = (_vEndPos - _vInitPos) / _fPressTime;
+		D3DXVec3Normalize(&m_vDir, &m_vVelocity);
+		
 		GetTransform()->SetPos(_vInitPos);
 	}
 
@@ -46,6 +50,7 @@ public:
 	void On(const _float& _fDeltaTime);
 	void Off(const _float& _fDeltaTime);
 	_float GetHeight() const { return GetTransform()->GetPos().y + 1.05f * GetTransform()->GetScale().y; }
+	_vec3 GetDeltaPos() const { return m_vDeltaPos; }
 
 private:
 	_int m_iLinkIndex = -1;
@@ -54,8 +59,10 @@ private:
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	_vec3 m_vInitPos;
 	_vec3 m_vEndPos;
+	_vec3 m_vVelocity;
+	_vec3 m_vDir;
 	_float m_fPressTime = 2.f;
-	_float m_fDeltaHeight = 0.f;
+	_vec3 m_vDeltaPos = _vec3(0.f, 0.f, 0.f);
 };
 
 END

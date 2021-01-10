@@ -248,8 +248,10 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		}
 
 		CPlatform* pPlatform = dynamic_cast<CPlatform*>(_tCollisionInfo.pCollidedObject);
+		_vec3 vDeltaPos = pPlatform->GetDeltaPos();
 		GetPhysics()->SetVelocityY(0.f);
 		GetTransform()->SetPosY(pPlatform->GetHeight());
+		GetTransform()->Translate(vDeltaPos.x, 0.f, vDeltaPos.z);
 	}
 
 	//if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {

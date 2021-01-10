@@ -212,7 +212,7 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 				pCustomObject = CPlatform::Create(m_pGraphicDev);
 				CPlatform* pPlatform = dynamic_cast<CPlatform*>(pCustomObject);
 				pPlatform->SetLinkIndex(_ttoi(tcFactors[0]));
-				pPlatform->SetPos(pStaticObject->GetTransform()->GetPos(), _ttof(tcFactors[1]), _ttof(tcFactors[2]));
+				pPlatform->SetPos(pStaticObject->GetTransform()->GetPos(), _vec3(_ttof(tcFactors[1]), _ttof(tcFactors[2]), _ttof(tcFactors[3])), _ttof(tcFactors[4]));
 			}
 
 			pCustomObject->GetTransform()->SetPos(pStaticObject->GetTransform()->GetPos());

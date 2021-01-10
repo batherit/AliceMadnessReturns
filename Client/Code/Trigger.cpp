@@ -2,6 +2,7 @@
 #include "Trigger.h"
 #include "PlayScene.h"
 #include "BossScene.h"
+#include "MadCapA.h"
 
 CTrigger::CTrigger(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -50,17 +51,25 @@ void CTrigger::Render_Object(void)
 
 void CTrigger::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
-	switch (m_eTriggerType)
-	{
-	case TRIGGER::TYPE_CHECKPOINT:
-		if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
-			if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+			switch (m_eTriggerType)
+			{
+			case TRIGGER::TYPE_CHECKPOINT:
 				SetActivated(false);
-				if (m_iSortingOrderIndex == 2)
+				if (m_iStageIndex == 1)
+					Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+				else if (m_iStageIndex == 2)
 					Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CBossScene::Create(m_pGraphicDev));
+				break;
+			case TRIGGER::TYPE_SPAWN:
+				SetActivated(false);
+				for (auto& rSpawner : m_vecSpawners) {
+					rSpawner->Spawn();
+				}
+				break;
 			}
 		}
-		break;
 	}
 }
 
@@ -132,6 +141,18 @@ _bool CTrigger::LoadInfo(HANDLE & _hfIn)
 	GetTransform()->SetScale(vScale);
 
 	return true; //SetRenderInfo(m_tcMeshTag, eRenderID);
+}
+
+void CTrigger::Spawn()
+{
+	if (lstrcmp(L"MadCapA", m_tcMonsterTag) == 0) {
+		CMadCapA* pMadCapA = CMadCapA::Create(m_pGraphicDev);
+		pMadCapA->GetTransform()->SetPos(GetTransform()->GetPos());
+		pMadCapA->GetTransform()->SetScale(GetTransform()->GetScale());
+		pMadCapA->GetTransform()->SetAngle(GetTransform()->GetAngle());
+		Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pMadCapA);
+		SetActivated(false);
+	}
 }
 
 //_bool CTrigger::LoadCollidersInfo()

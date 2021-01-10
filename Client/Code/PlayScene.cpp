@@ -285,42 +285,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
 	//pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, -2.f));
 
-	//// 테스트 플라워 생성
-	//pGameObject = CHPFlower::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
-	//pGameObject->GetTransform()->Translate(_vec3(0.f, 1.f, 0.f));
 
-	//// 테스트 점프패드 생성
-	//pGameObject = CJumpPad::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
-	//pGameObject->GetTransform()->Translate(_vec3(3.f, 1.f, 0.f));
-
-	//// 테스트 스네일 생성
-	//pGameObject = CSnail::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
-	//pGameObject->GetTransform()->Translate(_vec3(0.f, 1.f, -3.f));
-
-	//// 테스트 이빨 생성
-	//pGameObject = CTooth::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
-	//pGameObject->GetTransform()->Translate(_vec3(3.f, 1.f, -3.f));
-
-	//// 테스트 밸브 생성
-	//pGameObject = CValve::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
-	//pGameObject->GetTransform()->Translate(_vec3(3.f, 1.f, -5.f));
-
-	//// 테스트 팝 도미노 생성
-	//pGameObject = CPopDomino::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject), E_FAIL);
-	//pGameObject->GetTransform()->Translate(_vec3(0.f, 1.f, -5.f));
-	//dynamic_cast<CPopDomino*>(pGameObject)->SetPlayer(m_pPlayer);
 
 
 	// UI

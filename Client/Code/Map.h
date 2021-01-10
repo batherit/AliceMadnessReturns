@@ -38,6 +38,9 @@ public:
 	_vec3 GetCurSpawnPoint();
 
 private:
+	void Link(Engine::CLayer* pLayer);
+
+private:
 	Engine::CRenderer* m_pRenderer = nullptr;
 	Engine::CNaviMesh* m_pNaviMesh = nullptr;
 	CTerrain* m_pTerrain = nullptr;
@@ -45,7 +48,7 @@ private:
 	vector<CDynamicObject*> m_vecDynamicObjects;*/
 	//vector<CTrigger*> m_vecTrigger_Death;
 	vector<CTrigger*> m_vecTrigger_CheckPoint;
-	vector<CTrigger*> m_vecTrigger_Spawn;
+	//vector<CTrigger*> m_vecTrigger_Spawn;
 };
 
 END

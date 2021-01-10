@@ -29,14 +29,35 @@ public:
 	virtual _bool SaveInfo(HANDLE& _hfOut) override;
 	virtual _bool LoadInfo(HANDLE& _hfIn) override;
 
+
+public:
 	void SetTriggerType(TRIGGER::E_TYPE _eTriggerType) { m_eTriggerType = _eTriggerType; }
 	TRIGGER::E_TYPE GetTriggerType() const { return m_eTriggerType; }
+
 	void SetSortingOrderIndex(_int _iSortingOrderIndex) { m_iSortingOrderIndex = _iSortingOrderIndex; }
 	_int GetSortingOrderIndex() const { return m_iSortingOrderIndex; }
 
+	void SetStageIndex(_int _iStageIndex) { m_iStageIndex = _iStageIndex; }
+	_int GetStageIndex() const { return m_iStageIndex; }
+
+	void SetSpawnIndex(_int _iSpawnerIndex) { m_iSpawnIndex = _iSpawnerIndex; }
+	_int GetSpawnIndex() const { return m_iSpawnIndex; }
+
+	void SetMonsterTag(const _tchar* _tcMonsterTag) { lstrcpy(m_tcMonsterTag, _tcMonsterTag); }
+	const _tchar* GetMonsterTag() const { return m_tcMonsterTag; }
+
+public:
+	void AddSpawner(CTrigger* _pSpawner) { m_vecSpawners.emplace_back(_pSpawner); }
+	void Spawn();
+
 private:
-	_int m_iSortingOrderIndex = 0;
 	TRIGGER::E_TYPE m_eTriggerType = TRIGGER::TYPE_END;
+	_int m_iSortingOrderIndex = 0;
+	_int m_iStageIndex = -1;
+	_int m_iSpawnIndex = -1;
+	_tchar m_tcMonsterTag[50] = L"NULL";
+	
+	vector<CTrigger*> m_vecSpawners;
 };
 
 END

@@ -67,10 +67,57 @@ namespace BULLET {
 }
 
 namespace TRIGGER {
-	enum E_TYPE { TYPE_DEATH, TYPE_CHECKPOINT, TYPE_SPAWN, TYPE_END };
+	enum E_TYPE { TYPE_DEATH, TYPE_CHECKPOINT, TYPE_SPAWN, TYPE_SPAWNER, TYPE_END };
 }
 
 namespace ANIM {
+	enum E_ALICEI_ANIM {
+		AliceI_Idle,                              //0	frame:[93]
+		AliceI_Idle_Random_1,                     //1	frame:[191]
+		AliceI_Idle_Random_2,                     //2	frame:[365]
+		AliceI_Idle_Random_3,                     //3	frame:[201]
+		AliceI_Idle_Random_4,                     //4	frame:[141]
+		AliceI_Idle_Random_5,                     //5	frame:[181]
+		AliceI_Idle_Random_6,                     //6	frame:[468]
+		AliceI_Idle_Turn_Left_Short_back,         //7	frame:[10]
+		AliceI_Idle_Turn_Right_Short_back,        //8	frame:[10]
+		AliceI_Jump_Fall,                         //9	frame:[21]
+		AliceI_Jump_Land,                         //10	frame:[18]
+		AliceI_Jump_Rise,                         //11	frame:[9]
+		AliceI_Jump_Start,                        //12	frame:[9]
+		AliceI_JumpFwd_Fall,                      //13	frame:[26]
+		AliceI_JumpFwd_LandLow,                   //14	frame:[11]
+		AliceI_JumpFwd_Rise,                      //15	frame:[9]
+		AliceI_JumpFwd_Start,                     //16	frame:[5]
+		AliceI_Run,                               //17	frame:[22]
+		AliceI_Walk,                              //18	frame:[37]
+		AliceI_Walk_Fast,                         //19	frame:[27]
+		ALICEI_ANIM_END
+	};
+
+	enum E_PIGFLY_ANIM {
+		NoseSwich_Fly_Action,                     //0	frame:[61]
+		NoseSwich_Fly_Charge_1,                   //1	frame:[41]
+		NoseSwich_Fly_Charge_2,                   //2	frame:[31]
+		NoseSwich_Fly_Charge_3,                   //3	frame:[21]
+		NoseSwich_Fly_Charge_4,                   //4	frame:[9]
+		NoseSwich_Fly_Charge_5,                   //5	frame:[7]
+		NoseSwich_Fly_Disappear,                  //6	frame:[41]
+		NoseSwich_Fly_Idle,                       //7	frame:[146]
+		NoseSwich_Fly_Idle01,                     //8	frame:[61]
+		NoseSwich_Fly_Relax,                      //9	frame:[21]
+		NoseSwich_Mount_Action,                   //10	frame:[61]
+		NoseSwich_Mount_Charge_1,                 //11	frame:[41]
+		NoseSwich_Mount_Charge_2,                 //12	frame:[31]
+		NoseSwich_Mount_Charge_3,                 //13	frame:[21]
+		NoseSwich_Mount_Charge_4,                 //14	frame:[7]
+		NoseSwich_Mount_Charge_5,                 //15	frame:[9]
+		NoseSwich_Mount_Disappear,                //16	frame:[41]
+		NoseSwich_Mount_Idle,                     //17	frame:[61]
+		NoseSwich_Mount_Relax,                    //18	frame:[61]
+		PIGFLY_ANIM_END
+	};
+
 	enum E_ALICEW_ANIM{
 		AliceW_Walk_Watch,                        //54	frame:[33]
 		AliceW_Walk,                              //53	frame:[33]

@@ -208,8 +208,8 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 			pStaticObject->SetActivated(false);
 			//Engine::Safe_Release(pStaticObject);
 		}
-		else 
-			pLayer->Add_GameObject(L"MapObjects", pStaticObject);
+		/*else 
+			pLayer->Add_GameObject(L"MapObjects", pStaticObject);*/
 	}
 
 	// Dynamic
@@ -252,8 +252,8 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 			pDynamicObject->SetActivated(false);
 			//Engine::Safe_Release(pDynamicObject);
 		}
-		else
-			pLayer->Add_GameObject(L"MapObjects", pDynamicObject);
+		/*else
+			pLayer->Add_GameObject(L"MapObjects", pDynamicObject);*/
 	}
 
 	// Trigger
@@ -281,6 +281,18 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 				case TRIGGER::TYPE_CHECKPOINT:
 					if (0 == i)
 						pTriggerObject->SetSortingOrderIndex(_ttoi(tcFactor));
+					else if (1 == i)
+						pTriggerObject->SetStageIndex(_ttoi(tcFactor));
+					break;
+				case TRIGGER::TYPE_SPAWN:
+					if (0 == i)
+						pTriggerObject->SetSpawnIndex(_ttoi(tcFactor));
+					break;
+				case TRIGGER::TYPE_SPAWNER:
+					if (0 == i)
+						pTriggerObject->SetSpawnIndex(_ttoi(tcFactor));
+					else if (1 == i)
+						pTriggerObject->SetMonsterTag(tcFactor);
 					break;
 				}
 				// TODO : 팩터 해석을 작성합니다.
@@ -303,19 +315,18 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 			//pDynamicObject->SetActivated(false);
 			//Engine::Safe_Release(pDynamicObject);
 		}
-		else
-			pLayer->Add_GameObject(L"MapObjects", pTriggerObject);
+		/*else
+			pLayer->Add_GameObject(L"MapObjects", pTriggerObject);*/
 
 		switch (pTriggerObject->GetTriggerType()) {
-		case TRIGGER::TYPE_DEATH:
-			break;
 		case TRIGGER::TYPE_CHECKPOINT:
 			m_vecTrigger_CheckPoint.emplace_back(pTriggerObject);
 			break;
-		case TRIGGER::TYPE_SPAWN:
-			break;
 		}
 	}
+	
+	// 오브젝트 링크
+	Link(pLayer);
 
 	sort(m_vecTrigger_CheckPoint.begin(), m_vecTrigger_CheckPoint.end(), [](const CTrigger* pObj1, const CTrigger* pObj2) {
 		return pObj1->GetSortingOrderIndex() < pObj2->GetSortingOrderIndex();
@@ -342,4 +353,41 @@ _vec3 CMap::GetCurSpawnPoint()
 	}
 
 	return m_vecTrigger_CheckPoint[iSize - 1]->GetTransform()->GetPos();
+}
+
+void CMap::Link(Engine::CLayer* pLayer)
+{
+	auto vecMapObjects = pLayer->GetLayerList(L"MapObjects");
+	// Trigger
+
+	for (auto iter1 = vecMapObjects.begin(); iter1 != vecMapObjects.end(); ++iter1) {
+		for (auto iter2 = iter1; iter2 != vecMapObjects.end(); ++iter2) {
+			if (iter1 == iter2)
+				continue;
+
+			if (dynamic_cast<CTrigger*>(*iter1)) {
+				if (dynamic_cast<CTrigger*>(*iter2)) {
+					CTrigger* pTrigger1 = dynamic_cast<CTrigger*>(*iter1);
+					CTrigger* pTrigger2 = dynamic_cast<CTrigger*>(*iter2);
+
+					switch (pTrigger1->GetTriggerType()) {
+					case TRIGGER::TYPE_SPAWN:
+						switch (pTrigger2->GetTriggerType()) {
+						case TRIGGER::TYPE_SPAWNER:
+							pTrigger1->AddSpawner(pTrigger2);
+							break;
+						}
+						break;
+					case TRIGGER::TYPE_SPAWNER:
+						switch (pTrigger2->GetTriggerType()) {
+						case TRIGGER::TYPE_SPAWN:
+							pTrigger2->AddSpawner(pTrigger1);
+							break;
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
 }

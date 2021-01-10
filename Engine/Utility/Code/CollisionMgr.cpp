@@ -48,39 +48,17 @@ void CCollisionMgr::ProcessCollision()
 	// 충돌 체크를 진행한다.
 	CollisionInfo tCollisionInfo1, tCollisionInfo2;
 
-	for (auto& rObj1 : m_ObjectList) {
-		for (auto& rObj2 : m_ObjectList) {
+	CGameObject* rObj1 = nullptr;
+	CGameObject* rObj2 = nullptr;
+	for(auto iter1 = m_ObjectList.begin(); iter1 != m_ObjectList.end(); ++iter1)
+		for (auto iter2 = iter1; iter2 != m_ObjectList.end(); ++iter2) {
 			try {
+				rObj1 = *iter1;
+				rObj2 = *iter2;
 				if (rObj1 == rObj2 || !rObj1->IsValid() || !rObj2->IsValid())
 					continue;		// 같은 오브젝트끼리는 충돌 검출을 하지 않아요.
 
-				//if (rObj1->GetCullingSphere() && rObj2->GetCullingSphere()) {
-					if (IsCollided(rObj1->GetCullingSphere(), rObj2->GetCullingSphere())) {
-						for (auto& rCollider1 : rObj1->GetOptimizedColliderList()) {
-							for (auto& rCollider2 : rObj2->GetOptimizedColliderList()) {
-								if (rCollider1 == rObj1->GetCullingSphere() || rCollider2 == rObj2->GetCullingSphere())
-									continue;
-
-								tCollisionInfo1.pCollidedObject = rObj2;
-								tCollisionInfo1.pCollidedCollider = rCollider2;
-								tCollisionInfo2.pCollidedObject = rObj1;
-								tCollisionInfo2.pCollidedCollider = rCollider1;
-
-								if (rCollider1->IsActivated() && rCollider2->IsActivated() && IsCollided(rCollider1, rCollider2)) {
-									rObj1->OnCollision(tCollisionInfo1);
-									rObj2->OnCollision(tCollisionInfo2);
-								}
-								else {
-									rObj1->OnNotCollision(tCollisionInfo1);
-									rObj2->OnNotCollision(tCollisionInfo2);
-								}
-								if (!rObj1->IsValid() || !rObj2->IsValid())
-									throw false;
-							}
-						}
-					}
-				//}
-				/*else {
+				if (IsCollided(rObj1->GetCullingSphere(), rObj2->GetCullingSphere())) {
 					for (auto& rCollider1 : rObj1->GetOptimizedColliderList()) {
 						for (auto& rCollider2 : rObj2->GetOptimizedColliderList()) {
 							if (rCollider1 == rObj1->GetCullingSphere() || rCollider2 == rObj2->GetCullingSphere())
@@ -103,13 +81,12 @@ void CCollisionMgr::ProcessCollision()
 								throw false;
 						}
 					}
-				}*/
+				}
 			}
 			catch (_bool) {
 				continue;
 			}
 		}
-	}
 
 	// 충돌 처리 이후 유효하지 않게된 객체는 제거한다.
 	m_ObjectList.remove_if([](CGameObject* _pObj) {

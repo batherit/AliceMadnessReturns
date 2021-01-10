@@ -135,6 +135,7 @@ BOOL CMapTab::OnInitDialog()
 	m_treeObjectList.InsertItem(L"Trigger_Death", m_itemTriggerL, NULL);
 	m_treeObjectList.InsertItem(L"Trigger_CheckPoint", m_itemTriggerL, NULL);
 	m_treeObjectList.InsertItem(L"Trigger_Spawn", m_itemTriggerL, NULL);
+	m_treeObjectList.InsertItem(L"Spawner", m_itemTriggerL, NULL);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
@@ -168,6 +169,9 @@ void CMapTab::OnBnClickedButtonAdd()
 			}
 			else if (lstrcmp(L"Trigger_Spawn", pMeshTag) == 0) {
 				AddTriggerObject(TRIGGER::TYPE_SPAWN);
+			}
+			else if (lstrcmp(L"Spawner", pMeshTag) == 0) {
+				AddTriggerObject(TRIGGER::TYPE_SPAWNER);
 			}
 		}
 	}
@@ -544,7 +548,11 @@ void CMapTab::UpdateAddedTree(const vector<CStaticObject*>& rStaticObjects, cons
 			case TRIGGER::TYPE_SPAWN:
 				m_treeAddedObject.InsertItem(L"Trigger_Spawn", m_itemTriggerR, NULL);
 				break;
+			case TRIGGER::TYPE_SPAWNER:
+				m_treeAddedObject.InsertItem(L"Spawner", m_itemTriggerR, NULL);
+				break;
 			}
+			
 		}
 	}
 
@@ -695,6 +703,9 @@ _bool CMapTab::AddTriggerObject(TRIGGER::E_TYPE _eTriggerType)
 			break;
 		case TRIGGER::TYPE_SPAWN:
 			m_treeAddedObject.InsertItem(L"Trigger_Spawn", m_itemTriggerR, NULL);
+			break;
+		case TRIGGER::TYPE_SPAWNER:
+			m_treeAddedObject.InsertItem(L"Spawner", m_itemTriggerR, NULL);
 			break;
 		}
 		return true;

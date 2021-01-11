@@ -9,7 +9,8 @@
 #include "UI_OrthoPlane.h"
 #include "UI_Cursor.h"
 #include "Attribute.h"
-#include "PlayScene.h"
+//#include "PlayScene.h"
+#include "PoolScene.h"
 
 CTitleScene::CTitleScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -48,7 +49,7 @@ HRESULT CTitleScene::Ready(void)
 int CTitleScene::Update(const _float& fTimeDelta)
 {
 	if (!m_pFadeInOutUI->IsFadeIn() && !m_pFadeInOutUI->IsProcessing()) {
-		Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+		Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
 	}
 
 	return CScene::Update(fTimeDelta);
@@ -131,7 +132,7 @@ HRESULT CTitleScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pAlice->SetRenderInfo(L"AliceW");
 	pAlice->GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_Idle);
 	pAlice->GetTransform()->SetScaleXYZ(1.0f, 1.0f, 1.0f);
-	pAlice->GetTransform()->SetPos(-0.2f, -1.4f, -0.5f);
+	pAlice->GetTransform()->SetPos(-0.2f, -1.35f, -0.6f);
 	pAlice->GetTransform()->RotateByUp(D3DX_PI * 0.9f);
 	pLayer->Add_GameObject(pAlice);
 

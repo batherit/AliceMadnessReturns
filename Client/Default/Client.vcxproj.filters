@@ -163,12 +163,6 @@
     <Filter Include="02. Object\02. GameObject\UI\BunnyBomb">
       <UniqueIdentifier>{1d6a63c3-d066-4184-8f94-d71ed0d8858e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\03. Play">
-      <UniqueIdentifier>{ece43087-460b-4854-b6ec-fae4eb8aa6c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\04. Boss">
-      <UniqueIdentifier>{934eeef6-275b-492f-8e4b-b69a22803f5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\02. Title">
       <UniqueIdentifier>{75aea9b0-8c2e-471f-a8bc-a553ac379261}</UniqueIdentifier>
     </Filter>
@@ -204,6 +198,21 @@
     </Filter>
     <Filter Include="02. Object\02. GameObject\Platform">
       <UniqueIdentifier>{562557b0-76dc-4fa4-ad36-14f9373b1a78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\04. Play">
+      <UniqueIdentifier>{ece43087-460b-4854-b6ec-fae4eb8aa6c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\05. Boss">
+      <UniqueIdentifier>{934eeef6-275b-492f-8e4b-b69a22803f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Pool">
+      <UniqueIdentifier>{32f78452-3868-4f17-a8d1-006d0ef408d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\AliceL">
+      <UniqueIdentifier>{1887aacf-f166-4707-83bd-2947dfaa69f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. State\AliceL">
+      <UniqueIdentifier>{3346be63-623e-437c-b97c-ead558093d75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -427,10 +436,10 @@
       <Filter>02. Object\02. GameObject\UI\FadeInOut</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\PlayScene.h">
-      <Filter>01. Scene\03. Play</Filter>
+      <Filter>01. Scene\04. Play</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BossScene.h">
-      <Filter>01. Scene\04. Boss</Filter>
+      <Filter>01. Scene\05. Boss</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BunnyBomb.h">
       <Filter>02. Object\02. GameObject\BunnyBomb</Filter>
@@ -471,6 +480,18 @@
     <ClInclude Include="..\Code\Platform.h">
       <Filter>02. Object\02. GameObject\Platform</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\AliceL.h">
+      <Filter>02. Object\02. GameObject\AliceL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceLState_Run.h">
+      <Filter>03. State\AliceL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceLState_Idle.h">
+      <Filter>03. State\AliceL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\PoolScene.h">
+      <Filter>01. Scene\03. Pool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -495,7 +516,7 @@
       <Filter>01. Scene\00. Loading</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayScene.cpp">
-      <Filter>01. Scene\03. Play</Filter>
+      <Filter>01. Scene\04. Play</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LoadScene.cpp">
       <Filter>01. Scene\01. Load</Filter>
@@ -666,7 +687,7 @@
       <Filter>02. Object\02. GameObject\UI\FadeInOut</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BossScene.cpp">
-      <Filter>01. Scene\04. Boss</Filter>
+      <Filter>01. Scene\05. Boss</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BunnyBomb.cpp">
       <Filter>02. Object\02. GameObject\BunnyBomb</Filter>
@@ -706,6 +727,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\Platform.cpp">
       <Filter>02. Object\02. GameObject\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceL.cpp">
+      <Filter>02. Object\02. GameObject\AliceL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceLState_Idle.cpp">
+      <Filter>03. State\AliceL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceLState_Run.cpp">
+      <Filter>03. State\AliceL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PoolScene.cpp">
+      <Filter>01. Scene\03. Pool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -100,7 +100,7 @@ void CValve::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 				else if(fVelocityY >= 10.f)
 					pAlice->GetPhysics()->SetVelocityY(10.f);
 				_float fIntensity = 1.f + Engine::Clamp(pAlice->GetPhysics()->GetVelocity().y, -10.f, 0.f) * 0.1f;	// 0 -> 최대 낙하 속도
-				fIntensity = Engine::GetValueByWeight(fIntensity, 0.8f, 0.5f);
+				fIntensity = Engine::GetValueByWeight(fIntensity, 1.2f, 0.8f);
 				/*_float fToAliceY = Engine::Clamp(_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos().y - GetTransform()->GetPos().y, 5.f, 10.f);
 				_float fT = Engine::GetWeightByValue(fToAliceY, 5.f, 10.f);*/
 				pAlice->GetPhysics()->AddVelocityY(fIntensity/* + Engine::GetValueByWeight(fT, 0.f, 0.1f)*/);

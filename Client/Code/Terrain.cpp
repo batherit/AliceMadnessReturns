@@ -55,9 +55,9 @@ void CTerrain::Render_Object(void)
 	LPD3DXEFFECT	 pEffect = m_pShader->Get_EffectHandle();
 	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
 
-	//pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
-	m_vDir = Engine::GetRotatedVector(WORLD_Z_AXIS, D3DXToRadian(30.f) * 0.1f, m_vDir);
-	pEffect->SetVector("g_vLightDir", &_vec4(m_vDir, 0.f));
+	pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
+	//m_vDir = Engine::GetRotatedVector(WORLD_Z_AXIS, D3DXToRadian(30.f) * 0.1f, m_vDir);
+	//pEffect->SetVector("g_vLightDir", &_vec4(m_vDir, 0.f));
 	pEffect->SetVector("g_LightDiffuse", (_vec4*)&pLightInfo->Diffuse);
 	pEffect->SetVector("g_LightAmbient", (_vec4*)&pLightInfo->Ambient);
 

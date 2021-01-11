@@ -494,6 +494,109 @@ namespace ANIM {
 		MADCAP_END
 	};
 
+	// 미니 그룬트
+	enum E_MINIGRUNT_ANIM {
+		Grunt_Min_attack_01_A,                    //0	frame:[26]
+		Grunt_Min_attack_01_B,                    //1	frame:[36]
+		Grunt_Min_attack_01_C,                    //2	frame:[31]
+		Grunt_Min_attack_01_D,                    //3	frame:[61]
+		Grunt_Min_attack_02,                      //4	frame:[41]
+		Grunt_Min_attack_02_A,                    //5	frame:[26]
+		Grunt_Min_attack_02_B,                    //6	frame:[36]
+		Grunt_Min_attack_02_C,                    //7	frame:[31]
+		Grunt_Min_attack_02_D,                    //8	frame:[61]
+		Grunt_Min_attack_05_A,                    //9	frame:[27]
+		Grunt_Min_attack_05_B,                    //10	frame:[15]
+		Grunt_Min_attack_06_A,                    //11	frame:[31]
+		Grunt_Min_attack_06_B,                    //12	frame:[11]
+		Grunt_Min_attack_Idle,                    //13	frame:[61]
+		Grunt_Min_Damage_H,                       //14	frame:[51]
+		Grunt_Min_Damage_H_2,                     //15	frame:[51]
+		Grunt_Min_die_2,                          //16	frame:[101]
+		Grunt_Min_die_3,                          //17	frame:[81]
+		Grunt_Min_die_4,                          //18	frame:[96]
+		Grunt_Min_Falling,                        //19	frame:[17]
+		Grunt_Min_PreSpawn,                       //20	frame:[61]
+		Grunt_Min_Spawn_2,                        //21	frame:[61]
+		Grunt_Min_Spawn_3,                        //22	frame:[61]
+		Grunt_Min_Spawn_4,                        //23	frame:[61]
+		Grunt_Min_Strafe_3_B,                     //24	frame:[17]
+		Grunt_Min_Strafe_3_F,                     //25	frame:[17]
+		Grunt_Min_Strafe_3_Left,                  //26	frame:[17]
+		Grunt_Min_Strafe_3_Right,                 //27	frame:[17]
+		Grunt_Min_Strafe_B,                       //28	frame:[49]
+		Grunt_Min_Strafe_F,                       //29	frame:[49]
+		Grunt_Min_Strafe_Left,                    //30	frame:[49]
+		Grunt_Min_Strafe_Right,                   //31	frame:[49]
+		Grunt_Min_Taunt_1,                        //32	frame:[61]
+		Grunt_Min_Taunt_3,                        //33	frame:[61]
+		Grunt_Min_Taunt_4,                        //34	frame:[71]
+		Grunt_Min_Warn,                           //35	frame:[81]
+		Grunt_Mini_Damage_L,                      //36	frame:[23]
+		Grunt_Mini_Damage_L_2,                    //37	frame:[31]
+		Grunt_Mini_Damage_L_3,                    //38	frame:[31]
+		MINIGRUNT_ANIM_END
+	};
+
+	enum E_BOSS_ANIM {
+		Executioner_Attack01,                     //0	frame:[71]
+		Executioner_Attack01_Matinee,             //1	frame:[71]
+		Executioner_Attack02,                     //2	frame:[75]
+		Executioner_Attack03,                     //3	frame:[91]
+		Executioner_Attack04,                     //4	frame:[153]
+		Executioner_Attack05,                     //5	frame:[134]
+		Executioner_Attack05_A,                   //6	frame:[73]
+		Executioner_Attack06,                     //7	frame:[131]
+		Executioner_Attack07,                     //8	frame:[181]
+		Executioner_AttackSlam,                   //9	frame:[129]
+		Executioner_Entrance_BloodWall,           //10	frame:[253]
+		Executioner_Entrance_DoorBreak,           //11	frame:[94]
+		Executioner_Entrance_Fall_Land,           //12	frame:[52]
+		Executioner_Entrance_Fall_Loop,           //13	frame:[20]
+		Executioner_Entrance_Fall_Start,          //14	frame:[36]
+		Executioner_Entrance_JumpDown,            //15	frame:[116]
+		Executioner_Giant_Idle,                   //16	frame:[51]
+		Executioner_Giant_Laugh02,                //17	frame:[81]
+		Executioner_Giant_Laugh03,                //18	frame:[81]
+		Executioner_Idle,                         //19	frame:[51]
+		Executioner_Jump_Fall,                    //20	frame:[13]
+		Executioner_Jump_Land,                    //21	frame:[34]
+		Executioner_Jump_Rise,                    //22	frame:[7]
+		Executioner_Jump_Start,                   //23	frame:[13]
+		Executioner_KnockBack,                    //24	frame:[79]
+		Executioner_Laugh01,                      //25	frame:[81]
+		Executioner_Laugh02,                      //26	frame:[81]
+		Executioner_Laugh03,                      //27	frame:[81]
+		Executioner_Run_01,                       //28	frame:[31]
+		Executioner_Strafe_Bk,                    //29	frame:[51]
+		Executioner_Strafe_Fwd,                   //30	frame:[51]
+		Executioner_Turn_Lft,                     //31	frame:[35]
+		Executioner_Turn_Rgt,                     //32	frame:[35]
+		BOSS_ANIM_END
+	};
+
+	// 고양이
+	enum E_CAT_ANIM {
+		Cat_Idle,                                 //0	frame:[181]
+		Cat_Jump,                                 //1	frame:[33]
+		Cat_Meow,                                 //2	frame:[47]
+		Cat_Rub,                                  //3	frame:[111]
+		Cat_Rub01,                                //4	frame:[161]
+		Cat_Run,                                  //5	frame:[21]
+		Cat_Walk,                                 //6	frame:[37]
+		CAT_ANIM_END
+	};
+
+	enum E_BIGGUY_ANIM {
+		BigGuy_LSP_Idle_a,                        //0	frame:[101]
+		BigGuy_LSP_Idle_b,                        //1	frame:[295]
+		BigGuy_LSP_Sit_Idle,                      //2	frame:[490]
+		BigGuy_LSP_Talk_a,                        //3	frame:[326]
+		BigGuy_LSP_Talk_b,                        //4	frame:[221]
+		Bigguy_LSP_Walk,                          //5	frame:[40]
+		E_BIGGUY_ANIM
+	};
+
 	// 후추분쇄기
 	enum E_WP3_ANIM {
 		WP3_Attack_Alt_A,                         //0	frame:[26]

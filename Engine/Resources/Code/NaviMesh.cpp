@@ -36,6 +36,19 @@ _int CNaviMesh::GetNaviIndexByPos(const _vec3 & _vCurrentPos, const _vec3 & _vTa
 	return -1;
 }
 
+_int CNaviMesh::GetNaviIndexByPos(const _vec3 & _vCurrentPos) const
+{
+	_int iCellSize = m_vecCell.size();
+
+	for (_int i = 0; i < iCellSize; ++i) {
+		if (m_vecCell[i]->IsPosInCell(_vCurrentPos)) {
+			return i;
+		}
+	}
+
+	return -1;
+}
+
 HRESULT Engine::CNaviMesh::Ready_NaviMeshes(void)
 {
 	//m_vecCell.reserve(4);
@@ -130,6 +143,36 @@ _vec3 CNaviMesh::Move_OnNaviMesh(_int& _iCellIndex, const _vec3* pCurrentPos, co
 		break;
 	}
 
+
+	return *pTargetPos;
+}
+
+_vec3 CNaviMesh::MoveOnNaviMesh_Adhesion(_int & _iCellIndex, const _vec3 * pCurrentPos, const _vec3 * pTargetPos)
+{
+	if (*pCurrentPos == *pTargetPos)
+		return *pTargetPos;
+
+	_vec3 vEndPos = *pTargetPos;
+	_vec3 vHitPos;
+
+	/*if (_iCellIndex == -1 || !m_vecCell[_iCellIndex]->IsPosInCell(*pCurrentPos)) {
+		_iCellIndex = GetNaviIndexByPos(*pCurrentPos);
+	}
+
+	if (_iCellIndex == -1)
+		return *pCurrentPos;*/
+
+	if (CCell::INSIDE == m_vecCell[_iCellIndex]->CompareCell(&vEndPos, &_iCellIndex)) {
+		_float fHeight = m_vecCell[_iCellIndex]->GetHeight(vEndPos);
+		vEndPos.y = fHeight;
+		return vEndPos;
+	}
+	else {
+		vEndPos = m_vecCell[_iCellIndex]->GetPosInCell(vEndPos);
+		_float fHeight = m_vecCell[_iCellIndex]->GetHeight(vEndPos);
+		vEndPos.y = fHeight;
+		return vEndPos;
+	}
 
 	return *pTargetPos;
 }

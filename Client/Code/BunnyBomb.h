@@ -11,7 +11,7 @@ class CMap;
 class CUI_BunnyBomb;
 class CBunnyBomb : public Engine::CGameObject
 {
-#define BOOM_TIME 8.f
+#define BOOM_TIME 20.f
 
 private: // 持失切, 社瑚切
 	explicit  CBunnyBomb(LPDIRECT3DDEVICE9 pGraphicDev);

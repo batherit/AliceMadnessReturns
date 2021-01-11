@@ -173,20 +173,20 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 
 	// Stone 메쉬 원본 생성
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Stone",
 		Engine::TYPE_STATIC,
 		L"../../Resource/Mesh/StaticMesh/TombStone/",
 		L"TombStone.X"),
-		E_FAIL);
+		E_FAIL);*/
 
 	// 스톤에 맞는 메쉬 콜라이더 원본 생성.
-	Engine::CStaticMesh* pStaticMesh = nullptr;
+	/*Engine::CStaticMesh* pStaticMesh = nullptr;
 	pStaticMesh = static_cast<Engine::CStaticMesh*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, L"Mesh_Stone"));
 	Engine::CComponent* pComponent = Engine::CMeshCollider::Create(m_pGraphicDev, pStaticMesh->Get_VtxPos(), pStaticMesh->Get_NumVtx(), pStaticMesh->Get_Stride());
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(L"Collider_Stone", pComponent);
+	Engine::Ready_Proto(L"Collider_Stone", pComponent);*/
 
 	// Player 메쉬 원본 생성
 	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -379,58 +379,163 @@ _uint CLoading::Loading_ForStage(void)
 	//	NULL),
 	//	E_FAIL);
 
-	// CobbledStreet 생성
+	//Minge
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
-		L"CobbledStreet",
+		L"PoorbuildingE01_BlockA",
 		Engine::TYPE_STATIC,
-		L"../../Resource/Mesh/StaticMesh/Chapter1/",
-		L"CobbledStreet.X"),
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingE01_BlockA.X"),
 		E_FAIL);
 
-	// CobbledStreet_Even
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
-		L"CobbledStreet_Even",
+		L"PoorbuildingF01_BlockA",
 		Engine::TYPE_STATIC,
-		L"../../Resource/Mesh/StaticMesh/Chapter1/",
-		L"CobbledStreet_Even.X"),
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingF01_BlockA.X"),
 		E_FAIL);
 
-	// PoorBuildingE01
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
-		L"PoorBuildingE01",
+		L"PoorbuildingF01_BlockB",
 		Engine::TYPE_STATIC,
-		L"../../Resource/Mesh/StaticMesh/Chapter1/",
-		L"PoorBuildingE01.X"),
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingF01_BlockB.X"),
 		E_FAIL);
 
-	// Curb_90
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PoorbuildingA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingA.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PoorbuildingB",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingB.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PoorbuildingC",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingC.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"BrickWallArch",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"BrickWallArch.X"),
+		E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Curb_90",
 		Engine::TYPE_STATIC,
-		L"../../Resource/Mesh/StaticMesh/Chapter1/",
+		L"../../Resource/Mesh/StaticMesh/Minge/",
 		L"Curb_90.X"),
 		E_FAIL);
 
-	// Curb_Uneven
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Curb_Uneven",
-		Engine::TYPE_STATIC,
-		L"../../Resource/Mesh/StaticMesh/Chapter1/",
-		L"Curb_Uneven.X"),
-		E_FAIL);
-
-	// Curb_Section
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Curb_Section",
 		Engine::TYPE_STATIC,
-		L"../../Resource/Mesh/StaticMesh/Chapter1/",
+		L"../../Resource/Mesh/StaticMesh/Minge/",
 		L"Curb_Section.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Curb_Uneven",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Curb_Uneven.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Facade_Block_Greybrick",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Facade_Block_Greybrick.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Facade_BlockLow_Greybrick",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Facade_BlockLow_Greybrick.X"),
+		E_FAIL);
+
+	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Facade_Block_Redbrick",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Facade_Block_Redbrick.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_Block_Redbrick");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_Block_Redbrick");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Facade_BlockLow_Redbrick",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Facade_BlockLow_Redbrick.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_BlockLow_Redbrick");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_BlockLow_Redbrick");*/
+
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"IronGateA_Fence",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"IronGateA_Fence.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"IronGateA_Gate",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"IronGateA_Gate.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Roadworks_Barrier",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Roadworks_Barrier.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Facade2_WallLong_StyleA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Facade2_WallLong_StyleA.X"),
+		E_FAIL);
+
+	// 앨리스L
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"AliceL",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/AliceL/",
+		L"AliceL.X"),
 		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

@@ -318,7 +318,7 @@ _uint CLoading::Loading_ForStage(void)
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Valve");
 
 	// CobbledStreet 积己
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"CobbledStreet",
 		Engine::TYPE_STATIC,
@@ -326,10 +326,10 @@ _uint CLoading::Loading_ForStage(void)
 		L"CobbledStreet.X"),
 		E_FAIL);
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet");
-	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet");*/
 
 	// CobbledStreet_Even
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"CobbledStreet_Even",
 		Engine::TYPE_STATIC,
@@ -337,10 +337,10 @@ _uint CLoading::Loading_ForStage(void)
 		L"CobbledStreet_Even.X"),
 		E_FAIL);
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet_Even");
-	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet_Even");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CobbledStreet_Even");*/
 
 	// PoorBuildingE01
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"PoorBuildingE01",
 		Engine::TYPE_STATIC,
@@ -348,32 +348,32 @@ _uint CLoading::Loading_ForStage(void)
 		L"PoorBuildingE01.X"),
 		E_FAIL);
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorBuildingE01");
-	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorBuildingE01");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorBuildingE01");*/
 
 	// Curb_90
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Curb_90",
-		Engine::TYPE_STATIC,
-		L"../../Resource/Mesh/StaticMesh/Chapter1/",
-		L"Curb_90.X"),
-		E_FAIL);
-	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_90");
-	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_90");
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Curb_90",
+	//	Engine::TYPE_STATIC,
+	//	L"../../Resource/Mesh/StaticMesh/Chapter1/",
+	//	L"Curb_90.X"),
+	//	E_FAIL);
+	//m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_90");
+	//m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_90");
 
 	// Curb_Uneven
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Curb_Uneven",
-		Engine::TYPE_STATIC,
-		L"../../Resource/Mesh/StaticMesh/Chapter1/",
-		L"Curb_Uneven.X"),
-		E_FAIL);
-	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Uneven");
-	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Uneven");
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Curb_Uneven",
+	//	Engine::TYPE_STATIC,
+	//	L"../../Resource/Mesh/StaticMesh/Chapter1/",
+	//	L"Curb_Uneven.X"),
+	//	E_FAIL);
+	//m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Uneven");
+	//m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Uneven");
 
 	// Curb_Section
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Curb_Section",
 		Engine::TYPE_STATIC,
@@ -381,7 +381,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"Curb_Section.X"),
 		E_FAIL);
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Section");
-	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Section");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Section");*/
 
 	// 倒苞 唱公甸
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -584,6 +584,197 @@ _uint CLoading::Loading_ForStage(void)
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Platform");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Platform");
 
+	//Minge
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PoorbuildingE01_BlockA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingE01_BlockA.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingE01_BlockA");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingE01_BlockA");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PoorbuildingF01_BlockA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingF01_BlockA.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingF01_BlockA");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingF01_BlockA");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PoorbuildingF01_BlockB",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingF01_BlockB.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingF01_BlockB");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingF01_BlockB");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PoorbuildingA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingA.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingA");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingA");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PoorbuildingB",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingB.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingB");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingB");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PoorbuildingC",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"PoorbuildingC.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingC");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"PoorbuildingC");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"BrickWallArch",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"BrickWallArch.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"BrickWallArch");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"BrickWallArch");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Curb_90",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Curb_90.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_90");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_90");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Curb_Section",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Curb_Section.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Section");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Section");
+	
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Curb_Uneven",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Curb_Uneven.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Uneven");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Curb_Uneven");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Facade_Block_Greybrick",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Facade_Block_Greybrick.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_Block_Greybrick");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_Block_Greybrick");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Facade_BlockLow_Greybrick",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Facade_BlockLow_Greybrick.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_BlockLow_Greybrick");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_BlockLow_Greybrick");
+
+	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Facade_Block_Redbrick",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Facade_Block_Redbrick.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_Block_Redbrick");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_Block_Redbrick");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Facade_BlockLow_Redbrick",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Facade_BlockLow_Redbrick.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_BlockLow_Redbrick");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_BlockLow_Redbrick");*/
+
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"IronGateA_Fence",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"IronGateA_Fence.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"IronGateA_Fence");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"IronGateA_Fence");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"IronGateA_Gate",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"IronGateA_Gate.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"IronGateA_Gate");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"IronGateA_Gate");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Roadworks_Barrier",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Roadworks_Barrier.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Roadworks_Barrier");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Roadworks_Barrier");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Facade2_WallLong_StyleA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Minge/",
+		L"Facade2_WallLong_StyleA.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade2_WallLong_StyleA");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade2_WallLong_StyleA");
+
+	// 举府胶L
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"AliceL",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/AliceL/",
+		L"AliceL.X"),
+		E_FAIL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"AliceL");
 
 	// 举府胶W
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -594,6 +785,8 @@ _uint CLoading::Loading_ForStage(void)
 		L"AliceW.X"),
 		E_FAIL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"AliceW");
+
+
 
 	// 概靛母A
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

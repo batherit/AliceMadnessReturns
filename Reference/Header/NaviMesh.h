@@ -18,11 +18,13 @@ public:
 	//void		Set_NaviIndex(const _int& _iIndex) { m_iIndex = _iIndex; }
 	//_int		GetNaviIndex() const { return m_iIndex; }
 	_int		GetNaviIndexByPos(const _vec3 & _vCurrentPos, const _vec3 & _vTargetPos) const;
+	_int		GetNaviIndexByPos(const _vec3 & _vCurrentPos) const;
 
 public:
 	HRESULT		Ready_NaviMeshes(void);
 	void		Render_NaviMeshes(void);
 	_vec3		Move_OnNaviMesh(_int& _iCellIndex, const _vec3* pCurrentPos, const _vec3* pTargetPos, CPhysics* _pPhysics = nullptr);
+	_vec3		MoveOnNaviMesh_Adhesion(_int& _iCellIndex, const _vec3* pCurrentPos, const _vec3* pTargetPos);
 	_vec3		GetSlidedPos(const _vec3& _vPos);
 	//_bool		LoadNaviMeshFromFile(const _tchar* _pFilePath);
 	HRESULT		AddCell(const _vec3& _vV1, const _vec3& _vV2, const _vec3& _vV3, const _int& _iTagIndex = 0);

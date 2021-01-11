@@ -38,6 +38,22 @@ namespace Client{
 		int iRepeatedCount = 0;
 	}AnimProcessingInfo;
 
+	// 라우팅 인포
+	typedef struct _routing_info {
+		_routing_info(_float _fX, _float _fY, _float _fZ, _float _fSecToReach)
+			:
+			vPoint(_vec3(_fX, _fY, _fZ)),
+			fSecToReach(_fSecToReach)
+		{}
+		_routing_info(_vec3 _vPoint, _float _fSecToReach)
+			:
+			vPoint(_vPoint),
+			fSecToReach(_fSecToReach)
+		{}
+		_vec3 vPoint;
+		_float fSecToReach;
+	}ROUTING_INFO;
+
 	//typedef struct _texture_info
 	//{
 	//	LPDIRECT3DTEXTURE9 pTexture;	// 이미지 한장을 제어하기 위한 컴객체. 

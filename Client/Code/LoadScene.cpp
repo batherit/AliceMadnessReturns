@@ -4,6 +4,7 @@
 #include "TitleScene.h"
 #include "UI_Image.h"
 #include "Attribute.h"
+#include "Route.h"
 
 
 CLoadScene::CLoadScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -129,9 +130,15 @@ void CLoadScene::LoadComponents()
 	NULL_CHECK_RETURN(pComponent, );
 	Engine::Ready_Proto(Engine::COptimization::GetComponentTag(), pComponent);
 
+	// Attribute
 	pComponent = CAttribute::Create();
 	NULL_CHECK_RETURN(pComponent, );
 	Engine::Ready_Proto(CAttribute::GetComponentTag(), pComponent);
+
+	// Route
+	pComponent = CRoute::Create();
+	NULL_CHECK_RETURN(pComponent, );
+	Engine::Ready_Proto(CRoute::GetComponentTag(), pComponent);
 
 	Engine::CShader* pShader = nullptr;
 

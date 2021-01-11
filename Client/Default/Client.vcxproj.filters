@@ -214,6 +214,9 @@
     <Filter Include="03. State\AliceL">
       <UniqueIdentifier>{3346be63-623e-437c-b97c-ead558093d75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Route">
+      <UniqueIdentifier>{c88566a0-deab-454d-8773-d2a511d17792}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -492,6 +495,9 @@
     <ClInclude Include="..\Code\PoolScene.h">
       <Filter>01. Scene\03. Pool</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Route.h">
+      <Filter>04. Component\Route</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -739,6 +745,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\PoolScene.cpp">
       <Filter>01. Scene\03. Pool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Route.cpp">
+      <Filter>04. Component\Route</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

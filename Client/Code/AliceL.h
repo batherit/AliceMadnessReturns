@@ -8,6 +8,7 @@
 
 BEGIN(Client)
 class CMap;
+class CCat;
 class CAttribute;
 template<typename T> class CStateMgr;
 class CAliceL : public Engine::CGameObject
@@ -41,6 +42,7 @@ public:
 
 private:
 	CMap* m_pMap = nullptr;
+	CCat* m_pCat = nullptr;
 
 	CStateMgr<CAliceL>* m_pStateMgr = nullptr;
 	Engine::CDynamicMesh* m_pMesh = nullptr;

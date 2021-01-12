@@ -12,6 +12,8 @@
 #include "UI_InGame.h"
 #include "UI_WeaponLock.h"
 #include "UI_LockedWeapon.h"
+#include "Cat.h"
+#include "Trigger.h"
 
 CAliceL::CAliceL(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -60,6 +62,7 @@ int CAliceL::Update_Object(const _float & _fDeltaTime)
 		return 1;
 
 	if (!m_pMap) {
+		// 맵 세팅
 		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
 		_vec3 vPos = GetTransform()->GetPos();
 		m_iCellIndex = m_pMap->GetNaviMesh()->GetNaviIndexByPos(vPos);
@@ -67,7 +70,12 @@ int CAliceL::Update_Object(const _float & _fDeltaTime)
 			_float fHeight = m_pMap->GetNaviMesh()->GetCell(m_iCellIndex)->GetHeight(vPos);
 			GetTransform()->SetPosY(fHeight);
 		}
-			
+		// 고양이 찾기
+		auto& rMapObject = Engine::GetLayer(L"Environment")->GetLayerList(L"MapObjects");
+		for (auto pObj : rMapObject) {
+			if (m_pCat = dynamic_cast<CCat*>(pObj))
+				break;
+		}
 	}
 	if (!m_pStateMgr->ConfirmValidState())
 		return 1;
@@ -127,6 +135,23 @@ _bool CAliceL::LoadColliders(const _tchar* _pFileName)
 
 void CAliceL::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
+	if(lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Trigger") == 0) {
+		if (dynamic_cast<CTrigger*>(_tCollisionInfo.pCollidedObject)->GetTriggerType()
+			== TRIGGER::TYPE_CHECKPOINT) {
+
+			_int iIndex = 0;
+			for (auto& rObj : m_pMap->GetCheckPoint()) {
+				if (rObj->IsActivated()) {
+					break;
+				}
+				++iIndex;
+			}
+			if (iIndex != 1 && m_pMap->GetCheckPoint(iIndex + 1)) {
+				m_pCat->SetGoOn(true, m_pMap->GetCheckPoint(iIndex + 1)->GetTransform()->GetPos());
+			}
+		}
+	}
+	
 }
 
 void CAliceL::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)

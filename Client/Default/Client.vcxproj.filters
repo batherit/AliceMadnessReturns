@@ -549,6 +549,12 @@
     <ClInclude Include="..\Code\BigGuyBState_Walk.h">
       <Filter>03. State\BigGuyB</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\CatState_Idle.h">
+      <Filter>03. State\Cat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CatState_Run.h">
+      <Filter>03. State\Cat</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -829,6 +835,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\BigGuyBState_Walk.cpp">
       <Filter>03. State\BigGuyB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CatState_Idle.cpp">
+      <Filter>03. State\Cat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CatState_Run.cpp">
+      <Filter>03. State\Cat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -101,6 +101,10 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	if (!m_pStateMgr->ConfirmValidState())
 		return 1;
 
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
+		m_pAttribute->DecreaseHP(100.f);
+	}
+
 	// 부모 먼저 렌더러에 들어가야 올바르게 자식도 transform 됨.
 	m_pRenderer->Update(_fDeltaTime);	
 

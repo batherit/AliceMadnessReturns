@@ -124,7 +124,7 @@ _bool CBigGuyA::LoadColliders(const _tchar* _pFileName)
 void CBigGuyA::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
 	if (!m_bIsTalking) {
-		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Talk") == 0) {
 			m_bIsTalking = true;
 		}
 	}
@@ -133,7 +133,7 @@ void CBigGuyA::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 void CBigGuyA::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)
 {
 	if (m_bIsTalking) {
-		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Talk") == 0) {
 		//	ShoutOut(WINCX* 0.5f, WINCY - WINCY / 6.f, L"왜 일을 안하고 있는 거지,,,??");
 
 			m_bIsTalking = false;

@@ -37,8 +37,8 @@ public:
 	void SetSortingOrderIndex(_int _iSortingOrderIndex) { m_iSortingOrderIndex = _iSortingOrderIndex; }
 	_int GetSortingOrderIndex() const { return m_iSortingOrderIndex; }
 
-	void SetStageIndex(_int _iStageIndex) { m_iStageIndex = _iStageIndex; }
-	_int GetStageIndex() const { return m_iStageIndex; }
+	void SetStageTag(const _tchar* _tcStageTag) { lstrcpy(m_tcStageTag, _tcStageTag); }
+	const _tchar* GetStageTag() const { return m_tcStageTag; }
 
 	void SetSpawnIndex(_int _iSpawnerIndex) { m_iSpawnIndex = _iSpawnerIndex; }
 	_int GetSpawnIndex() const { return m_iSpawnIndex; }
@@ -56,6 +56,7 @@ private:
 	_int m_iStageIndex = -1;
 	_int m_iSpawnIndex = -1;
 	_tchar m_tcMonsterTag[50] = L"NULL";
+	_tchar m_tcStageTag[50] = L"NULL";
 	
 	vector<CTrigger*> m_vecSpawners;
 };

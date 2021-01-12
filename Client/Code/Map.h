@@ -35,6 +35,11 @@ public:
 
 	Engine::CNaviMesh* GetNaviMesh() const { return m_pNaviMesh; }
 	vector<CTrigger*>& GetCheckPoint() { return m_vecTrigger_CheckPoint; }
+	CTrigger* GetCheckPoint(_int _iIndex) {
+		if (_iIndex < 0 || _iIndex >= static_cast<_int>(m_vecTrigger_CheckPoint.size()))
+			return nullptr;
+		return m_vecTrigger_CheckPoint[_iIndex];
+	}
 	_vec3 GetCurSpawnPoint();
 
 private:

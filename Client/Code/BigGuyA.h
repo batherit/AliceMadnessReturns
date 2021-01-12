@@ -39,10 +39,6 @@ public:
 
 	_bool IsTalking() const { return m_bIsTalking; }
 	void ShoutOut(_float _fOffsetX, _float _fOffsetY, const wstring & _wstrText);
-	//_bool IsMoving(const _float& _fDeltaTime, _vec3* _pDir = nullptr);
-	//_bool IsRunOn(const _float&, _vec3* _pDir = nullptr);
-	//CMap* GetMap() const { return m_pMap; }
-	//_int GetCellIndex() const { return m_iCellIndex; }
 
 private:
 	//CMap* m_pMap = nullptr;

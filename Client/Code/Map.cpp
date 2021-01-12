@@ -17,6 +17,7 @@
 #include "Platform.h"
 #include "BigGuyA.h"
 #include "BigGuyB.h"
+#include "Cat.h"
 
 
 CMap::CMap(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -268,6 +269,9 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 				pCustomObject = CBigGuyB::Create(m_pGraphicDev);
 				dynamic_cast<CBigGuyB*>(pCustomObject)->LoadRoutePosList(tcFactors[0]);
 			}
+			else if (lstrcmp(L"Cat", pDynamicObject->GetMeshTag()) == 0) {
+				pCustomObject = CCat::Create(m_pGraphicDev);
+			}
 
 			pCustomObject->GetTransform()->SetPos(pDynamicObject->GetTransform()->GetPos());
 			pCustomObject->GetTransform()->SetScale(pDynamicObject->GetTransform()->GetScale());
@@ -306,7 +310,7 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 			switch (pTriggerObject->GetTriggerType()) {
 			case TRIGGER::TYPE_CHECKPOINT:
 				pTriggerObject->SetSortingOrderIndex(_ttoi(tcFactors[0]));
-				pTriggerObject->SetStageIndex(_ttoi(tcFactors[1]));
+				pTriggerObject->SetStageTag(tcFactors[1]);
 				break;
 			case TRIGGER::TYPE_SPAWN:
 				pTriggerObject->SetSpawnIndex(_ttoi(tcFactors[0]));

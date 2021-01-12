@@ -124,7 +124,7 @@ _bool CBigGuyB::LoadColliders(const _tchar* _pFileName)
 void CBigGuyB::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
 	if (!m_bIsTalking) {
-		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Talk") == 0) {
 			m_bIsTalking = true;
 		}
 	}
@@ -133,7 +133,7 @@ void CBigGuyB::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 void CBigGuyB::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)
 {
 	if (m_bIsTalking) {
-		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Talk") == 0) {
 			//ShoutOut(WINCX * 0.5f, WINCY - WINCY / 6.f, L"뭔가 세상이 잘못됐어!!");
 			m_bIsTalking = false;
 		}

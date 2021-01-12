@@ -217,6 +217,27 @@
     <Filter Include="04. Component\Route">
       <UniqueIdentifier>{c88566a0-deab-454d-8773-d2a511d17792}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\BigGuyB">
+      <UniqueIdentifier>{7febe78f-5923-41c2-8197-d7b87d88e2d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Cat">
+      <UniqueIdentifier>{e5ad3791-a6cb-4575-a4db-150e12475af0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\BigGuyA">
+      <UniqueIdentifier>{5730d401-14f8-46ad-8fc9-343f324a433d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. State\BigGuyA">
+      <UniqueIdentifier>{4b1041b3-58b7-48af-a81b-bc83b08c651a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. State\BigGuyB">
+      <UniqueIdentifier>{f9ed88dc-6601-4cc5-8cb9-a265f95cc9c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. State\Cat">
+      <UniqueIdentifier>{3a32d4cf-b7cc-460a-b323-971477ac9487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\SpeechBubble">
+      <UniqueIdentifier>{e64ba034-7e96-4295-8092-06d04976b6c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -498,6 +519,36 @@
     <ClInclude Include="..\Code\Route.h">
       <Filter>04. Component\Route</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\BigGuyA.h">
+      <Filter>02. Object\02. GameObject\BigGuyA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BigGuyB.h">
+      <Filter>02. Object\02. GameObject\BigGuyB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Cat.h">
+      <Filter>02. Object\02. GameObject\Cat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BigGuyAState_Idle.h">
+      <Filter>03. State\BigGuyA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BigGuyAState_Talk.h">
+      <Filter>03. State\BigGuyA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BigGuyAState_Walk.h">
+      <Filter>03. State\BigGuyA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_SpeechBubble.h">
+      <Filter>02. Object\02. GameObject\UI\SpeechBubble</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BigGuyBState_Idle.h">
+      <Filter>03. State\BigGuyB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BigGuyBState_Talk.h">
+      <Filter>03. State\BigGuyB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BigGuyBState_Walk.h">
+      <Filter>03. State\BigGuyB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -748,6 +799,36 @@
     </ClCompile>
     <ClCompile Include="..\Code\Route.cpp">
       <Filter>04. Component\Route</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigGuyA.cpp">
+      <Filter>02. Object\02. GameObject\BigGuyA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigGuyB.cpp">
+      <Filter>02. Object\02. GameObject\BigGuyB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Cat.cpp">
+      <Filter>02. Object\02. GameObject\Cat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigGuyAState_Idle.cpp">
+      <Filter>03. State\BigGuyA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigGuyAState_Talk.cpp">
+      <Filter>03. State\BigGuyA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigGuyAState_Walk.cpp">
+      <Filter>03. State\BigGuyA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_SpeechBubble.cpp">
+      <Filter>02. Object\02. GameObject\UI\SpeechBubble</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigGuyBState_Idle.cpp">
+      <Filter>03. State\BigGuyB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigGuyBState_Talk.cpp">
+      <Filter>03. State\BigGuyB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigGuyBState_Walk.cpp">
+      <Filter>03. State\BigGuyB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

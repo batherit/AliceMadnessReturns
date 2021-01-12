@@ -786,6 +786,39 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"AliceW");
 
+	// ºò¸ÇA
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"BigGuyA",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/BigGuy/",
+		L"BigGuyA.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"BigGuyA");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"BigGuyA");
+
+	// ºò¸ÇB
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"BigGuyB",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/BigGuy/",
+		L"BigGuyB.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"BigGuyB");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"BigGuyB");
+
+	// Cat
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Cat",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/Cat/",
+		L"Cat.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"Cat");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"Cat");
+
 
 
 	// ¸ÅµåÄ¸A

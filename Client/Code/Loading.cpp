@@ -328,6 +328,33 @@ _uint CLoading::Loading_ForStage(void)
 		L"Platform.X"),
 		E_FAIL);
 
+	// ºò¸ÇA
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"BigGuyA",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/BigGuy/",
+		L"BigGuyA.X"),
+		E_FAIL);
+
+	// ºò¸ÇB
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"BigGuyB",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/BigGuy/",
+		L"BigGuyB.X"),
+		E_FAIL);
+
+	// Cat
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Cat",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/Cat/",
+		L"Cat.X"),
+		E_FAIL);
+
 	// ¸ÅµåÄ¸A
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

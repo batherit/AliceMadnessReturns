@@ -61,7 +61,13 @@ int CAliceL::Update_Object(const _float & _fDeltaTime)
 
 	if (!m_pMap) {
 		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
-		m_iCellIndex = m_pMap->GetNaviMesh()->GetNaviIndexByPos(GetTransform()->GetPos());
+		_vec3 vPos = GetTransform()->GetPos();
+		m_iCellIndex = m_pMap->GetNaviMesh()->GetNaviIndexByPos(vPos);
+		if (m_iCellIndex != -1) {
+			_float fHeight = m_pMap->GetNaviMesh()->GetCell(m_iCellIndex)->GetHeight(vPos);
+			GetTransform()->SetPosY(fHeight);
+		}
+			
 	}
 	if (!m_pStateMgr->ConfirmValidState())
 		return 1;

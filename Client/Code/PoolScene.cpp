@@ -63,12 +63,25 @@ HRESULT CPoolScene::Ready(void)
 
 int CPoolScene::Update(const _float& fTimeDelta)
 {
+	static _bool m_bIsff = false;
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
 		if (Engine::CCollisionMgr::GetInstance()->IsColliderVisible()) {
 			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
 		}
 		else {
 			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
+		}
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
+		if (!m_bIsff) {
+			ShowCursor(true);
+			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false);
+			m_bIsff = true;
+		}
+		else {
+			ShowCursor(false);
+			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
+			m_bIsff = false;
 		}
 	}
 
@@ -179,6 +192,12 @@ HRESULT CPoolScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	// 커서 없애기
 	ShowCursor(false);
 	Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
+
+	// FadeInOut
+	CUI_FadeInOut* pFadeInOut = CUI_FadeInOut::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pFadeInOut, E_FAIL);
+	pLayer->Add_GameObject(L"Effect", pFadeInOut);
+	pFadeInOut->StartFadeInOut(2.f, true);
 
 	//CUI_InGame* pUIInGame = CUI_InGame::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pUIInGame, E_FAIL);

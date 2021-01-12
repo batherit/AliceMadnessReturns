@@ -15,6 +15,8 @@
 #include "Valve.h"
 #include "MirrorPad.h"
 #include "Platform.h"
+#include "BigGuyA.h"
+#include "BigGuyB.h"
 
 
 CMap::CMap(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -257,6 +259,14 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 			}
 			else if (lstrcmp(L"JumpPad", pDynamicObject->GetMeshTag()) == 0) {
 				pCustomObject = CJumpPad::Create(m_pGraphicDev);
+			}
+			else if (lstrcmp(L"BigGuyA", pDynamicObject->GetMeshTag()) == 0) {
+				pCustomObject = CBigGuyA::Create(m_pGraphicDev);
+				dynamic_cast<CBigGuyA*>(pCustomObject)->LoadRoutePosList(tcFactors[0]);
+			}
+			else if (lstrcmp(L"BigGuyB", pDynamicObject->GetMeshTag()) == 0) {
+				pCustomObject = CBigGuyB::Create(m_pGraphicDev);
+				dynamic_cast<CBigGuyB*>(pCustomObject)->LoadRoutePosList(tcFactors[0]);
 			}
 
 			pCustomObject->GetTransform()->SetPos(pDynamicObject->GetTransform()->GetPos());

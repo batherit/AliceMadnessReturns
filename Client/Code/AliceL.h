@@ -47,6 +47,8 @@ private:
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CPhysics* m_pPhysics = nullptr;
 
+
+
 	_int m_iCellIndex = -1;
 };
 

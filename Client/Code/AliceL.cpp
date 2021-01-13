@@ -12,6 +12,7 @@
 #include "UI_InGame.h"
 #include "UI_WeaponLock.h"
 #include "UI_LockedWeapon.h"
+#include "UI_SpeechBubble.h"
 #include "Cat.h"
 #include "Trigger.h"
 
@@ -52,6 +53,10 @@ HRESULT CAliceL::Ready_Object(void)
 	// StateMgr
 	m_pStateMgr = new CStateMgr<CAliceL>(*this);
 	m_pStateMgr->SetNextState(new CAliceLState_Idle(*this));
+
+	// SpeechBubble;
+	m_pSpeechBubble = CUI_SpeechBubble::Create(m_pGraphicDev);
+	AddChild(m_pSpeechBubble);
 
 	return S_OK;
 }
@@ -142,12 +147,16 @@ void CAliceL::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 			_int iIndex = 0;
 			for (auto& rObj : m_pMap->GetCheckPoint()) {
 				if (rObj->IsActivated()) {
+					if (iIndex == 2)
+						m_pSpeechBubble->SetText(WINCX / 6.f, WINCY - WINCY / 4.f, L"귀여운 고양이네! 일로 와보렴.");
+					else if (iIndex == 3)
+						m_pSpeechBubble->SetText(WINCX / 6.f, WINCY - WINCY / 4.f, L"어디까지 가는 거니?? 고양아~");
 					break;
 				}
 				++iIndex;
 			}
-			if (iIndex != 1 && m_pMap->GetCheckPoint(iIndex + 1)) {
-				m_pCat->SetGoOn(true, m_pMap->GetCheckPoint(iIndex + 1)->GetTransform()->GetPos());
+			if (iIndex != 1 && m_pMap->GetCheckPoint(iIndex)) {
+				m_pCat->SetGoOn(true, m_pMap->GetCheckPoint(iIndex)->GetTransform()->GetPos());
 			}
 		}
 	}

@@ -7,6 +7,7 @@
 #include "FontMgr.h"
 //#include "InputDev.h"
 #include "DirectInputMgr.h"
+#include "ChronoTimer.h"
 
 BEGIN(Engine)
 
@@ -24,6 +25,7 @@ inline void			Render_End(void);
 // General
 inline _float		Get_TimeDelta(const _tchar* pTimerTag);
 inline void			Set_TimeDelta(const _tchar* pTimerTag);
+inline CChronoTimer* GetTimer(const _tchar* _pTimerTag);
 inline HRESULT		Ready_Timer(const _tchar* pTimerTag);
 
 // FrameMgr

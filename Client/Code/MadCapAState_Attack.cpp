@@ -2,6 +2,7 @@
 #include "MadCapAState_Attack.h"
 #include "MadCapAState_Death.h"
 #include "MadCapAState_Idle.h"
+#include "MadCapAState_Damage.h"
 //#include "MadCapAState_Run.h"
 //#include "MadCapAState_Attack.h"
 //#include "MadCapAState_Jump.h"
@@ -39,9 +40,13 @@ int CMadCapAState_Attack::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
+	//if (m_rOwner.GetAttribute()->IsDamaged()) {
+	//	// 공격 도중에는 데미지 모션으로 전환하지 않는다.
+	//	m_rOwner.GetAttribute()->SetDamaged(false);
+	//}
 	if (m_rOwner.GetAttribute()->IsDamaged()) {
-		// 공격 도중에는 데미지 모션으로 전환하지 않는다.
-		m_rOwner.GetAttribute()->SetDamaged(false);
+		m_rOwner.GetStateMgr()->SetNextState(new CMadCapAState_Damage(m_rOwner));
+		return 0;
 	}
 
 	if (m_bIsAttacking) {

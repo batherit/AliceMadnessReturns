@@ -22,8 +22,8 @@ void CBigGuyBState_Talk::OnLoaded(void)
 {
 	m_fKeepTime = 0.f;
 	m_wstrTalkText[0] = L"아 서둘러야겠어, 놀아야되거든,,,";
-	m_wstrTalkText[1] = L"직장이 뭐지,,,까먹었어,,,";
-	m_wstrTalkText[2] = L"어이 너도 얼른 Oh버워치나 하라고~";
+	m_wstrTalkText[1] = L"아무 생각이 없다,,,";
+	m_wstrTalkText[2] = L"놀고 싶다~";
 
 	if (m_rOwner.GetRoute()->IsNextPositionExisted())
 		m_bIsNextGo = true;

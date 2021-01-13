@@ -3,6 +3,7 @@
 #include "PlayScene.h"
 #include "BossScene.h"
 #include "MadCapA.h"
+#include "MiniGrunt.h"
 
 CTrigger::CTrigger(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -151,6 +152,14 @@ void CTrigger::Spawn()
 		pMadCapA->GetTransform()->SetScale(GetTransform()->GetScale());
 		pMadCapA->GetTransform()->SetAngle(GetTransform()->GetAngle());
 		Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pMadCapA);
+		SetActivated(false);
+	}
+	else if (lstrcmp(L"MiniGrunt", m_tcMonsterTag) == 0) {
+		CMiniGrunt* pMiniGrunt = CMiniGrunt::Create(m_pGraphicDev);
+		pMiniGrunt->GetTransform()->SetPos(GetTransform()->GetPos());
+		pMiniGrunt->GetTransform()->SetScale(GetTransform()->GetScale());
+		pMiniGrunt->GetTransform()->SetAngle(GetTransform()->GetAngle());
+		Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pMiniGrunt);
 		SetActivated(false);
 	}
 }

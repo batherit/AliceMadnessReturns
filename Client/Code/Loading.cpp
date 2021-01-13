@@ -364,6 +364,23 @@ _uint CLoading::Loading_ForStage(void)
 		L"MadCapA.X"),
 		E_FAIL);
 
+	// 나사 파리
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"BolterFly",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/BolterFly/",
+		L"BolterFly.X"),
+		E_FAIL);
+
+	// 미니 그룬트
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MiniGrunt",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/MiniGrunt/",
+		L"MiniGrunt.X"),
+		E_FAIL);
 
 
 	// Alice 메쉬 원본 생성

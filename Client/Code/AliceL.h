@@ -10,6 +10,7 @@ BEGIN(Client)
 class CMap;
 class CCat;
 class CAttribute;
+class CUI_SpeechBubble;
 template<typename T> class CStateMgr;
 class CAliceL : public Engine::CGameObject
 {
@@ -49,7 +50,7 @@ private:
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CPhysics* m_pPhysics = nullptr;
 
-
+	CUI_SpeechBubble* m_pSpeechBubble;
 
 	_int m_iCellIndex = -1;
 };

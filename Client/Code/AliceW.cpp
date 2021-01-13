@@ -232,7 +232,9 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 			return;
 		}
 	}
-	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack") == 0) {
+	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack") == 0
+		|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_L") == 0
+		|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_R") == 0) {
 		if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
 			// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
 			m_pAttribute->Damaged(5.f);

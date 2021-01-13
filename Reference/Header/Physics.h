@@ -85,13 +85,11 @@ public:
 	}
 
 	_vec3 GetUpdatedPos(const _float& _fDeltaTime) {
-		GetUpdatedVelocity(_fDeltaTime);
-		return m_pOwner->GetTransform()->GetPos() + GetVelocity() * _fDeltaTime;
+		return m_pOwner->GetTransform()->GetPos() + GetUpdatedVelocity(_fDeltaTime) * _fDeltaTime;
 	}
 
 	void MoveByDelta(const _float& _fDeltaTime) {
-		GetUpdatedVelocity(_fDeltaTime);
-		m_pOwner->GetTransform()->Translate(GetVelocity() * _fDeltaTime);
+		m_pOwner->GetTransform()->Translate(GetUpdatedVelocity(_fDeltaTime) * _fDeltaTime);
 	}
 
 

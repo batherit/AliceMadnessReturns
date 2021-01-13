@@ -65,3 +65,9 @@ void		Engine::CTimerMgr::Set_TimeDelta(const _tchar* pTimerTag)
 
 	pTimer->RunTick();
 }
+
+CChronoTimer * CTimerMgr::GetTimer(const _tchar * _pTimerTag)
+{
+	return Find_Timer(_pTimerTag);
+}
+

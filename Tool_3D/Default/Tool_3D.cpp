@@ -197,7 +197,7 @@ int CTool3DApp::Run()
 	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_FPS60"), E_FAIL);
 
 	// 프레임 설치
-	FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame_FPS60", 60.f), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame_FPS60", 120.f), E_FAIL);
 
 	// 툴 커널 객체 생성
 	g_pTool3D_Kernel = CTool3D_Kernel::Create();

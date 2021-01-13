@@ -4,6 +4,7 @@
 #include "AliceW.h"
 #include "Monster.h"
 #include "MadCapA.h"
+#include "MiniGrunt.h"
 #include "Stone.h"
 #include "Sword.h"
 #include "SphereRenderer.h"
@@ -63,6 +64,7 @@ HRESULT CPlayScene::Ready(void)
 
 int CPlayScene::Update(const _float& fTimeDelta)
 {
+	//int a = 10;
 	// TODO : 네모를 움직이는 코드를 작성합니다.
 	//_float fHeight = m_pTerrain->GetHeight(m_pPlayer->GetComponent<Engine::CTransform>()->GetPos());
 	//m_pPlayer->GetComponent<Engine::CTransform>()->SetPosY(fHeight);
@@ -146,6 +148,8 @@ int CPlayScene::Update(const _float& fTimeDelta)
 
 void CPlayScene::OnLoaded()
 {
+	//Engine::Set_TimeDelta(L"Timer_FPS60");
+	Engine::GetTimer(L"Timer_FPS60")->RunToPause();
 	Engine::CCollisionMgr::GetInstance()->ClearGameObjectList();
 	Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
 
@@ -159,6 +163,7 @@ void CPlayScene::OnLoaded()
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
 }
 
 void CPlayScene::OnExited()
@@ -286,6 +291,11 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	//pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, -2.f));
 
 
+	// 테스트 미니 그룬트 생성
+	pGameObject = CMiniGrunt::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, 0.f));
 
 
 	// UI

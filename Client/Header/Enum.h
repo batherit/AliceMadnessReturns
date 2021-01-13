@@ -494,6 +494,20 @@ namespace ANIM {
 		MADCAP_END
 	};
 
+	enum E_BOLTERFLY_ANIM {
+		Bolterfly_Attack_MeLee3,                  //0	frame:[7]
+		Bolterfly_Idle_Damaged,                   //1	frame:[11]
+		Bolterfly_Leeching,                       //2	frame:[41]
+		Bolterfly_Leeching_Attach,                //3	frame:[7]
+		Bolterfly_Leeching_Detach,                //4	frame:[35]
+		Bolterfly_Sprint,                         //5	frame:[7]
+		Bolterfly_Strafe_Lft,                     //6	frame:[17]
+		Bolterfly_Strafe_Rgt,                     //7	frame:[17]
+		Bolterfly_Walk,                           //8	frame:[9]
+		Bolterfly_Walk_2,                         //9	frame:[49]
+		BOLTERFLY_ANIM_END
+	};
+
 	// ¹Ì´Ï ±×·éÆ®
 	enum E_MINIGRUNT_ANIM {
 		Grunt_Min_attack_01_A,                    //0	frame:[26]

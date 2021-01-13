@@ -21,7 +21,7 @@ CBigGuyAState_Talk::~CBigGuyAState_Talk()
 void CBigGuyAState_Talk::OnLoaded(void)
 {
 	m_fKeepTime = 0.f;
-	m_wstrTalkText[0] = L"Oh버워치는 정말 재밌거든..!!";
+	m_wstrTalkText[0] = L"Oh버워치 하고 싶다..";
 	m_wstrTalkText[1] = L"집에 가서 놀고 싶구만 이거,,,";
 	m_wstrTalkText[2] = L"내겐 월요병같은 건 없다구~";
 

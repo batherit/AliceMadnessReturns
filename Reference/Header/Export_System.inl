@@ -1,3 +1,4 @@
+#include "Export_System.h"
 // GraphicDev
 // Get
 // Set
@@ -27,6 +28,10 @@ _float		Get_TimeDelta(const _tchar* pTimerTag)
 void		Set_TimeDelta(const _tchar* pTimerTag)
 {
 	CTimerMgr::GetInstance()->Set_TimeDelta(pTimerTag);
+}
+inline CChronoTimer * GetTimer(const _tchar * _pTimerTag)
+{
+	return CTimerMgr::GetInstance()->GetTimer(_pTimerTag);
 }
 HRESULT		Ready_Timer(const _tchar* pTimerTag)
 {

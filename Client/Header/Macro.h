@@ -108,10 +108,15 @@ namespace Client
 #define ALICE_MAX_HP			64.f
 #define PHYSICS_MIN_VEL_Y		-400.f
 
-#define MADCAPA_COGNITIVE_RANGE 5.f
-#define MADCAPA_ATTACK_RANGE	4.0f
+#define MADCAPA_COGNITIVE_RANGE 9.f
+#define MADCAPA_ATTACK_RANGE	3.0f
 #define	MADCAPA_RUN_SPEED		2.f
 #define MADCAPA_MAX_HP			10.f
+
+#define MINIGRUNT_COGNITIVE_RANGE 9.f
+#define MINIGRUNT_ATTACK_RANGE	3.0f
+#define	MINIGRUNT_RUN_SPEED		2.f
+#define MINIGRUNT_MAX_HP			10.f
 
 // 키입력 관련
 //#define	KM_LEFT		0x00000001

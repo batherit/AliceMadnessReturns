@@ -18,6 +18,7 @@ public:
 	void SetProjectionMatrix(const _float& _fFOV, const _float& _fAspect, const _float& _fNearZ, const _float& _fFarZ);
 	inline _matrix GetViewMatrix() const { return m_matView; }
 	inline _matrix GetProjMatrix() const { return m_matProj; }
+	void Shake(_float _fShakeKeepTime, _float _fSakeRadius, _int _iShakeNum);
 
 protected:
 	_matrix			m_matView, m_matProj;
@@ -29,6 +30,15 @@ public:
 
 protected:
 	virtual void Free(void);
+
+private:
+	_bool m_bIsShaking = false;
+	_float m_fShakeKeepTime = 0.f;
+	_float m_fShakeTickTime = 0.f;
+	_float m_fShakeElapsedTime = 0.f;
+	_float m_fShakeRadius = 0.f;
+	_vec3 m_vShakeOffset = _vec3(0.f, 0.f, 0.f);
+	_int m_iShakeNum = 0;
 };
 
 

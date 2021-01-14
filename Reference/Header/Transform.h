@@ -74,7 +74,7 @@ public:
 	_matrix GetParentBoneMatrix() const;
 	void SeparateBoneMatrix(_matrix* _pScale, _matrix* _pRotation, _matrix* _pPosition);
 	const _matrix* GetParentBoneMatrixPointer();
-	_matrix GetObjectMatrix(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const;
+	_matrix GetObjectMatrix(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD, const _vec3& _vRenderOffset = _vec3(0.f, 0.f, 0.f)) const;
 	void SeparateObjectMatrix(_matrix* _pScale, _matrix* _pRotation, _matrix* _pPosition, E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD);
 	_vec3 GetPos(E_COORD_TYPE _eCoordType = COORD_TYPE_WORLD) const;
 	_vec3 GetAngle() const { return m_vAngle; }

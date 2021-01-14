@@ -29,8 +29,9 @@ void CMadCapAState_Attack::OnLoaded(void)
 	m_rOwner.GetPhysics()->SetSpeed(0.f);
 	m_bIsAttacking = false;
 
-	m_pWeaponCollider = m_rOwner.GetWeapon()->GetColliderFromTag(L"EnemyAttack");
-	m_pWeaponCollider->SetActivated(false);
+	m_rOwner.GetAttackCollider()->SetActivated(true);
+	//m_pWeaponCollider = m_rOwner.GetWeapon()->GetColliderFromTag(L"EnemyAttack");
+	//m_pWeaponCollider->SetActivated(false);
 }
 
 int CMadCapAState_Attack::Update(const _float& _fDeltaTime)
@@ -69,7 +70,8 @@ int CMadCapAState_Attack::Update(const _float& _fDeltaTime)
 		D3DXVec3TransformNormal(&vLook, &vLook, &matRot);
 		m_rOwner.GetPhysics()->SetVelocity(vLook * MADCAPA_RUN_SPEED * 12.f);
 		m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.93f);
-		m_pWeaponCollider->SetActivated(true);
+		//m_pWeaponCollider->SetActivated(true);
+		m_rOwner.GetAttackCollider()->SetActivated(true);
 	}
 
 	return 0;
@@ -77,7 +79,7 @@ int CMadCapAState_Attack::Update(const _float& _fDeltaTime)
 
 void CMadCapAState_Attack::OnExited(void)
 {
-	m_pWeaponCollider->SetActivated(false);
+	m_rOwner.GetAttackCollider()->SetActivated(false);
 }
 
 void CMadCapAState_Attack::Free(void)

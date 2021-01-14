@@ -57,9 +57,12 @@ HRESULT CMadCapA::Ready_Object(void)
 	//pStaticObject->GetTransform()->Rotate(D3DXToRadian(45.f), D3DXToRadian(90.f), D3DXToRadian(160.f));
 	pStaticObject->GetTransform()->Translate(0.f, -0.5f, 0.f);
 	AddChild(pStaticObject, "Bip01-Prop1");
-	m_pWeapon = pStaticObject;
+	//m_pWeapon = pStaticObject;
+
+	m_pAttackCollider = pStaticObject->GetColliderFromTag(L"EnemyAttack");
+	m_pAttackCollider->SetActivated(false);
 	
-	GetWeapon()->GetColliderFromTag(L"EnemyAttack")->SetActivated(false);
+	//GetWeapon()->GetColliderFromTag(L"EnemyAttack")->SetActivated(false);
 
 	return S_OK;
 }

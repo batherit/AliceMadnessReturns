@@ -45,11 +45,13 @@ public:
 	CMap* GetMap() const { return m_pMap; }
 	_int GetCellIndex() const { return m_iCellIndex; }
 
-	Engine::CGameObject* GetWeapon() const { return m_pWeapon; }
+	//Engine::CGameObject* GetWeapon() const { return m_pWeapon; }
+	Engine::CColliderObject* GetAttackCollider() const { return m_pAttackCollider; }
 
 private:
 	CMap* m_pMap = nullptr;
-	Engine::CGameObject* m_pWeapon = nullptr;
+	//Engine::CGameObject* m_pWeapon = nullptr;
+	Engine::CColliderObject* m_pAttackCollider = nullptr;
 	Engine::CGameObject* m_pTargetObject = nullptr;
 
 	CStateMgr<CMadCapA>* m_pStateMgr = nullptr;

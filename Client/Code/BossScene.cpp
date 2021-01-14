@@ -4,6 +4,7 @@
 #include "AliceW.h"
 #include "Monster.h"
 #include "MadCapA.h"
+#include "Boss.h"
 #include "Stone.h"
 #include "Sword.h"
 #include "SphereRenderer.h"
@@ -146,6 +147,7 @@ int CBossScene::Update(const _float& fTimeDelta)
 
 void CBossScene::OnLoaded()
 {
+	Engine::GetTimer(L"Timer_FPS60")->RunToPause();
 	Engine::CCollisionMgr::GetInstance()->ClearGameObjectList();
 	Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
 
@@ -159,6 +161,7 @@ void CBossScene::OnLoaded()
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
 }
 
 void CBossScene::OnExited()
@@ -274,6 +277,11 @@ HRESULT CBossScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pCameraController->GetTransform()->SetPos(_vec3(-10.f, 30.f, 10.f));
 	pCameraMgr->AddCameraController(pCameraController);
 
+	Engine::CGameObject* pGameObject = CBoss::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(0.f, 10.f, 0.f));
+
 	//// 테스트 몬스터(MadCapA) 생성
 	//Engine::CGameObject* pGameObject = CMadCapA::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -345,6 +353,7 @@ HRESULT CBossScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pSkyBox, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", m_pSkyBox), E_FAIL);
+	m_pSkyBox->GetComponent<Engine::CPolygonRenderer>()->SetTextureIndex(0);
 
 	return S_OK;
 }

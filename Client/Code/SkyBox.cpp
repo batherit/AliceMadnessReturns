@@ -42,7 +42,7 @@ HRESULT Client::CSkyBox::Ready_Object(void)
 
 	m_pRenderer = AddComponent<Engine::CPolygonRenderer>();
 	m_pRenderer->SetRenderInfo(Engine::RENDER_PRIORITY, m_pCubeTex, m_pTexture);
-	m_pRenderer->SetTextureIndex(3);
+	m_pRenderer->SetTextureIndex(2);
 	//m_pRenderer
 
 	return S_OK;

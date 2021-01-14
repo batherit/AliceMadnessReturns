@@ -227,7 +227,36 @@
     <ClInclude Include="..\Code\BigGuyBState_Idle.h" />
     <ClInclude Include="..\Code\BigGuyBState_Talk.h" />
     <ClInclude Include="..\Code\BigGuyBState_Walk.h" />
+    <ClInclude Include="..\Code\BolterFly.h" />
+    <ClInclude Include="..\Code\BolterFlyState_Alert.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Code\BolterFlyState_Attack.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Code\BolterFlyState_Damage.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Code\BolterFlyState_Death.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Code\BolterFlyState_Idle.h" />
+    <ClInclude Include="..\Code\Boss.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\BossScene.h" />
+    <ClInclude Include="..\Code\BossState_Attack_JumpDown.h" />
+    <ClInclude Include="..\Code\BossState_Attack_SideCut.h" />
+    <ClInclude Include="..\Code\BossState_Attack_Slam.h" />
+    <ClInclude Include="..\Code\BossState_Death.h" />
+    <ClInclude Include="..\Code\BossState_Idle.h" />
+    <ClInclude Include="..\Code\BossState_Run.h" />
+    <ClInclude Include="..\Code\BossState_Walk.h" />
     <ClInclude Include="..\Code\Bullet.h" />
     <ClInclude Include="..\Code\BunnyBomb.h" />
     <ClInclude Include="..\Code\CameraController_Crowd.h" />
@@ -466,7 +495,36 @@
     <ClCompile Include="..\Code\BigGuyBState_Idle.cpp" />
     <ClCompile Include="..\Code\BigGuyBState_Talk.cpp" />
     <ClCompile Include="..\Code\BigGuyBState_Walk.cpp" />
+    <ClCompile Include="..\Code\BolterFly.cpp" />
+    <ClCompile Include="..\Code\BolterFlyState_Alert.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\BolterFlyState_Attack.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\BolterFlyState_Damage.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\BolterFlyState_Death.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\BolterFlyState_Idle.cpp" />
+    <ClCompile Include="..\Code\Boss.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\BossScene.cpp" />
+    <ClCompile Include="..\Code\BossState_Attack_JumpDown.cpp" />
+    <ClCompile Include="..\Code\BossState_Attack_SideCut.cpp" />
+    <ClCompile Include="..\Code\BossState_Attack_Slam.cpp" />
+    <ClCompile Include="..\Code\BossState_Death.cpp" />
+    <ClCompile Include="..\Code\BossState_Idle.cpp" />
+    <ClCompile Include="..\Code\BossState_Run.cpp" />
+    <ClCompile Include="..\Code\BossState_Walk.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\BunnyBomb.cpp" />
     <ClCompile Include="..\Code\CameraController_Crowd.cpp" />

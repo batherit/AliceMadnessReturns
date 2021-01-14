@@ -244,6 +244,18 @@
     <Filter Include="03. State\MiniGrunt">
       <UniqueIdentifier>{250cf41c-7cad-43de-bd9a-f8d921329f37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\BolterFly">
+      <UniqueIdentifier>{5f1937ce-2bd9-4508-950a-bb8baafa535f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. State\BolterFly">
+      <UniqueIdentifier>{5a0503bb-2080-41d5-b18a-eaf3ce2305d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Boss">
+      <UniqueIdentifier>{5a31bc5f-516a-4516-95fa-dd90d804bf03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. State\Boss">
+      <UniqueIdentifier>{4103b2f5-1c67-4b19-98e4-dd076a996f40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -582,6 +594,48 @@
     <ClInclude Include="..\Code\MiniGruntState_Run.h">
       <Filter>03. State\MiniGrunt</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\BolterFly.h">
+      <Filter>02. Object\02. GameObject\BolterFly</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BolterFlyState_Alert.h">
+      <Filter>03. State\BolterFly</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BolterFlyState_Attack.h">
+      <Filter>03. State\BolterFly</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BolterFlyState_Damage.h">
+      <Filter>03. State\BolterFly</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BolterFlyState_Death.h">
+      <Filter>03. State\BolterFly</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BolterFlyState_Idle.h">
+      <Filter>03. State\BolterFly</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Boss.h">
+      <Filter>02. Object\02. GameObject\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossState_Death.h">
+      <Filter>03. State\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossState_Idle.h">
+      <Filter>03. State\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossState_Attack_SideCut.h">
+      <Filter>03. State\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossState_Walk.h">
+      <Filter>03. State\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossState_Run.h">
+      <Filter>03. State\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossState_Attack_JumpDown.h">
+      <Filter>03. State\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossState_Attack_Slam.h">
+      <Filter>03. State\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -889,6 +943,48 @@
     </ClCompile>
     <ClCompile Include="..\Code\MiniGruntState_Run.cpp">
       <Filter>03. State\MiniGrunt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BolterFly.cpp">
+      <Filter>02. Object\02. GameObject\BolterFly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BolterFlyState_Alert.cpp">
+      <Filter>03. State\BolterFly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BolterFlyState_Attack.cpp">
+      <Filter>03. State\BolterFly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BolterFlyState_Damage.cpp">
+      <Filter>03. State\BolterFly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BolterFlyState_Death.cpp">
+      <Filter>03. State\BolterFly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BolterFlyState_Idle.cpp">
+      <Filter>03. State\BolterFly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Boss.cpp">
+      <Filter>02. Object\02. GameObject\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossState_Death.cpp">
+      <Filter>03. State\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossState_Idle.cpp">
+      <Filter>03. State\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossState_Attack_SideCut.cpp">
+      <Filter>03. State\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossState_Walk.cpp">
+      <Filter>03. State\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossState_Run.cpp">
+      <Filter>03. State\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossState_Attack_JumpDown.cpp">
+      <Filter>03. State\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossState_Attack_Slam.cpp">
+      <Filter>03. State\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

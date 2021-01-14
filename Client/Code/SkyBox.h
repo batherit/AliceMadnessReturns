@@ -25,6 +25,7 @@ public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
+	Engine::CTexture* GetTexture() const { return m_pTexture; }
 
 private:
 	Engine::CCubeTex*				m_pCubeTex = nullptr;

@@ -259,6 +259,15 @@ _uint CLoading::Loading_ForStage(void)
 		L"Fork.X"),
 		E_FAIL);
 
+	// 낫 생성
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Sickle",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Sickle/",
+		L"Sickle.X"),
+		E_FAIL);
+
 	// 점프 패드 생성(Dynamic)
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -381,6 +390,17 @@ _uint CLoading::Loading_ForStage(void)
 		L"../../Resource/Mesh/DynamicMesh/MiniGrunt/",
 		L"MiniGrunt.X"),
 		E_FAIL);
+
+	// 보스
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Boss",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/Boss/",
+		L"Boss.X"),
+		E_FAIL);
+
+
 
 
 	// Alice 메쉬 원본 생성
@@ -540,7 +560,6 @@ _uint CLoading::Loading_ForStage(void)
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_BlockLow_Redbrick");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade_BlockLow_Redbrick");*/
 
-
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"IronGateA_Fence",
@@ -571,6 +590,15 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::TYPE_STATIC,
 		L"../../Resource/Mesh/StaticMesh/Minge/",
 		L"Facade2_WallLong_StyleA.X"),
+		E_FAIL);
+
+	// Boss Stage
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterFloorSystem_TeaMakerPlat",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/BossScene/",
+		L"HatterFloorSystem_TeaMakerPlat.X"),
 		E_FAIL);
 
 	// 앨리스L

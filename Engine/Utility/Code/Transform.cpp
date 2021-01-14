@@ -189,7 +189,7 @@ const _matrix * CTransform::GetParentBoneMatrixPointer()
 	return m_pParentBoneMatrix;
 }
 
-_matrix CTransform::GetObjectMatrix(E_COORD_TYPE _eCoordType) const {
+_matrix CTransform::GetObjectMatrix(E_COORD_TYPE _eCoordType, const _vec3& _vRenderOffset) const {
 	_matrix matWorld;
 	D3DXMatrixIdentity(&matWorld);
 	matWorld._11 = m_vRight.x * m_vScale.x;

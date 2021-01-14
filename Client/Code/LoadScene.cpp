@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "LoadScene.h"
 #include "PlayScene.h"
+#include "BossScene.h"
 #include "Export_Function.h"
 #include "TitleScene.h"
 #include "UI_Image.h"
@@ -40,7 +41,8 @@ Engine::_int CLoadScene::Update(const _float& fTimeDelta)
 		if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 		{
 			//Engine::CManagement::GetInstance()->SetNextScene(CTitleScene::Create(m_pGraphicDev));
-			Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+			//Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+			Engine::CManagement::GetInstance()->SetNextScene(CBossScene::Create(m_pGraphicDev));
 
 			return iExit;
 		}	

@@ -5,6 +5,7 @@
 #include "Monster.h"
 #include "MadCapA.h"
 #include "MiniGrunt.h"
+#include "BolterFly.h"
 #include "Stone.h"
 #include "Sword.h"
 #include "SphereRenderer.h"
@@ -115,18 +116,8 @@ int CPlayScene::Update(const _float& fTimeDelta)
 		pCameraMgr->ChangeCameraController(3, 0.1f);
 	}
 */
-
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
-		//m_pPlayer->GetComponent<CAttribute>()->DecreaseHP(10.f);
-		CUI_InGame* pUI = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
-		pUI->GetFadeInOut()->StartFadeInOut(1.f, true);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_P)) {
-		//m_pPlayer->GetComponent<CAttribute>()->IncreaseHP(10.f);
-		CUI_InGame* pUI = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
-		pUI->GetFadeInOut()->StartFadeInOut(1.f, false);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
+	static _bool m_bIsff = false;
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
 		if (Engine::CCollisionMgr::GetInstance()->IsColliderVisible()) {
 			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
 		}
@@ -134,6 +125,37 @@ int CPlayScene::Update(const _float& fTimeDelta)
 			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
 		}
 	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
+		if (!m_bIsff) {
+			ShowCursor(true);
+			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false);
+			m_bIsff = true;
+		}
+		else {
+			ShowCursor(false);
+			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
+			m_bIsff = false;
+		}
+	}
+
+	//if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
+	//	//m_pPlayer->GetComponent<CAttribute>()->DecreaseHP(10.f);
+	//	CUI_InGame* pUI = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
+	//	pUI->GetFadeInOut()->StartFadeInOut(1.f, true);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_P)) {
+	//	//m_pPlayer->GetComponent<CAttribute>()->IncreaseHP(10.f);
+	//	CUI_InGame* pUI = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
+	//	pUI->GetFadeInOut()->StartFadeInOut(1.f, false);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
+	//	if (Engine::CCollisionMgr::GetInstance()->IsColliderVisible()) {
+	//		Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
+	//	}
+	//	else {
+	//		Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
+	//	}
+	//}
 
 	return CScene::Update(fTimeDelta);
 }
@@ -296,6 +318,17 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
 	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, 0.f));
+
+	// 테스트 나사파리 생성
+	pGameObject = CBolterFly::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(4.f, 15.f, 0.f));
+
+	pGameObject = CBolterFly::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
+	pGameObject->GetTransform()->Translate(_vec3(4.f, 15.f, 0.f));
 
 
 	// UI

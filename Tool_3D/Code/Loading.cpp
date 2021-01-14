@@ -260,6 +260,17 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Fork");
 
+	// 낫 무기
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Sickle",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Chapter1/Sickle/",
+		L"Sickle.X"),
+		E_FAIL);
+	//m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade2_WallLong_StyleA");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Sickle");
+
 	// Custom
 
 	// 점프 패드 생성(Dynamic)
@@ -766,6 +777,21 @@ _uint CLoading::Loading_ForStage(void)
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade2_WallLong_StyleA");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade2_WallLong_StyleA");
 
+
+
+
+
+	// Boss Stage
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterFloorSystem_TeaMakerPlat",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/BossScene/",
+		L"HatterFloorSystem_TeaMakerPlat.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterFloorSystem_TeaMakerPlat");
+	// m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade2_WallLong_StyleA");
+
 	// 앨리스L
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -852,6 +878,18 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"MiniGrunt");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"MiniGrunt");
+
+	// 보스
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Boss",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/Boss/",
+		L"Boss.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"Boss");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"Boss");
+	
 	
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

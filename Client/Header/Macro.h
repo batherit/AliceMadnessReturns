@@ -114,9 +114,20 @@ namespace Client
 #define MADCAPA_MAX_HP			10.f
 
 #define MINIGRUNT_COGNITIVE_RANGE 9.f
-#define MINIGRUNT_ATTACK_RANGE	3.0f
+#define MINIGRUNT_ATTACK_RANGE	4.0f
 #define	MINIGRUNT_RUN_SPEED		2.f
 #define MINIGRUNT_MAX_HP			10.f
+
+#define BOLTERFLY_COGNITIVE_RANGE 9.f
+#define BOLTERFLY_ATTACK_RANGE	3.0f
+#define	BOLTERFLY_RUN_SPEED		2.f
+#define BOLTERFLY_MAX_HP			10.f
+
+#define BOSS_COGNITIVE_RANGE 30.f
+#define BOSS_ATTACK_RANGE	4.0f
+#define	BOSS_RUN_SPEED		9.f
+#define BOSS_JUMP_SPEED		30.f
+#define BOSS_MAX_HP			10.f
 
 // 키입력 관련
 //#define	KM_LEFT		0x00000001

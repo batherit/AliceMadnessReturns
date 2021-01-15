@@ -40,7 +40,7 @@ int CBossState_Attack_Mixer::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
-	if ((m_fElapsedTime += _fDeltaTime) >= 3.f) {
+	if ((m_fElapsedTime += _fDeltaTime) >= 2.5f) {
 		m_rOwner.GetStateMgr()->SetNextState(new CBossState_Idle(m_rOwner));
 		return 0;
 	}
@@ -70,13 +70,14 @@ int CBossState_Attack_Mixer::Update(const _float& _fDeltaTime)
 		if (D3DXVec3Dot(&vLook, &vToPlayer) <= 0.f || fToPlayerLength < 1.f) {
 			//m_rOwner.GetStateMgr()->SetNextState(new CBossState_Idle(m_rOwner));
 			m_bIsStopping = true;
-			m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
-			return 0;
+			m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.95f);
+			/*m_rOwner.GetStateMgr()->SetNextState(new CBossState_Idle(m_rOwner));
+			return 0;*/
 		}
 
 		// 플레이어를 향해 점점 빠르게 다가온다.
-		_float fT = Engine::GetWeightByValue(m_fElapsedTime, 0.f, 3.f);
-		m_rOwner.GetPhysics()->SetVelocity(vLook * Engine::GetValueByWeight(fT, BOSS_RUN_SPEED, BOSS_RUN_SPEED * 2.f));
+		_float fT = Engine::GetWeightByValue(m_fElapsedTime, 0.f, 2.5f);
+		m_rOwner.GetPhysics()->SetVelocity(vLook * Engine::GetValueByWeight(fT, BOSS_RUN_SPEED * 0.8f, BOSS_RUN_SPEED * 1.5f));
 	}
 
 	return 0;

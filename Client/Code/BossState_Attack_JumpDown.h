@@ -8,6 +8,7 @@
 
 BEGIN(Client)
 class CBoss;
+class CMap;
 class CBossState_Attack_JumpDown :
 	public CState<CBoss>
 {
@@ -25,6 +26,7 @@ public:
 	virtual void Free(void) override;
 
 private:
+	CMap* m_pMap = nullptr;
 	_bool m_bIsJumpStarting = true;
 	_bool m_bIsTargeting = false;
 	_bool m_bIsAttackEnd = false;

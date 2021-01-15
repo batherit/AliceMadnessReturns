@@ -28,12 +28,14 @@ void CBolterFlyState_Attack::OnLoaded(void)
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::Bolterfly_Sprint);
 
 	if (m_rOwner.GetTargetObject()) {
-		_vec3 vToPlayer = m_rOwner.GetTargetObject()->GetTransform()->GetPos() - m_rOwner.GetTransform()->GetPos();
-		vToPlayer.y += 1.f;
+		m_vTargetPos = m_rOwner.GetTargetObject()->GetTransform()->GetPos();
+		m_vTargetPos.y += 1.f;
+		_vec3 vToPlayer = m_vTargetPos - m_rOwner.GetTransform()->GetPos();
 		_float vToPlayerLength = D3DXVec3Length(&vToPlayer);
 		if(vToPlayerLength > 0.f)
 			m_rOwner.GetPhysics()->SetDirection(vToPlayer / vToPlayerLength);
-			m_rOwner.GetPhysics()->SetSpeed(BOLTERFLY_RUN_SPEED * 7.5f);
+			
+		m_rOwner.GetPhysics()->SetSpeed(BOLTERFLY_RUN_SPEED * 7.5f);
 	}
 	
 	//m_rOwner.GetPhysics()->SetDirection(m_rOwner.GetTransform()->GetLook());
@@ -79,6 +81,9 @@ int CBolterFlyState_Attack::Update(const _float& _fDeltaTime)
 	else if ((m_fElapsedTime += _fDeltaTime) >= 0.5f) {
 		m_bIsAttackEnd = true;
 		m_rOwner.GetAttackCollider()->SetActivated(false);
+	}
+	else if(m_rOwner.GetTransform()->GetPos().y < m_vTargetPos.y - 0.5f) {
+		m_rOwner.GetTransform()->SetPosY(m_vTargetPos.y - 0.5f);
 	}
 	//		
 	//	

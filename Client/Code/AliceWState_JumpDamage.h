@@ -5,15 +5,18 @@
 #include "Typedef.h"
 #include "State.h"
 
+BEGIN(Engine)
+class CNaviMesh;
+END
 
 BEGIN(Client)
-class CBolterFly;
-class CBolterFlyState_Attack :
-	public CState<CBolterFly>
+class CAliceW;
+class CAliceWState_JumpDamage :
+	public CState<CAliceW>
 {
 public:
-	CBolterFlyState_Attack(CBolterFly& _rOwner);
-	virtual ~CBolterFlyState_Attack();
+	CAliceWState_JumpDamage(CAliceW& _rOwner);
+	virtual ~CAliceWState_JumpDamage();
 
 	// CState을(를) 통해 상속됨
 	virtual void OnLoaded(void) override;
@@ -25,9 +28,12 @@ public:
 	virtual void Free(void) override;
 
 private:
-	_bool m_bIsAttackEnd = false;
-	_float m_fElapsedTime = 0.f;
-	_vec3 m_vTargetPos;
+	enum E_JumpDamage_STEP { STEP_FALL, STEP_LAND, STEP_END };
+
+private:
+	Engine::CNaviMesh* m_pNaviMesh = nullptr;
+	E_JumpDamage_STEP m_eJumpStep = STEP_FALL;
+	_bool m_bIsAnimChanging = false;
 };
 
 END

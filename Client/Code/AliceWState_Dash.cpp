@@ -31,6 +31,7 @@ CAliceWState_Dash::~CAliceWState_Dash()
 void CAliceWState_Dash::OnLoaded(void)
 {
 	m_rOwner.SetVisible(false);
+	m_rOwner.GetPhysics()->SetGravity(0.f);
 	m_rOwner.GetPhysics()->SetVelocity(m_vDir * ALICE_RUN_SPEED * 2.f);
 	m_fElapsedTime = 0.f;
 	m_rOwner.SetDashing(true);
@@ -71,6 +72,7 @@ void CAliceWState_Dash::OnExited(void)
 {
 	m_rOwner.SetVisible(true);
 	m_rOwner.SetDashing(false);
+	m_rOwner.GetPhysics()->SetGravity(9.8f * 3.f);
 }
 
 void CAliceWState_Dash::Free(void)

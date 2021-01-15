@@ -231,6 +231,7 @@ HRESULT CBossScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
 	m_pPlayer->GetTransform()->SetPos(pMap->GetCurSpawnPoint());
+	//m_pPlayer->GetTransform()->SetPosY(1.f);
 
 	// 플레이어 카메라 컨트롤러 생성(0)
 	Engine::CCameraController* pCameraController = CCameraController_Player::Create(m_pGraphicDev);

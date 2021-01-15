@@ -35,6 +35,8 @@ void CBossState_Attack_JumpDown::OnLoaded(void)
 	if (!m_rOwner.GetTargetObject())
 		m_rOwner.SetTargetObject(*Engine::GetLayer(L"Environment")->GetLayerList(L"Player").begin());
 
+	m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
+
 	m_rOwner.GetAttackCollider()->SetActivated(true);
 }
 
@@ -69,7 +71,8 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 				_float fProgress = m_rOwner.GetDynamicMesh()->GetAnimationProgress();
 				if (fProgress <= 0.6f) {
 					_float fT = Engine::GetWeightByValue(fProgress, 0.5f, 0.6f);
-					m_rOwner.GetTransform()->SetPos(m_vStartPos * (1.f - fT) + m_vTargetPos * fT);
+					_vec3 vNewPos = m_vStartPos * (1.f - fT) + m_vTargetPos * fT;
+					m_rOwner.GetTransform()->SetPos(m_pMap->GetNaviMesh()->MoveOnNaviMesh_Adhesion(m_rOwner.GetCellIndex(), &m_rOwner.GetTransform()->GetPos(), &vNewPos));
 
 					// 플레이어를 향해 회전.
 					/*_vec3 vToTargetDir = m_rOwner.GetTargetObject()->GetTransform()->GetPos() - m_rOwner.GetTransform()->GetPos();
@@ -89,7 +92,7 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 					}
 					else if(!m_bIsAttackEnd){
 						// 4. 0.6초간 내려찍혀진 채로 있는다.
-						m_rOwner.GetTransform()->SetPos(m_vTargetPos);
+						//m_rOwner.GetTransform()->SetPos(m_vTargetPos);
 						m_rOwner.GetPhysics()->SetVelocityY(0.f);
 						m_rOwner.GetDynamicMesh()->SetAnimationStop(true);
 						// TODO : 카메라 흔듦 이펙트
@@ -113,6 +116,9 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 			m_rOwner.GetTransform()->RotateByAxis(fRotAngle * 0.1f, vRotAxis);
 			m_vTargetPos = m_rOwner.GetTargetObject()->GetTransform()->GetPos();
 			m_vTargetPos.y = m_fHeight;
+
+		//	vSettedPos = m_pMap->GetNaviMesh()->MoveOnNaviMesh_Adhesion(m_iCellIndex, &vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f))
+
 			m_vTargetPos -= m_rOwner.GetTransform()->GetLook() * 4.f;
 			m_bIsTargeting = true;
 		}

@@ -149,6 +149,8 @@ _vec3 CNaviMesh::Move_OnNaviMesh(_int& _iCellIndex, const _vec3* pCurrentPos, co
 
 _vec3 CNaviMesh::MoveOnNaviMesh_Adhesion(_int & _iCellIndex, const _vec3 * pCurrentPos, const _vec3 * pTargetPos)
 {
+	// => 네비메쉬 밖으로 나갈 수 없음. 
+
 	if (*pCurrentPos == *pTargetPos)
 		return *pTargetPos;
 
@@ -164,13 +166,15 @@ _vec3 CNaviMesh::MoveOnNaviMesh_Adhesion(_int & _iCellIndex, const _vec3 * pCurr
 
 	if (CCell::INSIDE == m_vecCell[_iCellIndex]->CompareCell(&vEndPos, &_iCellIndex)) {
 		_float fHeight = m_vecCell[_iCellIndex]->GetHeight(vEndPos);
-		vEndPos.y = fHeight;
+		if(vEndPos.y < fHeight)
+			vEndPos.y = fHeight;
 		return vEndPos;
 	}
 	else {
 		vEndPos = m_vecCell[_iCellIndex]->GetPosInCell(vEndPos);
 		_float fHeight = m_vecCell[_iCellIndex]->GetHeight(vEndPos);
-		vEndPos.y = fHeight;
+		if(vEndPos.y < fHeight)
+			vEndPos.y = fHeight;
 		return vEndPos;
 	}
 

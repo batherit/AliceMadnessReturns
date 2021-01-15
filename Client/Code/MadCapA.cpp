@@ -103,7 +103,7 @@ int CMadCapA::Update_Object(const _float & _fDeltaTime)
 		}
 	}
 	else if (IsLanded()) {
-		vSettedPos = m_pMap->GetNaviMesh()->Move_OnNaviMesh(m_iCellIndex, &vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f)), GetPhysics());
+		vSettedPos = m_pMap->GetNaviMesh()->MoveOnNaviMesh_Adhesion(m_iCellIndex, &vCurrentPos, &(vTargetPos + _vec3(0.f, -1.0f, 0.f))/*, GetPhysics()*/);
 
 		if (vSettedPos == vTargetPos + _vec3(0.f, -1.0f, 0.f)) {
 			vSettedPos += _vec3(0.f, 1.f, 0.f);

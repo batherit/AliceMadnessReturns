@@ -43,7 +43,7 @@ public:
 	_bool IsDead() const;
 	_bool IsLanded() const { return m_bIsLanded; }
 	CMap* GetMap() const { return m_pMap; }
-	_int GetCellIndex() const { return m_iCellIndex; }
+	_int& GetCellIndex() { return m_iCellIndex; }
 
 	//Engine::CColliderObject* GetAttackL() const { return m_pAttackL; }
 	//Engine::CColliderObject* GetAttackR() const { return m_pAttackR; }

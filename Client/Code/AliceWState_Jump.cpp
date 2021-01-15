@@ -6,9 +6,11 @@
 #include "AliceWState_Death.h"
 #include "AliceWState_Slide.h"
 #include "AliceWState_Dash.h"
+#include "AliceWState_JumpDamage.h"
 #include "StateMgr.h"
 #include "AliceW.h"
 #include "Map.h"
+#include "Attribute.h"
 
 
 CAliceWState_Jump::CAliceWState_Jump(CAliceW & _rOwner, _bool _bIsJumping)
@@ -50,6 +52,11 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 	if (m_rOwner.IsSuperJumpOn()) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_SuperJump(m_rOwner));
 		m_rOwner.SetSuperJumped(false);
+		return 0;
+	}
+
+	if (m_rOwner.GetAttribute()->IsDamaged()) {
+		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_JumpDamage(m_rOwner));
 		return 0;
 	}
 

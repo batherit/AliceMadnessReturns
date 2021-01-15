@@ -51,7 +51,11 @@ int CAliceWState_Run::Update(const _float& _fDeltaTime)
 	}
 
 	if (m_rOwner.IsDashOn()) {
-		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Dash(m_rOwner, m_rOwner.GetTransform()->GetLook()));
+		_vec3 vDir;
+		if (m_rOwner.IsMoving(_fDeltaTime, &vDir))
+			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Dash(m_rOwner, vDir));
+		else
+			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Dash(m_rOwner, m_rOwner.GetTransform()->GetLook()));
 		return 0;
 	}
 

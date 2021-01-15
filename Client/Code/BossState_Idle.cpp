@@ -57,7 +57,7 @@ int CBossState_Idle::Update(const _float& _fDeltaTime)
 
 	if (fLength <= BOSS_COGNITIVE_RANGE) {
 		if ((m_fQuietTime -= _fDeltaTime) <= 0.f) {
-			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_JumpDown(m_rOwner));
+			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Walk(m_rOwner));
 			return 0;
 		}
 

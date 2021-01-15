@@ -5,6 +5,7 @@
 #include "AliceWState_Death.h"
 #include "AliceWState_Damage.h"
 #include "AliceWState_SuperJump.h"
+#include "AliceWState_Dash.h"
 #include "StateMgr.h"
 #include "AliceW.h"
 #include "Map.h"
@@ -40,7 +41,7 @@ int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Death(m_rOwner));
 		return 0;
 	}
-	
+
 	if (m_rOwner.IsSuperJumpOn()) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_SuperJump(m_rOwner));
 		m_rOwner.SetSuperJumped(false);
@@ -49,6 +50,11 @@ int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
 
 	if (m_rOwner.GetAttribute()->IsDamaged()) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Damage(m_rOwner));
+		return 0;
+	}
+
+	if (m_rOwner.IsDashOn()) {
+		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Dash(m_rOwner, m_rOwner.GetTransform()->GetLook()));
 		return 0;
 	}
 

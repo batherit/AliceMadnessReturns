@@ -222,7 +222,7 @@ _bool CAliceW::LoadColliders(const _tchar* _pFileName)
 
 void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
-	if (IsDead())
+	if (IsDead() || IsDashing())
 		return;
 
 	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Trigger") == 0) {
@@ -409,6 +409,19 @@ _bool CAliceW::IsJumpOn(const _float & _fDeltaTime)
 		return false;
 
 	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_SPACE);
+}
+
+_bool CAliceW::IsDashOn()
+{
+	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
+		return false;
+
+	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_LSHIFT);
+}
+
+_bool CAliceW::IsDashing()
+{
+	return m_bIsDashing;
 }
 
 _bool CAliceW::IsSliding(const _float & _fDeltaTime)

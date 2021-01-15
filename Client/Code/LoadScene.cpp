@@ -2,6 +2,7 @@
 #include "LoadScene.h"
 #include "PlayScene.h"
 #include "BossScene.h"
+#include "PoolScene.h"
 #include "Export_Function.h"
 #include "TitleScene.h"
 #include "UI_Image.h"
@@ -43,6 +44,7 @@ Engine::_int CLoadScene::Update(const _float& fTimeDelta)
 			//Engine::CManagement::GetInstance()->SetNextScene(CTitleScene::Create(m_pGraphicDev));
 			//Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
 			Engine::CManagement::GetInstance()->SetNextScene(CBossScene::Create(m_pGraphicDev));
+			//Engine::CManagement::GetInstance()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
 
 			return iExit;
 		}	

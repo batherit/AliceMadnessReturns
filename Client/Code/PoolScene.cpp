@@ -210,6 +210,7 @@ HRESULT CPoolScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pSkyBox, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", m_pSkyBox), E_FAIL);
+	m_pSkyBox->GetComponent<Engine::CPolygonRenderer>()->SetTextureIndex(5);
 
 	return S_OK;
 }

@@ -165,7 +165,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Texture_Logo", Engine::TEX_NORMAL, L"../../Resource/Texture/Logo/Logo.jpg"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Height", Engine::TEX_NORMAL, L"../../Resource/Texture/Terrain/Height2.bmp"), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkyBox", Engine::TEX_CUBE, L"../../Resource/Texture/SkyBox/burger%d.dds", 4),  E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkyBox", Engine::TEX_CUBE, L"../../Resource/Texture/SkyBox/burger%d.dds", 6),  E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"PlayTerrain", Engine::TEX_NORMAL, L"../../Resource/Texture/Terrain/PlayTerrain.bmp"), E_FAIL);
 	m_pTerrainTab->m_lbxHeightMap.AddString(L"None");
@@ -270,6 +270,16 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 	//m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Facade2_WallLong_StyleA");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Sickle");
+
+	// Ã¶¼Õ¹Ù´Ú
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"IronHand",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/BossScene/",
+		L"IronHand.X"),
+		E_FAIL);
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"IronHand");
 
 	// Custom
 

@@ -32,6 +32,7 @@ private:
 	_vec3 m_vStartPos;
 	_vec3 m_vTargetPos;
 	_float m_fElapsedTime = 0.f;
+	_float m_fHeight = 0.f;
 };
 
 END

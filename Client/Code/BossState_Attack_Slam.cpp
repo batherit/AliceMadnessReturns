@@ -3,6 +3,8 @@
 #include "BossState_Idle.h"
 #include "BossState_Run.h"
 #include "BossState_Death.h"
+#include "BossState_Attack_JumpDown.h"
+#include "BossState_Attack_IronHand.h"
 //#include "BossState_Alert.h"
 //#include "BossState_Damage.h"
 //#include "BossState_Attack.h"
@@ -40,11 +42,19 @@ int CBossState_Attack_Slam::Update(const _float& _fDeltaTime)
 	}
 
 	if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.95f) {
-		if (Engine::GetRandomBoolean()) {
+		switch (Engine::GetNumberBetweenMinMax(0, 3)) {
+		case 0:
 			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Idle(m_rOwner));
-		}
-		else {
+			break;
+		case 1:
 			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Run(m_rOwner));
+			break;
+		case 2:
+			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_JumpDown(m_rOwner));
+			break;
+		case 3:
+			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_IronHand(m_rOwner));
+			break;
 		}
 		return 0;
 	}

@@ -179,6 +179,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\AliceWState_Bomb.h" />
+    <ClInclude Include="..\Code\AliceWState_Dash.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\AliceWState_GunMode.h" />
     <ClInclude Include="..\Code\AliceWState_Attack_Horse.h" />
     <ClInclude Include="..\Code\AliceWState_Damage.h">
@@ -250,7 +254,15 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\BossScene.h" />
+    <ClInclude Include="..\Code\BossState_Attack_IronHand.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\BossState_Attack_JumpDown.h" />
+    <ClInclude Include="..\Code\BossState_Attack_Mixer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\BossState_Attack_SideCut.h" />
     <ClInclude Include="..\Code\BossState_Attack_Slam.h" />
     <ClInclude Include="..\Code\BossState_Death.h" />
@@ -292,6 +304,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Code\IronHand.h" />
     <ClInclude Include="..\Code\JumpPad.h" />
     <ClInclude Include="..\Code\MiniGrunt.h" />
     <ClInclude Include="..\Code\MiniGruntState_Alert.h">
@@ -447,6 +460,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_Bomb.cpp" />
+    <ClCompile Include="..\Code\AliceWState_Dash.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\AliceWState_GunMode.cpp" />
     <ClCompile Include="..\Code\AliceWState_Attack_Horse.cpp" />
     <ClCompile Include="..\Code\AliceWState_Damage.cpp">
@@ -518,7 +535,15 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\BossScene.cpp" />
+    <ClCompile Include="..\Code\BossState_Attack_IronHand.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\BossState_Attack_JumpDown.cpp" />
+    <ClCompile Include="..\Code\BossState_Attack_Mixer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\BossState_Attack_SideCut.cpp" />
     <ClCompile Include="..\Code\BossState_Attack_Slam.cpp" />
     <ClCompile Include="..\Code\BossState_Death.cpp" />
@@ -560,6 +585,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\IronHand.cpp" />
     <ClCompile Include="..\Code\JumpPad.cpp" />
     <ClCompile Include="..\Code\MiniGrunt.cpp" />
     <ClCompile Include="..\Code\MiniGruntState_Alert.cpp">

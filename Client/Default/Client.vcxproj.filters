@@ -256,6 +256,9 @@
     <Filter Include="03. State\Boss">
       <UniqueIdentifier>{4103b2f5-1c67-4b19-98e4-dd076a996f40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\IronHand">
+      <UniqueIdentifier>{fddfb1b3-f5ad-4e94-819b-75bc36a7059f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -636,6 +639,18 @@
     <ClInclude Include="..\Code\BossState_Attack_Slam.h">
       <Filter>03. State\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\BossState_Attack_IronHand.h">
+      <Filter>03. State\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\IronHand.h">
+      <Filter>02. Object\02. GameObject\IronHand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossState_Attack_Mixer.h">
+      <Filter>03. State\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AliceWState_Dash.h">
+      <Filter>03. State\AliceW</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -985,6 +1000,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\BossState_Attack_Slam.cpp">
       <Filter>03. State\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossState_Attack_IronHand.cpp">
+      <Filter>03. State\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IronHand.cpp">
+      <Filter>02. Object\02. GameObject\IronHand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossState_Attack_Mixer.cpp">
+      <Filter>03. State\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AliceWState_Dash.cpp">
+      <Filter>03. State\AliceW</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

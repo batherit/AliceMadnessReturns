@@ -348,6 +348,7 @@ HRESULT CBossScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI_InGame", pUIInGame), E_FAIL);
 	pUIInGame->SetPlayer(m_pPlayer);
 	pUIInGame->GetFadeInOut()->StartFadeInOut(2.f, true);
+	m_pPlayer->SetInGameUI(pUIInGame);
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);

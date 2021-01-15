@@ -106,7 +106,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Texture_SkyBox",
 		Engine::TEX_CUBE,
-		L"../../Resource/Texture/SkyBox/burger%d.dds", 4),
+		L"../../Resource/Texture/SkyBox/burger%d.dds", 6),
 		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"CobbledStreet_DM", Engine::TEX_NORMAL, L"../../Resource/Terrain/Texture/CobbledStreet_DM.tga"), E_FAIL);
@@ -266,6 +266,15 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::TYPE_STATIC,
 		L"../../Resource/Mesh/StaticMesh/Chapter1/Sickle/",
 		L"Sickle.X"),
+		E_FAIL);
+
+	// Ã¶¼Õ¹Ù´Ú
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"IronHand",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/BossScene/",
+		L"IronHand.X"),
 		E_FAIL);
 
 	// Á¡ÇÁ ÆÐµå »ý¼º(Dynamic)

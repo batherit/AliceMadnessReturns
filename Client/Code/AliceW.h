@@ -41,6 +41,7 @@ public:
 	void SetLanded(const _bool& _bIsLanded) { m_bIsLanded = _bIsLanded; }
 	void SetWeaponType(E_WEAPON_TYPE _eWeaponType);
 	void SetSuperJumped(const _bool& _bIsSuperJumped) { m_bIsSuperJumped = _bIsSuperJumped; }
+	void SetDashing(const _bool& _bIsDashing) { m_bIsDashing = _bIsDashing; }
 
 	_bool IsMoving(const _float& _fDeltaTime, _vec3* _pDir = nullptr);
 	_bool IsSmalling();
@@ -49,6 +50,8 @@ public:
 	_bool IsGunModeReleased();
 	_bool IsSuperJumpOn() const { return m_bIsSuperJumped; }
 	_bool IsJumpOn(const _float& _fDeltaTime);
+	_bool IsDashOn();
+	_bool IsDashing();
 	_bool IsSliding(const _float& _fDeltaTime);
 	_bool IsFloatingOn(const _float& _fDeltaTime);
 	_bool IsFalling(const _float& _fDeltaTime);
@@ -92,6 +95,7 @@ private:
 	Engine::CGameObject* m_pTargetObject = nullptr;
 	_bool m_bIsSmalled = false;
 	_bool m_bIsSuperJumped = false;
+	_bool m_bIsDashing = false;
 
 	_int m_iToothNum = 100;
 

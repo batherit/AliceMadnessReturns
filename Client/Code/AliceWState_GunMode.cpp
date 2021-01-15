@@ -5,6 +5,7 @@
 #include "AliceWState_Death.h"
 #include "AliceWState_Damage.h"
 #include "AliceWState_Jump.h"
+#include "AliceWState_Dash.h"
 #include "AliceWState_SuperJump.h"
 #include "StateMgr.h"
 #include "AliceW.h"
@@ -64,6 +65,15 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 
 	if (m_rOwner.GetAttribute()->IsDamaged()) {
 		m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Damage(m_rOwner));
+		return 0;
+	}
+
+	if (m_rOwner.IsDashOn()) {
+		_vec3 vDir;
+		if (m_rOwner.IsMoving(_fDeltaTime, &vDir))
+			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Dash(m_rOwner, vDir));
+		else
+			m_rOwner.GetStateMgr()->SetNextState(new CAliceWState_Dash(m_rOwner, m_rOwner.GetTransform()->GetLook()));
 		return 0;
 	}
 

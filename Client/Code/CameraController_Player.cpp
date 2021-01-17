@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CameraController_Player.h"
 #include "Camera.h"
+#include "AliceW.h"
 
 USING(Client)
 
@@ -28,7 +29,7 @@ void CCameraController_Player::ControlCamera(const _float& _fDeltaTime, Engine::
 
 	// 카메라 컨트롤러를 플레이어 위치에 맞춘다.
 	_vec3 vPlayerPos = m_pPlayer->GetTransform()->GetPos();
-	_float fRatio = 1.f;// m_pPlayer->GetTransform()->GetScale().x;
+	_float fRatio = m_pPlayer->GetTransform()->GetScale().x;
 	GetTransform()->SetPos(vPlayerPos + _vec3(0.f, 1.f * fRatio, 0.f));
 	SetStickLen(4.5f * fRatio);
 

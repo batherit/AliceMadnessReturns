@@ -25,7 +25,7 @@ HRESULT CNaviMesh::Ready_Object(void)
 {
 	m_pManualCol = AddComponent<Engine::CManualCol>();
 	m_pRenderer = AddComponent<Engine::CPolygonRenderer>();
-	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pManualCol);
+	m_pRenderer->SetRenderInfo(Engine::RENDER_ALPHA, m_pManualCol);
 	return S_OK;
 }
 

@@ -45,6 +45,7 @@ public:
 
 	_bool IsMoving(const _float& _fDeltaTime, _vec3* _pDir = nullptr);
 	_bool IsSmalling();
+	_bool IsSmallingTunnel() const { return m_bIsSmalling; }
 	_bool IsAttackOn(const _float& _fDeltaTime);
 	_bool IsAttacking(const _float& _fDeltaTime);
 	_bool IsGunModeReleased();
@@ -94,6 +95,7 @@ private:
 	_bool m_bIsLockOn = false;
 	Engine::CGameObject* m_pTargetObject = nullptr;
 	_bool m_bIsSmalled = false;
+	_bool m_bIsSmalling = false;
 	_bool m_bIsSuperJumped = false;
 	_bool m_bIsDashing = false;
 

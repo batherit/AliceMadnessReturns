@@ -104,6 +104,14 @@ HRESULT Engine::CCell::Ready_Cell(const _int& iIndex,
 	m_vPoint[POINT_C] = *pPointC;
 
 	m_vCenterPoint = (*pPointA + *pPointB + *pPointC) / 3.f;
+	m_iTagIndex = _iTagIndex;
+
+	if (_iTagIndex == CCell::TYPE_WALL) {
+		// 크기를 약간 키운다.
+		m_vPoint[POINT_A] = m_vPoint[POINT_A] + (m_vPoint[POINT_A] - m_vCenterPoint) * 0.1f;
+		m_vPoint[POINT_B] = m_vPoint[POINT_B] + (m_vPoint[POINT_B] - m_vCenterPoint) * 0.1f;
+		m_vPoint[POINT_C] = m_vPoint[POINT_C] + (m_vPoint[POINT_C] - m_vCenterPoint) * 0.1f;
+	}
 
 	m_pLine[LINE_AB] = CLine::Create(&_vec2(m_vPoint[POINT_A].x, m_vPoint[POINT_A].z),
 									 &_vec2(m_vPoint[POINT_B].x, m_vPoint[POINT_B].z));
@@ -114,9 +122,31 @@ HRESULT Engine::CCell::Ready_Cell(const _int& iIndex,
 	m_pLine[LINE_CA] = CLine::Create(&_vec2(m_vPoint[POINT_C].x, m_vPoint[POINT_C].z),
 									 &_vec2(m_vPoint[POINT_A].x, m_vPoint[POINT_A].z));
 
-	m_iTagIndex = _iTagIndex;
-
 	m_vNormal = GetNormalFromPoints(*pPointA, *pPointB, *pPointC);
+
+	if (m_vNormal.y != 1.f) {
+		// 일반적으로 여길 들어올 것이다. 슬라이딩 벡터는 보통 옆으로 영향을 주므로,
+		m_vNormalXZ = m_vNormal;
+		m_vNormalXZ.y = 0.f;
+		D3DXVec3Normalize(&m_vNormalXZ, &m_vNormalXZ);
+
+		_vec3 vPoint = m_vCenterPoint - WORLD_Y_AXIS;
+		vPoint = Engine::GetPointProjectedOntoTriangle(
+			m_vPoint[POINT_A],
+			m_vPoint[POINT_B],
+			m_vPoint[POINT_C],
+			vPoint
+		);
+
+		D3DXVec3Normalize(&m_vSliding, &(vPoint - m_vCenterPoint));
+	}
+	else {
+		m_vSliding = Engine::GetRotatedVector(
+			WORLD_Y_AXIS,
+			Engine::GetNumberBetweenMinMax(0.f, D3DX_PI * 2.f),
+			WORLD_X_AXIS);
+		m_vNormalXZ = m_vSliding;
+	}
 
 #ifdef _DEBUG
 	if (FAILED(D3DXCreateLine(m_pGraphicDev, &m_pD3DXLine)))

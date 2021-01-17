@@ -55,9 +55,9 @@ int CAliceWState_Slide::Update(const _float& _fDeltaTime)
 		}
 		_vec3 vLook = m_rOwner.GetTransform()->GetLook();
 		m_rOwner.GetPhysics()->AddVelocityXZ(_vec2(vLook.x, vLook.z) * 13.f * _fDeltaTime);
-		if (m_rOwner.GetPhysics()->GetSpeedXZ() > 9.f) {
+		if (m_rOwner.GetPhysics()->GetSpeedXZ() > 11.f) {
 			_vec2 vDirXZ = _vec2(m_rOwner.GetPhysics()->GetDirection().x, m_rOwner.GetPhysics()->GetDirection().z);
-			m_rOwner.GetPhysics()->SetVelocityXZ(*D3DXVec2Normalize(&vDirXZ, &vDirXZ) * 9.f);
+			m_rOwner.GetPhysics()->SetVelocityXZ(*D3DXVec2Normalize(&vDirXZ, &vDirXZ) * 11.f);
 		}
 		//if(m_rOwner.GetPhysics()->Get)
 	}

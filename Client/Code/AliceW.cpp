@@ -102,7 +102,7 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 		return 1;
 
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_I)) {
-		m_pAttribute->Damaged(0.1f);
+		m_pAttribute->Damaged(1000.1f);
 	}
 
 	// 부모 먼저 렌더러에 들어가야 올바르게 자식도 transform 됨.
@@ -150,6 +150,28 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 
 	Engine::CNaviMesh* pNaviMesh = m_pMap->GetNaviMesh();
 	_vec3 vCurrentPos = GetTransform()->GetPos();
+
+	//pNaviMesh->CorrectPosAndVelBySliding(vCurrentPos, *GetPhysics());
+	//_vec3 vSlidingXZ = pNaviMesh->GetSlidedVelocity(vCurrentPos);
+	//vSlidingXZ.y = 0.f;
+
+	//if (D3DXVec3LengthSq(&vSlidingXZ) > 0.f ) {
+	//	D3DXVec3Normalize(&vSlidingXZ, &vSlidingXZ);
+	//	_vec3 vVelocityXZ = GetPhysics()->GetVelocity();
+	//	vVelocityXZ.y = 0.f;
+
+	//	if (D3DXVec3LengthSq(&vVelocityXZ) > 0.f) {
+	//		_float fDot = D3DXVec3Dot(&vSlidingXZ, &vVelocityXZ);
+	//		if (fDot < 0.f) {
+	//			vVelocityXZ -= fDot * vSlidingXZ;
+	//			GetPhysics()->SetVelocityXZ(_vec2(vVelocityXZ.x, vVelocityXZ.z));
+	//		}
+	//	}
+	//	/*else {
+	//		m_v
+	//	}*/
+ //	}
+
 	_vec3 vTargetPos = m_pPhysics->GetUpdatedPos(_fDeltaTime);		// 물리 계산
 	vTargetPos = pNaviMesh->GetSlidedPos(vTargetPos);
 	
@@ -178,6 +200,7 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 	}
 	// 이동 확정
 	GetTransform()->SetPos(vSettedPos);
+	m_bIsSmalling = false;
 
 	return 0;
 }
@@ -258,6 +281,9 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		GetPhysics()->SetVelocityY(0.f);
 		GetTransform()->SetPosY(pPlatform->GetHeight());
 		GetTransform()->Translate(vDeltaPos.x, 0.f, vDeltaPos.z);
+	}
+	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Small") == 0) {
+		m_bIsSmalling = true;
 	}
 
 	//if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
@@ -376,7 +402,7 @@ _bool CAliceW::IsSmalling()
 	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
 		return false;
 
-	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_LCONTROL) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_LCONTROL);
+	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_LCONTROL) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_LCONTROL) || m_bIsSmalling;
 }
 
 _bool CAliceW::IsAttackOn(const _float & _fDeltaTime)
@@ -408,7 +434,7 @@ _bool CAliceW::IsJumpOn(const _float & _fDeltaTime)
 	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
 		return false;
 
-	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_SPACE);
+	return !IsSmalling() && Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_SPACE);
 }
 
 _bool CAliceW::IsDashOn()
@@ -416,7 +442,7 @@ _bool CAliceW::IsDashOn()
 	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
 		return false;
 
-	return Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_LSHIFT);
+	return !IsSmalling() && Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_LSHIFT);
 }
 
 _bool CAliceW::IsDashing()

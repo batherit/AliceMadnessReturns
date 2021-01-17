@@ -233,8 +233,8 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pMap->LoadMap(
 		pLayer,
 		nullptr,
-		L"../../Resource/Navi/NaviTest.navi",
-		L"../../Resource/Map/Map.map"
+		L"../../Resource/Navi/Navi_Play.navi",
+		L"../../Resource/Map/Map_Play.map"
 	);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Map", pMap), E_FAIL);
 	

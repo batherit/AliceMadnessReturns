@@ -65,6 +65,13 @@ int CDynamicCamera::Update_Object(const _float & fTimeDelta)
 
 	_vec3 vDir{ 0.f, 0.f, 0.f };
 
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
+		MultipleSpeed(0.5f);
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_P)) {
+		MultipleSpeed(2.f);
+	}
+
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(L"KEY_W")) {
 		vDir += m_pTransform->GetLook();
 	}

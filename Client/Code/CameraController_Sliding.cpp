@@ -7,11 +7,11 @@ USING(Client)
 CCameraController_Sliding::CCameraController_Sliding(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCameraController(pGraphicDev)
 {
-	_vec3 vDir = _vec3(0.f, 1.f, -1.f);
+	_vec3 vDir = _vec3(0.f, 0.8f, -1.f);
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	SetStickDir(vDir);
-	SetStickLen(4.5f);
+	SetStickLen(5.5f);
 
 
 }

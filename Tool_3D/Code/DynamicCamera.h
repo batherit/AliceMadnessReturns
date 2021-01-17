@@ -23,8 +23,11 @@ public:
 	static CDynamicCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
 
+	void MultipleSpeed(_float _fMultipleCof) { m_fSpeed *= _fMultipleCof; m_pPhysics->SetSpeed(m_fSpeed); }
+
 private:
 	Engine::CPhysics*	m_pPhysics = nullptr;
+	_float m_fSpeed = 100.f;
 };
 
 END

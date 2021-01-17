@@ -59,6 +59,7 @@ int CBossState_Attack_IronHand::Update(const _float& _fDeltaTime)
 		// TODO : 주먹 공격을 생성합니다.
 
 		if (m_iAttackCount < 5 && (m_fTickTime += _fDeltaTime) >= 0.3f) {
+			//Engine::GetTimer(L"Timer_FPS60")->RunToPause();
 			_vec3 vPlayerPos = m_rOwner.GetTargetObject()->GetTransform()->GetPos();
 			_vec3 vPos = m_rOwner.GetTransform()->GetPos();
 			_vec3 vToPlayer = vPlayerPos - vPos;
@@ -86,6 +87,7 @@ int CBossState_Attack_IronHand::Update(const _float& _fDeltaTime)
 			Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 			_float fT = (1.f - Engine::GetWeightByValue(fLength, 0.f, 50.f));
 			pCameraMgr->GetCamera()->Shake(0.3f * fT, 0.4f * fT, 10 * fT);
+		//	Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
 		}
 
 		//m_bIsAttack = true;

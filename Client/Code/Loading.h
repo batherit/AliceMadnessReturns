@@ -29,6 +29,14 @@ public:
 	_uint		Loading_ForStage(void);
 
 private:
+	_uint LoadBuffers();
+	_uint LoadTextures();
+	_uint LoadCommonMeshes();
+	_uint LoadPoolSceneMeshes();
+	_uint LoadPlaySceneMeshes();
+	_uint LoadBossSceneMeshes();
+
+private:
 	HANDLE				m_hThread;
 
 	CRITICAL_SECTION	m_Crt;

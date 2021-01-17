@@ -57,6 +57,7 @@ int CAliceWState_Death::Update(const _float& _fDeltaTime)
 
 void CAliceWState_Death::OnExited(void)
 {
+	m_rOwner.GetAttribute()->SetDamaged(false);
 }
 
 void CAliceWState_Death::Free(void)

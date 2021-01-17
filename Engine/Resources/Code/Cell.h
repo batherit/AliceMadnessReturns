@@ -10,7 +10,7 @@ BEGIN(Engine)
 class ENGINE_DLL CCell : public CBase
 {
 public:
-	enum E_CELL_TYPE { TYPE_NORMAL, TYPE_WALL, TYPE_SLIDE, TYPE_SLIDE_EXIT, TYPE_END };
+	enum E_CELL_TYPE { TYPE_NORMAL, TYPE_WALL, TYPE_SLIDE, TYPE_SLIDE_EXIT, TYPE_CLOSED, TYPE_END };
 	enum POINT {	POINT_A, POINT_B,POINT_C, POINT_END};
 	enum LINE  { LINE_AB, LINE_BC, LINE_CA, LINE_END };
 	enum NEIGHBOR {	NEIGHBOR_AB, NEIGHBOR_BC, NEIGHBOR_CA, NEIGHBOR_END };
@@ -31,6 +31,8 @@ public:
 	_float			GetHeight(const _vec3& _vPos);
 	_int			GetTagIndex() const { return m_iTagIndex; }
 	_vec3			GetNormal() const { return m_vNormal; }
+	_vec3			GetNormalXZ() const { return m_vNormalXZ; }
+	_vec3			GetSliding() const { return m_vSliding; }
 	_bool			IsPosInCell(const _vec3& _vPos);
 	_bool			IsCollided(const _vec3& _vFromPos, const _vec3& _vToPos, _vec3* _pHitPos = nullptr);
 
@@ -49,6 +51,8 @@ private:
 	_vec3				m_vPoint[POINT_END];
 	_vec3				m_vCenterPoint;
 	_vec3				m_vNormal;
+	_vec3				m_vNormalXZ;
+	_vec3				m_vSliding;
 	CCell*				m_pNeighbor[NEIGHBOR_END];
 	CLine*				m_pLine[LINE_END];
 	LPDIRECT3DDEVICE9	m_pGraphicDev;

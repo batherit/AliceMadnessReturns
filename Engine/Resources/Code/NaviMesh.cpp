@@ -82,6 +82,9 @@ HRESULT Engine::CNaviMesh::Ready_NaviMeshes(void)
 
 void CNaviMesh::Render_NaviMeshes(void)
 {
+	if (!m_bIsVisible)
+		return;
+
 	for (auto& iter : m_vecCell)
 		iter->Render_Cell();
 
@@ -139,6 +142,21 @@ _vec3 CNaviMesh::Move_OnNaviMesh(_int& _iCellIndex, const _vec3* pCurrentPos, co
 		break;
 	case CCell::TYPE_SLIDE_EXIT:
 		break;
+	case CCell::TYPE_CLOSED:
+		if (CCell::INSIDE == m_vecCell[_iCellIndex]->CompareCell(&vEndPos, &_iCellIndex)) {
+			_float fHeight = m_vecCell[_iCellIndex]->GetHeight(vEndPos);
+			if (vEndPos.y < fHeight)
+				vEndPos.y = fHeight;
+			return vEndPos;
+		}
+		else {
+			vEndPos = m_vecCell[_iCellIndex]->GetPosInCell(vEndPos);
+			_float fHeight = m_vecCell[_iCellIndex]->GetHeight(vEndPos);
+			if (vEndPos.y < fHeight)
+				vEndPos.y = fHeight;
+			return vEndPos;
+		}
+		break;
 	default:
 		break;
 	}
@@ -181,9 +199,75 @@ _vec3 CNaviMesh::MoveOnNaviMesh_Adhesion(_int & _iCellIndex, const _vec3 * pCurr
 	return *pTargetPos;
 }
 
+_vec3 CNaviMesh::GetSlidedVelocity(const _vec3 & _vPos)
+{
+	_vec3 vSlidedPos = _vPos;
+	_bool bIsForward = false;
+	_vec3 vHitPos;
+	_vec3 vVel = _vec3(0.f, 0.f, 0.f);
+	for (auto& rSlidingCell : m_vecSlidingCell) {
+		if (Engine::IsSphereAndTriangleCollided(
+			*rSlidingCell->Get_Point(CCell::POINT_A),
+			*rSlidingCell->Get_Point(CCell::POINT_B),
+			*rSlidingCell->Get_Point(CCell::POINT_C),
+			vSlidedPos, 1.f, &bIsForward, &vHitPos)) {
+
+			//vVel += rSlidingCell->GetSliding();
+			//if (!bIsForward) {
+			//	// 뒷편에 있었다면 앞으로 밀어낸다.
+				vVel += rSlidingCell->GetSliding();
+			//}
+		}
+	}
+
+	return vVel;
+}
+
+void CNaviMesh::CorrectPosAndVelBySliding(_vec3 & _vPos, CPhysics & _rPhysics)
+{
+	_vec3 vSlidedPos = _vPos;
+	vSlidedPos.y += 1.f;
+	_bool bIsForward = false;
+	_vec3 vHitPos;
+	_vec3 vVel = _vec3(0.f, 0.f, 0.f);
+	for (auto& rSlidingCell : m_vecSlidingCell) {
+		if (Engine::IsSphereAndTriangleCollided(
+			*rSlidingCell->Get_Point(CCell::POINT_A),
+			*rSlidingCell->Get_Point(CCell::POINT_B),
+			*rSlidingCell->Get_Point(CCell::POINT_C),
+			vSlidedPos, 1.f, &bIsForward, &vHitPos)) {
+
+			vVel += rSlidingCell->GetNormalXZ();
+			vSlidedPos += rSlidingCell->GetNormalXZ();
+			//if (!bIsForward) {
+			//	vSlidedPos = vHitPos;
+			//}
+		}
+	}
+
+	_vPos = vSlidedPos;
+	_vPos.y -= 1.f;
+
+	vVel.y = 0.f;
+	if (D3DXVec3LengthSq(&vVel) > 0.f) {
+		D3DXVec3Normalize(&vVel, &vVel);
+		_vec3 vVelocityXZ = _rPhysics.GetVelocity();
+		vVelocityXZ.y = 0.f;
+
+		if (D3DXVec3LengthSq(&vVelocityXZ) > 0.f) {
+			_float fDot = D3DXVec3Dot(&vVel, &vVelocityXZ);
+			if (fDot < 0.f) {
+				vVelocityXZ -= fDot * vVel;
+				_rPhysics.SetVelocityXZ(_vec2(vVelocityXZ.x, vVelocityXZ.z));
+			}
+		}
+	}
+}
+
 _vec3 CNaviMesh::GetSlidedPos(const _vec3 & _vPos)
 {
 	_vec3 vSlidedPos = _vPos;
+	vSlidedPos.y += 1.f;
 	_bool bIsForward = false;
 	_vec3 vHitPos;
 	for (auto& rSlidingCell : m_vecSlidingCell) {
@@ -192,14 +276,16 @@ _vec3 CNaviMesh::GetSlidedPos(const _vec3 & _vPos)
 			*rSlidingCell->Get_Point(CCell::POINT_B),
 			*rSlidingCell->Get_Point(CCell::POINT_C),
 			vSlidedPos, 1.f, &bIsForward, &vHitPos)) {
-
-			if (!bIsForward) {
-				// 뒷편에 있었다면 앞으로 밀어낸다.
-				vSlidedPos.x = vHitPos.x;
-				vSlidedPos.z = vHitPos.z;
-			}
+			vSlidedPos += rSlidingCell->GetNormalXZ() * 0.08f;
+			//if (!bIsForward) {
+			//	// 뒷편에 있었다면 앞으로 밀어낸다.
+			//	vSlidedPos.x = vHitPos.x;
+			//	vSlidedPos.z = vHitPos.z;
+			//}
 		}
 	}
+
+	vSlidedPos.y -= 1.f;
 
 	return vSlidedPos;
 }
@@ -239,10 +325,13 @@ HRESULT CNaviMesh::AddCell(const _vec3 & _vV1, const _vec3 & _vV2, const _vec3 &
 	CCell*		pCell = CCell::Create(m_pGraphicDev, m_vecCell.size(), &_vV1, &_vV2, &_vV3, _iTagIndex);
 	NULL_CHECK_RETURN(pCell, E_FAIL);
 
-	if (_iTagIndex == CCell::TYPE_NORMAL || _iTagIndex == CCell::TYPE_SLIDE || _iTagIndex == CCell::TYPE_SLIDE_EXIT)
+	/*if (_iTagIndex == CCell::TYPE_NORMAL || _iTagIndex == CCell::TYPE_SLIDE || _iTagIndex == CCell::TYPE_SLIDE_EXIT || _iTa)
 		m_vecCell.push_back(pCell);
-	else if(_iTagIndex == CCell::TYPE_WALL)
+	else */
+	if(_iTagIndex == CCell::TYPE_WALL)
 		m_vecSlidingCell.push_back(pCell);
+	else 
+		m_vecCell.push_back(pCell);
 	return S_OK;
 }
 

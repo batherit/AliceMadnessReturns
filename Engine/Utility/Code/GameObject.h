@@ -34,11 +34,11 @@ public:
 	LPDIRECT3DDEVICE9 GetGraphicDev() const { return m_pGraphicDev; }
 
 	void SetValid(_bool _bIsValid);
-	_bool IsValid() const { return m_bIsValid; }
+	inline _bool IsValid() const { return m_bIsValid; }
 	void SetVisible(_bool _bIsVisible);
-	_bool IsVisible() const { return m_bIsVisible; }
+	inline _bool IsVisible() const { return m_bIsVisible; }
 	void SetActivated(_bool _bIsActivated);
-	_bool IsActivated() const { return m_bIsActivated; }
+	inline _bool IsActivated() const { return m_bIsActivated; }
 
 	CComponent* GetComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);
 	CComponent*	AddComponent(const COMPONENTID eComponentID, const _tchar* pComponentTag);
@@ -73,7 +73,7 @@ public:
 	vector<pair<string, vector<CColliderObject*>>>& GetColliderList() { return m_vecColliders; }
 	vector<CColliderObject*>& GetOptimizedColliderList() { return m_vecOptimizedColliders; }
 	CColliderObject* GetColliderFromTag(const _tchar* _pColliderTag);
-	CColliderObject_Sphere* GetCullingSphere() const { return m_pCullingSphere; }
+	inline CColliderObject_Sphere* GetCullingSphere() const { return m_pCullingSphere; }
 	void SetCullingSphere(CColliderObject_Sphere* _pCullingSphere) { m_pCullingSphere = _pCullingSphere; }
 
 	// 파일 입출력 관련

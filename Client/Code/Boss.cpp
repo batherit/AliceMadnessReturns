@@ -87,7 +87,7 @@ int CBoss::Update_Object(const _float & _fDeltaTime)
 	Engine::CNaviMesh* pNaviMesh = m_pMap->GetNaviMesh();
 	_vec3 vCurrentPos = GetTransform()->GetPos();
 	_vec3 vTargetPos = m_pPhysics->GetUpdatedPos(_fDeltaTime);		// 물리 계산
-	vTargetPos = pNaviMesh->GetSlidedPos(vTargetPos);
+	//vTargetPos = pNaviMesh->GetSlidedPos(vTargetPos);
 
 	_vec3 vSettedPos = vTargetPos;
 

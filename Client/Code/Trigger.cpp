@@ -5,6 +5,8 @@
 #include "MadCapA.h"
 #include "MiniGrunt.h"
 #include "BolterFly.h"
+#include "Boss.h"
+#include "Attribute.h"
 
 CTrigger::CTrigger(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -64,11 +66,17 @@ void CTrigger::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 				else if (lstrcmp(m_tcStageTag, L"BossScene") == 0)
 					Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CBossScene::Create(m_pGraphicDev));
 				break;
-			case TRIGGER::TYPE_SPAWN:
+			case TRIGGER::TYPE_SPAWN: {
+				auto& rMonsterList = Engine::GetLayer(L"Environment")->GetLayerList(L"Monster");
+				for (auto& rObj : rMonsterList) {
+					//rObj->SetValid(false);
+					rObj->GetComponent<CAttribute>()->DecreaseHP(1000.f);
+				}
 				SetActivated(false);
 				for (auto& rSpawner : m_vecSpawners) {
 					rSpawner->Spawn();
 				}
+			}
 				break;
 			}
 		}
@@ -150,7 +158,7 @@ void CTrigger::Spawn()
 	if (lstrcmp(L"MadCapA", m_tcMonsterTag) == 0) {
 		CMadCapA* pMadCapA = CMadCapA::Create(m_pGraphicDev);
 		pMadCapA->GetTransform()->SetPos(GetTransform()->GetPos());
-		pMadCapA->GetTransform()->SetScale(GetTransform()->GetScale());
+		//pMadCapA->GetTransform()->SetScale(GetTransform()->GetScale());
 		pMadCapA->GetTransform()->SetAngle(GetTransform()->GetAngle());
 		Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pMadCapA);
 		//SetActivated(false);
@@ -158,7 +166,7 @@ void CTrigger::Spawn()
 	else if (lstrcmp(L"MiniGrunt", m_tcMonsterTag) == 0) {
 		CMiniGrunt* pMiniGrunt = CMiniGrunt::Create(m_pGraphicDev);
 		pMiniGrunt->GetTransform()->SetPos(GetTransform()->GetPos());
-		pMiniGrunt->GetTransform()->SetScale(GetTransform()->GetScale());
+		//pMiniGrunt->GetTransform()->SetScale(GetTransform()->GetScale());
 		pMiniGrunt->GetTransform()->SetAngle(GetTransform()->GetAngle());
 		Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pMiniGrunt);
 		//SetActivated(false);
@@ -166,9 +174,17 @@ void CTrigger::Spawn()
 	else if (lstrcmp(L"BolterFly", m_tcMonsterTag) == 0) {
 		CBolterFly* pBolterFly = CBolterFly::Create(m_pGraphicDev);
 		pBolterFly->GetTransform()->SetPos(GetTransform()->GetPos());
-		pBolterFly->GetTransform()->SetScale(GetTransform()->GetScale());
+		//pBolterFly->GetTransform()->SetScale(GetTransform()->GetScale());
 		pBolterFly->GetTransform()->SetAngle(GetTransform()->GetAngle());
 		Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pBolterFly);
+		//SetActivated(false);
+	}
+	else if (lstrcmp(L"Boss", m_tcMonsterTag) == 0) {
+		CBoss* pBoss = CBoss::Create(m_pGraphicDev);
+		pBoss->GetTransform()->SetPos(GetTransform()->GetPos());
+		//pBoss->GetTransform()->SetScale(GetTransform()->GetScale());
+		pBoss->GetTransform()->SetAngle(GetTransform()->GetAngle());
+		Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pBoss);
 		//SetActivated(false);
 	}
 

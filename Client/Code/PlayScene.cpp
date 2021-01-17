@@ -171,7 +171,7 @@ int CPlayScene::Update(const _float& fTimeDelta)
 void CPlayScene::OnLoaded()
 {
 	//Engine::Set_TimeDelta(L"Timer_FPS60");
-	Engine::GetTimer(L"Timer_FPS60")->RunToPause();
+	//Engine::GetTimer(L"Timer_FPS60")->RunToPause();
 	Engine::CCollisionMgr::GetInstance()->ClearGameObjectList();
 	Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
 
@@ -185,7 +185,7 @@ void CPlayScene::OnLoaded()
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
+	//Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
 }
 
 void CPlayScene::OnExited()

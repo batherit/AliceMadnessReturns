@@ -59,8 +59,11 @@ void CCollisionMgr::ProcessCollision()
 					continue;		// 같은 오브젝트끼리는 충돌 검출을 하지 않아요.
 
 				if (IsCollided(rObj1->GetCullingSphere(), rObj2->GetCullingSphere())) {
-					for (auto& rCollider1 : rObj1->GetOptimizedColliderList()) {
-						for (auto& rCollider2 : rObj2->GetOptimizedColliderList()) {
+					auto& ColList1 = rObj1->GetOptimizedColliderList();
+					auto& ColList2 = rObj2->GetOptimizedColliderList();
+
+					for (auto& rCollider1 : ColList1) {
+						for (auto& rCollider2 : ColList2) {
 							if (rCollider1 == rObj1->GetCullingSphere() || rCollider2 == rObj2->GetCullingSphere())
 								continue;
 
@@ -78,8 +81,11 @@ void CCollisionMgr::ProcessCollision()
 								rObj2->OnNotCollision(tCollisionInfo2);
 							}
 							if (!rObj1->IsValid() || !rObj2->IsValid())
+								//break;
 								throw false;
 						}
+						//if (!rObj1->IsValid() || !rObj2->IsValid())
+						//	break;
 					}
 				}
 			}

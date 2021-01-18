@@ -9,6 +9,7 @@
 #include "Attribute.h"
 #include "BunnyBomb.h"
 #include "Platform.h"
+#include "MovingPlatform.h"
 #include "UI_InGame.h"
 #include "UI_WeaponLock.h"
 #include "UI_LockedWeapon.h"
@@ -280,6 +281,20 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		_vec3 vDeltaPos = pPlatform->GetDeltaPos();
 		GetPhysics()->SetVelocityY(0.f);
 		GetTransform()->SetPosY(pPlatform->GetHeight());
+		GetTransform()->Translate(vDeltaPos.x, 0.f, vDeltaPos.z);
+	}
+	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"MovingPlatform") == 0) {
+		/*	if (GetPhysics()->GetVelocity().y > 0.f)
+				return;
+	*/
+		if (IsFalling(0.f)) {
+			m_bIsLanded = true;
+		}
+
+		CMovingPlatform* pMovingPlatform = dynamic_cast<CMovingPlatform*>(_tCollisionInfo.pCollidedObject);
+		_vec3 vDeltaPos = pMovingPlatform->GetDeltaPos();
+		GetPhysics()->SetVelocityY(0.f);
+		GetTransform()->SetPosY(pMovingPlatform->GetHeight());
 		GetTransform()->Translate(vDeltaPos.x, 0.f, vDeltaPos.z);
 	}
 	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Small") == 0) {

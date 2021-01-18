@@ -14,6 +14,7 @@
 #include "PopDomino.h"
 #include "Valve.h"
 #include "MirrorPad.h"
+#include "MovingPlatform.h"
 #include "Platform.h"
 #include "CrushingFist.h"
 #include "BigGuyA.h"
@@ -211,6 +212,12 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 				CMirrorPad* pMirrorPad = dynamic_cast<CMirrorPad*>(pCustomObject);
 				pMirrorPad->SetLinkIndex(_ttoi(tcFactors[0]));
 				pMirrorPad->SetPos(pStaticObject->GetTransform()->GetPos());
+			}
+			else if (lstrcmp(L"MovingPlatform", pStaticObject->GetMeshTag()) == 0) {
+				pCustomObject = CMovingPlatform::Create(m_pGraphicDev);
+				CMovingPlatform* pMovingPlatform = dynamic_cast<CMovingPlatform*>(pCustomObject);
+				pMovingPlatform->GetTransform()->SetPos(pStaticObject->GetTransform()->GetPos());
+				pMovingPlatform->SetMovingPlatformInfo(_vec3(_ttof(tcFactors[0]), _ttof(tcFactors[1]), _ttof(tcFactors[2])), _ttof(tcFactors[3]), _ttof(tcFactors[4]));
 			}
 			else if (lstrcmp(L"Platform", pStaticObject->GetMeshTag()) == 0) {
 				pCustomObject = CPlatform::Create(m_pGraphicDev);

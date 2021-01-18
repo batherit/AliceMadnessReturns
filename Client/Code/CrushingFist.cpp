@@ -44,18 +44,6 @@ int CCrushingFist::Update_Object(const _float & _fDeltaTime)
 	if (!IsActivated())
 		return 1;
 
-	//if (m_pAlice) {
-	//	if (m_pAlice->IsSmalling()) {
-	//		m_bIsVisible = true;
-	//	}
-	//	else {
-	//		m_bIsVisible = false;
-	//	}
-	//}
-	//else {
-	//	m_pAlice = dynamic_cast<CAliceW*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Player").begin());
-	//}
-
 	if (!m_bIsOn) {
 		if ((m_fElapsedTime += _fDeltaTime) >= m_fKeepTime) {
 			m_fElapsedTime = 0.f;

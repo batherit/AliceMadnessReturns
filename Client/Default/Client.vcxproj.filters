@@ -265,6 +265,9 @@
     <Filter Include="02. Object\02. GameObject\CrushingFist">
       <UniqueIdentifier>{941b0400-bfcf-4257-80a4-ab8a5623363e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\MovingPlatform">
+      <UniqueIdentifier>{cb4f7b2c-5152-4287-8f3f-5ab0542b360f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -666,6 +669,9 @@
     <ClInclude Include="..\Code\CrushingFist.h">
       <Filter>02. Object\02. GameObject\CrushingFist</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\MovingPlatform.h">
+      <Filter>02. Object\02. GameObject\MovingPlatform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1036,6 +1042,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CrushingFist.cpp">
       <Filter>02. Object\02. GameObject\CrushingFist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MovingPlatform.cpp">
+      <Filter>02. Object\02. GameObject\MovingPlatform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

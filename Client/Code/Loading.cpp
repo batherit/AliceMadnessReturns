@@ -939,10 +939,10 @@ _uint CLoading::LoadPlay2SceneMeshes() {
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
-		L"HatterFloorSystem_CrankingShortD",
+		L"MovingPlatform",
 		Engine::TYPE_STATIC,
 		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
-		L"HatterFloorSystem_CrankingShortD"),
+		L"MovingPlatform.X"),
 		E_FAIL);
 
 	return S_OK;

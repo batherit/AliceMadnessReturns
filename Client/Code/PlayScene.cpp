@@ -65,6 +65,7 @@ HRESULT CPlayScene::Ready(void)
 
 int CPlayScene::Update(const _float& fTimeDelta)
 {
+//	_float fDelta = fTimeDelta;
 	//int a = 10;
 	// TODO : 네모를 움직이는 코드를 작성합니다.
 	//_float fHeight = m_pTerrain->GetHeight(m_pPlayer->GetComponent<Engine::CTransform>()->GetPos());
@@ -186,6 +187,7 @@ void CPlayScene::OnLoaded()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
+	Engine::GetTimer(L"Timer_FPS60")->Reset();
 }
 
 void CPlayScene::OnExited()

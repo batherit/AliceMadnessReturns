@@ -67,7 +67,7 @@ HRESULT CUI_InGame::Ready_Object(void)
 
 	m_pCursor = CUI_Cursor::Create(m_pGraphicDev);
 	m_pCursor->SetActivated(false);
-	Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
+	Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true, WINCX >> 1, WINCY >> 1);
 	AddChild(m_pCursor);
 
 	// FadeInOut은 화면 전체를 덮어야하기 때문에 자식 중 가장 맨 뒤에 있어야 한다.

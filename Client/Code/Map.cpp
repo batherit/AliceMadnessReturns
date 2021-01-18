@@ -15,6 +15,7 @@
 #include "Valve.h"
 #include "MirrorPad.h"
 #include "Platform.h"
+#include "CrushingFist.h"
 #include "BigGuyA.h"
 #include "BigGuyB.h"
 #include "Cat.h"
@@ -216,6 +217,12 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 				CPlatform* pPlatform = dynamic_cast<CPlatform*>(pCustomObject);
 				pPlatform->SetLinkIndex(_ttoi(tcFactors[0]));
 				pPlatform->SetPos(pStaticObject->GetTransform()->GetPos(), _vec3(_ttof(tcFactors[1]), _ttof(tcFactors[2]), _ttof(tcFactors[3])), _ttof(tcFactors[4]));
+			}
+			else if (lstrcmp(L"CrushingFist", pStaticObject->GetMeshTag()) == 0) {
+				pCustomObject = CCrushingFist::Create(m_pGraphicDev);
+				CCrushingFist* pCrushingFist = dynamic_cast<CCrushingFist*>(pCustomObject);
+				pCrushingFist->GetTransform()->SetPos(pStaticObject->GetTransform()->GetPos());
+				pCrushingFist->SetCrushingFistInfo(_vec3(_ttof(tcFactors[0]), _ttof(tcFactors[1]), _ttof(tcFactors[2])), _ttof(tcFactors[3]), _ttof(tcFactors[4]), _ttof(tcFactors[5]));
 			}
 
 			pCustomObject->GetTransform()->SetPos(pStaticObject->GetTransform()->GetPos());

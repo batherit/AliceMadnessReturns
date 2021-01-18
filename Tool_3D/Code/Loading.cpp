@@ -100,6 +100,7 @@ _uint CLoading::Loading_ForStage(void)
 	LoadCommonMeshes();
 	LoadPoolSceneMeshes();
 	LoadPlaySceneMeshes();
+	LoadPlay2SceneMeshes();
 	LoadBossSceneMeshes();
 	
 
@@ -942,6 +943,99 @@ _uint CLoading::LoadPlaySceneMeshes()
 		E_FAIL);
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"KeyTunnel");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"KeyTunnel");
+
+	return S_OK;
+}
+
+_uint CLoading::LoadPlay2SceneMeshes() {
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterExtWallC_RightHole",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterExtWallC_RightHole.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterExtWallC_RightHole");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterExtWallC_RightHole");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterExtWallD_TwoHole",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterExtWallD_TwoHole.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterExtWallD_TwoHole");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterExtWallD_TwoHole");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterFloorSystem_OriginalTallH",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterFloorSystem_OriginalTallH.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterFloorSystem_OriginalTallH");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterFloorSystem_OriginalTallH");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterExtWallA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterExtWallA.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterExtWallA");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterExtWallA");
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterExtWallB",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterExtWallB.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterExtWallB");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterExtWallB");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterExtTowerD",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterExtTowerD.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterExtTowerD");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterExtTowerD");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterPlat_CheckeI",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterPlat_CheckeI.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterPlat_CheckeI");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"HatterPlat_CheckeI");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"CrushingFist",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"CrushingFist.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CrushingFist");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"CrushingFist");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"MovingPlatform",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"MovingPlatform.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MovingPlatform");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"MovingPlatform");
 
 	return S_OK;
 }

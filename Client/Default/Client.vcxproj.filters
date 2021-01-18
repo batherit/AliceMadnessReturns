@@ -202,9 +202,6 @@
     <Filter Include="01. Scene\04. Play">
       <UniqueIdentifier>{ece43087-460b-4854-b6ec-fae4eb8aa6c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\05. Boss">
-      <UniqueIdentifier>{934eeef6-275b-492f-8e4b-b69a22803f5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\03. Pool">
       <UniqueIdentifier>{32f78452-3868-4f17-a8d1-006d0ef408d0}</UniqueIdentifier>
     </Filter>
@@ -258,6 +255,15 @@
     </Filter>
     <Filter Include="02. Object\02. GameObject\IronHand">
       <UniqueIdentifier>{fddfb1b3-f5ad-4e94-819b-75bc36a7059f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\06. Boss">
+      <UniqueIdentifier>{934eeef6-275b-492f-8e4b-b69a22803f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\05. Play2">
+      <UniqueIdentifier>{7dfbc467-4b8b-4f7d-957f-61142d366b4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\CrushingFist">
+      <UniqueIdentifier>{941b0400-bfcf-4257-80a4-ab8a5623363e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -484,7 +490,7 @@
       <Filter>01. Scene\04. Play</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BossScene.h">
-      <Filter>01. Scene\05. Boss</Filter>
+      <Filter>01. Scene\06. Boss</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BunnyBomb.h">
       <Filter>02. Object\02. GameObject\BunnyBomb</Filter>
@@ -653,6 +659,12 @@
     </ClInclude>
     <ClInclude Include="..\Code\AliceWState_JumpDamage.h">
       <Filter>03. State\AliceW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Play2Scene.h">
+      <Filter>01. Scene\05. Play2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CrushingFist.h">
+      <Filter>02. Object\02. GameObject\CrushingFist</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -849,7 +861,7 @@
       <Filter>02. Object\02. GameObject\UI\FadeInOut</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BossScene.cpp">
-      <Filter>01. Scene\05. Boss</Filter>
+      <Filter>01. Scene\06. Boss</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BunnyBomb.cpp">
       <Filter>02. Object\02. GameObject\BunnyBomb</Filter>
@@ -1018,6 +1030,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_JumpDamage.cpp">
       <Filter>03. State\AliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Play2Scene.cpp">
+      <Filter>01. Scene\05. Play2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CrushingFist.cpp">
+      <Filter>02. Object\02. GameObject\CrushingFist</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

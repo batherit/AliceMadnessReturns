@@ -69,6 +69,7 @@ _uint CLoading::Loading_ForStage(void)
 	LoadCommonMeshes();
 	LoadPoolSceneMeshes();
 	LoadPlaySceneMeshes();
+	LoadPlay2SceneMeshes();
 	LoadBossSceneMeshes();
 
 	// UI
@@ -870,6 +871,83 @@ _uint CLoading::LoadPlaySceneMeshes() {
 
 	return S_OK;
 }
+
+_uint CLoading::LoadPlay2SceneMeshes() {
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterExtWallC_RightHole",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterExtWallC_RightHole.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterExtWallD_TwoHole",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterExtWallD_TwoHole.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterFloorSystem_OriginalTallH",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterFloorSystem_OriginalTallH.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterExtWallA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterExtWallA.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterExtWallB",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterExtWallB.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterExtTowerD",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterExtTowerD.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterPlat_CheckeI",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterPlat_CheckeI.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"CrushingFist",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"CrushingFist.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"HatterFloorSystem_CrankingShortD",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Play2Scene/",
+		L"HatterFloorSystem_CrankingShortD"),
+		E_FAIL);
+
+	return S_OK;
+}
+
 _uint CLoading::LoadBossSceneMeshes() {
 	// Boss Stage
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

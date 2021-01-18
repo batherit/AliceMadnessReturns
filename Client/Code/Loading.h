@@ -34,6 +34,7 @@ private:
 	_uint LoadCommonMeshes();
 	_uint LoadPoolSceneMeshes();
 	_uint LoadPlaySceneMeshes();
+	_uint LoadPlay2SceneMeshes();
 	_uint LoadBossSceneMeshes();
 
 private:

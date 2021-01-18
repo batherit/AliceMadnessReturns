@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "LoadScene.h"
 #include "PlayScene.h"
+#include "Play2Scene.h"
 #include "BossScene.h"
 #include "PoolScene.h"
 #include "Export_Function.h"
@@ -42,7 +43,8 @@ Engine::_int CLoadScene::Update(const _float& fTimeDelta)
 		if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 		{
 			//Engine::CManagement::GetInstance()->SetNextScene(CTitleScene::Create(m_pGraphicDev));
-			Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+			//Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+			Engine::CManagement::GetInstance()->SetNextScene(CPlay2Scene::Create(m_pGraphicDev));
 			//Engine::CManagement::GetInstance()->SetNextScene(CBossScene::Create(m_pGraphicDev));
 			//Engine::CManagement::GetInstance()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
 

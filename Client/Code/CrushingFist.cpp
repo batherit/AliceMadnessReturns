@@ -44,51 +44,53 @@ int CCrushingFist::Update_Object(const _float & _fDeltaTime)
 	if (!IsActivated())
 		return 1;
 
-	if (!m_bIsOn) {
-		if ((m_fElapsedTime += _fDeltaTime) >= m_fKeepTime) {
-			m_fElapsedTime = 0.f;
-			m_bIsOn = true;
-		}
-	}
-	else {
-		if (!m_bIsEnd) {
-			m_fElapsedTime += _fDeltaTime;
-			_float fT = Engine::Clamp(m_fElapsedTime / m_fPressTime, 0.f, 1.f);	// 0.6f초만에 엔드 지점으로 이동.
-			GetTransform()->SetPos(m_vStartPos * (1.f - fT) + m_vEndPos * fT);
-
-			if (fT >= 1.f) {
-				GetTransform()->SetPos(m_vEndPos);
-				m_bIsEnd = true;
+	if (!m_bIsEventOn) {
+		if (!m_bIsOn) {
+			if ((m_fElapsedTime += _fDeltaTime) >= m_fKeepTime) {
 				m_fElapsedTime = 0.f;
+				m_bIsOn = true;
 			}
 		}
 		else {
-			if (!m_bIsOff) {
-				// 상태 유지
-				if ((m_fElapsedTime += _fDeltaTime) >= m_fKeepTime) {
-					/*GetTransform()->SetPos(m_vStartPos);
-					SetValid(true);
-					return 0;*/
-					m_bIsOff = true;
+			if (!m_bIsEnd) {
+				m_fElapsedTime += _fDeltaTime;
+				_float fT = Engine::Clamp(m_fElapsedTime / m_fPressTime, 0.f, 1.f);	// 0.6f초만에 엔드 지점으로 이동.
+				GetTransform()->SetPos(m_vStartPos * (1.f - fT) + m_vEndPos * fT);
+
+				if (fT >= 1.f) {
+					GetTransform()->SetPos(m_vEndPos);
+					m_bIsEnd = true;
 					m_fElapsedTime = 0.f;
 				}
 			}
 			else {
-				m_fElapsedTime += _fDeltaTime;
-				_float fT = Engine::Clamp(m_fElapsedTime / m_fBackTime, 0.f, 1.f);	// 1.f초만에 시작 지점으로 이동.
-				GetTransform()->SetPos(m_vEndPos * (1.f - fT) + m_vStartPos * fT);
+				if (!m_bIsOff) {
+					// 상태 유지
+					if ((m_fElapsedTime += _fDeltaTime) >= m_fKeepTime) {
+						/*GetTransform()->SetPos(m_vStartPos);
+						SetValid(true);
+						return 0;*/
+						m_bIsOff = true;
+						m_fElapsedTime = 0.f;
+					}
+				}
+				else {
+					m_fElapsedTime += _fDeltaTime;
+					_float fT = Engine::Clamp(m_fElapsedTime / m_fBackTime, 0.f, 1.f);	// 1.f초만에 시작 지점으로 이동.
+					GetTransform()->SetPos(m_vEndPos * (1.f - fT) + m_vStartPos * fT);
 
-				if (fT >= 1.f) {
-					GetTransform()->SetPos(m_vStartPos);
-					m_fElapsedTime = 0.f;
-					m_bIsOn = false;
-					m_bIsOff = false;
-					m_bIsEnd = false;
+					if (fT >= 1.f) {
+						GetTransform()->SetPos(m_vStartPos);
+						m_fElapsedTime = 0.f;
+						m_bIsOn = false;
+						m_bIsOff = false;
+						m_bIsEnd = false;
+					}
 				}
 			}
 		}
 	}
-
+	
 
 	m_pRenderer->Update(_fDeltaTime);
 	CGameObject::Update_Object(_fDeltaTime);
@@ -160,4 +162,10 @@ void CCrushingFist::SetCrushingFistInfo(const _vec3 & _vEndPos, _float _fPressTi
 	m_bIsOn = false;
 	m_bIsOff = false;
 	m_bIsEnd = false;
+}
+
+void CCrushingFist::EventOn()
+{
+	m_bIsEventOn = true;
+	GetTransform()->SetPos(m_vStartPos);
 }

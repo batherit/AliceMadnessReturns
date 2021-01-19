@@ -27,12 +27,14 @@ public:
 
 public:
 	Engine::CStaticMesh* GetDynamicMesh() const { return m_pMesh; }
+	void EventOn();
 
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	CAliceW* m_pAlice = nullptr;
 	_bool m_bIsVisible = true;
+	_bool m_bIsEventOn = false;
 };
 
 END

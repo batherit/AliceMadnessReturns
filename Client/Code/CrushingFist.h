@@ -28,6 +28,7 @@ public:
 	Engine::CStaticMesh* GetDynamicMesh() const { return m_pMesh; }
 	
 	void SetCrushingFistInfo(const _vec3& _vEndPos, _float _fPressTime, _float _fKeepTime, _float _fBackTime);
+	void EventOn();
 	
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
@@ -43,6 +44,7 @@ private:
 	_bool m_bIsOn = false;
 	_bool m_bIsOff = false;
 	_bool m_bIsEnd = false;
+	_bool m_bIsEventOn = false;
 };
 
 END

@@ -7,6 +7,8 @@
 #include "Trigger.h"
 #include "Route.h"
 #include "UI_SpeechBubble.h"
+#include "PopDomino.h"
+#include "CrushingFist.h"
 
 CPigFly::CPigFly(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -58,16 +60,21 @@ int CPigFly::Update_Object(const _float & _fDeltaTime)
 		return 1;
 
 	switch (m_eStep) {
+	case STEP_INIT:
+		GetTransform()->SetPos(m_pRoute->GetStartPosition());
+		m_eStep = STEP_RELAX;
+		break;
 	case STEP_ACTION:
 		if (m_pMesh->GetAnimationProgress() >= 0.99f) {
+			// 돼지코 카메라 컨트롤러로 세팅.
 			m_pMesh->Set_AnimationSet(ANIM::NoseSwich_Fly_Idle01);
 			switch (m_eEventType) {
 			case TYPE_DOMINO: {
-				ShoutOut(WINCX / 6.f, WINCY - WINCY / 6.f, L"당신은 행운의 돼지코를 만났습니다. \n 생겨나라 미노미노를 외치면 도미노가 보이게 됩니다.");
+				ShoutOut(WINCX / 6.f, WINCY - WINCY / 6.f, L" 당신은 행운의 돼지코를 만났습니다. \n생겨나라 미노미노를 외치면 도미노가 보이게 됩니다.");
 				break;
 			}
 			case TYPE_FIST: {
-				ShoutOut(WINCX / 6.f, WINCY - WINCY / 6.f, L"당신은 행운의 돼지코를 만났습니다. \n 없어져라 주먹주먹을 외치면 쇠주먹이 사라지게 됩니다.");
+				ShoutOut(WINCX / 6.f, WINCY - WINCY / 6.f, L" 당신은 행운의 돼지코를 만났습니다. \n멈춰라 주먹주먹을 외치면 쇠주먹이 멈추게 됩니다.");
 				break;
 			}
 			}
@@ -78,20 +85,33 @@ int CPigFly::Update_Object(const _float & _fDeltaTime)
 		if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_F)) {
 			switch (m_eEventType) {
 			case TYPE_DOMINO:
-				ShoutOut(WINCX / 6.f, WINCY - WINCY / 8.f, L"생겨나라 미노미노!!");
+				ShoutOut(WINCX / 6.f, WINCY - WINCY / 6.f, L" 생겨나라 미노미노!!");
 				break;
 			case TYPE_FIST:
-				ShoutOut(WINCX / 6.f, WINCY - WINCY / 8.f, L"없어져라 주먹주먹!!");
+				ShoutOut(WINCX / 6.f, WINCY - WINCY / 6.f, L" 멈춰라 주먹주먹!!");
 				break;
 			}
-			m_bIsEventPlaying = true;
 			m_eStep = STEP_PROCEE_EVENT;
 			break;
 		}
 		break;
 	case STEP_PROCEE_EVENT:
-		if (!ProcessEvent()) {
-			
+		if (m_pRoute->IsNextPositionExisted()) {
+			_vec3 vPos = GetTransform()->GetPos();
+			_vec3 vPostPos = m_pRoute->GetNextPosition(_fDeltaTime, ALICE_RUN_SPEED);
+			if (vPos != vPostPos) {
+				_vec3 vNewLook;
+				D3DXVec3Normalize(&vNewLook, &(vPostPos - vPos));
+				GetTransform()->ResetRightUpLook(&(vPos + vNewLook), &WORLD_Y_AXIS);
+				
+			}
+			GetTransform()->SetPos(vPostPos);
+		}
+		else {
+			// 이벤트 처리
+			ProcessEvent();
+			SetValid(false);
+			return 1;
 		}
 		break;
 	}
@@ -217,6 +237,8 @@ _bool CPigFly::LoadRoutePosList(const _tchar * _pRouteFilePath)
 			vecPosList.emplace_back(_vec3(fX, fY, fZ));
 		}
 		m_pRoute->SetPosList(vecPosList);
+
+		GetTransform()->SetPos(m_pRoute->GetStartPosition());
 	}
 	else abort();
 
@@ -233,6 +255,33 @@ void CPigFly::ShoutOut(_float _fOffsetX, _float _fOffsetY, const wstring & _wstr
 
 _bool CPigFly::ProcessEvent()
 {
+	switch (m_eEventType) {
+	case TYPE_DOMINO: {
+		// TODO : 도미노를 찾아 보이게 한다. 
+		auto& rMapObjects = Engine::GetLayer(L"Environment")->GetLayerList(L"MapObjects");
+		CPopDomino* pPopDomino = nullptr;
+		for (auto& rObj : rMapObjects) {
+			pPopDomino = dynamic_cast<CPopDomino*>(rObj);
+			if (pPopDomino) {
+				pPopDomino->EventOn();
+			}
+		}
+	}
+		break;
+	case TYPE_FIST: {
+		// TODO : 쇠주먹을 찾아 제자리에 멈추도록 한다.
+		auto& rMapObjects = Engine::GetLayer(L"Environment")->GetLayerList(L"MapObjects");
+		CCrushingFist* pFist = nullptr;
+		for (auto& rObj : rMapObjects) {
+			pFist = dynamic_cast<CCrushingFist*>(rObj);
+			if (pFist) {
+				pFist->EventOn();
+			}
+		}
+	}
+		
+		break;
+	}
 	return true;
 }
 

@@ -41,16 +41,18 @@ int CPopDomino::Update_Object(const _float & _fDeltaTime)
 	if (!IsActivated())
 		return 1;
 
-	if (m_pAlice) {
-		if (m_pAlice->IsSmalling()) {
-			m_bIsVisible = true;
+	if (!m_bIsEventOn) {
+		if (m_pAlice) {
+			if (m_pAlice->IsSmalling()) {
+				m_bIsVisible = true;
+			}
+			else {
+				m_bIsVisible = false;
+			}
 		}
 		else {
-			m_bIsVisible = false;
+			m_pAlice = dynamic_cast<CAliceW*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Player").begin());
 		}
-	}
-	else {
-		m_pAlice = dynamic_cast<CAliceW*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Player").begin());
 	}
 
 	m_pRenderer->Update(_fDeltaTime);
@@ -110,4 +112,10 @@ CPopDomino * CPopDomino::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CPopDomino::Free(void)
 {
 	CGameObject::Free();
+}
+
+void CPopDomino::EventOn()
+{
+	m_bIsEventOn = true;
+	m_bIsVisible = true;
 }

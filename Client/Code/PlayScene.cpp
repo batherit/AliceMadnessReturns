@@ -304,10 +304,10 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pCameraMgr->AddCameraController(pCameraController);
 
 	// 테스트 몬스터(MadCapA) 생성
-	Engine::CGameObject* pGameObject = CMadCapA::Create(m_pGraphicDev);
+	/*Engine::CGameObject* pGameObject = CMadCapA::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
-	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, 0.f));
+	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, 0.f));*/
 
 	//pGameObject = CMadCapA::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -316,13 +316,13 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 
 
 	// 테스트 미니 그룬트 생성
-	pGameObject = CMiniGrunt::Create(m_pGraphicDev);
+	/*pGameObject = CMiniGrunt::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
-	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, 0.f));
+	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, 0.f));*/
 
 	// 테스트 나사파리 생성
-	pGameObject = CBolterFly::Create(m_pGraphicDev);
+	/*pGameObject = CBolterFly::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
 	pGameObject->GetTransform()->Translate(_vec3(4.f, 15.f, 0.f));
@@ -330,7 +330,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pGameObject = CBolterFly::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
-	pGameObject->GetTransform()->Translate(_vec3(4.f, 15.f, 0.f));
+	pGameObject->GetTransform()->Translate(_vec3(4.f, 15.f, 0.f));*/
 
 
 	// UI

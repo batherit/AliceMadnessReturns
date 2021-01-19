@@ -477,6 +477,13 @@ _uint CLoading::LoadCommonMeshes() {
 		L"../../Resource/Mesh/StaticMesh/Common/Platform/",
 		L"Platform.X"),
 		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PigFly",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/PigFly/",
+		L"PigFly.X"),
+		E_FAIL);
 
 	return S_OK;
 }

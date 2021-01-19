@@ -14,7 +14,7 @@ class CPigFly : public Engine::CGameObject
 {
 public:
 	enum E_EVENT_TYPE { TYPE_DOMINO, TYPE_FIST, TYPE_END };
-	enum E_STEP { STEP_RELAX, STEP_ATTACKED, STEP_ACTION, STEP_TALKING, STEP_PROCEE_EVENT, STEP_END };
+	enum E_STEP { STEP_INIT, STEP_RELAX, STEP_ATTACKED, STEP_ACTION, STEP_TALKING, STEP_PROCEE_EVENT, STEP_END };
 private: // 생성자, 소멸자
 	explicit  CPigFly(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit  CPigFly(const  CPigFly& rhs);
@@ -47,11 +47,10 @@ public:
 
 private:
 	E_EVENT_TYPE m_eEventType = TYPE_END;
-	E_STEP m_eStep = STEP_RELAX;
+	E_STEP m_eStep = STEP_INIT;
 	_int m_iTriggerGauge = 0;
 
 	_bool m_bIsOn = false;				// true가 되면 사전 이벤트를 시작하게 됨.
-	_bool m_bIsEventPlaying = false;	// true가 되변 본 이벤트를 시작하게 됨.
 
 	Engine::CDynamicMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;

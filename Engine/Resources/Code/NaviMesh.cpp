@@ -210,7 +210,7 @@ _vec3 CNaviMesh::GetSlidedVelocity(const _vec3 & _vPos)
 			*rSlidingCell->Get_Point(CCell::POINT_A),
 			*rSlidingCell->Get_Point(CCell::POINT_B),
 			*rSlidingCell->Get_Point(CCell::POINT_C),
-			vSlidedPos, 1.f, &bIsForward, &vHitPos)) {
+			vSlidedPos, 0.5f, &bIsForward, &vHitPos)) {
 
 			//vVel += rSlidingCell->GetSliding();
 			//if (!bIsForward) {

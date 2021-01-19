@@ -34,6 +34,11 @@ int CNaviMeshVtxMover::Update_Object(const _float & _fDeltaTime)
 	if (!m_bIsMoverGizmoActivated)
 		return 0;
 
+	// 화면 밖을 클릭한 경우
+	auto ptCurrentCursor = Engine::GetClientCursorPoint(g_hWnd);
+	if (!Engine::IsPointInClient(g_hWnd, ptCurrentCursor))
+		return 1;
+
 	// 컴바인 상태가 아닐때 업데이트됩니다.
 
 	if (!m_bIsPicking) {

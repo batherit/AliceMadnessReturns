@@ -43,7 +43,7 @@ _int CInputProcessor_Navi::ProcessInput(const _float & _fDeltaTime)
 	// 화면 밖을 클릭한 경우
 	auto ptCurrentCursor = Engine::GetClientCursorPoint(g_hWnd);
 	if (!Engine::IsPointInClient(g_hWnd, ptCurrentCursor))
-		return -1;
+		return 1;
 
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
 		// TODO : 뷰 픽킹에 대한 처리를 진행합니다.

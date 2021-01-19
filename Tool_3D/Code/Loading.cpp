@@ -521,6 +521,16 @@ _uint CLoading::LoadCommonMeshes()
 	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_StraightA");
 	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"DollSlide_StraightA");
 
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"PigFly",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/PigFly/",
+		L"PigFly.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"PigFly");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_DYNAMIC, L"PigFly");
+
 	return S_OK;
 }
 

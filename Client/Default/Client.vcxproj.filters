@@ -268,6 +268,12 @@
     <Filter Include="02. Object\02. GameObject\MovingPlatform">
       <UniqueIdentifier>{cb4f7b2c-5152-4287-8f3f-5ab0542b360f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Event">
+      <UniqueIdentifier>{d19d4000-4a92-416a-a12e-c532d1bc8ebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\PigFly">
+      <UniqueIdentifier>{cac8842b-e27e-45e5-811e-704ed9fef6b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -672,6 +678,12 @@
     <ClInclude Include="..\Code\MovingPlatform.h">
       <Filter>02. Object\02. GameObject\MovingPlatform</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\PigFly.h">
+      <Filter>02. Object\02. GameObject\PigFly</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Event.h">
+      <Filter>02. Object\02. GameObject\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1045,6 +1057,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\MovingPlatform.cpp">
       <Filter>02. Object\02. GameObject\MovingPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PigFly.cpp">
+      <Filter>02. Object\02. GameObject\PigFly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Event.cpp">
+      <Filter>02. Object\02. GameObject\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

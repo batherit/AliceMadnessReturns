@@ -17,6 +17,7 @@
 #include "MovingPlatform.h"
 #include "Platform.h"
 #include "CrushingFist.h"
+#include "PigFly.h"
 #include "BigGuyA.h"
 #include "BigGuyB.h"
 #include "Cat.h"
@@ -285,6 +286,12 @@ void CMap::LoadObjects(Engine::CLayer* pLayer, const _tchar * _pFilePath)
 			}
 			else if (lstrcmp(L"Cat", pDynamicObject->GetMeshTag()) == 0) {
 				pCustomObject = CCat::Create(m_pGraphicDev);
+			}
+			else if (lstrcmp(L"PigFly", pDynamicObject->GetMeshTag()) == 0) {
+				pCustomObject = CPigFly::Create(m_pGraphicDev);
+				CPigFly* pPigFly = dynamic_cast<CPigFly*>(pCustomObject);
+				pPigFly->LoadRoutePosList(tcFactors[0]);
+				pPigFly->SetEventType(static_cast<CPigFly::E_EVENT_TYPE>(_ttoi(tcFactors[1])));
 			}
 
 			pCustomObject->GetTransform()->SetPos(pDynamicObject->GetTransform()->GetPos());

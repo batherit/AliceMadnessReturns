@@ -269,6 +269,9 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 			GetPhysics()->SetResistanceCoefficientXZ(0.8f);
 		}
 	}
+	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Press") == 0) {
+		m_pAttribute->Damaged(1000.f);
+	}
 	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Platform") == 0) {
 	/*	if (GetPhysics()->GetVelocity().y > 0.f)
 			return;

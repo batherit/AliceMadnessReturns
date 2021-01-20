@@ -31,11 +31,11 @@ public:
 	void			SetAnimationStop(const _bool& _bIsAnimStopping) { m_bIsAnimStopping = _bIsAnimStopping; }
 	_bool			IsAnimStopping() const { return m_bIsAnimStopping; }
 	//void			UpdateDeltaTime(const _float& _fDeltaTime);
+	
+	// 렌더 부분에서 호출됩니다.
+	void			UpdateAnimation(/*const _float& fTimeDelta*/);
 
 private:
-	// 렌더 부분에서 호출됩니다.
-	void			UpdateAnimation(const _float& fTimeDelta);
-
 	// 모든 뼈들을 순회하면서 뼈들이 갖고 있는 TransformationMatrix와 pParentMatrix를 결합하여 CombinedTransformationMatrix를 만들어주는 함수
 	void			Update_FrameMatrices(D3DXFRAME_DERIVED* pFrame, const _matrix* pParentMatrix);
 

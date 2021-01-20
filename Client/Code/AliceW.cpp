@@ -216,8 +216,10 @@ void CAliceW::Render_Object(void)
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 
-	//if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
-	//	return;
+	m_pMesh->UpdateAnimation();
+	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
+		return;
+
 	if (!m_bIsVisible)
 		return;
 

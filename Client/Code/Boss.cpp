@@ -128,8 +128,9 @@ void CBoss::Render_Object(void)
 	//matWorld._42 -= 1.f;
 	m_pRenderer->SetWorldMatrix(matWorld);
 
-	//if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
-	//	return;
+	m_pMesh->UpdateAnimation();
+	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
+		return;
 
 	// 컬링을 안하는 이유는 컬링을 하면 애니메이션 갱신이 안돼서 화면밖에 객체가 있을 경우 Progress를 갱신할 수 없게 되어
 	// 상태 진행에 에러가 존재한다.

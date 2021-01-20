@@ -63,7 +63,7 @@ HRESULT Engine::CDynamicMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar
 
 void Engine::CDynamicMesh::Render_Meshes(LPD3DXEFFECT _pEffect)
 {
-	UpdateAnimation(m_fDeltaTime);
+	//UpdateAnimation(m_fDeltaTime);
 
 	for (auto& iter : m_MeshContainerList)
 	{
@@ -147,7 +147,7 @@ void CDynamicMesh::Play_Animation(const _float & fTimeDelta)
 //	m_fDeltaTime = _fDeltaTime;
 //}
 
-void CDynamicMesh::UpdateAnimation(const _float & fTimeDelta)
+void CDynamicMesh::UpdateAnimation(/*const _float & fTimeDelta*/)
 {
 	m_pAniCtrl->Play_Animation(m_fDeltaTime);
 

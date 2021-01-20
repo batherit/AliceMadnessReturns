@@ -3,13 +3,13 @@
 
 CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
-	CStaticObject(pGraphicDev)
+	CWeapon(pGraphicDev)
 {
 }
 
 CBullet::CBullet(const CBullet & rhs)
 	:
-	CStaticObject(rhs)
+	CWeapon(rhs)
 {
 }
 
@@ -19,8 +19,8 @@ CBullet::~CBullet(void)
 
 HRESULT CBullet::Ready_Object(void)
 {
-	CStaticObject::Ready_Object();
-	SetRenderInfo(L"Bullet");
+	CWeapon::Ready_Object();
+	SetWeaponInfo(L"Bullet", L"Bullet", 1.f);
 	m_pPhysics = AddComponent<Engine::CPhysics>();
 
 	GetTransform()->SetScaleXYZ(0.002f, 0.002f, 0.002f);
@@ -37,7 +37,7 @@ int CBullet::Update_Object(const _float & _fDeltaTime)
 		return 1;
 	}
 
-	CStaticObject::Update_Object(_fDeltaTime);
+	CWeapon::Update_Object(_fDeltaTime);
 
 	return 0;
 }
@@ -45,7 +45,7 @@ int CBullet::Update_Object(const _float & _fDeltaTime)
 void CBullet::Render_Object(void)
 {
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	CStaticObject::Render_Object();
+	CWeapon::Render_Object();
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
@@ -66,7 +66,7 @@ CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CBullet::Free(void)
 {
-	CStaticObject::Free();
+	CWeapon::Free();
 }
 
 void CBullet::SetBulletInfo(_vec3 _vPos, _vec3 _vDir, _float _fSpeed, _float _fDeathLength)

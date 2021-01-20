@@ -274,6 +274,9 @@
     <Filter Include="02. Object\02. GameObject\PigFly">
       <UniqueIdentifier>{cac8842b-e27e-45e5-811e-704ed9fef6b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Weapon">
+      <UniqueIdentifier>{a82f15d7-3bf6-4428-9376-c0f895b8ce3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -684,6 +687,9 @@
     <ClInclude Include="..\Code\Event.h">
       <Filter>02. Object\02. GameObject\Event</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Weapon.h">
+      <Filter>02. Object\02. GameObject\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1063,6 +1069,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Event.cpp">
       <Filter>02. Object\02. GameObject\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Weapon.cpp">
+      <Filter>02. Object\02. GameObject\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

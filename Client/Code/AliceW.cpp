@@ -66,6 +66,8 @@ HRESULT CAliceW::Ready_Object(void)
 	AddChild(pStaticObject, "Bip01-R-Hand");
 	pStaticObject->SetActivated(false);
 	m_pWeapons[TYPE_BLADE] = pStaticObject;
+	m_pAttackColliders[TYPE_BLADE] = pStaticObject->GetColliderFromTag(L"PlayerAttack");
+	m_pAttackColliders[TYPE_BLADE]->SetDamage(VORPALBLADE_DAMAGE);
 
 	// 2) Hobby Horse
 	pStaticObject = CStaticObject::Create(m_pGraphicDev);
@@ -75,6 +77,8 @@ HRESULT CAliceW::Ready_Object(void)
 	AddChild(pStaticObject, "Bip01-R-Hand");
 	pStaticObject->SetActivated(false);
 	m_pWeapons[TYPE_HORSE] = pStaticObject;
+	m_pAttackColliders[TYPE_HORSE] = pStaticObject->GetColliderFromTag(L"PlayerAttack");
+	m_pAttackColliders[TYPE_HORSE]->SetDamage(HOBBYHORSE_DAMAGE);
 
 	// 3) Gun
 	CDynamicObject* pDynamicObject = CDynamicObject::Create(m_pGraphicDev);
@@ -84,6 +88,7 @@ HRESULT CAliceW::Ready_Object(void)
 	AddChild(pDynamicObject, "Bip01-L-Hand");
 	pDynamicObject->SetActivated(false);
 	m_pWeapons[TYPE_GUN] = pDynamicObject;
+	m_pAttackColliders[TYPE_GUN] = nullptr;
 
 	SetWeaponType(TYPE_BLADE);
 	
@@ -211,8 +216,8 @@ void CAliceW::Render_Object(void)
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 
-	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
-		return;
+	//if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
+	//	return;
 	if (!m_bIsVisible)
 		return;
 
@@ -261,7 +266,7 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_R") == 0) {
 		if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
 			// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
-			m_pAttribute->Damaged(1.f);
+			m_pAttribute->Damaged(_tCollisionInfo.pCollidedCollider->GetDamage());
 			_vec3 vToOwner = GetTransform()->GetPos() - _tCollisionInfo.pCollidedCollider->GetTransform()->GetPos();
 			vToOwner.y = 0.f;
 			D3DXVec3Normalize(&vToOwner, &vToOwner);

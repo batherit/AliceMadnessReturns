@@ -27,6 +27,7 @@ HRESULT CIronHand::Ready_Object(void)
 
 	// Load Colliders
 	LoadColliders(L"IronHand.col");
+	GetColliderFromTag(L"EnemyAttack")->SetDamage(10.f);
 	// m_pCollider->SetActivated(false);
 
 	// MeshRenderer

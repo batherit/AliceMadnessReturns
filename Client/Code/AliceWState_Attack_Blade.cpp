@@ -30,8 +30,9 @@ void CAliceWState_Attack_Blade::OnLoaded(void)
 	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.85f);
 	++m_iAttackNum;
 
-	m_pWeaponCollider = m_rOwner.GetWeapon()->GetColliderFromTag(L"PlayerAttack");
-	m_pWeaponCollider->SetActivated(true);
+	//m_pWeaponCollider = m_rOwner.GetWeapon()->GetColliderFromTag(L"PlayerAttack");
+	//m_pWeaponCollider->SetActivated(true);
+	m_rOwner.GetAttackCollider()->SetActivated(true);
 }
 
 int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
@@ -134,7 +135,8 @@ int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
 
 void CAliceWState_Attack_Blade::OnExited(void)
 {
-	m_pWeaponCollider->SetActivated(false);
+	//m_pWeaponCollider->SetActivated(false);
+	m_rOwner.GetAttackCollider()->SetActivated(false);
 }
 
 void CAliceWState_Attack_Blade::Free(void)

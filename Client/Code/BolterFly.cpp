@@ -52,6 +52,7 @@ HRESULT CBolterFly::Ready_Object(void)
 	m_pStateMgr->SetNextState(new CBolterFlyState_Idle(*this));
 
 	m_pAttackCollider = GetColliderFromTag(L"EnemyAttack");
+	m_pAttackCollider->SetDamage(BOLTERFLY_DAMAGE);
 	m_pAttackCollider->SetActivated(false);
 
 	//GetWeapon()->GetColliderFromTag(L"EnemyAttack")->SetActivated(false);
@@ -119,8 +120,8 @@ void CBolterFly::Render_Object(void)
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 
-	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
-		return;
+	//if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
+	//	return;
 
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -169,7 +170,7 @@ void CBolterFly::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
 			if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
 				// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
-				m_pAttribute->Damaged(1.f);
+				m_pAttribute->Damaged(_tCollisionInfo.pCollidedCollider->GetDamage());
 			}
 		}
 	}

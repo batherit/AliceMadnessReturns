@@ -32,6 +32,7 @@ HRESULT CBunnyBomb::Ready_Object(void)
 	// Load Colliders
 	LoadColliders(L"BunnyBomb.col");
 	m_pCollider = GetColliderFromTag(L"PlayerAttack");
+	m_pCollider->SetDamage(BUNNYBOMB_DAMAGE);
 	m_pCollider->SetActivated(false);
 	// m_pCollider->SetActivated(false);
 

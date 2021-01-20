@@ -129,6 +129,16 @@ namespace Client
 #define BOSS_JUMP_SPEED		30.f
 #define BOSS_MAX_HP			10.f
 
+#define VORPALBLADE_DAMAGE	2.f
+#define BULLET_DAMAGE		1.f
+#define HOBBYHORSE_DAMAGE	4.f
+#define BUNNYBOMB_DAMAGE	3.f
+
+#define BOLTERFLY_DAMAGE	1.f
+#define MADCAPA_DAMAGE		2.f
+#define MINIGRUNT_DAMAGE	4.f
+#define BOSS_DAMAGE			8.f
+
 // 키입력 관련
 //#define	KM_LEFT		0x00000001
 //#define	KM_RIGHT	0x00000002 

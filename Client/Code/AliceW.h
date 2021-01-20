@@ -63,9 +63,10 @@ public:
 	_bool IsWeaponChanging();
 	_bool IsBombOn();
 	CMap* GetMap() const { return m_pMap; }
-	_int GetCellIndex() const { return m_iCellIndex; } 
+	_int GetCellIndex() const { return m_iCellIndex; }
 
 	Engine::CGameObject* GetWeapon() const { return m_pWeapons[m_eWeaponType]; }
+	Engine::CColliderObject* GetAttackCollider() const { return m_pAttackColliders[m_eWeaponType]; }
 	E_WEAPON_TYPE GetWeaponType() const { return m_eWeaponType; }
 
 	void ToggleLockOn();		// CAPS_LOCK 버튼을 눌렀을때
@@ -83,6 +84,7 @@ private:
 	CMap* m_pMap = nullptr;
 
 	Engine::CGameObject* m_pWeapons[E_WEAPON_TYPE::TYPE_END] = { nullptr, };
+	Engine::CColliderObject* m_pAttackColliders[E_WEAPON_TYPE::TYPE_END] = { nullptr, };
 	E_WEAPON_TYPE m_eWeaponType = TYPE_END;
 	CStateMgr<CAliceW>* m_pStateMgr = nullptr;
 	Engine::CDynamicMesh* m_pMesh = nullptr;

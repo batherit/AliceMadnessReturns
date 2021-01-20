@@ -52,6 +52,7 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 			// 1. 점프 시작 애님이 완료되면 내려찍기 모션으로 전환 후 점프를 실제로 한다.
 			m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::Executioner_AttackSlam);
 			m_fHeight = m_rOwner.GetTransform()->GetPos().y;
+			m_rOwner.GetPhysics()->SetGravity(9.8f * 2.f);
 			m_rOwner.GetPhysics()->SetVelocityY(BOSS_JUMP_SPEED);
 			m_rOwner.SetLanded(false);
 			m_bIsJumpStarting = false;
@@ -73,16 +74,6 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 					_float fT = Engine::GetWeightByValue(fProgress, 0.5f, 0.6f);
 					_vec3 vNewPos = m_vStartPos * (1.f - fT) + m_vTargetPos * fT;
 					m_rOwner.GetTransform()->SetPos(m_pMap->GetNaviMesh()->MoveOnNaviMesh_Adhesion(m_rOwner.GetCellIndex(), &m_rOwner.GetTransform()->GetPos(), &vNewPos));
-
-					// 플레이어를 향해 회전.
-					/*_vec3 vToTargetDir = m_rOwner.GetTargetObject()->GetTransform()->GetPos() - m_rOwner.GetTransform()->GetPos();
-					_float fLength = D3DXVec3Length(&vToTargetDir);
-					_vec3 vLook = m_rOwner.GetTransform()->GetLook();
-					_vec3 vToTargetDirXZ = _vec3(vToTargetDir.x, 0.f, vToTargetDir.z);
-					D3DXVec3Normalize(&vToTargetDirXZ, &vToTargetDirXZ);
-					_vec3 vRotAxis = Engine::GetRotationAxis(vLook, vToTargetDirXZ);
-					_float fRotAngle = Engine::GetRotationAngle(vLook, vToTargetDirXZ);
-					m_rOwner.GetTransform()->RotateByAxis(fRotAngle * 0.1f, vRotAxis);*/
 				}
 				else {
 					// 5. 1초간 내려찍기 모션이 끝나면 원래대로 돌아간다.
@@ -93,7 +84,8 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 					else if(!m_bIsAttackEnd){
 						// 4. 0.6초간 내려찍혀진 채로 있는다.
 						//m_rOwner.GetTransform()->SetPos(m_vTargetPos);
-						m_rOwner.GetPhysics()->SetVelocityY(0.f);
+						//m_rOwner.GetPhysics()->SetVelocityY(0.f);
+						//m_rOwner.GetPhysics()->SetGravity(9.8f * 2.f);
 						m_rOwner.GetDynamicMesh()->SetAnimationStop(true);
 						// TODO : 카메라 흔듦 이펙트
 						Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
@@ -104,6 +96,8 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 			}
 		}
 		else if(m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.4f){
+			//m_rOwner.GetPhysics()->SetGravity(0.f);
+			//m_rOwner.GetPhysics()->SetVelocityY(0.f);
 			// 2. 내려찍기 모션이 40% 진행됐을때, 내려가기 위한 준비 작업을 한다.
 			m_vStartPos = m_rOwner.GetTransform()->GetPos();
 			_vec3 vToTargetDir = m_rOwner.GetTargetObject()->GetTransform()->GetPos() - m_rOwner.GetTransform()->GetPos();
@@ -111,6 +105,7 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 			_vec3 vLook = m_rOwner.GetTransform()->GetLook();
 			_vec3 vToTargetDirXZ = _vec3(vToTargetDir.x, 0.f, vToTargetDir.z);
 			D3DXVec3Normalize(&vToTargetDirXZ, &vToTargetDirXZ);
+
 			_vec3 vRotAxis = Engine::GetRotationAxis(vLook, vToTargetDirXZ);
 			_float fRotAngle = Engine::GetRotationAngle(vLook, vToTargetDirXZ);
 			m_rOwner.GetTransform()->RotateByAxis(fRotAngle * 0.1f, vRotAxis);

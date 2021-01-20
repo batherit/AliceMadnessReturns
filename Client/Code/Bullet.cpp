@@ -3,13 +3,13 @@
 
 CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
-	CWeapon(pGraphicDev)
+	CStaticObject(pGraphicDev)
 {
 }
 
 CBullet::CBullet(const CBullet & rhs)
 	:
-	CWeapon(rhs)
+	CStaticObject(rhs)
 {
 }
 
@@ -19,8 +19,11 @@ CBullet::~CBullet(void)
 
 HRESULT CBullet::Ready_Object(void)
 {
-	CWeapon::Ready_Object();
-	SetWeaponInfo(L"Bullet", L"Bullet", 1.f);
+	CStaticObject::Ready_Object();
+	SetRenderInfo(L"Bullet");
+
+	GetColliderFromTag(L"PlayerAttack")->SetDamage(BULLET_DAMAGE);
+
 	m_pPhysics = AddComponent<Engine::CPhysics>();
 
 	GetTransform()->SetScaleXYZ(0.002f, 0.002f, 0.002f);
@@ -37,7 +40,7 @@ int CBullet::Update_Object(const _float & _fDeltaTime)
 		return 1;
 	}
 
-	CWeapon::Update_Object(_fDeltaTime);
+	CStaticObject::Update_Object(_fDeltaTime);
 
 	return 0;
 }
@@ -45,13 +48,14 @@ int CBullet::Update_Object(const _float & _fDeltaTime)
 void CBullet::Render_Object(void)
 {
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	CWeapon::Render_Object();
+	CStaticObject::Render_Object();
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-void CBullet::OnCollision(Engine::CollisionInfo)
+void CBullet::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
-	SetValid(false);
+	if(lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Monster") == 0)
+		SetValid(false);
 }
 
 CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -66,7 +70,7 @@ CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CBullet::Free(void)
 {
-	CWeapon::Free();
+	CStaticObject::Free();
 }
 
 void CBullet::SetBulletInfo(_vec3 _vPos, _vec3 _vDir, _float _fSpeed, _float _fDeathLength)

@@ -35,8 +35,10 @@ HRESULT CMiniGrunt::Ready_Object(void)
 	// Load Colliders
 	LoadColliders(L"MiniGrunt.col");
 	m_pAttackL = GetColliderFromTag(L"EnemyAttack_L");
+	m_pAttackL->SetDamage(MINIGRUNT_DAMAGE);
 	m_pAttackL->SetActivated(false);
 	m_pAttackR = GetColliderFromTag(L"EnemyAttack_R");
+	m_pAttackR->SetDamage(MINIGRUNT_DAMAGE);
 	m_pAttackR->SetActivated(false);
 
 	// MeshRenderer
@@ -114,8 +116,8 @@ void CMiniGrunt::Render_Object(void)
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 
-	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
-		return;
+	//if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
+	//	return;
 	m_pRenderer->Render();
 	//Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
@@ -159,7 +161,7 @@ void CMiniGrunt::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
 			if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
 				// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
-				m_pAttribute->Damaged(1.f);
+				m_pAttribute->Damaged(_tCollisionInfo.pCollidedCollider->GetDamage());
 			}
 		}
 	}

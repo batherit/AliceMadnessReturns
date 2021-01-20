@@ -33,9 +33,14 @@ public:
 	const _tchar* GetColliderTag() const { return m_tcColliderTag; }
 	E_COLLIDER_TYPE GetColliderType() const { return m_eColliderType; }
 
+	void SetDamage(_float _fDamage) { m_fDamage = _fDamage; }
+	_float GetDamage() const { return m_fDamage; }
+
 protected:
 	_tchar m_tcColliderTag[MAX_PATH] = L"NULL";
 	E_COLLIDER_TYPE m_eColliderType = COL_TYPE_END;
+
+	_float m_fDamage = 0.f;
 };
 
 END

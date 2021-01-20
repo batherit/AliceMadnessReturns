@@ -64,6 +64,7 @@ HRESULT CBoss::Ready_Object(void)
 	AddChild(pStaticObject, "Bip01-Prop1");
 
 	m_pAttackCollider = pStaticObject->GetColliderFromTag(L"EnemyAttack");
+	m_pAttackCollider->SetDamage(BOSS_DAMAGE);
 	m_pAttackCollider->SetActivated(false);
 
 	return S_OK;
@@ -127,8 +128,11 @@ void CBoss::Render_Object(void)
 	//matWorld._42 -= 1.f;
 	m_pRenderer->SetWorldMatrix(matWorld);
 
-	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
-		return;
+	//if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
+	//	return;
+
+	// 컬링을 안하는 이유는 컬링을 하면 애니메이션 갱신이 안돼서 화면밖에 객체가 있을 경우 Progress를 갱신할 수 없게 되어
+	// 상태 진행에 에러가 존재한다.
 	m_pRenderer->Render();
 	//Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
@@ -172,7 +176,7 @@ void CBoss::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
 			if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
 				// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
-				m_pAttribute->Damaged(1.f);
+				m_pAttribute->Damaged(_tCollisionInfo.pCollidedCollider->GetDamage());
 			}
 		}
 	}

@@ -6,11 +6,10 @@
 #include "Engine_Define.h"
 #include "Export_Function.h"
 #include "StaticObject.h"
-#include "Weapon.h"
 
 BEGIN(Client)
 
-class CBullet : public CWeapon
+class CBullet : public CStaticObject
 {
 private: // 持失切, 社瑚切
 	explicit  CBullet(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -21,7 +20,7 @@ private: // 持失切, 社瑚切
 	virtual HRESULT Ready_Object(void) override;
 	virtual int Update_Object(const _float & _fDeltaTime) override;
 	virtual void Render_Object(void) override;
-	virtual void OnCollision(Engine::CollisionInfo) override;
+	virtual void OnCollision(Engine::CollisionInfo _tCollisionInfo) override;
 
 public:
 	static CBullet*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

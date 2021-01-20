@@ -447,7 +447,10 @@
     </ClInclude>
     <ClInclude Include="..\Code\UI_WeaponLock.h" />
     <ClInclude Include="..\Code\Valve.h" />
-    <ClInclude Include="..\Code\Weapon.h" />
+    <ClInclude Include="..\Code\Weapon.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Enum.h" />
     <ClInclude Include="..\Header\Function.h" />
@@ -744,7 +747,10 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_WeaponLock.cpp" />
     <ClCompile Include="..\Code\Valve.cpp" />
-    <ClCompile Include="..\Code\Weapon.cpp" />
+    <ClCompile Include="..\Code\Weapon.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

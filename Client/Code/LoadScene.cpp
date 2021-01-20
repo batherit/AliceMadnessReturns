@@ -11,8 +11,8 @@
 #include "Route.h"
 
 
-CLoadScene::CLoadScene(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CScene(pGraphicDev)
+CLoadScene::CLoadScene(LPDIRECT3DDEVICE9 m_pGraphicDev)
+	: Engine::CScene(m_pGraphicDev)
 {
 
 }
@@ -148,29 +148,92 @@ void CLoadScene::LoadComponents()
 	NULL_CHECK_RETURN(pComponent, );
 	Engine::Ready_Proto(CRoute::GetComponentTag(), pComponent);
 
+	// RenderTarget _Deffered
+	D3DVIEWPORT9		ViewPort;
+	m_pGraphicDev->GetViewport(&ViewPort);
+
+	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
+		L"Target_Albedo",
+		ViewPort.Width,
+		ViewPort.Height,
+		D3DFMT_A16B16G16R16F,
+		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), );
+
+	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Albedo", 0.f, 0.f, 200.f, 200.f), );
+
+	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
+		L"Target_Normal",
+		ViewPort.Width,
+		ViewPort.Height,
+		D3DFMT_A16B16G16R16F,
+		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), );
+	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Normal", 0.f, 200.f, 200.f, 200.f), );
+
+	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
+		L"Target_Shade",
+		ViewPort.Width,
+		ViewPort.Height,
+		D3DFMT_A16B16G16R16F,
+		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), );
+	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Shade", 200.f, 0.f, 200.f, 200.f), );
+
+	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
+		L"Target_Specular",
+		ViewPort.Width,
+		ViewPort.Height,
+		D3DFMT_A16B16G16R16F,
+		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), );
+	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Specular", 200.f, 200.f, 200.f, 200.f), );
+
+	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
+		L"Target_Depth",
+		ViewPort.Width,
+		ViewPort.Height,
+		D3DFMT_A32B32G32R32F,
+		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), );
+	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Depth", 0.f, 400.f, 200.f, 200.f), );
+
+
+	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_Deferred", L"Target_Albedo"), );
+	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_Deferred", L"Target_Normal"), );
+	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_Deferred", L"Target_Depth"), );
+
+	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_LightAcc", L"Target_Shade"), );
+	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_LightAcc", L"Target_Specular"), );
+
+	// Shader
 	Engine::CShader* pShader = nullptr;
 
 	// Sample
 	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Sample.hpp");
-	NULL_CHECK_RETURN(pShader, );
-	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Sample", pShader), );
+	NULL_CHECK_RETURN(pShader,);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Sample", pShader),);
 
 	// Terrain
 	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Terrain.hpp");
-	NULL_CHECK_RETURN(pShader, );
-	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain", pShader), );
+	NULL_CHECK_RETURN(pShader,);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain", pShader),);
 
-	// Object
-	//pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Reference/Header/Shader_Object.hpp");
-	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Object.hpp");
-	NULL_CHECK_RETURN(pShader, );
-	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Object", pShader), );
+	// Terrain
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Mesh.hpp");
+	NULL_CHECK_RETURN(pShader,);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Mesh", pShader),);
+
+	// Shade
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Shade.hpp");
+	NULL_CHECK_RETURN(pShader,);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Shade", pShader),);
+
+	// Blend
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Blend.hpp");
+	NULL_CHECK_RETURN(pShader,);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Blend", pShader),);
 }
 
 
-CLoadScene* CLoadScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CLoadScene* CLoadScene::Create(LPDIRECT3DDEVICE9 m_pGraphicDev)
 {
-	CLoadScene*	pInstance = new CLoadScene(pGraphicDev);
+	CLoadScene*	pInstance = new CLoadScene(m_pGraphicDev);
 
 	if (FAILED(pInstance->Ready()))
 		Client::Safe_Release(pInstance);

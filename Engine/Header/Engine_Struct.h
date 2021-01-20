@@ -38,6 +38,15 @@ namespace Engine
 	// D3DFVF_TEXCOORDSIZE3 : uv값이 float형 3개의 크기 만큼이며 괄호 안의 숫자 0의 의미는 
 	// 본래 버텍스에 텍스쳐 uv값이 여러 개가 올 수 있는데 그 중 0번째 값을 지정하겠다는 의미
 	
+	typedef struct tagVertexScreen
+	{
+		_vec4		vPos;
+		_vec2		vTexUV;
+
+	}VTXSCREEN;
+
+	const _ulong		FVF_SCREEN = D3DFVF_XYZRHW | D3DFVF_TEX1;
+
 	typedef	struct tagIndex16
 	{
 		_ushort	_0, _1, _2;

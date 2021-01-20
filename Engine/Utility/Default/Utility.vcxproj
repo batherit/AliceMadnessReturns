@@ -69,6 +69,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\RenderTarget.cpp" />
+    <ClCompile Include="..\Code\RenderTargetMgr.cpp" />
     <ClCompile Include="..\Code\Shader.cpp" />
     <ClCompile Include="..\Code\SphereCollider.cpp" />
     <ClCompile Include="..\Code\Transform.cpp" />
@@ -134,9 +136,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Code\RenderTarget.h" />
+    <ClInclude Include="..\Code\RenderTargetMgr.h" />
     <ClInclude Include="..\Code\Shader.h" />
+    <ClInclude Include="..\Code\Shader_Blend.hpp" />
+    <ClInclude Include="..\Code\Shader_Mesh.hpp" />
     <ClInclude Include="..\Code\Shader_Object.hpp" />
     <ClInclude Include="..\Code\Shader_Sample.hpp" />
+    <ClInclude Include="..\Code\Shader_Shade.hpp" />
     <ClInclude Include="..\Code\Shader_Terrain.hpp" />
     <ClInclude Include="..\Code\SphereCollider.h" />
     <ClInclude Include="..\Code\Transform.h" />

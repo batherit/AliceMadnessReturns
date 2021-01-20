@@ -33,6 +33,12 @@ HRESULT Engine::CLightMgr::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DL
 	return S_OK;
 }
 
+void CLightMgr::Render_Light(LPD3DXEFFECT & pEffect)
+{
+	for (auto& iter : m_LightList)
+		iter->Render_Light(pEffect);
+}
+
 void Engine::CLightMgr::Free(void)
 {
 	for_each(m_LightList.begin(), m_LightList.end(), CDeleteObj());

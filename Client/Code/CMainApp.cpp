@@ -26,9 +26,15 @@ HRESULT CMainApp::Ready_MainApp(void)
 	m_pGraphicDev = m_pDeviceClass->Get_GraphicDev();
 	Engine::Safe_AddRef(m_pGraphicDev);
 
+	// 디퍼드 렌더링을 사용하기 위하여 호출함.
+	FAILED_CHECK_RETURN(Engine::Get_Renderer()->Ready_Renderer(m_pGraphicDev), E_FAIL)
+
 	// 임시 리소스 로드.
 	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(Engine::RESOURCE_END), E_FAIL);
 	Client::Safe_Release(m_pDeviceClass);
+
+
+
 	// 샘플링 상태 설정
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);

@@ -521,3 +521,16 @@ _bool CGameObject::LoadCollidersInfo(HANDLE& _hfIn) {
 
 	return true;
 }
+
+void CGameObject::ComputeViewZ()
+{
+	_matrix		matCamWorld;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
+
+	D3DXMatrixInverse(&matCamWorld, NULL, &matCamWorld);
+
+	_vec3	vCamPos;
+	memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
+
+	m_fViewZ = D3DXVec3Length(&(vCamPos - GetTransform()->GetPos()));
+}

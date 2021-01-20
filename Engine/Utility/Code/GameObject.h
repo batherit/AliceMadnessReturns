@@ -84,6 +84,10 @@ public:
 	_bool SaveCollidersInfo(HANDLE& _hfOut);
 	_bool LoadCollidersInfo(HANDLE& _hfIn);
 
+	// 알파소팅시 거리 정렬
+	void ComputeViewZ();
+	_float GetViewZ() const { return m_fViewZ; }
+
 	virtual void Free(void);
 
 protected:
@@ -93,6 +97,7 @@ protected:
 	_bool m_bIsValid = true;
 	_bool m_bIsVisible = true;
 	_bool m_bIsActivated = true;
+	_float m_fViewZ = 0.f;
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 	CGameObject* m_pParent = nullptr;
 	vector<CGameObject*> m_vecChildList;

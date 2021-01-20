@@ -109,6 +109,12 @@
     <Filter Include="98. Manager\06. CollisionMgr">
       <UniqueIdentifier>{a0f7aca1-23d2-454e-ac54-3e13fef2067e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="08. RenderTarget">
+      <UniqueIdentifier>{de5838ef-5c9d-44f0-a6d8-a5797fbd1067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager\07. RenderTargetMgr">
+      <UniqueIdentifier>{68195f98-b4fc-431e-be4f-6f974792d042}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Export_Utility.h">
@@ -219,6 +225,21 @@
     <ClInclude Include="..\Code\CollisionMgr.h">
       <Filter>98. Manager\06. CollisionMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\RenderTargetMgr.h">
+      <Filter>98. Manager\07. RenderTargetMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\RenderTarget.h">
+      <Filter>08. RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Shade.hpp">
+      <Filter>07. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Mesh.hpp">
+      <Filter>07. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Blend.hpp">
+      <Filter>07. Shader\hpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">
@@ -316,6 +337,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CollisionMgr.cpp">
       <Filter>98. Manager\06. CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RenderTargetMgr.cpp">
+      <Filter>98. Manager\07. RenderTargetMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RenderTarget.cpp">
+      <Filter>08. RenderTarget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

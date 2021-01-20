@@ -74,7 +74,7 @@ _int CScene::Update(const _float & _fDeltaTime)
 
 void CScene::Render(void)
 {
-	Engine::Get_Renderer()->Render_GameObject();
+	Engine::Get_Renderer()->Render_GameObject(m_pGraphicDev);
 }
 
 //void CScene::Render(void)

@@ -15,6 +15,9 @@ vector		g_vMtrlAmbient = (vector)1.f;
 float		g_fPower = 10.f;
 vector		g_vCamPos;
 
+vector		g_vLightPos;
+float		g_fRange;
+
 
 texture		g_DepthTexture;
 
@@ -38,7 +41,7 @@ struct PS_OUT
 	vector			vSpecular : COLOR1;
 };
 
-PS_OUT PS_MAIN(PS_IN In)
+PS_OUT PS_DIRECTIONAL(PS_IN In)
 {
 	PS_OUT			Out = (PS_OUT)0;
 
@@ -57,7 +60,7 @@ PS_OUT PS_MAIN(PS_IN In)
 
 	vector		vDepth = tex2D(DepthSampler, In.vTexUV);
 
-	float		fViewZ = vDepth.y * 1000.f;
+	float		fViewZ = vDepth.y * 1000.f;	// 카메라 공간상에서의 z깊이
 
 	vector vPosition; // 월드 영역에 위치여야 한다.
 
@@ -69,7 +72,7 @@ PS_OUT PS_MAIN(PS_IN In)
 	vPosition.x = (In.vTexUV.x * 2.f - 1.f) * fViewZ;
 	// texture V로 올수 있는 숫자의 범위는 (0)~(1), 투영 X로 변환된 숫자의 범위는 (1)~(-1)
 	vPosition.y = (In.vTexUV.y * -2.f + 1.f) * fViewZ;
-	vPosition.z = vDepth.x * fViewZ;
+	vPosition.z = vDepth.x * fViewZ;		// vDepth.x = 투영 공간 z/카메라 공간 z(원근적용) 이므로 fViewZ을 곱하면 결국 투영공간z를 구한 것.
 	vPosition.w = fViewZ;
 
 	vPosition = mul(vPosition, g_matProjInv);
@@ -82,6 +85,43 @@ PS_OUT PS_MAIN(PS_IN In)
 	return Out;
 }
 
+PS_OUT PS_POINT(PS_IN In)
+{
+	PS_OUT			Out = (PS_OUT)0;
+
+	vector		vNormal = tex2D(NormalSampler, In.vTexUV);
+	vector		vDepth = tex2D(DepthSampler, In.vTexUV);
+	float		fViewZ = vDepth.y * 1000.f;
+
+	vNormal = vector(vNormal.xyz * 2.f - 1.f, 0.f);
+
+	vector vPosition;
+
+	vPosition.x = (In.vTexUV.x * 2.f - 1.f) * fViewZ;
+	vPosition.y = (In.vTexUV.y * -2.f + 1.f) * fViewZ;
+	vPosition.z = vDepth.x * fViewZ;
+	vPosition.w = fViewZ;
+
+	vPosition = mul(vPosition, g_matProjInv);
+	vPosition = mul(vPosition, g_matViewInv);
+
+	vector vLightDir = vPosition - g_vLightPos;
+	float  fDistance = length(vLightDir);
+
+	float	fAtt = saturate((g_fRange - fDistance) / g_fRange);
+
+	Out.vShade = (saturate(dot(normalize(vLightDir) * -1.f, vNormal)) * (g_vLightDiffuse * g_vMtrlDiffuse) + (g_vLightAmbient * g_vMtrlAmbient)) * fAtt;
+	Out.vShade.a = 1.f;
+
+	vector		vReflect = normalize(reflect(normalize(vector(g_vLightDir.xyz, 0.f)), vNormal));
+
+	vector		vLook = normalize(g_vCamPos - vPosition);
+
+	Out.vSpecular = pow(saturate(dot(vLook, vReflect)), g_fPower) * fAtt;
+
+	return Out;
+}
+
 technique Default_Device
 {
 	// 기능의 캡슐화
@@ -89,7 +129,23 @@ technique Default_Device
 	{
 		zwriteenable = false;
 
+		alphablendenable = true;
+		srcblend = one;
+		destblend = one;
+
 		vertexshader = NULL;
-		pixelshader = compile ps_3_0 PS_MAIN();
+		pixelshader = compile ps_3_0 PS_DIRECTIONAL();
+	}
+
+	pass Point
+	{
+		zwriteenable = false;
+
+		alphablendenable = true;
+		srcblend = one;
+		destblend = one;
+
+		vertexshader = NULL;
+		pixelshader = compile ps_3_0 PS_POINT();
 	}
 };

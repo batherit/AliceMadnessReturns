@@ -87,7 +87,7 @@ void CPolygonRenderer::Render(LPD3DXEFFECT _pEffect, _uint _uiPassIndex)
 
 		if (m_pTexture)
 			// 텍스처가 있는 경우 
-			m_pTexture->Set_Texture(_pEffect, "g_BaseTexture");
+			m_pTexture->Set_Texture(_pEffect, "g_BaseTexture", m_uiTextureIndex);
 		else
 			// 텍스처가 없는 경우
 			_pEffect->SetTexture("g_BaseTexture", NULL);

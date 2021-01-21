@@ -93,7 +93,7 @@ technique Default_Device
 	// ±â´ÉÀÇ Ä¸½¶È­
 	pass Default
 	{
-
+		//zwriteenable = true;
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_MAIN();
 	}

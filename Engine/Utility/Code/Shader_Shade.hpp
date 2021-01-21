@@ -60,7 +60,7 @@ PS_OUT PS_DIRECTIONAL(PS_IN In)
 
 	vector		vDepth = tex2D(DepthSampler, In.vTexUV);
 
-	float		fViewZ = vDepth.y * 1000.f;
+	float		fViewZ = vDepth.y * 1000.f;	// 카메라 공간상에서의 z깊이
 
 	vector vPosition; // 월드 영역에 위치여야 한다.
 
@@ -72,7 +72,7 @@ PS_OUT PS_DIRECTIONAL(PS_IN In)
 	vPosition.x = (In.vTexUV.x * 2.f - 1.f) * fViewZ;
 	// texture V로 올수 있는 숫자의 범위는 (0)~(1), 투영 X로 변환된 숫자의 범위는 (1)~(-1)
 	vPosition.y = (In.vTexUV.y * -2.f + 1.f) * fViewZ;
-	vPosition.z = vDepth.x * fViewZ;
+	vPosition.z = vDepth.x * fViewZ;		// vDepth.x = 투영 공간 z/카메라 공간 z(원근적용) 이므로 fViewZ을 곱하면 결국 투영공간z를 구한 것.
 	vPosition.w = fViewZ;
 
 	vPosition = mul(vPosition, g_matProjInv);

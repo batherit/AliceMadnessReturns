@@ -158,6 +158,23 @@ int CPlayScene::Update(const _float& fTimeDelta)
 	//	}
 	//}
 
+	//if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_7)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_NONE);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_8)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_SPHERE);
+	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 400.f, _vec3(0.5f, 0.5f, 0.5f));
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_9)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_HEIGHT);
+	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-10.f, -300.f, _vec3(0.7f, 0.5f, 0.5f));
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_0)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_ALL);
+	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 400.f, _vec3(0.5f, 0.5f, 0.5f));
+	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-10.f, -300.f, _vec3(0.7f, 0.5f, 0.5f));
+	//}
+
 	return CScene::Update(fTimeDelta);
 }
 
@@ -375,6 +392,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pSkyBox, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", m_pSkyBox), E_FAIL);
+	m_pSkyBox->GetComponent<Engine::CPolygonRenderer>()->SetTextureIndex(2);
 
 	return S_OK;
 }

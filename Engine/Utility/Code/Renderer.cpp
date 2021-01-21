@@ -46,7 +46,7 @@ void Engine::CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Render_Alpha(pGraphicDev);
 	Render_UI(pGraphicDev);
 
-	//Render_DebugBuffer(L"MRT_Deferred");
+	Render_DebugBuffer(L"MRT_Deferred");
 	//Render_DebugBuffer(L"MRT_LightAcc");
 
 	Clear_RenderGroup();
@@ -211,9 +211,59 @@ void CRenderer::Render_Blend(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Albedo", "g_AlbedoTexture");
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Shade", "g_ShadeTexture");
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Specular", "g_SpecularTexture");
+	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
 
 	pEffect->Begin(NULL, 0);
-	pEffect->BeginPass(0);
+
+	pEffect->BeginPass(m_eFogType);
+
+	switch (m_eFogType) {
+	case FOG_NONE:
+		break;
+	case FOG_SPHERE: {
+		pEffect->SetFloat("g_fFogEnd", m_fFogEnd);
+		pEffect->SetFloat("g_fFogStart", m_fFogStart);
+		pEffect->SetVector("g_vFogSphereColor", &_vec4(m_vFogSphereColor.x, m_vFogSphereColor.y, m_vFogSphereColor.z, 1.f));
+		pEffect->SetFloat("g_fFogSphereDensity", m_fFogSphereDensity);
+	}
+		break;
+	case FOG_HEIGHT: {
+		pEffect->SetFloat("g_fFogHeightEnd", m_fFogHeightEnd);
+		pEffect->SetFloat("g_fFogHeightStart", m_fFogHeightStart);
+		pEffect->SetVector("g_vFogHeightColor", &_vec4(m_vFogHeightColor.x, m_vFogHeightColor.y, m_vFogHeightColor.z, 1.f));
+		pEffect->SetFloat("g_fFogHeightDensity", m_fFogHeightDensity);
+
+		_matrix			matView, matProj;
+		pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+		D3DXMatrixInverse(&matView, NULL, &matView);
+		pEffect->SetMatrix("g_matViewInv", &matView);
+
+		pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+		D3DXMatrixInverse(&matProj, NULL, &matProj);
+		pEffect->SetMatrix("g_matProjInv", &matProj);
+	}
+		break;
+	case FOG_ALL: {
+		pEffect->SetFloat("g_fFogEnd", m_fFogEnd);
+		pEffect->SetFloat("g_fFogStart", m_fFogStart);
+		pEffect->SetVector("g_vFogSphereColor", &_vec4(m_vFogSphereColor.x, m_vFogSphereColor.y, m_vFogSphereColor.z, 1.f));
+		pEffect->SetFloat("g_fFogSphereDensity", m_fFogSphereDensity);
+		pEffect->SetFloat("g_fFogHeightEnd", m_fFogHeightEnd);
+		pEffect->SetFloat("g_fFogHeightStart", m_fFogHeightStart);
+		pEffect->SetVector("g_vFogHeightColor", &_vec4(m_vFogHeightColor.x, m_vFogHeightColor.y, m_vFogHeightColor.z, 1.f));
+		pEffect->SetFloat("g_fFogHeightDensity", m_fFogHeightDensity);
+
+		_matrix			matView, matProj;
+		pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+		D3DXMatrixInverse(&matView, NULL, &matView);
+		pEffect->SetMatrix("g_matViewInv", &matView);
+
+		pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+		D3DXMatrixInverse(&matProj, NULL, &matProj);
+		pEffect->SetMatrix("g_matProjInv", &matProj);
+	}
+				  break;
+	}
 
 	pGraphicDev->SetStreamSource(0, m_pVB, 0, sizeof(VTXSCREEN));
 	pGraphicDev->SetFVF(FVF_SCREEN);

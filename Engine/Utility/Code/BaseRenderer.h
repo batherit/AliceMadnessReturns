@@ -21,6 +21,11 @@ public:
 	void SetRenderID(RENDERID _eRenderID) { m_eRenderID = _eRenderID; }
 	RENDERID GetRenderID() const { return m_eRenderID; };
 
+public:
+	void SetWorldMatrix(const _matrix& _matWorld) { m_matWorld = _matWorld; }
+	void SetViewMatrix(const _matrix& _matView) { m_matView = _matView; m_bIsViewCommited = false; }
+	void SetProjMatirx(const _matrix& _matProj) { m_matProj = _matProj; m_bIsProjCommited = false; }
+
 protected:
 	void RegisterToRenderer();
 
@@ -31,6 +36,12 @@ private:
 protected:
 	RENDERID m_eRenderID = RENDERID::RENDER_END;
 	CRenderer* m_pRenderer = nullptr;
+
+	_matrix m_matWorld;
+	_bool m_bIsViewCommited = true;
+	_matrix m_matView;
+	_bool m_bIsProjCommited = true;
+	_matrix m_matProj;
 };
 
 END

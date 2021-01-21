@@ -39,6 +39,7 @@ private:
 	CMap* m_pMap = nullptr;
 	Engine::CDynamicMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
+	Engine::CShader* m_pShader = nullptr;
 	Engine::CPhysics* m_pPhysics = nullptr;
 	Engine::CColliderObject* m_pCollider = nullptr;
 

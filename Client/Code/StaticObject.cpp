@@ -27,6 +27,10 @@ HRESULT CStaticObject::Ready_Object(void)
 	m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	//m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
+	// Shader
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", m_pShader);
+
 	return S_OK;
 }
 
@@ -52,7 +56,7 @@ void CStaticObject::Render_Object(void)
 
 	if (!IsVisible())
 		return;
-	m_pRenderer->Render();
+	m_pRenderer->Render(m_pShader->Get_EffectHandle());
 }
 
 CStaticObject * CStaticObject::Create(LPDIRECT3DDEVICE9 pGraphicDev)

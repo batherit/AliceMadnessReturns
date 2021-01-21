@@ -45,7 +45,7 @@ public:
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
-
+	Engine::CShader* m_pShader = nullptr;
 
 	_vec3 m_vStartPos;
 	_vec3 m_vEndPos;

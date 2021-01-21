@@ -20,6 +20,7 @@ public:
 public:
 	HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex);
 	void		Render_Light(LPD3DXEFFECT& pEffect);
+	void		ClearLights();
 
 private:
 	list<CLight*>				m_LightList;

@@ -33,6 +33,10 @@ HRESULT CHPFlower::Ready_Object(void)
 	m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
+	// Shader
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
+
 	m_pMesh->Set_AnimationSet(ANIM::ShrinkFlower_Idle);
 
 	return S_OK;
@@ -77,7 +81,7 @@ void CHPFlower::Render_Object(void)
 		return;
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pRenderer->Render();
+	m_pRenderer->Render(m_pShader->Get_EffectHandle());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 

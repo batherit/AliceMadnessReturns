@@ -77,6 +77,7 @@ void CTexture::Set_Texture(LPD3DXEFFECT & pEffect, const char * pConstantName, c
 		return;
 
 	pEffect->SetTexture(pConstantName, m_vecTexture[iIndex].pTexture);
+	pEffect->CommitChanges();
 }
 
 Engine::CTexture* Engine::CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pPath, TEXTURETYPE eType, const _uint& iCnt)

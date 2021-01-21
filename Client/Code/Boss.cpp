@@ -45,6 +45,10 @@ HRESULT CBoss::Ready_Object(void)
 	pComponent = m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
+	// Shader
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
+
 	// Attribute
 	m_pAttribute = AddComponent<CAttribute>();
 	m_pAttribute->SetHP(BOSS_MAX_HP, BOSS_MAX_HP);
@@ -134,7 +138,7 @@ void CBoss::Render_Object(void)
 
 	// 컬링을 안하는 이유는 컬링을 하면 애니메이션 갱신이 안돼서 화면밖에 객체가 있을 경우 Progress를 갱신할 수 없게 되어
 	// 상태 진행에 에러가 존재한다.
-	m_pRenderer->Render();
+	m_pRenderer->Render(m_pShader->Get_EffectHandle());
 	//Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
 }

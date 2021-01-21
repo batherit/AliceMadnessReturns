@@ -33,6 +33,7 @@ public:
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
+	Engine::CShader* m_pShader = nullptr;
 
 	_float m_fElapsedTime = 0.f;	//누적 시간
 	_float m_fPressTime = 1.f;		// 누름 완료까지의 시간

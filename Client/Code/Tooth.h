@@ -35,6 +35,7 @@ public:
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
+	Engine::CShader* m_pShader = nullptr;
 	Engine::CColliderObject* m_pCollider = nullptr;
 	CAliceW* m_pAlice = nullptr;
 	_vec3 m_vArrivalPos;

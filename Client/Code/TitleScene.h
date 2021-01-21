@@ -39,6 +39,7 @@ public:
 
 private:
 	//HRESULT		Ready_LightInfo();
+	HRESULT		Ready_LightInfo();
 	HRESULT		Ready_Environment_Layer(const _tchar* pLayerTag);
 	//HRESULT		Ready_Resource(Engine::RESOURCETYPE eType);
 

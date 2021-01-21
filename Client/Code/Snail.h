@@ -34,6 +34,7 @@ private:
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
+	Engine::CShader* m_pShader = nullptr;
 };
 
 END

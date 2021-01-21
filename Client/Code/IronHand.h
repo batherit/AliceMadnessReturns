@@ -31,6 +31,7 @@ public:
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
+	Engine::CShader* m_pShader = nullptr;
 
 	_float m_fActivationTime = 0.f;	// 작동할 시간
 	_float m_fElapsedTime = 0.f;	//누적 시간

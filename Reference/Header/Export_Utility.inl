@@ -60,6 +60,11 @@ inline void Render_Light(LPD3DXEFFECT & pEffect)
 	CLightMgr::GetInstance()->Render_Light(pEffect);
 }
 
+inline void ClearLights()
+{
+	CLightMgr::GetInstance()->ClearLights();
+}
+
 // Renderer
 CRenderer*		Get_Renderer(void)
 {

@@ -27,6 +27,9 @@ HRESULT CDynamicObject::Ready_Object(void)
 	m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	//m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", m_pShader);
+
 	return S_OK;
 }
 
@@ -47,12 +50,20 @@ void CDynamicObject::Render_Object(void)
 {
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 
+	m_pMesh->UpdateAnimation();
 	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW())) {
 		return;
 	}
 	if (!IsVisible())
 		return;
-	m_pRenderer->Render();
+
+	//_matrix matView, matProj;
+	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	//m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	//m_pRenderer->SetViewMatrix(matView);
+	//m_pRenderer->SetProjMatirx(matProj);
+
+	m_pRenderer->Render(m_pShader->Get_EffectHandle());
 }
 
 CDynamicObject * CDynamicObject::Create(LPDIRECT3DDEVICE9 pGraphicDev)

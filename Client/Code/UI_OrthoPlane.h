@@ -42,6 +42,7 @@ public:
 	}
 
 private:
+	Engine::CShader* m_pShader = nullptr;
 	Engine::CPolygonRenderer* m_pRenderer = nullptr;
 	_float m_fSizeX = 1.f;
 	_float m_fSizeY = 1.f;

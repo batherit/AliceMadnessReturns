@@ -60,6 +60,7 @@ void CTitleScene::OnLoaded()
 	Engine::CCollisionMgr::GetInstance()->ClearGameObjectList();
 	Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
 
+	FAILED_CHECK_RETURN(Ready_LightInfo(), );
 //	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), );
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), );
 
@@ -103,6 +104,27 @@ CTitleScene * CTitleScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 //
 //	return S_OK;
 //}
+
+HRESULT CTitleScene::Ready_LightInfo()
+{
+	Engine::ClearLights();
+
+	D3DLIGHT9		tLightInfo;
+	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
+
+	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
+
+	tLightInfo.Diffuse = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.f) ;
+	tLightInfo.Specular = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
+	tLightInfo.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
+
+	tLightInfo.Direction = _vec3(-1.f, -1.f, 1.f);
+
+	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0)))
+		return E_FAIL;
+
+	return S_OK;
+}
 
 HRESULT CTitleScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 {

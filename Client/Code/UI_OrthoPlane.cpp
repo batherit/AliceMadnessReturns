@@ -25,6 +25,8 @@ HRESULT CUI_OrthoPlane::Ready_Object(void)
 	m_pRenderer = AddComponent<Engine::CPolygonRenderer>();
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", m_pShader);
 	return S_OK;
 }
 
@@ -43,8 +45,8 @@ void CUI_OrthoPlane::Render_Object(void)
 	/*m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());*/
 	_matrix		matWorld, matView, matOriginView, matOriginProj;
 
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matOriginView);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matOriginProj);
+	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &matOriginView);
+	//m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matOriginProj);
 
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
@@ -58,15 +60,39 @@ void CUI_OrthoPlane::Render_Object(void)
 
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 	m_pRenderer->SetWorldMatrix(matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pRenderer->SetViewMatrix(matView);
+	m_pRenderer->SetProjMatirx(m_matProj);
+	//m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+	//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
-	m_pRenderer->Render();
+	/*m_pRenderer->Render();*/
+	//LPD3DXEFFECT	 pEffect = m_pShader->Get_EffectHandle();
+	//NULL_CHECK(pEffect);
+	//Engine::Safe_AddRef(pEffect);
 
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matOriginView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOriginProj);
+	//_uint	iMaxPass = 0;
+
+	//pEffect->Begin(&iMaxPass, 0);	// 현재 쉐이더 파일이 갖고 있는 최대 패스의 개수를 리턴, 사용하는 방식
+	//pEffect->BeginPass(0);
+
+	//_matrix		matWorld, matView, matProj;
+
+	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	//m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	//pEffect->SetMatrix("g_matView", &matView);
+	//pEffect->SetMatrix("g_matProj", &matProj);
+		
+	m_pRenderer->Render(m_pShader->Get_EffectHandle());
+	//m_pMeshCom->Render_Meshes(pEffect);
+	
+	//pEffect->EndPass();
+	//pEffect->End();
+
+	//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	//m_pGraphicDev->SetTransform(D3DTS_VIEW, &matOriginView);
+	//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOriginProj);
 }
 
 CUI_OrthoPlane * CUI_OrthoPlane::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -86,5 +112,5 @@ void CUI_OrthoPlane::Free(void)
 
 void CUI_OrthoPlane::SetTexture(const _tchar * _pTextureTag)
 {
-	m_pRenderer->SetRenderInfo(Engine::RENDER_UI, dynamic_cast<Engine::CVIBuffer*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"Buffer_RcTex")), static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, _pTextureTag)));
+	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, dynamic_cast<Engine::CVIBuffer*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"Buffer_RcTex")), static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, _pTextureTag)));
 }

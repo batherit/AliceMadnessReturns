@@ -34,6 +34,7 @@ public:
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
+	Engine::CShader* m_pShader = nullptr;
 	//const _tchar* m_pMeshTag = nullptr;
 	_tchar m_tcMeshTag[MAX_PATH] = L"";
 };

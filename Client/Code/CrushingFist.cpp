@@ -33,6 +33,10 @@ HRESULT CCrushingFist::Ready_Object(void)
 	m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
+	// Shader
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
+
 	GetTransform()->RotateByLook(D3DX_PI);
 	GetTransform()->SetScaleXYZ(0.3f, 0.3f, 0.3f);
 
@@ -107,7 +111,7 @@ void CCrushingFist::Render_Object(void)
 
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	if (m_bIsVisible) {
-		m_pRenderer->Render();
+		m_pRenderer->Render(m_pShader->Get_EffectHandle());
 	}
 
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);

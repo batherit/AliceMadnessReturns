@@ -40,6 +40,14 @@ void CPolygonRenderer::Render(LPD3DXEFFECT _pEffect, _uint _uiPassIndex)
 
 	if (!_pEffect) {
 		m_pOwner->GetGraphicDev()->SetTransform(D3DTS_WORLD, &m_matWorld);
+		if (!m_bIsViewCommited) {
+			m_pOwner->GetGraphicDev()->SetTransform(D3DTS_VIEW, &m_matView);
+			m_bIsViewCommited = true;
+		}
+		if (!m_bIsProjCommited) {
+			m_pOwner->GetGraphicDev()->SetTransform(D3DTS_PROJECTION, &m_matProj);
+			m_bIsProjCommited = true;
+		}
 		if (m_pTexture)
 			// 텍스처가 있는 경우
 			m_pTexture->Render_Texture(m_uiTextureIndex);
@@ -56,15 +64,26 @@ void CPolygonRenderer::Render(LPD3DXEFFECT _pEffect, _uint _uiPassIndex)
 		_pEffect->Begin(&iMaxPass, 0);
 		_pEffect->BeginPass(_uiPassIndex);
 
-		_matrix	matView, matProj;
-		m_pOwner->GetGraphicDev()->GetTransform(D3DTS_VIEW, &matView);
-		m_pOwner->GetGraphicDev()->GetTransform(D3DTS_PROJECTION, &matProj);
-
-		// 렌더러는 기본적으로 월드, 뷰, 프로젝션까지는 세팅해준다.
-		// 재질이나 조명같은 것은 렌더러 외부에서 미리 세팅해야 한다.
 		_pEffect->SetMatrix("g_matWorld", &m_matWorld);
-		_pEffect->SetMatrix("g_matView", &matView);
-		_pEffect->SetMatrix("g_matProj", &matProj);
+		if (!m_bIsViewCommited) {
+			_pEffect->SetMatrix("g_matView", &m_matView);
+			m_bIsViewCommited = true;
+		}
+		else {
+			_matrix matView;
+			m_pOwner->GetGraphicDev()->GetTransform(D3DTS_VIEW, &matView);
+			_pEffect->SetMatrix("g_matView", &matView);
+		}
+
+		if (!m_bIsProjCommited) {
+			_pEffect->SetMatrix("g_matProj", &m_matProj);
+			m_bIsProjCommited = true;
+		}
+		else {
+			_matrix matProj;
+			m_pOwner->GetGraphicDev()->GetTransform(D3DTS_PROJECTION, &matProj);
+			_pEffect->SetMatrix("g_matProj", &matProj);
+		}
 
 		if (m_pTexture)
 			// 텍스처가 있는 경우 

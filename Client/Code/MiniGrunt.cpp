@@ -45,6 +45,10 @@ HRESULT CMiniGrunt::Ready_Object(void)
 	pComponent = m_pRenderer = AddComponent<Engine::CMeshRenderer>();
 	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
+	// Shader
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
+
 	// Attribute
 	m_pAttribute = AddComponent<CAttribute>();
 	m_pAttribute->SetHP(MINIGRUNT_MAX_HP, MINIGRUNT_MAX_HP);
@@ -120,7 +124,7 @@ void CMiniGrunt::Render_Object(void)
 	if (m_pCullingSphere && Engine::IsSphereCulled(m_pGraphicDev, m_pCullingSphere->GetTransform()->GetPos(), m_pCullingSphere->GetRadiusW()))
 		return;
 
-	m_pRenderer->Render();
+	m_pRenderer->Render(m_pShader->Get_EffectHandle());
 	//Engine::Render_Buffer(Engine::RESOURCE_STATIC, L"M_Buffer_TriCol");
 	//m_pCollider->Render_MeshCollider(Engine::COL_TRUE, &m_pTransform->GetObjectMatrix());
 }

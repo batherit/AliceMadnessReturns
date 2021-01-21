@@ -39,9 +39,14 @@ void CLightMgr::Render_Light(LPD3DXEFFECT & pEffect)
 		iter->Render_Light(pEffect);
 }
 
-void Engine::CLightMgr::Free(void)
+void CLightMgr::ClearLights()
 {
 	for_each(m_LightList.begin(), m_LightList.end(), CDeleteObj());
 	m_LightList.clear();
+}
+
+void Engine::CLightMgr::Free(void)
+{
+	ClearLights();
 }
 

@@ -17,6 +17,8 @@ public:
 	// CComponent을(를) 통해 상속됨
 	virtual HRESULT Ready(void) override { return S_OK; }
 	virtual int Update(const _float & _fDeltaTime) override { return 0; }
+	static const _tchar* GetComponentTag() { return L"Shader"; }
+	static const Engine::COMPONENTID GetComponentID() { return Engine::ID_STATIC; }
 
 public:
 	LPD3DXEFFECT		Get_EffectHandle(void) { return m_pEffect; }

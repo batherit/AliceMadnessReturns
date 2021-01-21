@@ -54,6 +54,7 @@ private:
 
 	Engine::CDynamicMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
+	Engine::CShader* m_pShader = nullptr;
 	Engine::CPhysics* m_pPhysics = nullptr;
 	CRoute* m_pRoute = nullptr;
 

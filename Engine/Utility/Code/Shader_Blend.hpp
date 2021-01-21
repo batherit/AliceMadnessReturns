@@ -48,7 +48,7 @@ PS_OUT PS_MAIN(PS_IN In)
 
 	vector		vSpecular = tex2D(SpecularSampler, In.vTexUV);
 
-	Out.vColor = vAlbedo * vShade + vSpecular;
+	Out.vColor = vAlbedo * vShade /*+ vSpecular*/;
 
 	return Out;
 }

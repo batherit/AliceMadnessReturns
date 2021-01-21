@@ -38,7 +38,6 @@ void Engine::CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	}	*/
 
 	Render_Priority(pGraphicDev);
-
 	Render_Deferred(pGraphicDev);
 	Render_LightAcc(pGraphicDev);
 

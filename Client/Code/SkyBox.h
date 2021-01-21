@@ -1,18 +1,20 @@
 #ifndef SkyBox_h__
 #define SkyBox_h__
 
-#include "GameObject.h"
 #include "Define.h"
+#include "Base.h"
+#include "Engine_Define.h"
+#include "Export_Function.h"
 
-BEGIN(Engine)
-
-class CCubeTex;
-class CTexture;
-class CRenderer;
-class CTransform;
-class CPolygonRenderer;
-
-END
+//BEGIN(Engine)
+//
+//class CCubeTex;
+//class CTexture;
+//class CRenderer;
+//class CTransform;
+//class CPolygonRenderer;
+//
+//END
 
 BEGIN(Client)
 class CSkyBox : public Engine::CGameObject
@@ -28,9 +30,10 @@ public:
 	Engine::CTexture* GetTexture() const { return m_pTexture; }
 
 private:
-	Engine::CCubeTex*				m_pCubeTex = nullptr;
+	Engine::CCubeTex*			m_pCubeTex = nullptr;
 	Engine::CTexture*			m_pTexture = nullptr;
-	Engine::CPolygonRenderer*			m_pRenderer = nullptr;
+	Engine::CPolygonRenderer*	m_pRenderer = nullptr;
+	Engine::CShader*			m_pShader = nullptr;
 
 public:
 	static CSkyBox*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

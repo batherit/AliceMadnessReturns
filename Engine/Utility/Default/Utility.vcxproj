@@ -144,6 +144,7 @@
     <ClInclude Include="..\Code\Shader_Object.hpp" />
     <ClInclude Include="..\Code\Shader_Sample.hpp" />
     <ClInclude Include="..\Code\Shader_Shade.hpp" />
+    <ClInclude Include="..\Code\Shader_SkyBox.hpp" />
     <ClInclude Include="..\Code\Shader_Terrain.hpp" />
     <ClInclude Include="..\Code\SphereCollider.h" />
     <ClInclude Include="..\Code\Transform.h" />

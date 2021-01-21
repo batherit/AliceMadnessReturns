@@ -51,7 +51,7 @@ int CColliderScene::Update(const _float& fTimeDelta)
 
 void CColliderScene::Render(void)
 {
-	Engine::Get_Renderer()->Render_GameObject();
+	Engine::Get_Renderer()->Render_GameObject(m_pGraphicDev);
 }
 
 void CColliderScene::OnLoaded()

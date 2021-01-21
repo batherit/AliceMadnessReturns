@@ -75,7 +75,7 @@ int CEditScene::Update(const _float& fTimeDelta)
 
 void CEditScene::Render(void)
 {
-	Engine::Get_Renderer()->Render_GameObject();
+	Engine::Get_Renderer()->Render_GameObject(m_pGraphicDev);
 }
 
 void CEditScene::OnLoaded()

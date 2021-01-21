@@ -68,7 +68,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 	PS_OUT		Out = (PS_OUT)0;
 
 	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
-
+	Out.vColor.a = 1.f;
 	// (-1 ~ 1)값은 월드 상태의 법선 벡터를 정규화하였기 때문에 xyz값이 나올 수 있는 범위에 해당
 	// (0 ~ 1) 텍스쳐 uv좌표로 변환
 	Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);

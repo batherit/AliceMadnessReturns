@@ -240,6 +240,9 @@
     <ClInclude Include="..\Code\Shader_Blend.hpp">
       <Filter>07. Shader\hpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Shader_SkyBox.hpp">
+      <Filter>07. Shader\hpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">

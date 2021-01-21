@@ -157,7 +157,7 @@ void CLoadScene::LoadComponents()
 		ViewPort.Width,
 		ViewPort.Height,
 		D3DFMT_A16B16G16R16F,
-		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), );
+		D3DXCOLOR(0.f, 0.f, 0.f, 0.f)), );
 
 	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Albedo", 0.f, 0.f, 200.f, 200.f), );
 
@@ -182,7 +182,7 @@ void CLoadScene::LoadComponents()
 		ViewPort.Width,
 		ViewPort.Height,
 		D3DFMT_A16B16G16R16F,
-		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), );
+		D3DXCOLOR(0.f, 0.f, 0.f, 0.f)), );
 	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Specular", 200.f, 200.f, 200.f, 200.f), );
 
 	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
@@ -190,7 +190,7 @@ void CLoadScene::LoadComponents()
 		ViewPort.Width,
 		ViewPort.Height,
 		D3DFMT_A32B32G32R32F,
-		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), );
+		D3DXCOLOR(1.f, 1.f, 1.f, 1.f)), );
 	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Depth", 0.f, 400.f, 200.f, 200.f), );
 
 
@@ -214,10 +214,15 @@ void CLoadScene::LoadComponents()
 	NULL_CHECK_RETURN(pShader,);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain", pShader),);
 
-	// Terrain
+	// Mesh
 	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Mesh.hpp");
 	NULL_CHECK_RETURN(pShader,);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Mesh", pShader),);
+
+	// SkyBox
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_SkyBox.hpp");
+	NULL_CHECK_RETURN(pShader, );
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_SkyBox", pShader), );
 
 	// Shade
 	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Shade.hpp");

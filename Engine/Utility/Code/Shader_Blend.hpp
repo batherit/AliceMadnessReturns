@@ -48,7 +48,7 @@ PS_OUT PS_MAIN(PS_IN In)
 
 	vector		vSpecular = tex2D(SpecularSampler, In.vTexUV);
 
-	Out.vColor = vAlbedo * vShade /*+ vSpecular*/;
+	Out.vColor = vAlbedo * vShade/* + vSpecular*/;
 
 	return Out;
 }
@@ -58,8 +58,13 @@ technique Default_Device
 	// ±â´ÉÀÇ Ä¸½¶È­
 	pass Blend
 	{
-	//zwriteenable = false;
-	vertexshader = NULL;
-	pixelshader = compile ps_3_0 PS_MAIN();
-}
+		zwriteenable = false;
+
+		alphablendenable = true;
+		srcblend = srcalpha;
+		destblend = invsrcalpha;
+
+		vertexshader = NULL;
+		pixelshader = compile ps_3_0 PS_MAIN();
+	}
 };

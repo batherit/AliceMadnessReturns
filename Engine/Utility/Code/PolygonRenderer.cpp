@@ -115,17 +115,25 @@ CComponent * CPolygonRenderer::Clone()
 	return new CPolygonRenderer(*this);
 }
 
-void CPolygonRenderer::SetRenderInfo(RENDERID _eRenderID, CVIBuffer * _pBuffer, CTexture * _pTexture, LPD3DXEFFECT _pEffect)
+void CPolygonRenderer::SetRenderInfo(RENDERID _eRenderID, CVIBuffer * _pBuffer, CTexture * _pTexture)
 {
 	if (_eRenderID >= RENDERID::RENDER_END || !_pBuffer)
 		return;
 
 	SetRenderID(_eRenderID);
+	SetBuffer(_pBuffer);
+	SetTexture(_pTexture);
+}
 
+void CPolygonRenderer::SetBuffer(CVIBuffer * _pBuffer)
+{
 	Safe_Release(m_pBuffer);
 	m_pBuffer = _pBuffer;
 	Safe_AddRef(m_pBuffer);
+}
 
+void CPolygonRenderer::SetTexture(CTexture * _pTexture)
+{
 	Safe_Release(m_pTexture);
 	m_pTexture = _pTexture;
 	Safe_AddRef(m_pTexture);

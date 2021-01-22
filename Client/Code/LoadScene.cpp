@@ -233,6 +233,11 @@ void CLoadScene::LoadComponents()
 	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Blend.hpp");
 	NULL_CHECK_RETURN(pShader,);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Blend", pShader),);
+
+	// PlateEffect
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_PlateEffect.hpp");	// RENDER_ALPHA 채널에서 유효
+	NULL_CHECK_RETURN(pShader, );
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_PlateEffect", pShader), );
 }
 
 

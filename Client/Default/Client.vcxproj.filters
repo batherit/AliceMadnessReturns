@@ -277,6 +277,12 @@
     <Filter Include="02. Object\02. GameObject\Weapon">
       <UniqueIdentifier>{a82f15d7-3bf6-4428-9376-c0f895b8ce3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Effect">
+      <UniqueIdentifier>{20d77cca-b92e-4fdc-912f-669c6f6533df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Effect\PlateEffect">
+      <UniqueIdentifier>{331cb9b0-ff11-4eb9-b1ea-7cb17b2192a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -690,6 +696,9 @@
     <ClInclude Include="..\Code\Weapon.h">
       <Filter>02. Object\02. GameObject\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\PlateEffect.h">
+      <Filter>02. Object\02. GameObject\Effect\PlateEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1072,6 +1081,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Weapon.cpp">
       <Filter>02. Object\02. GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlateEffect.cpp">
+      <Filter>02. Object\02. GameObject\Effect\PlateEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

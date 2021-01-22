@@ -23,7 +23,9 @@ CUI_Targeting::~CUI_Targeting(void)
 HRESULT CUI_Targeting::Ready_Object(void)
 {
 	m_pRenderer = AddComponent<Engine::CPolygonRenderer>();
-	m_pRenderer->SetRenderInfo(Engine::RENDER_UI, dynamic_cast<Engine::CVIBuffer*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"Buffer_RcTex")), static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"UI_Targeting")));
+	m_pRenderer->SetRenderInfo(Engine::RENDER_UI, 
+		dynamic_cast<Engine::CVIBuffer*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"Buffer_RcTex")),
+		static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"UI_Targeting")));
 	GetTransform()->SetScaleXYZ(0.3f, 0.3f, 1.f);
 	m_fOffsetY = 1.5f;
 	return S_OK;

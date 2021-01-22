@@ -26,7 +26,9 @@ public:
 	static const _tchar* GetComponentTag() { return L"PolygonRenderer"; }
 	static const Engine::COMPONENTID GetComponentID() { return Engine::ID_STATIC; }
 
-	void SetRenderInfo(RENDERID _eRenderID, CVIBuffer* _pBuffer, CTexture* _pTexture = nullptr, LPD3DXEFFECT _pEffect = nullptr);
+	void SetRenderInfo(RENDERID _eRenderID, CVIBuffer* _pBuffer, CTexture* _pTexture = nullptr);
+	void SetBuffer(CVIBuffer* _pBuffer);
+	void SetTexture(CTexture* _pTexture);
 	void SetTextureIndex(const _uint& _uiTextureIndex) { m_uiTextureIndex = _uiTextureIndex; }
 
 	void SetWorldMatrix(const _matrix& _matWorld) { m_matWorld = _matWorld; }

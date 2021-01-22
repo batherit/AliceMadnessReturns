@@ -93,7 +93,7 @@ _bool CStaticObject::SetRenderInfo(const _tchar * _pMeshTag, Engine::RENDERID _e
 
 	// 새로운 메시로 세팅한다.
 	m_mapComponent[Engine::ID_STATIC][Engine::CStaticMesh::GetComponentTag()] = m_pMesh;
-	m_pRenderer->SetRenderInfo(_eRenderID, m_pMesh);
+	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
 
 	LoadCollidersInfo();
 

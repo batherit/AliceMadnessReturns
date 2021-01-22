@@ -172,6 +172,10 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Shade", pShader), E_FAIL);
 
+	// Blend
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Blend.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Blend", pShader), E_FAIL);
 
 	// ÅØ½ºÃÄ
 	lstrcpy(m_szLoading, L"Texture Loading.............................");

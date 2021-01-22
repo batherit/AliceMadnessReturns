@@ -45,7 +45,7 @@ void CMeshRenderer::Render(LPD3DXEFFECT _pEffect, _uint _uiPassIndex)
 				m_pOwner->GetGraphicDev()->SetTransform(D3DTS_PROJECTION, &m_matProj);
 				m_bIsProjCommited = true;
 			}
-
+			
 			m_pMesh->Render_Meshes(_pEffect);
 		}
 		else {

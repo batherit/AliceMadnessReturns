@@ -26,10 +26,10 @@ HRESULT CTerrain::Ready_Object(void)
 
 	m_pTerrain = AddComponent<Engine::CTerrainTex>();
 
-	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pTerrain, nullptr);
+	m_pRenderer->SetRenderInfo(Engine::RENDER_DEFERRED, m_pTerrain, nullptr);
 
 	// Shader
-	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Terrain"));
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
 	NULL_CHECK_RETURN(m_pShader, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", m_pShader);
 
@@ -49,19 +49,19 @@ void CTerrain::Render_Object(void)
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransform->GetObjectMatrix());
 	//Engine::Render_Texture(Engine::RESOURCE_STAGE, m_szTextureTag, 0);
 	//m_pTerrain->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	LPD3DXEFFECT	 pEffect = m_pShader->Get_EffectHandle();
-	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
+	//const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
 
-	pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
+	//pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
 	//m_vDir = Engine::GetRotatedVector(WORLD_Z_AXIS, D3DXToRadian(30.f) * 0.1f, m_vDir);
 	//pEffect->SetVector("g_vLightDir", &_vec4(m_vDir, 0.f));
-	pEffect->SetVector("g_LightDiffuse", (_vec4*)&pLightInfo->Diffuse);
-	pEffect->SetVector("g_LightAmbient", (_vec4*)&pLightInfo->Ambient);
+	//pEffect->SetVector("g_LightDiffuse", (_vec4*)&pLightInfo->Diffuse);
+	//pEffect->SetVector("g_LightAmbient", (_vec4*)&pLightInfo->Ambient);
 
-	D3DMATERIAL9			tMtrlInfo;
+	/*D3DMATERIAL9			tMtrlInfo;
 	ZeroMemory(&tMtrlInfo, sizeof(D3DMATERIAL9));
 
 	tMtrlInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
@@ -71,12 +71,12 @@ void CTerrain::Render_Object(void)
 	tMtrlInfo.Power = 0.f;
 
 	pEffect->SetVector("g_MtrlDiffuse", (_vec4*)&tMtrlInfo.Diffuse);
-	pEffect->SetVector("g_MtrlAmbient", (_vec4*)&tMtrlInfo.Ambient);
+	pEffect->SetVector("g_MtrlAmbient", (_vec4*)&tMtrlInfo.Ambient);*/
 
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 	m_pRenderer->Render(pEffect);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	//LPD3DXEFFECT	 pEffect = m_pShader->Get_EffectHandle();
 	//NULL_CHECK(pEffect);
@@ -161,11 +161,11 @@ void CTerrain::SetTextureTag(const _tchar * _pTextureTag)
 {
 	if (!_pTextureTag) {
 		lstrcpy(m_szTextureTag, L"");
-		m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pTerrain, nullptr);
+		m_pRenderer->SetRenderInfo(Engine::RENDER_DEFERRED, m_pTerrain, nullptr);
 		return;
 	}
 	lstrcpy(m_szTextureTag, _pTextureTag);
-	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pTerrain, static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, m_szTextureTag)));
+	m_pRenderer->SetRenderInfo(Engine::RENDER_DEFERRED, m_pTerrain, static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STAGE, m_szTextureTag)));
 }
 
 CTerrain * CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)

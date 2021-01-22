@@ -91,6 +91,88 @@ _uint CLoading::Loading_ForStage(void)
 	lstrcpy(m_szLoading, L"Registering Component.............................");
 	LoadComponents();
 
+	// RenderTarget _Deffered
+	D3DVIEWPORT9		ViewPort;
+	m_pGraphicDev->GetViewport(&ViewPort);
+
+	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
+		L"Target_Albedo",
+		ViewPort.Width,
+		ViewPort.Height,
+		D3DFMT_A16B16G16R16F,
+		D3DXCOLOR(0.f, 0.f, 0.f, 0.f)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Albedo", 0.f, 0.f, 200.f, 200.f), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
+		L"Target_Normal",
+		ViewPort.Width,
+		ViewPort.Height,
+		D3DFMT_A16B16G16R16F,
+		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Normal", 0.f, 200.f, 200.f, 200.f), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
+		L"Target_Shade",
+		ViewPort.Width,
+		ViewPort.Height,
+		D3DFMT_A16B16G16R16F,
+		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Shade", 200.f, 0.f, 200.f, 200.f), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
+		L"Target_Specular",
+		ViewPort.Width,
+		ViewPort.Height,
+		D3DFMT_A16B16G16R16F,
+		D3DXCOLOR(0.f, 0.f, 0.f, 0.f)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Specular", 200.f, 200.f, 200.f, 200.f), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
+		L"Target_Depth",
+		ViewPort.Width,
+		ViewPort.Height,
+		D3DFMT_A32B32G32R32F,
+		D3DXCOLOR(1.f, 1.f, 1.f, 1.f)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Depth", 0.f, 400.f, 200.f, 200.f), E_FAIL);
+
+
+	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_Deferred", L"Target_Albedo"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_Deferred", L"Target_Normal"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_Deferred", L"Target_Depth"), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_LightAcc", L"Target_Shade"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_LightAcc", L"Target_Specular"), E_FAIL);
+
+	// Shader
+	Engine::CShader* pShader = nullptr;
+
+	// Sample
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Sample.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Sample", pShader), E_FAIL);
+
+	// Terrain
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Terrain.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain", pShader), E_FAIL);
+
+	// Mesh
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Mesh.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Mesh", pShader), E_FAIL);
+
+	// SkyBox
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_SkyBox.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_SkyBox", pShader), E_FAIL);
+
+	// Shade
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Shade.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Shade", pShader), E_FAIL);
+
+
 	// ÅØ½ºÃÄ
 	lstrcpy(m_szLoading, L"Texture Loading.............................");
 	LoadTextures();

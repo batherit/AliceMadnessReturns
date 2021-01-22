@@ -2,10 +2,10 @@ matrix			g_matWorld;		// 상수 테이블
 matrix			g_matView;
 float4x4		g_matProj;
 
-vector			g_vPlayerPos;
+//vector			g_vPlayerPos;
 
-float			g_fDetail;
-float			g_fRange;
+//float			g_fDetail;
+//float			g_fRange;
 
 texture			g_BaseTexture;
 
@@ -17,38 +17,38 @@ sampler BaseSampler = sampler_state
 	magfilter = linear;
 };
 
-texture			g_BaseTexture1;
+//texture			g_BaseTexture1;
 
-sampler BaseSampler1 = sampler_state
-{
-	texture = g_BaseTexture1;
+//sampler BaseSampler1 = sampler_state
+//{
+//	texture = g_BaseTexture1;
+//
+//	minfilter = linear;
+//	magfilter = linear;
+//
+//	addressU = mirror;
+//	addressV = mirror;
+//};
 
-	minfilter = linear;
-	magfilter = linear;
+//texture			g_FilterTexture;
+//
+//sampler FilterSampler = sampler_state
+//{
+//	texture = g_FilterTexture;
+//
+//	minfilter = linear;
+//	magfilter = linear;
+//};
 
-	addressU = mirror;
-	addressV = mirror;
-};
-
-texture			g_FilterTexture;
-
-sampler FilterSampler = sampler_state
-{
-	texture = g_FilterTexture;
-
-	minfilter = linear;
-	magfilter = linear;
-};
-
-texture			g_AuraTexture;
-
-sampler AuraSampler = sampler_state
-{
-	texture = g_AuraTexture;
-
-	minfilter = linear;
-	magfilter = linear;
-};
+//texture			g_AuraTexture;
+//
+//sampler AuraSampler = sampler_state
+//{
+//	texture = g_AuraTexture;
+//
+//	minfilter = linear;
+//	magfilter = linear;
+//};
 
 struct	VS_IN
 {
@@ -107,31 +107,31 @@ PS_OUT		PS_MAIN(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
 
-	vector vColor = tex2D(BaseSampler, In.vTexUV * g_fDetail);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
-	vector vColor1 = tex2D(BaseSampler1, In.vTexUV * g_fDetail);
+	vector vColor = tex2D(BaseSampler, In.vTexUV /** g_fDetail*/);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+	//vector vColor1 = tex2D(BaseSampler1, In.vTexUV * g_fDetail);
 
-	vector vFilter = tex2D(FilterSampler, In.vTexUV);
+//	vector vFilter = tex2D(FilterSampler, In.vTexUV);
 
-	Out.vColor = vColor * vFilter + vColor1 * (1.f - vFilter);
+	//Out.vColor = vColor * vFilter + vColor1 * (1.f - vFilter);
 	Out.vColor.a = 1.f;
 
-	vector		vAuraColor = (vector)0.f;
+	//vector		vAuraColor = (vector)0.f;
 
-	if (g_vPlayerPos.x - g_fRange < In.vAuraPixelPos.x &&
-		g_vPlayerPos.x + g_fRange > In.vAuraPixelPos.x &&
-		g_vPlayerPos.z - g_fRange < In.vAuraPixelPos.z &&
-		g_vPlayerPos.z + g_fRange > In.vAuraPixelPos.z)
-	{
-		float2 vTexUV;
+	//if (g_vPlayerPos.x - g_fRange < In.vAuraPixelPos.x &&
+	//	g_vPlayerPos.x + g_fRange > In.vAuraPixelPos.x &&
+	//	g_vPlayerPos.z - g_fRange < In.vAuraPixelPos.z &&
+	//	g_vPlayerPos.z + g_fRange > In.vAuraPixelPos.z)
+	//{
+	//	float2 vTexUV;
 
-		// 0 ~ 1로 만들기 위한 공식
-		vTexUV.x = (In.vAuraPixelPos.x - (g_vPlayerPos.x - g_fRange)) / (g_fRange * 2.f);
-		vTexUV.y = ((g_vPlayerPos.z + g_fRange) - In.vAuraPixelPos.z) / (g_fRange * 2.f);
+	//	// 0 ~ 1로 만들기 위한 공식
+	//	vTexUV.x = (In.vAuraPixelPos.x - (g_vPlayerPos.x - g_fRange)) / (g_fRange * 2.f);
+	//	vTexUV.y = ((g_vPlayerPos.z + g_fRange) - In.vAuraPixelPos.z) / (g_fRange * 2.f);
 
-		vAuraColor = tex2D(AuraSampler, vTexUV);
-	}
+	//	vAuraColor = tex2D(AuraSampler, vTexUV);
+	//}
 
-	Out.vColor += vAuraColor;
+	//Out.vColor += vAuraColor;
 
 	Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
 
@@ -144,6 +144,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 	Out.vDepth = vector(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w * 0.001f, 0.f, 0.f);
 
 	return Out;
+
 }
 
 //VS_OUT VS_TEMP(VS_IN In);
@@ -157,7 +158,6 @@ technique Default_Device
 	/*alphablendenable = true;
 	srcblend = srcalpha;
 	destblend = invsrcalpha;*/
-
 	vertexshader = compile vs_3_0 VS_MAIN();
 	pixelshader = compile ps_3_0 PS_MAIN();
 }

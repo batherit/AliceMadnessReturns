@@ -40,13 +40,12 @@ void Engine::CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Render_Priority(pGraphicDev);
 	Render_Deferred(pGraphicDev);
 	Render_LightAcc(pGraphicDev);
-
 	Render_Blend(pGraphicDev);
-
+	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
 	Render_UI(pGraphicDev);
 
-	Render_DebugBuffer(L"MRT_Deferred");
+	//Render_DebugBuffer(L"MRT_Deferred");
 	//Render_DebugBuffer(L"MRT_LightAcc");
 
 	Clear_RenderGroup();
@@ -128,10 +127,26 @@ void CRenderer::Render_Priority(LPDIRECT3DDEVICE9 & pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
-void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9 & pGraphicDev)
-{
+void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9 & pGraphicDev) {
 	for (auto& iter : m_RenderGroup[RENDER_NONALPHA])
 		iter->Render_Object();
+}
+
+//void CRenderer::Render_NonAlpha_Deferred(LPDIRECT3DDEVICE9 & pGraphicDev)
+//{
+//	for (auto& iter : m_RenderGroup[RENDER_DEFERRED])
+//		iter->Render_Object();
+//}
+
+void CRenderer::Render_Deferred(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	Begin_MRT(L"MRT_Deferred");
+
+	//Render_NonAlpha_Deferred(pGraphicDev);
+	for (auto& iter : m_RenderGroup[RENDER_DEFERRED])
+		iter->Render_Object();
+
+	End_MRT(L"MRT_Deferred");
 }
 
 //_bool		Compare_ViewZ(CGameObject* pDest, CGameObject* pSrc)
@@ -166,14 +181,14 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9 & pGraphicDev)
 		iter->Render_Object();
 }
 
-void CRenderer::Render_Deferred(LPDIRECT3DDEVICE9 & pGraphicDev)
-{
-	Begin_MRT(L"MRT_Deferred");
-
-	Render_NonAlpha(pGraphicDev);
-
-	End_MRT(L"MRT_Deferred");
-}
+//void CRenderer::Render_Deferred(LPDIRECT3DDEVICE9 & pGraphicDev)
+//{
+//	Begin_MRT(L"MRT_Deferred");
+//
+//	Render_NonAlpha_Deferred(pGraphicDev);
+//
+//	End_MRT(L"MRT_Deferred");
+//}
 
 void CRenderer::Render_LightAcc(LPDIRECT3DDEVICE9 & pGraphicDev)
 {

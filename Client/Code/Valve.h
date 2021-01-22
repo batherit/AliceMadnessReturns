@@ -33,6 +33,7 @@ public:
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
+	Engine::CShader* m_pShader = nullptr;
 	Engine::CColliderObject* m_pCollider = nullptr;
 	_float m_fRadian = 0.f;
 };

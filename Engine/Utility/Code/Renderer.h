@@ -45,6 +45,7 @@ public:
 
 private:
 	void		Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev);
+	//void		Render_NonAlpha_Deferred(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_NonAlpha(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_UI(LPDIRECT3DDEVICE9& pGraphicDev);

@@ -52,7 +52,7 @@ HRESULT CMap::Ready_Object(void)
 int CMap::Update_Object(const _float & fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
-	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	m_pRenderer->Add_RenderGroup(Engine::RENDER_NONALPHA, this);		// 네비메쉬를 그리기 위함
 	return 0;
 }
 

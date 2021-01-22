@@ -38,7 +38,7 @@ HRESULT CPigFly::Ready_Object(void)
 
 	// MeshRenderer
 	m_pRenderer = AddComponent<Engine::CMeshRenderer>();
-	m_pRenderer->SetRenderInfo(Engine::RENDER_NONALPHA, m_pMesh);
+	m_pRenderer->SetRenderInfo(Engine::RENDER_DEFERRED, m_pMesh);
 
 	// Shader
 	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));

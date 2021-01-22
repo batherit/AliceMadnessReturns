@@ -27,7 +27,7 @@ public:
 	virtual void		Free(void);
 
 public:
-	void SetPlateEffectInfo(const _tchar* _pTextureTag, const _vec3& _vPos, const _vec2& _vStartSize, const _vec2& _vEndSize, _float _fAngleZ, _float _fLifeTime, E_DESTROY_TYPE _eDestroyType = DESTROY_UNVALID);
+	void SetPlateEffectInfo(const _tchar* _pTextureTag, const _vec3& _vPos, const _vec2& _vStartSize, const _vec2& _vEndSize, _float _fAngleZ, _float _fLifeTime, const _vec3& _vEffectColor, E_DESTROY_TYPE _eDestroyType = DESTROY_UNVALID);
 
 private:
 	Engine::CPolygonRenderer* m_pRenderer = nullptr;
@@ -37,6 +37,7 @@ private:
 	_vec2 m_vEndSize;
 	_float m_fMaxLifeTime;
 	_float m_fLifeTime;
+	_vec4 m_vEffectColor;
 	E_DESTROY_TYPE m_eDestroyType = DESTROY_UNVALID;
 };
 

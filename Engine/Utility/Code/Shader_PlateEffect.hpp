@@ -3,6 +3,7 @@ matrix			g_matView;
 float4x4		g_matProj;
 
 float			g_fT;
+vector			g_vEffectColor;
 
 texture			g_BaseTexture;
 
@@ -60,9 +61,14 @@ PS_OUT		PS_MAIN(PS_IN In)
 	PS_OUT		Out = (PS_OUT)0;
 
 	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
-	Out.vColor.a = saturate(1.f - g_fT);
+	Out.vColor = vector(Out.vColor.x * g_vEffectColor.x, Out.vColor.y * g_vEffectColor.y, Out.vColor.z * g_vEffectColor.z, saturate(Out.vColor.a - g_fT));
+	
+	//if(fAlpha != 0.f)
+	//	Out.vColor.a = saturate(1.f - g_fT);
 	// (-1 ~ 1)값은 월드 상태의 법선 벡터를 정규화하였기 때문에 xyz값이 나올 수 있는 범위에 해당
 	// (0 ~ 1) 텍스쳐 uv좌표로 변환
+
+	//Out.vColor = vector(1.f, 1.f, 1.f, 1.f);
 
 	return Out;
 }
@@ -82,19 +88,25 @@ technique Default_Device
 	// 기능의 캡슐화
 	pass Default
 	{
-	//zwriteenable = true;
+	zwriteenable = false;
+
+	alphablendenable = true;
+	blendop = add;
+	srcblend = srcalpha;
+	destblend = invsrcalpha;
+	cullmode = none;
 	vertexshader = compile vs_3_0 VS_MAIN();
 	pixelshader = compile ps_3_0 PS_MAIN();
-}
+	}
 
-pass	AlphaTest
-{
-	alphatestenable = true;
-	alpharef = 0xc0;
-	alphafunc = greater;
-	cullmode = none;
-
-	vertexshader = compile vs_3_0 VS_MAIN();
-	pixelshader = compile ps_3_0 PS_ALPHA();
-}
+//pass	AlphaTest
+//{
+//	alphatestenable = true;
+//	alpharef = 0xc0;
+//	alphafunc = greater;
+//	cullmode = none;
+//
+//	vertexshader = compile vs_3_0 VS_MAIN();
+//	pixelshader = compile ps_3_0 PS_ALPHA();
+//}
 };

@@ -2,9 +2,6 @@ matrix			g_matWorld;		// 상수 테이블
 matrix			g_matView;
 float4x4		g_matProj;
 
-float			g_fT;
-vector			g_vEffectColor;
-
 texture			g_BaseTexture;
 
 sampler BaseSampler = sampler_state
@@ -14,6 +11,17 @@ sampler BaseSampler = sampler_state
 	minfilter = linear;
 	magfilter = linear;
 };
+
+texture			g_DissolveTexture;
+
+sampler DissolveSampler = sampler_state
+{
+	texture = g_DissolveTexture;
+
+	minfilter = linear;
+	magfilter = linear;
+};
+float g_fDissolveAmount;
 
 struct	VS_IN
 {
@@ -25,7 +33,9 @@ struct	VS_IN
 struct	VS_OUT
 {
 	vector		vPosition : POSITION;
+	vector		vNormal : NORMAL;
 	float2		vTexUV : TEXCOORD0;
+	vector		vProjPos : TEXCOORD1;
 };
 
 // 버텍스 쉐이더
@@ -40,7 +50,11 @@ VS_OUT VS_MAIN(VS_IN In)
 	matWVP = mul(matWV, g_matProj);
 
 	Out.vPosition = mul(vector(In.vPosition.xyz, 1.f), matWVP);
+
+	Out.vNormal = normalize(mul(vector(In.vNormal.xyz, 0.f), g_matWorld));
+
 	Out.vTexUV = In.vTexUV;
+	Out.vProjPos = Out.vPosition;
 
 	return Out;
 }
@@ -48,27 +62,39 @@ VS_OUT VS_MAIN(VS_IN In)
 
 struct	PS_IN
 {
+	vector		vNormal : NORMAL;
 	float2		vTexUV : TEXCOORD0;
+	vector		vProjPos : TEXCOORD1;
 };
 
 struct	PS_OUT
 {
 	vector		vColor : COLOR0;
+	vector		vNormal : COLOR1;	// 노말이라는 렌더타겟(텍스쳐)에 출력하기 위한 색상
+	vector		vDepth : COLOR2;
 };
 
 PS_OUT		PS_MAIN(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
-
-	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
-	Out.vColor = vector(Out.vColor.x * g_vEffectColor.x, Out.vColor.y * g_vEffectColor.y, Out.vColor.z * g_vEffectColor.z, saturate(Out.vColor.a - g_fT));
 	
-	//if(fAlpha != 0.f)
-	//	Out.vColor.a = saturate(1.f - g_fT);
+	float fDissolveValue = tex2D(DissolveSampler, In.vTexUV).r;
+	float fIsVisible = fDissolveValue - g_fDissolveAmount;
+	clip(fIsVisible);
+	
+	float fIsGlowing = smoothstep(0.03f, 0.01f, fIsVisible);
+	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+	Out.vColor += fIsGlowing * vector(1.f, 1.f, 1.f, 1.f);
+	Out.vColor.a = 1.f;
+	
+	
 	// (-1 ~ 1)값은 월드 상태의 법선 벡터를 정규화하였기 때문에 xyz값이 나올 수 있는 범위에 해당
 	// (0 ~ 1) 텍스쳐 uv좌표로 변환
+	Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
 
-	//Out.vColor = vector(1.f, 1.f, 1.f, 1.f);
+	Out.vDepth = vector(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w * 0.001f, 0.f, 0.f);
+
+	//Out.vCol
 
 	return Out;
 }
@@ -88,16 +114,10 @@ technique Default_Device
 	// 기능의 캡슐화
 	pass Default
 	{
-	zwriteenable = false;
-
-	alphablendenable = true;
-	blendop = add;
-	srcblend = srcalpha;
-	destblend = invsrcalpha;
-	cullmode = none;
+	//zwriteenable = true;
 	vertexshader = compile vs_3_0 VS_MAIN();
 	pixelshader = compile ps_3_0 PS_MAIN();
-	}
+}
 
 //pass	AlphaTest
 //{

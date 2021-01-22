@@ -34,8 +34,11 @@ HRESULT CPopDomino::Ready_Object(void)
 	m_pRenderer->SetRenderInfo(Engine::RENDER_DEFERRED, m_pMesh);
 
 	// Shader
-	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Dissolve"));
 	m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
+
+	// Dissolve Texture
+	m_pTexture = static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"EFT_Dissolve"));
 
 	return S_OK;
 }
@@ -48,10 +51,29 @@ int CPopDomino::Update_Object(const _float & _fDeltaTime)
 	if (!m_bIsEventOn) {
 		if (m_pAlice) {
 			if (m_pAlice->IsSmalling()) {
-				m_bIsVisible = true;
+				if (!m_bIsKeeped) {
+					if ((m_fElapsedTime += _fDeltaTime) >= DOMINO_DELAY_TIME) {
+						m_fElapsedTime = DOMINO_DELAY_TIME;
+						m_bIsKeeped = true;
+						m_fKeepTime = DOMINO_KEEP_TIME;
+					}
+				}
+
+				m_fDissolveAmount = 1.f - m_fElapsedTime / DOMINO_DELAY_TIME;
 			}
 			else {
-				m_bIsVisible = false;
+				if (m_bIsKeeped) {
+					if ((m_fKeepTime -= _fDeltaTime) <= 0.f) {
+						m_fElapsedTime = DOMINO_DELAY_TIME;
+						m_bIsKeeped = false;
+					}
+				}
+				else {
+					m_fElapsedTime -= _fDeltaTime;
+					if (m_fElapsedTime < 0.f)
+						m_fElapsedTime = 0.f;
+				}
+				m_fDissolveAmount = 1.f - m_fElapsedTime / DOMINO_DELAY_TIME;
 			}
 		}
 		else {
@@ -73,9 +95,13 @@ void CPopDomino::Render_Object(void)
 		return;
 
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	if (m_bIsVisible) {
-		m_pRenderer->Render(m_pShader->Get_EffectHandle());
-	}
+	//if (m_bIsVisible) {
+		auto pEffect = m_pShader->Get_EffectHandle();
+		m_pTexture->Set_Texture(pEffect, "g_DissolveTexture");
+		pEffect->SetFloat("g_fDissolveAmount", m_fDissolveAmount);
+
+		m_pRenderer->Render(pEffect);
+	//}
 	
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

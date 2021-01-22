@@ -10,6 +10,9 @@ BEGIN(Client)
 class CAliceW;
 class CPopDomino : public Engine::CGameObject
 {
+#define DOMINO_DELAY_TIME	1.5f
+#define DOMINO_KEEP_TIME	0.5f
+
 private: // 持失切, 社瑚切
 	explicit  CPopDomino(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit  CPopDomino(const  CPopDomino& rhs);
@@ -33,9 +36,14 @@ private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CShader* m_pShader = nullptr;
+	Engine::CTexture* m_pTexture = nullptr;
 	CAliceW* m_pAlice = nullptr;
-	_bool m_bIsVisible = true;
+	//_bool m_bIsVisible = true;
 	_bool m_bIsEventOn = false;
+	_float m_fElapsedTime = 0.f;
+	_float m_fKeepTime = 0.f;
+	_bool m_bIsKeeped = false;
+	_float m_fDissolveAmount = 1.f;
 };
 
 END

@@ -246,6 +246,9 @@
     <ClInclude Include="..\Code\Shader_PlateEffect.hpp">
       <Filter>07. Shader\hpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Shader_Dissolve.hpp">
+      <Filter>07. Shader\hpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">

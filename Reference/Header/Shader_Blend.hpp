@@ -36,6 +36,13 @@ sampler DepthSampler = sampler_state
 	texture = g_DepthTexture;
 };
 
+texture		g_NormalTexture;
+
+sampler NormalSampler = sampler_state
+{
+	texture = g_NormalTexture;
+};
+
 
 float g_fFogEnd;
 float g_fFogStart;
@@ -47,6 +54,9 @@ vector g_vFogHeightColor;
 float g_fFogHeightDensity;
 matrix		g_matViewInv;
 matrix		g_matProjInv;
+
+float dx = 1.f / 800.f;
+float dy = 1.f / 600.f;
 
 struct PS_IN
 {

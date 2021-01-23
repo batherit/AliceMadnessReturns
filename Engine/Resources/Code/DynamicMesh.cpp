@@ -61,7 +61,7 @@ HRESULT Engine::CDynamicMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar
 	return S_OK;
 }
 
-void Engine::CDynamicMesh::Render_Meshes(LPD3DXEFFECT _pEffect)
+void Engine::CDynamicMesh::Render_Meshes(LPD3DXEFFECT _pEffect, _uint _uiPassIndex)
 {
 	//UpdateAnimation(m_fDeltaTime);
 
@@ -94,11 +94,13 @@ void Engine::CDynamicMesh::Render_Meshes(LPD3DXEFFECT _pEffect)
 				pMeshContainer->MeshData.pMesh->DrawSubset(i);
 			}
 		else {
-			for (_ulong i = 0; i < pMeshContainer->NumMaterials; ++i)
-			{
+			for (_ulong i = 0; i < pMeshContainer->NumMaterials; ++i) {
 				_pEffect->SetTexture("g_BaseTexture", pMeshContainer->ppTexture[i]);
 				_pEffect->CommitChanges();
+
+				_pEffect->BeginPass(_uiPassIndex);
 				pMeshContainer->MeshData.pMesh->DrawSubset(i);
+				_pEffect->EndPass();
 			}
 		}
 		

@@ -21,7 +21,7 @@ public:
 
 public:
 	HRESULT		Ready_Meshes(const _tchar* pFilePath, const _tchar* pFileName);
-	virtual void		Render_Meshes(LPD3DXEFFECT _pEffect = 0) override;
+	virtual void		Render_Meshes(LPD3DXEFFECT _pEffect = 0, _uint _uiPassIndex = 0) override;
 
 private:
 	LPD3DXMESH			m_pOriMesh;	// 최초 로드 시점에 생성하는 메쉬 컴객체

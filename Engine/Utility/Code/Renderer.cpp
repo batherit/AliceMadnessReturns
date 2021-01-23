@@ -249,6 +249,7 @@ void CRenderer::Render_Blend(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Shade", "g_ShadeTexture");
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Specular", "g_SpecularTexture");
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
+	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Normal", "g_NormalTexture");
 
 	pEffect->Begin(NULL, 0);
 

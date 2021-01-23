@@ -68,15 +68,15 @@ PS_OUT		PS_MAIN(PS_IN In)
 	Out.vColor.a = 1.f;
 
 	float2 vOffset;
-	for (int i = 1; i < 15; ++i) {
+	for (int i = 1; i < 20; ++i) {
 		// get offset in range [-0.5, 0.5]:
-		vOffset = vBlur * (float(i) / (15.f - 1.f) - 0.5f);
+		vOffset = vBlur * (float(i) / (20.f - 1.f) - 0.5f);
 
 		// sample & add to result:
 		Out.vColor += tex2D(BaseSampler, In.vTexUV + vOffset);
 	}
 
-	Out.vColor /= 15.f;
+	Out.vColor /= 20.f;
 	//Out.vColor = vector(vDepth.x * fViewZ * 0.01f, vDepth.x * fViewZ * 0.01f, vDepth.x * fViewZ * 0.01f, 1.f);
 
 	return Out;

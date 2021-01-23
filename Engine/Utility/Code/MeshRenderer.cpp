@@ -52,7 +52,7 @@ void CMeshRenderer::Render(LPD3DXEFFECT _pEffect, _uint _uiPassIndex)
 			Engine::Safe_AddRef(_pEffect);
 			_uint iMaxPass = 0;
 			_pEffect->Begin(&iMaxPass, 0);
-			_pEffect->BeginPass(_uiPassIndex);
+			
 			
 			_pEffect->SetMatrix("g_matWorld", &m_matWorld);
 			if (!m_bIsViewCommited) {
@@ -78,7 +78,7 @@ void CMeshRenderer::Render(LPD3DXEFFECT _pEffect, _uint _uiPassIndex)
 			//// 렌더러는 기본적으로 월드, 뷰, 프로젝션까지는 세팅해준다.
 			//// 재질이나 조명같은 것은 렌더러 외부에서 미리 세팅해야 한다.
 
-			m_pMesh->Render_Meshes(_pEffect);
+			m_pMesh->Render_Meshes(_pEffect, _uiPassIndex);
 
 			_pEffect->EndPass();
 			_pEffect->End();

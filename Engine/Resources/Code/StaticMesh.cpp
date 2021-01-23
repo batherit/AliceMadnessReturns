@@ -110,6 +110,7 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 
 	// 메쉬가 지닌 재질 정보 중 첫 번째 주소를 반환하여 저장
 	m_pMtrl = (D3DXMATERIAL*)m_pSubset->GetBufferPointer();
+	auto temp = (D3DXMATERIAL*)m_pSubset->GetBufferPointer() + 1;
 
 	m_ppTextures = new LPDIRECT3DTEXTURE9[m_dwSubsetCnt];
 
@@ -135,11 +136,12 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 	return S_OK;
 }
 
-void Engine::CStaticMesh::Render_Meshes(LPD3DXEFFECT _pEffect)
+void Engine::CStaticMesh::Render_Meshes(LPD3DXEFFECT _pEffect, _uint _uiPassIndex)
 {
 	if(!_pEffect)
 		for (_ulong i = 0; i < m_dwSubsetCnt; ++i)
 		{
+			auto p = m_pMtrl[i].pTextureFilename;
 			m_pGraphicDev->SetTexture(0, m_ppTextures[i]);
 			m_pMesh->DrawSubset(i);
 		}
@@ -160,11 +162,10 @@ void Engine::CStaticMesh::Render_Meshes(LPD3DXEFFECT _pEffect)
 		//	_pEffect->SetMatrix("g_matProj", &matProj);
 			_pEffect->SetTexture("g_BaseTexture", m_ppTextures[i]);
 			_pEffect->CommitChanges();
-			m_pMesh->DrawSubset(i);
 
-		//	_pEffect->EndPass();
-			
-			//m_pGraphicDev->SetTexture(0, m_ppTextures[i]);
+			_pEffect->BeginPass(_uiPassIndex);
+			m_pMesh->DrawSubset(i);
+			_pEffect->EndPass();
 			
 
 		}

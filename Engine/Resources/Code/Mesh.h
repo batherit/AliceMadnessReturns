@@ -13,7 +13,7 @@ protected:
 	virtual ~CMesh(void);
 
 public:
-	virtual void		Render_Meshes(LPD3DXEFFECT _pEffect = 0) {};
+	virtual void		Render_Meshes(LPD3DXEFFECT _pEffect = 0, _uint _uiPassIndex = 0) {};
 
 public:
 	virtual CComponent*		Clone(void)PURE;

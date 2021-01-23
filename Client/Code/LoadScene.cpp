@@ -42,10 +42,10 @@ Engine::_int CLoadScene::Update(const _float& fTimeDelta)
 	{
 		if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 		{
-			//Engine::CManagement::GetInstance()->SetNextScene(CTitleScene::Create(m_pGraphicDev));
+			Engine::CManagement::GetInstance()->SetNextScene(CTitleScene::Create(m_pGraphicDev));
 			//Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
 			//Engine::CManagement::GetInstance()->SetNextScene(CPlay2Scene::Create(m_pGraphicDev));
-			Engine::CManagement::GetInstance()->SetNextScene(CBossScene::Create(m_pGraphicDev));
+			//Engine::CManagement::GetInstance()->SetNextScene(CBossScene::Create(m_pGraphicDev));
 			//Engine::CManagement::GetInstance()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
 
 			return iExit;
@@ -177,6 +177,13 @@ void CLoadScene::LoadComponents()
 		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), );
 	FAILED_CHECK_RETURN(Engine::Ready_DebugBuffer(L"Target_Shade", 200.f, 0.f, 200.f, 200.f), );
 
+	/*FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
+		L"Target_Outline",
+		ViewPort.Width,
+		ViewPort.Height,
+		D3DFMT_A16B16G16R16F,
+		D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), );*/
+
 	FAILED_CHECK_RETURN(Engine::Ready_RenderTarget(m_pGraphicDev,
 		L"Target_Specular",
 		ViewPort.Width,
@@ -197,6 +204,8 @@ void CLoadScene::LoadComponents()
 	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_Deferred", L"Target_Albedo"), );
 	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_Deferred", L"Target_Normal"), );
 	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_Deferred", L"Target_Depth"), );
+
+	//FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_Outline", L"Target_Outline"), );
 
 	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_LightAcc", L"Target_Shade"), );
 	FAILED_CHECK_RETURN(Engine::Ready_MRT(L"MRT_LightAcc", L"Target_Specular"), );

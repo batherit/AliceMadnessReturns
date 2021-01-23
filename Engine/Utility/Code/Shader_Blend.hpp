@@ -36,6 +36,13 @@ sampler DepthSampler = sampler_state
 	texture = g_DepthTexture;
 };
 
+texture		g_NormalTexture;
+
+sampler NormalSampler = sampler_state
+{
+	texture = g_NormalTexture;
+};
+
 
 float g_fFogEnd;
 float g_fFogStart;
@@ -47,6 +54,18 @@ vector g_vFogHeightColor;
 float g_fFogHeightDensity;
 matrix		g_matViewInv;
 matrix		g_matProjInv;
+
+float dx = 1.f / 800.f;
+float dy = 1.f / 600.f;
+//
+//float mask[9] =
+//{
+//	0, -1, 0,
+//	-1, 4, -1,
+//	0, -1, 0
+//};
+//float coord[3] = { -1, 0, 1 };
+//float divider = 1;
 
 struct PS_IN
 {
@@ -61,21 +80,70 @@ struct PS_OUT
 PS_OUT PS_MAIN(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
+	float n = 0;
+	vector vCenter = tex2D(NormalSampler, In.vTexUV);
+	vector vTok;
+	for (int i = 0; i < 2; ++i) {
+		for (int j = 0; j < 2; ++j) {
+			vTok = tex2D(NormalSampler, In.vTexUV + float2(dx + j, dy + i));
+			vTok = abs(vCenter - vTok);
+			n = max(n, vTok.x);
+			n = max(n, vTok.y);
+			n = max(n, vTok.z);
+		}
+	}
 
-	vector		vAlbedo = tex2D(AlbedoSampler, In.vTexUV);
+	n = 1.0 - clamp(clamp((n * 2.0) - 0.8, 0.0, 1.0) * 1.5, 0.0, 1.0);
+
+	//float4 Color = 0;
+	//float4 Ret;
+	//for (int i = 0; i < 9; ++i) {
+	//	Color += mask[i] * (tex2D(NormalSampler, In.vTexUV + float2(coord[i % 3] / 800.f, coord[i / 3] / 600.f)));
+	//}
+	//float gray = 1.f - dot(Color, float3(0.1f, 0.1f, 0.1f));
+	//Ret = float4(gray, gray, gray, 1) / divider;
+
+	vector		vAlbedo = tex2D(AlbedoSampler, In.vTexUV) /** float4(gray, gray, gray, 1) / divider*/;
+	
+	vAlbedo.xyz *= (0.1 + 0.9 * n);
+
 	vector		vShade = tex2D(ShadeSampler, In.vTexUV);
 	vector		vSpecular = tex2D(SpecularSampler, In.vTexUV);
 
-	Out.vColor = vAlbedo * vShade /** vSpecular*/;
-	
+	Out.vColor = vAlbedo * vShade; /** vSpecular*/;
+
 	return Out;
 }
 
 PS_OUT PS_SphereFog(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
+	float n = 0;
+	vector vCenter = tex2D(NormalSampler, In.vTexUV);
+	vector vTok;
+	for (int i = 0; i < 2; ++i) {
+		for (int j = 0; j < 2; ++j) {
+			vTok = tex2D(NormalSampler, In.vTexUV + float2(dx + j, dy + i));
+			vTok = abs(vCenter - vTok);
+			n = max(n, vTok.x);
+			n = max(n, vTok.y);
+			n = max(n, vTok.z);
+		}
+	}
 
-	vector		vAlbedo = tex2D(AlbedoSampler, In.vTexUV);
+	n = 1.0 - clamp(clamp((n * 2.0) - 0.8, 0.0, 1.0) * 1.5, 0.0, 1.0);
+
+	//float4 Color = 0;
+	//float4 Ret;
+	//for (int i = 0; i < 9; ++i) {
+	//	Color += mask[i] * (tex2D(NormalSampler, In.vTexUV + float2(coord[i % 3] / 800.f, coord[i / 3] / 600.f)));
+	//}
+	//float gray = 1.f - dot(Color, float3(0.1f, 0.1f, 0.1f));
+	//Ret = float4(gray, gray, gray, 1) / divider;
+
+	vector		vAlbedo = tex2D(AlbedoSampler, In.vTexUV) /** float4(gray, gray, gray, 1) / divider*/;
+
+	vAlbedo.xyz *= (0.1 + 0.9 * n);
 	vector		vShade = tex2D(ShadeSampler, In.vTexUV);
 
 	vector		vSpecular = tex2D(SpecularSampler, In.vTexUV);
@@ -93,8 +161,32 @@ PS_OUT PS_SphereFog(PS_IN In)
 PS_OUT PS_HeightFog(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
+	float n = 0;
+	vector vCenter = tex2D(NormalSampler, In.vTexUV);
+	vector vTok;
+	for (int i = 0; i < 2; ++i) {
+		for (int j = 0; j < 2; ++j) {
+			vTok = tex2D(NormalSampler, In.vTexUV + float2(dx + j, dy + i));
+			vTok = abs(vCenter - vTok);
+			n = max(n, vTok.x);
+			n = max(n, vTok.y);
+			n = max(n, vTok.z);
+		}
+	}
 
-	vector		vAlbedo = tex2D(AlbedoSampler, In.vTexUV);
+	n = 1.0 - clamp(clamp((n * 2.0) - 0.8, 0.0, 1.0) * 1.5, 0.0, 1.0);
+
+	//float4 Color = 0;
+	//float4 Ret;
+	//for (int i = 0; i < 9; ++i) {
+	//	Color += mask[i] * (tex2D(NormalSampler, In.vTexUV + float2(coord[i % 3] / 800.f, coord[i / 3] / 600.f)));
+	//}
+	//float gray = 1.f - dot(Color, float3(0.1f, 0.1f, 0.1f));
+	//Ret = float4(gray, gray, gray, 1) / divider;
+
+	vector		vAlbedo = tex2D(AlbedoSampler, In.vTexUV) /** float4(gray, gray, gray, 1) / divider*/;
+
+	vAlbedo.xyz *= (0.1 + 0.9 * n);
 	vector		vShade = tex2D(ShadeSampler, In.vTexUV);
 
 	vector		vSpecular = tex2D(SpecularSampler, In.vTexUV);

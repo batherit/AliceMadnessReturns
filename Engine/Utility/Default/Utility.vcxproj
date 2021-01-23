@@ -142,6 +142,7 @@
     <ClInclude Include="..\Code\Shader_Blend.hpp" />
     <ClInclude Include="..\Code\Shader_Dissolve.hpp" />
     <ClInclude Include="..\Code\Shader_Mesh.hpp" />
+    <ClInclude Include="..\Code\Shader_MotionBlur.hpp" />
     <ClInclude Include="..\Code\Shader_Object.hpp" />
     <ClInclude Include="..\Code\Shader_PlateEffect.hpp" />
     <ClInclude Include="..\Code\Shader_Sample.hpp" />

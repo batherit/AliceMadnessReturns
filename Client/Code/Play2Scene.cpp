@@ -195,6 +195,9 @@ int CPlay2Scene::Update(const _float& fTimeDelta)
 		CPlateEffect* pEffect = CPlateEffect::Create(m_pGraphicDev);
 		pEffect->SetPlateEffectInfo(L"ETF_HobbyHorseAttack", _vec3(14.f, -9.f, -11.f), _vec2(0.5f, 0.5f), _vec2(0.8f, 0.8f), 0.f, 0.2f, _vec3(1.f, 1.f, 1.f));
 		Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
+
+		Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
+		pCameraMgr->GetCamera()->Shake(0.3f, 0.4f, 20);
 	}
 
 	return CScene::Update(fTimeDelta);

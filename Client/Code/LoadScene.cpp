@@ -44,8 +44,8 @@ Engine::_int CLoadScene::Update(const _float& fTimeDelta)
 		{
 			//Engine::CManagement::GetInstance()->SetNextScene(CTitleScene::Create(m_pGraphicDev));
 			//Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
-			Engine::CManagement::GetInstance()->SetNextScene(CPlay2Scene::Create(m_pGraphicDev));
-			//Engine::CManagement::GetInstance()->SetNextScene(CBossScene::Create(m_pGraphicDev));
+			//Engine::CManagement::GetInstance()->SetNextScene(CPlay2Scene::Create(m_pGraphicDev));
+			Engine::CManagement::GetInstance()->SetNextScene(CBossScene::Create(m_pGraphicDev));
 			//Engine::CManagement::GetInstance()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
 
 			return iExit;
@@ -243,6 +243,11 @@ void CLoadScene::LoadComponents()
 	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Dissolve.hpp");	// RENDER_ALPHA 채널에서 유효
 	NULL_CHECK_RETURN(pShader, );
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Dissolve", pShader), );
+
+	// MotionBlur
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_MotionBlur.hpp");	// RENDER_ALPHA 채널에서 유효
+	NULL_CHECK_RETURN(pShader, );
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_MotionBlur", pShader), );
 }
 
 

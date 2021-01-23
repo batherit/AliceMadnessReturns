@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "Transform.h"
+#include "Renderer.h"
 
 USING(Engine)
 
@@ -40,6 +41,7 @@ Engine::_int Engine::CCamera::Update_Object(const _float& fTimeDelta)
 				m_fShakeKeepTime = 0.f;
 				m_vShakeOffset = _vec3(0.f, 0.f, 0.f);
 				m_bIsShaking = false;
+				Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
 			}
 		}
 	}
@@ -80,7 +82,7 @@ void CCamera::Shake(_float _fShakeKeepTime, _float _fSakeRadius, _int _iShakeNum
 	_float fT = 1.f - m_fShakeElapsedTime / m_fShakeKeepTime;
 
 	m_vShakeOffset = Engine::GetRotatedVector(GetTransform()->GetLook(), Engine::GetNumberBetweenMinMax(0.f, D3DX_PI * 2.f), GetTransform()->GetRight()) * m_fShakeRadius * fT;
-
+	Engine::CRenderer::GetInstance()->SetMotionBlurOn(true);
 	//m_fShakeOffsetX = cosf(D3DXToRadian(m_fOffsetDegree)) * m_fShakeRadius * fT;
 	//m_fShakeOffsetY = sinf(D3DXToRadian(m_fOffsetDegree)) * m_fShakeRadius * fT;
 }

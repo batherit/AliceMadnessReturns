@@ -89,7 +89,7 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 						m_rOwner.GetDynamicMesh()->SetAnimationStop(true);
 						// TODO : Ä«¸Þ¶ó Èçµê ÀÌÆåÆ®
 						Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
-						pCameraMgr->GetCamera()->Shake(0.8f, 0.4f, 55);
+						pCameraMgr->GetCamera()->Shake(0.8f, 0.45f, 55);
 						m_bIsAttackEnd = true;
 					}
 				}

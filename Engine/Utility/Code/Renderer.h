@@ -43,6 +43,8 @@ public:
 		m_fFogHeightDensity = _fFogHeightDensity;
 	}
 
+	void SetMotionBlurOn(_bool _bIsMotionBlurOn) { m_bIsMotionBlurOn = _bIsMotionBlurOn; }
+
 private:
 	void		Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev);
 	//void		Render_NonAlpha_Deferred(LPDIRECT3DDEVICE9& pGraphicDev);
@@ -54,7 +56,14 @@ private:
 	void		Render_LightAcc(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_Blend(LPDIRECT3DDEVICE9& pGraphicDev);
 
+	void		ProcessMotionBlur(LPDIRECT3DDEVICE9&pGraphicDev);
+
+
 private:
+	LPDIRECT3DTEXTURE9				m_pCopiedBackBufferTexture;
+	LPDIRECT3DSURFACE9				m_pCopiedBackBufferSurface;
+	LPDIRECT3DSURFACE9				m_pOriginBackBufferSurface;
+	_matrix							m_matPrevViewProj;
 	list<CGameObject*>				m_RenderGroup[RENDER_END];
 	LPDIRECT3DVERTEXBUFFER9			m_pVB;
 	LPDIRECT3DINDEXBUFFER9			m_pIB;
@@ -68,6 +77,8 @@ private:
 	_float m_fFogHeightStart;
 	_vec3 m_vFogHeightColor;
 	_float m_fFogHeightDensity;
+
+	_bool m_bIsMotionBlurOn = false;
 
 private:
 	virtual CComponent*	Clone() { 

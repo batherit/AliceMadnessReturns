@@ -21,7 +21,7 @@ sampler DissolveSampler = sampler_state
 	minfilter = linear;
 	magfilter = linear;
 };
-_float g_fDissolveAmount;
+float g_fDissolveAmount;
 
 struct	VS_IN
 {
@@ -77,12 +77,16 @@ struct	PS_OUT
 PS_OUT		PS_MAIN(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
-
+	
+	float fDissolveValue = tex2D(DissolveSampler, In.vTexUV).r;
+	float fIsVisible = fDissolveValue - g_fDissolveAmount;
+	clip(fIsVisible);
+	
+	float fIsGlowing = smoothstep(0.03f, 0.01f, fIsVisible);
 	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+	Out.vColor += fIsGlowing * vector(1.f, 1.f, 1.f, 1.f);
 	Out.vColor.a = 1.f;
 	
-	float fDissolveValue = tex2D(fDissolveValue, In.vTexUV);
-	clip(fDissolveValue - g_fDissolveAmount);
 	
 	// (-1 ~ 1)값은 월드 상태의 법선 벡터를 정규화하였기 때문에 xyz값이 나올 수 있는 범위에 해당
 	// (0 ~ 1) 텍스쳐 uv좌표로 변환
@@ -90,18 +94,20 @@ PS_OUT		PS_MAIN(PS_IN In)
 
 	Out.vDepth = vector(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w * 0.001f, 0.f, 0.f);
 
-	return Out;
-}
-
-
-PS_OUT		PS_ALPHA(PS_IN In)
-{
-	PS_OUT		Out = (PS_OUT)0;
-
-	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+	//Out.vCol
 
 	return Out;
 }
+
+
+//PS_OUT		PS_ALPHA(PS_IN In)
+//{
+//	PS_OUT		Out = (PS_OUT)0;
+//
+//	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+//
+//	return Out;
+//}
 
 technique Default_Device
 {
@@ -113,14 +119,14 @@ technique Default_Device
 	pixelshader = compile ps_3_0 PS_MAIN();
 }
 
-pass	AlphaTest
-{
-	alphatestenable = true;
-	alpharef = 0xc0;
-	alphafunc = greater;
-	cullmode = none;
-
-	vertexshader = compile vs_3_0 VS_MAIN();
-	pixelshader = compile ps_3_0 PS_ALPHA();
-}
+//pass	AlphaTest
+//{
+//	alphatestenable = true;
+//	alpharef = 0xc0;
+//	alphafunc = greater;
+//	cullmode = none;
+//
+//	vertexshader = compile vs_3_0 VS_MAIN();
+//	pixelshader = compile ps_3_0 PS_ALPHA();
+//}
 };

@@ -44,6 +44,9 @@ void Engine::CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Render_Blend(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
+
+	if(m_bIsMotionBlurOn) ProcessMotionBlur(pGraphicDev);
+
 	Render_UI(pGraphicDev);
 
 	//Render_DebugBuffer(L"MRT_Deferred");
@@ -63,6 +66,24 @@ void Engine::CRenderer::Clear_RenderGroup(void)
 
 HRESULT CRenderer::Ready_Renderer(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
+	D3DVIEWPORT9		ViewPort;
+	pGraphicDev->GetViewport(&ViewPort);
+
+	if (FAILED(D3DXCreateTexture(pGraphicDev,
+		ViewPort.Width,
+		ViewPort.Height,
+		1,
+		D3DUSAGE_RENDERTARGET,
+		D3DFMT_A16B16G16R16F,
+		D3DPOOL_DEFAULT,
+		&m_pCopiedBackBufferTexture)))
+		return E_FAIL;
+
+	m_pCopiedBackBufferTexture->GetSurfaceLevel(0, &m_pCopiedBackBufferSurface);
+	Safe_Release(m_pCopiedBackBufferTexture);
+	pGraphicDev->GetRenderTarget(0, &m_pOriginBackBufferSurface);
+	D3DXMatrixIdentity(&m_matPrevViewProj);
+
 	FAILED_CHECK_RETURN(pGraphicDev->CreateVertexBuffer(sizeof(VTXSCREEN) * 4,
 		0, // 정적버퍼로 할당하겠다는 옵션
 		FVF_SCREEN,
@@ -79,8 +100,8 @@ HRESULT CRenderer::Ready_Renderer(LPDIRECT3DDEVICE9 & pGraphicDev)
 		NULL),
 		E_FAIL);
 
-	D3DVIEWPORT9		ViewPort;
-	pGraphicDev->GetViewport(&ViewPort);
+	//D3DVIEWPORT9		ViewPort;
+	//pGraphicDev->GetViewport(&ViewPort);
 
 	VTXSCREEN*		pVertex = NULL;
 	m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
@@ -293,8 +314,53 @@ void CRenderer::Render_Blend(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Safe_Release(pShader);
 }
 
+void CRenderer::ProcessMotionBlur(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	//LPDIRECT3DSURFACE9 pBackBufferSurface;
+	//pGraphicDev->GetRenderTarget()
+	pGraphicDev->StretchRect(m_pOriginBackBufferSurface, NULL, m_pCopiedBackBufferSurface, NULL, D3DTEXF_NONE);
+
+	CShader*		pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_MotionBlur"));
+	NULL_CHECK(pShader);
+
+	LPD3DXEFFECT pEffect = pShader->Get_EffectHandle();
+	Safe_AddRef(pEffect);
+
+	pEffect->Begin(NULL, 0);
+	pEffect->BeginPass(0);
+
+	pEffect->SetMatrix("g_matPrevViewProj", &m_matPrevViewProj);
+
+	_matrix matView, matProj;
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	_matrix matPrevViewProj = matView * matProj;
+	
+	pEffect->SetMatrix("g_matInvProjView", &(*D3DXMatrixInverse(&matProj, NULL, &matProj) * *D3DXMatrixInverse(&matView, NULL, &matView)));
+	pEffect->SetTexture("g_BaseTexture", m_pCopiedBackBufferTexture);
+	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
+	pEffect->CommitChanges();
+
+	pGraphicDev->SetStreamSource(0, m_pVB, 0, sizeof(VTXSCREEN));
+	pGraphicDev->SetFVF(FVF_SCREEN);
+	pGraphicDev->SetIndices(m_pIB);
+	pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 4, 0, 2);
+
+	pEffect->EndPass();
+	pEffect->End();
+
+	Safe_Release(pEffect);
+	Safe_Release(pShader);
+
+	m_matPrevViewProj = matPrevViewProj;
+}
+
 void Engine::CRenderer::Free(void)
 {
+	Safe_Release(m_pCopiedBackBufferTexture);
+	Safe_Release(m_pCopiedBackBufferSurface);
+	Safe_Release(m_pOriginBackBufferSurface);
+
 	Safe_Release(m_pIB);
 	Safe_Release(m_pVB);
 

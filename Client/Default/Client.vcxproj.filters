@@ -286,6 +286,9 @@
     <Filter Include="02. Object\02. GameObject\Effect\EFT_HobbyHorseAttack">
       <UniqueIdentifier>{8efdb5e9-59ff-42f3-af5d-a5a69bb92ee9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. Manager\EffectMgr">
+      <UniqueIdentifier>{27b0d771-a63f-485d-a1f7-6485a58bf136}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -705,6 +708,9 @@
     <ClInclude Include="..\Code\EFT_HobbyHorseAttack.h">
       <Filter>02. Object\02. GameObject\Effect\EFT_HobbyHorseAttack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\EffectMgr.h">
+      <Filter>05. Manager\EffectMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1093,6 +1099,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\EFT_HobbyHorseAttack.cpp">
       <Filter>02. Object\02. GameObject\Effect\EFT_HobbyHorseAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EffectMgr.cpp">
+      <Filter>05. Manager\EffectMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -48,7 +48,6 @@ VS_OUT VS_MAIN(VS_IN In)
 	return Out;
 }
 
-
 struct	PS_IN
 {
 	vector		vNormal : NORMAL;
@@ -79,14 +78,66 @@ PS_OUT		PS_MAIN(PS_IN In)
 }
 
 
-PS_OUT		PS_ALPHA(PS_IN In)
+struct	VS_IN_Outline
 {
-	PS_OUT		Out = (PS_OUT)0;
+	vector		vPosition : POSITION;
+	vector		vNormal : NORMAL;
+	float2		vTexUV : TEXCOORD0;
+};
 
-	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+struct	VS_OUT_Outline
+{
+	vector		vPosition : POSITION;
+	float2		vTexUV : TEXCOORD0;
+};
+
+
+VS_OUT_Outline VS_Outline(VS_IN_Outline In)
+{
+	VS_OUT_Outline		Out = (VS_OUT_Outline)0;
+
+	matrix matWorld, matWV, matWVP;
+
+	vector vOutPos = In.vNormal * 4.f + In.vPosition;
+	matWorld = g_matWorld;
+	matWorld._41 = vOutPos.x;
+	matWorld._42 = vOutPos.y;
+	matWorld._43 = vOutPos.z;
+
+	matWV = mul(matWorld, g_matView);
+	matWVP = mul(matWV, g_matProj);
+
+	Out.vPosition = mul(vector(In.vPosition.xyz, 1.f), matWVP);
+	Out.vTexUV = In.vTexUV;
 
 	return Out;
 }
+
+
+struct	PS_OUT_Outline
+{
+	vector		vOutline : COLOR0;
+};
+
+PS_OUT_Outline		PS_Outline(void)
+{
+	PS_OUT_Outline		Out = (PS_OUT_Outline)0;
+
+	Out.vOutline = vector(0.f, 0.f, 0.f, 1.f);
+
+	return Out;
+}
+
+
+
+//PS_OUT		PS_ALPHA(PS_IN In)
+//{
+//	PS_OUT		Out = (PS_OUT)0;
+//
+//	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+//
+//	return Out;
+//}
 
 technique Default_Device
 {
@@ -98,14 +149,20 @@ technique Default_Device
 		pixelshader = compile ps_3_0 PS_MAIN();
 	}
 
-	pass	AlphaTest
+	pass Outline
 	{
-		alphatestenable = true;
-		alpharef = 0xc0;
-		alphafunc = greater;
-		cullmode = none;
-
-		vertexshader = compile vs_3_0 VS_MAIN();
-		pixelshader = compile ps_3_0 PS_ALPHA();
+		vertexshader = compile vs_3_0 VS_Outline();
+		pixelshader = compile ps_3_0 PS_Outline();
 	}
+
+	//pass	AlphaTest
+	//{
+	//	alphatestenable = true;
+	//	alpharef = 0xc0;
+	//	alphafunc = greater;
+	//	cullmode = none;
+
+	//	vertexshader = compile vs_3_0 VS_MAIN();
+	//	pixelshader = compile ps_3_0 PS_ALPHA();
+	//}
 };

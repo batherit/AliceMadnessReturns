@@ -69,7 +69,7 @@ void CChronoTimer::PauseToRun()
 
 float CChronoTimer::GetElapsedTimePerFrame()
 {
-	return m_fElapsedTimePerFrame;
+	return m_fElapsedTimePerFrame * m_fDeltaMultiple;
 }
 
 float CChronoTimer::GetCurTime()

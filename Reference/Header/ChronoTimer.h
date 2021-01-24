@@ -22,6 +22,8 @@ public:
 	void RunTick();						// 한 번의 틱 (곧 경과된 시간을 측정한다.)
 	void RunToPause();					// 일시 정지
 	void PauseToRun();					// 타이머 작동 (연속 호출 시 첫 호출 기준으로 시간 측정)
+	void SetDeltaMultiple(_float _fDeltaMultiple) { m_fDeltaMultiple = _fDeltaMultiple; }
+	_float GetDeltaMultiple() const { return m_fDeltaMultiple; }
 
 	_float GetElapsedTimePerFrame();		// 프레임 당 경과된 시간(sec)
 	_float GetCurTime();					// 현재 시간(sec)
@@ -36,6 +38,8 @@ private:
 
 	_float m_fPauseTotalTime;		// 누적된 일시정지 총 시간 
 	_float m_fElapsedTimePerFrame; 		// 프레임 당 경과 시간 (sec)
+
+	_float m_fDeltaMultiple = 1.f;		// ElapsedTimePerFrame에 곱해질 계수 (슬로우 효과등)
 
 public:
 	static   CChronoTimer*      Create(void);

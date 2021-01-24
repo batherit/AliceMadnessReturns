@@ -31,6 +31,9 @@ public:
 private:
 	CPlateEffect* m_pAttackEffect = nullptr;
 	CPlateEffect* m_pAttackAfterEffect = nullptr;
+	//_float m_fSlowTime = 0.f;
+	//_bool m_bSlowRelease = false;
+	//Engine::CChronoTimer* m_pTimer = nullptr;
 };
 
 END

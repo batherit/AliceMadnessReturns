@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "EFT_HobbyHorseAttack.h"
 #include "PlateEffect.h"
+#include "EffectMgr.h"
 
 CEFT_HobbyHorseAttack::CEFT_HobbyHorseAttack(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -20,7 +21,9 @@ CEFT_HobbyHorseAttack::~CEFT_HobbyHorseAttack(void)
 
 HRESULT CEFT_HobbyHorseAttack::Ready_Object(void)
 {
-	
+	//m_pTimer = Engine::GetTimer(L"Timer_FPS60");
+	//m_pTimer->SetDeltaMultiple(0.08f);
+	dynamic_cast<CEffectMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"EffectMgr").begin())->SetTimeSpeed(0.08f, 0.13f);
 
 	return S_OK;
 }
@@ -30,7 +33,14 @@ _int CEFT_HobbyHorseAttack::Update_Object(const _float & _fDeltaTime)
 	if (!IsActivated())
 		return 1;
 
+	//if (!m_bSlowRelease && (m_fSlowTime += _fDeltaTime / m_pTimer->GetDeltaMultiple()) >= 0.13f) {
+	//	m_pTimer->SetDeltaMultiple(1.f);
+	//	m_bSlowRelease = true;
+	//}
+
+
 	if (!m_pAttackEffect->IsActivated() && !m_pAttackAfterEffect->IsActivated()) {
+		//Engine::GetTimer(L"Timer_FPS60")->SetDeltaMultiple(1.f);
 		SetValid(false);
 		return 1;
 	}
@@ -66,12 +76,10 @@ void CEFT_HobbyHorseAttack::SetInfo(const _vec3 & _vPos)
 
 	m_pAttackEffect = CPlateEffect::Create(m_pGraphicDev);
 	AddChild(m_pAttackEffect);
-	m_pAttackEffect->SetPlateEffectInfo(L"ETF_HobbyHorseAttack", _vec3(0.f, 0.f, 0.f), _vec2(0.5f, 0.5f), _vec2(1.2f, 1.2f), 0.f, 0.4f, _vec3(1.f, 1.f, 1.f), CPlateEffect::DESTROY_UNACTIVATED);
+	m_pAttackEffect->SetPlateEffectInfo(L"ETF_HobbyHorseAttack", _vec3(0.f, 0.f, 0.f), _vec2(0.5f, 0.5f), _vec2(1.2f, 1.2f), 0.f, 0.3f, _vec3(1.f, 1.f, 1.f), CPlateEffect::DESTROY_UNACTIVATED);
 
 
 	m_pAttackAfterEffect = CPlateEffect::Create(m_pGraphicDev);
 	AddChild(m_pAttackAfterEffect);
-	m_pAttackAfterEffect->SetPlateEffectInfo(L"EFT_HobbyHorseAttackAfterImage", _vec3(0.f, 0.f, 0.f), _vec2(0.5f, 0.5f), _vec2(1.5f, 1.5f), 0.f, 0.7f, _vec3(1.f, 1.f, 1.f), CPlateEffect::DESTROY_UNACTIVATED);
-
-	
+	m_pAttackAfterEffect->SetPlateEffectInfo(L"EFT_HobbyHorseAttackAfterImage", _vec3(0.f, 0.f, 0.f), _vec2(0.5f, 0.5f), _vec2(1.5f, 1.5f), 0.f, 0.5f, _vec3(1.f, 1.f, 1.f), CPlateEffect::DESTROY_UNACTIVATED);
 }

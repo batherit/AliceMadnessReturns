@@ -9,7 +9,8 @@
 BEGIN(Client)
 class CPlateEffect : public Engine::CGameObject
 {
-	enum E_DESTROY_TYPE { DESTROY_UNVALID, DESTROY_UNACTIVATED, DESTROY_END };
+public:
+	enum E_DESTROY_TYPE { DESTROY_INVALID, DESTROY_UNACTIVATED, DESTROY_END };
 
 private: // 持失切, 社瑚切
 	explicit  CPlateEffect(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -27,18 +28,21 @@ public:
 	virtual void		Free(void);
 
 public:
-	void SetPlateEffectInfo(const _tchar* _pTextureTag, const _vec3& _vPos, const _vec2& _vStartSize, const _vec2& _vEndSize, _float _fAngleZ, _float _fLifeTime, const _vec3& _vEffectColor, E_DESTROY_TYPE _eDestroyType = DESTROY_UNVALID);
+	void SetPlateEffectInfo(const _tchar* _pTextureTag, const _vec3& _vPos, const _vec2& _vStartSize, const _vec2& _vEndSize, _float _fAngleZ, _float _fLifeTime, const _vec3& _vEffectColor, E_DESTROY_TYPE _eDestroyType = DESTROY_INVALID, _float _fActivationTime = 0.f);
+	Engine::CPhysics* GetPhysics() const { return m_pPhysics; }
 
 private:
 	Engine::CPolygonRenderer* m_pRenderer = nullptr;
+	Engine::CPhysics* m_pPhysics = nullptr;
 	Engine::CShader* m_pShader = nullptr;
 
 	_vec2 m_vStartSize;
 	_vec2 m_vEndSize;
+	_float m_fActivationTime = 0.f;
 	_float m_fMaxLifeTime;
 	_float m_fLifeTime;
 	_vec4 m_vEffectColor;
-	E_DESTROY_TYPE m_eDestroyType = DESTROY_UNVALID;
+	E_DESTROY_TYPE m_eDestroyType = DESTROY_INVALID;
 };
 
 END

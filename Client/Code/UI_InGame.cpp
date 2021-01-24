@@ -84,7 +84,7 @@ _int CUI_InGame::Update_Object(const _float & _fDeltaTime)
 
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_C)) {
 		if (m_pWeaponLock->IsActivated()) {
-			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
+			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true, WINCX >> 1, WINCY >> 1);
 			m_pCursor->SetActivated(false);
 			m_pWeaponLock->SetActivated(false);
 		}

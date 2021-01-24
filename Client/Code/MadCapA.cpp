@@ -5,6 +5,7 @@
 #include "MadCapAState_Idle.h"
 #include "StaticObject.h"
 #include "Attribute.h"
+#include "EFT_HobbyHorseAttack.h"
 
 CMadCapA::CMadCapA(LPDIRECT3DDEVICE9 pGraphicDev)
 	:

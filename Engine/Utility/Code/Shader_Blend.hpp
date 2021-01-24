@@ -104,9 +104,9 @@ PS_OUT PS_MAIN(PS_IN In)
 	//Ret = float4(gray, gray, gray, 1) / divider;
 
 	vector		vAlbedo = tex2D(AlbedoSampler, In.vTexUV) /** float4(gray, gray, gray, 1) / divider*/;
-	
 	vAlbedo.xyz *= (0.1 + 0.9 * n);
 
+	
 	vector		vShade = tex2D(ShadeSampler, In.vTexUV);
 	vector		vSpecular = tex2D(SpecularSampler, In.vTexUV);
 

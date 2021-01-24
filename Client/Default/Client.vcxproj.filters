@@ -283,6 +283,9 @@
     <Filter Include="02. Object\02. GameObject\Effect\PlateEffect">
       <UniqueIdentifier>{331cb9b0-ff11-4eb9-b1ea-7cb17b2192a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Effect\EFT_HobbyHorseAttack">
+      <UniqueIdentifier>{8efdb5e9-59ff-42f3-af5d-a5a69bb92ee9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -699,6 +702,9 @@
     <ClInclude Include="..\Code\PlateEffect.h">
       <Filter>02. Object\02. GameObject\Effect\PlateEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\EFT_HobbyHorseAttack.h">
+      <Filter>02. Object\02. GameObject\Effect\EFT_HobbyHorseAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1084,6 +1090,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlateEffect.cpp">
       <Filter>02. Object\02. GameObject\Effect\PlateEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EFT_HobbyHorseAttack.cpp">
+      <Filter>02. Object\02. GameObject\Effect\EFT_HobbyHorseAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

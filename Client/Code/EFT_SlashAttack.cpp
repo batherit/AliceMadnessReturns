@@ -68,7 +68,7 @@ void CEFT_SlashAttack::SetInfo(const _vec3 & _vPos)
 
 	m_pSlashEffect = CPlateEffect::Create(m_pGraphicDev);
 	AddChild(m_pSlashEffect);
-	m_pSlashEffect->SetPlateEffectInfo(L"EFT_Slash", _vec3(0.f, 0.f, 0.f), _vec2(1.8f, 0.20f), _vec2(1.8f, 0.f), Engine::GetNumberBetweenMinMax(0.f, 2.f * D3DX_PI), 0.4f, _vec3(0.8f, 0.8f, 1.f), CPlateEffect::DESTROY_UNACTIVATED);
+	m_pSlashEffect->SetPlateEffectInfo(L"EFT_Slash", _vec3(0.f, 0.f, 0.f), _vec2(1.8f, 0.20f), _vec2(2.3f, 0.f), Engine::GetNumberBetweenMinMax(0.f, 2.f * D3DX_PI), 0.4f, _vec3(0.8f, 0.8f, 1.f), CPlateEffect::DESTROY_UNACTIVATED);
 
 
 	m_pLightEffect = CPlateEffect::Create(m_pGraphicDev);

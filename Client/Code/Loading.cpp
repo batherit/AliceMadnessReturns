@@ -385,6 +385,7 @@ _uint CLoading::LoadTextures() {
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Light", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Light.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Slash", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Slash.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Dissolve", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Dissolve2.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Smoke", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Smoke0.png"), E_FAIL);
 
 	return S_OK;
 }

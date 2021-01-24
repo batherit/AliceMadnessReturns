@@ -59,6 +59,7 @@ public:
 	_float GetGravity() const { return m_fGravity; }
 
 	void SetResistanceCoefficientXZ(const _float& _fResistanceCoefficient) { m_fResistanceCoefficientXZ = _fResistanceCoefficient; }
+	void SetResistanceCoefficientY(const _float& _fResistanceCoefficient) { m_fResistanceCoefficientY = _fResistanceCoefficient; }
 
 	void SetVelocityXZ(const _vec2& _vVelocityXZ) {
 		_float fVelocityY = GetVelocity().y;
@@ -80,18 +81,16 @@ public:
 	// Update
 	_vec3 GetUpdatedVelocity(const _float& _fDeltaTime) {
 		_vec3 vCurrentVelocity = GetVelocity();
-		SetVelocity(_vec3(vCurrentVelocity.x * m_fResistanceCoefficientXZ, vCurrentVelocity.y - m_fGravity * _fDeltaTime, vCurrentVelocity.z * m_fResistanceCoefficientXZ));
+		SetVelocity(_vec3(vCurrentVelocity.x * m_fResistanceCoefficientXZ, (vCurrentVelocity.y - m_fGravity * _fDeltaTime) * m_fResistanceCoefficientY, vCurrentVelocity.z * m_fResistanceCoefficientXZ));
 		return GetVelocity();
 	}
 
-	_vec3 GetUpdatedPos(const _float& _fDeltaTime) {
-		GetUpdatedVelocity(_fDeltaTime);
-		return m_pOwner->GetTransform()->GetPos() + GetVelocity() * _fDeltaTime;
+	_vec3 GetUpdatedPos(const _float& _fDeltaTime, CTransform::E_COORD_TYPE _eCoordType = CTransform::COORD_TYPE_WORLD) {
+		return m_pOwner->GetTransform()->GetPos(_eCoordType) + GetUpdatedVelocity(_fDeltaTime) * _fDeltaTime;
 	}
 
 	void MoveByDelta(const _float& _fDeltaTime) {
-		GetUpdatedVelocity(_fDeltaTime);
-		m_pOwner->GetTransform()->Translate(GetVelocity() * _fDeltaTime);
+		m_pOwner->GetTransform()->Translate(GetUpdatedVelocity(_fDeltaTime) * _fDeltaTime);
 	}
 
 
@@ -106,5 +105,6 @@ private:
 	_vec3 m_vDir = WORLD_X_AXIS;
 	_float m_fGravity = 0.f;
 	_float m_fResistanceCoefficientXZ = 1.f;
+	_float m_fResistanceCoefficientY = 1.f;
 };
 END

@@ -305,6 +305,7 @@
     <ClInclude Include="..\Code\EFT_BulletAttack.h" />
     <ClInclude Include="..\Code\EFT_HobbyHorseAttack.h" />
     <ClInclude Include="..\Code\EFT_SlashAttack.h" />
+    <ClInclude Include="..\Code\EFT_SmokeBomb.h" />
     <ClInclude Include="..\Code\Event.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -610,6 +611,7 @@
     <ClCompile Include="..\Code\EFT_BulletAttack.cpp" />
     <ClCompile Include="..\Code\EFT_HobbyHorseAttack.cpp" />
     <ClCompile Include="..\Code\EFT_SlashAttack.cpp" />
+    <ClCompile Include="..\Code\EFT_SmokeBomb.cpp" />
     <ClCompile Include="..\Code\Event.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

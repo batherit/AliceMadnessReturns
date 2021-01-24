@@ -295,6 +295,9 @@
     <Filter Include="02. Object\02. GameObject\Effect\EFT_BulletAttack">
       <UniqueIdentifier>{eb27823a-b063-4a65-ac9e-c00870e7b70b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Effect\EFT_SmokeBomb">
+      <UniqueIdentifier>{802f800f-e98f-4c3f-9b2d-79052324b203}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -723,6 +726,9 @@
     <ClInclude Include="..\Code\EFT_BulletAttack.h">
       <Filter>02. Object\02. GameObject\Effect\EFT_BulletAttack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\EFT_SmokeBomb.h">
+      <Filter>02. Object\02. GameObject\Effect\EFT_SmokeBomb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1120,6 +1126,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\EFT_BulletAttack.cpp">
       <Filter>02. Object\02. GameObject\Effect\EFT_BulletAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EFT_SmokeBomb.cpp">
+      <Filter>02. Object\02. GameObject\Effect\EFT_SmokeBomb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "UI_InGame.h"
 #include "UI_BunnyBomb.h"
+#include "EFT_SmokeBomb.h"
 
 CBunnyBomb::CBunnyBomb(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -75,6 +76,7 @@ int CBunnyBomb::Update_Object(const _float & _fDeltaTime)
 	else {
 		if ((m_fElapsedTime += _fDeltaTime) >= 0.5f) {
 			SetValid(false);
+			return 1;
 		}
 	}
 
@@ -185,4 +187,8 @@ void CBunnyBomb::Bomb()
 	SetVisible(false);
 	m_pCollider->SetActivated(true);
 	m_fElapsedTime = 0.f;
+
+	CEFT_SmokeBomb* pEffect = CEFT_SmokeBomb::Create(m_pGraphicDev);
+	pEffect->SetInfo(GetTransform()->GetPos(), GetTransform()->GetLook(), 0.f, 0.3f, 10, 20.f, 0.8f);
+	Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
 }

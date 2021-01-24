@@ -58,6 +58,8 @@ _int CPlateEffect::Update_Object(const _float & _fDeltaTime)
 		_vec2 vNewSize = _vec2(Engine::GetValueByWeight(fT, m_vStartSize.x, m_vEndSize.x), Engine::GetValueByWeight(fT, m_vStartSize.y, m_vEndSize.y));
 		GetTransform()->SetScaleXYZ(vNewSize.x, vNewSize.y, 1.f);
 
+		GetTransform()->SetPos(GetPhysics()->GetUpdatedPos(_fDeltaTime, Engine::CTransform::COORD_TYPE_LOCAL));
+
 		m_pRenderer->Update(_fDeltaTime);
 	}
 	return 0;

@@ -380,8 +380,10 @@ _uint CLoading::LoadTextures() {
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_WeaponLock_BunnyBomb", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_WeaponLock_BunnyBomb.tga"), E_FAIL);
 
 	// PlateEffect     EFT_HobbyHorseAttack EFT_HobbyHorseAttackAfterImage
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"ETF_HobbyHorseAttack", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_HobbyHorseAttack.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_HobbyHorseAttack", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_HobbyHorseAttack.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_HobbyHorseAttackAfterImage", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_HobbyHorseAttackAfterImage.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Light", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Light.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Slash", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Slash.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Dissolve", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Dissolve2.tga"), E_FAIL);
 
 	return S_OK;

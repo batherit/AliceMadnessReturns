@@ -289,6 +289,12 @@
     <Filter Include="05. Manager\EffectMgr">
       <UniqueIdentifier>{27b0d771-a63f-485d-a1f7-6485a58bf136}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Effect\EFT_SlashAttack">
+      <UniqueIdentifier>{0c98156e-7166-4e65-ad8a-87edff2565c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Effect\EFT_BulletAttack">
+      <UniqueIdentifier>{eb27823a-b063-4a65-ac9e-c00870e7b70b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -711,6 +717,12 @@
     <ClInclude Include="..\Code\EffectMgr.h">
       <Filter>05. Manager\EffectMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\EFT_SlashAttack.h">
+      <Filter>02. Object\02. GameObject\Effect\EFT_SlashAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\EFT_BulletAttack.h">
+      <Filter>02. Object\02. GameObject\Effect\EFT_BulletAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1102,6 +1114,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\EffectMgr.cpp">
       <Filter>05. Manager\EffectMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EFT_SlashAttack.cpp">
+      <Filter>02. Object\02. GameObject\Effect\EFT_SlashAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EFT_BulletAttack.cpp">
+      <Filter>02. Object\02. GameObject\Effect\EFT_BulletAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

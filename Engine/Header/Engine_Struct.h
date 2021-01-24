@@ -90,6 +90,7 @@ namespace Engine
 	typedef struct _collision_info {
 		CGameObject* pCollidedObject = nullptr;
 		CColliderObject* pCollidedCollider = nullptr;
+		CColliderObject* pCollidedMyCollider = nullptr;
 		//_vec3 vCollidedPos{0.f, 0.f, 0.f};
 	}CollisionInfo;
 

@@ -6,6 +6,8 @@
 #include "StaticObject.h"
 #include "Attribute.h"
 #include "EFT_HobbyHorseAttack.h"
+#include "EFT_SlashAttack.h"
+#include "EFT_BulletAttack.h"
 
 CBoss::CBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -183,8 +185,10 @@ void CBoss::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 			if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
 				// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
 				m_pAttribute->Damaged(/*_tCollisionInfo.pCollidedCollider->GetDamage()*/ 0);
-				CEFT_HobbyHorseAttack* pEffect = CEFT_HobbyHorseAttack::Create(m_pGraphicDev);
-				pEffect->SetInfo(_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos());
+				//CEFT_HobbyHorseAttack* pEffect = CEFT_HobbyHorseAttack::Create(m_pGraphicDev);
+				CEFT_SlashAttack* pEffect = CEFT_SlashAttack::Create(m_pGraphicDev);
+				//CEFT_BulletAttack* pEffect = CEFT_BulletAttack::Create(m_pGraphicDev);
+				pEffect->SetInfo((_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos() + _tCollisionInfo.pCollidedMyCollider->GetTransform()->GetPos()) * 0.5f);
 				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
 			}
 		}

@@ -69,8 +69,10 @@ void CCollisionMgr::ProcessCollision()
 
 							tCollisionInfo1.pCollidedObject = rObj2;
 							tCollisionInfo1.pCollidedCollider = rCollider2;
+							tCollisionInfo1.pCollidedMyCollider = rCollider1;
 							tCollisionInfo2.pCollidedObject = rObj1;
 							tCollisionInfo2.pCollidedCollider = rCollider1;
+							tCollisionInfo2.pCollidedMyCollider = rCollider2;
 
 							if (rCollider1->IsActivated() && rCollider2->IsActivated() && IsCollided(rCollider1, rCollider2)) {
 								rObj1->OnCollision(tCollisionInfo1);

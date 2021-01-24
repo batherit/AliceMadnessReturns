@@ -76,10 +76,10 @@ void CEFT_HobbyHorseAttack::SetInfo(const _vec3 & _vPos)
 
 	m_pAttackEffect = CPlateEffect::Create(m_pGraphicDev);
 	AddChild(m_pAttackEffect);
-	m_pAttackEffect->SetPlateEffectInfo(L"ETF_HobbyHorseAttack", _vec3(0.f, 0.f, 0.f), _vec2(0.5f, 0.5f), _vec2(1.2f, 1.2f), 0.f, 0.3f, _vec3(1.f, 1.f, 1.f), CPlateEffect::DESTROY_UNACTIVATED);
+	m_pAttackEffect->SetPlateEffectInfo(L"EFT_HobbyHorseAttack", _vec3(0.f, 0.f, 0.f), _vec2(0.5f, 0.5f), _vec2(1.2f, 1.2f), 0.f, 0.3f, _vec3(1.f, 1.f, 1.f), CPlateEffect::DESTROY_UNACTIVATED);
 
 
 	m_pAttackAfterEffect = CPlateEffect::Create(m_pGraphicDev);
 	AddChild(m_pAttackAfterEffect);
-	m_pAttackAfterEffect->SetPlateEffectInfo(L"EFT_HobbyHorseAttackAfterImage", _vec3(0.f, 0.f, 0.f), _vec2(0.5f, 0.5f), _vec2(1.5f, 1.5f), 0.f, 0.5f, _vec3(1.f, 1.f, 1.f), CPlateEffect::DESTROY_UNACTIVATED);
+	m_pAttackAfterEffect->SetPlateEffectInfo(L"EFT_HobbyHorseAttackAfterImage", _vec3(0.f, 0.f, 0.f), _vec2(0.5f, 0.5f), _vec2(1.5f, 1.5f), 0.f, 0.5f, _vec3(1.f, 1.f, 1.f), CPlateEffect::DESTROY_UNACTIVATED, 0.15f);
 }

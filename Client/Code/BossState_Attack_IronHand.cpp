@@ -86,7 +86,7 @@ int CBossState_Attack_IronHand::Update(const _float& _fDeltaTime)
 
 			Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 			_float fT = (1.f - Engine::GetWeightByValue(fLength, 0.f, 50.f));
-			pCameraMgr->GetCamera()->Shake(0.7f * fT, 0.6f * fT, 20 * fT);
+			pCameraMgr->GetCamera()->Shake(0.7f * fT, 0.3f * fT, 20 * fT);
 		//	Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
 		}
 

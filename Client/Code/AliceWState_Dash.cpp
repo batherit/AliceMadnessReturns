@@ -66,12 +66,12 @@ int CAliceWState_Dash::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
-	if ((m_fTickTime += _fDeltaTime) >= 0.05f) {
+	if ((m_fTickTime += _fDeltaTime) >= 0.06f) {
 		CPlateEffect* pEffect = CPlateEffect::Create(m_rOwner.GetGraphicDev());
-		pEffect->SetPlateEffectInfo(L"EFT_Smoke", m_rOwner.GetTransform()->GetPos() + _vec3(Engine::GetNumberBetweenMinMax(-0.3f, 0.3f), 1.f + Engine::GetNumberBetweenMinMax(-0.3f, 0.3f), Engine::GetNumberBetweenMinMax(-0.3f, 0.3f)), _vec2(0.5f, 0.5f), _vec2(0.5f, 0.5f),
+		pEffect->SetPlateEffectInfo(L"EFT_Smoke", m_rOwner.GetTransform()->GetPos() + _vec3(Engine::GetNumberBetweenMinMax(-0.35f, 0.35f), 1.f + Engine::GetNumberBetweenMinMax(-0.35f, 0.35f), Engine::GetNumberBetweenMinMax(-0.35f, 0.35f)), _vec2(0.5f, 0.5f), _vec2(0.4f, 0.4f),
 			Engine::GetNumberBetweenMinMax(0.f, 2.f * D3DX_PI), 0.25f, _vec3(0.6f, 0.8f, 1.f), CPlateEffect::DESTROY_INVALID, 0.05f);
 		Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
-		m_fTickTime -= 0.05f;
+		m_fTickTime -= 0.06f;
 	}
 	
 

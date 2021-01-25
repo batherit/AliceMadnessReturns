@@ -32,6 +32,9 @@ private:
 	enum E_JUMP_STEP { STEP_START, STEP_RISE, STEP_FALL, STEP_LAND, STEP_END };
 
 private:
+	void GenerateSmokeBombEffect();
+
+private:
 	Engine::CNaviMesh* m_pNaviMesh = nullptr;
 	_int m_iJumpNum = 0;
 	_bool m_bIsJumping = true;

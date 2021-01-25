@@ -7,6 +7,7 @@
 #include "AliceWState_Slide.h"
 #include "AliceWState_Dash.h"
 #include "AliceWState_JumpDamage.h"
+#include "EFT_SmokeBomb.h"
 #include "StateMgr.h"
 #include "AliceW.h"
 #include "Map.h"
@@ -30,6 +31,7 @@ void CAliceWState_Jump::OnLoaded(void)
 		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpFwd_Start);
 		m_rOwner.GetPhysics()->SetVelocityY(ALICE_JUMP_SPEED);
 		m_eJumpStep = STEP_START;
+		GenerateSmokeBombEffect();
 	}
 	else{
 		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpFwd_Fall);
@@ -130,6 +132,7 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 					}
 					++m_iJumpNum;
 					m_eJumpStep = STEP_START;
+					GenerateSmokeBombEffect();
 
 					// TODO : 점프에 대한 물리 처리를 해주어야 합니다.
 				}
@@ -169,6 +172,7 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 				}
 				++m_iJumpNum;
 				m_eJumpStep = STEP_START;
+				GenerateSmokeBombEffect();
 			}
 			else if (m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()) {
 				// 어떤 입력도 없다면 활강 애니메이션을 진행한다.
@@ -207,6 +211,7 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 			}
 			++m_iJumpNum;
 			m_eJumpStep = STEP_START;
+			GenerateSmokeBombEffect();
 
 			// TODO : 점프에 대한 물리 처리를 해주어야 합니다.
 		}
@@ -243,4 +248,11 @@ void CAliceWState_Jump::OnExited(void)
 
 void CAliceWState_Jump::Free(void)
 {
+}
+
+void CAliceWState_Jump::GenerateSmokeBombEffect()
+{
+	CEFT_SmokeBomb* pEffect = CEFT_SmokeBomb::Create(m_rOwner.GetGraphicDev());
+	pEffect->SetInfo(m_rOwner.GetTransform()->GetPos() + _vec3(0.f, 0.5f, 0.f), WORLD_Y_AXIS, 0.2f, 0.f, Engine::GetNumberBetweenMinMax(3, 5), 10.f, 0.4f, _vec2(0.3f, 0.3f), _vec2(0.5f, 0.5f));
+	Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
 }

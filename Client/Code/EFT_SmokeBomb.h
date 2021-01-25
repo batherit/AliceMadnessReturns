@@ -26,7 +26,7 @@ public:
 	virtual void		Free(void);
 
 public:
-	void SetInfo(const _vec3& _vPos, const _vec3& _vLook, _float _fRadius, _float _fOffset, _int _iParticleNum, _float _fParticleSpeed, _float _fResistanceXZ);
+	void SetInfo(const _vec3& _vPos, const _vec3& _vLook, _float _fRadius, _float _fOffset, _int _iParticleNum, _float _fParticleSpeed, _float _fResistanceXZ, const _vec2& _vStartSize = _vec2(0.5f, 0.5f), const _vec2& _vEndSize = _vec2(0.8f, 0.8f));
 
 private:
 	vector<CPlateEffect*> m_vecSmokeParticle;

@@ -66,11 +66,11 @@ void CEFT_SmokeBomb::Free(void)
 	CGameObject::Free();
 }
 
-void CEFT_SmokeBomb::SetInfo(const _vec3 & _vPos, const _vec3& _vLook, _float _fRadius, _float _fOffset, _int _iParticleNum, _float _fParticleSpeed, _float _fResistanceXZ)
+void CEFT_SmokeBomb::SetInfo(const _vec3 & _vPos, const _vec3& _vLook, _float _fRadius, _float _fOffset, _int _iParticleNum, _float _fParticleSpeed, _float _fResistanceXZ, const _vec2& _vStartSize, const _vec2& _vEndSize)
 {
 	GetTransform()->SetPos(_vPos);
 	if (_vLook == WORLD_Y_AXIS) {
-		GetTransform()->ResetRightUpLook(&WORLD_Y_AXIS, &WORLD_X_AXIS);
+		GetTransform()->ResetRightUpLook(&(_vPos + WORLD_Y_AXIS), &WORLD_X_AXIS);
 	}
 	else {
 		GetTransform()->ResetRightUpLook(&(_vPos + _vLook), &WORLD_Y_AXIS);
@@ -91,9 +91,9 @@ void CEFT_SmokeBomb::SetInfo(const _vec3 & _vPos, const _vec3& _vLook, _float _f
 		pEffect->SetPlateEffectInfo(
 			L"EFT_Smoke",
 			_vPos + vUp * (_fRadius + Engine::GetNumberBetweenMinMax(-_fOffset, _fOffset)),
-			_vec2(0.5f, 0.5f), _vec2(0.8f, 0.8f),
+			_vStartSize, _vEndSize,
 			Engine::GetNumberBetweenMinMax(0.f, 2.f * D3DX_PI),
-			0.4f, _vec3(0.8f, 0.8f, 0.8f), 
+			0.4f, _vec3(1.f, 1.f, 1.f), 
 			CPlateEffect::DESTROY_INVALID);
 		pEffect->GetPhysics()->SetSpeed(_fParticleSpeed);
 		pEffect->GetPhysics()->SetDirection(vUp);

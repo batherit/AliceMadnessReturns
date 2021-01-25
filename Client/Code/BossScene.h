@@ -51,6 +51,9 @@ private:
 	//CMonster* m_pMonster = nullptr;
 	CSkyBox* m_pSkyBox = nullptr;
 	CTerrain* m_pTerrain = nullptr;
+
+	_float m_fFogSphereDensity = 1.f;
+	_float m_fFogHeightDensity = 1.f;
 };
 
 END

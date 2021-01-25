@@ -13,6 +13,8 @@
 #include "UI_InGame.h"
 #include "UI_WeaponLock.h"
 #include "UI_LockedWeapon.h"
+#include "VorpalBlade.h"
+#include "HobbyHorse.h"
 
 CAliceW::CAliceW(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -63,8 +65,7 @@ HRESULT CAliceW::Ready_Object(void)
 
 	// Weapon
 	// 1) Vorpal Blade
-	CStaticObject* pStaticObject = CStaticObject::Create(m_pGraphicDev);
-	pStaticObject->SetRenderInfo(L"VorpalBlade");
+	CStaticObject* pStaticObject = CVorpalBlade::Create(m_pGraphicDev);
 	pStaticObject->GetTransform()->Rotate(D3DXToRadian(45.f), D3DXToRadian(90.f), D3DXToRadian(160.f));
 	pStaticObject->GetTransform()->Translate(0.07f, 0.f, 0.02f);
 	AddChild(pStaticObject, "Bip01-R-Hand");
@@ -74,9 +75,7 @@ HRESULT CAliceW::Ready_Object(void)
 	m_pAttackColliders[TYPE_BLADE]->SetDamage(VORPALBLADE_DAMAGE);
 
 	// 2) Hobby Horse
-	pStaticObject = CStaticObject::Create(m_pGraphicDev);
-	pStaticObject->SetRenderInfo(L"HobbyHorse");
-	//pStaticObject->GetTransform()->Rotate(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f));
+	pStaticObject = CHobbyHorse::Create(m_pGraphicDev);
 	pStaticObject->GetTransform()->Translate(0.05f, 0.f, 0.f);
 	AddChild(pStaticObject, "Bip01-R-Hand");
 	pStaticObject->SetActivated(false);
@@ -272,7 +271,7 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_R") == 0) {
 		if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
 			// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
-			m_pAttribute->Damaged(_tCollisionInfo.pCollidedCollider->GetDamage());
+			m_pAttribute->Damaged(/*_tCollisionInfo.pCollidedCollider->GetDamage()*/0);
 			_vec3 vToOwner = GetTransform()->GetPos() - _tCollisionInfo.pCollidedCollider->GetTransform()->GetPos();
 			vToOwner.y = 0.f;
 			D3DXVec3Normalize(&vToOwner, &vToOwner);

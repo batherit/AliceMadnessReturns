@@ -75,6 +75,7 @@ int CBunnyBomb::Update_Object(const _float & _fDeltaTime)
 	}
 	else {
 		if ((m_fElapsedTime += _fDeltaTime) >= 0.5f) {
+			// bomb 이후 사라지는 것.
 			SetValid(false);
 			return 1;
 		}
@@ -189,6 +190,9 @@ void CBunnyBomb::Bomb()
 	m_fElapsedTime = 0.f;
 
 	CEFT_SmokeBomb* pEffect = CEFT_SmokeBomb::Create(m_pGraphicDev);
-	pEffect->SetInfo(GetTransform()->GetPos(), GetTransform()->GetLook(), 0.f, 0.3f, 10, 20.f, 0.8f);
+	_matrix matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, NULL, &matView);
+	pEffect->SetInfo(GetTransform()->GetPos(), -_vec3(matView._31, matView._32, matView._33), 0.f, 0.3f, 10, 20.f, 0.8f);
 	Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
 }

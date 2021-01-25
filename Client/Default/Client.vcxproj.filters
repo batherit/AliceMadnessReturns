@@ -298,6 +298,12 @@
     <Filter Include="02. Object\02. GameObject\Effect\EFT_SmokeBomb">
       <UniqueIdentifier>{802f800f-e98f-4c3f-9b2d-79052324b203}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\HobbyHorse">
+      <UniqueIdentifier>{a78fec93-cff2-48d0-b47a-e5301155b2d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\VorpalBlade">
+      <UniqueIdentifier>{c6db8869-d665-401a-a9ff-f792b5f1ea81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -729,6 +735,12 @@
     <ClInclude Include="..\Code\EFT_SmokeBomb.h">
       <Filter>02. Object\02. GameObject\Effect\EFT_SmokeBomb</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\HobbyHorse.h">
+      <Filter>02. Object\02. GameObject\HobbyHorse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\VorpalBlade.h">
+      <Filter>02. Object\02. GameObject\VorpalBlade</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1129,6 +1141,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\EFT_SmokeBomb.cpp">
       <Filter>02. Object\02. GameObject\Effect\EFT_SmokeBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HobbyHorse.cpp">
+      <Filter>02. Object\02. GameObject\HobbyHorse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\VorpalBlade.cpp">
+      <Filter>02. Object\02. GameObject\VorpalBlade</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

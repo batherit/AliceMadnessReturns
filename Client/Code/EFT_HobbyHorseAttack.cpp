@@ -23,7 +23,8 @@ HRESULT CEFT_HobbyHorseAttack::Ready_Object(void)
 {
 	//m_pTimer = Engine::GetTimer(L"Timer_FPS60");
 	//m_pTimer->SetDeltaMultiple(0.08f);
-	dynamic_cast<CEffectMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"EffectMgr").begin())->SetTimeSpeed(0.08f, 0.13f);
+	dynamic_cast<CEffectMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"EffectMgr").begin())->SetTimeSpeed(0.04f, 0.2f);
+	dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin())->GetCamera()->Shake(0.12f * 0.04f, 0.06f, 10);
 
 	return S_OK;
 }

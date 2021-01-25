@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Bullet.h"
+#include "Attribute.h"
+#include "EFT_BulletAttack.h"
 
 CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -54,8 +56,13 @@ void CBullet::Render_Object(void)
 
 void CBullet::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
-	if(lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Monster") == 0)
-		SetValid(false);
+	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Monster") == 0) {
+		_tCollisionInfo.pCollidedObject->GetComponent<CAttribute>()->Damaged(/*BULLET_DAMAGE*/0);
+
+		CEFT_BulletAttack* pEffect = CEFT_BulletAttack::Create(m_pGraphicDev);
+		pEffect->SetInfo((_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos() + _tCollisionInfo.pCollidedMyCollider->GetTransform()->GetPos()) * 0.5f);
+		Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
+	}
 }
 
 CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev)

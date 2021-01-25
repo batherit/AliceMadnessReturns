@@ -1,5 +1,5 @@
-#ifndef Bullet_h__
-#define Bullet_h__
+#ifndef HobbyHorse_h__
+#define HobbyHorse_h__
 
 #include "Define.h"
 #include "Base.h"
@@ -9,29 +9,30 @@
 
 BEGIN(Client)
 class CAttribute;
-class CBullet : public CStaticObject
+class CHobbyHorse : public CStaticObject
 {
 private: // 생성자, 소멸자
-	explicit  CBullet(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit  CBullet(const  CBullet& rhs);
-	virtual ~CBullet(void);
+	explicit  CHobbyHorse(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit  CHobbyHorse(const  CHobbyHorse& rhs);
+	virtual ~CHobbyHorse(void);
 
 	// CGameObject을(를) 통해 상속됨
 	virtual HRESULT Ready_Object(void) override;
 	virtual int Update_Object(const _float & _fDeltaTime) override;
 	virtual void Render_Object(void) override;
 	virtual void OnCollision(Engine::CollisionInfo _tCollisionInfo) override;
+	virtual void OnNotCollision(Engine::CollisionInfo _tCollisionInfo) override;
 
 public:
-	static CBullet*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CHobbyHorse*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
 
 public:
-	void SetBulletInfo(_vec3 _vPos, _vec3 _vDir, _float _fSpeed = 60.f, _float _fDeathLength = 200.f);
+	Engine::CColliderObject* GetAttackCollider() const { return m_pAttackCollider; }
 
 private:
-	Engine::CPhysics* m_pPhysics = nullptr;
-	_float m_fDeathLength = 100.f;
+	CAttribute* m_pAttribute = nullptr;
+	Engine::CColliderObject* m_pAttackCollider = nullptr;
 };
 
 END

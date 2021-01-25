@@ -21,6 +21,7 @@ CEFT_SlashAttack::~CEFT_SlashAttack(void)
 
 HRESULT CEFT_SlashAttack::Ready_Object(void)
 {
+	dynamic_cast<CEffectMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"EffectMgr").begin())->SetTimeSpeed(0.04f, 0.1f);
 	//dynamic_cast<CEffectMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"EffectMgr").begin())->SetTimeSpeed(0.08f, 0.13f);
 
 	return S_OK;

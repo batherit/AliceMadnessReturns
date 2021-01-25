@@ -28,6 +28,7 @@ public:
 private:
 	_vec3 m_vDir;
 	_float m_fElapsedTime = 0.f;
+	_float m_fTickTime = 0.f;
 };
 
 END

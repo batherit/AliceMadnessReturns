@@ -275,6 +275,7 @@
     <ClInclude Include="..\Code\BossState_Walk.h" />
     <ClInclude Include="..\Code\Bullet.h" />
     <ClInclude Include="..\Code\BunnyBomb.h" />
+    <ClInclude Include="..\Code\Butterfly.h" />
     <ClInclude Include="..\Code\CameraController_Crowd.h" />
     <ClInclude Include="..\Code\CameraController_Gun.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -589,6 +590,7 @@
     <ClCompile Include="..\Code\BossState_Walk.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\BunnyBomb.cpp" />
+    <ClCompile Include="..\Code\Butterfly.cpp" />
     <ClCompile Include="..\Code\CameraController_Crowd.cpp" />
     <ClCompile Include="..\Code\CameraController_Gun.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

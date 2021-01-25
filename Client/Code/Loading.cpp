@@ -391,6 +391,15 @@ _uint CLoading::LoadTextures() {
 }
 
 _uint CLoading::LoadCommonMeshes() {
+	// 나비 생성
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Butterfly",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Common/Butterfly/",
+		L"Butterfly.X"),
+		E_FAIL);
+
 	// 보팔검 생성
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

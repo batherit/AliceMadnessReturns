@@ -473,12 +473,28 @@ namespace Engine
 		return acosf(Clamp(D3DXVec3Dot(D3DXVec3Normalize(&vUnitU, &vU), D3DXVec3Normalize(&vUnitV, &vV)), -1.f, 1.f));
 	}
 
+	// 회전된 벡터 얻기
 	inline _vec3 GetRotatedVector(const _vec3& _vAxis, const _float& _fAngle, const _vec3& _vV) {
 		_vec3 vRotatedVector;
 		_matrix matRot;
 		D3DXVec3TransformNormal(&vRotatedVector, &_vV, D3DXMatrixRotationAxis(&matRot, &_vAxis, _fAngle));
 
 		return vRotatedVector;
+	}
+	
+	// 랜덤한 벡터 얻기
+	inline _vec3 GetRandomVector() {
+		_vec3 vVector;
+
+		do {
+			vVector.x = Engine::GetNumberBetweenMinMax(-1.f, 1.f);
+			vVector.y = Engine::GetNumberBetweenMinMax(-1.f, 1.f);
+			vVector.z = Engine::GetNumberBetweenMinMax(-1.f, 1.f);
+		} while (D3DXVec3LengthSq(&vVector) == 0.f);
+
+		D3DXVec3Normalize(&vVector, &vVector);
+
+		return vVector;
 	}
 
 	// 쿼터니언 보간된 회전 행렬 얻기

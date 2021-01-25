@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Engine_Define.h"
+#include "Define.h"
 #include "Base.h"
+#include "Engine_Define.h"
+#include "Export_Function.h"
 #include "Typedef.h"
 #include "State.h"
 
@@ -29,6 +31,7 @@ private:
 	_vec3 m_vDir;
 	_float m_fElapsedTime = 0.f;
 	_float m_fTickTime = 0.f;
+	Engine::CLayer* m_pLayer = nullptr;
 };
 
 END

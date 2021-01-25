@@ -16,6 +16,7 @@
 #include "Map.h"
 #include "Attribute.h"
 #include "PlateEffect.h"
+#include "Butterfly.h"
 
 
 CAliceWState_Dash::CAliceWState_Dash(CAliceW & _rOwner, const _vec3& _vDir)
@@ -36,6 +37,8 @@ void CAliceWState_Dash::OnLoaded(void)
 	m_rOwner.GetPhysics()->SetVelocity(m_vDir * ALICE_RUN_SPEED * 2.f);
 	m_fElapsedTime = 0.f;
 	m_rOwner.SetDashing(true);
+
+	m_pLayer = Engine::GetLayer(L"Environment");
 }
 
 int CAliceWState_Dash::Update(const _float& _fDeltaTime)
@@ -68,9 +71,20 @@ int CAliceWState_Dash::Update(const _float& _fDeltaTime)
 
 	if ((m_fTickTime += _fDeltaTime) >= 0.06f) {
 		CPlateEffect* pEffect = CPlateEffect::Create(m_rOwner.GetGraphicDev());
-		pEffect->SetPlateEffectInfo(L"EFT_Smoke", m_rOwner.GetTransform()->GetPos() + _vec3(Engine::GetNumberBetweenMinMax(-0.35f, 0.35f), 1.f + Engine::GetNumberBetweenMinMax(-0.35f, 0.35f), Engine::GetNumberBetweenMinMax(-0.35f, 0.35f)), _vec2(0.5f, 0.5f), _vec2(0.4f, 0.4f),
+		_vec3 vPos = m_rOwner.GetTransform()->GetPos();
+		pEffect->SetPlateEffectInfo(L"EFT_Smoke", vPos + _vec3(Engine::GetNumberBetweenMinMax(-0.35f, 0.35f), 1.f + Engine::GetNumberBetweenMinMax(-0.35f, 0.35f), Engine::GetNumberBetweenMinMax(-0.35f, 0.35f)), _vec2(0.5f, 0.5f), _vec2(0.4f, 0.4f),
 			Engine::GetNumberBetweenMinMax(0.f, 2.f * D3DX_PI), 0.25f, _vec3(0.6f, 0.8f, 1.f), CPlateEffect::DESTROY_INVALID, 0.05f);
-		Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
+		m_pLayer->Add_GameObject(L"Effect", pEffect);
+
+		_int iButterflyNum = Engine::GetNumberBetweenMinMax(2, 4);
+		CButterfly* pButterfly = nullptr;
+		for (_int i = 0; i < iButterflyNum; ++i) {
+			pButterfly = CButterfly::Create(m_rOwner.GetGraphicDev());
+			pButterfly->SetButterflyInfo(vPos + _vec3(Engine::GetNumberBetweenMinMax(-0.25f, 0.25f), 1.f + Engine::GetNumberBetweenMinMax(-0.25f, 0.25f), Engine::GetNumberBetweenMinMax(-0.25f, 0.25f)),
+				Engine::GetRandomVector(), Engine::GetNumberBetweenMinMax(2.f, 2.5f), Engine::GetNumberBetweenMinMax(1.8f, 2.2f), Engine::GetNumberBetweenMinMax(0.6f, 1.f));
+			m_pLayer->Add_GameObject(L"Effect", pButterfly);
+		}
+
 		m_fTickTime -= 0.06f;
 	}
 	

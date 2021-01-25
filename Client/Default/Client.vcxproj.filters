@@ -304,6 +304,9 @@
     <Filter Include="02. Object\02. GameObject\VorpalBlade">
       <UniqueIdentifier>{c6db8869-d665-401a-a9ff-f792b5f1ea81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Butterfly">
+      <UniqueIdentifier>{227481e1-206b-4dfa-86a9-085a119774a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -741,6 +744,9 @@
     <ClInclude Include="..\Code\VorpalBlade.h">
       <Filter>02. Object\02. GameObject\VorpalBlade</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Butterfly.h">
+      <Filter>02. Object\02. GameObject\Butterfly</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1147,6 +1153,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\VorpalBlade.cpp">
       <Filter>02. Object\02. GameObject\VorpalBlade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Butterfly.cpp">
+      <Filter>02. Object\02. GameObject\Butterfly</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

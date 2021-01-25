@@ -252,6 +252,9 @@
     <ClInclude Include="..\Code\Shader_MotionBlur.hpp">
       <Filter>07. Shader\hpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Shader_Alpha.hpp">
+      <Filter>07. Shader\hpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">

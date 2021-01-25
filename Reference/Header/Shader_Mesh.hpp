@@ -145,6 +145,10 @@ technique Default_Device
 	pass Default
 	{
 		//zwriteenable = true;
+		/*alphablendenable = true;
+		blendop = add;
+		srcblend = srcalpha;
+		destblend = invsrcalpha;*/
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_MAIN();
 	}

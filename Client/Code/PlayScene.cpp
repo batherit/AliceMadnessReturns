@@ -26,6 +26,7 @@
 #include "Valve.h"
 #include "PopDomino.h"
 #include "UI_FadeInOut.h"
+#include "EffectMgr.h"
 
 #include "Attribute.h"
 
@@ -387,6 +388,10 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pUIInGame->SetPlayer(m_pPlayer);
 	pUIInGame->GetFadeInOut()->StartFadeInOut(2.f, true);
 	m_pPlayer->SetInGameUI(pUIInGame);
+
+	CEffectMgr* pEffectMgr = CEffectMgr::Create(m_pGraphicDev, Engine::GetTimer(L"Timer_FPS60"));
+	NULL_CHECK_RETURN(pEffectMgr, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"EffectMgr", pEffectMgr), E_FAIL);
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);

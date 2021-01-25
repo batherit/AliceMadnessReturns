@@ -228,6 +228,11 @@ void CLoadScene::LoadComponents()
 	NULL_CHECK_RETURN(pShader,);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Mesh", pShader),);
 
+	// Alpha
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Alpha.hpp");
+	NULL_CHECK_RETURN(pShader, );
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Alpha", pShader), );
+
 	// SkyBox
 	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_SkyBox.hpp");
 	NULL_CHECK_RETURN(pShader, );

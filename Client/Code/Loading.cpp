@@ -400,6 +400,15 @@ _uint CLoading::LoadCommonMeshes() {
 		L"Butterfly.X"),
 		E_FAIL);
 
+	// 플로팅 이펙트 생성
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"EFT_FloatingEffect",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Common/FloatingEffect/",
+		L"FloatingEffect.X"),
+		E_FAIL);
+
 	// 보팔검 생성
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

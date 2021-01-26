@@ -304,6 +304,7 @@
     </ClInclude>
     <ClInclude Include="..\Code\EffectMgr.h" />
     <ClInclude Include="..\Code\EFT_BulletAttack.h" />
+    <ClInclude Include="..\Code\EFT_FloatingEffect.h" />
     <ClInclude Include="..\Code\EFT_HobbyHorseAttack.h" />
     <ClInclude Include="..\Code\EFT_SlashAttack.h" />
     <ClInclude Include="..\Code\EFT_SmokeBomb.h" />
@@ -619,6 +620,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\EffectMgr.cpp" />
     <ClCompile Include="..\Code\EFT_BulletAttack.cpp" />
+    <ClCompile Include="..\Code\EFT_FloatingEffect.cpp" />
     <ClCompile Include="..\Code\EFT_HobbyHorseAttack.cpp" />
     <ClCompile Include="..\Code\EFT_SlashAttack.cpp" />
     <ClCompile Include="..\Code\EFT_SmokeBomb.cpp" />

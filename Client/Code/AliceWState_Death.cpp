@@ -42,10 +42,9 @@ int CAliceWState_Death::Update(const _float& _fDeltaTime)
 		for (_int i = 0; i <40; ++i) {
 			pButterfly = CButterfly::Create(m_rOwner.GetGraphicDev());
 			pButterfly->SetButterflyInfo(m_rOwner.GetTransform()->GetPos() + _vec3(Engine::GetNumberBetweenMinMax(-0.25f, 0.25f), 1.f + Engine::GetNumberBetweenMinMax(-0.25f, 0.25f), Engine::GetNumberBetweenMinMax(-0.25f, 0.25f)),
-				Engine::GetRandomVector(), Engine::GetNumberBetweenMinMax(4.6f,5.0f ), Engine::GetNumberBetweenMinMax(3.f, 4.f), Engine::GetNumberBetweenMinMax(2.f, 2.1f), Engine::GetNumberBetweenMinMax(1.f, 3.f));
+				Engine::GetRandomVector(), Engine::GetNumberBetweenMinMax(3.5f,4.0f ), Engine::GetNumberBetweenMinMax(3.f, 4.f), Engine::GetNumberBetweenMinMax(2.f, 2.1f), Engine::GetNumberBetweenMinMax(1.f, 3.f));
 			pLayer->Add_GameObject(L"Effect", pButterfly);
 		}
-
 	}
 	else {
 		// 페이드인아웃 실행

@@ -14,6 +14,7 @@ class CAliceW;
 class CAliceWState_Jump :
 	public CState<CAliceW>
 {
+#define FLOATINGEFFECT_GEN_TIME 0.5f
 public:
 	CAliceWState_Jump(CAliceW& _rOwner, _bool _bIsJumping = true);
 	virtual ~CAliceWState_Jump();
@@ -33,6 +34,7 @@ private:
 
 private:
 	void GenerateSmokeBombEffect();
+	void GenerateFloatingEffect(const _float& _fDeltaTime);
 
 private:
 	Engine::CNaviMesh* m_pNaviMesh = nullptr;
@@ -40,6 +42,7 @@ private:
 	_bool m_bIsJumping = true;
 	E_JUMP_TYPE m_eJumpType = TYPE_FORWARD;
 	E_JUMP_STEP m_eJumpStep = STEP_START;
+	_float m_fElapsedTime = 0.f;
 };
 
 END

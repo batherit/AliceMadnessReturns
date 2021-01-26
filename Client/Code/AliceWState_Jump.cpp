@@ -12,6 +12,7 @@
 #include "AliceW.h"
 #include "Map.h"
 #include "Attribute.h"
+#include "EFT_FloatingEffect.h"
 
 
 CAliceWState_Jump::CAliceWState_Jump(CAliceW & _rOwner, _bool _bIsJumping)
@@ -32,6 +33,7 @@ void CAliceWState_Jump::OnLoaded(void)
 		m_rOwner.GetPhysics()->SetVelocityY(ALICE_JUMP_SPEED);
 		m_eJumpStep = STEP_START;
 		GenerateSmokeBombEffect();
+		m_fElapsedTime = FLOATINGEFFECT_GEN_TIME;
 	}
 	else{
 		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpFwd_Fall);
@@ -133,6 +135,7 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 					++m_iJumpNum;
 					m_eJumpStep = STEP_START;
 					GenerateSmokeBombEffect();
+					m_fElapsedTime = FLOATINGEFFECT_GEN_TIME;
 
 					// TODO : 점프에 대한 물리 처리를 해주어야 합니다.
 				}
@@ -173,6 +176,7 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 				++m_iJumpNum;
 				m_eJumpStep = STEP_START;
 				GenerateSmokeBombEffect();
+				m_fElapsedTime = FLOATINGEFFECT_GEN_TIME;
 			}
 			else if (m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()) {
 				// 어떤 입력도 없다면 활강 애니메이션을 진행한다.
@@ -191,6 +195,7 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 	case STEP_FALL:
 		if (m_rOwner.IsFalling(_fDeltaTime) && m_rOwner.IsFloatingOn(_fDeltaTime)) {
 			m_rOwner.GetPhysics()->SetVelocityY(-2.f);
+			GenerateFloatingEffect(_fDeltaTime);
 		}
 		// 활강 상태에선 점프를 다시 할 수 있습니다.
 		if (m_rOwner.IsJumpOn(_fDeltaTime) && m_iJumpNum < 4) {
@@ -212,6 +217,7 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 			++m_iJumpNum;
 			m_eJumpStep = STEP_START;
 			GenerateSmokeBombEffect();
+			m_fElapsedTime = FLOATINGEFFECT_GEN_TIME;
 
 			// TODO : 점프에 대한 물리 처리를 해주어야 합니다.
 		}
@@ -255,4 +261,14 @@ void CAliceWState_Jump::GenerateSmokeBombEffect()
 	CEFT_SmokeBomb* pEffect = CEFT_SmokeBomb::Create(m_rOwner.GetGraphicDev());
 	pEffect->SetInfo(m_rOwner.GetTransform()->GetPos() + _vec3(0.f, 0.5f, 0.f), WORLD_Y_AXIS, 0.2f, 0.f, Engine::GetNumberBetweenMinMax(3, 5), 10.f, 0.4f, _vec2(0.3f, 0.3f), _vec2(0.5f, 0.5f));
 	Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
+}
+
+void CAliceWState_Jump::GenerateFloatingEffect(const _float & _fDeltaTime)
+{
+	if ((m_fElapsedTime += _fDeltaTime) >= FLOATINGEFFECT_GEN_TIME) {
+		CEFT_FloatingEffect* pEffect = CEFT_FloatingEffect::Create(m_rOwner.GetGraphicDev());
+		pEffect->SetFloatingEffectInfo(&m_rOwner);
+		Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
+		m_fElapsedTime = 0.f;
+	}
 }

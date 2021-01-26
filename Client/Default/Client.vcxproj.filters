@@ -307,6 +307,9 @@
     <Filter Include="02. Object\02. GameObject\Butterfly">
       <UniqueIdentifier>{227481e1-206b-4dfa-86a9-085a119774a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Effect\EFT_FloatingEffect">
+      <UniqueIdentifier>{db674f21-24ae-4719-99f7-84ca1c15e0ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -747,6 +750,9 @@
     <ClInclude Include="..\Code\Butterfly.h">
       <Filter>02. Object\02. GameObject\Butterfly</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\EFT_FloatingEffect.h">
+      <Filter>02. Object\02. GameObject\Effect\EFT_FloatingEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1156,6 +1162,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Butterfly.cpp">
       <Filter>02. Object\02. GameObject\Butterfly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EFT_FloatingEffect.cpp">
+      <Filter>02. Object\02. GameObject\Effect\EFT_FloatingEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

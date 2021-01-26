@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Valve.h"
 #include "AliceW.h"
+#include "PlateEffect.h"
 
 CValve::CValve(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -53,6 +54,29 @@ int CValve::Update_Object(const _float & _fDeltaTime)
 
 	m_pRenderer->Update(_fDeltaTime);
 	CGameObject::Update_Object(_fDeltaTime);
+
+	// 벨브 이펙트를 생성한다.
+	if((m_fTickTime += _fDeltaTime) >= VALVE_SMOKE_TICKTIME) {
+		if (m_pLayer) {
+			CPlateEffect* pEffect = nullptr;
+			//_int iParticleNum = Engine::GetNumberBetweenMinMax(1, 3);
+			
+			for (_int i = 0; i < 3; ++i) {
+				pEffect = CPlateEffect::Create(m_pGraphicDev);
+				pEffect->SetPlateEffectInfo(L"EFT_Smoke", GetTransform()->GetPos() + _vec3(0.f, 2.f + Engine::GetNumberBetweenMinMax(0.f, 0.5f), 0.f), _vec2(0.6f, 0.6f), _vec2(3.3f, 3.3f),
+					0.f, 0.75f, _vec3(1.f, 1.f, 1.f), CPlateEffect::DESTROY_INVALID, 0.f, 0.5f);
+				pEffect->GetPhysics()->SetVelocityY(Engine::GetNumberBetweenMinMax(14.5, 15.5f));
+				pEffect->GetPhysics()->SetVelocityXZ(_vec2(Engine::GetNumberBetweenMinMax(-2.3f, 2.3f), Engine::GetNumberBetweenMinMax(-2.3f, 2.3f)));
+
+				m_pLayer->Add_GameObject(L"Effect", pEffect);
+			}
+
+		}
+		else {
+			m_pLayer = Engine::GetLayer(L"Environment");
+		}
+		m_fTickTime = 0.f;
+	}
 
 	return 0;
 }

@@ -71,7 +71,7 @@ void CPlateEffect::Render_Object(void)
 	//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	
 	auto pEffect = m_pShader->Get_EffectHandle();
-	pEffect->SetFloat("g_fT", 1.f - m_fLifeTime / m_fMaxLifeTime);
+	pEffect->SetFloat("g_fT", Engine::GetValueByWeight(1.f - m_fLifeTime / m_fMaxLifeTime, m_fInitAlpha, 1.f));
 	pEffect->SetVector("g_vEffectColor", &m_vEffectColor);
 	m_pRenderer->Render(pEffect);
 	//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -92,7 +92,7 @@ void CPlateEffect::Free(void)
 	CGameObject::Free();
 }
 
-void CPlateEffect::SetPlateEffectInfo(const _tchar* _pTextureTag, const _vec3 & _vPos, const _vec2 & _vStartSize, const _vec2 & _vEndSize, _float _fAngleZ, _float _fLifeTime, const _vec3& _vEffectColor, E_DESTROY_TYPE _eDestroyType, _float _fActivationTime)
+void CPlateEffect::SetPlateEffectInfo(const _tchar* _pTextureTag, const _vec3 & _vPos, const _vec2 & _vStartSize, const _vec2 & _vEndSize, _float _fAngleZ, _float _fLifeTime, const _vec3& _vEffectColor, E_DESTROY_TYPE _eDestroyType, _float _fActivationTime, _float _fInitAlpha)
 {
 	// 텍스쳐 세팅
 	m_pRenderer->SetTexture(static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, _pTextureTag)));
@@ -120,6 +120,9 @@ void CPlateEffect::SetPlateEffectInfo(const _tchar* _pTextureTag, const _vec3 & 
 	// 라이프타임 세팅
 	m_fLifeTime = _fLifeTime;
 	m_fMaxLifeTime = _fLifeTime;
+
+	// 알파
+	m_fInitAlpha = _fInitAlpha;
 
 	// 이펙트 컬러 세팅
 	m_vEffectColor = _vec4(_vEffectColor.x, _vEffectColor.y, _vEffectColor.z, 1.f);

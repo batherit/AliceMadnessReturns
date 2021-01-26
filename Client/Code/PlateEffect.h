@@ -28,7 +28,7 @@ public:
 	virtual void		Free(void);
 
 public:
-	void SetPlateEffectInfo(const _tchar* _pTextureTag, const _vec3& _vPos, const _vec2& _vStartSize, const _vec2& _vEndSize, _float _fAngleZ, _float _fLifeTime, const _vec3& _vEffectColor, E_DESTROY_TYPE _eDestroyType = DESTROY_INVALID, _float _fActivationTime = 0.f);
+	void SetPlateEffectInfo(const _tchar* _pTextureTag, const _vec3& _vPos, const _vec2& _vStartSize, const _vec2& _vEndSize, _float _fAngleZ, _float _fLifeTime, const _vec3& _vEffectColor, E_DESTROY_TYPE _eDestroyType = DESTROY_INVALID, _float _fActivationTime = 0.f, _float _fInitAlpha = 0.f);
 	Engine::CPhysics* GetPhysics() const { return m_pPhysics; }
 
 private:
@@ -41,6 +41,7 @@ private:
 	_float m_fActivationTime = 0.f;
 	_float m_fMaxLifeTime;
 	_float m_fLifeTime;
+	_float m_fInitAlpha = 0.f;
 	_vec4 m_vEffectColor;
 	E_DESTROY_TYPE m_eDestroyType = DESTROY_INVALID;
 };

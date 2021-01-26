@@ -10,6 +10,7 @@ BEGIN(Client)
 class CAliceW;
 class CValve : public Engine::CGameObject
 {
+#define VALVE_SMOKE_TICKTIME 0.06f
 private: // 持失切, 社瑚切
 	explicit  CValve(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit  CValve(const  CValve& rhs);
@@ -31,11 +32,13 @@ public:
 	Engine::CStaticMesh* GetDynamicMesh() const { return m_pMesh; }
 
 private:
+	Engine::CLayer* m_pLayer = nullptr;
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CShader* m_pShader = nullptr;
 	Engine::CColliderObject* m_pCollider = nullptr;
 	_float m_fRadian = 0.f;
+	_float m_fTickTime = 0.f;
 };
 
 END

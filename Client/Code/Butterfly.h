@@ -9,7 +9,7 @@
 BEGIN(Client)
 class CButterfly : public Engine::CGameObject
 {
-#define WING_SPEED_DEGREE 1080.f * 2.f
+#define WING_SPEED_DEGREE 1080.f
 public:
 	enum E_DESTROY_TYPE { DESTROY_INVALID, DESTROY_UNACTIVATED, DESTROY_END };
 
@@ -29,7 +29,7 @@ public:
 	virtual void		Free(void);
 
 public:
-	void SetButterflyInfo(const _vec3& _vPos, const _vec3& _vDir, _float _fSpeed, _float _fSize = 1.f, _float _fLifeTime = 1.f, E_DESTROY_TYPE _eDestroyType = DESTROY_INVALID);
+	void SetButterflyInfo(const _vec3& _vPos, const _vec3& _vDir, _float _fSpeed, _float _fSize = 1.f, _float _fLifeTime = 1.f, _float _fWingSpeed = 1.f, E_DESTROY_TYPE _eDestroyType = DESTROY_INVALID);
 	Engine::CPhysics* GetPhysics() const { return m_pPhysics; }
 
 private:
@@ -43,6 +43,7 @@ private:
 	_float m_fRadian = 0.f;
 	_float m_fMaxLifeTime;
 	_float m_fLifeTime;
+	_float m_fWingSpeed = 1.f;
 	E_DESTROY_TYPE m_eDestroyType = DESTROY_INVALID;
 };
 

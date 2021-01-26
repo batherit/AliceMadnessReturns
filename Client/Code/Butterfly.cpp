@@ -61,7 +61,7 @@ _int CButterfly::Update_Object(const _float & _fDeltaTime)
 	//_vec2 vNewSize = _vec2(Engine::GetValueByWeight(fT, m_vStartSize.x, m_vEndSize.x), Engine::GetValueByWeight(fT, m_vStartSize.y, m_vEndSize.y));
 	//GetTransform()->SetScaleXYZ(vNewSize.x, vNewSize.y, 1.f);
 
-	m_fRadian += D3DXToRadian(WING_SPEED_DEGREE) * _fDeltaTime;
+	m_fRadian += D3DXToRadian(WING_SPEED_DEGREE * m_fWingSpeed) * _fDeltaTime;
 	if (m_fRadian >= 2.f * D3DX_PI) {
 		m_fRadian -= 2.f * D3DX_PI;
 	}
@@ -99,7 +99,7 @@ void CButterfly::Free(void)
 	CGameObject::Free();
 }
 
-void CButterfly::SetButterflyInfo(const _vec3 & _vPos, const _vec3 & _vDir, _float _fSpeed, _float _fSize, _float _fLifeTime, E_DESTROY_TYPE _eDestroyType)
+void CButterfly::SetButterflyInfo(const _vec3 & _vPos, const _vec3 & _vDir, _float _fSpeed, _float _fSize, _float _fLifeTime, _float _fWingSpeed, E_DESTROY_TYPE _eDestroyType)
 {
 	GetTransform()->SetPos(_vPos);
 	GetTransform()->SetScaleXYZ(_fSize, _fSize, _fSize);
@@ -107,6 +107,8 @@ void CButterfly::SetButterflyInfo(const _vec3 & _vPos, const _vec3 & _vDir, _flo
 	m_fMaxSize = _fSize;
 	GetPhysics()->SetDirection(_vDir);
 	GetPhysics()->SetSpeed(_fSpeed);
+
+	m_fWingSpeed = _fWingSpeed;
 
 	// X축을 _vDir에 맞춘다.
 	/*_vec3 vRight = GetTransform()->GetRight();

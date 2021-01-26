@@ -81,7 +81,7 @@ int CAliceWState_Dash::Update(const _float& _fDeltaTime)
 		for (_int i = 0; i < iButterflyNum; ++i) {
 			pButterfly = CButterfly::Create(m_rOwner.GetGraphicDev());
 			pButterfly->SetButterflyInfo(vPos + _vec3(Engine::GetNumberBetweenMinMax(-0.25f, 0.25f), 1.f + Engine::GetNumberBetweenMinMax(-0.25f, 0.25f), Engine::GetNumberBetweenMinMax(-0.25f, 0.25f)),
-				Engine::GetRandomVector(), Engine::GetNumberBetweenMinMax(2.f, 2.5f), Engine::GetNumberBetweenMinMax(1.8f, 2.2f), Engine::GetNumberBetweenMinMax(0.6f, 1.f));
+				Engine::GetRandomVector(), Engine::GetNumberBetweenMinMax(1.8f, 2.2f), Engine::GetNumberBetweenMinMax(1.6f, 2.0f), Engine::GetNumberBetweenMinMax(0.6f, 1.f), Engine::GetNumberBetweenMinMax(1.f, 3.f));
 			m_pLayer->Add_GameObject(L"Effect", pButterfly);
 		}
 

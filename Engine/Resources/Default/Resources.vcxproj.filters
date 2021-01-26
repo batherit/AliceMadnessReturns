@@ -49,9 +49,6 @@
     <Filter Include="00. Resources\02. Mesh\01. DynamicMesh\01. AniCtrl">
       <UniqueIdentifier>{5625bc86-48b8-4874-a0d8-69ba5c082a34}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Resources\00. VIBuffer\06. ManualCol">
-      <UniqueIdentifier>{8ea89dd2-0364-4551-95d6-6995df80562e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00. Resources\02. Mesh\02. NaviMesh">
       <UniqueIdentifier>{b1e30892-8d0e-47b5-b77c-a22bc306b900}</UniqueIdentifier>
     </Filter>
@@ -63,6 +60,12 @@
     </Filter>
     <Filter Include="00. Resources\00. VIBuffer\06. CubeCol">
       <UniqueIdentifier>{294dc0cd-1bbe-4800-a43a-ea2b4e111c7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\00. VIBuffer\07. ManualCol">
+      <UniqueIdentifier>{8ea89dd2-0364-4551-95d6-6995df80562e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\00. VIBuffer\08. Trail">
+      <UniqueIdentifier>{3f4ad708-bd84-4624-858b-b382652eb229}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,7 +118,7 @@
       <Filter>00. Resources\02. Mesh\01. DynamicMesh\00. HierarchyLoader</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\ManualCol.h">
-      <Filter>00. Resources\00. VIBuffer\06. ManualCol</Filter>
+      <Filter>00. Resources\00. VIBuffer\07. ManualCol</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Cell.h">
       <Filter>00. Resources\02. Mesh\02. NaviMesh\00. Cell</Filter>
@@ -128,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\CubeCol.h">
       <Filter>00. Resources\00. VIBuffer\06. CubeCol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Trail.h">
+      <Filter>00. Resources\00. VIBuffer\08. Trail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,7 +188,7 @@
       <Filter>00. Resources\02. Mesh\01. DynamicMesh\00. HierarchyLoader</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ManualCol.cpp">
-      <Filter>00. Resources\00. VIBuffer\06. ManualCol</Filter>
+      <Filter>00. Resources\00. VIBuffer\07. ManualCol</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Cell.cpp">
       <Filter>00. Resources\02. Mesh\02. NaviMesh\00. Cell</Filter>
@@ -195,6 +201,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CubeCol.cpp">
       <Filter>00. Resources\00. VIBuffer\06. CubeCol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Trail.cpp">
+      <Filter>00. Resources\00. VIBuffer\08. Trail</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -304,6 +304,12 @@ _uint CLoading::LoadBuffers() {
 		Engine::BUFFER_CUBETEX),
 		E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		L"Buffer_Trail",
+		Engine::BUFFER_TRAIL),
+		E_FAIL);
+
 	return S_OK;
 }
 
@@ -386,6 +392,10 @@ _uint CLoading::LoadTextures() {
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Slash", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Slash.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Dissolve", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Dissolve2.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Smoke", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Smoke0.png"), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Trail", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Trail.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Trail_BG", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Trail_BG.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Trail_Lace", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Trail_Lace.tga"), E_FAIL);
 
 	return S_OK;
 }

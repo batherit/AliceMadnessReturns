@@ -64,6 +64,9 @@ HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const
 	case BUFFER_CUBECOL:
 		pResources = CCubeCol::Create(pGraphicDev);
 		break;
+	case BUFFER_TRAIL:
+		pResources = CTrail::Create(pGraphicDev, 300);
+		break;
 	}
 	NULL_CHECK_RETURN(pResources, E_FAIL);
 	

@@ -33,6 +33,15 @@ public:
 private:
 	CAttribute* m_pAttribute = nullptr;
 	Engine::CColliderObject* m_pAttackCollider = nullptr;
+
+	Engine::CTrail* m_pTrail = nullptr;
+	Engine::CPolygonRenderer* m_pRenderer = nullptr;
+	Engine::CShader* m_pShader = nullptr;
+
+	Engine::CGameObject* m_pTop = nullptr;
+	Engine::CGameObject* m_pBottom = nullptr;
+	list<pair<_vec3, _vec3>> m_TrailVtxList;
+	_float m_fTickTime = 0.f;
 };
 
 END

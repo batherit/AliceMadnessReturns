@@ -12,6 +12,7 @@
 #include "TerrainTex.h"
 #include "CubeTex.h"
 #include "CubeCol.h"
+#include "Trail.h"
 
 #include "Texture.h"
 

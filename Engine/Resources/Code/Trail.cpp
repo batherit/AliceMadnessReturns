@@ -36,22 +36,31 @@ HRESULT Engine::CTrail::Ready_Buffer(const _ulong& dwVtxMax)
 
 void CTrail::Render_Buffer()
 {
+	if (!m_pTrailList || m_pTrailList->size() < 4) {
+		m_pTrailList = nullptr;
+		return;
+	}
+
+	Add_Vertex_CatmullRom(m_pTrailList);
+
 	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
 	m_pGraphicDev->SetFVF(m_dwFVF);
 	m_pGraphicDev->SetIndices(m_pIB);
 
 	m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwUsingVtxCnt, 0, m_dwUsingTriCnt);
+	
+	m_pTrailList = nullptr;
 }
 
-void CTrail::Render_Buffer(const list<pair<_vec3, _vec3> >* pTrailList)
-{
-	if (pTrailList->size() < 4)
-		return;
-
-	Add_Vertex_CatmullRom(pTrailList);
-
-	Render_Buffer();
-}
+//void CTrail::Render_Buffer(const list<pair<_vec3, _vec3> >* pTrailList)
+//{
+//	if (pTrailList->size() < 4)
+//		return;
+//
+//	Add_Vertex_CatmullRom(pTrailList);
+//
+//	Render_Buffer();
+//}
 
 HRESULT CTrail::Add_Vertex(const _vec3 * pTopPos, const _vec3 * pBottomPos)
 {

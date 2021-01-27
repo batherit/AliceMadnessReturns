@@ -4,6 +4,8 @@ float4x4		g_matProj;
 
 float			g_fU;
 float			g_fV;
+float			g_fGapU;
+float			g_fGapV;
 vector			g_vEffectColor;
 
 texture			g_BaseTexture;
@@ -61,7 +63,10 @@ PS_OUT		PS_MAIN(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
 
-	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+	float2 fNewUV = In.vTexUV;
+	fNewUV.x = g_fU * (1.f - In.vTexUV.x) + (g_fU + g_fGapU) * In.vTexUV.x;
+	fNewUV.y = g_fV * (1.f - In.vTexUV.y) + (g_fV + g_fGapV) * In.vTexUV.y;
+	Out.vColor = tex2D(BaseSampler, fNewUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
 	clip(Out.vColor.x + Out.vColor.y + Out.vColor.z - 0.001f);
 
 	Out.vColor = vector(Out.vColor.x * g_vEffectColor.x, Out.vColor.y * g_vEffectColor.y, Out.vColor.z * g_vEffectColor.z, 1.f);

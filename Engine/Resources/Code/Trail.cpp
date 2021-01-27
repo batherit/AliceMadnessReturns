@@ -41,7 +41,11 @@ void CTrail::Render_Buffer()
 		return;
 	}
 
-	Add_Vertex_CatmullRom(m_pTrailList);
+	//Add_Vertex_CatmullRom(m_pTrailList);
+	Clear_Vertex();
+	for (auto iter = m_pTrailList->begin(); iter != m_pTrailList->end(); ++iter) {
+		Add_Vertex(&iter->first, &iter->second);
+	}
 
 	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
 	m_pGraphicDev->SetFVF(m_dwFVF);

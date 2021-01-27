@@ -269,6 +269,11 @@ void CLoadScene::LoadComponents()
 	NULL_CHECK_RETURN(pShader, );
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Dissolve", pShader), );
 
+	// Trail
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Trail.hpp");	// RENDER_ALPHA 채널에서 유효
+	NULL_CHECK_RETURN(pShader, );
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Trail", pShader), );
+
 	// MotionBlur
 	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_MotionBlur.hpp");	// RENDER_ALPHA 채널에서 유효
 	NULL_CHECK_RETURN(pShader, );

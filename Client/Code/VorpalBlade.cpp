@@ -35,13 +35,13 @@ HRESULT CVorpalBlade::Ready_Object(void)
 
 	m_pAttribute = AddComponent<CAttribute>();
 
-	//m_pTrail = dynamic_cast<Engine::CTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
-	//m_pRenderer = AddComponent<Engine::CPolygonRenderer>();
-	//m_pRenderer->SetRenderInfo(Engine::RENDER_ALPHA, m_pTrail, static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"EFT_Trail")));
+	m_pTrail = dynamic_cast<Engine::CTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
+	m_pRenderer = AddComponent<Engine::CPolygonRenderer>();
+	m_pRenderer->SetRenderInfo(Engine::RENDER_ALPHA, m_pTrail, static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"EFT_Trail")));
 	
 	// Shader
-	//m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Alpha"));
-	//m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Trail"));
+	m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
 
 
 	return S_OK;
@@ -52,16 +52,16 @@ int CVorpalBlade::Update_Object(const _float & _fDeltaTime)
 	CStaticObject::Update_Object(_fDeltaTime);
 
 	//if () {
-	//if (m_pAttackCollider->IsActivated()) {
-	//	if (m_TrailVtxList.size() < 30) {
-	//		m_TrailVtxList.emplace_back(make_pair(m_pTop->GetTransform()->GetPos(), m_pBottom->GetTransform()->GetPos()));
-	//		
-	//	}
-	//}
-	//else {
-	//	//m_pTrail->Clear_Vertex();
-	//	m_TrailVtxList.clear();
-	//}
+	if (m_pAttackCollider->IsActivated()) {
+		if (m_TrailVtxList.size() > 13) {
+			m_TrailVtxList.pop_back();
+		}
+		m_TrailVtxList.emplace_front(make_pair(m_pTop->GetTransform()->GetPos(), m_pBottom->GetTransform()->GetPos()));
+	}
+	else {
+		//m_pTrail->Clear_Vertex();
+		m_TrailVtxList.clear();
+	}
 
 	//if ((m_fTickTime += _fDeltaTime) >= 1.f) {
 	//	m_pTrail->Clear_Vertex();
@@ -81,8 +81,8 @@ void CVorpalBlade::Render_Object(void)
 	CStaticObject::Render_Object();
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	//m_pTrail->Clear_Vertex();
-	//m_pTrail->SetTrailList(&m_TrailVtxList);
-	//m_pRenderer->Render(m_pShader->Get_EffectHandle());
+	m_pTrail->SetTrailList(&m_TrailVtxList);
+	m_pRenderer->Render(m_pShader->Get_EffectHandle());
 }
 
 void CVorpalBlade::OnCollision(Engine::CollisionInfo _tCollisionInfo)
@@ -120,6 +120,6 @@ void CVorpalBlade::Free(void)
 {
 	Engine::Safe_Release(m_pTop);
 	Engine::Safe_Release(m_pBottom);
-	//Engine::Safe_Release(m_pTrail);
+	Engine::Safe_Release(m_pTrail);
 	CStaticObject::Free();
 }

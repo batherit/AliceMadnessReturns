@@ -53,11 +53,12 @@ struct	PS_OUT
 	vector		vColor : COLOR0;
 };
 
-PS_OUT		PS_MAIN(PS_IN In)
+PS_OUT		PS_MAIN_Mask(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
 
 	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+	Out.vColor = vector(Out.vColor.x, Out.vColor.y, Out.vColor.z, Out.vColor.x);
 
 	//if(fAlpha != 0.f)
 	//	Out.vColor.a = saturate(1.f - g_fT);
@@ -68,6 +69,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 
 	return Out;
 }
+
 
 
 //PS_OUT		PS_ALPHA(PS_IN In)
@@ -81,8 +83,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 
 technique Default_Device
 {
-	// 기능의 캡슐화
-	pass Default
+	pass Mask
 	{
 	zwriteenable = false;
 
@@ -92,17 +93,18 @@ technique Default_Device
 	destblend = invsrcalpha;
 	cullmode = none;
 	vertexshader = compile vs_3_0 VS_MAIN();
-	pixelshader = compile ps_3_0 PS_MAIN();
+	pixelshader = compile ps_3_0 PS_MAIN_Mask();
 	}
 
-	//pass	AlphaTest
-	//{
-	//	alphatestenable = true;
-	//	alpharef = 0xc0;
-	//	alphafunc = greater;
-	//	cullmode = none;
-	//
-	//	vertexshader = compile vs_3_0 VS_MAIN();
-	//	pixelshader = compile ps_3_0 PS_ALPHA();
-	//}
+
+		//pass	AlphaTest
+		//{
+		//	alphatestenable = true;
+		//	alpharef = 0xc0;
+		//	alphafunc = greater;
+		//	cullmode = none;
+		//
+		//	vertexshader = compile vs_3_0 VS_MAIN();
+		//	pixelshader = compile ps_3_0 PS_ALPHA();
+		//}
 };

@@ -337,37 +337,37 @@ void CGameObject::ReleaseChild(CGameObject * _pChild)
 	_pChild->GetTransform()->SetParentBoneMatrix(nullptr);
 }
 
-//CColliderObject * CGameObject::ExtractColliderFromList(const _tchar * _pColliderTag)
-//{
-//	if (!_pColliderTag)
-//		return nullptr;
-//		
-//	_int iSize = m_vecColliders.size()
-//	for(_int i = 0; i < )
-//	for (auto& rPair : m_vecColliders) {
-//		auto find_iter = find_if(rPair.second.begin(), rPair.second.end(), [_pColliderTag](CColliderObject* _pCollider) {
-//			return lstrcmp(_pCollider->GetColliderTag(), _pColliderTag) == 0;
-//		});
-//		if (find_iter == rPair.second.end())
-//			continue; // 찾지 못했다면 다음 뼈에서 찾아봅니다.
-//		
-//		// 본래 콜라이더 리스트에서 제거
-//		CColliderObject* pCollider = *find_iter;
-//		rPair.second.erase(find_iter);		
-//
-//		// 최적 콜라이더 리스트에서 제거
-//		for (auto iter = m_vecOptimizedColliders.begin(); iter != m_vecOptimizedColliders.end(); ++iter) {
-//			if (lstrcmp((*iter)->GetColliderTag(), _pColliderTag) == 0) {
-//				m_vecOptimizedColliders.erase(iter);
-//				break;
-//			}
-//		}
-//
-//		//return pCollider;
-//		return nullptr;
-//	}
-//	return nullptr;
-//}
+CColliderObject * CGameObject::ExtractColliderFromTag(const _tchar * _pColliderTag)
+{
+	if (!_pColliderTag)
+		return nullptr;
+
+	//_int iSize = m_vecColliders.size()
+	//for(_int i = 0; i < )
+	for (auto& rPair : m_vecColliders) {
+		auto find_iter = find_if(rPair.second.begin(), rPair.second.end(), [_pColliderTag](CColliderObject* _pCollider) {
+			//ramda
+			return lstrcmp(_pCollider->GetColliderTag(), _pColliderTag) == 0;
+		});
+		if (find_iter == rPair.second.end())
+			continue; // 찾지 못했다면 다음 뼈에서 찾아봅니다.
+
+		// 본래 콜라이더 리스트에서 제거
+		CColliderObject* pCollider = *find_iter;
+		rPair.second.erase(find_iter);
+
+		// 최적 콜라이더 리스트에서 제거
+		for (auto iter = m_vecOptimizedColliders.begin(); iter != m_vecOptimizedColliders.end(); ++iter) {
+			if (lstrcmp((*iter)->GetColliderTag(), _pColliderTag) == 0) {
+				m_vecOptimizedColliders.erase(iter);
+				break;
+			}
+		}
+
+		return pCollider;
+	}
+	return nullptr;
+}
 
 void CGameObject::ClearColliders()
 {

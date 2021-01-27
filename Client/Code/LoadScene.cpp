@@ -9,6 +9,7 @@
 #include "UI_Image.h"
 #include "Attribute.h"
 #include "Route.h"
+#include "AnimUV.h"
 
 
 CLoadScene::CLoadScene(LPDIRECT3DDEVICE9 m_pGraphicDev)
@@ -44,8 +45,8 @@ Engine::_int CLoadScene::Update(const _float& fTimeDelta)
 		{
 			//Engine::CManagement::GetInstance()->SetNextScene(CTitleScene::Create(m_pGraphicDev));
 			//Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
-			Engine::CManagement::GetInstance()->SetNextScene(CPlay2Scene::Create(m_pGraphicDev));
-			//Engine::CManagement::GetInstance()->SetNextScene(CBossScene::Create(m_pGraphicDev));
+			//Engine::CManagement::GetInstance()->SetNextScene(CPlay2Scene::Create(m_pGraphicDev));
+			Engine::CManagement::GetInstance()->SetNextScene(CBossScene::Create(m_pGraphicDev));
 			//Engine::CManagement::GetInstance()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
 
 			return iExit;
@@ -148,6 +149,11 @@ void CLoadScene::LoadComponents()
 	NULL_CHECK_RETURN(pComponent, );
 	Engine::Ready_Proto(CRoute::GetComponentTag(), pComponent);
 
+	// AnimUV
+	pComponent = CAnimUV::Create();
+	NULL_CHECK_RETURN(pComponent, );
+	Engine::Ready_Proto(CAnimUV::GetComponentTag(), pComponent);
+
 	// RenderTarget _Deffered
 	D3DVIEWPORT9		ViewPort;
 	m_pGraphicDev->GetViewport(&ViewPort);
@@ -232,6 +238,11 @@ void CLoadScene::LoadComponents()
 	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Alpha.hpp");
 	NULL_CHECK_RETURN(pShader, );
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Alpha", pShader), );
+
+	// Anim
+	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_Anim.hpp");
+	NULL_CHECK_RETURN(pShader, );
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Anim", pShader), );
 
 	// SkyBox
 	pShader = Engine::CShader::Create(m_pGraphicDev, L"../../Engine/Utility/Code/Shader_SkyBox.hpp");

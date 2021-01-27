@@ -141,6 +141,7 @@
     <ClInclude Include="..\Code\Shader.h" />
     <ClInclude Include="..\Code\Shader_Alpha.hpp" />
     <ClInclude Include="..\Code\Shader_Blend.hpp" />
+    <ClInclude Include="..\Code\Shader_Anim.hpp" />
     <ClInclude Include="..\Code\Shader_Dissolve.hpp" />
     <ClInclude Include="..\Code\Shader_Mesh.hpp" />
     <ClInclude Include="..\Code\Shader_MotionBlur.hpp" />

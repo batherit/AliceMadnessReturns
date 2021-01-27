@@ -40,7 +40,7 @@ Engine::CComponent* CAttribute::Clone(void) {
 }
 
 void CAttribute::Free(void) {
-
+	m_AttackerList.clear();
 }
 
 _bool CAttribute::RegisterAttacker(Engine::CGameObject * _pAttacker)

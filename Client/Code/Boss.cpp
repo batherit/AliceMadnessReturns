@@ -8,6 +8,7 @@
 #include "EFT_HobbyHorseAttack.h"
 #include "EFT_SlashAttack.h"
 #include "EFT_BulletAttack.h"
+#include "EFT_Blood.h"
 
 CBoss::CBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -181,6 +182,26 @@ void CBoss::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		_int a = 10;
 	}
 	else {
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
+			if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
+				// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
+				//_tCollisionInfo.pCollidedObject->GetComponent<CAttribute>()->Damaged(/*VORPALBLADE_DAMAGE*/0);
+
+				CEFT_Blood* pEffect = nullptr;
+				//	_int iBloodNum = Engine::GetNumberBetweenMinMax(10, 10);
+				_float fBloodSize = 1.f;
+				for (_int i = 0; i < 4; ++i) {
+					fBloodSize = Engine::GetNumberBetweenMinMax(0.1f, 0.45f);
+					pEffect = CEFT_Blood::Create(m_pGraphicDev);
+					pEffect->SetBloodInfo(
+						(_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos() + _tCollisionInfo.pCollidedMyCollider->GetTransform()->GetPos()) * 0.5f
+						+ _vec3(Engine::GetNumberBetweenMinMax(-0.3f, 0.3f), Engine::GetNumberBetweenMinMax(-0.3f, 0.3f), Engine::GetNumberBetweenMinMax(-0.2f, 0.2f)),
+						_vec3(fBloodSize, fBloodSize, 1.f));
+					Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
+				}
+			}
+		}
+
 		//if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
 		//	if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
 		//		// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
@@ -207,10 +228,10 @@ void CBoss::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)
 		_int a = 10;
 	}
 	else {
-		//if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
-		//	// 충돌하지 않았다면 어태커에서 제거한다.
-		//	m_pAttribute->ReleaseAttacker(_tCollisionInfo.pCollidedCollider);
-		//}
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
+			// 충돌하지 않았다면 어태커에서 제거한다.
+			m_pAttribute->ReleaseAttacker(_tCollisionInfo.pCollidedCollider);
+		}
 	}
 }
 

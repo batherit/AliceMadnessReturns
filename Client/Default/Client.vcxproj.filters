@@ -310,6 +310,12 @@
     <Filter Include="02. Object\02. GameObject\Effect\EFT_FloatingEffect">
       <UniqueIdentifier>{db674f21-24ae-4719-99f7-84ca1c15e0ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Effect\EFT_Blood">
+      <UniqueIdentifier>{bb7a93a5-d639-484b-8749-26972d7879ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\AnimUV">
+      <UniqueIdentifier>{d3d9f050-ee13-4462-91d1-c8a7d19b2677}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -753,6 +759,12 @@
     <ClInclude Include="..\Code\EFT_FloatingEffect.h">
       <Filter>02. Object\02. GameObject\Effect\EFT_FloatingEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\EFT_Blood.h">
+      <Filter>02. Object\02. GameObject\Effect\EFT_Blood</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\AnimUV.h">
+      <Filter>04. Component\AnimUV</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1165,6 +1177,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\EFT_FloatingEffect.cpp">
       <Filter>02. Object\02. GameObject\Effect\EFT_FloatingEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EFT_Blood.cpp">
+      <Filter>02. Object\02. GameObject\Effect\EFT_Blood</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AnimUV.cpp">
+      <Filter>04. Component\AnimUV</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

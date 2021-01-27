@@ -11,9 +11,10 @@ namespace Client{
 
 	typedef struct _anim_info {
 	public:
-		_anim_info(int _iAnimIndex = 0, int _iCol = 1, int _iStartFrameIndex = 0, int _iFrameCount = 0, float _fTotalTime = 0.f, int _iCountToRepeat = 0, bool _bIsReversePlay = false) :
+		_anim_info(_int _iAnimIndex = 0, _int _iCol = 1, _int _iRow = 1, _int _iStartFrameIndex = 0, _int _iFrameCount = 0, _float _fTotalTime = 0.f, _int _iCountToRepeat = 0, _bool _bIsReversePlay = false) :
 			iAnimIndex(_iAnimIndex),
 			iCol(_iCol),
+			iRow(_iRow),
 			iStartFrameIndex(_iStartFrameIndex),
 			iFrameCount(_iFrameCount),
 			fTotalTime(_fTotalTime),
@@ -22,20 +23,21 @@ namespace Client{
 		{}
 
 	public:
-		int iAnimIndex = 0;				// 실행할 애님 인덱스
-		int iCol = 1;					// 애님 아틀라스 이미지에서 열의 수 (실행할 프레임의 행과 열을 구하는데 쓰임.)
-		int iStartFrameIndex = 0;		// 애니메이션 시작 인덱스
-		int iFrameCount = 1;			// 시작 인덱스에서부터 출력할 총 컷수
-		float fTotalTime = 0.f;			// 애님 총 진행시간
-		int iCountToRepeat = 0;			// 애님 반복 횟수 (0 - 무한)
-		bool bIsReversePlay = false;	// 거꾸로 재생할 것인지?
+		_int iAnimIndex = 0;				// 실행할 애님 인덱스
+		_int iCol = 1;					// 애님 아틀라스 이미지에서 열의 수
+		_int iRow = 1;					// 애님 아틀라스 이미지에서 행의 수 
+		_int iStartFrameIndex = 0;		// 애니메이션 시작 인덱스
+		_int iFrameCount = 1;			// 시작 인덱스에서부터 출력할 총 컷수
+		_float fTotalTime = 0.f;			// 애님 총 진행시간
+		_int iCountToRepeat = 0;			// 애님 반복 횟수 (0 - 무한)
+		_bool bIsReversePlay = false;	// 거꾸로 재생할 것인지?
 	}AnimInfo;
 
 	// 애님 재생 처리 구조체
 	typedef struct _anim_processing_info {
-		float fAnimElapsedTime = 0.f;
-		int iCurrentIndex = 0;
-		int iRepeatedCount = 0;
+		_float fAnimElapsedTime = 0.f;
+		_int iCurrentIndex = 0;
+		_int iRepeatedCount = 0;
 	}AnimProcessingInfo;
 
 	// 라우팅 인포

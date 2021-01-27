@@ -63,7 +63,7 @@ public:
 	_bool IsColliderExist(CColliderObject* _pCollider);
 	void ReleaseParent();
 	void ReleaseChild(CGameObject* _pChild);
-	//CColliderObject* ExtractColliderFromList(const _tchar* _pColliderTag);	// 부모 자식은 유지하지만 콜라이더 리스트에서 제거함. => 제거시 수동 제거해야 함.
+	CColliderObject* ExtractColliderFromTag(const _tchar* _pColliderTag);	// 부모 자식은 유지하지만 콜라이더 리스트에서 제거함. => 제거시 수동 제거해야 함.
 	void ClearColliders();
 	//void ReleaseCollider(CColliderObject* _pCollider);
 

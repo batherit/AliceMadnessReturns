@@ -12,7 +12,7 @@ CCameraController_Target::CCameraController_Target(LPDIRECT3DDEVICE9 pGraphicDev
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	SetStickDir(vDir);
-	SetStickLen(5.2f);
+	SetStickLen(6.2f);
 
 
 }
@@ -42,18 +42,25 @@ void CCameraController_Target::ControlCamera(const _float& _fDeltaTime, Engine::
 
 		vToPlayer /= fLength;	// Normalize;
 
-		_vec3 vStickDirXZ = m_vStickDir;
-		vStickDirXZ.y = 0.f;
-		D3DXVec3Normalize(&vStickDirXZ, &vStickDirXZ);
-		_vec3 vRotAxis = Engine::GetRotationAxis(vStickDirXZ, vToPlayer);
-		_float fRotAngle = Engine::GetRotationAngle(vStickDirXZ, vToPlayer);
-		_matrix matRot;
-		D3DXMatrixRotationAxis(&matRot, &vRotAxis, fRotAngle * 0.2f);
-		D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
+		//_vec3 vStickDirXZ = m_vStickDir;
+		//vStickDirXZ.y = 0.f;
+		//D3DXVec3Normalize(&vStickDirXZ, &vStickDirXZ);
+		//_vec3 vRotAxis = Engine::GetRotationAxis(vStickDirXZ, vToPlayer);
+		//_float fRotAngle = Engine::GetRotationAngle(vStickDirXZ, vToPlayer);
+		//_matrix matRot;
+		//D3DXMatrixRotationAxis(&matRot, &vRotAxis, fRotAngle * 0.2f);
+		//D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
+
+		m_fStickLen = Engine::GetValueByWeight(Engine::Clamp(D3DXVec3Dot(&WORLD_Y_AXIS, &m_vStickDir), 0.f, 1.f), 4.0f, 11.5f);
 
 		if (Engine::CDirectInputMgr::GetInstance()->IsMouseFixed()) {
 			_vec3 vDeltaMouseDegree = Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree();
+			_float fRotAngleByY = vDeltaMouseDegree.x * 0.005f;
 			_float fRotAngleByRight = vDeltaMouseDegree.y * 0.005f;
+			
+			_matrix matRot;
+			D3DXMatrixRotationAxis(&matRot, &WORLD_Y_AXIS, fRotAngleByY);
+			D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
 			D3DXMatrixRotationAxis(&matRot, &GetRightAxis(), fRotAngleByRight);
 			D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
 		}
@@ -65,7 +72,7 @@ void CCameraController_Target::ControlCamera(const _float& _fDeltaTime, Engine::
 		// 카메라 위치를 조정한다.
 		TranslateCameraToStickEnd(_pCamera, _fShiftFactor);
 
-		RotateCameraToTargetPoint(_pCamera, pAliceW->GetTargetObject()->GetTransform()->GetPos(), _fShiftFactor);
+		RotateCameraToTargetPoint(_pCamera, (pAliceW->GetTargetObject()->GetTransform()->GetPos() + vPlayerPos) * 0.5f + _vec3(0.f, 2.f, 0.f), _fShiftFactor);
 	}
 }
 

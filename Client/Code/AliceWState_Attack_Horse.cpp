@@ -32,7 +32,7 @@ void CAliceWState_Attack_Horse::OnLoaded(void)
 
 	//m_pWeaponCollider = m_rOwner.GetWeapon()->GetColliderFromTag(L"PlayerAttack");
 	//m_pWeaponCollider->SetActivated(true);
-	m_rOwner.GetAttackCollider()->SetActivated(true);
+	m_rOwner.GetAttackCollider()->SetActivated(false);
 }
 
 int CAliceWState_Attack_Horse::Update(const _float& _fDeltaTime)
@@ -62,6 +62,28 @@ int CAliceWState_Attack_Horse::Update(const _float& _fDeltaTime)
 	_vec3 vDir;
 	if (m_bIsAttacking) {
 		// 공격 모션이 진행되고 있는 상태에서,,,
+		if (m_iAttackNum == 2) {
+			_float fProgress = m_rOwner.GetDynamicMesh()->GetAnimationProgress();
+			if (fProgress <= 0.2f) {
+				m_rOwner.GetAttackCollider()->SetActivated(true);
+			}
+			else if (fProgress <= 0.4f) {
+				m_rOwner.GetAttackCollider()->SetActivated(false);
+			}
+			else if (fProgress <= 0.8f) {
+				m_rOwner.GetAttackCollider()->SetActivated(true);
+			}
+			else {
+				m_rOwner.GetAttackCollider()->SetActivated(false);
+			}
+		}
+		else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= m_fEndTime[m_iAttackNum]) {
+			m_rOwner.GetAttackCollider()->SetActivated(false);
+		}
+		else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= m_fStartTime[m_iAttackNum]) {
+			m_rOwner.GetAttackCollider()->SetActivated(true);
+		}
+		
 
 		if (m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()) {
 			// 공격이 종료되었으면, 종료 모션 애니메이션을 돌린다.
@@ -81,32 +103,33 @@ int CAliceWState_Attack_Horse::Update(const _float& _fDeltaTime)
 				break;
 			}
 			m_bIsAttacking = false;
+			m_rOwner.GetAttackCollider()->SetActivated(false);
 		}
-		else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= m_fEntryTime[m_iAttackNum]) {
+		else if (m_iAttackNum < 4 && m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= m_fEntryTime[m_iAttackNum]) {
 			// 입력 가능 상태(공격 애니메이션이 70퍼센트 진행됐을때)가 됐을때,
 			// 공격에 대한 입력을 살피고 새로운 공격 입력이 들어왔으면 다음 공격을 실행한다.
 			if (m_rOwner.IsAttackOn(_fDeltaTime)) {
-				if (m_iAttackNum < 4) {
-					switch (m_iAttackNum)
-					{
-					case 1:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_2_A);
-						m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 2.f);
-						m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
-						break;
-					case 2:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_3_A);
-						m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 2.f);
-						m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
-						break;
-					case 3:
-						m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_4_A);
-						m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 3.f);
-						m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
-						break;
-					}
-					++m_iAttackNum;
+				switch (m_iAttackNum)
+				{
+				case 1:
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_2_A);
+					m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 1.f);
+					m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
+					break;
+				case 2:
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_3_A);
+					m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 1.f);
+					m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
+					break;
+				case 3:
+					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_4_A);
+					m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 1.f);
+					m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
+					break;
 				}
+				++m_iAttackNum;
+				m_rOwner.GetAttackCollider()->SetActivated(false);
+				//m_rOwner.GetAttackCollider()->SetActivated(true);
 			}
 			else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.6f && m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
 				_vec2 vDirXZ = _vec2(vDir.x, vDir.z);

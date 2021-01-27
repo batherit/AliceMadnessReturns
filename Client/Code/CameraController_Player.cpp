@@ -12,7 +12,7 @@ CCameraController_Player::CCameraController_Player(LPDIRECT3DDEVICE9 pGraphicDev
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	SetStickDir(vDir);
-	SetStickLen(4.5f);
+	SetStickLen(5.5f);
 
 	
 }
@@ -55,7 +55,7 @@ void CCameraController_Player::ControlCamera(const _float& _fDeltaTime, Engine::
 	// 카메라 위치를 조정한다.
 	TranslateCameraToStickEnd(_pCamera, _fShiftFactor);
 
-	RotateCameraToTargetPoint(_pCamera, vPlayerPos + _vec3(0.f, 1.f * fRatio, 0.f), _fShiftFactor);
+	RotateCameraToTargetPoint(_pCamera, vPlayerPos + _vec3(0.f, 1.4f * fRatio, 0.f), _fShiftFactor);
 }
 
 CCameraController_Player * CCameraController_Player::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -25,7 +25,10 @@ public:
 	virtual void Free(void) override;
 
 private:
-	const _float m_fEntryTime[4] = { 0.f, 0.4f, 0.7f, 0.6f };
+	const _float m_fEntryTime[5] = { 0.f, 0.4f, 0.7f, 0.6f };
+	const _float m_fStartTime[5] = { 0.1f, 0.5f, 0.4f, 0.4f, 0.4f };
+	const _float m_fEndTime[5] = { 0.f, 0.8f, 0.7f, 0.8f, 0.8f };
+
 	_int m_iAttackNum = 0;
 	_bool m_bIsAttacking = true;
 	Engine::CGameObject* m_pWeaponCollider = nullptr;

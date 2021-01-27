@@ -27,7 +27,7 @@ HRESULT CUI_Targeting::Ready_Object(void)
 		dynamic_cast<Engine::CVIBuffer*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"Buffer_RcTex")),
 		static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"UI_Targeting")));
 	GetTransform()->SetScaleXYZ(0.3f, 0.3f, 1.f);
-	m_fOffsetY = 1.5f;
+	m_fOffsetY = 3.5f;
 	return S_OK;
 }
 

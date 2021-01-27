@@ -37,7 +37,7 @@ HRESULT CVorpalBlade::Ready_Object(void)
 
 	m_pTrail = dynamic_cast<Engine::CTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
 	m_pRenderer = AddComponent<Engine::CPolygonRenderer>();
-	m_pRenderer->SetRenderInfo(Engine::RENDER_ALPHA, m_pTrail, static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"EFT_Trail")));
+	m_pRenderer->SetRenderInfo(Engine::RENDER_ALPHA, m_pTrail, static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"EFT_Trail_BG")));
 	
 	// Shader
 	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Trail"));
@@ -53,7 +53,7 @@ int CVorpalBlade::Update_Object(const _float & _fDeltaTime)
 
 	//if () {
 	if (m_pAttackCollider->IsActivated()) {
-		if (m_TrailVtxList.size() > 13) {
+		if (m_TrailVtxList.size() > 11) {
 			m_TrailVtxList.pop_back();
 		}
 		m_TrailVtxList.emplace_front(make_pair(m_pTop->GetTransform()->GetPos(), m_pBottom->GetTransform()->GetPos()));

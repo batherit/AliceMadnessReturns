@@ -58,7 +58,7 @@ PS_OUT		PS_MAIN_Mask(PS_IN In)
 	PS_OUT		Out = (PS_OUT)0;
 
 	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
-	Out.vColor = vector(Out.vColor.x * 0.6f, Out.vColor.y * 0.6f, Out.vColor.z * 1.f, Out.vColor.x);
+	Out.vColor = vector(Out.vColor.x * 0.7f, Out.vColor.y * 0.7f, Out.vColor.z * 1.f, Out.vColor.x);
 
 
 	//if(fAlpha != 0.f)

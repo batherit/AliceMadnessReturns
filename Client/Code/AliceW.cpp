@@ -592,7 +592,7 @@ void CAliceW::ToggleLockOn()
 		if (m_pTargetObject) {
 			m_bIsLockOn = true;	// 타겟을 찾았다면 락온을 활성화한다.
 			Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
-			pCameraMgr->ChangeCameraController(2, 0.1f);
+			pCameraMgr->ChangeCameraController(2, 0.2f);
 		}
 			
 	}

@@ -148,7 +148,8 @@ technique Default_Device
 		/*alphablendenable = true;
 		blendop = add;
 		srcblend = srcalpha;
-		destblend = invsrcalpha;*/
+		destblend = invsrcalpha;
+		cullmode = true;*/
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_MAIN();
 	}

@@ -47,7 +47,7 @@ int CBossState_Idle::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
-	/*_vec3 vToTargetDir = m_rOwner.GetTargetObject()->GetTransform()->GetPos() - m_rOwner.GetTransform()->GetPos();
+	_vec3 vToTargetDir = m_rOwner.GetTargetObject()->GetTransform()->GetPos() - m_rOwner.GetTransform()->GetPos();
 	_float fLength = D3DXVec3Length(&vToTargetDir);
 
 	if (fLength <= BOSS_COGNITIVE_RANGE) {
@@ -62,7 +62,7 @@ int CBossState_Idle::Update(const _float& _fDeltaTime)
 		_vec3 vRotAxis = Engine::GetRotationAxis(vLook, vToTargetDirXZ);
 		_float fRotAngle = Engine::GetRotationAngle(vLook, vToTargetDirXZ);
 		m_rOwner.GetTransform()->RotateByAxis(fRotAngle * 0.1f, vRotAxis);
-	}*/
+	}
 
 	return 0;
 }

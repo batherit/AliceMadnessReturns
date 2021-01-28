@@ -42,6 +42,8 @@ void CCameraController_Target::ControlCamera(const _float& _fDeltaTime, Engine::
 
 		vToPlayer /= fLength;	// Normalize;
 
+		//GetTransform()->SetPos((pAliceW->GetTargetObject()->GetTransform()->GetPos() + vPlayerPos) * 0.5f);
+
 		//_vec3 vStickDirXZ = m_vStickDir;
 		//vStickDirXZ.y = 0.f;
 		//D3DXVec3Normalize(&vStickDirXZ, &vStickDirXZ);
@@ -51,7 +53,8 @@ void CCameraController_Target::ControlCamera(const _float& _fDeltaTime, Engine::
 		//D3DXMatrixRotationAxis(&matRot, &vRotAxis, fRotAngle * 0.2f);
 		//D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
 
-		m_fStickLen = Engine::GetValueByWeight(Engine::Clamp(D3DXVec3Dot(&WORLD_Y_AXIS, &m_vStickDir), 0.f, 1.f), 4.0f, 11.5f);
+		m_fStickLen = Engine::GetValueByWeight(Engine::Clamp(D3DXVec3Dot(&WORLD_Y_AXIS, &m_vStickDir), 0.f, 1.f), 4.0f, 10.f);
+		m_fStickLen *= Engine::GetValueByWeight(Engine::GetWeightByValue(Engine::Clamp(fLength, 1.5f, 10.f), 1.f, 10.f), 0.8f, 1.5f);
 
 		if (Engine::CDirectInputMgr::GetInstance()->IsMouseFixed()) {
 			_vec3 vDeltaMouseDegree = Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree();
@@ -72,7 +75,7 @@ void CCameraController_Target::ControlCamera(const _float& _fDeltaTime, Engine::
 		// 카메라 위치를 조정한다.
 		TranslateCameraToStickEnd(_pCamera, _fShiftFactor);
 
-		RotateCameraToTargetPoint(_pCamera, (pAliceW->GetTargetObject()->GetTransform()->GetPos() + vPlayerPos) * 0.5f + _vec3(0.f, 2.f, 0.f), _fShiftFactor);
+		RotateCameraToTargetPoint(_pCamera, (pAliceW->GetTargetObject()->GetTransform()->GetPos() + vPlayerPos) * 0.5f + _vec3(0.f, 1.5f, 0.f), _fShiftFactor);
 	}
 }
 

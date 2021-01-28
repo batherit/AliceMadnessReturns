@@ -10,6 +10,7 @@
 #include "Boss.h"
 #include "Map.h"
 #include "Attribute.h"
+#include "SplashAttack.h"
 //#include "CameraMgr.h"
 
 
@@ -90,6 +91,10 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 						// TODO : Ä«¸Þ¶ó Èçµê ÀÌÆåÆ®
 						Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 						pCameraMgr->GetCamera()->Shake(0.8f, 0.45f, 55);
+						CSplashAttack* pSplashAttack = CSplashAttack::Create(m_rOwner.GetGraphicDev());
+						pSplashAttack->SetSplashAttackInfo(L"Monster", L"Player",
+							m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, WORLD_X_AXIS, 180.f);
+						Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
 						m_bIsAttackEnd = true;
 					}
 				}

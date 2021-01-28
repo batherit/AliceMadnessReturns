@@ -316,6 +316,9 @@
     <Filter Include="04. Component\AnimUV">
       <UniqueIdentifier>{d3d9f050-ee13-4462-91d1-c8a7d19b2677}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\SplashAttack">
+      <UniqueIdentifier>{625c35f1-457c-4de3-beed-5e41bacc4fa4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -765,6 +768,9 @@
     <ClInclude Include="..\Code\AnimUV.h">
       <Filter>04. Component\AnimUV</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\SplashAttack.h">
+      <Filter>02. Object\02. GameObject\SplashAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1183,6 +1189,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\AnimUV.cpp">
       <Filter>04. Component\AnimUV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SplashAttack.cpp">
+      <Filter>02. Object\02. GameObject\SplashAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

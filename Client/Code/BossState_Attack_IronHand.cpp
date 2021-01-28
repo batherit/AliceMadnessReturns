@@ -12,6 +12,7 @@
 #include "Map.h"
 #include "Attribute.h"
 #include "IronHand.h"
+#include "SplashAttack.h"
 
 
 CBossState_Attack_IronHand::CBossState_Attack_IronHand(CBoss & _rOwner)
@@ -57,6 +58,14 @@ int CBossState_Attack_IronHand::Update(const _float& _fDeltaTime)
 	}
 	else if (/*!m_bIsAttack && */m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.5f) {
 		// TODO : 주먹 공격을 생성합니다.
+		if (!m_bIsEffectOn) {
+			CSplashAttack* pSplashAttack = CSplashAttack::Create(m_rOwner.GetGraphicDev());
+			pSplashAttack->SetSplashAttackInfo(L"Monster", L"Player",
+				m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, WORLD_X_AXIS, 180.f);
+			Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
+
+			m_bIsEffectOn = true;
+		}
 
 		if (m_iAttackCount < 5 && (m_fTickTime += _fDeltaTime) >= 0.3f) {
 			//Engine::GetTimer(L"Timer_FPS60")->RunToPause();

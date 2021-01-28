@@ -23,6 +23,10 @@ public:
 
 	// CState을(를) 통해 상속됨
 	virtual void Free(void) override;
+
+private:
+	_int m_iAttackIndex = 0;
+	_bool m_bIsEffectOn = false;
 };
 
 END

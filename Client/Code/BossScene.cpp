@@ -414,10 +414,10 @@ HRESULT CBossScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pSkyBox->GetComponent<Engine::CPolygonRenderer>()->SetTextureIndex(0);
 
 	// 테스트 나비 생성
-	CButterfly* pButterfly = CButterfly::Create(m_pGraphicDev);
+	/*CButterfly* pButterfly = CButterfly::Create(m_pGraphicDev);
 	pButterfly->SetButterflyInfo(_vec3(0.f, 2.f, 0.f), WORLD_X_AXIS, 0.5f, 1.f, 100.f);
 	NULL_CHECK_RETURN(pButterfly, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pButterfly), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pButterfly), E_FAIL);*/
 
 	return S_OK;
 }

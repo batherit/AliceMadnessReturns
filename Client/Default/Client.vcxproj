@@ -374,6 +374,10 @@
     <ClInclude Include="..\Code\Play2Scene.h" />
     <ClInclude Include="..\Code\PoolScene.h" />
     <ClInclude Include="..\Code\Route.h" />
+    <ClInclude Include="..\Code\SplashAttack.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\UI_Cursor.h" />
     <ClInclude Include="..\Code\UI_LockedWeapon.h" />
     <ClInclude Include="..\Code\PopDomino.h" />
@@ -698,6 +702,10 @@
     <ClCompile Include="..\Code\Play2Scene.cpp" />
     <ClCompile Include="..\Code\PoolScene.cpp" />
     <ClCompile Include="..\Code\Route.cpp" />
+    <ClCompile Include="..\Code\SplashAttack.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\UI_Cursor.cpp" />
     <ClCompile Include="..\Code\UI_LockedWeapon.cpp" />
     <ClCompile Include="..\Code\PopDomino.cpp" />

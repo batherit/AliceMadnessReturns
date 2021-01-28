@@ -12,6 +12,7 @@
 #include "Boss.h"
 #include "Map.h"
 #include "Attribute.h"
+#include "SplashAttack.h"
 
 
 CBossState_Attack_SideCut::CBossState_Attack_SideCut(CBoss & _rOwner)
@@ -26,7 +27,7 @@ CBossState_Attack_SideCut::~CBossState_Attack_SideCut()
 
 void CBossState_Attack_SideCut::OnLoaded(void)
 {
-	switch (rand() % 3) {
+	switch (m_iAttackIndex = rand() % 3) {
 	case 0:
 		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::Executioner_Attack01);
 		break;
@@ -51,7 +52,8 @@ int CBossState_Attack_SideCut::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
-	if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.95f) {
+	_float fProgress = m_rOwner.GetDynamicMesh()->GetAnimationProgress();
+	if (fProgress >= 0.95f) {
 		switch (Engine::GetNumberBetweenMinMax(0, 3)) {
 		case 0:
 			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Idle(m_rOwner));
@@ -68,6 +70,40 @@ int CBossState_Attack_SideCut::Update(const _float& _fDeltaTime)
 		}
 		
 		return 0;
+	}
+	else if (!m_bIsEffectOn) {
+		switch (m_iAttackIndex)
+		{
+		case 0:
+			if (fProgress >= 0.4f) {
+				CSplashAttack* pSplashAttack = CSplashAttack::Create(m_rOwner.GetGraphicDev());
+				pSplashAttack->SetSplashAttackInfo(L"Monster", L"Player",
+					m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, m_rOwner.GetTransform()->GetLook(), 60.f);
+				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
+				m_bIsEffectOn = true;
+			}
+			break;
+		case 1:
+			if (fProgress >= 0.4f) {
+				CSplashAttack* pSplashAttack = CSplashAttack::Create(m_rOwner.GetGraphicDev());
+				pSplashAttack->SetSplashAttackInfo(L"Monster", L"Player",
+					m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, m_rOwner.GetTransform()->GetLook(), 60.f);
+				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
+				m_bIsEffectOn = true;
+			}
+			break;
+		case 2:
+			if (fProgress >= 0.5f) {
+				CSplashAttack* pSplashAttack = CSplashAttack::Create(m_rOwner.GetGraphicDev());
+				pSplashAttack->SetSplashAttackInfo(L"Monster", L"Player",
+					m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, m_rOwner.GetTransform()->GetLook(), 60.f);
+				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
+				m_bIsEffectOn = true;
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
 	return 0;

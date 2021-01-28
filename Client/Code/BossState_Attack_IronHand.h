@@ -28,6 +28,7 @@ private:
 	_bool m_bIsAttack = false;
 	_float m_fTickTime = 0.f;
 	_int m_iAttackCount = 0;
+	_bool m_bIsEffectOn = false;
 };
 
 END

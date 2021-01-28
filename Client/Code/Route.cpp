@@ -30,7 +30,7 @@ Engine::CComponent* CRoute::Create() {
 	CRoute* pInstance = new CRoute;
 
 	if (FAILED(pInstance->Ready()))
-		Safe_Release(pInstance);
+		Engine::Safe_Release(pInstance);
 
 	return pInstance;
 }

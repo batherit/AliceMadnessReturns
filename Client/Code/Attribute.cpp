@@ -30,7 +30,7 @@ Engine::CComponent* CAttribute::Create() {
 	CAttribute* pInstance = new CAttribute;
 
 	if (FAILED(pInstance->Ready()))
-		Safe_Release(pInstance);
+		Engine::Safe_Release(pInstance);
 
 	return pInstance;
 }

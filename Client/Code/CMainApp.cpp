@@ -33,7 +33,8 @@ HRESULT CMainApp::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(Engine::RESOURCE_END), E_FAIL);
 	Client::Safe_Release(m_pDeviceClass);
 
-
+	// 사운드 매니져 초기화
+	CSoundMgr::Get_Instance()->Initialize();
 
 	// 샘플링 상태 설정
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
@@ -102,5 +103,6 @@ void CMainApp::Free(void)
 	Engine::Release_Resoures();
 	Engine::Release_Utility();
 	Engine::Release_System();
+	CSoundMgr::Destroy_Instance();
 }
 

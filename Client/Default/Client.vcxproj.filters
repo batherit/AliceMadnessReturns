@@ -319,6 +319,12 @@
     <Filter Include="02. Object\02. GameObject\SplashAttack">
       <UniqueIdentifier>{625c35f1-457c-4de3-beed-5e41bacc4fa4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97. FMOD">
+      <UniqueIdentifier>{afe723e5-7be4-42be-be9d-34f62a02358a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Manager\SoundMgr">
+      <UniqueIdentifier>{f511b398-ac9c-436a-b35f-34f15c3e277a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -771,6 +777,30 @@
     <ClInclude Include="..\Code\SplashAttack.h">
       <Filter>02. Object\02. GameObject\SplashAttack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\SoundMgr.h">
+      <Filter>05. Manager\SoundMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod.h">
+      <Filter>97. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod.hpp">
+      <Filter>97. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_codec.h">
+      <Filter>97. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_dsp.h">
+      <Filter>97. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_errors.h">
+      <Filter>97. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_memoryinfo.h">
+      <Filter>97. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_output.h">
+      <Filter>97. FMOD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1192,6 +1222,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\SplashAttack.cpp">
       <Filter>02. Object\02. GameObject\SplashAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoundMgr.cpp">
+      <Filter>05. Manager\SoundMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

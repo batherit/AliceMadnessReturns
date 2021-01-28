@@ -38,4 +38,9 @@
 
 using namespace std;
 
+#include <io.h>
+#include "fmod.h"
+#pragma comment(lib, "fmodex_vc.lib")
+#include "SoundMgr.h"
+
 #endif //PCH_H

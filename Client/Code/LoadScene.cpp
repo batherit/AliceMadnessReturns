@@ -81,6 +81,9 @@ void CLoadScene::OnLoaded()
 	pLayer->Add_GameObject(pImage);
 
 	m_mapLayer.emplace(L"LoadLayer", pLayer);
+
+	// 타이틀 브금 틀기
+	CSoundMgr::Get_Instance()->PlayBGM(L"Title.ogg");
 	
 
 	// Loading Thread

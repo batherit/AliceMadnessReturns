@@ -57,7 +57,7 @@ void CBullet::Render_Object(void)
 void CBullet::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
 	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Monster") == 0) {
-		_tCollisionInfo.pCollidedObject->GetComponent<CAttribute>()->Damaged(/*BULLET_DAMAGE*/0);
+		_tCollisionInfo.pCollidedObject->GetComponent<CAttribute>()->Damaged(BULLET_DAMAGE + Engine::GetNumberBetweenMinMax(0.f, 1.f));
 
 		CEFT_BulletAttack* pEffect = CEFT_BulletAttack::Create(m_pGraphicDev);
 		pEffect->SetInfo((_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos() + _tCollisionInfo.pCollidedMyCollider->GetTransform()->GetPos()) * 0.5f);

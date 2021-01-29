@@ -5,6 +5,7 @@
 #include "BolterFlyState_Idle.h"
 #include "StaticObject.h"
 #include "Attribute.h"
+#include "EFT_Blood.h"
 
 CBolterFly::CBolterFly(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -165,17 +166,20 @@ void CBolterFly::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 	if (IsDead())
 		return;
 
-	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
-		_int a = 10;
-	}
-	else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
-		_int a = 10;
-	}
-	else {
-		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
-			if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
-				// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
-				m_pAttribute->Damaged(_tCollisionInfo.pCollidedCollider->GetDamage());
+	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0 &&
+		lstrcmp(_tCollisionInfo.pCollidedMyCollider->GetColliderTag(), L"Monster") == 0) {
+		if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
+			CEFT_Blood* pEffect = nullptr;
+			//	_int iBloodNum = Engine::GetNumberBetweenMinMax(10, 10);
+			_float fBloodSize = 1.f;
+			for (_int i = 0; i < 2; ++i) {
+				fBloodSize = Engine::GetNumberBetweenMinMax(0.1f, 0.45f);
+				pEffect = CEFT_Blood::Create(m_pGraphicDev);
+				pEffect->SetBloodInfo(
+					(_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos() + _tCollisionInfo.pCollidedMyCollider->GetTransform()->GetPos()) * 0.5f
+					+ _vec3(Engine::GetNumberBetweenMinMax(-0.3f, 0.3f), Engine::GetNumberBetweenMinMax(-0.3f, 0.3f), Engine::GetNumberBetweenMinMax(-0.2f, 0.2f)),
+					_vec3(fBloodSize, fBloodSize, 1.f));
+				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
 			}
 		}
 	}
@@ -186,17 +190,10 @@ void CBolterFly::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)
 	if (IsDead())
 		return;
 
-	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
-		_int a = 10;
-	}
-	else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
-		_int a = 10;
-	}
-	else {
-		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
-			// 충돌하지 않았다면 어태커에서 제거한다.
-			m_pAttribute->ReleaseAttacker(_tCollisionInfo.pCollidedCollider);
-		}
+	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0 &&
+		lstrcmp(_tCollisionInfo.pCollidedMyCollider->GetColliderTag(), L"Monster") == 0) {
+		// 충돌하지 않았다면 어태커에서 제거한다.
+		m_pAttribute->ReleaseAttacker(_tCollisionInfo.pCollidedCollider);
 	}
 }
 

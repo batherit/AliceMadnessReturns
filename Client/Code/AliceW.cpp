@@ -271,11 +271,11 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		}
 	}
 	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack") == 0
-		|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_L") == 0
-		|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_R") == 0) {
+		/*|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_L") == 0
+		|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_R") == 0*/) {
 		if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
 			// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
-			m_pAttribute->Damaged(/*_tCollisionInfo.pCollidedCollider->GetDamage()*/0);
+			m_pAttribute->Damaged(_tCollisionInfo.pCollidedCollider->GetDamage());
 			_vec3 vToOwner = GetTransform()->GetPos() - _tCollisionInfo.pCollidedCollider->GetTransform()->GetPos();
 			vToOwner.y = 0.f;
 			D3DXVec3Normalize(&vToOwner, &vToOwner);
@@ -294,20 +294,20 @@ void CAliceW::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)
 	if (IsDead())
 		return;
 
-	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
+	/*if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
 		_int a = 10;
 	}
 	else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
 		_int a = 10;
 	}
-	else {
+	else {*/
 		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack") == 0
-			|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_L") == 0
-			|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_R") == 0) {
+			/*|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_L") == 0
+			|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_R") == 0*/) {
 			// 충돌하지 않았다면 어태커에서 제거한다.
 			m_pAttribute->ReleaseAttacker(_tCollisionInfo.pCollidedCollider);
 		}
-	}
+	//}
 }
 
 //void CAliceW::AttachItemToBone(Engine::CGameObject * _pItemObject, const _tchar * _pBoneName)

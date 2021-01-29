@@ -74,6 +74,7 @@ void CTitleScene::OnLoaded()
 
 void CTitleScene::OnExited()
 {
+	CSoundMgr::Get_Instance()->StopSound(CSoundMgr::BGM);
 }
 
 CTitleScene * CTitleScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)

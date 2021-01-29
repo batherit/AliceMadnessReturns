@@ -127,7 +127,7 @@ int CPlayScene::Update(const _float& fTimeDelta)
 			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
 		}
 	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
+	/*else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
 		if (!m_bIsff) {
 			ShowCursor(true);
 			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false);
@@ -138,7 +138,7 @@ int CPlayScene::Update(const _float& fTimeDelta)
 			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
 			m_bIsff = false;
 		}
-	}
+	}*/
 
 	//if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
 	//	//m_pPlayer->GetComponent<CAttribute>()->DecreaseHP(10.f);

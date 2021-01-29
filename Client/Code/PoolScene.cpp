@@ -72,18 +72,18 @@ int CPoolScene::Update(const _float& fTimeDelta)
 			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
 		}
 	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
-		if (!m_bIsff) {
-			ShowCursor(true);
-			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false);
-			m_bIsff = true;
-		}
-		else {
-			ShowCursor(false);
-			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
-			m_bIsff = false;
-		}
-	}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
+	//	if (!m_bIsff) {
+	//		ShowCursor(true);
+	//		Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false);
+	//		m_bIsff = true;
+	//	}
+	//	else {
+	//		ShowCursor(false);
+	//		Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
+	//		m_bIsff = false;
+	//	}
+	//}
 
 	return CScene::Update(fTimeDelta);
 }

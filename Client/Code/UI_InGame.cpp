@@ -7,6 +7,7 @@
 #include "UI_Image.h"
 #include "UI_GunGauge.h"
 #include "UI_FadeInOut.h"
+#include "UI_BloodScreen.h"
 #include "UI_BunnyBomb.h"
 #include "UI_WeaponLock.h"
 #include "UI_Cursor.h"
@@ -64,6 +65,9 @@ HRESULT CUI_InGame::Ready_Object(void)
 	m_pWeaponLock = CUI_WeaponLock::Create(m_pGraphicDev);
 	m_pWeaponLock->SetActivated(false);
 	AddChild(m_pWeaponLock);
+
+	m_pBloodScreen = CUI_BloodScreen::Create(m_pGraphicDev);
+	AddChild(m_pBloodScreen);
 
 	m_pCursor = CUI_Cursor::Create(m_pGraphicDev);
 	m_pCursor->SetActivated(false);

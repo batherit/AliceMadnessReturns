@@ -128,7 +128,7 @@ int CPlay2Scene::Update(const _float& fTimeDelta)
 			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
 		}
 	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
+	/*else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
 		if (!m_bIsff) {
 			ShowCursor(true);
 			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false);
@@ -139,7 +139,7 @@ int CPlay2Scene::Update(const _float& fTimeDelta)
 			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
 			m_bIsff = false;
 		}
-	}
+	}*/
 
 	//if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
 	//	//m_pPlayer->GetComponent<CAttribute>()->DecreaseHP(10.f);
@@ -160,46 +160,46 @@ int CPlay2Scene::Update(const _float& fTimeDelta)
 	//	}
 	//}
 
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_7)) {
-		Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_NONE);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_8)) {
-		Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_SPHERE);
-		Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_9)) {
-		Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_HEIGHT);
-		Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_0)) {
-		Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_ALL);
-		Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-		Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADPLUS)) {
-		Engine::Clamp(&(m_fFogHeightDensity += 0.1f), 0.f, 1.f);
-		Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADMINUS)) {
-		Engine::Clamp(&(m_fFogHeightDensity -= 0.1f), 0.f, 1.f);
-		Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADSTAR)) {
-		Engine::Clamp(&(m_fFogSphereDensity += 0.1f), 0.f, 1.f);
-		Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADSLASH)) {
-		Engine::Clamp(&(m_fFogSphereDensity -= 0.1f), 0.f, 1.f);
-		Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_BACKSLASH)) {
-		CPlateEffect* pEffect = CPlateEffect::Create(m_pGraphicDev);
-		pEffect->SetPlateEffectInfo(L"ETF_HobbyHorseAttack", _vec3(14.f, -9.f, -11.f), _vec2(0.5f, 0.5f), _vec2(0.8f, 0.8f), 0.f, 0.2f, _vec3(1.f, 1.f, 1.f));
-		Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
+	//if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_7)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_NONE);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_8)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_SPHERE);
+	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_9)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_HEIGHT);
+	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_0)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_ALL);
+	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
+	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADPLUS)) {
+	//	Engine::Clamp(&(m_fFogHeightDensity += 0.1f), 0.f, 1.f);
+	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADMINUS)) {
+	//	Engine::Clamp(&(m_fFogHeightDensity -= 0.1f), 0.f, 1.f);
+	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADSTAR)) {
+	//	Engine::Clamp(&(m_fFogSphereDensity += 0.1f), 0.f, 1.f);
+	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADSLASH)) {
+	//	Engine::Clamp(&(m_fFogSphereDensity -= 0.1f), 0.f, 1.f);
+	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_BACKSLASH)) {
+	//	CPlateEffect* pEffect = CPlateEffect::Create(m_pGraphicDev);
+	//	pEffect->SetPlateEffectInfo(L"ETF_HobbyHorseAttack", _vec3(14.f, -9.f, -11.f), _vec2(0.5f, 0.5f), _vec2(0.8f, 0.8f), 0.f, 0.2f, _vec3(1.f, 1.f, 1.f));
+	//	Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
 
-		Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
-		pCameraMgr->GetCamera()->Shake(0.3f, 0.4f, 20);
-	}
+	//	Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
+	//	pCameraMgr->GetCamera()->Shake(0.3f, 0.4f, 20);
+	//}
 
 	return CScene::Update(fTimeDelta);
 }

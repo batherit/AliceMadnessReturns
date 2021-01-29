@@ -117,17 +117,7 @@ int CBossScene::Update(const _float& fTimeDelta)
 	}
 */
 
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
-		//m_pPlayer->GetComponent<CAttribute>()->DecreaseHP(10.f);
-		CUI_InGame* pUI = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
-		pUI->GetFadeInOut()->StartFadeInOut(1.f, true);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_P)) {
-		//m_pPlayer->GetComponent<CAttribute>()->IncreaseHP(10.f);
-		CUI_InGame* pUI = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
-		pUI->GetFadeInOut()->StartFadeInOut(1.f, false);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
 		if (Engine::CCollisionMgr::GetInstance()->IsColliderVisible()) {
 			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
 		}
@@ -135,38 +125,38 @@ int CBossScene::Update(const _float& fTimeDelta)
 			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
 		}
 	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_7)) {
-		Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_NONE);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_8)) {
-		Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_SPHERE);
-		Engine::CRenderer::GetInstance()->SetSphereFogInfo(3.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_9)) {
-		Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_HEIGHT);
-		Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_0)) {
-		Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_ALL);
-		Engine::CRenderer::GetInstance()->SetSphereFogInfo(3.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-		Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADPLUS)) {
-		Engine::Clamp(&(m_fFogHeightDensity += 0.1f), 0.f, 1.f);
-		Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADMINUS)) {
-		Engine::Clamp(&(m_fFogHeightDensity -= 0.1f), 0.f, 1.f);
-		Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADSTAR)) {
-		Engine::Clamp(&(m_fFogSphereDensity += 0.1f), 0.f, 1.f);
-		Engine::CRenderer::GetInstance()->SetSphereFogInfo(3.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-	}
-	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADSLASH)) {
-		Engine::Clamp(&(m_fFogSphereDensity -= 0.1f), 0.f, 1.f);
-		Engine::CRenderer::GetInstance()->SetSphereFogInfo(3.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-	}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_7)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_NONE);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_8)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_SPHERE);
+	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(3.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_9)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_HEIGHT);
+	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_0)) {
+	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_ALL);
+	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(3.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
+	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADPLUS)) {
+	//	Engine::Clamp(&(m_fFogHeightDensity += 0.1f), 0.f, 1.f);
+	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADMINUS)) {
+	//	Engine::Clamp(&(m_fFogHeightDensity -= 0.1f), 0.f, 1.f);
+	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADSTAR)) {
+	//	Engine::Clamp(&(m_fFogSphereDensity += 0.1f), 0.f, 1.f);
+	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(3.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
+	//}
+	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADSLASH)) {
+	//	Engine::Clamp(&(m_fFogSphereDensity -= 0.1f), 0.f, 1.f);
+	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(3.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
+	//}
 
 	return CScene::Update(fTimeDelta);
 }

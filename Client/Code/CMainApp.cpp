@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "CMainApp.h"
 #include "LoadScene.h"
+#include "PoolScene.h"
+#include "PlayScene.h"
+#include "Play2Scene.h"
+#include "BossScene.h"
 //#include "PlayScene.h"
 
 CMainApp::CMainApp(void)
@@ -68,6 +72,20 @@ HRESULT CMainApp::Ready_MainApp(void)
 _int CMainApp::Update_MainApp(const _float& fTimeDelta)
 {
 	Engine::CDirectInputMgr::GetInstance()->Update();
+
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_7)) {
+		Engine::CManagement::GetInstance()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_8)) {
+		Engine::CManagement::GetInstance()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_9)) {
+		Engine::CManagement::GetInstance()->SetNextScene(CPlay2Scene::Create(m_pGraphicDev));
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_0)) {
+		Engine::CManagement::GetInstance()->SetNextScene(CBossScene::Create(m_pGraphicDev));
+	}
+
 	Engine::CManagement::GetInstance()->UpdateScene(fTimeDelta);
 
 	return 0;

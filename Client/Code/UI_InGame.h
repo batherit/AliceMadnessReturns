@@ -17,6 +17,7 @@ class CUI_FadeInOut;
 class CUI_BunnyBomb;
 class CUI_WeaponLock;
 class CUI_Cursor;
+class CUI_BloodScreen;
 class CUI_InGame : public Engine::CGameObject
 {
 private: // 持失切, 社瑚切
@@ -43,6 +44,7 @@ public:
 	CUI_Targeting* GetTargeting() const { return m_pTargeting; }
 	CUI_TargetingMode* GetTargetingMode() const { return m_pTargetingMode; }
 	CUI_FadeInOut* GetFadeInOut() const { return m_pFadeInOut; }
+	CUI_BloodScreen* GetBloodScreen() const { return m_pBloodScreen; }
 	CUI_BunnyBomb* GetBunnyBomb() const { return m_pBunnyBomb; }
 	CUI_WeaponLock* GetWeaponLock() const { return m_pWeaponLock; }
 	CUI_Cursor* GetCursor() const { return m_pCursor; }
@@ -56,6 +58,7 @@ private:
 	CUI_Targeting* m_pTargeting = nullptr;
 	CUI_TargetingMode* m_pTargetingMode = nullptr;
 	CUI_FadeInOut* m_pFadeInOut = nullptr;
+	CUI_BloodScreen* m_pBloodScreen = nullptr;
 	CUI_BunnyBomb* m_pBunnyBomb = nullptr;
 	CUI_WeaponLock* m_pWeaponLock = nullptr;
 	CUI_Cursor* m_pCursor = nullptr;

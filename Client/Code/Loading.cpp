@@ -396,10 +396,12 @@ _uint CLoading::LoadTextures() {
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Trail", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Trail.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Trail_BG", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Trail_BG.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Trail_Lace", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Trail_Lace.tga"), E_FAIL);
-	// BlledEffect
+	// BloodEffect
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Blood0", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Blood0.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Blood1", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Blood1.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_Blood2", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_Blood2.tga"), E_FAIL);
+	// BloodScreen
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_BloodScreen", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_BloodScreen.png"), E_FAIL);
 
 	return S_OK;
 }

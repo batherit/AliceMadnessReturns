@@ -15,6 +15,7 @@
 #include "UI_LockedWeapon.h"
 #include "VorpalBlade.h"
 #include "HobbyHorse.h"
+#include "UI_BloodScreen.h"
 
 CAliceW::CAliceW(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -277,6 +278,7 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 			D3DXVec3Normalize(&vToOwner, &vToOwner);
 			GetPhysics()->SetVelocityXZ(_vec2(vToOwner.x, vToOwner.z) * ALICE_RUN_SPEED * 2.f);
 			GetPhysics()->SetResistanceCoefficientXZ(0.8f);
+			m_pInGameUI->GetBloodScreen()->StartBloodScreen();
 		}
 	}
 	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Press") == 0) {

@@ -325,6 +325,9 @@
     <Filter Include="05. Manager\SoundMgr">
       <UniqueIdentifier>{f511b398-ac9c-436a-b35f-34f15c3e277a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\UI\BloodScreen">
+      <UniqueIdentifier>{f2352d05-45cc-49da-9d03-bb8306e61985}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -801,6 +804,9 @@
     <ClInclude Include="fmod_output.h">
       <Filter>97. FMOD</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\UI_BloodScreen.h">
+      <Filter>02. Object\02. GameObject\UI\BloodScreen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1225,6 +1231,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\SoundMgr.cpp">
       <Filter>05. Manager\SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_BloodScreen.cpp">
+      <Filter>02. Object\02. GameObject\UI\BloodScreen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

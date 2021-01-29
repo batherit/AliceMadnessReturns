@@ -55,9 +55,12 @@ public:
 private:
 	_int m_iLinkIndex = -1;
 
+	CAliceW* m_pAliceW = nullptr;
+
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CShader* m_pShader = nullptr;
+
 	_vec3 m_vInitPos;
 	_vec3 m_vEndPos;
 	_vec3 m_vVelocity;

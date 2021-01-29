@@ -284,50 +284,9 @@ void CAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 			m_pInGameUI->GetBloodScreen()->StartBloodScreen();
 		}
 	}
-	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Press") == 0) {
-		m_pAttribute->Damaged(1000.f);
-	}
-	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Platform") == 0) {
-	/*	if (GetPhysics()->GetVelocity().y > 0.f)
-			return;
-*/
-		if (IsFalling(0.f)) {
-			m_bIsLanded = true;
-		}
-
-		CPlatform* pPlatform = dynamic_cast<CPlatform*>(_tCollisionInfo.pCollidedObject);
-		_vec3 vDeltaPos = pPlatform->GetDeltaPos();
-		GetPhysics()->SetVelocityY(0.f);
-		GetTransform()->SetPosY(pPlatform->GetHeight());
-		GetTransform()->Translate(vDeltaPos.x, 0.f, vDeltaPos.z);
-	}
-	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"MovingPlatform") == 0) {
-		/*	if (GetPhysics()->GetVelocity().y > 0.f)
-				return;
-	*/
-		if (IsFalling(0.f)) {
-			m_bIsLanded = true;
-		}
-
-		CMovingPlatform* pMovingPlatform = dynamic_cast<CMovingPlatform*>(_tCollisionInfo.pCollidedObject);
-		_vec3 vDeltaPos = pMovingPlatform->GetDeltaPos();
-		GetPhysics()->SetVelocityY(0.f);
-		GetTransform()->SetPosY(pMovingPlatform->GetHeight());
-		GetTransform()->Translate(vDeltaPos.x, 0.f, vDeltaPos.z);
-	}
 	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Small") == 0) {
 		m_bIsSmalling = true;
 	}
-
-	//if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
-	//	
-	//}
-	//else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
-	//	_int a = 10;
-	//}
-	//else {
-	//	
-	//}
 }
 
 void CAliceW::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)

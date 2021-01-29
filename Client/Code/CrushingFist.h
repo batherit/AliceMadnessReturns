@@ -7,6 +7,7 @@
 #include "Export_Function.h"
 
 BEGIN(Client)
+class CAttribute;
 class CCrushingFist : public Engine::CGameObject
 {
 private: // 생성자, 소멸자
@@ -19,6 +20,7 @@ private: // 생성자, 소멸자
 	virtual int Update_Object(const _float & _fDeltaTime) override;
 	virtual void Render_Object(void) override;
 	_bool LoadColliders(const _tchar* _pFileName);
+	virtual void OnCollision(Engine::CollisionInfo _tCollisionInfo);
 
 public:
 	static CCrushingFist*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -34,6 +36,8 @@ private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CShader* m_pShader = nullptr;
+
+	CAttribute* m_pPlayerAttribute = nullptr;
 
 	_float m_fElapsedTime = 0.f;	//누적 시간
 	_float m_fPressTime = 1.f;		// 누름 완료까지의 시간

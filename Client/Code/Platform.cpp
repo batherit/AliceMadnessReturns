@@ -111,6 +111,29 @@ void CPlatform::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"BunnyBomb") == 0) {
 		m_bIsOn = true;
 	}*/
+
+	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+		if (m_pAliceW) {
+			if (m_pAliceW->IsFalling(0.f)) {
+				m_pAliceW->SetLanded(true);
+			}
+			_vec3 vDeltaPos = GetDeltaPos();
+			m_pAliceW->GetPhysics()->SetVelocityY(0.f);
+			m_pAliceW->GetTransform()->SetPosY(GetHeight());
+			m_pAliceW->GetTransform()->Translate(vDeltaPos.x, 0.f, vDeltaPos.z);
+		}
+		else {
+			m_pAliceW = dynamic_cast<CAliceW*>(_tCollisionInfo.pCollidedObject);
+			if (m_pAliceW->IsFalling(0.f)) {
+				m_pAliceW->SetLanded(true);
+			}
+			_vec3 vDeltaPos = GetDeltaPos();
+			m_pAliceW->GetPhysics()->SetVelocityY(0.f);
+			m_pAliceW->GetTransform()->SetPosY(GetHeight());
+			m_pAliceW->GetTransform()->Translate(vDeltaPos.x, 0.f, vDeltaPos.z);
+		}
+	}
+
 }
 
 void CPlatform::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)

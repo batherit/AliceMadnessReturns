@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CrushingFist.h"
 #include "AliceW.h"
+#include "Attribute.h"
 
 CCrushingFist::CCrushingFist(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -138,6 +139,23 @@ _bool CCrushingFist::LoadColliders(const _tchar* _pFileName)
 	CloseHandle(hFile);
 
 	return true;
+}
+
+void CCrushingFist::OnCollision(Engine::CollisionInfo _tCollisionInfo)
+{
+	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+		if (m_pPlayerAttribute) {
+			if (!m_pPlayerAttribute->IsDead()) {
+				m_pPlayerAttribute->Damaged(1000.f);
+			}
+		}
+		else {
+			m_pPlayerAttribute = _tCollisionInfo.pCollidedObject->GetComponent<CAttribute>();
+			if (!m_pPlayerAttribute->IsDead()) {
+				m_pPlayerAttribute->Damaged(1000.f);
+			}
+		}
+	}
 }
 
 CCrushingFist * CCrushingFist::Create(LPDIRECT3DDEVICE9 pGraphicDev)

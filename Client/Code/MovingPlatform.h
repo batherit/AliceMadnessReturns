@@ -47,6 +47,8 @@ private:
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CShader* m_pShader = nullptr;
 
+	CAliceW* m_pAliceW = nullptr;
+
 	_vec3 m_vStartPos;
 	_vec3 m_vEndPos;
 	_float m_fMovingTime = 1.f;

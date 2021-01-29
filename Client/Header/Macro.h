@@ -127,7 +127,7 @@ namespace Client
 #define BOSS_ATTACK_RANGE	4.0f
 #define	BOSS_RUN_SPEED		9.f
 #define BOSS_JUMP_SPEED		30.f
-#define BOSS_MAX_HP			10.f
+#define BOSS_MAX_HP			150.f
 
 #define VORPALBLADE_DAMAGE	2.f
 #define BULLET_DAMAGE		1.f

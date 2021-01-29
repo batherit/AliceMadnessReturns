@@ -16,6 +16,7 @@
 #include "VorpalBlade.h"
 #include "HobbyHorse.h"
 #include "UI_BloodScreen.h"
+#include "UI_PurpleScreen.h"
 
 CAliceW::CAliceW(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -138,6 +139,7 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 		if (vScale.x <= 0.3f) {
 			vScale = _vec3(0.3f, 0.3f, 0.3f);
 			m_bIsSmalled = true;
+			m_pInGameUI->GetPurpleScreen()->On();
 		}
 		else
 			vScale *= 0.7f;
@@ -149,6 +151,7 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 		if (vScale.x >= 1.f) {
 			vScale = _vec3(1.f, 1.f, 1.f);
 			m_bIsSmalled = false;
+			m_pInGameUI->GetPurpleScreen()->Off();
 		}
 		else 
 			vScale *= 1.3f;

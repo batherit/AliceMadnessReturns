@@ -2,6 +2,7 @@
 #include "BossState_Death.h"
 #include "StateMgr.h"
 #include "Boss.h"
+#include "UI_HPBar.h"
 
 
 CBossState_Death::CBossState_Death(CBoss & _rOwner)
@@ -18,6 +19,7 @@ void CBossState_Death::OnLoaded(void)
 {
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::Executioner_Giant_Laugh03);
 	m_rOwner.GetPhysics()->SetSpeed(0.f);
+	m_rOwner.GetHPBarUI()->Off();
 }
 
 int CBossState_Death::Update(const _float& _fDeltaTime)

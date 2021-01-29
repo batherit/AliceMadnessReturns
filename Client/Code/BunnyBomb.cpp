@@ -74,10 +74,13 @@ int CBunnyBomb::Update_Object(const _float & _fDeltaTime)
 			m_pBunnyBombUI->SetProgress((m_fElapsedTime += _fDeltaTime) / BOOM_TIME);
 	}
 	else {
-		if ((m_fElapsedTime += _fDeltaTime) >= 0.5f) {
+		if ((m_fElapsedTime += _fDeltaTime) >= 0.7f) {
 			// bomb 이후 사라지는 것.
 			SetValid(false);
 			return 1;
+		}
+		else if (m_fElapsedTime > 0.5f) {
+			m_pCollider->SetActivated(false);
 		}
 	}
 

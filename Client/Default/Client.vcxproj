@@ -239,6 +239,11 @@
     <ClInclude Include="..\Code\BigGuyBState_Idle.h" />
     <ClInclude Include="..\Code\BigGuyBState_Talk.h" />
     <ClInclude Include="..\Code\BigGuyBState_Walk.h" />
+    <ClInclude Include="..\Code\UI_HPBar.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_PurpleScreen.h" />
     <ClInclude Include="..\Code\UI_BloodScreen.h" />
     <ClInclude Include="..\Code\BolterFly.h" />
     <ClInclude Include="..\Code\BolterFlyState_Alert.h">
@@ -576,6 +581,11 @@
     <ClCompile Include="..\Code\BigGuyBState_Idle.cpp" />
     <ClCompile Include="..\Code\BigGuyBState_Talk.cpp" />
     <ClCompile Include="..\Code\BigGuyBState_Walk.cpp" />
+    <ClCompile Include="..\Code\UI_HPBar.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_PurpleScreen.cpp" />
     <ClCompile Include="..\Code\UI_BloodScreen.cpp" />
     <ClCompile Include="..\Code\BolterFly.cpp" />
     <ClCompile Include="..\Code\BolterFlyState_Alert.cpp">

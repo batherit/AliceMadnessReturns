@@ -33,8 +33,11 @@ int CSplashAttack::Update_Object(const _float & _fDeltaTime)
 		return 1;
 
 	if ((m_fLifeTime -= _fDeltaTime) <= 0.f) {
-		SetValid(false);
+		m_pAttackCollider->SetActivated(false);
 		return 1;
+	}
+	else if (m_fLifeTime <= -0.2f) {
+		SetValid(false);
 	}
 
 	return 0;

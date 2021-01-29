@@ -90,7 +90,7 @@ void CVorpalBlade::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Monster") == 0) {
 		if (m_pAttribute->RegisterAttacker(_tCollisionInfo.pCollidedCollider)) {
 			// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
-			_tCollisionInfo.pCollidedObject->GetComponent<CAttribute>()->Damaged(/*VORPALBLADE_DAMAGE*/0);
+			_tCollisionInfo.pCollidedObject->GetComponent<CAttribute>()->Damaged(VORPALBLADE_DAMAGE + Engine::GetNumberBetweenMinMax(0.f, 3.f));
 
 			CEFT_SlashAttack* pEffect = CEFT_SlashAttack::Create(m_pGraphicDev);
 			pEffect->SetInfo((_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos() + _tCollisionInfo.pCollidedMyCollider->GetTransform()->GetPos()) * 0.5f);

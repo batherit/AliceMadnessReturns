@@ -339,7 +339,7 @@ _uint CLoading::LoadTextures() {
 	// Cursor
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Cursor", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Cursor.tga"), E_FAIL);
 
-	// HP
+	// Player HP
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_HP_Branch", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_HP_Branch.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		Engine::RESOURCE_STATIC,
@@ -347,6 +347,10 @@ _uint CLoading::LoadTextures() {
 		Engine::TEX_NORMAL,
 		L"../../Resource/Texture/UI/UI_HP%d.tga", 8),
 		E_FAIL);
+
+	// Boss HP
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_HPBar_BG", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_HPBar_BG.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_HPBar", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_HPBar.png"), E_FAIL);
 
 	// Targeting
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Targeting", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Targeting.tga"), E_FAIL);

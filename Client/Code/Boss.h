@@ -9,6 +9,7 @@
 BEGIN(Client)
 class CMap;
 class CAttribute;
+class CUI_HPBar;
 template<typename T> class CStateMgr;
 class CBoss : public Engine::CGameObject
 {
@@ -34,9 +35,11 @@ public:
 	Engine::CDynamicMesh* GetDynamicMesh() const { return m_pMesh; }
 	Engine::CPhysics* GetPhysics() const { return m_pPhysics; }
 	CAttribute* GetAttribute() const { return m_pAttribute; }
-
 	Engine::CGameObject* GetTargetObject() const { return m_pTargetObject; }
+	CUI_HPBar* GetHPBarUI() const { return m_pHPBar; }
+
 	void SetTargetObject(Engine::CGameObject* _pTargetObject) { m_pTargetObject = _pTargetObject; }
+	void SetHPBarUI(CUI_HPBar* _pHPBarUI);
 	void SetLanded(const _bool& _bIsLanded) { m_bIsLanded = _bIsLanded; }
 
 	_bool IsFalling(const _float& _fDeltaTime);
@@ -51,6 +54,7 @@ public:
 
 private:
 	CMap* m_pMap = nullptr;
+	CUI_HPBar* m_pHPBar = nullptr;
 
 	Engine::CColliderObject* m_pAttackCollider = nullptr;
 	Engine::CGameObject* m_pTargetObject = nullptr;

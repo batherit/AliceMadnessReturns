@@ -9,6 +9,7 @@
 #include "EFT_SlashAttack.h"
 #include "EFT_BulletAttack.h"
 #include "EFT_Blood.h"
+#include "UI_HPBar.h"
 
 CBoss::CBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -86,6 +87,7 @@ int CBoss::Update_Object(const _float & _fDeltaTime)
 	if (!m_pMap) {
 		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
 	}
+
 	if (!m_pStateMgr->ConfirmValidState())
 		return 1;
 
@@ -249,6 +251,12 @@ void CBoss::Free(void)
 {
 	Engine::Safe_Release(m_pStateMgr);
 	CGameObject::Free();
+}
+
+void CBoss::SetHPBarUI(CUI_HPBar * _pHPBarUI)
+{
+	m_pHPBar = _pHPBarUI;
+	m_pHPBar->On(this);
 }
 
 _bool CBoss::IsFalling(const _float & _fDeltaTime)

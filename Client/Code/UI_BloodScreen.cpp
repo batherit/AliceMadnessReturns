@@ -23,7 +23,7 @@ HRESULT CUI_BloodScreen::Ready_Object(void)
 	CUI_Image::Ready_Object();
 	SetTexture(L"EFT_BloodScreen");
 	SetRenderColor(D3DCOLOR_ARGB(0, 255, 255, 255));
-	SetOutputArea(0, 0, WINCX, WINCY);
+	SetOutputArea(-100, -100, WINCX + 100, WINCY + 100);
 
 	return S_OK;
 }

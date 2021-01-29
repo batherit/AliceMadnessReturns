@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "UI_InGame.h"
 #include "UI_HPGauge.h"
+#include "UI_HPBar.h"
 #include "UI_Tooth.h"
 #include "UI_Targeting.h"
 #include "UI_TargetingMode.h"
@@ -8,6 +9,7 @@
 #include "UI_GunGauge.h"
 #include "UI_FadeInOut.h"
 #include "UI_BloodScreen.h"
+#include "UI_PurpleScreen.h"
 #include "UI_BunnyBomb.h"
 #include "UI_WeaponLock.h"
 #include "UI_Cursor.h"
@@ -42,12 +44,17 @@ HRESULT CUI_InGame::Ready_Object(void)
 	m_pGunGauge->SetActivated(false);
 	AddChild(m_pGunGauge);
 
+	// Player HP
 	m_pHPGauge = CUI_HPGauge::Create(m_pGraphicDev);
 	//m_pHPGauge->SetPlayer(m_pPlayer);
 	AddChild(m_pHPGauge);
 
 	m_pTooth = CUI_Tooth::Create(m_pGraphicDev);
 	AddChild(m_pTooth);
+
+	// Boss HP
+	m_pHPBar = CUI_HPBar::Create(m_pGraphicDev);
+	AddChild(m_pHPBar);
 
 	m_pTargeting = CUI_Targeting::Create(m_pGraphicDev);
 	m_pTargeting->GetTransform()->SetPos(0.f, 10.f, 0.f);
@@ -57,6 +64,10 @@ HRESULT CUI_InGame::Ready_Object(void)
 	m_pBunnyBomb = CUI_BunnyBomb::Create(m_pGraphicDev);
 	m_pBunnyBomb->SetActivated(false);
 	AddChild(m_pBunnyBomb);
+
+	m_pPurpleScreen = CUI_PurpleScreen::Create(m_pGraphicDev);
+	m_pPurpleScreen->Off();
+	AddChild(m_pPurpleScreen);
 
 	m_pTargetingMode = CUI_TargetingMode::Create(m_pGraphicDev);
 	//m_pTargetingMode->SetPlayer(m_pPlayer);

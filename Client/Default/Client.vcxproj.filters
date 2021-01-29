@@ -88,39 +88,6 @@
     <Filter Include="02. Object\02. GameObject\AliceW">
       <UniqueIdentifier>{32cb0994-47c5-4825-bbdf-cd871b863a1a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. Manager">
-      <UniqueIdentifier>{f5368c3b-6ab7-4571-8ba8-a480e1246459}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05. Manager\StateMgr">
-      <UniqueIdentifier>{6906ec20-968e-4a6e-8ce6-5ab470edc44c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component">
-      <UniqueIdentifier>{a7a0280c-8c3b-47bd-b45a-74af6d1d5991}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\Attribute">
-      <UniqueIdentifier>{0db9cfe8-1f30-47ca-9e3d-f717ccd55683}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI">
-      <UniqueIdentifier>{55d5c14c-8be1-4a2c-b0fe-c0960ec0ac28}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\Image">
-      <UniqueIdentifier>{807bb520-0fca-43e2-836e-239988c38e62}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\HPGauge">
-      <UniqueIdentifier>{9a80128a-7d22-4631-84a7-373c608fcd87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\Tooth">
-      <UniqueIdentifier>{1696ee56-4c46-4d6e-8f9d-de5974641d5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\Targeting">
-      <UniqueIdentifier>{a1735192-4ea4-45b3-9756-869ee6d0de3b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\InGameUI">
-      <UniqueIdentifier>{372ae1c3-f153-44ac-8a2a-4226eaf23c38}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\GunGauge">
-      <UniqueIdentifier>{593e12d3-d7b6-4ec4-a4fd-a9830a6968dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\02. GameObject\Bullet">
       <UniqueIdentifier>{8a96ebda-c28e-4d62-ab7c-104771531e9e}</UniqueIdentifier>
     </Filter>
@@ -154,14 +121,8 @@
     <Filter Include="02. Object\02. GameObject\Trigger">
       <UniqueIdentifier>{3740dc39-dd60-4615-a6fb-dafb59af20f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\FadeInOut">
-      <UniqueIdentifier>{a9f143ba-3309-4193-933c-beaf5917f050}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\02. GameObject\BunnyBomb">
       <UniqueIdentifier>{c58c834b-c185-4a77-a291-64b4bcb469ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\BunnyBomb">
-      <UniqueIdentifier>{1d6a63c3-d066-4184-8f94-d71ed0d8858e}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Scene\02. Title">
       <UniqueIdentifier>{75aea9b0-8c2e-471f-a8bc-a553ac379261}</UniqueIdentifier>
@@ -171,27 +132,6 @@
     </Filter>
     <Filter Include="01. Scene\00. Loading">
       <UniqueIdentifier>{af091aa3-bbbf-4962-ad07-2b35aa38f3b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\OrthoPlane">
-      <UniqueIdentifier>{5fa100fb-6819-4a04-b008-f41e6c67307f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\Button">
-      <UniqueIdentifier>{07582a2e-2228-4b47-a1e9-bd962cb589a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\TargetingMode">
-      <UniqueIdentifier>{be75e666-653c-453a-83ed-46c1f917708e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\WeaponLock">
-      <UniqueIdentifier>{8cf85b1e-dbd7-42b1-8f02-8883e09ee58b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\LockedWeapon">
-      <UniqueIdentifier>{29373b73-4f6d-4fa8-bf5c-c4f238e0db14}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05. Manager\MouseMgr">
-      <UniqueIdentifier>{ffc34556-10e8-46e4-9cd2-7a34668b4030}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\Cursor">
-      <UniqueIdentifier>{c7cbbdea-e057-48ab-b98c-71bcfa23a49e}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\02. GameObject\MirrorPad">
       <UniqueIdentifier>{89f25482-ceb4-4ae0-84b2-b74ed4b87730}</UniqueIdentifier>
@@ -211,9 +151,6 @@
     <Filter Include="03. State\AliceL">
       <UniqueIdentifier>{3346be63-623e-437c-b97c-ead558093d75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Component\Route">
-      <UniqueIdentifier>{c88566a0-deab-454d-8773-d2a511d17792}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\02. GameObject\BigGuyB">
       <UniqueIdentifier>{7febe78f-5923-41c2-8197-d7b87d88e2d7}</UniqueIdentifier>
     </Filter>
@@ -231,9 +168,6 @@
     </Filter>
     <Filter Include="03. State\Cat">
       <UniqueIdentifier>{3a32d4cf-b7cc-460a-b323-971477ac9487}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\SpeechBubble">
-      <UniqueIdentifier>{e64ba034-7e96-4295-8092-06d04976b6c2}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\02. GameObject\MiniGrunt">
       <UniqueIdentifier>{dfd18de5-c26e-46e8-b6ea-7ff8b05ccf2c}</UniqueIdentifier>
@@ -277,27 +211,6 @@
     <Filter Include="02. Object\02. GameObject\Weapon">
       <UniqueIdentifier>{a82f15d7-3bf6-4428-9376-c0f895b8ce3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\02. GameObject\Effect">
-      <UniqueIdentifier>{20d77cca-b92e-4fdc-912f-669c6f6533df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\Effect\PlateEffect">
-      <UniqueIdentifier>{331cb9b0-ff11-4eb9-b1ea-7cb17b2192a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\Effect\EFT_HobbyHorseAttack">
-      <UniqueIdentifier>{8efdb5e9-59ff-42f3-af5d-a5a69bb92ee9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05. Manager\EffectMgr">
-      <UniqueIdentifier>{27b0d771-a63f-485d-a1f7-6485a58bf136}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\Effect\EFT_SlashAttack">
-      <UniqueIdentifier>{0c98156e-7166-4e65-ad8a-87edff2565c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\Effect\EFT_BulletAttack">
-      <UniqueIdentifier>{eb27823a-b063-4a65-ac9e-c00870e7b70b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\Effect\EFT_SmokeBomb">
-      <UniqueIdentifier>{802f800f-e98f-4c3f-9b2d-79052324b203}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\02. GameObject\HobbyHorse">
       <UniqueIdentifier>{a78fec93-cff2-48d0-b47a-e5301155b2d8}</UniqueIdentifier>
     </Filter>
@@ -307,26 +220,119 @@
     <Filter Include="02. Object\02. GameObject\Butterfly">
       <UniqueIdentifier>{227481e1-206b-4dfa-86a9-085a119774a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\02. GameObject\Effect\EFT_FloatingEffect">
-      <UniqueIdentifier>{db674f21-24ae-4719-99f7-84ca1c15e0ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. GameObject\Effect\EFT_Blood">
-      <UniqueIdentifier>{bb7a93a5-d639-484b-8749-26972d7879ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\AnimUV">
-      <UniqueIdentifier>{d3d9f050-ee13-4462-91d1-c8a7d19b2677}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\02. GameObject\SplashAttack">
       <UniqueIdentifier>{625c35f1-457c-4de3-beed-5e41bacc4fa4}</UniqueIdentifier>
     </Filter>
     <Filter Include="97. FMOD">
       <UniqueIdentifier>{afe723e5-7be4-42be-be9d-34f62a02358a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. Manager\SoundMgr">
-      <UniqueIdentifier>{f511b398-ac9c-436a-b35f-34f15c3e277a}</UniqueIdentifier>
+    <Filter Include="04. UI">
+      <UniqueIdentifier>{06dbe959-807e-43b4-8bab-7a1816cb2c0b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\02. GameObject\UI\BloodScreen">
+    <Filter Include="05. Effect">
+      <UniqueIdentifier>{68b70e01-5d10-4369-9ec5-f91f36faeb97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\BloodScreen">
       <UniqueIdentifier>{f2352d05-45cc-49da-9d03-bb8306e61985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\BunnyBomb">
+      <UniqueIdentifier>{1d6a63c3-d066-4184-8f94-d71ed0d8858e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Button">
+      <UniqueIdentifier>{07582a2e-2228-4b47-a1e9-bd962cb589a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Cursor">
+      <UniqueIdentifier>{c7cbbdea-e057-48ab-b98c-71bcfa23a49e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\FadeInOut">
+      <UniqueIdentifier>{a9f143ba-3309-4193-933c-beaf5917f050}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\GunGauge">
+      <UniqueIdentifier>{593e12d3-d7b6-4ec4-a4fd-a9830a6968dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\HPGauge">
+      <UniqueIdentifier>{9a80128a-7d22-4631-84a7-373c608fcd87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Image">
+      <UniqueIdentifier>{807bb520-0fca-43e2-836e-239988c38e62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\InGameUI">
+      <UniqueIdentifier>{372ae1c3-f153-44ac-8a2a-4226eaf23c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\LockedWeapon">
+      <UniqueIdentifier>{29373b73-4f6d-4fa8-bf5c-c4f238e0db14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\HPBar">
+      <UniqueIdentifier>{93be29b1-1c52-432b-9e19-82c0125852f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\PurpleScreen">
+      <UniqueIdentifier>{1e654bc7-17f8-4d97-a404-c05204b043a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\OrthoPlane">
+      <UniqueIdentifier>{5fa100fb-6819-4a04-b008-f41e6c67307f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\SpeechBubble">
+      <UniqueIdentifier>{e64ba034-7e96-4295-8092-06d04976b6c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Targeting">
+      <UniqueIdentifier>{a1735192-4ea4-45b3-9756-869ee6d0de3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\TargetingMode">
+      <UniqueIdentifier>{be75e666-653c-453a-83ed-46c1f917708e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Tooth">
+      <UniqueIdentifier>{1696ee56-4c46-4d6e-8f9d-de5974641d5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\WeaponLock">
+      <UniqueIdentifier>{8cf85b1e-dbd7-42b1-8f02-8883e09ee58b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Effect\EFT_Blood">
+      <UniqueIdentifier>{bb7a93a5-d639-484b-8749-26972d7879ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Effect\EFT_BulletAttack">
+      <UniqueIdentifier>{eb27823a-b063-4a65-ac9e-c00870e7b70b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Effect\EFT_FloatingEffect">
+      <UniqueIdentifier>{db674f21-24ae-4719-99f7-84ca1c15e0ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Effect\EFT_HobbyHorseAttack">
+      <UniqueIdentifier>{8efdb5e9-59ff-42f3-af5d-a5a69bb92ee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Effect\EFT_SlashAttack">
+      <UniqueIdentifier>{0c98156e-7166-4e65-ad8a-87edff2565c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Effect\EFT_SmokeBomb">
+      <UniqueIdentifier>{802f800f-e98f-4c3f-9b2d-79052324b203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Effect\PlateEffect">
+      <UniqueIdentifier>{331cb9b0-ff11-4eb9-b1ea-7cb17b2192a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component">
+      <UniqueIdentifier>{a7a0280c-8c3b-47bd-b45a-74af6d1d5991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\Attribute">
+      <UniqueIdentifier>{0db9cfe8-1f30-47ca-9e3d-f717ccd55683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\Route">
+      <UniqueIdentifier>{c88566a0-deab-454d-8773-d2a511d17792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\AnimUV">
+      <UniqueIdentifier>{d3d9f050-ee13-4462-91d1-c8a7d19b2677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Manager">
+      <UniqueIdentifier>{f5368c3b-6ab7-4571-8ba8-a480e1246459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Manager\StateMgr">
+      <UniqueIdentifier>{6906ec20-968e-4a6e-8ce6-5ab470edc44c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Manager\MouseMgr">
+      <UniqueIdentifier>{ffc34556-10e8-46e4-9cd2-7a34668b4030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Manager\EffectMgr">
+      <UniqueIdentifier>{27b0d771-a63f-485d-a1f7-6485a58bf136}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Manager\SoundMgr">
+      <UniqueIdentifier>{f511b398-ac9c-436a-b35f-34f15c3e277a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -442,7 +448,7 @@
       <Filter>03. State</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\StateMgr.h">
-      <Filter>05. Manager\StateMgr</Filter>
+      <Filter>07. Manager\StateMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\AliceWState_Slide.h">
       <Filter>03. State\AliceW</Filter>
@@ -475,7 +481,7 @@
       <Filter>03. State\MadCapA</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Attribute.h">
-      <Filter>04. Component\Attribute</Filter>
+      <Filter>06. Component\Attribute</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\AliceWState_Attack_Blade.h">
       <Filter>03. State\AliceW</Filter>
@@ -484,16 +490,16 @@
       <Filter>02. Object\07. CameraController</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_Image.h">
-      <Filter>02. Object\02. GameObject\UI\Image</Filter>
+      <Filter>04. UI\Image</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_Tooth.h">
-      <Filter>02. Object\02. GameObject\UI\Tooth</Filter>
+      <Filter>04. UI\Tooth</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_HPGauge.h">
-      <Filter>02. Object\02. GameObject\UI\HPGauge</Filter>
+      <Filter>04. UI\HPGauge</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_Targeting.h">
-      <Filter>02. Object\02. GameObject\UI\Targeting</Filter>
+      <Filter>04. UI\Targeting</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\AliceWState_Attack_Horse.h">
       <Filter>03. State\AliceW</Filter>
@@ -505,10 +511,10 @@
       <Filter>03. State\AliceW</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_InGame.h">
-      <Filter>02. Object\02. GameObject\UI\InGameUI</Filter>
+      <Filter>04. UI\InGameUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_GunGauge.h">
-      <Filter>02. Object\02. GameObject\UI\GunGauge</Filter>
+      <Filter>04. UI\GunGauge</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Bullet.h">
       <Filter>02. Object\02. GameObject\Bullet</Filter>
@@ -547,7 +553,7 @@
       <Filter>02. Object\02. GameObject\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_FadeInOut.h">
-      <Filter>02. Object\02. GameObject\UI\FadeInOut</Filter>
+      <Filter>04. UI\FadeInOut</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\PlayScene.h">
       <Filter>01. Scene\04. Play</Filter>
@@ -562,31 +568,31 @@
       <Filter>03. State\AliceW</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_BunnyBomb.h">
-      <Filter>02. Object\02. GameObject\UI\BunnyBomb</Filter>
+      <Filter>04. UI\BunnyBomb</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\TitleScene.h">
       <Filter>01. Scene\02. Title</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_OrthoPlane.h">
-      <Filter>02. Object\02. GameObject\UI\OrthoPlane</Filter>
+      <Filter>04. UI\OrthoPlane</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_Button.h">
-      <Filter>02. Object\02. GameObject\UI\Button</Filter>
+      <Filter>04. UI\Button</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_TargetingMode.h">
-      <Filter>02. Object\02. GameObject\UI\TargetingMode</Filter>
+      <Filter>04. UI\TargetingMode</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_WeaponLock.h">
-      <Filter>02. Object\02. GameObject\UI\WeaponLock</Filter>
+      <Filter>04. UI\WeaponLock</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_LockedWeapon.h">
-      <Filter>02. Object\02. GameObject\UI\LockedWeapon</Filter>
+      <Filter>04. UI\LockedWeapon</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\MouseMgr.h">
-      <Filter>05. Manager\MouseMgr</Filter>
+      <Filter>07. Manager\MouseMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_Cursor.h">
-      <Filter>02. Object\02. GameObject\UI\Cursor</Filter>
+      <Filter>04. UI\Cursor</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\MirrorPad.h">
       <Filter>02. Object\02. GameObject\MirrorPad</Filter>
@@ -607,7 +613,7 @@
       <Filter>01. Scene\03. Pool</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Route.h">
-      <Filter>04. Component\Route</Filter>
+      <Filter>06. Component\Route</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BigGuyA.h">
       <Filter>02. Object\02. GameObject\BigGuyA</Filter>
@@ -628,7 +634,7 @@
       <Filter>03. State\BigGuyA</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_SpeechBubble.h">
-      <Filter>02. Object\02. GameObject\UI\SpeechBubble</Filter>
+      <Filter>04. UI\SpeechBubble</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BigGuyBState_Idle.h">
       <Filter>03. State\BigGuyB</Filter>
@@ -742,22 +748,22 @@
       <Filter>02. Object\02. GameObject\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\PlateEffect.h">
-      <Filter>02. Object\02. GameObject\Effect\PlateEffect</Filter>
+      <Filter>05. Effect\PlateEffect</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\EFT_HobbyHorseAttack.h">
-      <Filter>02. Object\02. GameObject\Effect\EFT_HobbyHorseAttack</Filter>
+      <Filter>05. Effect\EFT_HobbyHorseAttack</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\EffectMgr.h">
-      <Filter>05. Manager\EffectMgr</Filter>
+      <Filter>07. Manager\EffectMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\EFT_SlashAttack.h">
-      <Filter>02. Object\02. GameObject\Effect\EFT_SlashAttack</Filter>
+      <Filter>05. Effect\EFT_SlashAttack</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\EFT_BulletAttack.h">
-      <Filter>02. Object\02. GameObject\Effect\EFT_BulletAttack</Filter>
+      <Filter>05. Effect\EFT_BulletAttack</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\EFT_SmokeBomb.h">
-      <Filter>02. Object\02. GameObject\Effect\EFT_SmokeBomb</Filter>
+      <Filter>05. Effect\EFT_SmokeBomb</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\HobbyHorse.h">
       <Filter>02. Object\02. GameObject\HobbyHorse</Filter>
@@ -769,19 +775,19 @@
       <Filter>02. Object\02. GameObject\Butterfly</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\EFT_FloatingEffect.h">
-      <Filter>02. Object\02. GameObject\Effect\EFT_FloatingEffect</Filter>
+      <Filter>05. Effect\EFT_FloatingEffect</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\EFT_Blood.h">
-      <Filter>02. Object\02. GameObject\Effect\EFT_Blood</Filter>
+      <Filter>05. Effect\EFT_Blood</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\AnimUV.h">
-      <Filter>04. Component\AnimUV</Filter>
+      <Filter>06. Component\AnimUV</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SplashAttack.h">
       <Filter>02. Object\02. GameObject\SplashAttack</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoundMgr.h">
-      <Filter>05. Manager\SoundMgr</Filter>
+      <Filter>07. Manager\SoundMgr</Filter>
     </ClInclude>
     <ClInclude Include="fmod.h">
       <Filter>97. FMOD</Filter>
@@ -805,7 +811,13 @@
       <Filter>97. FMOD</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UI_BloodScreen.h">
-      <Filter>02. Object\02. GameObject\UI\BloodScreen</Filter>
+      <Filter>04. UI\BloodScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_PurpleScreen.h">
+      <Filter>04. UI\PurpleScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_HPBar.h">
+      <Filter>04. UI\HPBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -894,7 +906,7 @@
       <Filter>03. State</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\StateMgr.cpp">
-      <Filter>05. Manager\StateMgr</Filter>
+      <Filter>07. Manager\StateMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_Slide.cpp">
       <Filter>03. State\AliceW</Filter>
@@ -927,7 +939,7 @@
       <Filter>03. State\MadCapA</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Attribute.cpp">
-      <Filter>04. Component\Attribute</Filter>
+      <Filter>06. Component\Attribute</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_Attack_Blade.cpp">
       <Filter>03. State\AliceW</Filter>
@@ -936,16 +948,16 @@
       <Filter>02. Object\07. CameraController</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Image.cpp">
-      <Filter>02. Object\02. GameObject\UI\Image</Filter>
+      <Filter>04. UI\Image</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Tooth.cpp">
-      <Filter>02. Object\02. GameObject\UI\Tooth</Filter>
+      <Filter>04. UI\Tooth</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_HPGauge.cpp">
-      <Filter>02. Object\02. GameObject\UI\HPGauge</Filter>
+      <Filter>04. UI\HPGauge</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Targeting.cpp">
-      <Filter>02. Object\02. GameObject\UI\Targeting</Filter>
+      <Filter>04. UI\Targeting</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\AliceWState_Attack_Horse.cpp">
       <Filter>03. State\AliceW</Filter>
@@ -957,10 +969,10 @@
       <Filter>03. State\AliceW</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_InGame.cpp">
-      <Filter>02. Object\02. GameObject\UI\InGameUI</Filter>
+      <Filter>04. UI\InGameUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_GunGauge.cpp">
-      <Filter>02. Object\02. GameObject\UI\GunGauge</Filter>
+      <Filter>04. UI\GunGauge</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Bullet.cpp">
       <Filter>02. Object\02. GameObject\Bullet</Filter>
@@ -999,7 +1011,7 @@
       <Filter>02. Object\02. GameObject\Trigger</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_FadeInOut.cpp">
-      <Filter>02. Object\02. GameObject\UI\FadeInOut</Filter>
+      <Filter>04. UI\FadeInOut</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BossScene.cpp">
       <Filter>01. Scene\06. Boss</Filter>
@@ -1011,31 +1023,31 @@
       <Filter>03. State\AliceW</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_BunnyBomb.cpp">
-      <Filter>02. Object\02. GameObject\UI\BunnyBomb</Filter>
+      <Filter>04. UI\BunnyBomb</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TitleScene.cpp">
       <Filter>01. Scene\02. Title</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_OrthoPlane.cpp">
-      <Filter>02. Object\02. GameObject\UI\OrthoPlane</Filter>
+      <Filter>04. UI\OrthoPlane</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Button.cpp">
-      <Filter>02. Object\02. GameObject\UI\Button</Filter>
+      <Filter>04. UI\Button</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_TargetingMode.cpp">
-      <Filter>02. Object\02. GameObject\UI\TargetingMode</Filter>
+      <Filter>04. UI\TargetingMode</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_WeaponLock.cpp">
-      <Filter>02. Object\02. GameObject\UI\WeaponLock</Filter>
+      <Filter>04. UI\WeaponLock</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_LockedWeapon.cpp">
-      <Filter>02. Object\02. GameObject\UI\LockedWeapon</Filter>
+      <Filter>04. UI\LockedWeapon</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MouseMgr.cpp">
-      <Filter>05. Manager\MouseMgr</Filter>
+      <Filter>07. Manager\MouseMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Cursor.cpp">
-      <Filter>02. Object\02. GameObject\UI\Cursor</Filter>
+      <Filter>04. UI\Cursor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MirrorPad.cpp">
       <Filter>02. Object\02. GameObject\MirrorPad</Filter>
@@ -1056,7 +1068,7 @@
       <Filter>01. Scene\03. Pool</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Route.cpp">
-      <Filter>04. Component\Route</Filter>
+      <Filter>06. Component\Route</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BigGuyA.cpp">
       <Filter>02. Object\02. GameObject\BigGuyA</Filter>
@@ -1077,7 +1089,7 @@
       <Filter>03. State\BigGuyA</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_SpeechBubble.cpp">
-      <Filter>02. Object\02. GameObject\UI\SpeechBubble</Filter>
+      <Filter>04. UI\SpeechBubble</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BigGuyBState_Idle.cpp">
       <Filter>03. State\BigGuyB</Filter>
@@ -1191,22 +1203,22 @@
       <Filter>02. Object\02. GameObject\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlateEffect.cpp">
-      <Filter>02. Object\02. GameObject\Effect\PlateEffect</Filter>
+      <Filter>05. Effect\PlateEffect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EFT_HobbyHorseAttack.cpp">
-      <Filter>02. Object\02. GameObject\Effect\EFT_HobbyHorseAttack</Filter>
+      <Filter>05. Effect\EFT_HobbyHorseAttack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EffectMgr.cpp">
-      <Filter>05. Manager\EffectMgr</Filter>
+      <Filter>07. Manager\EffectMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EFT_SlashAttack.cpp">
-      <Filter>02. Object\02. GameObject\Effect\EFT_SlashAttack</Filter>
+      <Filter>05. Effect\EFT_SlashAttack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EFT_BulletAttack.cpp">
-      <Filter>02. Object\02. GameObject\Effect\EFT_BulletAttack</Filter>
+      <Filter>05. Effect\EFT_BulletAttack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EFT_SmokeBomb.cpp">
-      <Filter>02. Object\02. GameObject\Effect\EFT_SmokeBomb</Filter>
+      <Filter>05. Effect\EFT_SmokeBomb</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HobbyHorse.cpp">
       <Filter>02. Object\02. GameObject\HobbyHorse</Filter>
@@ -1218,22 +1230,28 @@
       <Filter>02. Object\02. GameObject\Butterfly</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EFT_FloatingEffect.cpp">
-      <Filter>02. Object\02. GameObject\Effect\EFT_FloatingEffect</Filter>
+      <Filter>05. Effect\EFT_FloatingEffect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EFT_Blood.cpp">
-      <Filter>02. Object\02. GameObject\Effect\EFT_Blood</Filter>
+      <Filter>05. Effect\EFT_Blood</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\AnimUV.cpp">
-      <Filter>04. Component\AnimUV</Filter>
+      <Filter>06. Component\AnimUV</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SplashAttack.cpp">
       <Filter>02. Object\02. GameObject\SplashAttack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoundMgr.cpp">
-      <Filter>05. Manager\SoundMgr</Filter>
+      <Filter>07. Manager\SoundMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_BloodScreen.cpp">
-      <Filter>02. Object\02. GameObject\UI\BloodScreen</Filter>
+      <Filter>04. UI\BloodScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_PurpleScreen.cpp">
+      <Filter>04. UI\PurpleScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPBar.cpp">
+      <Filter>04. UI\HPBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

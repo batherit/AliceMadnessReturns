@@ -38,7 +38,6 @@ private:
 	CUI_Image* m_pHPGauge = nullptr;
 	_float m_fSmoothGauge = 0.f;
 	LONG m_iWidth = 1;
-	LONG m_iHeight = 1;
 };
 
 END

@@ -80,6 +80,25 @@ public:
 		m_rcExtractionArea = _rcExtractionArea;
 	}
 	
+	void SetOutputAreaWidth(LONG _iWidth) {
+		_vec3 vPos = GetTransform()->GetPos();
+		SetOutputArea(RECT{
+			static_cast<LONG>(vPos.x - (_iWidth >> 1)),
+			static_cast<LONG>(vPos.y - (GetHeight() >> 1)),
+			static_cast<LONG>(vPos.x + (_iWidth >> 1)),
+			static_cast<LONG>(vPos.y + (GetHeight() >> 1))
+			});
+	}
+
+	void SetOutputAreaHeight(LONG _iHeight) {
+		_vec3 vPos = GetTransform()->GetPos();
+		SetOutputArea(RECT{
+			static_cast<LONG>(vPos.x - (GetWidth() >> 1)),
+			static_cast<LONG>(vPos.y - (_iHeight >> 1)),
+			static_cast<LONG>(vPos.x + (GetWidth() >> 1)),
+			static_cast<LONG>(vPos.y + (_iHeight >> 1))
+			});
+	}
 
 	void SetTexture(const _tchar* _pTextureTag);
 	void SetTextureIndex(const _int& _iTextureIndex);

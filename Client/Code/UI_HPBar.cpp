@@ -23,15 +23,17 @@ HRESULT CUI_HPBar::Ready_Object(void)
 {
 	m_pBackground = CUI_Image::Create(m_pGraphicDev);
 	m_pBackground->SetTexture(L"UI_HPBar_BG");
-	m_pBackground->SetPos(WINCX >> 1, WINCY * 0.1f);
-	//m_pBackground->SetOutputArea(RECT{(WINCX >> 1) - (m_pBackground->GetWidth() >> 1),});
+	m_pBackground->SetPos(WINCX >> 1, WINCY * 0.020f);
+	m_pBackground->SetOutputAreaWidth(m_pBackground->GetWidth());
+	m_pBackground->SetOutputAreaHeight(m_pBackground->GetHeight() * 0.5f);
 	AddChild(m_pBackground);
 
 	m_pHPGauge = CUI_Image::Create(m_pGraphicDev);
 	m_pHPGauge->SetTexture(L"UI_HPBar");
-	m_pHPGauge->SetPos(WINCX >> 1, WINCY * 0.1f);
+	m_pHPGauge->SetPos(WINCX >> 1, WINCY * 0.020f);
 	m_iWidth = m_pHPGauge->GetWidth();
-	m_iHeight = m_pHPGauge->GetHeight();
+	m_pHPGauge->SetOutputAreaWidth(m_pHPGauge->GetWidth());
+	m_pHPGauge->SetOutputAreaHeight(m_pHPGauge->GetHeight() * 0.5f);
 	AddChild(m_pHPGauge);
 
 	return S_OK;

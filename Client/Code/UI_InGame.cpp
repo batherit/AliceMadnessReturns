@@ -52,9 +52,7 @@ HRESULT CUI_InGame::Ready_Object(void)
 	m_pTooth = CUI_Tooth::Create(m_pGraphicDev);
 	AddChild(m_pTooth);
 
-	// Boss HP
-	m_pHPBar = CUI_HPBar::Create(m_pGraphicDev);
-	AddChild(m_pHPBar);
+	
 
 	m_pTargeting = CUI_Targeting::Create(m_pGraphicDev);
 	m_pTargeting->GetTransform()->SetPos(0.f, 10.f, 0.f);
@@ -79,6 +77,10 @@ HRESULT CUI_InGame::Ready_Object(void)
 
 	m_pBloodScreen = CUI_BloodScreen::Create(m_pGraphicDev);
 	AddChild(m_pBloodScreen);
+	
+	// Boss HP
+	m_pHPBar = CUI_HPBar::Create(m_pGraphicDev);
+	AddChild(m_pHPBar);
 
 	m_pCursor = CUI_Cursor::Create(m_pGraphicDev);
 	m_pCursor->SetActivated(false);

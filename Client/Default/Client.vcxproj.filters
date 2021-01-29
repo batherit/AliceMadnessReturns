@@ -334,6 +334,9 @@
     <Filter Include="07. Manager\SoundMgr">
       <UniqueIdentifier>{f511b398-ac9c-436a-b35f-34f15c3e277a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\TitleAlice">
+      <UniqueIdentifier>{8fb5980a-560a-44b2-bb9b-a438876edab2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -819,6 +822,9 @@
     <ClInclude Include="..\Code\UI_HPBar.h">
       <Filter>04. UI\HPBar</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\TitleAlice.h">
+      <Filter>02. Object\02. GameObject\TitleAlice</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1252,6 +1258,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_HPBar.cpp">
       <Filter>04. UI\HPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TitleAlice.cpp">
+      <Filter>02. Object\02. GameObject\TitleAlice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 #include "StaticCamera.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
+#include "TitleAlice.h"
 #include "UI_Image.h"
 #include "UI_Button.h"
 #include "UI_FadeInOut.h"
@@ -151,7 +152,15 @@ HRESULT CTitleScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pLayer->Add_GameObject(pBackPlane);
 
 	//// 플레이어 생성
-	CDynamicObject* pAlice = CDynamicObject::Create(m_pGraphicDev);
+	/*CDynamicObject* pAlice = CDynamicObject::Create(m_pGraphicDev);
+	pAlice->SetRenderInfo(L"AliceW");
+	pAlice->GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_Idle);
+	pAlice->GetTransform()->SetScaleXYZ(1.0f, 1.0f, 1.0f);
+	pAlice->GetTransform()->SetPos(-0.2f, -1.35f, -0.6f);
+	pAlice->GetTransform()->RotateByUp(D3DX_PI * 0.9f);
+	pLayer->Add_GameObject(pAlice);*/
+
+	CTitleAlice* pAlice = CTitleAlice::Create(m_pGraphicDev);
 	pAlice->SetRenderInfo(L"AliceW");
 	pAlice->GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_Idle);
 	pAlice->GetTransform()->SetScaleXYZ(1.0f, 1.0f, 1.0f);

@@ -261,6 +261,9 @@
     <ClInclude Include="..\Code\Shader_Trail.hpp">
       <Filter>07. Shader\hpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Shader_Normal.hpp">
+      <Filter>07. Shader\hpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CScene.cpp">

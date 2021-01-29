@@ -407,6 +407,9 @@ _uint CLoading::LoadTextures() {
 	// BloodScreen
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_BloodScreen", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_BloodScreen.png"), E_FAIL);
 
+	// AliceW Normal
+	/*FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"IMG_AliceW_Normal", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_BloodScreen.png"), E_FAIL);*/
+
 	return S_OK;
 }
 

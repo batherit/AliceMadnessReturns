@@ -145,6 +145,10 @@
     <ClInclude Include="..\Code\Shader_Dissolve.hpp" />
     <ClInclude Include="..\Code\Shader_Mesh.hpp" />
     <ClInclude Include="..\Code\Shader_MotionBlur.hpp" />
+    <ClInclude Include="..\Code\Shader_Normal.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\Shader_Object.hpp" />
     <ClInclude Include="..\Code\Shader_PlateEffect.hpp" />
     <ClInclude Include="..\Code\Shader_Sample.hpp" />

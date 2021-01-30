@@ -67,6 +67,7 @@ public:
 
 	Engine::CGameObject* GetWeapon() const { return m_pWeapons[m_eWeaponType]; }
 	Engine::CColliderObject* GetAttackCollider() const { return m_pAttackColliders[m_eWeaponType]; }
+	//Engine::CColliderObject* GetHead() const { return m_pHead; }
 	E_WEAPON_TYPE GetWeaponType() const { return m_eWeaponType; }
 
 	void ToggleLockOn();		// CAPS_LOCK 버튼을 눌렀을때
@@ -85,6 +86,7 @@ private:
 
 	Engine::CGameObject* m_pWeapons[E_WEAPON_TYPE::TYPE_END] = { nullptr, };
 	Engine::CColliderObject* m_pAttackColliders[E_WEAPON_TYPE::TYPE_END] = { nullptr, };
+	//Engine::CColliderObject* m_pHead = nullptr;
 	E_WEAPON_TYPE m_eWeaponType = TYPE_END;
 	CStateMgr<CAliceW>* m_pStateMgr = nullptr;
 	Engine::CDynamicMesh* m_pMesh = nullptr;

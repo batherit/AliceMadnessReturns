@@ -12,6 +12,7 @@
 #include "Attribute.h"
 //#include "PlayScene.h"
 #include "PoolScene.h"
+#include "EndScene.h"
 
 CTitleScene::CTitleScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -50,7 +51,8 @@ HRESULT CTitleScene::Ready(void)
 int CTitleScene::Update(const _float& fTimeDelta)
 {
 	if (!m_pFadeInOutUI->IsFadeIn() && !m_pFadeInOutUI->IsProcessing()) {
-		Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
+		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
+		Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CEndScene::Create(m_pGraphicDev));
 	}
 
 	return CScene::Update(fTimeDelta);

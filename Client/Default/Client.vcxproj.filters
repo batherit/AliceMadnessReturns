@@ -337,6 +337,18 @@
     <Filter Include="02. Object\02. GameObject\TitleAlice">
       <UniqueIdentifier>{8fb5980a-560a-44b2-bb9b-a438876edab2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Cake">
+      <UniqueIdentifier>{6692c42c-f33d-40f7-ad32-aa22d1d21cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\07. End">
+      <UniqueIdentifier>{aabe4c55-0bfb-4183-8735-4979f14bf299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\GiantAliceW">
+      <UniqueIdentifier>{2397aa4b-6829-4f69-980c-15dcb2b1c717}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. State\GiantAliceW">
+      <UniqueIdentifier>{89342e05-4857-4704-a8d3-e183088149f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -828,6 +840,27 @@
     <ClInclude Include="..\Code\CameraController_HPFlower.h">
       <Filter>02. Object\07. CameraController</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Cake.h">
+      <Filter>02. Object\02. GameObject\Cake</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\EndScene.h">
+      <Filter>01. Scene\07. End</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GiantAliceW.h">
+      <Filter>02. Object\02. GameObject\GiantAliceW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GiantAliceWState_Attack.h">
+      <Filter>03. State\GiantAliceW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GiantAliceWState_Idle.h">
+      <Filter>03. State\GiantAliceW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GiantAliceWState_Scale.h">
+      <Filter>03. State\GiantAliceW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GiantAliceWState_Walk.h">
+      <Filter>03. State\GiantAliceW</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1267,6 +1300,27 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraController_HPFlower.cpp">
       <Filter>02. Object\07. CameraController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Cake.cpp">
+      <Filter>02. Object\02. GameObject\Cake</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EndScene.cpp">
+      <Filter>01. Scene\07. End</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GiantAliceW.cpp">
+      <Filter>02. Object\02. GameObject\GiantAliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GiantAliceWState_Attack.cpp">
+      <Filter>03. State\GiantAliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GiantAliceWState_Idle.cpp">
+      <Filter>03. State\GiantAliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GiantAliceWState_Scale.cpp">
+      <Filter>03. State\GiantAliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GiantAliceWState_Walk.cpp">
+      <Filter>03. State\GiantAliceW</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

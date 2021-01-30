@@ -414,6 +414,15 @@ _uint CLoading::LoadTextures() {
 }
 
 _uint CLoading::LoadCommonMeshes() {
+	// 纳捞农 积己
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Cake",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/Common/Cake/",
+		L"Cake.X"),
+		E_FAIL);
+
 	// 唱厚 积己
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

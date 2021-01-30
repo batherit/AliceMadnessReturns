@@ -43,6 +43,7 @@ HRESULT CAliceW::Ready_Object(void)
 
 	// Load Colliders
 	LoadColliders(L"AliceW.col");
+	//m_pHead = ExtractColliderFromTag(L"Head");
 
 	// MeshRenderer
 	m_pRenderer = AddComponent<Engine::CMeshRenderer>();
@@ -326,6 +327,7 @@ CAliceW * CAliceW::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CAliceW::Free(void)
 {
+	//Engine::Safe_Release(m_pHead);
 	Engine::Safe_Release(m_pStateMgr);
 	CGameObject::Free();
 }

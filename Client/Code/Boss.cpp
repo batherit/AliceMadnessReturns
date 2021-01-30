@@ -66,13 +66,13 @@ HRESULT CBoss::Ready_Object(void)
 	m_pStateMgr = new CStateMgr<CBoss>(*this);
 	m_pStateMgr->SetNextState(new CBossState_Idle(*this));
 
-	CStaticObject* pStaticObject = CStaticObject::Create(m_pGraphicDev);
-	pStaticObject->SetRenderInfo(L"Sickle");
+	m_pAttackerObject = CStaticObject::Create(m_pGraphicDev);
+	m_pAttackerObject->SetRenderInfo(L"Sickle");
 	//pStaticObject->GetTransform()->Rotate(D3DXToRadian(45.f), D3DXToRadian(90.f), D3DXToRadian(160.f));
-	pStaticObject->GetTransform()->Translate(0.f, -0.5f, 0.f);
-	AddChild(pStaticObject, "Bip01-Prop1");
+	m_pAttackerObject->GetTransform()->Translate(0.f, -0.5f, 0.f);
+	AddChild(m_pAttackerObject, "Bip01-Prop1");
 
-	m_pAttackCollider = pStaticObject->GetColliderFromTag(L"EnemyAttack");
+	m_pAttackCollider = m_pAttackerObject->GetColliderFromTag(L"EnemyAttack");
 	m_pAttackCollider->SetDamage(BOSS_DAMAGE);
 	m_pAttackCollider->SetActivated(false);
 

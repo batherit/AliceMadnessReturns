@@ -282,3 +282,26 @@ _bool CDynamicObject::LoadCollidersInfo()
 	CloseHandle(hFile);
 	return true;
 }
+
+_bool CDynamicObject::LoadCollidersInfo(const _tchar * _pCollidersTag)
+{
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Resource\\Colliders\\");
+
+	lstrcat(szDataPath, _pCollidersTag);
+	lstrcat(szDataPath, L".col");
+
+	HANDLE hFile = CreateFileW(szDataPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return false;
+
+	CGameObject::LoadCollidersInfo(hFile);
+
+	CloseHandle(hFile);
+	return true;
+}

@@ -10,6 +10,7 @@ BEGIN(Client)
 class CMap;
 class CAttribute;
 class CUI_HPBar;
+class CStaticObject;
 template<typename T> class CStateMgr;
 class CBoss : public Engine::CGameObject
 {
@@ -51,11 +52,13 @@ public:
 	//Engine::CColliderObject* GetAttackL() const { return m_pAttackL; }
 	//Engine::CColliderObject* GetAttackR() const { return m_pAttackR; }
 	Engine::CColliderObject* GetAttackCollider() const { return m_pAttackCollider; }
+	CStaticObject* GetAttackerObject() const { return m_pAttackerObject; }
 
 private:
 	CMap* m_pMap = nullptr;
 	CUI_HPBar* m_pHPBar = nullptr;
 
+	CStaticObject* m_pAttackerObject = nullptr;
 	Engine::CColliderObject* m_pAttackCollider = nullptr;
 	Engine::CGameObject* m_pTargetObject = nullptr;
 

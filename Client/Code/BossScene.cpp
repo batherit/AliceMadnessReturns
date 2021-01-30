@@ -306,7 +306,7 @@ HRESULT CBossScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pCameraMgr->AddCameraController(pCameraController);
 
 	// 관중형 카메라 컨트롤러 생성
-	pCameraController = CCameraController_Crowd::Create(m_pGraphicDev);
+	/*pCameraController = CCameraController_Crowd::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pCameraController, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
 	static_cast<CCameraController_Crowd*>(pCameraController)->SetTarget(m_pPlayer);
@@ -318,7 +318,7 @@ HRESULT CBossScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
 	static_cast<CCameraController_Crowd*>(pCameraController)->SetTarget(m_pPlayer);
 	pCameraController->GetTransform()->SetPos(_vec3(-10.f, 30.f, 10.f));
-	pCameraMgr->AddCameraController(pCameraController);
+	pCameraMgr->AddCameraController(pCameraController);*/
 
 	//// 테스트 몬스터(MadCapA) 생성
 	//Engine::CGameObject* pGameObject = CMadCapA::Create(m_pGraphicDev);

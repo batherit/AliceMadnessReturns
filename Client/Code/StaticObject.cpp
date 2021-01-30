@@ -56,6 +56,7 @@ void CStaticObject::Render_Object(void)
 
 	if (!IsVisible())
 		return;
+
 	m_pRenderer->Render(m_pShader->Get_EffectHandle());
 }
 

@@ -33,6 +33,7 @@ public:
 	/*virtual _bool SaveCollidersInfo(HANDLE& _hfOut) override;
 	virtual _bool LoadCollidersInfo(HANDLE& _hfIn) override;*/
 	_bool LoadCollidersInfo();
+	_bool LoadCollidersInfo(const _tchar* _pCollidersTag);
 
 private:
 	Engine::CDynamicMesh* m_pMesh = nullptr;

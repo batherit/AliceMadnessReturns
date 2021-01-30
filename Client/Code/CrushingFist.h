@@ -37,6 +37,8 @@ private:
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CShader* m_pShader = nullptr;
 
+	Engine::CColliderObject* m_pAttackCollider = nullptr;
+
 	CAttribute* m_pPlayerAttribute = nullptr;
 
 	_float m_fElapsedTime = 0.f;	//누적 시간

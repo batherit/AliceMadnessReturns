@@ -2,6 +2,7 @@
 #include "CrushingFist.h"
 #include "AliceW.h"
 #include "Attribute.h"
+#include "PlateEffect.h"
 
 CCrushingFist::CCrushingFist(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -28,6 +29,7 @@ HRESULT CCrushingFist::Ready_Object(void)
 
 	// Load Colliders
 	LoadColliders(L"CrushingFist.col");
+	m_pAttackCollider = GetColliderFromTag(L"EnemyAttack");
 	// m_pCollider->SetActivated(false);
 
 	// MeshRenderer
@@ -66,6 +68,26 @@ int CCrushingFist::Update_Object(const _float & _fDeltaTime)
 					GetTransform()->SetPos(m_vEndPos);
 					m_bIsEnd = true;
 					m_fElapsedTime = 0.f;
+
+					// TODO : 연기 이펙트 추가
+					_vec3 vDir = WORLD_X_AXIS;
+					_vec3 vPos = m_pAttackCollider->GetTransform()->GetPos();
+					vPos.y -= 3.f;
+					_float fRotGap = D3DX_PI / 10.f;
+					_matrix matRot;
+					D3DXMatrixRotationY(&matRot, fRotGap);
+					//D3DXVec3TransformNormal(&vAttackDirXZ, &vAttackDirXZ, &matRot);	
+
+					CPlateEffect* pEffect = nullptr;
+					for (_int i = 0; i < 20; ++i) {
+						D3DXVec3TransformNormal(&vDir, &vDir, &matRot);
+						pEffect = CPlateEffect::Create(m_pGraphicDev);
+						pEffect->SetPlateEffectInfo(L"EFT_Smoke", vPos + vDir * 4.f, _vec2(1.3f, 1.3f), _vec2(1.7f, 1.7f), 0.f, 1.f, _vec3(0.8f, 0.8f, 0.8f));
+						pEffect->GetPhysics()->SetVelocityXZ(_vec2(vDir.x, vDir.z) * Engine::GetNumberBetweenMinMax(3.f, 5.f));
+						pEffect->GetPhysics()->SetResistanceCoefficientXZ(Engine::GetNumberBetweenMinMax(0.85f, 0.95f));
+						pEffect->GetPhysics()->SetGravity(-Engine::GetNumberBetweenMinMax(3.f, 4.f));
+						Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
+					}
 				}
 			}
 			else {

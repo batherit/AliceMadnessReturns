@@ -39,7 +39,7 @@ void CBossState_Attack_SideCut::OnLoaded(void)
 		break;
 	}
 	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.96f);
-	m_rOwner.GetAttackCollider()->SetActivated(true);
+	//m_rOwner.GetAttackCollider()->SetActivated(true);
 
 	if (!m_rOwner.GetTargetObject())
 		m_rOwner.SetTargetObject(*Engine::GetLayer(L"Environment")->GetLayerList(L"Player").begin());
@@ -112,7 +112,7 @@ int CBossState_Attack_SideCut::Update(const _float& _fDeltaTime)
 void CBossState_Attack_SideCut::OnExited(void)
 {
 	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(1.f);
-	m_rOwner.GetAttackCollider()->SetActivated(false);
+	//m_rOwner.GetAttackCollider()->SetActivated(false);
 }
 
 void CBossState_Attack_SideCut::Free(void)

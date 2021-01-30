@@ -2,8 +2,10 @@
 #include "BossState_Attack_IronHand.h"
 #include "BossState_Idle.h"
 #include "BossState_Run.h"
+#include "BossState_Walk.h"
 #include "BossState_Death.h"
-#include "BossState_Attack_JumpDown.h"
+#include "BossState_Attack_Mixer.h"
+//#include "BossState_Attack_JumpDown.h"
 //#include "BossState_Alert.h"
 //#include "BossState_Damage.h"
 //#include "BossState_Attack.h"
@@ -48,10 +50,10 @@ int CBossState_Attack_IronHand::Update(const _float& _fDeltaTime)
 			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Idle(m_rOwner));
 			break;
 		case 1:
-			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Run(m_rOwner));
+			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Walk(m_rOwner));
 			break;
 		case 2:
-			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_JumpDown(m_rOwner));
+			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_Mixer(m_rOwner));
 			break;
 		}
 		return 0;

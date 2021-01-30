@@ -299,9 +299,7 @@ void CAliceW::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)
 		_int a = 10;
 	}
 	else {*/
-		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack") == 0
-			/*|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_L") == 0
-			|| lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack_R") == 0*/) {
+		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"EnemyAttack") == 0) {
 			// 충돌하지 않았다면 어태커에서 제거한다.
 			m_pAttribute->ReleaseAttacker(_tCollisionInfo.pCollidedCollider);
 		}

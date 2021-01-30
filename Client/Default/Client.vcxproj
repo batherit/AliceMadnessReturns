@@ -280,7 +280,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\BossState_Attack_SideCut.h" />
-    <ClInclude Include="..\Code\BossState_Attack_Slam.h" />
+    <ClInclude Include="..\Code\BossState_Attack_Slam.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\BossState_Death.h" />
     <ClInclude Include="..\Code\BossState_Idle.h" />
     <ClInclude Include="..\Code\BossState_Run.h" />
@@ -624,7 +627,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\BossState_Attack_SideCut.cpp" />
-    <ClCompile Include="..\Code\BossState_Attack_Slam.cpp" />
+    <ClCompile Include="..\Code\BossState_Attack_Slam.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\BossState_Death.cpp" />
     <ClCompile Include="..\Code\BossState_Idle.cpp" />
     <ClCompile Include="..\Code\BossState_Run.cpp" />

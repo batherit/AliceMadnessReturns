@@ -38,7 +38,7 @@ void CBossState_Attack_JumpDown::OnLoaded(void)
 
 	m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
 
-	m_rOwner.GetAttackCollider()->SetActivated(true);
+	//m_rOwner.GetAttackCollider()->SetActivated(true);
 }
 
 int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
@@ -130,7 +130,7 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 void CBossState_Attack_JumpDown::OnExited(void)
 {
 	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(1.f);
-	m_rOwner.GetAttackCollider()->SetActivated(false);
+	//m_rOwner.GetAttackCollider()->SetActivated(false);
 }
 
 void CBossState_Attack_JumpDown::Free(void)

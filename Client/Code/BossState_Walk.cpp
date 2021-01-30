@@ -5,7 +5,7 @@
 #include "BossState_Death.h"
 #include "BossState_Attack_SideCut.h"
 #include "BossState_Attack_JumpDown.h"
-#include "BossState_Attack_Slam.h"
+//#include "BossState_Attack_Slam.h"
 #include "BossState_Attack_IronHand.h"
 #include "BossState_Attack_Mixer.h"
 //#include "BossState_Alert.h"
@@ -52,18 +52,15 @@ int CBossState_Walk::Update(const _float& _fDeltaTime)
 	_float fToPlayerLength = D3DXVec3Length(&vToPlayer);
 
 	if (fToPlayerLength <= BOSS_ATTACK_RANGE) {
-		switch (Engine::GetNumberBetweenMinMax(0, 3)) {
+		switch (Engine::GetNumberBetweenMinMax(0, 2)) {
 		case 0:
 			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_SideCut(m_rOwner));
 			break;
 		case 1:
-			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_Slam(m_rOwner));
+			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_IronHand(m_rOwner));
 			break;
 		case 2:
 			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_JumpDown(m_rOwner));
-			break;
-		case 3:
-			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_IronHand(m_rOwner));
 			break;
 		}
 		
@@ -90,17 +87,14 @@ int CBossState_Walk::Update(const _float& _fDeltaTime)
 	}
 	else if (m_fWanderingTime <= 0.f && fToPlayerLength <= BOSS_ATTACK_RANGE) {
 		// 배회 시간이 다되었고 공격범위에 플레이어가 있으면, 바로 공격한다.
-		switch(Engine::GetNumberBetweenMinMax(0, 3)) {
+		switch(Engine::GetNumberBetweenMinMax(0, 2)) {
 		case 0:
 			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_SideCut(m_rOwner));
 			break;
 		case 1:
-			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_Slam(m_rOwner));
-			break;
-		case 2:
 			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_JumpDown(m_rOwner));
 			break;
-		case 3:
+		case 2:
 			m_rOwner.GetStateMgr()->SetNextState(new CBossState_Attack_IronHand(m_rOwner));
 			break;
 		}

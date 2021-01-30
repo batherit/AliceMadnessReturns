@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "TitleScene.h"
+#include "BossScene.h"
 #include "StaticCamera.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
@@ -52,7 +53,8 @@ int CTitleScene::Update(const _float& fTimeDelta)
 {
 	if (!m_pFadeInOutUI->IsFadeIn() && !m_pFadeInOutUI->IsProcessing()) {
 		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
-		Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CEndScene::Create(m_pGraphicDev));
+		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CEndScene::Create(m_pGraphicDev));
+		Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CBossScene::Create(m_pGraphicDev));
 	}
 
 	return CScene::Update(fTimeDelta);
@@ -219,6 +221,8 @@ HRESULT CTitleScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 
 	m_pFadeInOutUI = CUI_FadeInOut::Create(m_pGraphicDev);
 	pLayer->Add_GameObject(m_pFadeInOutUI);
+
+	Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false);
 
 	return S_OK;
 }

@@ -12,6 +12,7 @@
 #include "UI_InGame.h"
 #include "UI_WeaponLock.h"
 #include "UI_LockedWeapon.h"
+#include "CreditScene.h"
 //#include "UI_SpeechBubble.h"
 #include "Cat.h"
 #include "Trigger.h"
@@ -150,7 +151,7 @@ _bool CGiantAliceW::LoadColliders(const _tchar* _pFileName)
 void CGiantAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
 	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Monster") == 0) {
-		exit(-1);
+		Engine::CManagement::GetInstance()->SetNextScene(CCreditScene::Create(m_pGraphicDev));
 	}
 }
 

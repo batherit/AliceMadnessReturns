@@ -26,7 +26,7 @@ void CGiantAliceWState_Attack::OnLoaded(void)
 
 int CGiantAliceWState_Attack::Update(const _float& _fDeltaTime)
 {
-	if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.2f) {
+	if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.35f) {
 		if(!m_rOwner.GetAttackCollider()->IsActivated())
 			m_rOwner.GetAttackCollider()->SetActivated(true);
 	}

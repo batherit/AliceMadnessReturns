@@ -867,6 +867,9 @@
     <ClInclude Include="..\Code\CameraController_Giant.h">
       <Filter>02. Object\07. CameraController</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\CreditScene.h">
+      <Filter>01. Scene\08. Credit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1330,6 +1333,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraController_Giant.cpp">
       <Filter>02. Object\07. CameraController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CreditScene.cpp">
+      <Filter>01. Scene\08. Credit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

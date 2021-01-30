@@ -242,6 +242,7 @@
     <ClInclude Include="..\Code\Cake.h" />
     <ClInclude Include="..\Code\CameraController_Giant.h" />
     <ClInclude Include="..\Code\CameraController_HPFlower.h" />
+    <ClInclude Include="..\Code\CreditScene.h" />
     <ClInclude Include="..\Code\EndScene.h" />
     <ClInclude Include="..\Code\GiantAliceW.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -600,6 +601,7 @@
     <ClCompile Include="..\Code\Cake.cpp" />
     <ClCompile Include="..\Code\CameraController_Giant.cpp" />
     <ClCompile Include="..\Code\CameraController_HPFlower.cpp" />
+    <ClCompile Include="..\Code\CreditScene.cpp" />
     <ClCompile Include="..\Code\EndScene.cpp" />
     <ClCompile Include="..\Code\GiantAliceW.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

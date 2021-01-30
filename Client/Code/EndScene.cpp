@@ -64,11 +64,13 @@ int CEndScene::Update(const _float& fTimeDelta)
 		m_pBoss->GetTransform()->RotateByAxis(fRotAngle * 0.1f, vRotAxis);
 	}
 
-	if (Engine::CCollisionMgr::GetInstance()->IsColliderVisible()) {
-		Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
-	}
-	else {
-		Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
+	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
+		if (Engine::CCollisionMgr::GetInstance()->IsColliderVisible()) {
+			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
+		}
+		else {
+			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
+		}
 	}
 
 	return CScene::Update(fTimeDelta);

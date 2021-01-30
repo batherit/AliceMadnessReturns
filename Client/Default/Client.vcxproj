@@ -240,6 +240,7 @@
     <ClInclude Include="..\Code\BigGuyBState_Talk.h" />
     <ClInclude Include="..\Code\BigGuyBState_Walk.h" />
     <ClInclude Include="..\Code\Cake.h" />
+    <ClInclude Include="..\Code\CameraController_Giant.h" />
     <ClInclude Include="..\Code\CameraController_HPFlower.h" />
     <ClInclude Include="..\Code\EndScene.h" />
     <ClInclude Include="..\Code\GiantAliceW.h">
@@ -597,6 +598,7 @@
     <ClCompile Include="..\Code\BigGuyBState_Talk.cpp" />
     <ClCompile Include="..\Code\BigGuyBState_Walk.cpp" />
     <ClCompile Include="..\Code\Cake.cpp" />
+    <ClCompile Include="..\Code\CameraController_Giant.cpp" />
     <ClCompile Include="..\Code\CameraController_HPFlower.cpp" />
     <ClCompile Include="..\Code\EndScene.cpp" />
     <ClCompile Include="..\Code\GiantAliceW.cpp">

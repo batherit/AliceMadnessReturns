@@ -21,14 +21,20 @@ CGiantAliceWState_Attack::~CGiantAliceWState_Attack()
 void CGiantAliceWState_Attack::OnLoaded(void)
 {
 	m_rOwner.GetPhysics()->SetSpeed(0.f);
-	m_rOwner.GetDynamicMesh()->Play_Animation(ANIM::AliceGiant_Attack03);
+	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceGiant_Attack03);
 }
 
 int CGiantAliceWState_Attack::Update(const _float& _fDeltaTime)
 {
-	if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() > 0.99f) {
+	if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.2f) {
+		if(!m_rOwner.GetAttackCollider()->IsActivated())
+			m_rOwner.GetAttackCollider()->SetActivated(true);
+	}
+
+	if (m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()) {
 		m_rOwner.GetStateMgr()->SetNextState(new CGiantAliceWState_Idle(m_rOwner));
 	}
+
 
 	return 0;
 }
@@ -37,6 +43,7 @@ void CGiantAliceWState_Attack::OnExited(void)
 {
 	//m_pWeaponCollider->SetActivated(false);
 	//m_rOwner.GetAttackCollider()->SetActivated(false);
+	m_rOwner.GetAttackCollider()->SetActivated(false);
 }
 
 void CGiantAliceWState_Attack::Free(void)

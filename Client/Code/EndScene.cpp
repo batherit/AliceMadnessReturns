@@ -11,7 +11,7 @@
 #include "UI_Cursor.h"
 #include "Attribute.h"
 #include "GiantAliceW.h"
-#include "CameraController_Player.h"
+#include "CameraController_Giant.h"
 //#include "PlayScene.h"
 #include "PoolScene.h"
 #include "Map.h"
@@ -53,6 +53,23 @@ HRESULT CEndScene::Ready(void)
 
 int CEndScene::Update(const _float& fTimeDelta)
 {
+	if (m_pBoss && m_pPlayer) {
+		// 보스는 항상 플레이어를 바라보도록 한다.
+		_vec3 vToTargetDir = m_pPlayer->GetTransform()->GetPos() - m_pBoss->GetTransform()->GetPos();
+		_vec3 vLook = m_pBoss->GetTransform()->GetLook();
+		_vec3 vToTargetDirXZ = _vec3(vToTargetDir.x, 0.f, vToTargetDir.z);
+		D3DXVec3Normalize(&vToTargetDirXZ, &vToTargetDirXZ);
+		_vec3 vRotAxis = Engine::GetRotationAxis(vLook, vToTargetDirXZ);
+		_float fRotAngle = Engine::GetRotationAngle(vLook, vToTargetDirXZ);
+		m_pBoss->GetTransform()->RotateByAxis(fRotAngle * 0.1f, vRotAxis);
+	}
+
+	if (Engine::CCollisionMgr::GetInstance()->IsColliderVisible()) {
+		Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
+	}
+	else {
+		Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
+	}
 
 	return CScene::Update(fTimeDelta);
 }
@@ -164,24 +181,28 @@ HRESULT CEndScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
 	m_pPlayer->GetTransform()->SetPos(_vec3(10.f, 0.f, 0.f));
+	m_pPlayer->GetTransform()->RotateByUp(-D3DX_PI * 0.5f);
 	//m_pPlayer->GetTransform()->SetPosY(1.f);
 
-	//// 플레이어 카메라 컨트롤러 생성(0)
-	//Engine::CCameraController* pCameraController = CCameraController_Player::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pCameraController, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
-	//static_cast<CCameraController_Player*>(pCameraController)->SetPlayer(m_pPlayer);
-	//pCameraMgr->AddCameraController(pCameraController);
-	//pCameraMgr->ChangeCameraController(0, 0.5f);
-
-	CDynamicObject* pGameObject = CDynamicObject::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
-	pGameObject->GetTransform()->Translate(_vec3(0.f, 0.f, 0.f));
-	pGameObject->SetRenderInfo(L"Boss");
-	pGameObject->LoadCollidersInfo(L"EndBoss");
-	pGameObject->GetDynamicMesh()->Set_AnimationSet(ANIM::Executioner_Giant_Laugh03);
+	// 보스 생성
+	m_pBoss = CDynamicObject::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pBoss, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", m_pBoss), E_FAIL);
+	m_pBoss->GetTransform()->Translate(_vec3(0.f, 0.f, 0.f));
+	m_pBoss->SetRenderInfo(L"Boss");
+	Engine::CCollisionMgr::GetInstance()->ExtractGameObject(m_pBoss);
+	m_pBoss->LoadCollidersInfo(L"EndBoss");
+	m_pBoss->GetDynamicMesh()->Set_AnimationSet(ANIM::Executioner_Giant_Laugh03);
 	//dynamic_cast<CBoss*>(pGameObject)->SetHPBarUI(pUIInGame->GetHPBar());
+
+	//// 플레이어 카메라 컨트롤러 생성(0)
+	CCameraController_Giant* pCameraController = CCameraController_Giant::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pCameraController, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CameraController", pCameraController), E_FAIL);
+	pCameraController->SetTargetObject(m_pPlayer->GetHead());
+	pCameraController->SetBenchmarkObject(m_pBoss);
+	pCameraMgr->AddCameraController(pCameraController);
+	pCameraMgr->ChangeCameraController(0, 0.5f);
 
 	// 스카이 박스 생성
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);

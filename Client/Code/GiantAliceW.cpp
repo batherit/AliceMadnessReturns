@@ -42,6 +42,8 @@ HRESULT CGiantAliceW::Ready_Object(void)
 	// Load Colliders
 	LoadColliders(L"GiantAliceW.col");
 	m_pHead = ExtractColliderFromTag(L"Head");
+	m_pAttackCollider = GetColliderFromTag(L"Foot");
+	m_pAttackCollider->SetActivated(false);
 
 	// MeshRenderer
 	m_pRenderer = AddComponent<Engine::CMeshRenderer>();
@@ -147,6 +149,9 @@ _bool CGiantAliceW::LoadColliders(const _tchar* _pFileName)
 
 void CGiantAliceW::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
+	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Monster") == 0) {
+		exit(-1);
+	}
 }
 
 void CGiantAliceW::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)
@@ -182,9 +187,6 @@ _bool CGiantAliceW::IsAttacking(const _float & _fDeltaTime)
 
 _bool CGiantAliceW::IsMoving(const _float & _fDeltaTime, _vec3 * _pDir)
 {
-	if (!Engine::CDirectInputMgr::GetInstance()->IsMouseFixed())
-		return false;
-
 	_matrix matView;
 	GetGraphicDev()->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, nullptr, &matView);

@@ -19,7 +19,8 @@ CGiantAliceWState_Walk::~CGiantAliceWState_Walk()
 
 void CGiantAliceWState_Walk::OnLoaded(void)
 {
-	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceI_Walk);
+	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceGiant_Walk);
+	m_pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 	//m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::GiantAliceW_WP1_Walk);
 }
 
@@ -29,7 +30,7 @@ int CGiantAliceWState_Walk::Update(const _float& _fDeltaTime)
 	// Walk => Death, Jump, Idle, Attack
 	if (m_rOwner.IsMoving(_fDeltaTime, &vDir)) {
 		_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
-		m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED);
+		m_rOwner.GetPhysics()->SetVelocityXZ(vDirXZ * ALICE_RUN_SPEED * 0.7f);
 		// 플레이어 방향 전환이 이루어졌다면 회전시키기
 		_vec3 vRotAxis = Engine::GetRotationAxis(m_rOwner.GetTransform()->GetLook(), vDir);
 		_float vRotAngle = Engine::GetRotationAngle(m_rOwner.GetTransform()->GetLook(), vDir) * 0.25f;
@@ -38,6 +39,8 @@ int CGiantAliceWState_Walk::Update(const _float& _fDeltaTime)
 	else {
 		m_rOwner.GetStateMgr()->SetNextState(new CGiantAliceWState_Idle(m_rOwner));
 	}
+
+	m_pCameraMgr->GetCamera()->Shake(2.f, 0.08f * (1.f - Engine::GetWeightByValue(D3DXVec3Length(&m_rOwner.GetTransform()->GetPos()), 2.f, 20.f)), 10);
 
 	return 0;
 }

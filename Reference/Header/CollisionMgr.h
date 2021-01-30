@@ -16,6 +16,7 @@ private:
 
 public:
 	_bool AddGameObject(CGameObject* _pGameObject);
+	void ExtractGameObject(CGameObject* _pGameObject);
 	void ProcessCollision();
 	void ClearGameObjectList();
 

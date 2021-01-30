@@ -93,6 +93,7 @@ _bool CDynamicObject::SetRenderInfo(const _tchar * _pMeshTag, Engine::RENDERID _
 		Engine::Safe_Release(pComponent);
 	}
 
+
 	// 새로운 메시로 세팅한다.
 	m_mapComponent[Engine::ID_STATIC][Engine::CDynamicMesh::GetComponentTag()] = m_pMesh;
 	m_pRenderer->SetRenderInfo(Engine::RENDER_DEFERRED, m_pMesh);

@@ -43,6 +43,16 @@ _bool CCollisionMgr::AddGameObject(CGameObject * _pGameObject)
 	return true;
 }
 
+void CCollisionMgr::ExtractGameObject(CGameObject * _pGameObject)
+{
+	if (!_pGameObject)
+		return;	
+
+	auto iter = find(m_ObjectList.begin(), m_ObjectList.end(), _pGameObject);
+	if (iter != m_ObjectList.end())
+		m_ObjectList.erase(iter);
+}
+
 void CCollisionMgr::ProcessCollision()
 {
 	// 충돌 체크를 진행한다.

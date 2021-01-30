@@ -28,12 +28,12 @@ int CGiantAliceWState_Scale::Update(const _float& _fDeltaTime)
 {
 	_float fProgress = m_rOwner.GetDynamicMesh()->GetAnimationProgress();
 	if (fProgress >= 0.99f) {
-		m_rOwner.GetTransform()->SetScaleXYZ(5.f, 5.f, 5.f);
+		m_rOwner.GetTransform()->SetScaleXYZ(4.f, 4.f, 4.f);
 		m_rOwner.GetStateMgr()->SetNextState(new CGiantAliceWState_Idle(m_rOwner));
 		return 1;
 	}
 	else {
-		_float fScale = Engine::GetValueByWeight(fProgress, 1.f, 5.f);
+		_float fScale = Engine::GetValueByWeight(fProgress, 1.f, 4.f);
 		m_rOwner.GetTransform()->SetScaleXYZ(fScale, fScale, fScale);
 	}
 

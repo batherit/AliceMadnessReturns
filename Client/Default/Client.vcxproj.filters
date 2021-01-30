@@ -349,6 +349,9 @@
     <Filter Include="03. State\GiantAliceW">
       <UniqueIdentifier>{89342e05-4857-4704-a8d3-e183088149f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\08. Credit">
+      <UniqueIdentifier>{81a02e12-7393-42c2-bcc1-69f6698dd44f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -861,6 +864,9 @@
     <ClInclude Include="..\Code\GiantAliceWState_Walk.h">
       <Filter>03. State\GiantAliceW</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\CameraController_Giant.h">
+      <Filter>02. Object\07. CameraController</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1321,6 +1327,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\GiantAliceWState_Walk.cpp">
       <Filter>03. State\GiantAliceW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraController_Giant.cpp">
+      <Filter>02. Object\07. CameraController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

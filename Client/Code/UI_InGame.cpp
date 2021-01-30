@@ -80,6 +80,7 @@ HRESULT CUI_InGame::Ready_Object(void)
 	
 	// Boss HP
 	m_pHPBar = CUI_HPBar::Create(m_pGraphicDev);
+	m_pHPBar->Off();
 	AddChild(m_pHPBar);
 
 	m_pCursor = CUI_Cursor::Create(m_pGraphicDev);

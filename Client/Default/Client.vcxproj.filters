@@ -825,6 +825,9 @@
     <ClInclude Include="..\Code\TitleAlice.h">
       <Filter>02. Object\02. GameObject\TitleAlice</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\CameraController_HPFlower.h">
+      <Filter>02. Object\07. CameraController</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1261,6 +1264,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\TitleAlice.cpp">
       <Filter>02. Object\02. GameObject\TitleAlice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraController_HPFlower.cpp">
+      <Filter>02. Object\07. CameraController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

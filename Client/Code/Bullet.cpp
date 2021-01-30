@@ -41,6 +41,10 @@ int CBullet::Update_Object(const _float & _fDeltaTime)
 		SetValid(false);
 		return 1;
 	}
+	else if (!IsActivated() && (m_fElapsedTime += _fDeltaTime) >= 1.f) {
+		SetValid(false);
+		return 1;
+	}
 
 	CStaticObject::Update_Object(_fDeltaTime);
 
@@ -57,11 +61,15 @@ void CBullet::Render_Object(void)
 void CBullet::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
 	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Monster") == 0) {
-		_tCollisionInfo.pCollidedObject->GetComponent<CAttribute>()->Damaged(BULLET_DAMAGE + Engine::GetNumberBetweenMinMax(0.f, 1.f));
+		CAttribute* pAttribute = _tCollisionInfo.pCollidedObject->GetComponent<CAttribute>();
+		if (pAttribute) 
+			pAttribute->Damaged(BULLET_DAMAGE + Engine::GetNumberBetweenMinMax(0.f, 1.f));
 
 		CEFT_BulletAttack* pEffect = CEFT_BulletAttack::Create(m_pGraphicDev);
 		pEffect->SetInfo((_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos() + _tCollisionInfo.pCollidedMyCollider->GetTransform()->GetPos()) * 0.5f);
 		Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
+
+		SetActivated(false);
 	}
 }
 

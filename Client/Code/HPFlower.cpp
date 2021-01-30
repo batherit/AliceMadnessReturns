@@ -52,8 +52,10 @@ int CHPFlower::Update_Object(const _float & _fDeltaTime)
 			m_pAlice->GetTransform()->SetPos(GetTransform()->GetPos());
 			m_pMesh->Set_AnimationSet(ANIM::ShrinkFlower_Eat);
 			m_bIsEating = true;
+			// TODO : 플라워 카메라 컨트롤러로 변경
 		}
 		else if (m_bIsEating && !m_pAlice->IsSmalling()) {
+			// TODO : 플레이어 카메라 컨트롤러로 변경
 			SetValid(false);
 			return 1;
 		}

@@ -32,6 +32,7 @@ public:
 private:
 	Engine::CPhysics* m_pPhysics = nullptr;
 	_float m_fDeathLength = 100.f;
+	_float m_fElapsedTime = 0.f;
 };
 
 END

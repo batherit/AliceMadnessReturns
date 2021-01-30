@@ -139,6 +139,8 @@ namespace Client
 #define MINIGRUNT_DAMAGE	4.f
 #define BOSS_DAMAGE			8.f
 
+#define PIGFLY_SPEED		10.f
+
 // 키입력 관련
 //#define	KM_LEFT		0x00000001
 //#define	KM_RIGHT	0x00000002 

@@ -148,4 +148,5 @@ void CPopDomino::EventOn()
 {
 	m_bIsEventOn = true;
 	m_bIsVisible = true;
+	m_fDissolveAmount = 0.f;
 }

@@ -46,7 +46,7 @@ HRESULT CPigFly::Ready_Object(void)
 
 	// Physics
 	m_pPhysics = AddComponent<Engine::CPhysics>();
-	m_pPhysics->SetSpeed(ALICE_RUN_SPEED);
+	m_pPhysics->SetSpeed(PIGFLY_SPEED);
 
 	// Route
 	m_pRoute = AddComponent<CRoute>();
@@ -102,19 +102,45 @@ int CPigFly::Update_Object(const _float & _fDeltaTime)
 	case STEP_PROCEE_EVENT:
 		if (m_pRoute->IsNextPositionExisted()) {
 			_vec3 vPos = GetTransform()->GetPos();
-			_vec3 vPostPos = m_pRoute->GetNextPosition(_fDeltaTime, ALICE_RUN_SPEED);
-			if (vPos != vPostPos) {
-				_vec3 vNewLook;
-				D3DXVec3Normalize(&vNewLook, &(vPostPos - vPos));
-				GetTransform()->ResetRightUpLook(&(vPos + vNewLook), &WORLD_Y_AXIS);
-				
-			}
-			GetTransform()->SetPos(vPostPos);
+			_vec3 vPostPos = m_pRoute->GetNextPosition(_fDeltaTime, PIGFLY_SPEED * 1.1f);
+
+			// 목표 지점으로의 방향 벡터를 구한다.
+			_vec3 vToTargetPos = vPostPos - vPos;
+			D3DXVec3Normalize(&vToTargetPos, &vToTargetPos);
+			_matrix matRot;
+			_vec3 vLook = GetTransform()->GetLook();
+			_vec3 vRotAxis = Engine::GetRotationAxis(vLook, vToTargetPos);
+			_float vRotAngle = Engine::GetRotationAngle(vLook, vToTargetPos) * 0.25f;
+			D3DXVec3TransformNormal(&vLook, &vLook, D3DXMatrixRotationAxis(&matRot, &vRotAxis, vRotAngle));
+			GetTransform()->ResetRightUpLook(&(vPos + vLook), &WORLD_Y_AXIS);
+
+			m_pPhysics->SetDirection(GetTransform()->GetLook());
+			GetTransform()->SetPos(m_pPhysics->GetUpdatedPos(_fDeltaTime));
 		}
 		else {
-			// 이벤트 처리
-			ProcessEvent();
-			SetValid(false);
+			if (D3DXVec3LengthSq(&(m_pRoute->GetEndPosition() - GetTransform()->GetPos())) <= 0.1f) {
+				// 이벤트 처리
+				ProcessEvent();
+				SetValid(false);
+			}
+			else {
+				_vec3 vPos = GetTransform()->GetPos();
+				_vec3 vPostPos = m_pRoute->GetEndPosition();
+
+				// 목표 지점으로의 방향 벡터를 구한다.
+				_vec3 vToTargetPos = vPostPos - vPos;
+				D3DXVec3Normalize(&vToTargetPos, &vToTargetPos);
+				_matrix matRot;
+				_vec3 vLook = GetTransform()->GetLook();
+				_vec3 vRotAxis = Engine::GetRotationAxis(vLook, vToTargetPos);
+				_float vRotAngle = Engine::GetRotationAngle(vLook, vToTargetPos) * 0.25f;
+				D3DXVec3TransformNormal(&vLook, &vLook, D3DXMatrixRotationAxis(&matRot, &vRotAxis, vRotAngle));
+				GetTransform()->ResetRightUpLook(&(vPos + vLook), &WORLD_Y_AXIS);
+
+				m_pPhysics->SetDirection(GetTransform()->GetLook());
+				GetTransform()->SetPos(m_pPhysics->GetUpdatedPos(_fDeltaTime));
+			}
+			
 			return 1;
 		}
 		break;

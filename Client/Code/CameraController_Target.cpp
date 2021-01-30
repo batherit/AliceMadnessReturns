@@ -53,7 +53,7 @@ void CCameraController_Target::ControlCamera(const _float& _fDeltaTime, Engine::
 		//D3DXMatrixRotationAxis(&matRot, &vRotAxis, fRotAngle * 0.2f);
 		//D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, &matRot);
 
-		m_fStickLen = Engine::GetValueByWeight(Engine::Clamp(D3DXVec3Dot(&WORLD_Y_AXIS, &m_vStickDir), 0.f, 1.f), 4.0f, 10.f);
+		m_fStickLen = Engine::GetValueByWeight(Engine::Clamp(D3DXVec3Dot(&WORLD_Y_AXIS, &m_vStickDir), 0.f, 1.f), 3.0f, 9.f);
 		m_fStickLen *= Engine::GetValueByWeight(Engine::GetWeightByValue(Engine::Clamp(fLength, 1.5f, 10.f), 1.f, 10.f), 0.8f, 1.5f);
 
 		if (Engine::CDirectInputMgr::GetInstance()->IsMouseFixed()) {

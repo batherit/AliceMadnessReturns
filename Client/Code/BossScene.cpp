@@ -190,6 +190,12 @@ void CBossScene::OnLoaded()
 
 void CBossScene::OnExited()
 {
+	// 플레이어 데이터 저장
+	auto* pDataMgr = CDataMgr::GetInstance();
+	if (pDataMgr) {
+		pDataMgr->SaveAliceWData(m_pPlayer);
+		pDataMgr->SetValidData(true);
+	}
 }
 
 CBossScene * CBossScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -274,6 +280,12 @@ HRESULT CBossScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
 	m_pPlayer->GetTransform()->SetPos(pMap->GetCurSpawnPoint());
 	//m_pPlayer->GetTransform()->SetPosY(1.f);
+	if (CDataMgr::GetInstance()->IsValidData()) {
+		CAttribute* pAttribute = m_pPlayer->GetComponent<CAttribute>();
+		auto* pDataMgr = CDataMgr::GetInstance();
+		pAttribute->SetHP(pDataMgr->GetCurHP(), pDataMgr->GetMaxHP());
+		m_pPlayer->SetToothNum(pDataMgr->GetToothNum());
+	}
 
 	// 플레이어 카메라 컨트롤러 생성(0)
 	Engine::CCameraController* pCameraController = CCameraController_Player::Create(m_pGraphicDev);

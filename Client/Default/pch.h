@@ -43,4 +43,6 @@ using namespace std;
 #pragma comment(lib, "fmodex_vc.lib")
 #include "SoundMgr.h"
 
+#include "DataMgr.h"
+
 #endif //PCH_H

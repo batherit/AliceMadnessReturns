@@ -75,6 +75,7 @@ public:
 	_bool ChangeLockOnTarget();	// TAB버튼을 눌렀을때 (락온이 켜져있을때 유효) // 타겟 대상이 바뀌면 true반환
 	Engine::CGameObject* GetTargetObject() const { return m_pTargetObject; }
 
+	void SetToothNum(_int _iToothNum) { m_iToothNum = _iToothNum; }
 	void IncreaseTooth(_int _iAmount) { m_iToothNum += _iAmount; }
 	void DecreaseTooth(_int _iAmount) { m_iToothNum -= _iAmount; if (_iAmount < 0) _iAmount = 0; }
 	_int GetToothNum() const { return m_iToothNum; }

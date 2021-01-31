@@ -243,6 +243,7 @@
     <ClInclude Include="..\Code\CameraController_Giant.h" />
     <ClInclude Include="..\Code\CameraController_HPFlower.h" />
     <ClInclude Include="..\Code\CreditScene.h" />
+    <ClInclude Include="..\Code\DataMgr.h" />
     <ClInclude Include="..\Code\EndScene.h" />
     <ClInclude Include="..\Code\GiantAliceW.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -380,10 +381,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\MirrorPad.h" />
-    <ClInclude Include="..\Code\MouseMgr.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="..\Code\MovingPlatform.h" />
     <ClInclude Include="..\Code\PigFly.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -602,6 +599,7 @@
     <ClCompile Include="..\Code\CameraController_Giant.cpp" />
     <ClCompile Include="..\Code\CameraController_HPFlower.cpp" />
     <ClCompile Include="..\Code\CreditScene.cpp" />
+    <ClCompile Include="..\Code\DataMgr.cpp" />
     <ClCompile Include="..\Code\EndScene.cpp" />
     <ClCompile Include="..\Code\GiantAliceW.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -739,10 +737,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\MirrorPad.cpp" />
-    <ClCompile Include="..\Code\MouseMgr.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\Code\MovingPlatform.cpp" />
     <ClCompile Include="..\Code\PigFly.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

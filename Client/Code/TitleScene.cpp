@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "TitleScene.h"
 #include "BossScene.h"
+#include "MiniGameScene.h"
 #include "StaticCamera.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
@@ -54,7 +55,8 @@ int CTitleScene::Update(const _float& fTimeDelta)
 	if (!m_pFadeInOutUI->IsFadeIn() && !m_pFadeInOutUI->IsProcessing()) {
 		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
 		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CEndScene::Create(m_pGraphicDev));
-		Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CBossScene::Create(m_pGraphicDev));
+		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CBossScene::Create(m_pGraphicDev));
+		Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CMiniGameScene::Create(m_pGraphicDev));
 	}
 
 	return CScene::Update(fTimeDelta);

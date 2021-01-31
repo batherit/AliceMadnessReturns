@@ -242,6 +242,7 @@
     <ClInclude Include="..\Code\Cake.h" />
     <ClInclude Include="..\Code\CameraController_Giant.h" />
     <ClInclude Include="..\Code\CameraController_HPFlower.h" />
+    <ClInclude Include="..\Code\CannonBall.h" />
     <ClInclude Include="..\Code\CreditScene.h" />
     <ClInclude Include="..\Code\DataMgr.h" />
     <ClInclude Include="..\Code\EndScene.h" />
@@ -253,6 +254,9 @@
     <ClInclude Include="..\Code\GiantAliceWState_Idle.h" />
     <ClInclude Include="..\Code\GiantAliceWState_Scale.h" />
     <ClInclude Include="..\Code\GiantAliceWState_Walk.h" />
+    <ClInclude Include="..\Code\MiniGameScene.h" />
+    <ClInclude Include="..\Code\Shark.h" />
+    <ClInclude Include="..\Code\Ship.h" />
     <ClInclude Include="..\Code\TitleAlice.h" />
     <ClInclude Include="..\Code\UI_HPBar.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -598,6 +602,7 @@
     <ClCompile Include="..\Code\Cake.cpp" />
     <ClCompile Include="..\Code\CameraController_Giant.cpp" />
     <ClCompile Include="..\Code\CameraController_HPFlower.cpp" />
+    <ClCompile Include="..\Code\CannonBall.cpp" />
     <ClCompile Include="..\Code\CreditScene.cpp" />
     <ClCompile Include="..\Code\DataMgr.cpp" />
     <ClCompile Include="..\Code\EndScene.cpp" />
@@ -609,6 +614,9 @@
     <ClCompile Include="..\Code\GiantAliceWState_Idle.cpp" />
     <ClCompile Include="..\Code\GiantAliceWState_Scale.cpp" />
     <ClCompile Include="..\Code\GiantAliceWState_Walk.cpp" />
+    <ClCompile Include="..\Code\MiniGameScene.cpp" />
+    <ClCompile Include="..\Code\Shark.cpp" />
+    <ClCompile Include="..\Code\Ship.cpp" />
     <ClCompile Include="..\Code\TitleAlice.cpp" />
     <ClCompile Include="..\Code\UI_HPBar.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

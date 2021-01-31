@@ -69,6 +69,7 @@ _uint CLoading::Loading_ForStage(void)
 	LoadCommonMeshes();
 	LoadPoolSceneMeshes();
 	LoadPlaySceneMeshes();
+	LoadMiniGameSceneMeshes();
 	LoadPlay2SceneMeshes();
 	LoadBossSceneMeshes();
 
@@ -947,6 +948,35 @@ _uint CLoading::LoadPlaySceneMeshes() {
 		E_FAIL);
 
 	return S_OK;
+}
+
+_uint CLoading::LoadMiniGameSceneMeshes() {
+	// 某稠杭 积己
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"CannonBall",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"CannonBall.X"),
+		E_FAIL);
+
+	// 硅 积己
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Ship",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"Ship.X"),
+		E_FAIL);
+
+	// 惑绢 积己
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Shark",
+		Engine::TYPE_DYNAMIC,
+		L"../../Resource/Mesh/DynamicMesh/Shark/",
+		L"Shark.X"),
+		E_FAIL);
 }
 
 _uint CLoading::LoadPlay2SceneMeshes() {

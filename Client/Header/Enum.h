@@ -637,7 +637,17 @@ namespace ANIM {
 		BUNNYBOMB_END
 	};
 
-
+	// »À»ó¾î
+	enum E_SHARK_ID {
+		Shark_Charging,                           //0	frame:[61]
+		Shark_Hit,                                //1	frame:[68]
+		Shark_Stuck,                              //2	frame:[41]
+		Shark_swim,                               //3	frame:[121]
+		Shark_Swim_Fast,                          //4	frame:[61]
+		Shark_Turn_Left,                          //5	frame:[76]
+		Shark_Turn_Right,                         //6	frame:[76]
+		SHARK_END
+	};
 };
 
 

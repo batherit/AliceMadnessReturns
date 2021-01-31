@@ -355,6 +355,15 @@
     <Filter Include="07. Manager\DataMgr">
       <UniqueIdentifier>{e48abde3-ceeb-415d-a2ed-2a75f5f97328}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Ship">
+      <UniqueIdentifier>{9932bf39-c203-402b-a3e8-7bfd229a35b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\Shark">
+      <UniqueIdentifier>{10dd8150-f116-4f98-9f09-bca1f5fa2eee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\CannonBall">
+      <UniqueIdentifier>{daa6d52d-835c-4b3b-8b33-39451ec0752d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -873,6 +882,18 @@
     <ClInclude Include="..\Code\DataMgr.h">
       <Filter>07. Manager\DataMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\MiniGameScene.h">
+      <Filter>01. Scene\09. MiniGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Ship.h">
+      <Filter>02. Object\02. GameObject\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shark.h">
+      <Filter>02. Object\02. GameObject\Shark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CannonBall.h">
+      <Filter>02. Object\02. GameObject\CannonBall</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1339,6 +1360,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\DataMgr.cpp">
       <Filter>07. Manager\DataMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiniGameScene.cpp">
+      <Filter>01. Scene\09. MiniGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ship.cpp">
+      <Filter>02. Object\02. GameObject\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shark.cpp">
+      <Filter>02. Object\02. GameObject\Shark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CannonBall.cpp">
+      <Filter>02. Object\02. GameObject\CannonBall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

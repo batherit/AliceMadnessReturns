@@ -141,6 +141,9 @@ namespace Client
 
 #define PIGFLY_SPEED		10.f
 
+#define SEA_HALF_WIDTH		25.f
+#define SEA_HALF_HEIGHT		20.f
+
 // 키입력 관련
 //#define	KM_LEFT		0x00000001
 //#define	KM_RIGHT	0x00000002 

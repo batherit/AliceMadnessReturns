@@ -9,6 +9,7 @@
 BEGIN(Client)
 //class CGameObject;
 class CAliceW;
+class CShip;
 class CDataMgr : public CBase
 {
 	DECLARE_SINGLETON(CDataMgr)
@@ -21,6 +22,7 @@ public:
 	_bool IsValidData() const { return m_bIsValidData; }
 
 	void SaveAliceWData(CAliceW* _pAliceW);
+	void SaveShipData(CShip* _pShip);
 	_int GetToothNum() const { return m_iToothNum; }
 	_float GetCurHP() const { return m_fCurHP; }
 	_float GetMaxHP() const { return m_fMaxHP; }
@@ -32,8 +34,8 @@ private:
 	_bool m_bIsValidData = false;
 
 	_int m_iToothNum = 0;
-	_float m_fCurHP = 0.f;
-	_float m_fMaxHP = 0.f;
+	_float m_fCurHP = 64.f;
+	_float m_fMaxHP = 64.f;
 };
 
 END

@@ -6,6 +6,7 @@
 #include "Attribute.h"
 #include "CannonBall.h"
 #include "Ship.h"
+#include "ToothShip.h"
 
 CShark::CShark(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -32,6 +33,7 @@ HRESULT CShark::Ready_Object(void)
 
 	// Load Colliders
 	LoadColliders(L"Shark.col");
+	m_pCollider = GetColliderFromTag(L"Monster");
 
 	// MeshRenderer
 	m_pRenderer = AddComponent<Engine::CMeshRenderer>();
@@ -44,18 +46,17 @@ HRESULT CShark::Ready_Object(void)
 	// Physics
 	m_pPhysics = AddComponent<Engine::CPhysics>();
 	m_pPhysics->SetDirection(_vec3(-1.f, 0.f, 0.f));
-	m_pPhysics->SetSpeed(Engine::GetNumberBetweenMinMax(5.f, 8.f));
+	m_pPhysics->SetSpeed(Engine::GetNumberBetweenMinMax(8.f, 11.f));
 
 	//GetTransform()->SetPos(0.f, -15.f, 0.f);
 	GetTransform()->RotateByUp(-D3DX_PI * 0.5f);
 
 	// Attribute
 	m_pAttribute = AddComponent<CAttribute>();
-	m_pAttribute->SetHP(7.f, 12.f);
+	m_pAttribute->SetHP(3.f, 5.f);
 
 	// Dissolve Texture
 	m_pTexture = static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"EFT_Dissolve"));
-
 	m_fAttackDelayTime = Engine::GetNumberBetweenMinMax(3.f, 5.f);
 
 	return S_OK;
@@ -74,12 +75,35 @@ int CShark::Update_Object(const _float & _fDeltaTime)
 
 		if ((m_fAttackDelayTime -= _fDeltaTime) <= 0.f) {
 			Bang();
-			m_fAttackDelayTime = Engine::GetNumberBetweenMinMax(3.f, 5.f);
+			m_fAttackDelayTime = Engine::GetNumberBetweenMinMax(2.f, 4.f);
 		}
 	}
+	else {
+		if (!m_bIsDeathInit) {
+			m_pPhysics->SetGravity(-3.f);
+			m_pPhysics->SetResistanceCoefficientXZ(0.95f);
+			m_pMesh->Set_AnimationSet(ANIM::Shark_swim);
+			CToothShip* pToothShip = nullptr;
+			_vec3 vPos = GetTransform()->GetPos();
+			auto pLayer = Engine::GetLayer(L"Environment");
+			for (_int i = 0; i < 2; ++i) {
+				pToothShip = CToothShip::Create(m_pGraphicDev);
+				pToothShip->SetPopTooth(vPos);
+				pLayer->Add_GameObject(pToothShip);
+			}
+			m_pCollider->SetActivated(false);
+			m_bIsDeathInit = true;
+		}
 
-	
-
+		if ((m_fDeathAnimTime -= _fDeltaTime) > 0.f) {
+			m_fDissolveAmount = 1.f - m_fDeathAnimTime / 2.f;
+			GetTransform()->RotateByLook(D3DX_PI * _fDeltaTime * 0.2f);
+		}
+		else {
+			SetValid(false);
+			return 1;
+		}
+	}
 	
 
 	GetTransform()->SetPos(m_pPhysics->GetUpdatedPos(_fDeltaTime));
@@ -139,6 +163,9 @@ _bool CShark::LoadColliders(const _tchar* _pFileName)
 
 void CShark::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
+	if (m_pAttribute->IsDead())
+		return;
+
 	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
 		CShip* pShip = dynamic_cast<CShip*>(_tCollisionInfo.pCollidedObject);
 		if (pShip && !pShip->IsAttacked()) {

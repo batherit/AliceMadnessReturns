@@ -1,5 +1,5 @@
-#ifndef Play2Scene_h__
-#define Play2Scene_h__
+#ifndef MiniGameScene_h__
+#define MiniGameScene_h__
 
 #include "Define.h"
 #include "Base.h"
@@ -16,9 +16,11 @@ class CMap;
 class CShip;
 class CUI_HPBar;
 class CUI_FadeInOut;
-class CSeaMonsterGenerator;
+class CUI_ToothShip;
+class CUI_ShipProgress;
 class CMiniGameScene : public Engine::CScene
 {
+#define MINIGAME_TIME 40.f
 private: // 持失切, 社瑚切
 	explicit CMiniGameScene(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CMiniGameScene(const CMiniGameScene& rhs);
@@ -51,10 +53,13 @@ private:
 	Engine::CCamera* m_pCamera = nullptr;
 	CShip* m_pShip = nullptr;
 	CUI_HPBar* m_pHPBar = nullptr;
-	CSeaMonsterGenerator* m_pSeaMosnterGenerator = nullptr;
+	CUI_ShipProgress* m_pShipProgress = nullptr;
+	CUI_ToothShip* m_pToothShip = nullptr;
 	CUI_FadeInOut* m_pFadeInOut = nullptr;
 
 	_float m_fGenTime = 0.f;
+	_float m_fGameTime = MINIGAME_TIME;
+	_bool m_bIsGameOver = false;
 	//CMonster* m_pMonster = nullptr;
 	//CSkyBox* m_pSkyBox = nullptr;
 	//CTerrain* m_pTerrain = nullptr;

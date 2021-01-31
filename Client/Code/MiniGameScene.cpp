@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MiniGameScene.h"
+#include "Play2Scene.h"
 #include "Terrain.h"
 #include "AliceW.h"
 #include "Monster.h"
@@ -31,6 +32,9 @@
 #include "Ship.h"
 #include "Shark.h"
 #include "UI_HPBar.h"
+#include "UI_ShipProgress.h"
+#include "UI_ToothShip.h"
+
 
 #include "Attribute.h"
 
@@ -70,58 +74,6 @@ HRESULT CMiniGameScene::Ready(void)
 
 int CMiniGameScene::Update(const _float& fTimeDelta)
 {
-	//	_float fDelta = fTimeDelta;
-		//int a = 10;
-		// TODO : 네모를 움직이는 코드를 작성합니다.
-		//_float fHeight = m_pTerrain->GetHeight(m_pPlayer->GetComponent<Engine::CTransform>()->GetPos());
-		//m_pPlayer->GetComponent<Engine::CTransform>()->SetPosY(fHeight);
-
-		//if (Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree().z != 0) {
-		//	_int iW = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetNumOfVerticesW();
-		//	_int iH = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetNumOfVerticesH();
-		//	if (Engine::CDirectInputMgr::GetInstance()->GetDeltaMouseDegree().z > 0) {
-		//		m_pTerrain->CreateTerrain(iW + 1, iH + 1, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
-		//	}
-		//	else {
-		//		if(iW > 10 && iH > 10)
-		//			m_pTerrain->CreateTerrain(iW - 1, iH - 1, 129.f, 129.f, 1.f, 1.f, L"../Bin/Resource/Texture/Terrain/Height2.bmp");
-		//	}
-		//}
-
-		//if (Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(Engine::DIM_LB)) {
-		//	// 픽킹을 하기 위한 기본 변수들 세팅.
-		//	auto& pVertices = m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetVertices();
-		//	auto stPickingRayInfo = Engine::GetPickingRayInfo(m_pGraphicDev, Engine::GetClientCursorPoint(g_hWnd));
-		//	_float fU, fV, fDist;
-		//	_vec3 vV1, vV2, vV3;
-		//	
-		//	// 픽킹 검사를 진행한다.
-		//	for (auto& pIndex : m_pTerrain->GetComponent<Engine::CTerrainTex>()->GetIndexes()) {
-		//		vV1 = pVertices[pIndex._0];
-		//		vV2 = pVertices[pIndex._1];
-		//		vV3 = pVertices[pIndex._2];
-		//		if (D3DXIntersectTri(&vV1, &vV2, &vV3, &stPickingRayInfo.vRayPos, &stPickingRayInfo.vRayDir, &fU, &fV, &fDist)) {
-		//			// 픽킹이 성공했다면, 픽킹 히트 지점을 플레이어 이동 지점으로 세팅
-		//			//m_pPlayer->SetTartgetPos(stPickingRayInfo.vRayPos + stPickingRayInfo.vRayDir * fDist);
-		//			m_pPlayer->SetTartgetPos(Engine::GetHitPos(vV1, vV2, vV3, fU, fV));
-		//			break;
-		//		}
-		//	}
-		//}	
-
-		/*if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_0)) {
-			Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
-			pCameraMgr->ChangeCameraController(0, 0.1f);
-		}
-		else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_1)) {
-			Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
-			pCameraMgr->ChangeCameraController(2, 0.1f);
-		}
-		else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_2)) {
-			Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
-			pCameraMgr->ChangeCameraController(3, 0.1f);
-		}
-	*/
 	static _bool m_bIsff = false;
 	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
 		if (Engine::CCollisionMgr::GetInstance()->IsColliderVisible()) {
@@ -131,85 +83,30 @@ int CMiniGameScene::Update(const _float& fTimeDelta)
 			Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
 		}
 	}
-	/*else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
-		if (!m_bIsff) {
-			ShowCursor(true);
-			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false);
-			m_bIsff = true;
+
+	if (!m_bIsGameOver) {
+		if ((m_fGenTime -= fTimeDelta) <= 0.f) {
+			CShark* pShark = CShark::Create(m_pGraphicDev);
+			pShark->GetTransform()->SetPos(_vec3(SEA_HALF_WIDTH + 10.f, Engine::GetNumberBetweenMinMax(-(SEA_HALF_HEIGHT - 5.f), SEA_HALF_HEIGHT - 5.f), 0.f));
+			Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pShark);
+			m_fGenTime = Engine::GetNumberBetweenMinMax(1.f, 3.f);
 		}
-		else {
-			ShowCursor(false);
-			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true);
-			m_bIsff = false;
+
+		if ((m_fGameTime -= fTimeDelta) <= 0.f)
+			m_fGameTime = 0.f;
+		m_pShipProgress->UpdateProgress(1.f - (m_fGameTime / MINIGAME_TIME));
+
+		if (m_pShip->GetAttribute()->IsDead() || m_fGameTime <= 0.f) {
+			m_bIsGameOver = true;
+			m_pFadeInOut->StartFadeInOut(2.f, false);
 		}
-	}*/
-
-	//if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_O)) {
-	//	//m_pPlayer->GetComponent<CAttribute>()->DecreaseHP(10.f);
-	//	CUI_InGame* pUI = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
-	//	pUI->GetFadeInOut()->StartFadeInOut(1.f, true);
-	//}
-	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_P)) {
-	//	//m_pPlayer->GetComponent<CAttribute>()->IncreaseHP(10.f);
-	//	CUI_InGame* pUI = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
-	//	pUI->GetFadeInOut()->StartFadeInOut(1.f, false);
-	//}
-	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_L)) {
-	//	if (Engine::CCollisionMgr::GetInstance()->IsColliderVisible()) {
-	//		Engine::CCollisionMgr::GetInstance()->SetColliderVisible(false);
-	//	}
-	//	else {
-	//		Engine::CCollisionMgr::GetInstance()->SetColliderVisible(true);
-	//	}
-	//}
-
-	//if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_7)) {
-	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_NONE);
-	//}
-	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_8)) {
-	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_SPHERE);
-	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-	//}
-	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_9)) {
-	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_HEIGHT);
-	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	//}
-	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_0)) {
-	//	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_ALL);
-	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	//}
-	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADPLUS)) {
-	//	Engine::Clamp(&(m_fFogHeightDensity += 0.1f), 0.f, 1.f);
-	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	//}
-	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADMINUS)) {
-	//	Engine::Clamp(&(m_fFogHeightDensity -= 0.1f), 0.f, 1.f);
-	//	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-15.f, -30.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
-	//}
-	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADSTAR)) {
-	//	Engine::Clamp(&(m_fFogSphereDensity += 0.1f), 0.f, 1.f);
-	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-	//}
-	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_NUMPADSLASH)) {
-	//	Engine::Clamp(&(m_fFogSphereDensity -= 0.1f), 0.f, 1.f);
-	//	Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(0.5f, 0.5f, 0.5f), m_fFogSphereDensity);
-	//}
-	//else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_BACKSLASH)) {
-	//	CPlateEffect* pEffect = CPlateEffect::Create(m_pGraphicDev);
-	//	pEffect->SetPlateEffectInfo(L"ETF_HobbyHorseAttack", _vec3(14.f, -9.f, -11.f), _vec2(0.5f, 0.5f), _vec2(0.8f, 0.8f), 0.f, 0.2f, _vec3(1.f, 1.f, 1.f));
-	//	Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
-
-	//	Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
-	//	pCameraMgr->GetCamera()->Shake(0.3f, 0.4f, 20);
-	//}
-
-	if ((m_fGenTime -= fTimeDelta) <= 0.f) {
-		CShark* pShark = CShark::Create(m_pGraphicDev);
-		pShark->GetTransform()->SetPos(_vec3(SEA_HALF_WIDTH + 10.f, Engine::GetNumberBetweenMinMax(-(SEA_HALF_HEIGHT - 5.f), SEA_HALF_HEIGHT - 5.f), 0.f));
-		Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pShark);
-		m_fGenTime = Engine::GetNumberBetweenMinMax(2.f, 4.f);
 	}
+	else {
+		if (!m_pFadeInOut->IsFadeIn() && !m_pFadeInOut->IsProcessing()) {
+			Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPlay2Scene::Create(m_pGraphicDev));
+		}
+	}
+	
 
 	return CScene::Update(fTimeDelta);
 }
@@ -250,12 +147,13 @@ void CMiniGameScene::OnLoaded()
 void CMiniGameScene::OnExited()
 {
 	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_NONE);
+	Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
 	// 플레이어 데이터 저장
-	/*auto* pDataMgr = CDataMgr::GetInstance();
+	auto* pDataMgr = CDataMgr::GetInstance();
 	if (pDataMgr) {
-		pDataMgr->SaveAliceWData(m_pPlayer);
+		pDataMgr->SaveShipData(m_pShip);
 		pDataMgr->SetValidData(true);
-	}*/
+	}
 }
 
 CMiniGameScene * CMiniGameScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -338,8 +236,23 @@ HRESULT CMiniGameScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pShip = CShip::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pShip, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Ship", m_pShip), E_FAIL);
+	m_pShip->GetTransform()->SetPos(-SEA_HALF_WIDTH + 5.f, 0.f, 0.f);
 	m_pShip->SetHPBar(m_pHPBar);
+	if (CDataMgr::GetInstance()->IsValidData()) {
+		m_pShip->IncreaseToothNum(CDataMgr::GetInstance()->GetToothNum());
+	}
+
+	// 배 진행 UI 생성
+	m_pShipProgress = CUI_ShipProgress::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pShipProgress, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", m_pShipProgress), E_FAIL);
+	m_pShipProgress->GetTransform()->SetPos(WINCX >> 1, WINCY - (WINCY * 0.05f), 0.f);
 	
+	// 이빨 UI 생성
+	m_pToothShip = CUI_ToothShip::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pToothShip, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", m_pToothShip), E_FAIL);
+	m_pToothShip->SetShip(m_pShip);
 
 	// 커서 없애기
 	ShowCursor(false);
@@ -347,6 +260,10 @@ HRESULT CMiniGameScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	CEffectMgr* pEffectMgr = CEffectMgr::Create(m_pGraphicDev, Engine::GetTimer(L"Timer_FPS60"));
 	NULL_CHECK_RETURN(pEffectMgr, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"EffectMgr", pEffectMgr), E_FAIL);
+
+	// FadeInOut
+	m_pFadeInOut = CUI_FadeInOut::Create(m_pGraphicDev);
+	pLayer->Add_GameObject(m_pFadeInOut);
 
 
 

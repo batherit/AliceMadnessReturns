@@ -34,6 +34,9 @@ public:
 	void Bang();
 	void Attacked();
 	_bool IsAttacked() const { return m_bIsAttacked; }
+	void IncreaseToothNum(_int _iAmount) { m_iToothNum += _iAmount; }
+	_int GetToothNum() const { return m_iToothNum; }
+	CAttribute* GetAttribute() const { return m_pAttribute; }
 
 private:
 	_bool m_bIsAttacked = false;
@@ -42,9 +45,16 @@ private:
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CShader* m_pShader = nullptr;
 	Engine::CPhysics* m_pPhysics = nullptr;
+	Engine::CTexture* m_pTexture = nullptr;
 	CAttribute* m_pAttribute = nullptr;
 
 	CUI_HPBar* m_pHPBar = nullptr;
+
+	_float m_fDissolveAmount = 0.f;
+	_float m_fDeathAnimTime = 2.f;
+	_bool m_bIsDeathInit = false;
+
+	_int m_iToothNum = 0;
 };
 
 END

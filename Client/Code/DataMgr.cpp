@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DataMgr.h"
 #include "AliceW.h"
+#include "Ship.h"
 #include "Attribute.h"
 
 USING(Client)
@@ -22,8 +23,10 @@ void CDataMgr::SaveAliceWData(CAliceW * _pAliceW)
 	CAttribute* pAttribute = _pAliceW->GetComponent<CAttribute>();
 	m_fCurHP = pAttribute->GetHP();
 	m_fMaxHP = pAttribute->GetMaxHP();
+}
 
-
+void CDataMgr::SaveShipData(CShip* _pShip) {
+	m_iToothNum = _pShip->GetToothNum();
 }
 
 void CDataMgr::Free(void)

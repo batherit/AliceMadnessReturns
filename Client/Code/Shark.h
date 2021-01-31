@@ -32,6 +32,7 @@ public:
 	void Bang();
 
 private:
+	Engine::CColliderObject* m_pCollider = nullptr;
 	Engine::CDynamicMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CShader* m_pShader = nullptr;
@@ -40,6 +41,8 @@ private:
 	CAttribute* m_pAttribute = nullptr;
 	_float m_fDissolveAmount = 0.f;
 	_float m_fAttackDelayTime = 0.f;
+	_float m_fDeathAnimTime = 2.f;
+	_bool m_bIsDeathInit = false;
 };
 
 END

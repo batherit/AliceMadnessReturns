@@ -6,6 +6,7 @@
 #include "Attribute.h"
 #include "CannonBall.h"
 #include "UI_HPBar.h"
+#include "StaticCamera.h"
 
 CShip::CShip(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -37,7 +38,7 @@ HRESULT CShip::Ready_Object(void)
 	m_pRenderer->SetRenderInfo(Engine::RENDER_DEFERRED, m_pMesh);
 
 	// Shader
-	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Dissolve"));
 	m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
 
 	// Physics
@@ -49,6 +50,9 @@ HRESULT CShip::Ready_Object(void)
 
 	m_pAttribute = AddComponent<CAttribute>();
 	m_pAttribute->SetHP(10.f, 10.f);
+
+	// Dissolve
+	m_pTexture = static_cast<Engine::CTexture*>(Engine::GetOriResource(Engine::RESOURCE_STATIC, L"EFT_Dissolve"));
 
 	return S_OK;
 }
@@ -73,34 +77,54 @@ int CShip::Update_Object(const _float & _fDeltaTime)
 		}
 	}
 
-	_vec2 vDir = _vec2(0.f, 0.f);
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_W) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_W)) {
-		vDir.y += 1.f;
-	}
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_A) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_A)) {
-		vDir.x -= 1.f;
-	}
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_S) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_S)) {
-		vDir.y -= 1.f;
-	}
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_D) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_D)) {
-		vDir.x += 1.f;
-	}
-	if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
-		Bang();
-	}
+	if (!m_pAttribute->IsDead()) {
+		_vec2 vDir = _vec2(0.f, 0.f);
+		if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_W) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_W)) {
+			vDir.y += 1.f;
+		}
+		if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_A) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_A)) {
+			vDir.x -= 1.f;
+		}
+		if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_S) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_S)) {
+			vDir.y -= 1.f;
+		}
+		if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_D) || Engine::CDirectInputMgr::GetInstance()->IsKeyPressing(DIK_D)) {
+			vDir.x += 1.f;
+		}
+		if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(Engine::DIM_LB)) {
+			Bang();
+		}
 
-	if (D3DXVec2LengthSq(&vDir) > 0.f) {
-		D3DXVec2Normalize(&vDir, &vDir);
-		m_pPhysics->SetDirection(_vec3(vDir.x, vDir.y, 0.f));
-		m_pPhysics->SetSpeed(20.f);
-		m_pPhysics->SetResistanceCoefficientXZ(1.f);
-		m_pPhysics->SetResistanceCoefficientY(1.f);
+		if (D3DXVec2LengthSq(&vDir) > 0.f) {
+			D3DXVec2Normalize(&vDir, &vDir);
+			m_pPhysics->SetDirection(_vec3(vDir.x, vDir.y, 0.f));
+			m_pPhysics->SetSpeed(20.f);
+			m_pPhysics->SetResistanceCoefficientXZ(1.f);
+			m_pPhysics->SetResistanceCoefficientY(1.f);
+		}
+		else {
+			m_pPhysics->SetResistanceCoefficientXZ(0.9f);
+			m_pPhysics->SetResistanceCoefficientY(0.9f);
+		}
 	}
 	else {
-		m_pPhysics->SetResistanceCoefficientXZ(0.95f);
-		m_pPhysics->SetResistanceCoefficientY(0.95f);
+		if (!m_bIsDeathInit) {
+			m_pPhysics->SetSpeed(0.f);
+			m_pPhysics->SetGravity(-3.f);
+			m_bIsDeathInit = true;
+		}
+
+		if ((m_fDeathAnimTime -= _fDeltaTime) > 0.f) {
+			m_fDissolveAmount = 1.f - m_fDeathAnimTime / 2.f;
+			GetTransform()->RotateByLook(D3DX_PI * _fDeltaTime * 0.2f);
+		}
+		else {
+			m_pHPBar->Off();
+			//SetValid(false);
+			return 1;
+		}
 	}
+	
 
 	GetTransform()->SetPos(m_pPhysics->GetUpdatedPos(_fDeltaTime));
 	_vec3 vPos = GetTransform()->GetPos();
@@ -130,7 +154,11 @@ void CShip::Render_Object(void)
 	if (!m_bIsVisible)
 		return;
 
-	m_pRenderer->Render(m_pShader->Get_EffectHandle());
+	auto pEffect = m_pShader->Get_EffectHandle();
+	m_pTexture->Set_Texture(pEffect, "g_DissolveTexture");
+	pEffect->SetFloat("g_fDissolveAmount", m_fDissolveAmount);
+
+	m_pRenderer->Render(pEffect);
 
 	//_vec3 vPos = GetTransform()->GetPos();
 	//_tchar tcBuf[50];
@@ -201,4 +229,5 @@ void CShip::Attacked()
 {
 	m_bIsAttacked = true;
 	m_fRecoveryTime = 1.f;
+	dynamic_cast<CStaticCamera*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Camera").begin())->Shake(0.5f, 0.3f, 10);
 }

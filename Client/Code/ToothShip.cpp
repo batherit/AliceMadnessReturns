@@ -1,24 +1,24 @@
 #include "pch.h"
-#include "Tooth.h"
-#include "AliceW.h"
+#include "ToothShip.h"
+#include "Ship.h"
 
-CTooth::CTooth(LPDIRECT3DDEVICE9 pGraphicDev)
+CToothShip::CToothShip(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
 	CGameObject(pGraphicDev)
 {
 }
 
-CTooth::CTooth(const CTooth & rhs)
+CToothShip::CToothShip(const CToothShip & rhs)
 	:
 	CGameObject(rhs)
 {
 }
 
-CTooth::~CTooth(void)
+CToothShip::~CToothShip(void)
 {
 }
 
-HRESULT CTooth::Ready_Object(void)
+HRESULT CToothShip::Ready_Object(void)
 {
 	// Mesh
 	m_pMesh = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Tooth"));
@@ -38,43 +38,37 @@ HRESULT CTooth::Ready_Object(void)
 	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
 	m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
 
-	m_bIsArrived = true;
+	m_pPhysics = AddComponent<Engine::CPhysics>();
+	m_pPhysics->SetSpeed(0.f);
+
+	GetTransform()->SetScaleXYZ(5.f, 5.f, 5.f);
 
 	return S_OK;
 }
 
-int CTooth::Update_Object(const _float & _fDeltaTime)
+int CToothShip::Update_Object(const _float & _fDeltaTime)
 {
 	if (!IsActivated())
 		return 1;
 
-	if (!m_bIsArrived) {
-		_vec3 vToArrivalPos = m_vArrivalPos - GetTransform()->GetPos();
-
-		if (D3DXVec3Length(&vToArrivalPos) <= 0.1f) {
-			//m_pCollider->SetActivated(true);
-			m_bIsArrived = true;
+	if (m_bIsPoped) {
+		if (m_pPhysics->GetSpeed() <= 0.05f) {
+			m_pPhysics->SetVelocityXZ(_vec2(-5.f, 0.f));
+			m_pPhysics->SetResistanceCoefficientXZ(1.f);
+			m_pPhysics->SetResistanceCoefficientY(1.f);
+			m_bIsPoped = false;
 		}
-		else
-			GetTransform()->Translate(vToArrivalPos * 0.25f);
 	}
-	else if (m_pAlice && m_bIsArrived) {
-		_vec3 vPlayerPos = m_pAlice->GetTransform()->GetPos();
-		vPlayerPos.y += 1.f;
-		_vec3 vToPlayer = vPlayerPos - GetTransform()->GetPos();
-
-		if ((m_fElapsedTime += _fDeltaTime) <= 0.3f) {
-			_float fT = Engine::GetWeightByValue(m_fElapsedTime, 0.f, 0.25f);
-			GetTransform()->Translate(vToPlayer * fT);
+	else {
+		if (m_pPhysics->GetVelocity().x >= -5.f) {
+			m_pPhysics->AddVelocityXZ(_vec2(-2.5f * _fDeltaTime, 0.f));
 		}
 		else {
-			m_pAlice->IncreaseTooth(1);
-			SetValid(false);
+			m_pPhysics->SetVelocityXZ(_vec2(-5.f, 0.f));
 		}
 	}
 
-	GetTransform()->RotateByUp(D3DXToRadian(720.f) * _fDeltaTime);
-
+	GetTransform()->SetPos(m_pPhysics->GetUpdatedPos(_fDeltaTime));
 
 	m_pRenderer->Update(_fDeltaTime);
 	CGameObject::Update_Object(_fDeltaTime);
@@ -82,7 +76,7 @@ int CTooth::Update_Object(const _float & _fDeltaTime)
 	return 0;
 }
 
-void CTooth::Render_Object(void)
+void CToothShip::Render_Object(void)
 {
 	m_pRenderer->SetWorldMatrix(GetTransform()->GetObjectMatrix());
 
@@ -94,7 +88,7 @@ void CTooth::Render_Object(void)
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-_bool CTooth::LoadColliders(const _tchar* _pFileName)
+_bool CToothShip::LoadColliders(const _tchar* _pFileName)
 {
 	TCHAR szCurPath[MAX_PATH] = L"";
 	TCHAR szDataPath[MAX_PATH] = L"";
@@ -117,24 +111,20 @@ _bool CTooth::LoadColliders(const _tchar* _pFileName)
 	return true;
 }
 
-void CTooth::OnCollision(Engine::CollisionInfo _tCollisionInfo)
+void CToothShip::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
-	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
-		_int a = 10;
-	}
-	else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
-		_int a = 10;
-	}
-	else {
-		if (!m_pAlice && lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
-			m_pAlice = dynamic_cast<CAliceW*>(_tCollisionInfo.pCollidedObject);
+	if (!m_pShip && lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+		m_pShip = dynamic_cast<CShip*>(_tCollisionInfo.pCollidedObject);
+		if (m_pShip) {
+			m_pShip->IncreaseToothNum(1);
+			SetValid(false);
 		}
 	}
 }
 
-CTooth * CTooth::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CToothShip * CToothShip::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CTooth*	pInstance = new CTooth(pGraphicDev);
+	CToothShip*	pInstance = new CToothShip(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -142,15 +132,20 @@ CTooth * CTooth::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CTooth::Free(void)
+void CToothShip::Free(void)
 {
 	CGameObject::Free();
 }
 
-void CTooth::SetPopInfo(_vec3 _vArrivalPos, _bool _bIsArrived)
+void CToothShip::SetPopTooth(const _vec3 & _vPos)
 {
-	m_vArrivalPos = _vArrivalPos;
-	m_bIsArrived = _bIsArrived;
-	//m_pCollider->SetActivated(false);
+	GetTransform()->SetPos(_vPos);
+	_vec3 vDir = WORLD_X_AXIS;
+	_matrix matRot;
+	D3DXVec3TransformNormal(&vDir, &vDir, D3DXMatrixRotationZ(&matRot, Engine::GetNumberBetweenMinMax(0.f, D3DX_PI * 2.f)));
+	m_pPhysics->SetDirection(vDir);
+	m_pPhysics->SetSpeed(15.f);
+	m_pPhysics->SetResistanceCoefficientXZ(0.9f);
+	m_pPhysics->SetResistanceCoefficientY(0.9f);
+	m_bIsPoped = true;
 }
-

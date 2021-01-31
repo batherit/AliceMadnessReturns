@@ -408,6 +408,10 @@ _uint CLoading::LoadTextures() {
 	// BloodScreen
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_BloodScreen", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_BloodScreen.png"), E_FAIL);
 
+	// MiniGame
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Ship", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Ship.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Ship_Progress", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Ship_Progress.png"), E_FAIL);
+
 	// Help
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Help", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Help.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Help_ButtonOn", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Help_ButtonOn.png"), E_FAIL);

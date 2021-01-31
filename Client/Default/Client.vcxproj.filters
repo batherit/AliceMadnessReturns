@@ -364,6 +364,15 @@
     <Filter Include="02. Object\02. GameObject\CannonBall">
       <UniqueIdentifier>{daa6d52d-835c-4b3b-8b33-39451ec0752d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\ShipProgress">
+      <UniqueIdentifier>{101bee79-635d-4e7d-b144-e86c06566e1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\ToothShip">
+      <UniqueIdentifier>{69279719-e3c1-4fa0-bfb5-5791c716c23c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\ToothShip">
+      <UniqueIdentifier>{27b64b92-b69d-4207-bd18-207e9502b6d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -894,6 +903,15 @@
     <ClInclude Include="..\Code\CannonBall.h">
       <Filter>02. Object\02. GameObject\CannonBall</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\UI_ShipProgress.h">
+      <Filter>04. UI\ShipProgress</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ToothShip.h">
+      <Filter>02. Object\02. GameObject\ToothShip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_ToothShip.h">
+      <Filter>04. UI\ToothShip</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1372,6 +1390,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CannonBall.cpp">
       <Filter>02. Object\02. GameObject\CannonBall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_ShipProgress.cpp">
+      <Filter>04. UI\ShipProgress</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToothShip.cpp">
+      <Filter>02. Object\02. GameObject\ToothShip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_ToothShip.cpp">
+      <Filter>04. UI\ToothShip</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

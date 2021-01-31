@@ -1068,6 +1068,16 @@ _uint CLoading::LoadPlaySceneMeshes()
 
 _uint CLoading::LoadMiniGameSceneMeshes()
 {
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mine",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"Mine.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Mine");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Mine");
+
 	// 캐논볼 생성
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

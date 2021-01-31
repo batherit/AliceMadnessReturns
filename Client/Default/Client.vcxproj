@@ -254,6 +254,11 @@
     <ClInclude Include="..\Code\GiantAliceWState_Idle.h" />
     <ClInclude Include="..\Code\GiantAliceWState_Scale.h" />
     <ClInclude Include="..\Code\GiantAliceWState_Walk.h" />
+    <ClInclude Include="..\Code\Mine.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Code\MineBombAttack.h" />
     <ClInclude Include="..\Code\MiniGameScene.h" />
     <ClInclude Include="..\Code\Shark.h" />
     <ClInclude Include="..\Code\Ship.h" />
@@ -617,6 +622,11 @@
     <ClCompile Include="..\Code\GiantAliceWState_Idle.cpp" />
     <ClCompile Include="..\Code\GiantAliceWState_Scale.cpp" />
     <ClCompile Include="..\Code\GiantAliceWState_Walk.cpp" />
+    <ClCompile Include="..\Code\Mine.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\MineBombAttack.cpp" />
     <ClCompile Include="..\Code\MiniGameScene.cpp" />
     <ClCompile Include="..\Code\Shark.cpp" />
     <ClCompile Include="..\Code\Ship.cpp" />

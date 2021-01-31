@@ -57,7 +57,8 @@ private:
 	CUI_ToothShip* m_pToothShip = nullptr;
 	CUI_FadeInOut* m_pFadeInOut = nullptr;
 
-	_float m_fGenTime = 0.f;
+	_float m_fGenTime_Shark = 0.f;
+	_float m_fGenTime_Mine = 0.f;
 	_float m_fGameTime = MINIGAME_TIME;
 	_bool m_bIsGameOver = false;
 	//CMonster* m_pMonster = nullptr;

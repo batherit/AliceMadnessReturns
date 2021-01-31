@@ -373,6 +373,12 @@
     <Filter Include="04. UI\ToothShip">
       <UniqueIdentifier>{27b64b92-b69d-4207-bd18-207e9502b6d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\02. GameObject\Mine">
+      <UniqueIdentifier>{a7b15ba2-647e-4791-9eb8-782ef25d17cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. GameObject\MineBombAttack">
+      <UniqueIdentifier>{87df748b-5f90-4e42-9255-563ed81e7c92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -912,6 +918,12 @@
     <ClInclude Include="..\Code\UI_ToothShip.h">
       <Filter>04. UI\ToothShip</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Mine.h">
+      <Filter>02. Object\02. GameObject\Mine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MineBombAttack.h">
+      <Filter>02. Object\02. GameObject\MineBombAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1399,6 +1411,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_ToothShip.cpp">
       <Filter>04. UI\ToothShip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mine.cpp">
+      <Filter>02. Object\02. GameObject\Mine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MineBombAttack.cpp">
+      <Filter>02. Object\02. GameObject\MineBombAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

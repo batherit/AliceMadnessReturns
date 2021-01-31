@@ -31,6 +31,7 @@
 #include "EffectMgr.h"
 #include "Ship.h"
 #include "Shark.h"
+#include "Mine.h"
 #include "UI_HPBar.h"
 #include "UI_ShipProgress.h"
 #include "UI_ToothShip.h"
@@ -85,11 +86,18 @@ int CMiniGameScene::Update(const _float& fTimeDelta)
 	}
 
 	if (!m_bIsGameOver) {
-		if ((m_fGenTime -= fTimeDelta) <= 0.f) {
+		if ((m_fGenTime_Shark -= fTimeDelta) <= 0.f) {
 			CShark* pShark = CShark::Create(m_pGraphicDev);
 			pShark->GetTransform()->SetPos(_vec3(SEA_HALF_WIDTH + 10.f, Engine::GetNumberBetweenMinMax(-(SEA_HALF_HEIGHT - 5.f), SEA_HALF_HEIGHT - 5.f), 0.f));
 			Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pShark);
-			m_fGenTime = Engine::GetNumberBetweenMinMax(1.f, 3.f);
+			m_fGenTime_Shark = Engine::GetNumberBetweenMinMax(1.f, 3.f);
+		}
+
+		if ((m_fGenTime_Mine -= fTimeDelta) <= 0.f) {
+			CMine* pMine = CMine::Create(m_pGraphicDev);
+			pMine->GetTransform()->SetPos(_vec3(SEA_HALF_WIDTH + 10.f, Engine::GetNumberBetweenMinMax(-(SEA_HALF_HEIGHT - 5.f), SEA_HALF_HEIGHT - 5.f), 0.f));
+			Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pMine);
+			m_fGenTime_Mine = Engine::GetNumberBetweenMinMax(2.f, 4.f);
 		}
 
 		if ((m_fGameTime -= fTimeDelta) <= 0.f)

@@ -51,9 +51,14 @@ private:
 	void HoveredOnStartButton(void*);
 	void UnhoveredOnStartButton(void*);
 	void ClickStartButton(void*);
+
 	void HoveredOnExitButton(void*);
 	void UnhoveredOnExitButton(void*);
 	void ClickQuitButton(void*);
+
+	void HoveredOnHelpButton(void*);
+	void UnhoveredOnHelpButton(void*);
+	//void ClickHelpButton(void*);
 
 private:
 	_bool m_bIsOnStartButtonHovered = false;
@@ -65,6 +70,12 @@ private:
 	CUI_Image* m_pExitButtonOn = nullptr;
 	CUI_Image* m_pExitButtonOff = nullptr;
 	CUI_Button<CTitleScene>* m_pExitButton = nullptr;
+
+	_bool m_bIsOnHelpButtonHovered = false;
+	CUI_Image* m_pHelpButtonOn = nullptr;
+	CUI_Image* m_pHelpButtonOff = nullptr;
+	CUI_Button<CTitleScene>* m_pHelpButton = nullptr;
+	CUI_Image* m_pHelpImage = nullptr;
 
 	CUI_Cursor* m_pCursorUI = nullptr;
 

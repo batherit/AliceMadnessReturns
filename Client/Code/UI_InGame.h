@@ -67,6 +67,7 @@ private:
 	CUI_PurpleScreen* m_pPurpleScreen = nullptr;
 	CUI_BunnyBomb* m_pBunnyBomb = nullptr;
 	CUI_WeaponLock* m_pWeaponLock = nullptr;
+	CUI_Image* m_pHelpImage = nullptr;
 	CUI_Cursor* m_pCursor = nullptr;
 };
 

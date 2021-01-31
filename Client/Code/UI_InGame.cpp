@@ -88,6 +88,15 @@ HRESULT CUI_InGame::Ready_Object(void)
 	Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true, WINCX >> 1, WINCY >> 1);
 	AddChild(m_pCursor);
 
+	m_pHelpImage = CUI_Image::Create(m_pGraphicDev);
+	m_pHelpImage->SetTexture(L"UI_Help");
+	m_pHelpImage->SetPos(WINCX >> 1, WINCY >> 1);
+	_float fRatio = static_cast<_float>(m_pHelpImage->GetHeight()) / m_pHelpImage->GetWidth();
+	m_pHelpImage->SetOutputAreaWidth(WINCX * 1.2f);
+	m_pHelpImage->SetOutputAreaHeight(m_pHelpImage->GetWidth() * fRatio);
+	m_pHelpImage->SetVisible(false);
+	AddChild(m_pHelpImage);
+
 	// FadeInOut은 화면 전체를 덮어야하기 때문에 자식 중 가장 맨 뒤에 있어야 한다.
 	m_pFadeInOut = CUI_FadeInOut::Create(m_pGraphicDev);
 	AddChild(m_pFadeInOut);
@@ -111,6 +120,14 @@ _int CUI_InGame::Update_Object(const _float & _fDeltaTime)
 			m_pCursor->SetActivated(true);
 			m_pWeaponLock->SetActivated(true);
 		}
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_F1)) {
+		if (!m_pHelpImage->IsVisible())
+			m_pHelpImage->SetVisible(true);
+	}
+	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyUp(DIK_F1)) {
+		if (m_pHelpImage->IsVisible())
+			m_pHelpImage->SetVisible(false);
 	}
 
 	CGameObject::Update_Object(_fDeltaTime);

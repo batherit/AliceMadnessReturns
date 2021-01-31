@@ -179,10 +179,12 @@ HRESULT CTitleScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pLayer->Add_GameObject(pRedCurve);
 
 	// 버튼 생성
-	m_pStartButton = CUI_Button<CTitleScene>::Create(m_pGraphicDev, this, static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) - WINCY /7.f), 222, 72);
-	m_pExitButton = CUI_Button<CTitleScene>::Create(m_pGraphicDev, this, static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) + WINCY / 7.f), 180, 60);
+	m_pStartButton = CUI_Button<CTitleScene>::Create(m_pGraphicDev, this, static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) - WINCY /6.f), 222, 72);
+	m_pExitButton = CUI_Button<CTitleScene>::Create(m_pGraphicDev, this, static_cast<LONG>((WINCX >> 1) + WINCX / 5.f), static_cast<LONG>(WINCY >> 1), 180, 60);
+	m_pHelpButton = CUI_Button<CTitleScene>::Create(m_pGraphicDev, this, static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) + WINCY / 6.f), 180, 60);
 	pLayer->Add_GameObject(m_pStartButton);
 	pLayer->Add_GameObject(m_pExitButton);
+	pLayer->Add_GameObject(m_pHelpButton);
 
 	// 버튼 이벤트 연결
 	m_pStartButton->SetEvent(CUI_Button<CTitleScene>::BUTTON_STATE_CLICKED, &CTitleScene::ClickStartButton, nullptr);
@@ -191,28 +193,51 @@ HRESULT CTitleScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pExitButton->SetEvent(CUI_Button<CTitleScene>::BUTTON_STATE_CLICKED, &CTitleScene::ClickQuitButton, nullptr);
 	m_pExitButton->SetEvent(CUI_Button<CTitleScene>::BUTTON_STATE_HOVERED, &CTitleScene::HoveredOnExitButton, nullptr);
 	m_pExitButton->SetEvent(CUI_Button<CTitleScene>::BUTTON_STATE_UNHOVERED, &CTitleScene::UnhoveredOnExitButton, nullptr);
+	m_pHelpButton->SetEvent(CUI_Button<CTitleScene>::BUTTON_STATE_HOVERED, &CTitleScene::HoveredOnHelpButton, nullptr);
+	m_pHelpButton->SetEvent(CUI_Button<CTitleScene>::BUTTON_STATE_UNHOVERED, &CTitleScene::UnhoveredOnHelpButton, nullptr);
 
 	// 시작 버튼 관련 이미지 생성
 	m_pStartButtonOn = CUI_Image::Create(m_pGraphicDev);
 	m_pStartButtonOn->SetTexture(L"UI_NewGameOn");
-	m_pStartButtonOn->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) - WINCY / 7.f));
+	m_pStartButtonOn->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) - WINCY / 6.f));
 	m_pStartButtonOn->SetActivated(false);
 	m_pStartButtonOff = CUI_Image::Create(m_pGraphicDev);
 	m_pStartButtonOff->SetTexture(L"UI_NewGameOff");
-	m_pStartButtonOff->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) - WINCY / 7.f));
+	m_pStartButtonOff->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) - WINCY / 6.f));
 	pLayer->Add_GameObject(m_pStartButtonOn);
 	pLayer->Add_GameObject(m_pStartButtonOff);
 	
 	// 종료 버튼 관련 이미지 생성
 	m_pExitButtonOn = CUI_Image::Create(m_pGraphicDev);
 	m_pExitButtonOn->SetTexture(L"UI_GameExitOn");
-	m_pExitButtonOn->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) + WINCY / 7.f));
+	m_pExitButtonOn->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 5.f), static_cast<LONG>(WINCY >> 1));
 	m_pExitButtonOn->SetActivated(false);
 	m_pExitButtonOff = CUI_Image::Create(m_pGraphicDev);
 	m_pExitButtonOff->SetTexture(L"UI_GameExitOff");
-	m_pExitButtonOff->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) + WINCY / 7.f));
+	m_pExitButtonOff->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 5.f), static_cast<LONG>(WINCY >> 1));
 	pLayer->Add_GameObject(m_pExitButtonOn);
 	pLayer->Add_GameObject(m_pExitButtonOff);
+
+	// 도움말 버튼 관련 이미지 생성
+	m_pHelpButtonOn = CUI_Image::Create(m_pGraphicDev);
+	m_pHelpButtonOn->SetTexture(L"UI_Help_ButtonOn");
+	m_pHelpButtonOn->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) + WINCY / 6.f));
+	m_pHelpButtonOn->SetActivated(false);
+	m_pHelpButtonOff = CUI_Image::Create(m_pGraphicDev);
+	m_pHelpButtonOff->SetTexture(L"UI_Help_ButtonOff");
+	m_pHelpButtonOff->SetPos(static_cast<LONG>((WINCX >> 1) + WINCX / 6.f), static_cast<LONG>((WINCY >> 1) + WINCY / 6.f));
+	pLayer->Add_GameObject(m_pHelpButtonOn);
+	pLayer->Add_GameObject(m_pHelpButtonOff);
+	// 도움말 이미지 생성
+	m_pHelpImage = CUI_Image::Create(m_pGraphicDev);
+	m_pHelpImage->SetTexture(L"UI_Help");
+	m_pHelpImage->SetPos(WINCX >> 1, WINCY >> 1);
+	_float fRatio = static_cast<_float>(m_pHelpImage->GetHeight()) / m_pHelpImage->GetWidth();
+	//m_pHelpImage->SetExtractionArea(RECT{ 2048.f * 0.5f -  })
+	m_pHelpImage->SetOutputAreaWidth(WINCX * 1.2f);
+	m_pHelpImage->SetOutputAreaHeight(m_pHelpImage->GetWidth() * fRatio);
+	m_pHelpImage->SetActivated(false);
+	pLayer->Add_GameObject(m_pHelpImage);
 
 	// 커서 생성
 	ShowCursor(false);
@@ -286,4 +311,26 @@ void CTitleScene::ClickQuitButton(void *)
 	if (m_pFadeInOutUI->IsProcessing())
 		return;
 	DestroyWindow(g_hWnd);
+}
+
+void CTitleScene::HoveredOnHelpButton(void *)
+{
+	// 도움말 버튼 온
+	if (!m_bIsOnHelpButtonHovered) {
+		m_pHelpButtonOn->SetActivated(true);
+		m_pHelpButtonOff->SetActivated(false);
+		m_bIsOnHelpButtonHovered = true;
+		m_pHelpImage->SetActivated(true);
+	}
+}
+
+void CTitleScene::UnhoveredOnHelpButton(void *)
+{
+	if (m_bIsOnHelpButtonHovered) {
+		// 도움말 버튼 오프
+		m_pHelpButtonOn->SetActivated(false);
+		m_pHelpButtonOff->SetActivated(true);
+		m_bIsOnHelpButtonHovered = false;
+		m_pHelpImage->SetActivated(false);
+	}
 }

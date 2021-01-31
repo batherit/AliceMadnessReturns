@@ -34,9 +34,14 @@ public:
 	_bool IsLocked() const { return m_bIsLocked; }
 	void SetToothNum(_int _iToothNum) { m_iToothNum = _iToothNum; }
 	_int GetToothNum() const { return m_iToothNum; }
+	void SetHelpImage(CUI_Image* _pImage) { m_pHelpImage = _pImage; }
+	CUI_Image* GetHelpImage() const { return m_pHelpImage; }
 
 private:
 	void ClickUnlockButton(void*);
+	// button event
+	void HoveredOnButton(void*);
+	void UnhoveredOnButton(void*);
 
 private:
 	Engine::CRenderer* m_pRenderer = nullptr;
@@ -46,8 +51,11 @@ private:
 	_bool m_bIsLocked = true;
 	CUI_Image* m_pWeaponImage = nullptr;
 	CUI_Image* m_pLockImage = nullptr;
+	CUI_Button<CUI_LockedWeapon>* m_pHelpButton = nullptr;
 	CUI_Button<CUI_LockedWeapon>* m_pUnlockButton = nullptr;
 	CUI_Image* m_pToothImage = nullptr;
+	CUI_Image* m_pHelpImage = nullptr;
+	_bool m_bIsOnHelpHovered = false;
 	_int m_iToothNum = 0;
 };
 

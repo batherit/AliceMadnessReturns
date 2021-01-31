@@ -30,30 +30,64 @@ HRESULT CUI_WeaponLock::Ready_Object(void)
 	m_pToothUI->SetPos(-(WINCX >> 1) + 100, (WINCY >> 1) - 120);
 	AddChild(m_pToothUI);
 
+	CUI_Image* pHelpImage = nullptr;
 	m_pVorpalBladeUI = CUI_LockedWeapon::Create(m_pGraphicDev);
 	m_pVorpalBladeUI->SetWeaponTexture(L"UI_WeaponLock_VorpalBlade");
 	m_pVorpalBladeUI->SetToothNum(0);
 	m_pVorpalBladeUI->GetTransform()->SetPos(-WINCX / 5.f - WINCX / 10.f, 0.f, 0.f);
 	m_pVorpalBladeUI->SetLocked(false);
-	AddChild(m_pVorpalBladeUI);
+	pHelpImage = CUI_Image::Create(m_pGraphicDev);
+	pHelpImage->SetTexture(L"UI_Help_VorpalBlade");
+	pHelpImage->SetPos(-WINCX / 5.f - WINCX / 10.f + 250, 0.f);
+	pHelpImage->SetOutputAreaWidth(pHelpImage->GetWidth() * 0.5f);
+	pHelpImage->SetOutputAreaHeight(pHelpImage->GetHeight() * 0.5f);
+	pHelpImage->SetVisible(false);
+	m_pVorpalBladeUI->SetHelpImage(pHelpImage);
+	AddChild(m_pVorpalBladeUI);//m_pVorpalBladeUI->SetHelpImage(L"UI_Help_VorpalBlade", -WINCX / 5.f - WINCX / 10.f, 0.f);
 
 	m_pHobbyHorseUI = CUI_LockedWeapon::Create(m_pGraphicDev);
 	m_pHobbyHorseUI->SetWeaponTexture(L"UI_WeaponLock_HobbyHorse");
 	m_pHobbyHorseUI->SetToothNum(20);
-	m_pHobbyHorseUI->GetTransform()->SetPos(-WINCX / 10.f, 0.f, 0.f);
-	AddChild(m_pHobbyHorseUI);
+	m_pHobbyHorseUI->GetTransform()->SetPos(-WINCX / 10.f , 0.f, 0.f);
+	pHelpImage = CUI_Image::Create(m_pGraphicDev);
+	pHelpImage->SetTexture(L"UI_Help_HobbyHorse");
+	pHelpImage->SetPos(-WINCX / 10.f+ 250, 0.f);
+	pHelpImage->SetOutputAreaWidth(pHelpImage->GetWidth() * 0.5f);
+	pHelpImage->SetOutputAreaHeight(pHelpImage->GetHeight() * 0.5f);
+	pHelpImage->SetVisible(false);
+	m_pHobbyHorseUI->SetHelpImage(pHelpImage);
+	AddChild(m_pHobbyHorseUI);//m_pHobbyHorseUI->SetHelpImage(L"UI_Help_HobbyHorse", -WINCX / 10.f, 0);
 
 	m_pGunUI = CUI_LockedWeapon::Create(m_pGraphicDev);
 	m_pGunUI->SetWeaponTexture(L"UI_WeaponLock_Gun");
 	m_pGunUI->SetToothNum(20);
-	m_pGunUI->GetTransform()->SetPos(WINCX / 10.f, 0.f, 0.f);
-	AddChild(m_pGunUI);
+	m_pGunUI->GetTransform()->SetPos(WINCX / 10.f , 0.f, 0.f);
+	pHelpImage = CUI_Image::Create(m_pGraphicDev);
+	pHelpImage->SetTexture(L"UI_Help_Gun");
+	pHelpImage->SetPos(WINCX / 10.f- 250, 0.f);
+	pHelpImage->SetOutputAreaWidth(pHelpImage->GetWidth() * 0.5f);
+	pHelpImage->SetOutputAreaHeight(pHelpImage->GetHeight() * 0.5f);
+	pHelpImage->SetVisible(false);
+	m_pGunUI->SetHelpImage(pHelpImage);
+	AddChild(m_pGunUI);//m_pGunUI->SetHelpImage(L"UI_Help_Gun", 0, 0);
 
 	m_pBunnyBombUI = CUI_LockedWeapon::Create(m_pGraphicDev);
 	m_pBunnyBombUI->SetWeaponTexture(L"UI_WeaponLock_BunnyBomb");
 	m_pBunnyBombUI->SetToothNum(20);
-	m_pBunnyBombUI->GetTransform()->SetPos(WINCX / 5.f + WINCX / 10.f, 0.f, 0.f);
-	AddChild(m_pBunnyBombUI);
+	m_pBunnyBombUI->GetTransform()->SetPos(WINCX / 5.f + WINCX / 10.f , 0.f, 0.f);
+	pHelpImage = CUI_Image::Create(m_pGraphicDev);
+	pHelpImage->SetTexture(L"UI_Help_BunnyBomb");
+	pHelpImage->SetPos(WINCX / 5.f + WINCX / 10.f- 250, 0.f);
+	pHelpImage->SetOutputAreaWidth(pHelpImage->GetWidth() * 0.5f);
+	pHelpImage->SetOutputAreaHeight(pHelpImage->GetHeight() * 0.5f);
+	pHelpImage->SetVisible(false);
+	m_pBunnyBombUI->SetHelpImage(pHelpImage);
+	AddChild(m_pBunnyBombUI);//m_pBunnyBombUI->SetHelpImage(L"UI_Help_BunnyBomb", 0, 0);
+
+	AddChild(m_pVorpalBladeUI->GetHelpImage());
+	AddChild(m_pHobbyHorseUI->GetHelpImage());
+	AddChild(m_pGunUI->GetHelpImage());
+	AddChild(m_pBunnyBombUI->GetHelpImage());
 
 	return S_OK;
 }

@@ -407,6 +407,15 @@ _uint CLoading::LoadTextures() {
 	// BloodScreen
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"EFT_BloodScreen", Engine::TEX_NORMAL, L"../../Resource/Texture/Effect/EFT_BloodScreen.png"), E_FAIL);
 
+	// Help
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Help", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Help.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Help_ButtonOn", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Help_ButtonOn.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Help_ButtonOff", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Help_ButtonOff.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Help_VorpalBlade", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Help_VorpalBlade.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Help_HobbyHorse", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Help_HobbyHorse.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Help_Gun", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Help_Gun.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Help_BunnyBomb", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Help_BunnyBomb.png"), E_FAIL);
+
 	// Fin
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Fin", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Fin.png"), E_FAIL);
 

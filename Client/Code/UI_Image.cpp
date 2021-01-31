@@ -37,6 +37,9 @@ _int CUI_Image::Update_Object(const _float & _fDeltaTime)
 
 void CUI_Image::Render_Object(void)
 {
+	if (!m_bIsVisible)
+		return;
+
 	if (!m_pTexture)
 		return;
 

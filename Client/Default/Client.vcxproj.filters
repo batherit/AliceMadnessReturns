@@ -352,6 +352,9 @@
     <Filter Include="01. Scene\08. Credit">
       <UniqueIdentifier>{81a02e12-7393-42c2-bcc1-69f6698dd44f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\09. MiniGame">
+      <UniqueIdentifier>{d4c745af-eb12-49d8-9f2e-50c9bc5c67ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">

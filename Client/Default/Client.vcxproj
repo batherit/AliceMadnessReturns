@@ -245,6 +245,10 @@
     <ClInclude Include="..\Code\CannonBall.h" />
     <ClInclude Include="..\Code\CreditScene.h" />
     <ClInclude Include="..\Code\DataMgr.h" />
+    <ClInclude Include="..\Code\EFT_Explosion.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\EndScene.h" />
     <ClInclude Include="..\Code\GiantAliceW.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -613,6 +617,10 @@
     <ClCompile Include="..\Code\CannonBall.cpp" />
     <ClCompile Include="..\Code\CreditScene.cpp" />
     <ClCompile Include="..\Code\DataMgr.cpp" />
+    <ClCompile Include="..\Code\EFT_Explosion.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\EndScene.cpp" />
     <ClCompile Include="..\Code\GiantAliceW.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

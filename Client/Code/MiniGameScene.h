@@ -50,6 +50,7 @@ private:
 
 private:
 	CMap* m_pMap = nullptr;
+	Engine::CLayer* m_pLayer = nullptr;
 	Engine::CCamera* m_pCamera = nullptr;
 	CShip* m_pShip = nullptr;
 	CUI_HPBar* m_pHPBar = nullptr;

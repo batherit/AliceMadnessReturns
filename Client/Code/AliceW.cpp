@@ -59,8 +59,6 @@ HRESULT CAliceW::Ready_Object(void)
 
 	// Physics
 	m_pPhysics = AddComponent<Engine::CPhysics>();
-	m_pPhysics->SetSpeed(ALICE_RUN_SPEED);
-	m_pPhysics->SetGravity(9.8f * 3.f);
 
 	// StateMgr
 	m_pStateMgr = new CStateMgr<CAliceW>(*this);
@@ -109,6 +107,10 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 
 	if (!m_pMap) {
 		m_pMap = dynamic_cast<CMap*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Map").begin());
+		GetTransform()->SetPos(m_pMap->GetCurSpawnPoint());
+		m_pPhysics->SetSpeed(ALICE_RUN_SPEED);
+		m_pPhysics->SetGravity(9.8f * 3.f);
+		return 1;
 	}
 	if (!m_pStateMgr->ConfirmValidState())
 		return 1;
@@ -164,27 +166,6 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 
 	Engine::CNaviMesh* pNaviMesh = m_pMap->GetNaviMesh();
 	_vec3 vCurrentPos = GetTransform()->GetPos();
-
-	//pNaviMesh->CorrectPosAndVelBySliding(vCurrentPos, *GetPhysics());
-	//_vec3 vSlidingXZ = pNaviMesh->GetSlidedVelocity(vCurrentPos);
-	//vSlidingXZ.y = 0.f;
-
-	//if (D3DXVec3LengthSq(&vSlidingXZ) > 0.f ) {
-	//	D3DXVec3Normalize(&vSlidingXZ, &vSlidingXZ);
-	//	_vec3 vVelocityXZ = GetPhysics()->GetVelocity();
-	//	vVelocityXZ.y = 0.f;
-
-	//	if (D3DXVec3LengthSq(&vVelocityXZ) > 0.f) {
-	//		_float fDot = D3DXVec3Dot(&vSlidingXZ, &vVelocityXZ);
-	//		if (fDot < 0.f) {
-	//			vVelocityXZ -= fDot * vSlidingXZ;
-	//			GetPhysics()->SetVelocityXZ(_vec2(vVelocityXZ.x, vVelocityXZ.z));
-	//		}
-	//	}
-	//	/*else {
-	//		m_v
-	//	}*/
- //	}
 
 	_vec3 vTargetPos = m_pPhysics->GetUpdatedPos(_fDeltaTime);		// 물리 계산
 	vTargetPos = pNaviMesh->GetSlidedPos(vTargetPos);

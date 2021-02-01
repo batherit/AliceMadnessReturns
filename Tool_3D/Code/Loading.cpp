@@ -1070,6 +1070,36 @@ _uint CLoading::LoadMiniGameSceneMeshes()
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
+		L"WaterLogA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"WaterLogA.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterLogA");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterLogA");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"WaterLogB",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"WaterLogB.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterLogB");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterLogB");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"WaterLogC",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"WaterLogC.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterLogC");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterLogC");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
 		L"Mine",
 		Engine::TYPE_STATIC,
 		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",

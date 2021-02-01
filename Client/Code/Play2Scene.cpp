@@ -230,6 +230,10 @@ void CPlay2Scene::OnLoaded()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
+
+	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_HEIGHT);
+	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-25.f, -40.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
+
 	Engine::GetTimer(L"Timer_FPS60")->Reset();
 }
 
@@ -241,6 +245,8 @@ void CPlay2Scene::OnExited()
 		pDataMgr->SaveAliceWData(m_pPlayer);
 		pDataMgr->SetValidData(true);
 	}
+	Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
+	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_NONE);
 }
 
 CPlay2Scene * CPlay2Scene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -323,7 +329,7 @@ HRESULT CPlay2Scene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pPlayer = CAliceW::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
-	m_pPlayer->GetTransform()->SetPos(pMap->GetCurSpawnPoint());
+	//m_pPlayer->GetTransform()->SetPos(pMap->GetCurSpawnPoint());
 	if (CDataMgr::GetInstance()->IsValidData()) {
 		CAttribute* pAttribute = m_pPlayer->GetComponent<CAttribute>();
 		auto* pDataMgr = CDataMgr::GetInstance();

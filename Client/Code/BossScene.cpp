@@ -196,6 +196,7 @@ void CBossScene::OnExited()
 		pDataMgr->SaveAliceWData(m_pPlayer);
 		pDataMgr->SetValidData(true);
 	}
+	Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
 }
 
 CBossScene * CBossScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)

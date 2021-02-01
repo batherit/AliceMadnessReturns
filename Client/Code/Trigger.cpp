@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Trigger.h"
 #include "PlayScene.h"
+#include "MiniGameScene.h"
 #include "Play2Scene.h"
 #include "BossScene.h"
 #include "MadCapA.h"
@@ -64,6 +65,8 @@ void CTrigger::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 				SetActivated(false);
 				if (lstrcmp(m_tcStageTag, L"PlayScene") == 0)
 					Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+				else if(lstrcmp(m_tcStageTag, L"MiniGameScene") == 0)
+					Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CMiniGameScene::Create(m_pGraphicDev));
 				else if (lstrcmp(m_tcStageTag, L"Play2Scene") == 0)
 					Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPlay2Scene::Create(m_pGraphicDev));
 				else if (lstrcmp(m_tcStageTag, L"BossScene") == 0)

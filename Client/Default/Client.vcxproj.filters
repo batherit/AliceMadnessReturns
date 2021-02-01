@@ -379,6 +379,9 @@
     <Filter Include="02. Object\02. GameObject\MineBombAttack">
       <UniqueIdentifier>{87df748b-5f90-4e42-9255-563ed81e7c92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. Effect\EFT_Explosion">
+      <UniqueIdentifier>{b5ab2da8-1489-4688-ba12-d1a1f2fa66fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -924,6 +927,9 @@
     <ClInclude Include="..\Code\MineBombAttack.h">
       <Filter>02. Object\02. GameObject\MineBombAttack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\EFT_Explosion.h">
+      <Filter>05. Effect\EFT_Explosion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1417,6 +1423,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MineBombAttack.cpp">
       <Filter>02. Object\02. GameObject\MineBombAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EFT_Explosion.cpp">
+      <Filter>05. Effect\EFT_Explosion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

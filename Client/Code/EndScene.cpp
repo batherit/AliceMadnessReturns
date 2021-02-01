@@ -96,6 +96,7 @@ void CEndScene::OnLoaded()
 void CEndScene::OnExited()
 {
 	CSoundMgr::Get_Instance()->StopSound(CSoundMgr::BGM);
+	Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
 }
 
 CEndScene * CEndScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)

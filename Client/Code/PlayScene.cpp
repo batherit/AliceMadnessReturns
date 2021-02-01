@@ -217,6 +217,7 @@ void CPlayScene::OnExited()
 		pDataMgr->SaveAliceWData(m_pPlayer);
 		pDataMgr->SetValidData(true);
 	}
+	Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
 }
 
 CPlayScene * CPlayScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -297,7 +298,7 @@ HRESULT CPlayScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pPlayer = CAliceW::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
-	m_pPlayer->GetTransform()->SetPos(pMap->GetCurSpawnPoint());
+	//m_pPlayer->GetTransform()->SetPos(pMap->GetCurSpawnPoint());
 	if (CDataMgr::GetInstance()->IsValidData()) {
 		CAttribute* pAttribute = m_pPlayer->GetComponent<CAttribute>();
 		auto* pDataMgr = CDataMgr::GetInstance();

@@ -62,7 +62,7 @@ int CBossState_Attack_IronHand::Update(const _float& _fDeltaTime)
 		// TODO : 주먹 공격을 생성합니다.
 		if (!m_bIsEffectOn) {
 			CSplashAttack* pSplashAttack = CSplashAttack::Create(m_rOwner.GetGraphicDev());
-			pSplashAttack->SetSplashAttackInfo(L"Monster", L"Player",
+			pSplashAttack->SetSplashAttackInfo(L"EnemyAttack", L"Player",
 				m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, WORLD_X_AXIS, 180.f);
 			Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
 

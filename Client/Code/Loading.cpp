@@ -421,6 +421,14 @@ _uint CLoading::LoadTextures() {
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Help_Gun", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Help_Gun.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Help_BunnyBomb", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Help_BunnyBomb.png"), E_FAIL);
 
+	// Explosion
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		L"EFT_Explosion",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/Explosion/Explosion%d.png", 90),
+		E_FAIL);
+
 	// Fin
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STATIC, L"UI_Fin", Engine::TEX_NORMAL, L"../../Resource/Texture/UI/UI_Fin.png"), E_FAIL);
 
@@ -955,6 +963,30 @@ _uint CLoading::LoadPlaySceneMeshes() {
 }
 
 _uint CLoading::LoadMiniGameSceneMeshes() {
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"WaterLogA",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"WaterLogA.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"WaterLogB",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"WaterLogB.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"WaterLogC",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"WaterLogC.X"),
+		E_FAIL);
+
 	// 마인 생성
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -990,6 +1022,8 @@ _uint CLoading::LoadMiniGameSceneMeshes() {
 		L"../../Resource/Mesh/DynamicMesh/Shark/",
 		L"Shark.X"),
 		E_FAIL);
+
+	return S_OK;
 }
 
 _uint CLoading::LoadPlay2SceneMeshes() {

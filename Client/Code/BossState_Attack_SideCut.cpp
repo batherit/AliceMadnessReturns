@@ -77,7 +77,7 @@ int CBossState_Attack_SideCut::Update(const _float& _fDeltaTime)
 		case 0:
 			if (fProgress >= 0.4f) {
 				CSplashAttack* pSplashAttack = CSplashAttack::Create(m_rOwner.GetGraphicDev());
-				pSplashAttack->SetSplashAttackInfo(L"Monster", L"Player",
+				pSplashAttack->SetSplashAttackInfo(L"EnemyAttack", L"Player",
 					m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, m_rOwner.GetTransform()->GetLook(), 60.f);
 				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
 				m_bIsEffectOn = true;
@@ -86,7 +86,7 @@ int CBossState_Attack_SideCut::Update(const _float& _fDeltaTime)
 		case 1:
 			if (fProgress >= 0.4f) {
 				CSplashAttack* pSplashAttack = CSplashAttack::Create(m_rOwner.GetGraphicDev());
-				pSplashAttack->SetSplashAttackInfo(L"Monster", L"Player",
+				pSplashAttack->SetSplashAttackInfo(L"EnemyAttack", L"Player",
 					m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, m_rOwner.GetTransform()->GetLook(), 60.f);
 				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
 				m_bIsEffectOn = true;
@@ -95,7 +95,7 @@ int CBossState_Attack_SideCut::Update(const _float& _fDeltaTime)
 		case 2:
 			if (fProgress >= 0.5f) {
 				CSplashAttack* pSplashAttack = CSplashAttack::Create(m_rOwner.GetGraphicDev());
-				pSplashAttack->SetSplashAttackInfo(L"Monster", L"Player",
+				pSplashAttack->SetSplashAttackInfo(L"EnemyAttack", L"Player",
 					m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, m_rOwner.GetTransform()->GetLook(), 60.f);
 				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
 				m_bIsEffectOn = true;

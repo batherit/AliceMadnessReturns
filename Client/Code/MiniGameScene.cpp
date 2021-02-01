@@ -85,6 +85,14 @@ int CMiniGameScene::Update(const _float& fTimeDelta)
 		}
 	}
 
+	if (m_pMap) {
+		auto& rObjectList = m_pLayer->GetLayerList(L"MapObjects");
+			
+		for (auto& rObj : rObjectList) {
+			rObj->GetTransform()->Translate(_vec3(-5.f * fTimeDelta, 0.f, 0.f));
+		}
+	}
+
 	if (!m_bIsGameOver) {
 		if ((m_fGenTime_Shark -= fTimeDelta) <= 0.f) {
 			CShark* pShark = CShark::Create(m_pGraphicDev);
@@ -147,7 +155,7 @@ void CMiniGameScene::OnLoaded()
 	//Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
 
 	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_SPHERE);
-	Engine::CRenderer::GetInstance()->SetSphereFogInfo(40.f, 100.f, _vec3(0.f, 0.3f, 0.63f), 1.f);
+	Engine::CRenderer::GetInstance()->SetSphereFogInfo(40.f, 120.f, _vec3(0.f, 0.3f, 0.63f), 1.f);
 
 	Engine::GetTimer(L"Timer_FPS60")->Reset();
 }
@@ -216,17 +224,18 @@ HRESULT CMiniGameScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	Engine::CLayer* pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 	m_mapLayer.emplace(pLayerTag, pLayer);
+	m_pLayer = pLayer;
 
 	// 甘 积己
-	/*CMap* pMap = CMap::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pMap, E_FAIL);
-	pMap->LoadMap(
+	m_pMap = CMap::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pMap, E_FAIL);
+	m_pMap->LoadMap(
 		pLayer,
 		nullptr,
-		L"../../Resource/Navi/Navi_Play2.navi",
-		L"../../Resource/Map/Map_Play2.map"
-	);*/
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Map", pMap), E_FAIL);
+		nullptr,
+		L"../../Resource/Map/Map_MiniGame.map"
+	);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Map", m_pMap), E_FAIL);
 
 	// 墨皋扼 积己
 	m_pCamera = CStaticCamera::Create(m_pGraphicDev);
@@ -254,7 +263,7 @@ HRESULT CMiniGameScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pShipProgress = CUI_ShipProgress::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pShipProgress, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", m_pShipProgress), E_FAIL);
-	m_pShipProgress->GetTransform()->SetPos(WINCX >> 1, WINCY - (WINCY * 0.05f), 0.f);
+	m_pShipProgress->GetTransform()->SetPos(WINCX >> 1, (WINCY * 0.1f), 0.f);
 	
 	// 捞弧 UI 积己
 	m_pToothShip = CUI_ToothShip::Create(m_pGraphicDev);

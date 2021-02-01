@@ -5,6 +5,7 @@
 #include "EndScene.h"
 #include "Attribute.h"
 #include "Ship.h"
+#include "EFT_Explosion.h"
 
 CCannonBall::CCannonBall(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -118,6 +119,9 @@ void CCannonBall::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Monster") == 0) {
 			_tCollisionInfo.pCollidedObject->GetComponent<CAttribute>()->Damaged(1.f);
 			// TODO : Æø¹ß ÀÌÆåÆ®¸¦ ³Ö´Â´Ù.
+			CEFT_Explosion* pExplosion = CEFT_Explosion::Create(m_pGraphicDev);
+			pExplosion->SetExplosionInfo(GetTransform()->GetPos());
+			Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pExplosion);
 			SetValid(false);
 		}
 	}
@@ -129,6 +133,9 @@ void CCannonBall::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 				_tCollisionInfo.pCollidedObject->GetComponent<CAttribute>()->Damaged(1.f);
 				pShip->Attacked();
 				// TODO : Æø¹ß ÀÌÆåÆ®¸¦ ³Ö´Â´Ù.
+				CEFT_Explosion* pExplosion = CEFT_Explosion::Create(m_pGraphicDev);
+				pExplosion->SetExplosionInfo(GetTransform()->GetPos());
+				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pExplosion);
 				SetValid(false);
 			}
 		}

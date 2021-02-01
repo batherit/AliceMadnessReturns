@@ -28,6 +28,8 @@
 #include "UI_FadeInOut.h"
 #include "PlateEffect.h"
 #include "EffectMgr.h"
+#include "UI_WeaponLock.h"
+#include "UI_LockedWeapon.h"
 
 #include "Attribute.h"
 
@@ -243,6 +245,7 @@ void CPlay2Scene::OnExited()
 	auto* pDataMgr = CDataMgr::GetInstance();
 	if (pDataMgr) {
 		pDataMgr->SaveAliceWData(m_pPlayer);
+		pDataMgr->SaveInGameUIData(m_pUIInGame);
 		pDataMgr->SetValidData(true);
 	}
 	Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
@@ -329,13 +332,6 @@ HRESULT CPlay2Scene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pPlayer = CAliceW::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", m_pPlayer), E_FAIL);
-	//m_pPlayer->GetTransform()->SetPos(pMap->GetCurSpawnPoint());
-	if (CDataMgr::GetInstance()->IsValidData()) {
-		CAttribute* pAttribute = m_pPlayer->GetComponent<CAttribute>();
-		auto* pDataMgr = CDataMgr::GetInstance();
-		pAttribute->SetHP(pDataMgr->GetCurHP(), pDataMgr->GetMaxHP());
-		m_pPlayer->SetToothNum(pDataMgr->GetToothNum());
-	}
 
 	// 플레이어 카메라 컨트롤러 생성(0)
 	Engine::CCameraController* pCameraController = CCameraController_Player::Create(m_pGraphicDev);
@@ -427,12 +423,24 @@ HRESULT CPlay2Scene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	// 커서 없애기
 	ShowCursor(false);
 
-	CUI_InGame* pUIInGame = CUI_InGame::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pUIInGame, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI_InGame", pUIInGame), E_FAIL);
-	pUIInGame->SetPlayer(m_pPlayer);
-	pUIInGame->GetFadeInOut()->StartFadeInOut(2.f, true);
-	m_pPlayer->SetInGameUI(pUIInGame);
+	m_pUIInGame = CUI_InGame::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pUIInGame, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI_InGame", m_pUIInGame), E_FAIL);
+	m_pUIInGame->SetPlayer(m_pPlayer);
+	m_pUIInGame->GetFadeInOut()->StartFadeInOut(2.f, true);
+	m_pPlayer->SetInGameUI(m_pUIInGame);
+
+	if (CDataMgr::GetInstance()->IsValidData()) {
+		CAttribute* pAttribute = m_pPlayer->GetComponent<CAttribute>();
+		auto* pDataMgr = CDataMgr::GetInstance();
+		pAttribute->SetHP(pDataMgr->GetCurHP(), pDataMgr->GetMaxHP());
+		m_pPlayer->SetToothNum(pDataMgr->GetToothNum());
+		m_pUIInGame->GetWeaponLock()->GetVorpalBladeUI()->SetLocked(pDataMgr->IsVorpalBladeLocked());
+		m_pUIInGame->GetWeaponLock()->GetHobbyHorseUI()->SetLocked(pDataMgr->IsHobbyHorseLocked());
+		m_pUIInGame->GetWeaponLock()->GetGunUI()->SetLocked(pDataMgr->IsGunLocked());
+		m_pUIInGame->GetWeaponLock()->GetBunnyBombUI()->SetLocked(pDataMgr->IsBunnyBombLocked());
+		m_pPlayer->SetWeaponType(static_cast<CAliceW::E_WEAPON_TYPE>(pDataMgr->GetWeaponType()));
+	}
 
 	CEffectMgr* pEffectMgr = CEffectMgr::Create(m_pGraphicDev, Engine::GetTimer(L"Timer_FPS60"));
 	NULL_CHECK_RETURN(pEffectMgr, E_FAIL);

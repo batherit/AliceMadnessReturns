@@ -38,6 +38,7 @@ HRESULT CCake::Ready_Object(void)
 	m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
 
 	GetTransform()->SetPos(0.f, 1.f, 0.f);
+	GetTransform()->SetScaleXYZ(2.f, 2.f, 2.f);
 
 	return S_OK;
 }

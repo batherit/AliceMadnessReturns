@@ -16,6 +16,7 @@ class CAliceW;
 class CMonster;
 class CSkyBox;
 class CTerrain;
+class CUI_InGame;
 class CPlayScene : public Engine::CScene
 {
 private: // 持失切, 社瑚切
@@ -51,6 +52,7 @@ private:
 	//CMonster* m_pMonster = nullptr;
 	CSkyBox* m_pSkyBox = nullptr;
 	CTerrain* m_pTerrain = nullptr;
+	CUI_InGame* m_pUIInGame = nullptr;
 };
 
 END

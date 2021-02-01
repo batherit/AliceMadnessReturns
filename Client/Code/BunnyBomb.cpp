@@ -70,8 +70,27 @@ int CBunnyBomb::Update_Object(const _float & _fDeltaTime)
 		if ((m_fElapsedTime += _fDeltaTime) >= BOOM_TIME) {
 			Bomb();
 		}
-		else
-			m_pBunnyBombUI->SetProgress((m_fElapsedTime += _fDeltaTime) / BOOM_TIME);
+		else {
+			_float fProgress = (m_fElapsedTime += _fDeltaTime) / BOOM_TIME;
+			m_pBunnyBombUI->SetProgress(fProgress);
+			if ((m_fTickTime += _fDeltaTime) >= 0.7f) {
+				CSoundMgr::Get_Instance()->PlaySound(L"BunnyBomb_TickSlow.ogg", CSoundMgr::LOOP_TICK);
+				m_fTickTime = 0.f;
+			}
+
+			/*if (!CSoundMgr::Get_Instance()->IsPlaying(CSoundMgr::LOOP_TICK)) {
+				if (fProgress < 0.5f) {
+					CSoundMgr::Get_Instance()->PlaySound(L"BunnyBomb_TickSlow.ogg", CSoundMgr::LOOP_TICK);
+				}
+				else if (fProgress < 0.8f) {
+					CSoundMgr::Get_Instance()->PlaySound(L"BunnyBomb_TickFast.ogg", CSoundMgr::LOOP_TICK);
+				}
+				else {
+					CSoundMgr::Get_Instance()->PlaySound(L"BunnyBomb_TickWarn.ogg", CSoundMgr::LOOP_TICK);
+				}
+			}*/
+		}
+			
 	}
 	else {
 		if ((m_fElapsedTime += _fDeltaTime) >= 0.7f) {
@@ -198,4 +217,7 @@ void CBunnyBomb::Bomb()
 	D3DXMatrixInverse(&matView, NULL, &matView);
 	pEffect->SetInfo(GetTransform()->GetPos(), -_vec3(matView._31, matView._32, matView._33), 0.f, 0.3f, 10, 20.f, 0.8f);
 	Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
+	CSoundMgr::Get_Instance()->PlaySound(L"BunnyBomb_Bomb.ogg", CSoundMgr::PLAYER);
+	CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_TICK);
+	//CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_TICK);
 }

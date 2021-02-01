@@ -44,6 +44,16 @@ int CAliceWState_Death::Update(const _float& _fDeltaTime)
 			pButterfly->SetButterflyInfo(m_rOwner.GetTransform()->GetPos() + _vec3(Engine::GetNumberBetweenMinMax(-0.25f, 0.25f), 1.f + Engine::GetNumberBetweenMinMax(-0.25f, 0.25f), Engine::GetNumberBetweenMinMax(-0.25f, 0.25f)),
 				Engine::GetRandomVector(), Engine::GetNumberBetweenMinMax(3.5f,4.0f ), Engine::GetNumberBetweenMinMax(3.f, 4.f), Engine::GetNumberBetweenMinMax(2.f, 2.1f), Engine::GetNumberBetweenMinMax(1.f, 3.f));
 			pLayer->Add_GameObject(L"Effect", pButterfly);
+			
+		}
+		switch (Engine::GetNumberBetweenMinMax(0, 1))
+		{
+		case 0:
+			CSoundMgr::Get_Instance()->PlaySound(L"Alice_Death0.ogg", CSoundMgr::PLAYER);
+			break;
+		case 1:
+			CSoundMgr::Get_Instance()->PlaySound(L"Alice_Death1.ogg", CSoundMgr::PLAYER);
+			break;
 		}
 	}
 	else {

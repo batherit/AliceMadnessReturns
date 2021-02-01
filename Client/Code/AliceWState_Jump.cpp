@@ -32,6 +32,7 @@ void CAliceWState_Jump::OnLoaded(void)
 		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_JumpFwd_Start);
 		m_rOwner.GetPhysics()->SetVelocityY(ALICE_JUMP_SPEED);
 		m_eJumpStep = STEP_START;
+		CSoundMgr::Get_Instance()->PlaySound(L"Alice_Jump.ogg", CSoundMgr::PLAYER);
 		GenerateSmokeBombEffect();
 		m_fElapsedTime = FLOATINGEFFECT_GEN_TIME;
 	}
@@ -90,6 +91,8 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 			break;
 		}
 		m_eJumpStep = STEP_LAND;
+		// SOUND : JUMPLAND => 빼는게 더 낫다
+		//CSoundMgr::Get_Instance()->PlaySound(L"Alice_JumpLand.ogg", CSoundMgr::PLAYER);
 	}
 		
 	// Jump => Death, Jump, Run, Attack
@@ -134,10 +137,10 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 					}
 					++m_iJumpNum;
 					m_eJumpStep = STEP_START;
+
 					GenerateSmokeBombEffect();
 					m_fElapsedTime = FLOATINGEFFECT_GEN_TIME;
 
-					// TODO : 점프에 대한 물리 처리를 해주어야 합니다.
 				}
 				else {
 					// 어떤 입력도 없다면 활강 애니메이션을 진행한다.
@@ -219,7 +222,24 @@ int CAliceWState_Jump::Update(const _float& _fDeltaTime)
 			GenerateSmokeBombEffect();
 			m_fElapsedTime = FLOATINGEFFECT_GEN_TIME;
 
-			// TODO : 점프에 대한 물리 처리를 해주어야 합니다.
+
+
+			// SOUND : DoubleJump
+			switch (Engine::GetNumberBetweenMinMax(0, 3)) {
+			case 0:
+				CSoundMgr::Get_Instance()->PlaySound(L"Alice_DoubleJump0.ogg", CSoundMgr::PLAYER);
+				break;
+			case 1:
+				CSoundMgr::Get_Instance()->PlaySound(L"Alice_DoubleJump1.ogg", CSoundMgr::PLAYER);
+				break;
+			case 2:
+				CSoundMgr::Get_Instance()->PlaySound(L"Alice_DoubleJump2.ogg", CSoundMgr::PLAYER);
+				break;
+			case 3:
+				CSoundMgr::Get_Instance()->PlaySound(L"Alice_DoubleJump3.ogg", CSoundMgr::PLAYER);
+				break;
+			}
+
 		}
 		break;
 	case STEP_LAND:

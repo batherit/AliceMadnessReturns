@@ -118,6 +118,7 @@ void CJumpPad::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 					m_bIsLaunched = true;
 				}
 				m_pMesh->Set_AnimationSet(ANIM::GrowingJumpPad_Launch);
+				CSoundMgr::Get_Instance()->PlaySound(L"JumpPad_Jump.ogg", CSoundMgr::EFFECT);
 			}
 		}
 	}

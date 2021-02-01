@@ -19,6 +19,7 @@ void CBolterFlyState_Death::OnLoaded(void)
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::Bolterfly_Attack_MeLee3);
 	m_rOwner.GetPhysics()->SetVelocityXZ(_vec2(0.f, 0.f));
 	m_rOwner.GetPhysics()->SetVelocityY(-9.8f * 3.f);
+	CSoundMgr::Get_Instance()->PlaySound(L"Bolterfly_Drop.ogg", CSoundMgr::MONSTER);
 }
 
 int CBolterFlyState_Death::Update(const _float& _fDeltaTime)

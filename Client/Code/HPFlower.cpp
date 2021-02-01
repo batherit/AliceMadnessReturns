@@ -55,11 +55,13 @@ int CHPFlower::Update_Object(const _float & _fDeltaTime)
 			// TODO : 플라워 카메라 컨트롤러로 변경
 			Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 			pCameraMgr->ChangeCameraController(4, 0.5f);
+			CSoundMgr::Get_Instance()->PlaySound(L"HPFlower_Entry.ogg", CSoundMgr::EFFECT);
 		}
 		else if (m_bIsEating && !m_pAlice->IsSmalling()) {
 			// TODO : 플레이어 카메라 컨트롤러로 변경
 			Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 			pCameraMgr->ChangeCameraController(0, 0.5f);
+			CSoundMgr::Get_Instance()->PlaySound(L"HPFlower_Exit.ogg", CSoundMgr::EFFECT);
 			SetValid(false);
 			return 1;
 		}

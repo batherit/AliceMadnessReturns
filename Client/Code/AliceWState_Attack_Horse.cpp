@@ -33,6 +33,8 @@ void CAliceWState_Attack_Horse::OnLoaded(void)
 	//m_pWeaponCollider = m_rOwner.GetWeapon()->GetColliderFromTag(L"PlayerAttack");
 	//m_pWeaponCollider->SetActivated(true);
 	m_rOwner.GetAttackCollider()->SetActivated(false);
+	m_bIsSwing = false;
+	//CSoundMgr::Get_Instance()->PlaySound(L"HobbyHorse_Swing0.ogg", CSoundMgr::PLAYER);
 }
 
 int CAliceWState_Attack_Horse::Update(const _float& _fDeltaTime)
@@ -65,23 +67,44 @@ int CAliceWState_Attack_Horse::Update(const _float& _fDeltaTime)
 		if (m_iAttackNum == 2) {
 			_float fProgress = m_rOwner.GetDynamicMesh()->GetAnimationProgress();
 			if (fProgress <= 0.2f) {
-				m_rOwner.GetAttackCollider()->SetActivated(true);
+				if (!m_bIsSwing) {
+					m_rOwner.GetAttackCollider()->SetActivated(true);
+					PlaySwingSound();
+					m_bIsSwing = true;
+				}
 			}
 			else if (fProgress <= 0.4f) {
-				m_rOwner.GetAttackCollider()->SetActivated(false);
+				if (m_bIsSwing) {
+					m_rOwner.GetAttackCollider()->SetActivated(false);
+					m_bIsSwing = false;
+				}
 			}
 			else if (fProgress <= 0.8f) {
-				m_rOwner.GetAttackCollider()->SetActivated(true);
+				if (!m_bIsSwing) {
+					m_rOwner.GetAttackCollider()->SetActivated(true);
+					PlaySwingSound();
+					m_bIsSwing = true;
+				}
 			}
 			else {
-				m_rOwner.GetAttackCollider()->SetActivated(false);
+				if (m_bIsSwing) {
+					m_rOwner.GetAttackCollider()->SetActivated(false);
+					m_bIsSwing = false;
+				}
 			}
 		}
 		else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= m_fEndTime[m_iAttackNum]) {
-			m_rOwner.GetAttackCollider()->SetActivated(false);
+			if (m_bIsSwing) {
+				m_rOwner.GetAttackCollider()->SetActivated(false);
+				m_bIsSwing = false;
+			}
 		}
 		else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= m_fStartTime[m_iAttackNum]) {
-			m_rOwner.GetAttackCollider()->SetActivated(true);
+			if (!m_bIsSwing) {
+				m_rOwner.GetAttackCollider()->SetActivated(true);
+				PlaySwingSound();
+				m_bIsSwing = true;
+			}
 		}
 		
 
@@ -103,7 +126,10 @@ int CAliceWState_Attack_Horse::Update(const _float& _fDeltaTime)
 				break;
 			}
 			m_bIsAttacking = false;
-			m_rOwner.GetAttackCollider()->SetActivated(false);
+			if (m_bIsSwing) {
+				m_rOwner.GetAttackCollider()->SetActivated(false);
+				m_bIsSwing = false;
+			}
 		}
 		else if (m_iAttackNum < 4 && m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= m_fEntryTime[m_iAttackNum]) {
 			// 입력 가능 상태(공격 애니메이션이 70퍼센트 진행됐을때)가 됐을때,
@@ -115,21 +141,26 @@ int CAliceWState_Attack_Horse::Update(const _float& _fDeltaTime)
 					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_2_A);
 					m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 1.f);
 					m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
+					//CSoundMgr::Get_Instance()->PlaySound(L"HobbyHorse_Swing0.ogg", CSoundMgr::PLAYER);
 					break;
 				case 2:
 					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_3_A);
 					m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 1.f);
 					m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
+					//CSoundMgr::Get_Instance()->PlaySound(L"HobbyHorse_Swing1.ogg", CSoundMgr::PLAYER);
 					break;
 				case 3:
 					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP2_Mele_Attack_4_A);
 					m_rOwner.GetPhysics()->SetVelocity(m_rOwner.GetTransform()->GetLook() * ALICE_RUN_SPEED * 1.f);
 					m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.9f);
+					//CSoundMgr::Get_Instance()->PlaySound(L"HobbyHorse_Swing2.ogg", CSoundMgr::PLAYER);
 					break;
 				}
 				++m_iAttackNum;
-				m_rOwner.GetAttackCollider()->SetActivated(false);
-				//m_rOwner.GetAttackCollider()->SetActivated(true);
+				if (m_bIsSwing) {
+					m_rOwner.GetAttackCollider()->SetActivated(false);
+					m_bIsSwing = false;
+				}
 			}
 			else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.6f && m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
 				_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
@@ -166,4 +197,19 @@ void CAliceWState_Attack_Horse::OnExited(void)
 
 void CAliceWState_Attack_Horse::Free(void)
 {
+}
+
+void CAliceWState_Attack_Horse::PlaySwingSound()
+{
+	switch (Engine::GetNumberBetweenMinMax(0, 2)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"HobbyHorse_Swing0.ogg", CSoundMgr::PLAYER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"HobbyHorse_Swing1.ogg", CSoundMgr::PLAYER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"HobbyHorse_Swing2.ogg", CSoundMgr::PLAYER);
+		break;
+	}
 }

@@ -55,8 +55,8 @@ int CTitleScene::Update(const _float& fTimeDelta)
 	if (!m_pFadeInOutUI->IsFadeIn() && !m_pFadeInOutUI->IsProcessing()) {
 		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
 		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CEndScene::Create(m_pGraphicDev));
-		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CBossScene::Create(m_pGraphicDev));
-		Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CMiniGameScene::Create(m_pGraphicDev));
+		Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CBossScene::Create(m_pGraphicDev));
+		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CMiniGameScene::Create(m_pGraphicDev));
 	}
 
 	return CScene::Update(fTimeDelta);
@@ -285,7 +285,9 @@ void CTitleScene::ClickStartButton(void *)
 	if (m_pFadeInOutUI->IsProcessing())
 		return;
 	//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+	CSoundMgr::Get_Instance()->PlaySound(L"Button_Click.ogg", CSoundMgr::UI);
 	m_pFadeInOutUI->StartFadeInOut(2.f, false);
+
 }
 
 void CTitleScene::HoveredOnExitButton(void *)
@@ -312,6 +314,7 @@ void CTitleScene::ClickQuitButton(void *)
 {
 	if (m_pFadeInOutUI->IsProcessing())
 		return;
+	CSoundMgr::Get_Instance()->PlaySound(L"Button_Click.ogg", CSoundMgr::UI);
 	DestroyWindow(g_hWnd);
 }
 

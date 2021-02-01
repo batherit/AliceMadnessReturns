@@ -36,6 +36,17 @@ void CBolterFlyState_Attack::OnLoaded(void)
 			m_rOwner.GetPhysics()->SetDirection(vToPlayer / vToPlayerLength);
 			
 		m_rOwner.GetPhysics()->SetSpeed(BOLTERFLY_RUN_SPEED * 7.5f);
+		switch (Engine::GetNumberBetweenMinMax(0, 2)) {
+		case 0:
+			CSoundMgr::Get_Instance()->PlaySound(L"Bolterfly_Attack0.ogg", CSoundMgr::MONSTER);
+			break;
+		case 1:
+			CSoundMgr::Get_Instance()->PlaySound(L"Bolterfly_Attack1.ogg", CSoundMgr::MONSTER);
+			break;
+		case 2:
+			CSoundMgr::Get_Instance()->PlaySound(L"Bolterfly_Attack2.ogg", CSoundMgr::MONSTER);
+			break;
+		}
 	}
 	
 	//m_rOwner.GetPhysics()->SetDirection(m_rOwner.GetTransform()->GetLook());

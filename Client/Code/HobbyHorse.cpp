@@ -60,6 +60,7 @@ void CHobbyHorse::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 			CEFT_HobbyHorseAttack* pEffect = CEFT_HobbyHorseAttack::Create(m_pGraphicDev);
 			pEffect->SetInfo((_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos() + _tCollisionInfo.pCollidedMyCollider->GetTransform()->GetPos()) * 0.5f);
 			Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
+
 		}
 	}
 }

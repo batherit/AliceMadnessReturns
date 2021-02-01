@@ -33,6 +33,21 @@ void CAliceWState_Damage::OnLoaded(void)
 	}
 	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.8f);
 	m_rOwner.GetAttribute()->SetDamaged(false);
+
+	switch (Engine::GetNumberBetweenMinMax(0, 3)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Alice_Damaged0.ogg", CSoundMgr::PLAYER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Alice_Damaged1.ogg", CSoundMgr::PLAYER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"Alice_Damaged2.ogg", CSoundMgr::PLAYER);
+		break;
+	case 3:
+		CSoundMgr::Get_Instance()->PlaySound(L"Alice_Damaged3.ogg", CSoundMgr::PLAYER);
+		break;
+	}
 }
 
 int CAliceWState_Damage::Update(const _float& _fDeltaTime)

@@ -97,6 +97,7 @@ private:
 	CAttribute* m_pAttribute = nullptr;
 	_int m_iCellIndex = -1;
 	_bool m_bIsLanded = false;
+	_float m_fHiccupTickTime = 0.f;
 
 	_bool m_bIsLockOn = false;
 	Engine::CGameObject* m_pTargetObject = nullptr;

@@ -50,11 +50,17 @@ void CSoundMgr::PlaySound(const _tchar * pSoundKey, CHANNELID eID)
 		return;
 
 	FMOD_BOOL bPlay = FALSE; 
-	if (FMOD_Channel_IsPlaying(m_pChannelArr[eID], &bPlay))
-	{
+	//if (FMOD_Channel_IsPlaying(m_pChannelArr[eID], &bPlay))
+	//{
 		FMOD_System_PlaySound(m_pSystem, FMOD_CHANNEL_FREE, iter->second, FALSE, &m_pChannelArr[eID]);
-	}
+	//}
 	FMOD_System_Update(m_pSystem);
+}
+
+_bool CSoundMgr::IsPlaying(CHANNELID eID)
+{
+	FMOD_BOOL bPlay = FALSE;
+	return FMOD_Channel_IsPlaying(m_pChannelArr[eID], &bPlay) == 0;
 }
 
 void CSoundMgr::PlayBGM(const _tchar * pSoundKey)

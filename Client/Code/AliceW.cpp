@@ -160,6 +160,24 @@ int CAliceW::Update_Object(const _float & _fDeltaTime)
 			vScale *= 1.3f;
 		GetTransform()->SetScale(vScale);
 	}
+	else if(m_bIsSmalled && (m_fHiccupTickTime -= _fDeltaTime) <= 0.f){
+		switch (Engine::GetNumberBetweenMinMax(0, 3))
+		{
+		case 0:
+			CSoundMgr::Get_Instance()->PlaySound(L"Alice_Hiccup0.ogg", CSoundMgr::PLAYER);
+			break;
+		case 1:
+			CSoundMgr::Get_Instance()->PlaySound(L"Alice_Hiccup1.ogg", CSoundMgr::PLAYER);
+			break;
+		case 2:
+			CSoundMgr::Get_Instance()->PlaySound(L"Alice_Hiccup2.ogg", CSoundMgr::PLAYER);
+			break;
+		case 3:
+			CSoundMgr::Get_Instance()->PlaySound(L"Alice_Hiccup3.ogg", CSoundMgr::PLAYER);
+			break;
+		}
+		m_fHiccupTickTime = Engine::GetNumberBetweenMinMax(3.f, 4.f);
+	}
 
 	m_pStateMgr->Update(_fDeltaTime);
 	m_pMesh->Play_Animation(_fDeltaTime);
@@ -536,6 +554,7 @@ void CAliceW::ToggleLockOn()
 			m_bIsLockOn = true;	// 타겟을 찾았다면 락온을 활성화한다.
 			Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 			pCameraMgr->ChangeCameraController(2, 0.2f);
+			CSoundMgr::Get_Instance()->PlaySound(L"Focus_On.ogg", CSoundMgr::UI);
 		}
 			
 	}
@@ -547,6 +566,7 @@ void CAliceW::ReleaseLockOn()
 	m_pTargetObject = nullptr;
 	Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 	pCameraMgr->ChangeCameraController(0, 0.5f);
+	CSoundMgr::Get_Instance()->PlaySound(L"Focus_Off.ogg", CSoundMgr::UI);
 }
 
 _bool CAliceW::ChangeLockOnTarget()
@@ -584,6 +604,7 @@ _bool CAliceW::ChangeLockOnTarget()
 
 	if ((*iter) != m_pTargetObject) {
 		m_pTargetObject = (*iter);
+		CSoundMgr::Get_Instance()->PlaySound(L"Focus_Switch.ogg", CSoundMgr::UI);
 		return true;
 	}
 		

@@ -39,6 +39,7 @@ void CAliceWState_Dash::OnLoaded(void)
 	m_rOwner.SetDashing(true);
 
 	m_pLayer = Engine::GetLayer(L"Environment");
+	CSoundMgr::Get_Instance()->PlaySound(L"Alice_Dash.ogg", CSoundMgr::PLAYER);
 }
 
 int CAliceWState_Dash::Update(const _float& _fDeltaTime)

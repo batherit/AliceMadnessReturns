@@ -25,7 +25,20 @@ HRESULT CEFT_HobbyHorseAttack::Ready_Object(void)
 	//m_pTimer->SetDeltaMultiple(0.08f);
 	dynamic_cast<CEffectMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"EffectMgr").begin())->SetTimeSpeed(0.04f, 0.2f);
 	dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin())->GetCamera()->Shake(0.12f * 0.04f, 0.06f, 10);
-
+	
+	switch (Engine::GetNumberBetweenMinMax(0, 4)) 
+	{
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"HobbyHorse_Attack0.ogg", CSoundMgr::PLAYER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"HobbyHorse_Attack1.ogg", CSoundMgr::PLAYER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"HobbyHorse_Attack2.ogg", CSoundMgr::PLAYER);
+		break;
+	}
+	
 	return S_OK;
 }
 

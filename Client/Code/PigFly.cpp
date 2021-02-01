@@ -216,6 +216,7 @@ void CPigFly::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 			default:
 				m_bIsOn = true;
 				m_pMesh->Set_AnimationSet(ANIM::NoseSwich_Fly_Action);
+				CSoundMgr::Get_Instance()->PlaySound(L"PigFly_On.ogg", CSoundMgr::EFFECT);
 				m_eStep = STEP_ACTION;
 				break;
 			}

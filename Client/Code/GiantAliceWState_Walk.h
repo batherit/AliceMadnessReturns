@@ -25,7 +25,12 @@ public:
 	virtual void Free(void) override;
 
 private:
+	void PlayStepSound();
+
+private:
 	Engine::CCameraMgr* m_pCameraMgr = nullptr;
+	_bool m_bIsLeftFootOnRightFoot = true; // √ ±‚
+	_float m_fElapsedTime = 0.f;
 };
 
 END

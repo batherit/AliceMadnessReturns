@@ -26,9 +26,16 @@ void CGiantAliceWState_Attack::OnLoaded(void)
 
 int CGiantAliceWState_Attack::Update(const _float& _fDeltaTime)
 {
-	if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.35f) {
-		if(!m_rOwner.GetAttackCollider()->IsActivated())
+	_float fProgress = m_rOwner.GetDynamicMesh()->GetAnimationProgress();
+	if (fProgress >= 0.35f) {
+		if (!m_rOwner.GetAttackCollider()->IsActivated()) {
 			m_rOwner.GetAttackCollider()->SetActivated(true);
+		}
+			
+	}
+	else if (!m_bIsSwingSoundOn && fProgress >= 0.2f) {
+		CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Swing.ogg", CSoundMgr::PLAYER);
+		m_bIsSwingSoundOn = true;
 	}
 
 	if (m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()) {

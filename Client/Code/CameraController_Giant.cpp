@@ -33,7 +33,7 @@ void CCameraController_Giant::ControlCamera(const _float& _fDeltaTime, Engine::C
 	// 카메라 스틱의 길이/방향을 조정한다.
 	//_vec3 vCameraPos = m_pBenchmarkObject->GetTransform()->GetPos() 
 	//	+ m_pBenchmarkObject->GetTransform()->GetRight() * 0.4f + m_pBenchmarkObject->GetTransform()->GetUp() * (1.5f + 3.f);
-	GetTransform()->SetPos(m_pBenchmarkObject->GetTransform()->GetPos() + _vec3(0.f, 0.1f, 0.f));
+	GetTransform()->SetPos(m_pBenchmarkObject->GetTransform()->GetPos() + _vec3(0.f, 0.15f, 0.f));
 	m_vStickDir = -m_pBenchmarkObject->GetTransform()->GetLook();
 	_matrix matRot;
 	D3DXVec3TransformNormal(&m_vStickDir, &m_vStickDir, D3DXMatrixRotationAxis(&matRot, &WORLD_Y_AXIS, -D3DX_PI * 0.15f));

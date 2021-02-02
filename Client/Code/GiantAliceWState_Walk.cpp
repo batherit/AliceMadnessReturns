@@ -40,7 +40,26 @@ int CGiantAliceWState_Walk::Update(const _float& _fDeltaTime)
 		m_rOwner.GetStateMgr()->SetNextState(new CGiantAliceWState_Idle(m_rOwner));
 	}
 
-	m_pCameraMgr->GetCamera()->Shake(2.f, 0.08f * (1.f - Engine::GetWeightByValue(D3DXVec3Length(&m_rOwner.GetTransform()->GetPos()), 2.f, 20.f)), 10);
+	//m_pCameraMgr->GetCamera()->Shake(2.f, 0.08f * (1.f - Engine::GetWeightByValue(D3DXVec3Length(&m_rOwner.GetTransform()->GetPos()), 2.f, 20.f)), 10);
+
+	if ((m_fElapsedTime += _fDeltaTime) >= 0.2f) {
+		if (m_bIsLeftFootOnRightFoot) {
+			if (m_rOwner.GetLeftFoot()->GetTransform()->GetPos().y < m_rOwner.GetRightFoot()->GetTransform()->GetPos().y) {
+				CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Step0.ogg", CSoundMgr::PLAYER);
+				m_bIsLeftFootOnRightFoot = false;
+				m_pCameraMgr->GetCamera()->Shake(0.8f, 0.25f * (1.f - Engine::GetWeightByValue(D3DXVec3Length(&m_rOwner.GetTransform()->GetPos()), 2.f, 20.f)), 30);
+			}
+		}
+		else {
+			if (m_rOwner.GetLeftFoot()->GetTransform()->GetPos().y > m_rOwner.GetRightFoot()->GetTransform()->GetPos().y) {
+				CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Step0.ogg", CSoundMgr::PLAYER);
+				m_bIsLeftFootOnRightFoot = true;
+				m_pCameraMgr->GetCamera()->Shake(0.8f, 0.25f * (1.f - Engine::GetWeightByValue(D3DXVec3Length(&m_rOwner.GetTransform()->GetPos()), 2.f, 20.f)), 30);
+			}
+		}
+		m_fElapsedTime = 0.2f;
+	}
+	
 
 	return 0;
 }
@@ -51,4 +70,19 @@ void CGiantAliceWState_Walk::OnExited(void)
 
 void CGiantAliceWState_Walk::Free(void)
 {
+}
+
+void CGiantAliceWState_Walk::PlayStepSound()
+{
+	switch (Engine::GetNumberBetweenMinMax(0, 2)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Step0.ogg", CSoundMgr::PLAYER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Step1.ogg", CSoundMgr::PLAYER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Step2.ogg", CSoundMgr::PLAYER);
+		break;
+	}
 }

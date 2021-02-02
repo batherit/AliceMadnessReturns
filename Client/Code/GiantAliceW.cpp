@@ -43,7 +43,8 @@ HRESULT CGiantAliceW::Ready_Object(void)
 	// Load Colliders
 	LoadColliders(L"GiantAliceW.col");
 	m_pHead = ExtractColliderFromTag(L"Head");
-	m_pAttackCollider = GetColliderFromTag(L"Foot");
+	m_pLeftFoot = ExtractColliderFromTag(L"Foot_L");
+	m_pAttackCollider = GetColliderFromTag(L"Foot_R");
 	m_pAttackCollider->SetActivated(false);
 
 	// MeshRenderer
@@ -172,6 +173,7 @@ CGiantAliceW * CGiantAliceW::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CGiantAliceW::Free(void)
 {
 	Engine::Safe_Release(m_pHead);
+	Engine::Safe_Release(m_pLeftFoot);
 	Engine::Safe_Release(m_pStateMgr);
 	CGameObject::Free();
 }

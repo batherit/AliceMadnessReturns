@@ -91,11 +91,14 @@ void CEndScene::OnLoaded()
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	CSoundMgr::Get_Instance()->PlayBGM(L"EndScene_BGM.wav");
 }
 
 void CEndScene::OnExited()
 {
-	CSoundMgr::Get_Instance()->StopSound(CSoundMgr::BGM);
+	//CSoundMgr::Get_Instance()->StopSound(CSoundMgr::BGM);
+	CSoundMgr::Get_Instance()->StopAll();
 	Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
 }
 

@@ -23,6 +23,9 @@ public:
 
 	// CState을(를) 통해 상속됨
 	virtual void Free(void) override;
+
+private:
+	_bool m_bIsSwingSoundOn = false;
 };
 
 END

@@ -22,6 +22,7 @@ void CGiantAliceWState_Scale::OnLoaded(void)
 {
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceGiant_Idle_Long01);
 	m_rOwner.GetPhysics()->SetSpeed(0.f);
+	//CSoundMgr::C
 }
 
 int CGiantAliceWState_Scale::Update(const _float& _fDeltaTime)

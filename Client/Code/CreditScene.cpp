@@ -68,7 +68,7 @@ int CCreditScene::Update(const _float& fTimeDelta)
 void CCreditScene::Render()
 {
 	Engine::CScene::Render();
-	Engine::Render_Font(L"Font_Jinji", L"By. 110C 심정환", &_vec2(WINCX * 0.004f, WINCY - 40.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f), &_vec2(0.3f, 0.3f));
+	Engine::Render_Font(L"Font_Jinji", L"By. 110C 심정환", &_vec2(WINCX * 0.25f, (WINCY >> 1) + 100.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f), &_vec2(0.7f, 0.7f));
 }
 
 void CCreditScene::OnLoaded()

@@ -44,6 +44,8 @@ public:
 	_int GetCellIndex() const { return m_iCellIndex; }
 
 	Engine::CGameObject* GetHead() const { return m_pHead; }
+	Engine::CColliderObject* GetLeftFoot() const { return m_pLeftFoot; }
+	Engine::CColliderObject* GetRightFoot() const { return m_pAttackCollider; }
 	Engine::CColliderObject* GetAttackCollider() const { return m_pAttackCollider; }
 
 private:
@@ -51,6 +53,7 @@ private:
 	CCat* m_pCat = nullptr;
 
 	Engine::CGameObject* m_pHead = nullptr;
+	Engine::CColliderObject* m_pLeftFoot = nullptr;
 	Engine::CColliderObject* m_pAttackCollider = nullptr;
 
 	CStateMgr<CGiantAliceW>* m_pStateMgr = nullptr;

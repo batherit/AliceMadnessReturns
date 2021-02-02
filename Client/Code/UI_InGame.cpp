@@ -123,8 +123,10 @@ _int CUI_InGame::Update_Object(const _float & _fDeltaTime)
 		}
 	}
 	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_F1)) {
-		if (!m_pHelpImage->IsVisible())
+		if (!m_pHelpImage->IsVisible()) {
 			m_pHelpImage->SetVisible(true);
+			CSoundMgr::Get_Instance()->PlaySound(L"Tutorial.ogg", CSoundMgr::UI);
+		}
 	}
 	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyUp(DIK_F1)) {
 		if (m_pHelpImage->IsVisible())

@@ -68,6 +68,7 @@ int CBossState_Attack_IronHand::Update(const _float& _fDeltaTime)
 
 			m_bIsEffectOn = true;
 			CSoundMgr::Get_Instance()->PlaySound(L"Boss_Slam.ogg", CSoundMgr::MONSTER);
+			CSoundMgr::Get_Instance()->PlaySound(L"Boss_Attack0_A.ogg", CSoundMgr::MONSTER);
 		}
 
 		if (m_iAttackCount < 5 && (m_fTickTime += _fDeltaTime) >= 0.3f) {
@@ -98,15 +99,28 @@ int CBossState_Attack_IronHand::Update(const _float& _fDeltaTime)
 
 			Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 			_float fT = (1.f - Engine::GetWeightByValue(fLength, 0.f, 50.f));
-			pCameraMgr->GetCamera()->Shake(0.7f * fT, 0.3f * fT, 20 * fT);
+			pCameraMgr->GetCamera()->Shake(0.7f * fT, 0.2f * fT, 20 * fT); // 0.3f
 		//	Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
 		}
 
 		//m_bIsAttack = true;
 	}
 	else if (!m_bIsSoundOn && m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.15f) {
-
-		CSoundMgr::Get_Instance()->PlaySound(L"Boss_Attack5_A.ogg", CSoundMgr::MONSTER);
+		switch (Engine::GetNumberBetweenMinMax(0, 3)) {
+		case 0:
+			CSoundMgr::Get_Instance()->PlaySound(L"Boss_Attack4_A.ogg", CSoundMgr::MONSTER);
+			break;
+		case 1:
+			CSoundMgr::Get_Instance()->PlaySound(L"Boss_Attack4_B.ogg", CSoundMgr::MONSTER);
+			break;
+		case 2:
+			CSoundMgr::Get_Instance()->PlaySound(L"Boss_Attack5_A.ogg", CSoundMgr::MONSTER);
+			break;
+		case 3:
+			CSoundMgr::Get_Instance()->PlaySound(L"Boss_Attack5_B.ogg", CSoundMgr::MONSTER);
+			break;
+		}
+		
 		m_bIsSoundOn = true;
 
 	}

@@ -187,9 +187,14 @@ void CBossScene::OnLoaded()
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_HEIGHT);
+	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-10.f, -80.f, _vec3(0.115f, 0.1f, 0.1f), 1.f);
+	CSoundMgr::Get_Instance()->PlayBGM(L"BossSceneBGM.ogg");
+
 	Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
 
-	CSoundMgr::Get_Instance()->PlayBGM(L"BossSceneBGM.ogg");
+	
 }
 
 void CBossScene::OnExited()
@@ -203,6 +208,7 @@ void CBossScene::OnExited()
 	}
 	Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
 	CSoundMgr::Get_Instance()->StopAll();
+	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_NONE);
 }
 
 CBossScene * CBossScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -426,7 +432,7 @@ HRESULT CBossScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pSkyBox, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", m_pSkyBox), E_FAIL);
-	m_pSkyBox->GetComponent<Engine::CPolygonRenderer>()->SetTextureIndex(0);
+	m_pSkyBox->GetComponent<Engine::CPolygonRenderer>()->SetTextureIndex(5);
 
 	// 테스트 나비 생성
 	/*CButterfly* pButterfly = CButterfly::Create(m_pGraphicDev);

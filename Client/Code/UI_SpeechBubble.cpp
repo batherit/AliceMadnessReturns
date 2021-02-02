@@ -49,6 +49,7 @@ void CUI_SpeechBubble::Render_Object(void)
 	//_vec3 vPos = m_pToothImage->GetTransform()->GetPos();
 	//_tchar tcBuffer[20];
 	//wsprintf(tcBuffer, L"%s", m_wstrText);
+	Engine::Render_Font(L"Font_Jinji", m_wstrText.c_str(), &(m_vOutputPos + _vec2(2.f, 2.f)), D3DXCOLOR(0.f, 0.f, 0.f, 1.f), &_vec2(0.3f, 0.5f));
 	Engine::Render_Font(L"Font_Jinji", m_wstrText.c_str(), &m_vOutputPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), &_vec2(0.3f, 0.5f));
 }
 

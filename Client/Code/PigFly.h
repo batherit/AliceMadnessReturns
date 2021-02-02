@@ -13,7 +13,7 @@ template<typename T> class CStateMgr;
 class CPigFly : public Engine::CGameObject
 {
 public:
-	enum E_EVENT_TYPE { TYPE_DOMINO, TYPE_FIST, TYPE_END };
+	enum E_EVENT_TYPE { TYPE_DOMINO, TYPE_FIST, TYPE_MINIGAME, TYPE_END };
 	enum E_STEP { STEP_INIT, STEP_RELAX, STEP_ATTACKED, STEP_ACTION, STEP_TALKING, STEP_PROCEE_EVENT, STEP_END };
 private: // 持失切, 社瑚切
 	explicit  CPigFly(LPDIRECT3DDEVICE9 pGraphicDev);

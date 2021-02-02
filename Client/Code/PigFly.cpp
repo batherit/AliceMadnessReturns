@@ -74,11 +74,15 @@ int CPigFly::Update_Object(const _float & _fDeltaTime)
 			m_pMesh->Set_AnimationSet(ANIM::NoseSwich_Fly_Idle01);
 			switch (m_eEventType) {
 			case TYPE_DOMINO: {
-				ShoutOut(WINCX / 6.f, WINCY - WINCY / 6.f, L" 당신은 행운의 돼지코를 만났습니다. \n생겨나라 미노미노를 외치면 도미노가 보이게 됩니다.");
+				ShoutOut(WINCX / 6.f,  WINCY / 6.f, L" 당신은 행운의 돼지코를 만났습니다. \n생겨나라 미노미노를 외치면 도미노가 보이게 됩니다.");
 				break;
 			}
 			case TYPE_FIST: {
-				ShoutOut(WINCX / 6.f, WINCY - WINCY / 6.f, L" 당신은 행운의 돼지코를 만났습니다. \n멈춰라 주먹주먹을 외치면 쇠주먹이 멈추게 됩니다.");
+				ShoutOut(WINCX / 6.f,  WINCY / 6.f, L" 당신은 행운의 돼지코를 만났습니다. \n멈춰라 주먹주먹을 외치면 쇠주먹이 멈추게 됩니다.");
+				break;
+			}
+			case TYPE_MINIGAME: {
+				ShoutOut(WINCX / 6.f,  WINCY / 6.f, L" 당신은 행운의 돼지코를 만났습니다. \n돼지코를 따라가면 좋은 일이 생길 것입니다.");
 				break;
 			}
 			}
@@ -89,10 +93,13 @@ int CPigFly::Update_Object(const _float & _fDeltaTime)
 		if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_F)) {
 			switch (m_eEventType) {
 			case TYPE_DOMINO:
-				ShoutOut(WINCX / 6.f, WINCY - WINCY / 6.f, L" 생겨나라 미노미노!!");
+				ShoutOut(WINCX / 6.f, WINCY / 6.f, L" 생겨나라 미노미노!!");
 				break;
 			case TYPE_FIST:
-				ShoutOut(WINCX / 6.f, WINCY - WINCY / 6.f, L" 멈춰라 주먹주먹!!");
+				ShoutOut(WINCX / 6.f, WINCY / 6.f, L" 멈춰라 주먹주먹!!");
+				break;
+			case TYPE_MINIGAME:
+				ShoutOut(WINCX / 6.f, WINCY / 6.f, L" 여기는 낭떠러지라구??");
 				break;
 			}
 			m_eStep = STEP_PROCEE_EVENT;

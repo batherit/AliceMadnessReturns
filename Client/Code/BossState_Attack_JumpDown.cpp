@@ -57,7 +57,18 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 			m_rOwner.GetPhysics()->SetVelocityY(BOSS_JUMP_SPEED);
 			m_rOwner.SetLanded(false);
 			m_bIsJumpStarting = false;
-			CSoundMgr::Get_Instance()->PlaySound(L"Boss_Laugh_Short.ogg", CSoundMgr::MONSTER);
+			switch (Engine::GetNumberBetweenMinMax(0, 2)) {
+			case 0:
+				CSoundMgr::Get_Instance()->PlaySound(L"Boss_Laugh0.ogg", CSoundMgr::MONSTER);
+				break;
+			case 1:
+				CSoundMgr::Get_Instance()->PlaySound(L"Boss_Laugh1.ogg", CSoundMgr::MONSTER);
+				break;
+			case 2:
+				CSoundMgr::Get_Instance()->PlaySound(L"Boss_Laugh_Short.ogg", CSoundMgr::MONSTER);
+				break;
+			}
+			
 		}
 	}
 	else {
@@ -91,7 +102,7 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 						m_rOwner.GetDynamicMesh()->SetAnimationStop(true);
 						// TODO : Ä«¸Þ¶ó Èçµê ÀÌÆåÆ®
 						Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
-						pCameraMgr->GetCamera()->Shake(0.8f, 0.45f, 55);
+						pCameraMgr->GetCamera()->Shake(0.8f, 0.2f, 55); //0.45f
 						CSplashAttack* pSplashAttack = CSplashAttack::Create(m_rOwner.GetGraphicDev());
 						pSplashAttack->SetSplashAttackInfo(L"EnemyAttack", L"Player",
 							m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, WORLD_X_AXIS, 180.f);

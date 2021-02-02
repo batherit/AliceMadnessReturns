@@ -32,6 +32,7 @@ void CMiniGruntState_Attack::OnLoaded(void)
 	m_bIsAttackEnd = false;
 
 	m_rOwner.GetAttackR()->SetActivated(true);
+	PlayAttackSound();
 }
 
 int CMiniGruntState_Attack::Update(const _float& _fDeltaTime)
@@ -103,4 +104,19 @@ void CMiniGruntState_Attack::OnExited(void)
 
 void CMiniGruntState_Attack::Free(void)
 {
+}
+
+void CMiniGruntState_Attack::PlayAttackSound()
+{
+	switch (Engine::GetNumberBetweenMinMax(0, 2)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"MiniGrunt_RunAttack0.ogg", CSoundMgr::MONSTER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"MiniGrunt_RunAttack1.ogg", CSoundMgr::MONSTER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"MiniGrunt_RunAttack2.ogg", CSoundMgr::MONSTER);
+		break;
+	}
 }

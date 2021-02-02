@@ -25,6 +25,9 @@ public:
 	virtual void Free(void) override;
 
 private:
+	void PlayDamagedSound();
+
+private:
 	_bool m_bIsBigAttack = false;
 };
 

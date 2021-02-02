@@ -62,6 +62,7 @@ void CMiniGruntState_Damage::OnLoaded(void)
 	}
 
 	m_rOwner.GetAttribute()->SetDamaged(false);
+	PlayDamagedSound();
 }
 
 int CMiniGruntState_Damage::Update(const _float& _fDeltaTime)
@@ -90,4 +91,19 @@ void CMiniGruntState_Damage::OnExited(void)
 
 void CMiniGruntState_Damage::Free(void)
 {
+}
+
+void CMiniGruntState_Damage::PlayDamagedSound()
+{
+	switch (Engine::GetNumberBetweenMinMax(0, 2)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"MiniGrunt_Damaged0.ogg", CSoundMgr::MONSTER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"MiniGrunt_Damaged1.ogg", CSoundMgr::MONSTER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"MiniGrunt_Damaged2.ogg", CSoundMgr::MONSTER);
+		break;
+	}
 }

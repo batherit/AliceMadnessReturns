@@ -27,6 +27,8 @@ void CMadCapAState_Alert::OnLoaded(void)
 
 	if (!m_rOwner.GetTargetObject())
 		m_rOwner.SetTargetObject(*Engine::GetLayer(L"Environment")->GetLayerList(L"Player").begin());
+	
+	PlayAlertSound();
 }
 
 int CMadCapAState_Alert::Update(const _float& _fDeltaTime)
@@ -216,4 +218,22 @@ CMadCapAState_Alert::E_DIR CMadCapAState_Alert::GetVelDirXZType(const _vec2 & _v
 	}
 
 	return DIR_FORWARD;
+}
+
+void CMadCapAState_Alert::PlayAlertSound()
+{
+	switch (Engine::GetNumberBetweenMinMax(0, 3)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Alert0.ogg", CSoundMgr::MONSTER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Alert1.ogg", CSoundMgr::MONSTER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Alert2.ogg", CSoundMgr::MONSTER);
+		break;
+	case 3:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Alert3.ogg", CSoundMgr::MONSTER);
+		break;
+	}
 }

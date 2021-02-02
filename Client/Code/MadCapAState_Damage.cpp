@@ -55,6 +55,7 @@ void CMadCapAState_Damage::OnLoaded(void)
 	}
 
 	m_rOwner.GetAttribute()->SetDamaged(false);
+	PlayDamagedSound();
 }
 
 int CMadCapAState_Damage::Update(const _float& _fDeltaTime)
@@ -83,4 +84,22 @@ void CMadCapAState_Damage::OnExited(void)
 
 void CMadCapAState_Damage::Free(void)
 {
+}
+
+void CMadCapAState_Damage::PlayDamagedSound()
+{
+	switch (Engine::GetNumberBetweenMinMax(0, 3)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Damaged0.ogg", CSoundMgr::MONSTER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Damaged1.ogg", CSoundMgr::MONSTER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Damaged2.ogg", CSoundMgr::MONSTER);
+		break;
+	case 3:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Damaged3.ogg", CSoundMgr::MONSTER);
+		break;
+	}
 }

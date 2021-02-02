@@ -72,6 +72,7 @@ int CMadCapAState_Attack::Update(const _float& _fDeltaTime)
 		m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.93f);
 		//m_pWeaponCollider->SetActivated(true);
 		m_rOwner.GetAttackCollider()->SetActivated(true);
+		PlayAttackSound();
 	}
 
 	return 0;
@@ -84,4 +85,34 @@ void CMadCapAState_Attack::OnExited(void)
 
 void CMadCapAState_Attack::Free(void)
 {
+}
+
+void CMadCapAState_Attack::PlayAttackSound()
+{
+	switch (Engine::GetNumberBetweenMinMax(0, 3)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Attack0.ogg", CSoundMgr::MONSTER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Attack1.ogg", CSoundMgr::MONSTER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Attack2.ogg", CSoundMgr::MONSTER);
+		break;
+	case 3:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Attack3.ogg", CSoundMgr::MONSTER);
+		break;
+	}
+
+	switch (Engine::GetNumberBetweenMinMax(0, 2)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Swipe0.ogg", CSoundMgr::MONSTER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Swipe1.ogg", CSoundMgr::MONSTER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"MadCapA_Swipe2.ogg", CSoundMgr::MONSTER);
+		break;
+	}
 }

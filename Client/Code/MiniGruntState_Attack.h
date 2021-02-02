@@ -25,6 +25,9 @@ public:
 	virtual void Free(void) override;
 
 private:
+	void PlayAttackSound();
+
+private:
 	_bool m_bIsAttackEnd = false;
 };
 

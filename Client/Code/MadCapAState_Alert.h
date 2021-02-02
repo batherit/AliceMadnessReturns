@@ -31,6 +31,9 @@ public:
 
 private:
 	E_DIR GetVelDirXZType(const _vec2& _vVelDirXZ);
+	
+private:
+	void PlayAlertSound();
 
 private:
 	E_STATE_TYPE m_eStateType = TYPE_PURSUE;

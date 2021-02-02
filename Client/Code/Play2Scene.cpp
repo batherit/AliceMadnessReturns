@@ -236,6 +236,8 @@ void CPlay2Scene::OnLoaded()
 	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_HEIGHT);
 	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-25.f, -40.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
 
+	CSoundMgr::Get_Instance()->PlayBGM(L"PlayScene_BGM.ogg");
+
 	Engine::GetTimer(L"Timer_FPS60")->Reset();
 }
 
@@ -250,6 +252,8 @@ void CPlay2Scene::OnExited()
 	}
 	Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
 	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_NONE);
+	//CSoundMgr::Get_Instance()->StopAll();
+	CSoundMgr::Get_Instance()->StopAll();
 }
 
 CPlay2Scene * CPlay2Scene::Create(LPDIRECT3DDEVICE9 pGraphicDev)

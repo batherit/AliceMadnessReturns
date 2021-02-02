@@ -38,10 +38,10 @@ HRESULT CBolterFly::Ready_Object(void)
 
 	// MeshRenderer
 	pComponent = m_pRenderer = AddComponent<Engine::CMeshRenderer>();
-	m_pRenderer->SetRenderInfo(Engine::RENDER_DEFERRED, m_pMesh);
+	m_pRenderer->SetRenderInfo(Engine::RENDER_ALPHA, m_pMesh);
 
 	// Shader
-	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	m_pShader = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Alpha"));
 	m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
 
 	// Attribute

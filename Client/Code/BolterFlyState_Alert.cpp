@@ -46,6 +46,12 @@ int CBolterFlyState_Alert::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
+	CAliceW* pAliceW = dynamic_cast<CAliceW*>(m_rOwner.GetTargetObject());
+	if (pAliceW && pAliceW->IsFalling(0.f)) {
+		m_rOwner.GetStateMgr()->SetNextState(new CBolterFlyState_Idle(m_rOwner));
+		return 0;
+	}
+
 	_vec3 vTargetPos = m_rOwner.GetTargetObject()->GetTransform()->GetPos();
 	_vec3 vToTargetDir = vTargetPos - m_rOwner.GetTransform()->GetPos();
 	_float fLength = D3DXVec3Length(&vToTargetDir);

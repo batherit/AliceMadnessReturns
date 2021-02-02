@@ -94,6 +94,7 @@ int CBossState_Attack_Mixer::Update(const _float& _fDeltaTime)
 	}
 
 	if ((m_fLoopSpinTime += _fDeltaTime) >= 2.f) {
+		CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_SPIN);
 		CSoundMgr::Get_Instance()->PlaySound(L"Boss_Spin_Loop.ogg", CSoundMgr::LOOP_SPIN);
 		m_fLoopSpinTime = 0.f;
 	}

@@ -24,7 +24,7 @@ CMainApp::~CMainApp(void)
 
 HRESULT CMainApp::Ready_MainApp(void)
 {
-	FAILED_CHECK_RETURN(Engine::Ready_GraphicDev(g_hWnd, Engine::MODE_FULL, WINCX, WINCY, &m_pDeviceClass), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_GraphicDev(g_hWnd, Engine::MODE_WIN, WINCX, WINCY, &m_pDeviceClass), E_FAIL);
 	Engine::Safe_AddRef(m_pDeviceClass);
 
 	m_pGraphicDev = m_pDeviceClass->Get_GraphicDev();

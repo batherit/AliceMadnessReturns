@@ -15,6 +15,8 @@
 //#include "PlayScene.h"
 #include "PoolScene.h"
 #include "EndScene.h"
+#include "PlayScene.h"
+#include "Play2Scene.h"
 
 CTitleScene::CTitleScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:
@@ -53,7 +55,7 @@ HRESULT CTitleScene::Ready(void)
 int CTitleScene::Update(const _float& fTimeDelta)
 {
 	if (!m_pFadeInOutUI->IsFadeIn() && !m_pFadeInOutUI->IsProcessing()) {
-		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPlayScene::Create(m_pGraphicDev));
+		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPlay2Scene::Create(m_pGraphicDev));
 		Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CPoolScene::Create(m_pGraphicDev));
 		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CEndScene::Create(m_pGraphicDev));
 		//Engine::CManagement::GetInstance()->GetSceneMgr()->SetNextScene(CBossScene::Create(m_pGraphicDev));
@@ -82,7 +84,7 @@ void CTitleScene::OnLoaded()
 
 void CTitleScene::OnExited()
 {
-	CSoundMgr::Get_Instance()->StopSound(CSoundMgr::BGM);
+	CSoundMgr::Get_Instance()->StopAll();
 }
 
 CTitleScene * CTitleScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -250,7 +252,7 @@ HRESULT CTitleScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pFadeInOutUI = CUI_FadeInOut::Create(m_pGraphicDev);
 	pLayer->Add_GameObject(m_pFadeInOutUI);
 
-	Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false);
+	Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false, WINCX >> 1, WINCY >> 1);
 
 	return S_OK;
 }

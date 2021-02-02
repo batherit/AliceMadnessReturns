@@ -208,6 +208,9 @@ void CPlayScene::OnLoaded()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
+
+	CSoundMgr::Get_Instance()->PlayBGM(L"PlayScene_BGM.ogg");
+
 	Engine::GetTimer(L"Timer_FPS60")->Reset();
 }
 
@@ -221,6 +224,7 @@ void CPlayScene::OnExited()
 		pDataMgr->SetValidData(true);
 	}
 	Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
+	CSoundMgr::Get_Instance()->StopAll();
 }
 
 CPlayScene * CPlayScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -69,7 +69,7 @@ int CTooth::Update_Object(const _float & _fDeltaTime)
 		}
 		else {
 			m_pAlice->IncreaseTooth(1);
-			
+			PlayToothSound();
 			SetValid(false);
 		}
 	}

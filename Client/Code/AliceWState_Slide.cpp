@@ -35,6 +35,8 @@ int CAliceWState_Slide::Update(const _float& _fDeltaTime)
 		return 0;
 	}
 
+	PlaySlideSound(_fDeltaTime);
+
 	_vec3 vDir;
 	_vec3 vSettedPos = m_rOwner.GetTransform()->GetPos();
 	if (m_rOwner.IsSliding(_fDeltaTime)) {
@@ -74,8 +76,18 @@ void CAliceWState_Slide::OnExited(void)
 	Engine::CCameraMgr* pCameraMgr = dynamic_cast<Engine::CCameraMgr*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"CameraMgr").begin());
 	pCameraMgr->GetCameraController(0)->SetStickDir(pCameraMgr->GetCameraController(1)->GetStickDir());
 	pCameraMgr->ChangeCameraController(0, 0.5f);
+	CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_SLIDE);
 }
 
 void CAliceWState_Slide::Free(void)
 {
+}
+
+void CAliceWState_Slide::PlaySlideSound(const _float & _fDeltaTime)
+{
+	if ((m_fSlideSoundTickTime -= _fDeltaTime) <= 0.f) {
+		CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_SLIDE);
+		CSoundMgr::Get_Instance()->PlaySound(L"Slide_Loop.ogg", CSoundMgr::LOOP_SLIDE);
+		m_fSlideSoundTickTime = 1.5f;
+	}
 }

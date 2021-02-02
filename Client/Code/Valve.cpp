@@ -78,6 +78,23 @@ int CValve::Update_Object(const _float & _fDeltaTime)
 		m_fTickTime = 0.f;
 	}
 
+	if (m_bIsSoundOn && ((m_fFanSoundTickTime -= _fDeltaTime) <= 0.f)) {
+		// 사운드 재갱신
+		CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_FAN);
+		CSoundMgr::Get_Instance()->PlaySound(L"Fan.wav", CSoundMgr::LOOP_FAN);
+		m_fFanSoundTickTime = 25.f;
+	}
+	else if (!m_bIsCollidedWithPlayer && ((m_fSoundOffTime -= _fDeltaTime) <= 0.f)) {
+		CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_FAN);
+		m_fFanSoundTickTime = 0.f;
+		m_bIsSoundOn = false;
+	}
+	else if (m_bIsCollidedWithPlayer && !m_bIsSoundOn) {
+		m_bIsSoundOn = true;
+		m_fFanSoundTickTime = 0.f;
+	}
+
+	m_bIsCollidedWithPlayer = false;
 	return 0;
 }
 
@@ -132,6 +149,7 @@ void CValve::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 				/*_float fToAliceY = Engine::Clamp(_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos().y - GetTransform()->GetPos().y, 5.f, 10.f);
 				_float fT = Engine::GetWeightByValue(fToAliceY, 5.f, 10.f);*/
 				pAlice->GetPhysics()->AddVelocityY(fIntensity/* + Engine::GetValueByWeight(fT, 0.f, 0.1f)*/);
+				m_bIsCollidedWithPlayer = true;
 			}
 		}
 	}

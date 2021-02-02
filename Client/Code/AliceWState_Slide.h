@@ -23,6 +23,12 @@ public:
 
 	// CState을(를) 통해 상속됨
 	virtual void Free(void) override;
+	
+private:
+	void PlaySlideSound(const _float& _fDeltaTime);
+
+private:
+	_float m_fSlideSoundTickTime = 0.f;
 };
 
 END

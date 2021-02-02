@@ -202,8 +202,7 @@ void CBossScene::OnExited()
 		pDataMgr->SetValidData(true);
 	}
 	Engine::CRenderer::GetInstance()->SetMotionBlurOn(false);
-
-	CSoundMgr::Get_Instance()->StopSound(CSoundMgr::BGM);
+	CSoundMgr::Get_Instance()->StopAll();
 }
 
 CBossScene * CBossScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)

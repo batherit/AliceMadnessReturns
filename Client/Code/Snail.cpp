@@ -98,12 +98,14 @@ void CSnail::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 	else {
 		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
 			PopTooth(Engine::GetNumberBetweenMinMax(2, 4));
+			PlaySnailBreakSound();
 			SetValid(false);
 		}
 		else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
 			CAliceW* pAlice = dynamic_cast<CAliceW*>(_tCollisionInfo.pCollidedObject);
 			if (pAlice && pAlice->IsSliding(0.f)) {
 				PopTooth(Engine::GetNumberBetweenMinMax(2, 4));
+				PlaySnailBreakSound();
 				SetValid(false);
 			}
 		}
@@ -122,6 +124,21 @@ void CSnail::PopTooth(_int _iToothNum, _bool _bIsArrived)
 			vPos.y + 1.f, 
 			vPos.z + Engine::GetNumberBetweenMinMax(-2.f, 2.f)), _bIsArrived);
 		Engine::GetLayer(L"Environment")->Add_GameObject(pTooth);
+	}
+}
+
+void CSnail::PlaySnailBreakSound()
+{
+	switch (Engine::GetNumberBetweenMinMax(0, 2)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Snail_Break0.ogg", CSoundMgr::EFFECT);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Snail_Break1.ogg", CSoundMgr::EFFECT);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"Snail_Break2.ogg", CSoundMgr::EFFECT);
+		break;
 	}
 }
 

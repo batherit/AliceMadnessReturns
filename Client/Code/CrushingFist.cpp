@@ -88,6 +88,7 @@ int CCrushingFist::Update_Object(const _float & _fDeltaTime)
 						pEffect->GetPhysics()->SetGravity(-Engine::GetNumberBetweenMinMax(3.f, 4.f));
 						Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pEffect);
 					}
+					CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Step0.ogg", CSoundMgr::MONSTER);
 				}
 			}
 			else {

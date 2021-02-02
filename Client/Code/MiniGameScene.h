@@ -20,7 +20,7 @@ class CUI_ToothShip;
 class CUI_ShipProgress;
 class CMiniGameScene : public Engine::CScene
 {
-#define MINIGAME_TIME 40.f
+#define MINIGAME_TIME 60.f
 private: // 持失切, 社瑚切
 	explicit CMiniGameScene(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CMiniGameScene(const CMiniGameScene& rhs);

@@ -111,10 +111,13 @@ void CPoolScene::OnLoaded()
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	CSoundMgr::Get_Instance()->PlayBGM(L"PoolScene_BGM.wav");
 }
 
 void CPoolScene::OnExited()
 {
+	CSoundMgr::Get_Instance()->StopAll();
 }
 
 CPoolScene * CPoolScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)

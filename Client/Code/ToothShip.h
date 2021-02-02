@@ -31,6 +31,7 @@ public:
 
 public:
 	void SetPopTooth(const _vec3& _vPos);
+	void PlayToothSound();
 
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;

@@ -117,6 +117,7 @@ void CToothShip::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		m_pShip = dynamic_cast<CShip*>(_tCollisionInfo.pCollidedObject);
 		if (m_pShip) {
 			m_pShip->IncreaseToothNum(1);
+			PlayToothSound();
 			SetValid(false);
 		}
 	}
@@ -148,4 +149,28 @@ void CToothShip::SetPopTooth(const _vec3 & _vPos)
 	m_pPhysics->SetResistanceCoefficientXZ(0.9f);
 	m_pPhysics->SetResistanceCoefficientY(0.9f);
 	m_bIsPoped = true;
+}
+
+void CToothShip::PlayToothSound()
+{
+	switch (Engine::GetNumberBetweenMinMax(0, 1)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Tooth0.ogg", CSoundMgr::EFFECT);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Tooth1.ogg", CSoundMgr::EFFECT);
+		break;
+	}
+
+	switch (Engine::GetNumberBetweenMinMax(0, 2)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Tooth_Magic0.ogg", CSoundMgr::EFFECT);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Tooth_Magic1.ogg", CSoundMgr::EFFECT);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"Tooth_Magic2.ogg", CSoundMgr::EFFECT);
+		break;
+	}
 }

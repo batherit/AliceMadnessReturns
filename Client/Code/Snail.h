@@ -30,6 +30,7 @@ public:
 
 private:
 	void PopTooth(_int _iToothNum, _bool _bIsArrived = false);
+	void PlaySnailBreakSound();
 
 private:
 	Engine::CStaticMesh* m_pMesh = nullptr;

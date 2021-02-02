@@ -20,6 +20,15 @@ CCatState_Run::~CCatState_Run()
 void CCatState_Run::OnLoaded(void)
 {
 	m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::Cat_Run);
+	switch (Engine::GetNumberBetweenMinMax(0, 1)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Cat_Meow0.ogg", CSoundMgr::EFFECT);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Cat_Meow1.ogg", CSoundMgr::EFFECT);
+		break;
+	}
+	
 }
 
 int CCatState_Run::Update(const _float& _fDeltaTime)

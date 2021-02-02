@@ -31,6 +31,19 @@ void CBossState_Attack_Mixer::OnLoaded(void)
 
 	if (!m_rOwner.GetTargetObject())
 		m_rOwner.SetTargetObject(*Engine::GetLayer(L"Environment")->GetLayerList(L"Player").begin());
+
+	switch (Engine::GetNumberBetweenMinMax(0, 2)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Boss_Laugh0.ogg", CSoundMgr::MONSTER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Boss_Laugh1.ogg", CSoundMgr::MONSTER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"Boss_Laugh2.ogg", CSoundMgr::MONSTER);
+		break;
+	}
+	
 }
 
 int CBossState_Attack_Mixer::Update(const _float& _fDeltaTime)
@@ -80,6 +93,11 @@ int CBossState_Attack_Mixer::Update(const _float& _fDeltaTime)
 		m_rOwner.GetPhysics()->SetVelocity(vLook * Engine::GetValueByWeight(fT, BOSS_RUN_SPEED * 0.8f, BOSS_RUN_SPEED * 1.5f));
 	}
 
+	if ((m_fLoopSpinTime += _fDeltaTime) >= 2.f) {
+		CSoundMgr::Get_Instance()->PlaySound(L"Boss_Spin_Loop.ogg", CSoundMgr::LOOP_SPIN);
+		m_fLoopSpinTime = 0.f;
+	}
+
 	return 0;
 }
 
@@ -87,6 +105,7 @@ void CBossState_Attack_Mixer::OnExited(void)
 {
 	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(1.f);
 	m_rOwner.GetAttackCollider()->SetActivated(false);
+	CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_SPIN);
 }
 
 void CBossState_Attack_Mixer::Free(void)

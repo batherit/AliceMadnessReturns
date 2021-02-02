@@ -65,6 +65,7 @@ int CIronHand::Update_Object(const _float & _fDeltaTime)
 		if ((m_fElapsedTime += _fDeltaTime) >= m_fActivationTime) {
 			m_fElapsedTime = 0.f;
 			m_bIsOn = true;
+			CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Stomp.ogg", CSoundMgr::MONSTER);
 		}
 	}
 	else {

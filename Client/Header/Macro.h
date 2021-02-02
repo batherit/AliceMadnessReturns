@@ -131,7 +131,7 @@ namespace Client
 
 #define VORPALBLADE_DAMAGE	2.f
 #define BULLET_DAMAGE		1.f
-#define HOBBYHORSE_DAMAGE	4.f
+#define HOBBYHORSE_DAMAGE	7.f
 #define BUNNYBOMB_DAMAGE	3.f
 
 #define BOLTERFLY_DAMAGE	1.f

@@ -29,6 +29,7 @@ private:
 	_float m_fTickTime = 0.f;
 	_int m_iAttackCount = 0;
 	_bool m_bIsEffectOn = false;
+	_bool m_bIsSoundOn = false;
 };
 
 END

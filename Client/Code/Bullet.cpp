@@ -30,6 +30,27 @@ HRESULT CBullet::Ready_Object(void)
 
 	GetTransform()->SetScaleXYZ(0.002f, 0.002f, 0.002f);
 
+	switch (Engine::GetNumberBetweenMinMax(0, 5)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Gun_Fire0.ogg", CSoundMgr::PLAYER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Gun_Fire1.ogg", CSoundMgr::PLAYER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"Gun_Fire2.ogg", CSoundMgr::PLAYER);
+		break;
+	case 3:
+		CSoundMgr::Get_Instance()->PlaySound(L"Gun_Fire3.ogg", CSoundMgr::PLAYER);
+		break;
+	case 4:
+		CSoundMgr::Get_Instance()->PlaySound(L"Gun_Fire4.ogg", CSoundMgr::PLAYER);
+		break;
+	case 5:
+		CSoundMgr::Get_Instance()->PlaySound(L"Gun_Fire5.ogg", CSoundMgr::PLAYER);
+		break;
+	}
+
 	return S_OK;
 }
 

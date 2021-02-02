@@ -55,7 +55,7 @@ void CHobbyHorse::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 			// 어태커에 등록이 성공했다는 것은 기존 어태커가 등록되지 않았음을 의미하므로 데미지가 들어간다
 			CAttribute* pAttribute = _tCollisionInfo.pCollidedObject->GetComponent<CAttribute>();
 			if(pAttribute)
-				pAttribute->Damaged(/*HOBBYHORSE_DAMAGE + Engine::GetNumberBetweenMinMax(0.f, 3.f)*/ 1000.f);
+				pAttribute->Damaged(HOBBYHORSE_DAMAGE + Engine::GetNumberBetweenMinMax(0.f, 8.f));
 
 			CEFT_HobbyHorseAttack* pEffect = CEFT_HobbyHorseAttack::Create(m_pGraphicDev);
 			pEffect->SetInfo((_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos() + _tCollisionInfo.pCollidedMyCollider->GetTransform()->GetPos()) * 0.5f);

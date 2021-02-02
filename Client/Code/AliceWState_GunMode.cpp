@@ -101,6 +101,7 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 					m_pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_NoAmmo);
 				}
 				m_eStateType = TYPE_NOAMMO;
+				//CSoundMgr::Get_Instance()->PlaySound(L"Gun_Noammo.ogg", CSoundMgr::PLAYER);
 			}
 			else {
 				if ((m_fFireTickTime += _fDeltaTime) >= FIRE_DELAY_TIME) {
@@ -121,10 +122,13 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 				m_pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_Release);
 			}
 			m_eStateType = TYPE_RELEASE;
+			CSoundMgr::Get_Instance()->PlaySound(L"Gun_Release.ogg", CSoundMgr::PLAYER);
 		}
 		break;
 	case TYPE_NOAMMO: {
-		if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.95f) {
+		if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.99f) {
+			m_fNoammonSoundTickTime = 0.f;
+			//m_bIsNoammonSoundOn = false;
 			if (m_rOwner.IsAttackOn(_fDeltaTime) || m_rOwner.IsAttacking(_fDeltaTime)) {
 				if (!m_pGunGauge->IsOverloaded()) {
 					m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::AliceW_WP3_Fire);
@@ -140,6 +144,7 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 						m_pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_NoAmmo);
 					}
 					m_eStateType = TYPE_NOAMMO;
+					//CSoundMgr::Get_Instance()->PlaySound(L"Gun_Noammo.ogg", CSoundMgr::PLAYER);
 				}
 			}
 			else {
@@ -149,6 +154,11 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 				}
 				m_eStateType = TYPE_IDLE_OR_RUN;
 			}
+		}
+		else if ((m_fNoammonSoundTickTime += _fDeltaTime) >= 0.3f) {
+			// 0.3초마다 사운드 나도록 했는데 체감이 잘 안됨. 이유는 아직 모르겠음;
+			CSoundMgr::Get_Instance()->PlaySound(L"Gun_Noammo.ogg", CSoundMgr::PLAYER);
+			m_fNoammonSoundTickTime = 0.f;
 		}
 	}
 		break;
@@ -169,6 +179,7 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 						m_pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_NoAmmo);
 					}
 					m_eStateType = TYPE_NOAMMO;
+					//CSoundMgr::Get_Instance()->PlaySound(L"Gun_Noammo.ogg", CSoundMgr::PLAYER);
 				}
 			}
 			else {
@@ -200,6 +211,7 @@ int CAliceWState_GunMode::Update(const _float& _fDeltaTime)
 					m_pGun->GetDynamicMesh()->Set_AnimationSet(ANIM::WP3_NoAmmo);
 				}
 				m_eStateType = TYPE_NOAMMO;
+				//CSoundMgr::Get_Instance()->PlaySound(L"Gun_Noammo.ogg", CSoundMgr::PLAYER);
 			}
 		}
 		else if (m_rOwner.IsGunModeReleased()) {

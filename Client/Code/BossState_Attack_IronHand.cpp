@@ -67,6 +67,7 @@ int CBossState_Attack_IronHand::Update(const _float& _fDeltaTime)
 			Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
 
 			m_bIsEffectOn = true;
+			CSoundMgr::Get_Instance()->PlaySound(L"Boss_Slam.ogg", CSoundMgr::MONSTER);
 		}
 
 		if (m_iAttackCount < 5 && (m_fTickTime += _fDeltaTime) >= 0.3f) {
@@ -102,6 +103,12 @@ int CBossState_Attack_IronHand::Update(const _float& _fDeltaTime)
 		}
 
 		//m_bIsAttack = true;
+	}
+	else if (!m_bIsSoundOn && m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.15f) {
+
+		CSoundMgr::Get_Instance()->PlaySound(L"Boss_Attack5_A.ogg", CSoundMgr::MONSTER);
+		m_bIsSoundOn = true;
+
 	}
 
 	return 0;

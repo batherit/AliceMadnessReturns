@@ -34,6 +34,7 @@ private:
 	CUI_GunGauge* m_pGunGauge = nullptr;
 	CDynamicObject* m_pGun = nullptr;
 	_float m_fFireTickTime = 0.f;
+	_float m_fNoammonSoundTickTime = 0.f;
 };
 
 END

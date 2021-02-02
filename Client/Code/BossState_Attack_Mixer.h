@@ -27,6 +27,7 @@ public:
 private:
 	_float m_fElapsedTime = 0.f;
 	_bool m_bIsStopping = false;
+	_float m_fLoopSpinTime = 0.f;
 };
 
 END

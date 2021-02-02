@@ -45,14 +45,14 @@ int CGiantAliceWState_Walk::Update(const _float& _fDeltaTime)
 	if ((m_fElapsedTime += _fDeltaTime) >= 0.2f) {
 		if (m_bIsLeftFootOnRightFoot) {
 			if (m_rOwner.GetLeftFoot()->GetTransform()->GetPos().y < m_rOwner.GetRightFoot()->GetTransform()->GetPos().y) {
-				CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Step2.ogg", CSoundMgr::PLAYER);
+				CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Stomp.ogg", CSoundMgr::PLAYER);
 				m_bIsLeftFootOnRightFoot = false;
 				m_pCameraMgr->GetCamera()->Shake(0.8f, 0.25f * (1.f - Engine::GetWeightByValue(D3DXVec3Length(&m_rOwner.GetTransform()->GetPos()), 2.f, 20.f)), 30);
 			}
 		}
 		else {
 			if (m_rOwner.GetLeftFoot()->GetTransform()->GetPos().y > m_rOwner.GetRightFoot()->GetTransform()->GetPos().y) {
-				CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Step2.ogg", CSoundMgr::PLAYER);
+				CSoundMgr::Get_Instance()->PlaySound(L"Alice_Giant_Stomp.ogg", CSoundMgr::PLAYER);
 				m_bIsLeftFootOnRightFoot = true;
 				m_pCameraMgr->GetCamera()->Shake(0.8f, 0.25f * (1.f - Engine::GetWeightByValue(D3DXVec3Length(&m_rOwner.GetTransform()->GetPos()), 2.f, 20.f)), 30);
 			}

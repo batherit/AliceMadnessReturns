@@ -78,23 +78,30 @@ int CValve::Update_Object(const _float & _fDeltaTime)
 		m_fTickTime = 0.f;
 	}
 
-	if (m_bIsSoundOn && ((m_fFanSoundTickTime -= _fDeltaTime) <= 0.f)) {
-		// 사운드 재갱신
-		CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_FAN);
-		CSoundMgr::Get_Instance()->PlaySound(L"Fan.wav", CSoundMgr::LOOP_FAN);
-		m_fFanSoundTickTime = 25.f;
-	}
-	else if (!m_bIsCollidedWithPlayer && ((m_fSoundOffTime -= _fDeltaTime) <= 0.f)) {
-		CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_FAN);
-		m_fFanSoundTickTime = 0.f;
-		m_bIsSoundOn = false;
-	}
-	else if (m_bIsCollidedWithPlayer && !m_bIsSoundOn) {
-		m_bIsSoundOn = true;
-		m_fFanSoundTickTime = 0.f;
-	}
+	
+	
 
-	m_bIsCollidedWithPlayer = false;
+	//if (!m_bIsCollidedWithPlayer) {
+	//	if (m_bIsSoundOn && (m_fSoundOffTime -= _fDeltaTime) <= 0.f) {
+	//		CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_FAN);
+	//		m_fFanSoundTickTime = 0.f;
+	//		m_bIsSoundOn = false;
+	//	}
+	//	
+	//}
+	//else {
+	//	m_fSoundOffTime = 3.f;
+	//	m_bIsSoundOn = true;
+	//}
+
+	//if (m_bIsSoundOn && ((m_fFanSoundTickTime -= _fDeltaTime) <= 0.f)) {
+	//	// 사운드 재갱신
+	//	CSoundMgr::Get_Instance()->StopSound(CSoundMgr::LOOP_FAN);
+	//	CSoundMgr::Get_Instance()->PlaySound(L"Fan.wav", CSoundMgr::LOOP_FAN);
+	//	m_fFanSoundTickTime = 25.f;
+	//}
+
+	//m_bIsCollidedWithPlayer = false;
 	return 0;
 }
 
@@ -135,53 +142,36 @@ _bool CValve::LoadColliders(const _tchar* _pFileName)
 
 void CValve::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 {
-	if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
-		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
-			CAliceW* pAlice = dynamic_cast<CAliceW*>(_tCollisionInfo.pCollidedObject);
-			if (pAlice) {
-				_float fVelocityY = pAlice->GetPhysics()->GetVelocity().y;
-				if (fVelocityY <= -20.f)
-					pAlice->GetPhysics()->SetVelocityY(-20.f);
-				else if(fVelocityY >= 10.f)
-					pAlice->GetPhysics()->SetVelocityY(10.f);
-				_float fIntensity = 1.f + Engine::Clamp(pAlice->GetPhysics()->GetVelocity().y, -10.f, 0.f) * 0.1f;	// 0 -> 최대 낙하 속도
-				fIntensity = Engine::GetValueByWeight(fIntensity, 1.2f, 0.8f);
-				/*_float fToAliceY = Engine::Clamp(_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos().y - GetTransform()->GetPos().y, 5.f, 10.f);
-				_float fT = Engine::GetWeightByValue(fToAliceY, 5.f, 10.f);*/
-				pAlice->GetPhysics()->AddVelocityY(fIntensity/* + Engine::GetValueByWeight(fT, 0.f, 0.1f)*/);
-				m_bIsCollidedWithPlayer = true;
-			}
+	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+		CAliceW* pAlice = dynamic_cast<CAliceW*>(_tCollisionInfo.pCollidedObject);
+		if (pAlice) {
+			_float fVelocityY = pAlice->GetPhysics()->GetVelocity().y;
+			if (fVelocityY <= -20.f)
+				pAlice->GetPhysics()->SetVelocityY(-20.f);
+			else if(fVelocityY >= 10.f)
+				pAlice->GetPhysics()->SetVelocityY(10.f);
+			_float fIntensity = 1.f + Engine::Clamp(pAlice->GetPhysics()->GetVelocity().y, -10.f, 0.f) * 0.1f;	// 0 -> 최대 낙하 속도
+			fIntensity = Engine::GetValueByWeight(fIntensity, 1.2f, 0.8f);
+			/*_float fToAliceY = Engine::Clamp(_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos().y - GetTransform()->GetPos().y, 5.f, 10.f);
+			_float fT = Engine::GetWeightByValue(fToAliceY, 5.f, 10.f);*/
+			pAlice->GetPhysics()->AddVelocityY(fIntensity/* + Engine::GetValueByWeight(fT, 0.f, 0.1f)*/);
+			/*m_bIsCollidedWithPlayer = true;
+			m_fSoundOffTime = 3.f;
+			if (!CSoundMgr::Get_Instance()->IsPlaying(CSoundMgr::BGM1)) {
+				
+			}*/
 		}
-	}
-	else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
-		_int a = 10;
-	}
-	else {
-		
 	}
 }
 
 void CValve::OnNotCollision(Engine::CollisionInfo _tCollisionInfo)
 {
-	//if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_AABB) {
-	//	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetCaolliderTag(), L"Player") == 0) {
-	//		CAliceW* pAlice = dynamic_cast<CAliceW*>(_tCollisionInfo.pCollidedObject);
-	//		if (pAlice) {
-	//			_int a = 10;
-	//			//_float fIntensity =(2.f + Engine::Clamp(pAlice->GetPhysics()->GetVelocity().y, -2.f, 0.f)) * 0.5f;	// 0 -> 최대 낙하 속도
-	//			//fIntensity = Engine::GetValueByWeight(fIntensity, 8.f, 2.f);
-	//			//_float fToAliceY = Engine::Clamp(_tCollisionInfo.pCollidedCollider->GetTransform()->GetPos().y - GetTransform()->GetPos().y, 1.f, 10.f);
-	//			//_float fT = Engine::GetWeightByValue(fToAliceY, 1.f, 10.f);
-	//			//pAlice->GetPhysics()->AddVelocityY(fIntensity * Engine::GetValueByWeight(fT, 5.f, 3.f));
-	//		}
-	//	}
-	//}
-	//else if (_tCollisionInfo.pCollidedCollider->GetColliderType() == Engine::TYPE_OBB) {
-	//	_int a = 10;
-	//}
-	//else {
+	/*if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
+		if (m_bIsCollidedWithPlayer && m_fSoundOffTime -=) {
 
-	//}
+		}
+
+	}*/
 }
 
 CValve * CValve::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -237,6 +237,7 @@ void CPlay2Scene::OnLoaded()
 	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-25.f, -40.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
 
 	CSoundMgr::Get_Instance()->PlayBGM(L"PlayScene_BGM.ogg");
+	CSoundMgr::Get_Instance()->PlayBGM1(L"Fan.wav");
 
 	Engine::GetTimer(L"Timer_FPS60")->Reset();
 }

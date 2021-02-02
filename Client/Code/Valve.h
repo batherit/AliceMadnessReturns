@@ -39,10 +39,10 @@ private:
 	Engine::CColliderObject* m_pCollider = nullptr;
 	_float m_fRadian = 0.f;
 	_float m_fTickTime = 0.f;
-	_bool m_bIsCollidedWithPlayer = false;
+	/*_bool m_bIsCollidedWithPlayer = false;
 	_bool m_bIsSoundOn = false;
 	_float m_fFanSoundTickTime = 0.f;
-	_float m_fSoundOffTime = 0.f;
+	_float m_fSoundOffTime = 3.f;*/
 };
 
 END

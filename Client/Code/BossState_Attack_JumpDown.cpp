@@ -57,6 +57,7 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 			m_rOwner.GetPhysics()->SetVelocityY(BOSS_JUMP_SPEED);
 			m_rOwner.SetLanded(false);
 			m_bIsJumpStarting = false;
+			CSoundMgr::Get_Instance()->PlaySound(L"Boss_Laugh_Short.ogg", CSoundMgr::MONSTER);
 		}
 	}
 	else {
@@ -95,6 +96,9 @@ int CBossState_Attack_JumpDown::Update(const _float& _fDeltaTime)
 						pSplashAttack->SetSplashAttackInfo(L"EnemyAttack", L"Player",
 							m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, WORLD_X_AXIS, 180.f);
 						Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
+						CSoundMgr::Get_Instance()->PlaySound(L"Boss_Slam.ogg", CSoundMgr::MONSTER);
+						CSoundMgr::Get_Instance()->PlaySound(L"Boss_Slam_Sub.ogg", CSoundMgr::MONSTER);
+						CSoundMgr::Get_Instance()->PlaySound(L"Boss_Attack0_A.ogg", CSoundMgr::MONSTER);
 						m_bIsAttackEnd = true;
 					}
 				}

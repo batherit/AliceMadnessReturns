@@ -29,6 +29,9 @@ public:
 	void SetInfo(const _vec3& _vPos);
 
 private:
+	void PlaySlashSound();
+
+private:
 	CPlateEffect* m_pSlashEffect = nullptr;
 	CPlateEffect* m_pLightEffect = nullptr;
 };

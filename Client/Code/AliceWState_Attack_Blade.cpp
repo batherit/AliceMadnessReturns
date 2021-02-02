@@ -33,6 +33,7 @@ void CAliceWState_Attack_Blade::OnLoaded(void)
 	//m_pWeaponCollider = m_rOwner.GetWeapon()->GetColliderFromTag(L"PlayerAttack");
 	//m_pWeaponCollider->SetActivated(true);
 	m_rOwner.GetAttackCollider()->SetActivated(true);
+	PlaySwingSound();
 }
 
 int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
@@ -63,7 +64,7 @@ int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
 	if (m_bIsAttacking) {
 		// 공격 모션이 진행되고 있는 상태에서,,,
 		if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= m_fEndTime[m_iAttackNum]) {
-			m_rOwner.GetAttackCollider()->SetActivated(false);
+				m_rOwner.GetAttackCollider()->SetActivated(false);
 		}
 
 		if (m_rOwner.GetDynamicMesh()->Is_AnimationSetEnd()) {
@@ -108,6 +109,7 @@ int CAliceWState_Attack_Blade::Update(const _float& _fDeltaTime)
 				}
 				++m_iAttackNum;
 				m_rOwner.GetAttackCollider()->SetActivated(true);
+				PlaySwingSound();
 			}
 			else if (m_rOwner.GetDynamicMesh()->GetAnimationProgress() >= 0.6f && m_rOwner.IsRunOn(_fDeltaTime, &vDir)) {
 				_vec2 vDirXZ = _vec2(vDir.x, vDir.z);
@@ -147,4 +149,31 @@ void CAliceWState_Attack_Blade::OnExited(void)
 
 void CAliceWState_Attack_Blade::Free(void)
 {
+}
+
+void CAliceWState_Attack_Blade::PlaySwingSound()
+{
+	switch (Engine::GetNumberBetweenMinMax(0, 6)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Vorpal_Slash0.ogg", CSoundMgr::PLAYER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Vorpal_Slash1.ogg", CSoundMgr::PLAYER);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"Vorpal_Slash2.ogg", CSoundMgr::PLAYER);
+		break;
+	case 3:
+		CSoundMgr::Get_Instance()->PlaySound(L"Vorpal_Slash3.ogg", CSoundMgr::PLAYER);
+		break;
+	case 4:
+		CSoundMgr::Get_Instance()->PlaySound(L"Vorpal_Slash4.ogg", CSoundMgr::PLAYER);
+		break;
+	case 5:
+		CSoundMgr::Get_Instance()->PlaySound(L"Vorpal_Slash5.ogg", CSoundMgr::PLAYER);
+		break;
+	case 6:
+		CSoundMgr::Get_Instance()->PlaySound(L"Vorpal_Slash6.ogg", CSoundMgr::PLAYER);
+		break;
+	}
 }

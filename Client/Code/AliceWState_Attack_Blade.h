@@ -25,6 +25,9 @@ public:
 	virtual void Free(void) override;
 
 private:
+	void PlaySwingSound();
+
+private:
 	const _float m_fEntryTime[5] = { 0.f, 0.3f, 0.5f, 0.6f, 1.f };
 	const _float m_fEndTime[5] = { 0.f, 0.5f, 0.6f, 0.6f, 0.6f };
 	_int m_iAttackNum = 0;

@@ -30,12 +30,15 @@ void CBossState_Attack_SideCut::OnLoaded(void)
 	switch (m_iAttackIndex = rand() % 3) {
 	case 0:
 		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::Executioner_Attack01);
+		CSoundMgr::Get_Instance()->PlaySound(L"Boss_Attack0_A.ogg", CSoundMgr::MONSTER);
 		break;
 	case 1:
 		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::Executioner_Attack02);
+		CSoundMgr::Get_Instance()->PlaySound(L"Boss_Attack0_B.ogg", CSoundMgr::MONSTER);
 		break;
 	case 2:
 		m_rOwner.GetDynamicMesh()->Set_AnimationSet(ANIM::Executioner_Attack03);
+		CSoundMgr::Get_Instance()->PlaySound(L"Boss_Attack0_C.ogg", CSoundMgr::MONSTER);
 		break;
 	}
 	m_rOwner.GetPhysics()->SetResistanceCoefficientXZ(0.96f);
@@ -81,6 +84,7 @@ int CBossState_Attack_SideCut::Update(const _float& _fDeltaTime)
 					m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, m_rOwner.GetTransform()->GetLook(), 60.f);
 				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
 				m_bIsEffectOn = true;
+				CSoundMgr::Get_Instance()->PlaySound(L"Boss_Swing0.ogg", CSoundMgr::MONSTER);
 			}
 			break;
 		case 1:
@@ -90,6 +94,7 @@ int CBossState_Attack_SideCut::Update(const _float& _fDeltaTime)
 					m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, m_rOwner.GetTransform()->GetLook(), 60.f);
 				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
 				m_bIsEffectOn = true;
+				CSoundMgr::Get_Instance()->PlaySound(L"Boss_Swing1.ogg", CSoundMgr::MONSTER);
 			}
 			break;
 		case 2:
@@ -99,6 +104,7 @@ int CBossState_Attack_SideCut::Update(const _float& _fDeltaTime)
 					m_rOwner.GetTransform()->GetPos(), 10.f, 4.f, 0.5f, m_rOwner.GetTransform()->GetLook(), 60.f);
 				Engine::GetLayer(L"Environment")->Add_GameObject(L"Effect", pSplashAttack);
 				m_bIsEffectOn = true;
+				CSoundMgr::Get_Instance()->PlaySound(L"Boss_Swing2.ogg", CSoundMgr::MONSTER);
 			}
 			break;
 		default:

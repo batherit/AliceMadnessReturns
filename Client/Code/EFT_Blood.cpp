@@ -49,6 +49,7 @@ HRESULT CEFT_Blood::Ready_Object(void)
 	m_pPhysics = AddComponent<Engine::CPhysics>();
 	m_pPhysics->SetGravity(9.8f);
 	
+	CSoundMgr::Get_Instance()->PlaySound(L"Blood.mp3", CSoundMgr::EFFECT);
 
 	return S_OK;
 }

@@ -197,6 +197,7 @@ void CPigFly::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"PlayerAttack") == 0) {
 			m_eStep = STEP_ATTACKED;
 			m_iTriggerGauge += 1;
+			CSoundMgr::Get_Instance()->PlaySound(L"PigFly_Hit.ogg", CSoundMgr::EFFECT);
 			switch (m_iTriggerGauge / 3) {
 			case 0: //0~2
 				m_pMesh->Set_AnimationSet(ANIM::NoseSwich_Fly_Charge_1);

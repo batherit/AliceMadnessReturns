@@ -124,6 +124,7 @@ void CUI_LockedWeapon::ClickUnlockButton(void *)
 	if (m_iToothNum <= m_pAliceW->GetToothNum()) {
 		SetLocked(false);
 		m_pAliceW->DecreaseTooth(m_iToothNum);
+		CSoundMgr::Get_Instance()->PlaySound(L"UI_WeaponPickup.ogg", CSoundMgr::UI);
 	}
 }
 

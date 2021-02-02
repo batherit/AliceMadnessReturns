@@ -157,6 +157,8 @@ void CMiniGameScene::OnLoaded()
 	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_SPHERE);
 	Engine::CRenderer::GetInstance()->SetSphereFogInfo(40.f, 120.f, _vec3(0.f, 0.3f, 0.63f), 1.f);
 
+	CSoundMgr::Get_Instance()->PlayBGM(L"Water.ogg");
+
 	Engine::GetTimer(L"Timer_FPS60")->Reset();
 }
 
@@ -170,6 +172,7 @@ void CMiniGameScene::OnExited()
 		pDataMgr->SaveShipData(m_pShip);
 		pDataMgr->SetValidData(true);
 	}
+	CSoundMgr::Get_Instance()->StopSound(CSoundMgr::BGM);
 }
 
 CMiniGameScene * CMiniGameScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)

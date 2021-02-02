@@ -25,6 +25,7 @@ void CBossState_Death::OnLoaded(void)
 	m_rOwner.GetAttackCollider()->SetActivated(false);
 	m_rOwner.GetAttackerObject()->SetActivated(false);
 	Engine::GetLayer(L"Environment")->Add_GameObject(CCake::Create(m_rOwner.GetGraphicDev()));
+	CSoundMgr::Get_Instance()->PlaySound(L"Boss_Death.ogg", CSoundMgr::MONSTER);
 }
 
 int CBossState_Death::Update(const _float& _fDeltaTime)

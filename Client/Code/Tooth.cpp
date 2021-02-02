@@ -69,6 +69,7 @@ int CTooth::Update_Object(const _float & _fDeltaTime)
 		}
 		else {
 			m_pAlice->IncreaseTooth(1);
+			
 			SetValid(false);
 		}
 	}
@@ -152,5 +153,29 @@ void CTooth::SetPopInfo(_vec3 _vArrivalPos, _bool _bIsArrived)
 	m_vArrivalPos = _vArrivalPos;
 	m_bIsArrived = _bIsArrived;
 	//m_pCollider->SetActivated(false);
+}
+
+void CTooth::PlayToothSound()
+{
+	switch (Engine::GetNumberBetweenMinMax(0, 1)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Tooth0.ogg", CSoundMgr::EFFECT);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Tooth1.ogg", CSoundMgr::EFFECT);
+		break;
+	}
+
+	switch (Engine::GetNumberBetweenMinMax(0, 2)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Tooth_Magic0.ogg", CSoundMgr::EFFECT);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Tooth_Magic1.ogg", CSoundMgr::EFFECT);
+		break;
+	case 2:
+		CSoundMgr::Get_Instance()->PlaySound(L"Tooth_Magic2.ogg", CSoundMgr::EFFECT);
+		break;
+	}
 }
 

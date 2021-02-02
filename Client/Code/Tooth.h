@@ -33,6 +33,9 @@ public:
 	void SetPopInfo(_vec3 _vArrivalPos, _bool _bIsArrived =  false);
 
 private:
+	void PlayToothSound();
+
+private:
 	Engine::CStaticMesh* m_pMesh = nullptr;
 	Engine::CMeshRenderer* m_pRenderer = nullptr;
 	Engine::CShader* m_pShader = nullptr;

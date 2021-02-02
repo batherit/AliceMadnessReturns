@@ -119,6 +119,7 @@ _int CUI_InGame::Update_Object(const _float & _fDeltaTime)
 			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false, WINCX >> 1, WINCY >> 1);
 			m_pCursor->SetActivated(true);
 			m_pWeaponLock->SetActivated(true);
+			CSoundMgr::Get_Instance()->PlaySound(L"Tutorial.ogg", CSoundMgr::UI);
 		}
 	}
 	else if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_F1)) {

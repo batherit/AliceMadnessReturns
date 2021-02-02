@@ -23,6 +23,7 @@ CMineBombAttack::~CMineBombAttack(void)
 
 HRESULT CMineBombAttack::Ready_Object(void)
 {
+	CSoundMgr::Get_Instance()->PlaySound(L"PigFly_Hit.ogg", CSoundMgr::EFFECT);
 	return S_OK;
 }
 

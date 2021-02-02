@@ -112,6 +112,15 @@ int CShip::Update_Object(const _float & _fDeltaTime)
 			m_pPhysics->SetSpeed(0.f);
 			m_pPhysics->SetGravity(-3.f);
 			m_bIsDeathInit = true;
+			switch (Engine::GetNumberBetweenMinMax(0, 1))
+			{
+			case 0:
+				CSoundMgr::Get_Instance()->PlaySound(L"Ship_Destroy0.ogg", CSoundMgr::PLAYER);
+				break;
+			case 1:
+				CSoundMgr::Get_Instance()->PlaySound(L"Ship_Destroy1.ogg", CSoundMgr::PLAYER);
+				break;
+			}
 		}
 
 		if ((m_fDeathAnimTime -= _fDeltaTime) > 0.f) {
@@ -230,4 +239,14 @@ void CShip::Attacked()
 	m_bIsAttacked = true;
 	m_fRecoveryTime = 1.f;
 	dynamic_cast<CStaticCamera*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"Camera").begin())->Shake(0.5f, 0.3f, 10);
+	
+	switch (Engine::GetNumberBetweenMinMax(0, 1)) {
+	case 0:
+		CSoundMgr::Get_Instance()->PlaySound(L"Ship_Damaged0.ogg", CSoundMgr::PLAYER);
+		break;
+	case 1:
+		CSoundMgr::Get_Instance()->PlaySound(L"Ship_Damaged1.ogg", CSoundMgr::PLAYER);
+		break;
+	}
+	
 }

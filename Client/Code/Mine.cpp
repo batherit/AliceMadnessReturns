@@ -69,6 +69,15 @@ int CMine::Update_Object(const _float & _fDeltaTime)
 			CMineBombAttack* pAttack = CMineBombAttack::Create(m_pGraphicDev);
 			pAttack->SetMineBombAttackInfo(GetTransform()->GetPos());
 			Engine::GetLayer(L"Environment")->Add_GameObject(pAttack);
+			switch (Engine::GetNumberBetweenMinMax(0, 1)) {
+			case 0:
+				CSoundMgr::Get_Instance()->PlaySound(L"Mine_Bomb0.ogg", CSoundMgr::MONSTER);
+				break;
+			case 1:
+				CSoundMgr::Get_Instance()->PlaySound(L"Mine_Bomb1.ogg", CSoundMgr::MONSTER);
+				break;
+			}
+			
 			SetValid(false);
 		}
 	}

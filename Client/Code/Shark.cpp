@@ -199,4 +199,5 @@ void CShark::Bang()
 	CCannonBall* pCannonBall = CCannonBall::Create(m_pGraphicDev);
 	pCannonBall->SetCannonBallInfo(CCannonBall::TYPE_MONSTER, GetTransform()->GetPos() + _vec3(-1.f, 0.f, 0.f), _vec3(-20.f, 0.f, 0.f));
 	Engine::GetLayer(L"Environment")->Add_GameObject(pCannonBall);
+	CSoundMgr::Get_Instance()->PlaySound(L"Shark_Attack.ogg", CSoundMgr::MONSTER);
 }

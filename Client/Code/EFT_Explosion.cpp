@@ -30,6 +30,7 @@ HRESULT CEFT_Explosion::Ready_Object(void)
 	m_mapComponent[Engine::CShader::GetComponentID()].emplace(Engine::CShader::GetComponentTag(), m_pShader);
 
 	GetTransform()->SetScaleXYZ(2.f, 2.f, 2.f);
+	CSoundMgr::Get_Instance()->PlaySound(L"CannonBall_Impact.ogg", CSoundMgr::PLAYER);
 
 	return S_OK;
 }

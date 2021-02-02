@@ -43,6 +43,7 @@ HRESULT CCannonBall::Ready_Object(void)
 
 	// Physics
 	m_pPhysics = AddComponent<Engine::CPhysics>();
+	CSoundMgr::Get_Instance()->PlaySound(L"CannonBall_Fire.ogg", CSoundMgr::PLAYER);
 
 	return S_OK;
 }

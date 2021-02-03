@@ -25,7 +25,7 @@ void CAliceWState_Death::OnLoaded(void)
 	m_rOwner.GetPhysics()->SetSpeed(0.f);
 	m_rOwner.SetSuperJumped(false);
 	m_pInGameUI = dynamic_cast<CUI_InGame*>(*Engine::GetLayer(L"Environment")->GetLayerList(L"UI_InGame").begin());
-	
+	m_rOwner.DecreaseTooth(10);
 }
 
 int CAliceWState_Death::Update(const _float& _fDeltaTime)

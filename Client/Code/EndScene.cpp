@@ -92,7 +92,7 @@ void CEndScene::OnLoaded()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
-	CSoundMgr::Get_Instance()->PlayBGM(L"EndScene_BGM.wav");
+	CSoundMgr::Get_Instance()->PlayBGM(L"PoolScene_BGM1.wav");
 }
 
 void CEndScene::OnExited()

@@ -106,7 +106,7 @@ private:
 	_bool m_bIsSuperJumped = false;
 	_bool m_bIsDashing = false;
 
-	_int m_iToothNum = 100;
+	_int m_iToothNum = 0;
 
 	CUI_InGame* m_pInGameUI = nullptr;
 };

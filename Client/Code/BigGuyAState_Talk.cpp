@@ -21,9 +21,9 @@ CBigGuyAState_Talk::~CBigGuyAState_Talk()
 void CBigGuyAState_Talk::OnLoaded(void)
 {
 	m_fKeepTime = 0.f;
-	m_wstrTalkText[0] = L"Oh버워치 하고 싶다..";
-	m_wstrTalkText[1] = L"집에 가서 놀고 싶구만 이거,,,";
-	m_wstrTalkText[2] = L"내겐 월요병같은 건 없다구~";
+	m_wstrTalkText[0] = L"저기 고양이 한 마리 있던데,,,누군갈 기다리는 걸까?";
+	m_wstrTalkText[1] = L"천둥 소리는 왜 이렇게 커!";
+	m_wstrTalkText[2] = L"저기 고양이 한 마리 있던데,,,누군갈 기다리는 걸까?";
 
 	if (m_rOwner.GetRoute()->IsNextPositionExisted())
 		m_bIsNextGo = true;

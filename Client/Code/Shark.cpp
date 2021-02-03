@@ -75,7 +75,7 @@ int CShark::Update_Object(const _float & _fDeltaTime)
 
 		if ((m_fAttackDelayTime -= _fDeltaTime) <= 0.f) {
 			Bang();
-			m_fAttackDelayTime = Engine::GetNumberBetweenMinMax(2.f, 4.f);
+			m_fAttackDelayTime = Engine::GetNumberBetweenMinMax(1.5f, 2.5f);
 		}
 	}
 	else {

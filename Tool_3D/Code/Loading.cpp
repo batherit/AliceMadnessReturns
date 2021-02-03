@@ -1070,6 +1070,64 @@ _uint CLoading::LoadMiniGameSceneMeshes()
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
+		L"ShipWreck_Front",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"ShipWreck_Front.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"ShipWreck_Front");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"ShipWreck_Front");
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"ShipWreck_Back",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"ShipWreck_Back.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"ShipWreck_Back");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"ShipWreck_Back");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Moai",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"Moai.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Moai");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"Moai");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"WaterRock0",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"WaterRock0.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterRock0");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterRock0");
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"WaterRock1",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"WaterRock1.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterRock1");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterRock1");
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"WaterRock2",
+		Engine::TYPE_STATIC,
+		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",
+		L"WaterRock2.X"),
+		E_FAIL);
+	m_pMapTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterRock2");
+	m_pColliderTab->RegisterMeshTag(Engine::TYPE_STATIC, L"WaterRock2");
+
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
 		L"WaterLogA",
 		Engine::TYPE_STATIC,
 		L"../../Resource/Mesh/StaticMesh/MiniGameScene/",

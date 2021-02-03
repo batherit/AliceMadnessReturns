@@ -140,12 +140,15 @@ void CMine::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 		return;
 
 	if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Player") == 0) {
-		CShip* pShip = dynamic_cast<CShip*>(_tCollisionInfo.pCollidedObject);
-		if (pShip && !pShip->IsAttacked()) {
-			_tCollisionInfo.pCollidedObject->GetComponent<CAttribute>()->Damaged(2.f);
-			pShip->Attacked();
-			Bang();
+		if (_tCollisionInfo.pCollidedMyCollider == m_pCollider) {
+			CShip* pShip = dynamic_cast<CShip*>(_tCollisionInfo.pCollidedObject);
+			if (pShip && !pShip->IsAttacked()) {
+				_tCollisionInfo.pCollidedObject->GetComponent<CAttribute>()->Damaged(2.f);
+				pShip->Attacked();
+				
+			}
 		}
+		Bang();
 	}
 	else if (lstrcmp(_tCollisionInfo.pCollidedCollider->GetColliderTag(), L"Ball") == 0) {
 		Bang();

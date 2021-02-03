@@ -54,6 +54,8 @@ private:
 	CUI_SpeechBubble* m_pSpeechBubble;
 
 	_int m_iCellIndex = -1;
+	_bool m_bIsEventOn = false;
+	_float m_fDistToEnd = 0.f;
 };
 
 END

@@ -21,9 +21,9 @@ CBigGuyBState_Talk::~CBigGuyBState_Talk()
 void CBigGuyBState_Talk::OnLoaded(void)
 {
 	m_fKeepTime = 0.f;
-	m_wstrTalkText[0] = L"아 서둘러야겠어, 놀아야되거든,,,";
-	m_wstrTalkText[1] = L"아무 생각이 없다,,,";
-	m_wstrTalkText[2] = L"놀고 싶다~";
+	m_wstrTalkText[0] = L"비가 내릴 것 같네,,, 어서 집으로 가야겠어.";
+	m_wstrTalkText[1] = L"저쪽에 있는 문에 웬 고양이가 있더군.";
+	m_wstrTalkText[2] = L"저쪽에 있는 문에 웬 고양이가 있더군.";
 
 	if (m_rOwner.GetRoute()->IsNextPositionExisted())
 		m_bIsNextGo = true;

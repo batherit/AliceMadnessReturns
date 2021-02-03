@@ -47,7 +47,7 @@ HRESULT CUI_WeaponLock::Ready_Object(void)
 
 	m_pHobbyHorseUI = CUI_LockedWeapon::Create(m_pGraphicDev);
 	m_pHobbyHorseUI->SetWeaponTexture(L"UI_WeaponLock_HobbyHorse");
-	m_pHobbyHorseUI->SetToothNum(20);
+	m_pHobbyHorseUI->SetToothNum(50);
 	m_pHobbyHorseUI->GetTransform()->SetPos(-WINCX / 10.f , 0.f, 0.f);
 	pHelpImage = CUI_Image::Create(m_pGraphicDev);
 	pHelpImage->SetTexture(L"UI_Help_HobbyHorse");
@@ -60,7 +60,7 @@ HRESULT CUI_WeaponLock::Ready_Object(void)
 
 	m_pGunUI = CUI_LockedWeapon::Create(m_pGraphicDev);
 	m_pGunUI->SetWeaponTexture(L"UI_WeaponLock_Gun");
-	m_pGunUI->SetToothNum(20);
+	m_pGunUI->SetToothNum(50);
 	m_pGunUI->GetTransform()->SetPos(WINCX / 10.f , 0.f, 0.f);
 	pHelpImage = CUI_Image::Create(m_pGraphicDev);
 	pHelpImage->SetTexture(L"UI_Help_Gun");
@@ -73,7 +73,7 @@ HRESULT CUI_WeaponLock::Ready_Object(void)
 
 	m_pBunnyBombUI = CUI_LockedWeapon::Create(m_pGraphicDev);
 	m_pBunnyBombUI->SetWeaponTexture(L"UI_WeaponLock_BunnyBomb");
-	m_pBunnyBombUI->SetToothNum(20);
+	m_pBunnyBombUI->SetToothNum(50);
 	m_pBunnyBombUI->GetTransform()->SetPos(WINCX / 5.f + WINCX / 10.f , 0.f, 0.f);
 	pHelpImage = CUI_Image::Create(m_pGraphicDev);
 	pHelpImage->SetTexture(L"UI_Help_BunnyBomb");

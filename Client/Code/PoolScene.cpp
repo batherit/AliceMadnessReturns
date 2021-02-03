@@ -112,11 +112,12 @@ void CPoolScene::OnLoaded()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
-	CSoundMgr::Get_Instance()->PlayBGM(L"PoolScene_BGM.wav");
+	CSoundMgr::Get_Instance()->PlayBGM(L"PoolScene_BGM1.wav");
 }
 
 void CPoolScene::OnExited()
 {
+	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_NONE);
 	CSoundMgr::Get_Instance()->StopAll();
 }
 

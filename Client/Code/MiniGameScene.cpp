@@ -98,14 +98,14 @@ int CMiniGameScene::Update(const _float& fTimeDelta)
 			CShark* pShark = CShark::Create(m_pGraphicDev);
 			pShark->GetTransform()->SetPos(_vec3(SEA_HALF_WIDTH + 10.f, Engine::GetNumberBetweenMinMax(-(SEA_HALF_HEIGHT - 5.f), SEA_HALF_HEIGHT - 5.f), 0.f));
 			Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pShark);
-			m_fGenTime_Shark = Engine::GetNumberBetweenMinMax(1.f, 3.f);
+			m_fGenTime_Shark = Engine::GetNumberBetweenMinMax(1.f, 2.f);
 		}
 
 		if ((m_fGenTime_Mine -= fTimeDelta) <= 0.f) {
 			CMine* pMine = CMine::Create(m_pGraphicDev);
 			pMine->GetTransform()->SetPos(_vec3(SEA_HALF_WIDTH + 10.f, Engine::GetNumberBetweenMinMax(-(SEA_HALF_HEIGHT - 5.f), SEA_HALF_HEIGHT - 5.f), 0.f));
 			Engine::GetLayer(L"Environment")->Add_GameObject(L"Monster", pMine);
-			m_fGenTime_Mine = Engine::GetNumberBetweenMinMax(2.f, 4.f);
+			m_fGenTime_Mine = Engine::GetNumberBetweenMinMax(1.f, 2.5f);
 		}
 
 		if ((m_fGameTime -= fTimeDelta) <= 0.f)
@@ -155,7 +155,7 @@ void CMiniGameScene::OnLoaded()
 	//Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
 
 	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_SPHERE);
-	Engine::CRenderer::GetInstance()->SetSphereFogInfo(40.f, 120.f, _vec3(0.f, 0.3f, 0.63f), 1.f);
+	Engine::CRenderer::GetInstance()->SetSphereFogInfo(40.f, 150.f, _vec3(0.f, 0.3f, 0.63f), 0.8f);
 
 	CSoundMgr::Get_Instance()->PlayBGM(L"Water.ogg");
 	CSoundMgr::Get_Instance()->PlayBGM1(L"MiniGameScene_BGM.ogg");

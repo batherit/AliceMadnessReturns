@@ -104,6 +104,29 @@ int CAliceL::Update_Object(const _float & _fDeltaTime)
 	// 이동 확정
 	GetTransform()->SetPos(pNaviMesh->MoveOnNaviMesh_Adhesion(m_iCellIndex, &vCurrentPos, &vTargetPos));
 
+	/*if (Engine::CDirectInputMgr::GetInstance()->IsKeyDown(DIK_M)) {
+		if (Engine::CDirectInputMgr::GetInstance()->IsMouseFixed()) {
+			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(false);
+		}
+		else {
+			Engine::CDirectInputMgr::GetInstance()->SetMouseFixed(true, WINCX >> 1, WINCY >> 1);
+		}
+	}*/
+
+	if (m_bIsEventOn) {
+		_float fDistToEnd = D3DXVec3Length(&(m_pMap->GetCheckPoint(3)->GetTransform()->GetPos() - GetTransform()->GetPos()));
+		_float fT = 1.f - Engine::GetWeightByValue(fDistToEnd, 9.f, m_fDistToEnd);
+		//_float fT = 1.f - Engine::Clamp(fDistToEnd / m_fDistToEnd, 0.f, 1.f) ;
+		_vec3 vTemp;
+		Engine::CRenderer::GetInstance()->SetSphereFogInfo(
+			Engine::GetValueByWeight(fT, 10.f, 0.f),
+			Engine::GetValueByWeight(fT, 300.f, 0.f),
+			*D3DXVec3Lerp(&vTemp, &_vec3(1.f, 1.f, 1.f), &_vec3(0.f, 0.f, 0.f), fT),
+			1.f
+		);
+	}
+	
+
 	return 0;
 }
 
@@ -153,8 +176,15 @@ void CAliceL::OnCollision(Engine::CollisionInfo _tCollisionInfo)
 			_int iIndex = 0;
 			for (auto& rObj : m_pMap->GetCheckPoint()) {
 				if (rObj->IsActivated()) {
-					if (iIndex == 2)
+					if (iIndex == 2) {
+						Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_SPHERE);
+						Engine::CRenderer::GetInstance()->SetSphereFogInfo(10.f, 100.f, _vec3(1.f, 1.f, 1.f), 1.f);
 						m_pSpeechBubble->SetText(WINCX / 6.f, WINCY - WINCY / 4.f, L"귀여운 고양이네! 일로 와보렴.");
+						if (!m_bIsEventOn) {
+							m_fDistToEnd = D3DXVec3Length(&(m_pMap->GetCheckPoint(3)->GetTransform()->GetPos() - m_pMap->GetCheckPoint(1)->GetTransform()->GetPos()));
+							m_bIsEventOn = true;
+						}
+					}
 					else if (iIndex == 3)
 						m_pSpeechBubble->SetText(WINCX / 6.f, WINCY - WINCY / 4.f, L"어디까지 가는 거니?? 고양아~");
 					break;

@@ -77,7 +77,7 @@ public:
 
 	void SetToothNum(_int _iToothNum) { m_iToothNum = _iToothNum; }
 	void IncreaseTooth(_int _iAmount) { m_iToothNum += _iAmount; }
-	void DecreaseTooth(_int _iAmount) { m_iToothNum -= _iAmount; if (_iAmount < 0) _iAmount = 0; }
+	void DecreaseTooth(_int _iAmount) { m_iToothNum -= _iAmount; if (m_iToothNum < 0) m_iToothNum = 0; }
 	_int GetToothNum() const { return m_iToothNum; }
 
 	void SetInGameUI(CUI_InGame* _pInGameUI) { m_pInGameUI = _pInGameUI; }

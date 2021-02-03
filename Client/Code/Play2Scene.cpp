@@ -386,10 +386,10 @@ HRESULT CPlay2Scene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pCameraMgr->AddCameraController(pCameraController);
 
 	// 테스트 몬스터(MadCapA) 생성
-	Engine::CGameObject* pGameObject = CMadCapA::Create(m_pGraphicDev);
+	/*Engine::CGameObject* pGameObject = CMadCapA::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
-	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, 0.f));
+	pGameObject->GetTransform()->Translate(_vec3(4.f, 55.f, 0.f));*/
 
 	//pGameObject = CMadCapA::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);

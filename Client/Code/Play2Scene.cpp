@@ -233,8 +233,10 @@ void CPlay2Scene::OnLoaded()
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//Engine::GetTimer(L"Timer_FPS60")->PauseToRun();
 
+	//Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_HEIGHT);
+	//Engine::CRenderer::GetInstance()->SetHeightFogInfo(-25.f, -40.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
 	Engine::CRenderer::GetInstance()->SetFogType(Engine::CRenderer::FOG_HEIGHT);
-	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-25.f, -40.f, _vec3(0.2f, 0.2f, 0.2f), m_fFogHeightDensity);
+	Engine::CRenderer::GetInstance()->SetHeightFogInfo(-25.f, -40.f, _vec3(0.115f, 0.1f, 0.1f), 1.f);
 
 	CSoundMgr::Get_Instance()->PlayBGM(L"PlayScene_BGM.ogg");
 	CSoundMgr::Get_Instance()->PlayBGM1(L"Fan.wav");
@@ -455,7 +457,8 @@ HRESULT CPlay2Scene::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_pSkyBox = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pSkyBox, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", m_pSkyBox), E_FAIL);
-	m_pSkyBox->GetComponent<Engine::CPolygonRenderer>()->SetTextureIndex(0);
+	//m_pSkyBox->GetComponent<Engine::CPolygonRenderer>()->SetTextureIndex(0);
+	m_pSkyBox->GetComponent<Engine::CPolygonRenderer>()->SetTextureIndex(5);
 
 	return S_OK;
 }

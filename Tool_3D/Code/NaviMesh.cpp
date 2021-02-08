@@ -239,6 +239,7 @@ _bool CNaviMesh::LoadInfo(HANDLE & _hfIn)
 	_int iTriangleIndex = 0;
 	_int iTriangleSize = iVerticesSize / 3;
 
+	m_vecTriangleTagIndices.clear();
 	for (_int i = 0; i < iTriangleSize; ++i) {
 		for (_int j = 0; j < 3; ++j) {
 			ReadFile(_hfIn, &vPos, sizeof(vPos), &dwByte, nullptr);

@@ -229,6 +229,7 @@ _bool CNaviMesh::SaveInfo(HANDLE & _hfOut)
 
 _bool CNaviMesh::LoadInfo(HANDLE & _hfIn)
 {
+	// test commit
 	_int iVerticesSize = 0;
 	DWORD dwByte = 0;
 	ReadFile(_hfIn, &iVerticesSize, sizeof(_int), &dwByte, nullptr);
